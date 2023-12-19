@@ -9,9 +9,10 @@ import { CompetencyPassbookRoutingModule } from './competency-passbook-routing.m
 import { CompetencyPassbookComponent } from './competency-passbook/competency-passbook.component';
 import { CompetencyPassbookSideBarComponent } from './../component/competency-passbook-side-bar/competency-passbook-side-bar.component';
 import { CompetencySearchComponent } from './competency-search/competency-search.component';
+import { CompetencyCardDetailsComponent } from './competency-card-details/competency-card-details.component';
 
 @NgModule({
-  declarations: [CompetencyPassbookComponent, CompetencyPassbookSideBarComponent, CompetencySearchComponent],
+  declarations: [CompetencyPassbookComponent, CompetencyPassbookSideBarComponent, CompetencySearchComponent, CompetencyCardDetailsComponent],
   imports: [
     CommonModule,
     RouterModule,
