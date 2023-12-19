@@ -8,10 +8,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CompetencyPassbookRoutingModule } from './competency-passbook-routing.module';
 import { CompetencyPassbookComponent } from './competency-passbook/competency-passbook.component';
 import { CompetencyPassbookSideBarComponent } from './../component/competency-passbook-side-bar/competency-passbook-side-bar.component';
-
+import { CompetencySearchComponent } from './competency-search/competency-search.component';
 
 @NgModule({
-  declarations: [CompetencyPassbookComponent, CompetencyPassbookSideBarComponent],
+  declarations: [CompetencyPassbookComponent, CompetencyPassbookSideBarComponent, CompetencySearchComponent],
   imports: [
     CommonModule,
     RouterModule,

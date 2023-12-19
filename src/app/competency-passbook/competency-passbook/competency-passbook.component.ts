@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-// import { HTMLInputElement }
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ws-competency-passbook',
@@ -8,15 +7,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 
 export class CompetencyPassbookComponent implements OnInit {
-
-  @ViewChild('searchInput') searchInput: any
   constructor() { }
 
   ngOnInit() {
-  }
-
-  handleFocus(): void {
-    this.searchInput.nativeElement.focus();
   }
 
 }

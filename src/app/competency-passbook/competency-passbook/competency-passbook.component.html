@@ -1,12 +1,51 @@
+<ng-template #competencyCard>
+    <div class="flex flex-wrap gap-6">
+        <div class="flex flex-col" *ngFor="let i of [1, 2, 3]">
+            <div class="competency-passbook-theme"></div>
+            <div class="detail flex flex-col">
+                <div class="flex flex-col">
+                    <div class="flex flex-row justify-between px-6 py-4 cursor-pointer">
+                        <div class="flex flex-col gap-3 text-primary">
+                            <div class="flex flex-row gap-3 items-center">
+                                <div class="text-xl font-semibold">Self-Awareness</div>
+                                <img src="assets/icons/competency/cp-arrow.svg" alt="cp arrow img" />
+                            </div>
+                            <div class="flex flex-row gap-3">
+                                <mat-icon>school</mat-icon>
+                                <div class="text-base">12</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3 px-6 py-4 chip-container">
+                        <div class="chip rounded-full p-2 text-xs">
+                            Self-Awareness
+                        </div>
+                        <div class="chip rounded-full p-2 text-xs">
+                            Design
+                        </div>
+                        <div class="chip rounded-full p-2 text-xs">
+                            Software design
+                        </div>
+                        <div class="chip rounded-full p-2 text-xs">
+                            Relationship management
+                        </div>
+                        <div class="flex items-center text-primary underline cursor-pointer text-xs">
+                            View more
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
 <div class="passbook-container gap-5">
     <div class="left-container">
         <div class="flex flex-col gap-4 cp-container">
             <div class="flex flex-row gap-3">
                 <div class="flex-1 text-xl font-semibold">Competency passbook</div>
                 <div class="flex items-center">
-                    <!-- <button mat-icon-button [matMenuTriggerFor]="filter"> -->
-                        <mat-icon class="cursor-pointer" [matMenuTriggerFor]="filter">filter_list</mat-icon>
-                    <!-- </button> -->
+                    <mat-icon class="cursor-pointer" [matMenuTriggerFor]="filter">filter_list</mat-icon>
                     <mat-menu #filter="matMenu" xPosition="before">
                         <button mat-menu-item class="px-3">
                             <span>Last 3 months</span>
@@ -21,9 +60,16 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-2 p-4">
-                <div class="text-base">My competencies</div>
-                <div class="text-4xl font-semibold">365</div>
+            <div class="flex flex-row gap-3 p-4">
+                <div class="flex-1">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-base">My competencies</div>
+                        <div class="text-4xl font-semibold">365</div>
+                    </div>
+                </div>
+                <div class="flex justify-center items-end">
+                    <mat-icon class="info-icon">info</mat-icon>
+                </div>
             </div>
 
             <div class="competency-passbook-category" *ngFor="let i of [1, 2, 3]" >
@@ -55,61 +101,39 @@
 
     <div class="right-container">
         <mat-tab-group>
-            <mat-tab label="All"> All </mat-tab>
-            <mat-tab label="Behavioral"> Behavioral </mat-tab>
-            <mat-tab label="Functional"> Functional </mat-tab>
-            <mat-tab label="Domain"> Domain </mat-tab>
+            <mat-tab label="All">
+                <div class="flex flex-col">
+                    <div class="py-4">
+                        <ws-competency-search></ws-competency-search>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </mat-tab>
+            <mat-tab label="Behavioral">
+                <div class="flex flex-col">
+                    <div class="py-4">
+                        <ws-competency-search></ws-competency-search>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </mat-tab>
+            <mat-tab label="Functional">
+                <div class="flex flex-col">
+                    <div class="py-4">
+                        <ws-competency-search></ws-competency-search>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </mat-tab>
+            <mat-tab label="Domain">
+                <div class="flex flex-col">
+                    <div class="py-4">
+                        <ws-competency-search></ws-competency-search>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </mat-tab>
         </mat-tab-group>
 
-        <div class="flex flex-row gap-3">
-            <div class="flex-1">
-                <div class="flex flex-row search-div">
-                    <mat-icon (click)="handleFocus()" class="cursor-pointer">search</mat-icon>
-                    <input #searchInput type="text" class="search-input flex" placeholder="Search" />
-                </div>
-            </div>
-            <div class="flex items-center justify-center">
-                <mat-icon class="cursor-pointer">filter_list</mat-icon>
-            </div>
-        </div>
-
-        <div class="flex flex-wrap gap-6">
-            <div class="flex flex-col" *ngFor="let i of [1, 2, 3]" >
-                <div class="competency-passbook-theme"></div>
-                <div class="detail flex flex-col">
-                    <div class="flex flex-col gap-6 p-6">
-                        <div class="flex flex-row justify-between">
-                            <div class="flex flex-col gap-3 text-primary">
-                                <div class="flex flex-row gap-3 items-center">
-                                    <div class="text-xl font-semibold">Self-Awareness</div>
-                                    <img src="assets/icons/competency/cp-arrow.svg" alt="cp arrow img" />
-                                </div>
-                                <div class="flex flex-row gap-3">
-                                    <mat-icon>school</mat-icon>
-                                    <div class="text-base">12</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap gap-3">
-                            <div class="chip rounded-full p-2 text-xs">
-                                Self-Awareness
-                            </div>
-                            <div class="chip rounded-full p-2 text-xs">
-                                Design
-                            </div>
-                            <div class="chip rounded-full p-2 text-xs">
-                                Software design
-                            </div>
-                            <div class="chip rounded-full p-2 text-xs">
-                                Relationship management
-                            </div>
-                            <div class="flex items-center text-primary underline cursor-pointer text-xs">
-                                View more
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

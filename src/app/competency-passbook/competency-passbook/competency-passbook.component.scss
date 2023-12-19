@@ -1,5 +1,3 @@
-@import '_ws-vars.scss';
-
 $text-primary: #1B4CA1;
 
 .text-primary {
@@ -22,6 +20,13 @@ $text-primary: #1B4CA1;
 
 .left-container {
     max-width: 384px;
+
+    .info-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+        color: rgba(255, 255, 255, 0.4);
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -59,10 +64,15 @@ $text-primary: #1B4CA1;
     position: relative;
     top: -8px;
 
-    .chip {
-        border: 1px solid $text-primary;
-        color: $text-primary;
+    .chip-container {
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+        .chip {
+            border: 1px solid $text-primary;
+            color: $text-primary;
+        }
     }
+
 }
 
 .competency-passbook-category {
@@ -76,31 +86,6 @@ $text-primary: #1B4CA1;
         height: 1px;
         background-color: rgba(255, 255, 255, 0.08);
         margin: 16px 0;
-    }
-}
-
-.search-div {
-    border: 1px solid rgba(0, 0, 0, 0.16);
-    border-radius: 4px;
-    background: #fff;
-
-    .mat-icon {
-        padding: 8px;
-    }
-
-    .search-input {
-        padding: 8px 0px;
-        border: none;
-        width: 100%;
-        font-family: $font-family-lato;
-
-        &:focus {
-            outline: none;
-        }
-
-        &:focus-visible {
-            outline: none !important;
-        }
     }
 }
 
