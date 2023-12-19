@@ -12,8 +12,7 @@ const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   FETCH_USER_GROUPS: (userId: string) =>
     `${PROTECTED_SLAG_V8}/user/group/fetchUserGroup?userId=${userId}`,
-    FETCH_CPB_PLANS: (userId: string) =>
-    `/apis/proxies/v8/user/v1/cbplan/${userId}`,
+    FETCH_CPB_PLANS:`/apis/proxies/v8/user/v1/cbplan`,
   FETCH_USER_ENROLLMENT_LIST: (userId: string | undefined) =>
     // tslint:disable-next-line: max-line-length
     `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey,avgRating,additionalTags&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes`,
@@ -145,7 +144,7 @@ export class WidgetUserService {
   }
 
   fetchCbpPlanList(userId:string) {
-    const result: any =  this.http.get(API_END_POINTS.FETCH_CPB_PLANS(userId)).pipe(catchError(this.handleError), map(
+    const result: any =  this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
       (data: any) => {
         // localStorage.setItem('enrollmentData', JSON.stringify(data.result))
         return data.result

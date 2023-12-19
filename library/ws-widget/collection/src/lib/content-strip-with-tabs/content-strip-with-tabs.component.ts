@@ -410,21 +410,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
   }
 
-  fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
-    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
-      let userId=''
-      if (this.configSvc.userProfile) {
-        userId = this.configSvc.userProfile.userId
-      }
-      this.userSvc.fetchCbpPlanList(userId).subscribe((res:any)=> {
-        console.log(res,'asdfghj')
-      },(_err: any)=> {
-        console.log(_err,'asdfghj')
-
-      })
-      console.log(strip,'asdfghj')
-    }
-  }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.searchV6 && Object.keys(strip.request.searchV6).length) {
@@ -935,5 +920,97 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     console.log('calculateParentStatus-- ', calculateParentStatus)
     // TODO: Write logic for individual filter if passed in config
     // add switch case based on config key passed
+  }
+
+  fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
+      let userId=''
+      let courses: NsContent.IContent[]
+      let contentNew: any[] = []
+      let tabResults: any[] = []
+      if (this.configSvc.userProfile) {
+        userId = this.configSvc.userProfile.userId
+      }
+      this.userSvc.fetchCbpPlanList(userId).subscribe((res:any)=> {
+        if (res && res.count) {
+          res.content.forEach((c: any) => {
+            c.contentList.forEach((childData: any)=> {
+              childData['endDate'] = c.endDate
+              childData['parentId'] = c.id
+              childData['planType'] = 'cbPlan'
+              contentNew.push(childData)
+            })
+            // contentNew = [...contentNew,...c.contentList]
+          })
+        }
+        console.log(contentNew)
+        courses = contentNew
+        console.log(res,'res')
+        if (strip.tabs && strip.tabs.length) {
+          tabResults = this.splitCbpTabsData(courses, strip)
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(courses, strip),
+            'done',
+            calculateParentStatus,
+            '',
+            tabResults
+          )
+        } else {
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(courses, strip),
+            'done',
+            calculateParentStatus,
+            'viewMoreUrl',
+          )
+        }
+      },(_err: any)=> {
+        console.log(_err,'asdfghj')
+
+      })
+      console.log(strip,'asdfghj')
+    }
+  }
+  splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
+    debugger
+    const tabResults: any[] = []
+    const splitData = this.getTabsList(
+      contentNew,
+      (e: any) => e.completionStatus === 1 || e.completionPercentage < 100,
+      strip,
+    )
+    
+    if (strip.tabs && strip.tabs.length) {
+      for (let i = 0; i < strip.tabs.length; i += 1) {
+        if (strip.tabs[i]) {
+          tabResults.push(
+            {
+              ...strip.tabs[i],
+              fetchTabStatus: 'done',
+              ...(splitData.find(itmInner => {
+                if (strip.tabs && strip.tabs[i] && itmInner.value === strip.tabs[i].value) {
+                  return itmInner
+                }
+                return undefined
+              })),
+            }
+          )
+        }
+      }
+    }
+    return tabResults
+  }
+
+  getTabsList(array: NsContent.IContent[],
+    customFilter: any,
+    strip: NsContentStripWithTabs.IContentStripUnit) {
+    const upcoming: any[] = []
+    const overdue: any[] = []
+    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? upcoming : overdue).push(e))
+    return [
+    { value: 'all', widgets: this.transformContentsToWidgets([...upcoming,...overdue], strip) },
+    { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
+    { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
   }
 }
