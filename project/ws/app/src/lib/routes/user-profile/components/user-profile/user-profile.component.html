@@ -931,6 +931,20 @@
                     </mat-form-field>
                   </div>
 
+                  <div class="item1">
+                    <label for="pinCode1" class=" margin-remove-bottom form-label"
+                      i18n="Pin Code label|Label which explains the user to enter Pin Code">
+                      Office Pin Code
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="pinCode1" matInput #otherDetailsOfficePinCode type="text"
+                        formControlName="otherDetailsOfficePinCode" (keypress)="numericOnly($event)" i18n-placeholder
+                        placeholder="Enter Office Pin Code" maxlength="6" />
+                      <!-- <mat-error [hidden]="false" i18n="Pin Code  Error|Explains name is required">
+                        Pin Code is mandatory
+                      </mat-error> -->
+                    </mat-form-field>
+                  </div>
 
                   <div class="item1">
                     <label class="margin-remove-bottom form-label">Tags</label>
