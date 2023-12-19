@@ -8,6 +8,7 @@ const routes: Routes = [
     component: CompetencyPassbookComponent
   }
 ]
+
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
@@ -15,4 +16,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [],
 })
-export class CbpRoutingModule { }
+
+export class CompetencyPassbookRoutingModule { }
