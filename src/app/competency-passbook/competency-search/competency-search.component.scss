@@ -1,0 +1,26 @@
+@import '_ws-vars.scss';
+
+.search-div {
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    background: #fff;
+
+    .mat-icon {
+        padding: 8px;
+    }
+
+    .search-input {
+        padding: 8px 0px;
+        border: none;
+        width: 100%;
+        font-family: $font-family-lato;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: none !important;
+        }
+    }
+}
