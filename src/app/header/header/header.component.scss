@@ -250,14 +250,14 @@ ws-app-nav-bar {
 }
 @media (min-width : 414px) and (max-width : 414px){  
   .mobile-download-app-desc {
-    margin-left:8px;
-    width:47%
+    margin-left: 8px;
+    width: 47%
   }
+
   .download-app-chip-top-header {
     border-radius: 64px;
     background: #F3962F;
     color: #fff;
-    // min-width: 129px;
     text-align: center;
     padding: 6px 10px;
     list-style: none;
@@ -265,9 +265,10 @@ ws-app-nav-bar {
 }
 @media (min-width : 390px) and (max-width : 390px){  
   .mobile-download-app-desc {
-    margin-left:8px;
-    width:45%
+    margin-left: 8px;
+    width: 36%
   }
+
   .download-app-chip-top-header {
     border-radius: 64px;
     background: #F3962F;
@@ -279,9 +280,10 @@ ws-app-nav-bar {
 }
 @media (min-width : 768px) and (max-width : 768px){  
   .mobile-download-app-desc {
-    margin-left:8px;
-    width:71%
+    margin-left: 8px;
+    width: 60%
   }
+  
   .download-app-chip-top-header {
     border-radius: 64px;
     background: #F3962F;
