@@ -15,6 +15,7 @@ export class ProfileCardStatsComponent implements OnInit {
   @Input() insightsData: any
   @Input() nudgeData: any
   @Input() profileData: any
+  @Input() isMobile: any =false
 
   @Output() expandCollapse = new EventEmitter<any>()
   @Output() activity = new EventEmitter<any>()

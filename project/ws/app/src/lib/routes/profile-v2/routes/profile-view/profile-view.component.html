@@ -205,7 +205,7 @@
             <p class="margin-top-s tab-heading">Your stats</p>
             <div class="margin-bottom-m margin-top-m">
               <div class="profile-section">
-                <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [profileData]="pageData.profileCard" [isLoading]="false"></ws-widget-profile-card-stats>
+                <ws-widget-profile-card-stats [isMobile]="true" (expandCollapse)="expandCollapse($event)" [insightsData]="insightsData" [profileData]="pageData.profileCard" [isLoading]="insightsDataLoading"></ws-widget-profile-card-stats>
               </div>
             </div>
             <div class="margin-bottom-m">
@@ -222,13 +222,13 @@
               <ws-widget-discussions [discussion]="discussion" [count]="2"></ws-widget-discussions>
             </div>
 
-            <div class="margin-bottom-m mt-4">
+            <!-- <div class="margin-bottom-m mt-4">
               <ws-widget-update-posts [isMobile]="true" [updatesPosts]="updatesPosts"></ws-widget-update-posts>
-            </div>
+            </div> -->
 
-            <div class="margin-bottom-m mt-4 discussion-card">
+            <!-- <div class="margin-bottom-m mt-4 discussion-card">
               <ws-widget-recent-requests [recentRequests]="recentRequests" (updateRequest)="handleUpdateRequest($event)"></ws-widget-recent-requests>
-            </div>
+            </div> -->
             <div class="mt-4 mb-4">
               <ws-widget-pending-request [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
             </div>

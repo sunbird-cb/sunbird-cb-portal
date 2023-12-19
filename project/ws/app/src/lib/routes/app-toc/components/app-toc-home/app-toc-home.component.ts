@@ -653,6 +653,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                   this.content.name,
                 )
                 this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
+                /* tslint:disable-next-line */
+                console.log(this.resumeDataLink,'=====> home resum data link <========')
               }
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
@@ -1233,6 +1235,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory,
         this.getBatchId(),
       )
+
+      /* tslint:disable-next-line */
+      console.log(this.firstResourceLink,'=====> home first data link <========')
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
         this.updateProgress(2, firstPlayableContent.identifier)
       }
