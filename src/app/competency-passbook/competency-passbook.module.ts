@@ -6,13 +6,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { CompetencyPassbookRoutingModule } from './competency-passbook-routing.module';
+
 import { CompetencyPassbookComponent } from './competency-passbook/competency-passbook.component';
+import { CompetencyListComponent } from './competency-list/competency-list.component';
+import { CompetencyCardDetailsComponent } from './competency-card-details/competency-card-details.component';
 import { CompetencyPassbookSideBarComponent } from './../component/competency-passbook-side-bar/competency-passbook-side-bar.component';
 import { CompetencySearchComponent } from './competency-search/competency-search.component';
-import { CompetencyCardDetailsComponent } from './competency-card-details/competency-card-details.component';
 
 @NgModule({
-  declarations: [CompetencyPassbookComponent, CompetencyPassbookSideBarComponent, CompetencySearchComponent, CompetencyCardDetailsComponent],
+  declarations: [CompetencyPassbookComponent, CompetencyPassbookSideBarComponent, CompetencySearchComponent, CompetencyListComponent, CompetencyCardDetailsComponent],
   imports: [
     CommonModule,
     RouterModule,
