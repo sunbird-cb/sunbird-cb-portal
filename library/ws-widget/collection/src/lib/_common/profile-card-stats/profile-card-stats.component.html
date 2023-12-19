@@ -28,9 +28,7 @@
     <hr class="divider">
     <div class="profile-user-stats">
         <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
-        <div class="user-insights hidden md:block" *ngIf="insightsData.sliderData">
-            <ws-widget-sliders-dynamic [widgetData]="insightsData.sliderData"></ws-widget-sliders-dynamic>
-        </div>
+        
         <div class="user-insights block md:hidden" *ngIf="insightsData.sliderData">
 
         <hr class="divider margin-remove-top">
@@ -100,4 +98,7 @@
       </ng-container>
     </ng-container>
   </div>
+  <div class="user-insights " *ngIf="insightsData?.sliderData" [ngClass]="{'hidden md:block': !isMobile}">
+    <ws-widget-sliders-dynamic [widgetData]="insightsData?.sliderData"></ws-widget-sliders-dynamic>
+</div>
 </ng-template>
