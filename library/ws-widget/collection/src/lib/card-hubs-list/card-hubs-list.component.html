@@ -36,7 +36,7 @@
         </ng-container>
       </div>
 
-      <div class="mobile flex flex-col mobile-hub" *ngIf="visible" (clickOutside)="visible = false" [@enterAnimation]="visible">
+      <div class="mobile flex flex-col mobile-hub" *ngIf="visible" (wsWidgetClickOutside)="visible = false" [@enterAnimation]="visible">
         <div class="flex flex-1 margin-xs" *ngIf="inactiveHubList.length">
           <h4 class="mat-h4 nav_sub_heading">Hubs</h4>
         </div>

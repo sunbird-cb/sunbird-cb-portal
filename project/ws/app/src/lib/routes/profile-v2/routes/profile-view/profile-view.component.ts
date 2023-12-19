@@ -385,31 +385,31 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   constructNudgeData() {
     this.insightsDataLoading = true
-    let nudgeData: any = {
-      type:'data',
+    const nudgeData: any = {
+      type: 'data',
       iconsDisplay: false,
-      cardClass:'slider-container',
-      height:'auto',
-      width:'',
+      cardClass: 'slider-container',
+      height: 'auto',
+      width: '',
       sliderData: [],
-      negativeDisplay:false,
-      "dot-default":"dot-grey",
-      "dot-active":"dot-active"
+      negativeDisplay: false,
+      'dot-default': 'dot-grey',
+      'dot-active': 'dot-active',
     }
-    let sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
-    this.insightsData.nudges.forEach((ele: any)=>{
-      if(ele) {
-        let data = {
-          "title": ele.label,
-          "icon": ele.growth === 'positive' ?  "arrow_upward" :"arrow_downward",
-          "data": `${ele.growth === 'positive' && ele.progress > 1?  '+' + Math.round(ele.progress)+'%': ""}`,
-          "colorData": ele.growth === 'positive' ? 'color-green' : 'color-red',
+    const sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
+    this.insightsData.nudges.forEach((ele: any) => {
+      if (ele) {
+        const data = {
+          title: ele.label,
+          icon: ele.growth === 'positive' ?  'arrow_upward' : 'arrow_downward',
+          data: ele.growth === 'positive' && ele.progress > 1 ? `+${Math.round(ele.progress)}%` : '',
+          colorData: ele.growth === 'positive' ? 'color-green' : 'color-red',
         }
         sliderData.push(data)
       }
     })
     nudgeData.sliderData = sliderData
-    this.insightsData['sliderData']= nudgeData
+    this.insightsData['sliderData'] = nudgeData
     this.insightsDataLoading = false
   }
 

@@ -1,31 +1,31 @@
-import { Directive, ElementRef, Output, EventEmitter, HostListener,OnInit } from "@angular/core";
-import { fromEvent } from "rxjs";
-import { take } from "rxjs/operators";
+import { Directive, ElementRef, Output, EventEmitter, HostListener, OnInit } from '@angular/core'
+import { fromEvent } from 'rxjs'
+import { take } from 'rxjs/operators'
 
 @Directive({
-  selector: "[clickOutside]"
+  selector: '[wsWidgetClickOutside]',
 })
 export class ClickOutsideDirective implements OnInit {
-  @Output() clickOutside = new EventEmitter();
+  @Output() wsWidgetClickOutside = new EventEmitter()
 
-  captured = false;
+  captured = false
 
   constructor(private elRef: ElementRef) {}
 
-  @HostListener("document:click", ["$event.target"])
+  @HostListener('document:click', ['$event.target'])
   onClick(target: any) {
     if (!this.captured) {
-      return;
+      return
     }
 
     if (!this.elRef.nativeElement.contains(target)) {
-      this.clickOutside.emit();
+      this.wsWidgetClickOutside.emit()
     }
   }
 
   ngOnInit() {
-    fromEvent(document, "click", { capture: true })
+    fromEvent(document, 'click', { capture: true })
       .pipe(take(1))
-      .subscribe(() => (this.captured = true));
+      .subscribe(() => (this.captured = true))
   }
 }

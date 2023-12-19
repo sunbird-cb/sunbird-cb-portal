@@ -151,7 +151,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${url})`)
   }
   resourceLink(resource: NsContent.IContent): { url: string; queryParams: { [key: string]: any } } {
-    let url = viewerRouteGenerator(resource.identifier, resource.mimeType)
+    const url = viewerRouteGenerator(resource.identifier, resource.mimeType)
     /* tslint:disable-next-line */
     console.log(url,'=====> toc content resource url link <========')
     return url
