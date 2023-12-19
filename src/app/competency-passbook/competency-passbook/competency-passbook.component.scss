@@ -1,11 +1,16 @@
+@import '_ws-vars.scss';
+
 $text-primary: #1B4CA1;
+
+.text-primary {
+    color: $text-primary;
+}
 
 .passbook-container {
     display: flex;
     flex-direction: row;
     max-width: 1200px;
-    margin: auto;
-    margin-top: 32px;
+    margin: 32px auto;
 }
 
 .left-container, .right-container {
@@ -30,43 +35,86 @@ $text-primary: #1B4CA1;
     }
 }
 
+.cp-container {
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #1B4CA1;
+    color: #fff;
+}
+
 .competency-passbook-theme {
     width: 100%;
     max-width: 384px;
-    // max-height: 208px;
-    border-radius: 12px;
+    height: 16px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     background-color: rgb(248, 184, 97);
-    position: relative;
-
-    .detail {
-        width: inherit;
-        height: inherit; 
-        max-width: 384px;
-        min-height: inherit;
-        background-color: rgb(255, 255, 255);
-        top: 10px;
-        border-radius: 12px;
-        position: absolute;
-
-        .chip {
-            border: 1px solid $text-primary;
-            color: $text-primary;
-        }
-    }
 }
 
+.detail {
+    width: 100%;
+    max-width: 384px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 12px;
+    position: relative;
+    top: -8px;
+
+    .chip {
+        border: 1px solid $text-primary;
+        color: $text-primary;
+    }
+}
 
 .competency-passbook-category {
     width: 100%;
     max-width: 352px;
     background-color: rgb(23, 64, 135);
     border-radius: 12px;
-    color: $text-primary;
-    padding: 16px;
+    color: #fff;
 
     .separator {
         height: 1px;
         background-color: rgba(255, 255, 255, 0.08);
         margin: 16px 0;
+    }
+}
+
+.search-div {
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    background: #fff;
+
+    .mat-icon {
+        padding: 8px;
+    }
+
+    .search-input {
+        padding: 8px 0px;
+        border: none;
+        width: 100%;
+        font-family: $font-family-lato;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: none !important;
+        }
+    }
+}
+
+::ng-deep .mat-menu-panel {
+    min-width: 12em !important;
+    padding: 8px 0px !important;
+    border-radius: 12px;
+    margin-top: 4px;
+
+    .mat-menu-content {
+        padding-top: 0px !important;
+
+        button {
+            padding: 0 16px !important;
+        }
     }
 }
