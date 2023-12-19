@@ -1206,6 +1206,8 @@ $title-line-count: 2;
     min-height: 40px;
   }
   .portrait_course_logo_box {
+    width: 24px;
+    height: 24px;
     // box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
     img {
       padding: 3px;
@@ -1314,6 +1316,27 @@ $title-line-count: 2;
     height: 10px;
     border-radius: 5px;
   }
+  .rating-session {
+    mat-icon {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+      color: $secondary-color;
+    }
+    .rating-number {
+      font-size: 14px;
+    }
+    .most-enrolled-text {
+      font-size: 10px;
+      font-weight: 400;
+    }
+    .most-enrolled-text {
+      padding: 4px;
+      background: #ffea9e;
+      border-radius: 4px;
+      line-height: 12px;
+    }
+  }
 }
 
 ::ng-deep .course-progress-bar {
@@ -1337,7 +1360,7 @@ $title-line-count: 2;
 .card-portrait-clickable {
   min-height: 112px !important;
   .right-corner-portrait {
-    right: 4px;
+    right: 8px;
     bottom: 16px;
   }
 }
