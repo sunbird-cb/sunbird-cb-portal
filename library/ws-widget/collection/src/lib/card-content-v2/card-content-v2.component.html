@@ -1419,68 +1419,86 @@
   [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
   role="link" i18n-aria-label>
     <mat-card class="card-portrait mr-2 card-portrait-clickable min-height-remove" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
-        <div class="flex">
-          <div class="margin-right-s position-relative">
-            <ng-container *ngIf="widgetData.content.posterImage">
-              <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy"
-              class="card-image ws-mat-primary-lite-background margin-remove" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+      <div class="course_widget portrait_widget flex  margin-bottom-xs">
+        <div class="flex flex-end flex-middle course_port">
+          <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
+          <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
+            class="ws-mat-black60-text font-normal mat-caption " [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
+            ?'Module'
+            :widgetData.content?.primaryCategory">
+          </ws-widget-display-content-type>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="margin-right-s position-relative">
+          <ng-container *ngIf="widgetData.content.posterImage">
+            <img mat-card-image [src]="widgetData.content.posterImage | pipePublicURL" loading="lazy"
+            class="card-image ws-mat-primary-lite-background margin-remove" [wsUtilsDefaultThumbnail]="defaultThumbnail"
+            [alt]="widgetData.content.name" />
+            <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.duration > 0">
+              <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+              <span class=" ws-mat-white-text duration"> 
+                {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}
+              </span>
+            </div>
+            <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.programDuration > 0">
+              <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+              <span class=" ws-mat-white-text duration"> 
+                {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
+              </span>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!widgetData.content.posterImage">
+            <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">
+              <img mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy"
+              class="card-image ws-mat-primary-lite-background margin-remove"  [wsUtilsDefaultThumbnail]="defaultThumbnail"
               [alt]="widgetData.content.name" />
-              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.duration > 0">
-                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
-                <span class=" ws-mat-white-text duration"> 
-                  {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}
-                </span>
-              </div>
-              <div class="duration-box right-corner-portrait" *ngIf="widgetData?.content?.programDuration > 0">
-                <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
-                <span class=" ws-mat-white-text duration"> 
-                  {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
-                </span>
-              </div>
             </ng-container>
-            <ng-container *ngIf="!widgetData.content.posterImage">
-              <ng-container *ngIf="widgetData.content.appIcon; else defaultImg">
-                <img mat-card-image [src]="widgetData.content.appIcon | pipePublicURL" loading="lazy"
-                class="card-image ws-mat-primary-lite-background margin-remove"  [wsUtilsDefaultThumbnail]="defaultThumbnail"
-                [alt]="widgetData.content.name" />
-              </ng-container>
-              <ng-template #defaultImg>
-                <img mat-card-image [src]="defaultThumbnail" loading="lazy"
-                class="card-image ws-mat-primary-lite-background margin-remove"
-                [alt]="widgetData.content.name" />
-              </ng-template>
-            </ng-container> 
+            <ng-template #defaultImg>
+              <img mat-card-image [src]="defaultThumbnail" loading="lazy"
+              class="card-image ws-mat-primary-lite-background margin-remove"
+              [alt]="widgetData.content.name" />
+            </ng-template>
+          </ng-container> 
+        </div>
+        <div class="width-1-1">
+          <div [id]="'m-c-'+ widgetData.content?.identifier"
+              class="portrait-subheading mat-subheading-2 title-text">
+              {{ widgetData.content.name }}
           </div>
-          <div class="width-1-1">
-            <div [id]="'m-c-'+ widgetData.content?.identifier"
-                class="portrait-subheading mat-subheading-2 title-text">
-                {{ widgetData.content.name }}
+          <div class="flex w-full  flex-middle">
+            <div class="portrait_course_logo_box margin-right-xs">
+              <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon"  loading="lazy" [wsUtilsDefaultThumbnail]="defaultSLogo"
+              [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
             </div>
-            <div class="flex w-full  flex-middle">
-              <div class="portrait_course_logo_box margin-right-xs">
-                <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon"  loading="lazy" [wsUtilsDefaultThumbnail]="defaultSLogo"
-                [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
-              </div>
-              <span class="portrait-org-name font-normal mat-caption">By {{ (widgetData.content.organisation && widgetData.content.organisation[0]) ? widgetData.content.organisation[0] : 'Karmayogi Bharat' }}</span>
+            <span class="portrait-org-name font-normal mat-caption">By {{ (widgetData.content.organisation && widgetData.content.organisation[0]) ? widgetData.content.organisation[0] : 'Karmayogi Bharat' }}</span>
+          </div>
+          <div class="flex flex-middle rating-session margin-top-xs">
+            <div class="flex flex-middle" *ngIf="widgetData?.content?.avgRating">
+              <mat-icon class="mr-1">star</mat-icon>
+              <span>{{widgetData.content.avgRating}}</span>
             </div>
-            <div class="course_widget portrait_widget flex  margin-bottom-xxs">
-              <div class="flex flex-end flex-middle course_port">
-                <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
-                <ws-widget-display-content-type i18n-title title="Content Type" *ngIf="widgetData.content?.primaryCategory"
-                  class="ws-mat-black60-text font-normal mat-caption " [displayContentType]="widgetData.content?.primaryCategory==='Course Unit'
-                  ?'Module'
-                  :widgetData.content?.primaryCategory">
-                </ws-widget-display-content-type>
-              </div>
-            </div>
+            <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostEnrolled')">
+              <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+            </ng-container>
+            <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
+              <span class="most-enrolled-text margin-left-xs">Most trending</span>
+            </ng-container>
           </div>
         </div>
+      </div>
     </mat-card>
   </a>
 </ng-template>
 
 <ng-template #cardPortraitClickSkeleton>
   <mat-card class="card-portrait mr-2 card-portrait-clickable" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
+
+    <div class="portrait_widget flex margin-bottom-xs">
+      <div class="flex flex-end flex-middle">
+        <ws-widget-skeleton-loader [width]="'65px'" [height]="'12px'"  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+      </div>
+    </div>
     <div class="flex">
       <div class="margin-right-s">
         <ng-container>
@@ -1495,9 +1513,9 @@
             <ws-widget-skeleton-loader [width]="'24px'" [height]="'24px'"  [bindingClass]="'flex rounded margin-right-xs'"></ws-widget-skeleton-loader>
             <ws-widget-skeleton-loader [width]="'100px'" [height]="'12px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </div>
-        <div class="portrait_widget flex margin-top-xs">
-          <div class="flex flex-end flex-middle">
-            <ws-widget-skeleton-loader [width]="'65px'" [height]="'12px'"  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+        <div class="flex flex-middle rating-session margin-top-xs">
+          <div class="flex flex-middle">
+            <ws-widget-skeleton-loader [width]="'45px'" [height]="'12px'" [bindingClass]="'flex rounded margin-top-m'"></ws-widget-skeleton-loader>
           </div>
         </div>
       </div>
