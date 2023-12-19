@@ -1180,6 +1180,9 @@ $title-line-count: 2;
   width: 350px;
   min-height: 154px;
   padding: 16px;
+  .img-block-portrait {
+    line-height: 10px;
+  }
   .card-image {
     border-radius: 8px;
     opacity: 1;
@@ -1337,6 +1340,10 @@ $title-line-count: 2;
       line-height: 12px;
     }
   }
+  .right-corner-portrait {
+    right: 8px;
+    bottom: 8px;
+  }
 }
 
 ::ng-deep .course-progress-bar {
@@ -1361,7 +1368,7 @@ $title-line-count: 2;
   min-height: 112px !important;
   .right-corner-portrait {
     right: 8px;
-    bottom: 16px;
+    bottom: 8px;
   }
 }
 

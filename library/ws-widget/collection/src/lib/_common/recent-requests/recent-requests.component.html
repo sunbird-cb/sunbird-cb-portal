@@ -38,34 +38,34 @@
     
             <ng-container *ngIf="recentRequests.data.length">
                 <div class="flex-1 h-full">
-                    <div class="flex flex-row gap-3 items-center pb-3 recent-div"
-                        *ngFor="let reqData of recentRequests.data | slice:0:3">
-                        <ws-widget-avatar-photo [name]="reqData?.fullName" [photoUrl]="''"
-                            size="round-m"></ws-widget-avatar-photo>
-                        <div class="flex-1 flex-col">
-                            <div class="mat-subheading-1">{{ reqData?.fullName }}</div>
-                            <div class="text-sm">{{ reqData?.departmentName }}</div>
+                    <ng-container *ngFor="let reqData of recentRequests.data | slice:0:3;let isLast=last">
+                        <div class="flex flex-row gap-3 items-center pb-3 pt-3" [ngClass]="{'recent-div': !isLast}">
+                            <ws-widget-avatar-photo [name]="reqData?.fullName" [photoUrl]="''"
+                                size="round-m"></ws-widget-avatar-photo>
+                            <div class="flex-1 flex-col">
+                                <div class="mat-subheading-1">{{ reqData?.fullName }}</div>
+                                <div class="text-sm">{{ reqData?.departmentName }}</div>
+                            </div>
+                            <div class="flex flex-row gap-2 justify-center items-center">
+                                <ng-container *ngIf="reqData.connecting">
+                                    <div class="flex justify-center items-center">
+                                        <mat-icon class="pending">cached</mat-icon>
+                                    </div>
+                                </ng-container>
+            
+                                <ng-container *ngIf="!reqData.connecting">
+                                    <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Rejected')">
+                                        <mat-icon class="cancel">cancel</mat-icon>
+                                    </div>
+                                    <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Approved')">
+                                        <mat-icon class="approve">check_circle</mat-icon>
+                                    </div>
+                                </ng-container>
+                            </div>
                         </div>
-                        <div class="flex flex-row gap-2 justify-center items-center">
-                            <ng-container *ngIf="reqData.connecting">
-                                <div class="flex justify-center items-center">
-                                    <mat-icon class="pending">cached</mat-icon>
-                                </div>
-                            </ng-container>
-        
-                            <ng-container *ngIf="!reqData.connecting">
-                                <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Rejected')">
-                                    <mat-icon class="cancel">cancel</mat-icon>
-                                </div>
-                                <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Approved')">
-                                    <mat-icon class="approve">check_circle</mat-icon>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </div>
+                    </ng-container>
                 </div>
-    
-                <div class="flex justify-center items-center">
+                <div class="flex justify-center items-center" *ngIf="recentRequests?.data?.length > 3">
                     <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer"
                         [routerLink]="['/app/network-v2/home']" [queryParams]="{page: 'people_connection_request'}">
                         <div>Show all</div>
