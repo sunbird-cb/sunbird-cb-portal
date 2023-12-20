@@ -193,7 +193,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   }
   checkCondition(wData: NsContentStripWithTabs.IContentStripMultiple, data: IStripUnitContentData) {
-    if(wData.strips[0].stripConfig && wData.strips[0].stripConfig.hideShowAll) {
+    if (wData.strips[0].stripConfig && wData.strips[0].stripConfig.hideShowAll) {
       return !wData.strips[0].stripConfig.hideShowAll
     }
     return wData.strips[0].viewMoreUrl && data.widgets && data.widgets.length >= 4
@@ -264,7 +264,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     if (this.configSvc.userProfile) {
       userData = this.configSvc.userProfile
     }
-    
+
     if (filters && filters.hasOwnProperty('batches.endDate')) {
       // tslint:disable-next-line
       filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
