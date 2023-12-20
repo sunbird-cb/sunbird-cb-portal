@@ -46,13 +46,23 @@ export class NetworkHomeComponent implements OnInit {
         return a.personalDetails.firstname.toLowerCase().localeCompare(b.personalDetails.firstname.toLowerCase())
       })
     }
-    this.establishedConnections = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    if (this.route.snapshot.data.myConnectionList 
+      && this.route.snapshot.data.myConnectionList.data
+      && this.route.snapshot.data.myConnectionList.data.result
+      && this.route.snapshot.data.myConnectionList.data.result.data) {
+        this.establishedConnections = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
+          if (v && v.personalDetails && v.personalDetails.firstname) {
+            v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+          }
+          return v
+        })
       }
-      return v
-    })
-    this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
+      if (this.route.snapshot.data.connectionRequests 
+        && this.route.snapshot.data.connectionRequests.data
+        && this.route.snapshot.data.connectionRequests.data.result
+        && this.route.snapshot.data.connectionRequests.data.result.data) {
+          this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
+        }
     this.getAllConnectionRequests()
   }
 

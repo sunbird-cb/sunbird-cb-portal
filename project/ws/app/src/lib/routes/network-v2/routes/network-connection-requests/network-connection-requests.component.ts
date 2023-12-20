@@ -24,14 +24,19 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     private networkV2Service: NetworkV2Service,
     private eventSvc: EventService,
   ) {
-    this.datalist = this.route.snapshot.data.connectionRequests.data.result.data
-    this.data = this.route.snapshot.data.connectionRequests.data.result.data
-    this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    if(this.route.snapshot.data.connectionRequests 
+      && this.route.snapshot.data.connectionRequests.data
+      && this.route.snapshot.data.connectionRequests.data.result
+      && this.route.snapshot.data.connectionRequests.data.result.data) {
+        this.datalist = this.route.snapshot.data.connectionRequests.data.result.data
+        this.data = this.route.snapshot.data.connectionRequests.data.result.data
+        this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
+          if (v && v.personalDetails && v.personalDetails.firstname) {
+            v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+          }
+          return v
+        })
       }
-      return v
-    })
    }
 
   ngOnInit() {
