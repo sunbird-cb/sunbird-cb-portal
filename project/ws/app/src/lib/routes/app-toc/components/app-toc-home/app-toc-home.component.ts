@@ -623,7 +623,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
             // this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
-            if (this.content && this.content.cumulativeTracking) {
+            if (this.contentReadData && this.contentReadData.cumulativeTracking) {
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
               this.tocSvc.resumeData.subscribe((res: any) => {
                 this.resumeData = res
@@ -827,7 +827,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           userId,
           programId: this.content.identifier,
           // as of now cureted program only one batch is coming need to check and modify
-          batchId: this.contentReadData && this.contentReadData.batches[0].batchId, 
+          batchId: this.contentReadData && this.contentReadData.batches[0].batchId,
         },
       }
       this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(

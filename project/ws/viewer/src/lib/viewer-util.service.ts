@@ -159,8 +159,10 @@ export class ViewerUtilService {
       batchId,
     }
     const tempContentData = this.contentSvc.currentMetaData
+    const tempContentReadData = this.contentSvc.currentContentReadMetaData
     const enrollmentList = this.contentSvc.currentBatchEnrollmentList
-    if (tempContentData && tempContentData.cumulativeTracking && (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
+    if (tempContentData && tempContentReadData.cumulativeTracking &&
+       (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
       tempContentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
       tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM)
       ) {

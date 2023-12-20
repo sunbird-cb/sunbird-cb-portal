@@ -360,7 +360,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         // queryparam.request.filters.contentType = this.contentType
       // }
 
-      if(isModeratedFilterChecked) {
+      if (isModeratedFilterChecked) {
         this.primaryCategoryType.push('Course')
         queryparam.request.filters.primaryCategory = this.primaryCategoryType
       } else if (queryparam.request.filters.primaryCategory.length === 0 && !isModeratedFilterChecked) {
@@ -369,7 +369,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         this.primaryCategoryType.push('Standalone Assessment')
         queryparam.request.filters.primaryCategory = this.primaryCategoryType
       }
-  
+
       if (this.param && this.param !== 'moderatedCourses') {
         queryparam.request.query = this.param
       } else {

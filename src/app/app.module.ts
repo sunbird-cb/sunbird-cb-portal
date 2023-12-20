@@ -86,6 +86,7 @@ import { AppTourVideoComponent } from './component/app-tour-video/app-tour-video
 import { AppChatbotModule } from './component/app-chatbot/app-chatbot.module'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
+import { AppContentResolverService } from './services/app-content-read-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -219,6 +220,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PipeContentRoutePipe,
     AppTocResolverService,
     AppHierarchyResolverService,
+    AppContentResolverService,
     AppEnrollmentResolverService,
     {
       provide: APP_BASE_HREF,
