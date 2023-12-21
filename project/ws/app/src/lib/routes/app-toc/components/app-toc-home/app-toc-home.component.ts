@@ -628,7 +628,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
             // this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
-            if (this.content && this.content.cumulativeTracking) {
+            if (this.contentReadData && this.contentReadData.cumulativeTracking) {
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
               this.tocSvc.resumeData.subscribe((res: any) => {
                 this.resumeData = res
@@ -656,6 +656,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                   this.content.name,
                 )
                 this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
+                /* tslint:disable-next-line */
+                console.log(this.resumeDataLink,'=====> home resum data link <========')
               }
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
@@ -1236,6 +1238,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory,
         this.getBatchId(),
       )
+
+      /* tslint:disable-next-line */
+      console.log(this.firstResourceLink,'=====> home first data link <========')
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
         this.updateProgress(2, firstPlayableContent.identifier)
       }

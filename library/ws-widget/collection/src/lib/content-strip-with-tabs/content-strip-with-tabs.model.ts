@@ -40,6 +40,7 @@ export namespace NsContentStripWithTabs {
       search?: NSSearch.ISearchRequest
       searchV6?: NSSearch.ISearchV6Request
       enrollmentList?: any
+      cbpList?: any
       searchRegionRecommendation?: NSSearch.ISearchOrgRegionRecommendationRequest
       api?: IStripRequestApi
       networkApi?: INetworkRequestApi
@@ -94,6 +95,7 @@ export namespace NsContentStripWithTabs {
     intranetMode?: 'greyOut' | 'hide'
     deletedMode?: 'greyOut' | 'hide'
     contentTags?: IContentTags
+    hideShowAll?: boolean
   }
 
   export interface IContentTags {

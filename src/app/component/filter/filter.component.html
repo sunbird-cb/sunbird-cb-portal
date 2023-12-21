@@ -1,9 +1,27 @@
-<div class="filter-overlay">
-    <div class="filter">
+<ng-container class="">
+    <div class="filter-overlay hidden md:block">
+        <div class="filter filter-md ">
+            <ng-container [ngTemplateOutlet]="filter"></ng-container>
+        </div>
+    </div>
+</ng-container>
+<!-- block md:hidden -->
+<div  class="block md:hidden">
+    <div>
+        <div class="filter">
+            <ng-container [ngTemplateOutlet]="filter"></ng-container>
+        </div>
+    </div>
+</div>
+
+<ng-template #filter>
+    <div class="filter-block">
         <div class="filter-header flex flex-1">
             <div class="flex flex-2 flex-row">
                 <div class="label">Filters</div>
-                <div class="cross-filter cursor-pointer" (click)="hideFilter()"><img src="assets/icons/close.svg"></div>
+                <div class="cross-filter cursor-pointer" (click)="hideFilter()">
+                    <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> close </mat-icon>
+                </div>
             </div>
         </div>
         <div class="filter-content-container">
@@ -157,14 +175,16 @@
                 </mat-accordion>
             </div>
         </div>
-        <div class="filter-footer flex flex-1">
-            <div class="flex flex-2 flex-row">
-                <div class="filter-clear" (click)="hideFilter()">
-                    Clear
-                </div>
-                <div class="filter-apply" (click)="hideFilter()">
-                    Apply
-                </div>
+        
+    </div>
+    <div class="filter-footer flex flex-1">
+        <div class="flex flex-2 flex-row">
+            <div class="filter-clear" (click)="hideFilter()">
+                Clear
+            </div>
+            <div class="filter-apply" (click)="hideFilter()">
+                Apply
             </div>
         </div>
     </div>
+</ng-template>

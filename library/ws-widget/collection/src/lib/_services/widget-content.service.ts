@@ -48,6 +48,7 @@ const API_END_POINTS = {
   CERT_ISSUE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/issue`,
   CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
   READ_KARMAPOINTS: `/apis/proxies/v8/karmapoints/read`,
+  CONTENT_READ: (contentId: any) => `/apis/proxies/v8/action/content/v3/read/${contentId}`,
 }
 
 @Injectable({
@@ -62,6 +63,7 @@ export class WidgetContentService {
 
   tocConfigData: any = null
   currentMetaData!: NsContent.IContent
+  currentContentReadMetaData!: NsContent.IContent
   currentBatchEnrollmentList!: NsContent.ICourse[]
 
   isResource(primaryCategory: string) {
@@ -397,4 +399,8 @@ export class WidgetContentService {
   getKarmaPoitns () {
     return this.http.post(API_END_POINTS.READ_KARMAPOINTS, {}).pipe(catchError(_err => of(true)))
   }
+  fetchProgramContent(contentId: string[]): Observable<NsContent.IContent[]> {
+    return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
+  }
+
 }

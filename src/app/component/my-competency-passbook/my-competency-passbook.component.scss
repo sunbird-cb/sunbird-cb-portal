@@ -1,0 +1,16 @@
+.comp-book {
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0, 0.04);
+    opacity: 1;
+    background-color: rgba(27,76,161, 0.08);
+    padding: 16px;
+    .title {
+        margin-bottom: 0;
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font: 700 14px/20px Lato-Bold;
+        font-style: normal;
+        letter-spacing: 0.5px;
+        text-align: left;
+    }
+}
