@@ -1,0 +1,55 @@
+<div class="flex flex-col gap-5 mobile-container">
+    <div class="flex flex-row">
+        <div class="flex-1">
+            <div class="flex flex-col gap-2 justify-center">
+                <div class="text-2xl font-semibold header text-primary">Self-Awareness</div>
+                <div class="text-sm">Issued on May 2023</div>
+            </div>
+        </div>
+        <div class="flex justify-center items-center"></div>
+    </div>
+
+    <div class="chips-container">
+        <div class="flex flex-col gap-3">
+            <div class="text-base font-semibold">Competency sub-theme (32)</div>
+            <div class="flex flex-wrap gap-3">
+                <div class="chip rounded-full p-2 text-xs">
+                    Self-Awareness
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Design
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Software design
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Relationship management
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Management
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Software design
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Relationship management
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Management
+                </div>
+                <div class="chip rounded-full p-2 text-xs">
+                    Self-Awareness
+                </div>
+                <div class="flex items-center text-primary underline cursor-pointer text-xs">
+                    View more
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-base font-semibold">Associated Certificates (5)</div>
+
+    <div class="flex flex-wrap gap-4">
+        <div class="certificate-card" *ngFor="let i of [1, 2, 3, 4, 5, 6]" ></div>
+    </div>
+</div>
