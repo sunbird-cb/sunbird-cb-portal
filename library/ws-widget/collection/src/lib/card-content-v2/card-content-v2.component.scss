@@ -1180,6 +1180,9 @@ $title-line-count: 2;
   width: 350px;
   min-height: 154px;
   padding: 16px;
+  .img-block-portrait {
+    line-height: 10px;
+  }
   .card-image {
     border-radius: 8px;
     opacity: 1;
@@ -1314,6 +1317,31 @@ $title-line-count: 2;
     height: 10px;
     border-radius: 5px;
   }
+  .rating-session {
+    mat-icon {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+      color: $secondary-color;
+    }
+    .rating-number {
+      font-size: 14px;
+    }
+    .most-enrolled-text {
+      font-size: 10px;
+      font-weight: 400;
+    }
+    .most-enrolled-text {
+      padding: 4px;
+      background: #ffea9e;
+      border-radius: 4px;
+      line-height: 12px;
+    }
+  }
+  .right-corner-portrait {
+    right: 8px;
+    bottom: 8px;
+  }
 }
 
 ::ng-deep .course-progress-bar {
@@ -1337,13 +1365,36 @@ $title-line-count: 2;
 .card-portrait-clickable {
   min-height: 112px !important;
   .right-corner-portrait {
-    right: 4px;
-    bottom: 16px;
+    right: 8px;
+    bottom: 8px;
   }
 }
 
 .card-portrait-clickable:hover {
   transform: scale(1.02);
+}
+.cbp-mark {
+  border-radius: 0px 0px 12px 0px;
+  opacity: 1;
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+  position: absolute;
+  top: 0;
+  padding: 8px;
+  padding-top: 4px;
+  span {
+    opacity: 1;
+    background-color: white;
+    padding: 4px;
+    opacity: 1;
+    color: rgba(27, 33, 51, 1);
+    font-family: "Lato-Regular";
+    font-size: 10px;
+    font-weight: 400;
+    font-style: Regular;
+    letter-spacing: 0.5px;
+    text-align: left;
+    line-height: 12px;
+  }
 }
 @media only screen and (max-width:768px) {
   .card-portrait {
@@ -1392,19 +1443,22 @@ $title-line-count: 2;
 .cbp-danger {
   border-radius: 2px;
   border: 1px solid rgba(0,0,0, 0.08);
-  background-color: #d13924;
+  background-color: #d13924 !important;
+  color: rgba(255,255,255,1) !important;
   opacity: 1;
   
 }
 .cbp-success {
   border-radius: 2px;
   border: 1px solid #1d8922;
-  background-color: #1d8922;
+  background-color: #1d8922 !important;
+  color: rgba(255,255,255,1) !important;
   opacity: 1;
 }
 .cbp-warning {
   border-radius: 2px;
   border: 1px solid #ef951e;
-  background-color: #ef951e;
+  background-color: #ef951e !important;
+  color: rgba(255,255,255,1) !important;
   opacity: 1;
 }

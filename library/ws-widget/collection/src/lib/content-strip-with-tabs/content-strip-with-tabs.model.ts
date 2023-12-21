@@ -95,6 +95,7 @@ export namespace NsContentStripWithTabs {
     intranetMode?: 'greyOut' | 'hide'
     deletedMode?: 'greyOut' | 'hide'
     contentTags?: IContentTags
+    hideShowAll?: boolean
   }
 
   export interface IContentTags {

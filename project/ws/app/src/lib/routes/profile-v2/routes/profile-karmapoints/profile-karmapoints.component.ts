@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils';
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'app-profile-karmapoints',
@@ -12,7 +12,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils';
 })
 export class ProfileKarmapointsComponent implements OnInit {
   currentUser: any
-  karmaPointsHistory :any = []
+  karmaPointsHistory: any = []
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -21,25 +21,25 @@ export class ProfileKarmapointsComponent implements OnInit {
     this.currentUser = this.configSvc && this.configSvc.userProfile
     this.karmaPointsHistory = [
       {
-        name: "Course Completed",
-        courseName: "Practise Test: Introduction to Angular",
-        date: "19 Dec 2021",
+        name: 'Course Completed',
+        courseName: 'Practise Test: Introduction to Angular',
+        date: '19 Dec 2021',
         points: 10,
-        bonus: 0
+        bonus: 0,
       },
       {
-        name: "Course Rating",
-        courseName: "Practise Test: Introduction to Angular",
-        date: "01 Apr 2001",
+        name: 'Course Rating',
+        courseName: 'Practise Test: Introduction to Angular',
+        date: '01 Apr 2001',
         points: 10,
-        bonus: 0
+        bonus: 0,
       },
       {
-        name: "Course Completed",
-        courseName: "Practise Test: Introduction to RxJS",
-        date: "21 Nov 2024",
+        name: 'Course Completed',
+        courseName: 'Practise Test: Introduction to RxJS',
+        date: '21 Nov 2024',
         points: 15,
-        bonus: 5
+        bonus: 5,
       },
     ]
   }

@@ -156,25 +156,25 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.portalProfile.karmapoints = [
       {
-        name: "Course Completed",
-        courseName: "Practise Test: Introduction to Angular",
-        date: "19 Dec 2021",
+        name: 'Course Completed',
+        courseName: 'Practise Test: Introduction to Angular',
+        date: '19 Dec 2021',
         points: 10,
-        bonus: 0
+        bonus: 0,
       },
       {
-        name: "Course Rating",
-        courseName: "Practise Test: Introduction to Angular",
-        date: "01 Apr 2001",
+        name: 'Course Rating',
+        courseName: 'Practise Test: Introduction to Angular',
+        date: '01 Apr 2001',
         points: 10,
-        bonus: 0
+        bonus: 0,
       },
       {
-        name: "Course Completed",
-        courseName: "Practise Test: Introduction to RxJS",
-        date: "21 Nov 2024",
+        name: 'Course Completed',
+        courseName: 'Practise Test: Introduction to RxJS',
+        date: '21 Nov 2024',
         points: 15,
-        bonus: 5
+        bonus: 5,
       },
     ]
     })
@@ -398,6 +398,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.homeSvc.getInsightsData(request).subscribe((res: any) => {
       if (res.result.response) {
         this.insightsData = res.result.response
+        this.constructNudgeData()
         if (this.insightsData && this.insightsData['weekly-claps']) {
           this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
         }
@@ -406,6 +407,35 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
    },                                               (_error: any) => {
       this.insightsDataLoading = false
    })
+  }
+  constructNudgeData() {
+    this.insightsDataLoading = true
+    const nudgeData: any = {
+      type: 'data',
+      iconsDisplay: false,
+      cardClass: 'slider-container',
+      height: 'auto',
+      width: '',
+      sliderData: [],
+      negativeDisplay: false,
+      'dot-default': 'dot-grey',
+      'dot-active': 'dot-active',
+    }
+    const sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
+    this.insightsData.nudges.forEach((ele: any) => {
+      if (ele) {
+        const data = {
+          title: ele.label,
+          icon: ele.growth === 'positive' ?  'arrow_upward' : 'arrow_downward',
+          data: ele.growth === 'positive' && ele.progress > 1 ? `+${Math.round(ele.progress)}%` : '',
+          colorData: ele.growth === 'positive' ? 'color-green' : 'color-red',
+        }
+        sliderData.push(data)
+      }
+    })
+    nudgeData.sliderData = sliderData
+    this.insightsData['sliderData'] = nudgeData
+    this.insightsDataLoading = false
   }
 
   getPendingRequestData() {
