@@ -955,6 +955,17 @@
                     </mat-chip-list>
                     <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available
                     </p>
+                  </div>
+
+                  <div class="item1 mt-3">
+                    <label class="margin-remove-bottom form-label">External System Id</label>
+                    <mat-chip-list #chipListexternalId *ngIf="externalSystemId">
+                      <mat-chip  [selectable]="true" [removable]="true">
+                        {{ externalSystemId }}
+                      </mat-chip>
+                    </mat-chip-list>
+                    <p *ngIf="!externalSystemId" class="margin-top-xs mat-body-2">No External System Id available
+                    </p>
                     <span class="mat-subheading-2 lock-heading">Once Your department will approve your request, System will unlock this
                       section.</span>
                   </div>
