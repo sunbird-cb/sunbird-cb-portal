@@ -24,6 +24,7 @@ import { SearchModule } from '@ws/app/src/public-api'
 import { SharedModule } from '../shared/shared.module';
 import { FontSettingComponent } from './../component/font-setting/font-setting.component';
 import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-right-nav-bar.component';
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
 @NgModule({
   declarations: [HeaderComponent, AppNavBarComponent, FontSettingComponent, TopRightNavBarComponent],
   imports: [
@@ -42,7 +43,8 @@ import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-ri
     RouterModule,
     GridLayoutModule,
     SharedModule,
-    MatTooltipModule
+    MatTooltipModule,
+    SkeletonLoaderModule
   ],
   exports: [
     HeaderComponent,

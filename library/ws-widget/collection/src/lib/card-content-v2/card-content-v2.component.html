@@ -714,6 +714,11 @@
               <img [src]="widgetData.content.creatorLogo" class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
                 [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
             </div>
+            <ng-container *ngIf="widgetData?.content?.cbPlanEndDate">
+              <div class="cbp-mark">
+                <span>{{widgetData?.content?.cbPlanEndDate | date: 'd MMM, y'}}</span>
+              </div>
+            </ng-container>
             <div class="duration-box right-corner" *ngIf="widgetData?.content?.duration > 0">
               <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
               <span class=" ws-mat-white-text duration"> 
