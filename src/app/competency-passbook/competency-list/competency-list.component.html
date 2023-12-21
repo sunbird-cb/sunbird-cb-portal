@@ -1,5 +1,5 @@
 <ng-template #competencyCard>
-    <div class="flex flex-wrap gap-6">
+    <div class="flex flex-wrap gap-6 mobile-gap">
         <div class="flex flex-col" *ngFor="let i of [1, 2, 3]">
             <div class="competency-passbook-theme"></div>
             <div class="detail flex flex-col">
@@ -72,6 +72,32 @@
                     <mat-icon class="info-icon">info</mat-icon>
                 </div>
             </div>
+
+            <div class="mobile-competency-card">
+                <div class="flex flex-row justify-between ">
+                    <div class="flex flex-col items-center kpi-card">
+                        <div class="text-base font-semibold">86</div>
+                        <div class="flex justify-center items-center">
+                            <div class="text-xs">Behavioral</div>
+                            <mat-icon>navigate_next</mat-icon>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center kpi-card">
+                        <div class="text-base font-semibold">86</div>
+                        <div class="flex">
+                            <div class="text-xs">Functional</div>
+                            <mat-icon>navigate_next</mat-icon>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center kpi-card">
+                        <div class="text-base font-semibold">86</div>
+                        <div class="flex">
+                            <div class="text-xs">Domain</div>
+                            <mat-icon>navigate_next</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
     
             <div class="competency-passbook-category" *ngFor="let i of [1, 2, 3]">
                 <div class="p-4">
@@ -135,6 +161,12 @@
                 </div>
             </mat-tab>
         </mat-tab-group>
-    
+    </div>
+
+    <div class="mobile-right-container">
+        <div class="flex flex-col gap-6 px-4">
+            <div class="text-base font-bold">Recently associated competencies</div>
+            <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+        </div>
     </div>
 </div>

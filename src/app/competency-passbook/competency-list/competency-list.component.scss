@@ -37,7 +37,36 @@ $text-primary: #1B4CA1;
             color: rgba(255, 255, 255, 0.4);
         }
     }
+}
 
+.mobile-competency-card {
+    display: none;
+    border-top: 1px solid rgba($color: #FFFFFF, $alpha: 0.16);
+    padding: 16px;
+
+    .kpi-card {
+        color: #fff;
+    }
+}
+
+
+@media screen and (max-width: 992px) {
+    .left-container {
+        .cp-container {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+    }
+
+    .competency-passbook-category {
+        display: none;
+    }
+
+    .mobile-competency-card {
+        display: block;
+    }
 }
 
 ::ng-deep .mat-menu-panel {
@@ -59,6 +88,11 @@ $text-primary: #1B4CA1;
 
 
 /************ Right Container CSS ***************/
+.mobile-right-container {
+    display: none;
+    margin-top: 24px;
+}
+
 .competency-passbook-theme {
     width: 100%;
     max-width: 384px;
@@ -111,5 +145,14 @@ $text-primary: #1B4CA1;
     .right-container {
         padding: 16px;
         flex-direction: column;
+        display: none;
+    }
+
+    .mobile-right-container {
+        display: block;
+    }
+
+    .mobile-gap {
+        gap: 16px
     }
 }
