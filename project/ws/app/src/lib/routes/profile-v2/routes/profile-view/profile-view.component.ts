@@ -373,6 +373,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.homeSvc.getInsightsData(request).subscribe((res: any) => {
       if (res.result.response) {
         this.insightsData = res.result.response
+        this.constructNudgeData()
         if (this.insightsData && this.insightsData['weekly-claps']) {
           this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
         }
@@ -381,6 +382,35 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
    },                                               (_error: any) => {
       this.insightsDataLoading = false
    })
+  }
+  constructNudgeData() {
+    this.insightsDataLoading = true
+    const nudgeData: any = {
+      type: 'data',
+      iconsDisplay: false,
+      cardClass: 'slider-container',
+      height: 'auto',
+      width: '',
+      sliderData: [],
+      negativeDisplay: false,
+      'dot-default': 'dot-grey',
+      'dot-active': 'dot-active',
+    }
+    const sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
+    this.insightsData.nudges.forEach((ele: any) => {
+      if (ele) {
+        const data = {
+          title: ele.label,
+          icon: ele.growth === 'positive' ?  'arrow_upward' : 'arrow_downward',
+          data: ele.growth === 'positive' && ele.progress > 1 ? `+${Math.round(ele.progress)}%` : '',
+          colorData: ele.growth === 'positive' ? 'color-green' : 'color-red',
+        }
+        sliderData.push(data)
+      }
+    })
+    nudgeData.sliderData = sliderData
+    this.insightsData['sliderData'] = nudgeData
+    this.insightsDataLoading = false
   }
 
   getPendingRequestData() {

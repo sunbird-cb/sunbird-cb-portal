@@ -1,3 +1,9 @@
+:host {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
 .recent-div {
     border-bottom: 1px solid rgba(0, 0, 0, 0.16);
 
@@ -22,6 +28,15 @@
         color: orange;
         animation: rotation infinite 2s linear;
     }
+}
+.approve {
+    color: #1D8923;
+    cursor: pointer;
+}
+
+.cancel {
+    color: rgba($color: #000000, $alpha: 0.4);
+    cursor: pointer;
 }
 
 @keyframes rotation {

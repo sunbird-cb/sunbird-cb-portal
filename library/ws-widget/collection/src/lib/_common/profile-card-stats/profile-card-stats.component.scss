@@ -109,11 +109,7 @@
         letter-spacing: 0.12px;
         line-height: 24px;
         cursor: pointer;
-        p {
-          white-space:nowrap;
-          overflow:hidden;
-          text-overflow:ellipsis;
-        }
+        
         mat-icon {
           cursor: pointer;
           float:right;
@@ -222,10 +218,13 @@
 }
 
 .text-ellipses {
-  white-space: nowrap;
+  word-break: break-all;
+  white-space: initial;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px; 
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 .activites {
   opacity: 1;
