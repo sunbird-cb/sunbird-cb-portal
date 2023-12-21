@@ -625,7 +625,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
             // this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
-            if (this.content && this.content.cumulativeTracking) {
+            if (this.contentReadData && this.contentReadData.cumulativeTracking) {
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
               this.tocSvc.resumeData.subscribe((res: any) => {
                 this.resumeData = res
