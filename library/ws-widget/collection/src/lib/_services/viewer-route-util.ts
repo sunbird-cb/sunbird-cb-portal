@@ -79,6 +79,8 @@ export function viewerRouteGenerator(
     collType = undefined
   }
   const url = `/viewer/${VIEWER_ROUTE_FROM_MIME(mimeType)}/${id}`
+  // tslint:disable-next-line
+  console.log(url,'========>Route from MIME TYPE<==========')
   let queryParams = {}
   if (primaryCategory) {
     queryParams = {

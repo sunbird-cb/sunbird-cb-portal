@@ -1,0 +1,28 @@
+.highlight-block {
+    border-radius: 12px;
+    opacity: 1;
+    background-color: rgba(27,76,161, 0.16);
+    padding: 16px;
+    border-color: rgba(27,76,161, 1);
+    border: 1px solid;
+    .title {
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font: 600 16px/24px Montserrat-SemiBold;
+        font-style: normal;
+        letter-spacing: 0.12px;
+        text-align: left;
+        margin-bottom: 0;
+    }
+    .description {
+        opacity: 1;
+        color: rgba(0,0,0,0.6);
+        font-family: "Lato-Regular";
+        font-size: 14px;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 20px;
+            }
+}

@@ -1,0 +1,30 @@
+
+.my-cbp {
+    opacity: 1;
+    background: white;
+    padding: 24px 16px;
+    border-radius: 12px;
+    .title {
+        margin-bottom: 0;
+    }
+    .divider {
+        width: 100%;
+        border: 1px solid rgba(0,0,0, 0.08);
+    }
+    .group-title {
+        opacity: 1;
+        color: rgba(0,0,0,0.6);
+        font: 400 12px/16px Lato-Regular;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+    }
+    .group-count {
+        opacity: 1;
+        color: rgba(27,76,161,1);
+        font: 700 14px/20px Lato-Bold;
+        font-style: normal;
+        text-align: left;
+        margin-bottom: 0;
+    }
+}
