@@ -21,6 +21,7 @@ import {
   MatProgressSpinnerModule,
   MatProgressBarModule,
   MatTabsModule,
+  MatTooltipModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -97,6 +98,7 @@ import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profil
     DiscussionsModule,
     RecentRequestsModule,
     PendingRequestModule,
+    MatTooltipModule,
     // ShareModule
   ],
   entryComponents: [
