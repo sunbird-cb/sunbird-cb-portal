@@ -183,9 +183,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
         let profilePopUp = sessionStorage.getItem('hideUpdateProfilePopUp')
         if(profilePopUp !== null){
           this.isNudgeOpen = false
-        }else if (x && x.profileDetails && x.profileDetails.mandatoryFieldsExists) {
-          this.isNudgeOpen = false
+        }else if(x && x.profileDetails && x.profileDetails.personalDetails){
+          if (x.profileDetails.mandatoryFieldsExists || x.profileDetails.personalDetails.dob ||
+            x.profileDetails.personalDetails.gender || x.profileDetails.personalDetails.category || x.profileDetails.personalDetails.pincode) {
+            this.isNudgeOpen = false
+          }
         }
+          
         // if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
         //   this.isNudgeOpen = false
         // }

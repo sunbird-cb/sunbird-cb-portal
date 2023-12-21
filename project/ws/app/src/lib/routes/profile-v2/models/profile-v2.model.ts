@@ -33,7 +33,7 @@ export namespace NSProfileDataV2 {
     result: any
     userName: any
     profileDetails: any
-    karmapoints? : IKarmapoints[]
+    karmapoints?: IKarmapoints[]
   }
 
   export interface IKarmapoints {
