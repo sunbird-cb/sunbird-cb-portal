@@ -29,6 +29,15 @@
         animation: rotation infinite 2s linear;
     }
 }
+.approve {
+    color: #1D8923;
+    cursor: pointer;
+}
+
+.cancel {
+    color: rgba($color: #000000, $alpha: 0.4);
+    cursor: pointer;
+}
 
 @keyframes rotation {
     from {

@@ -395,7 +395,7 @@ export class WidgetContentService {
     req.query = req.query || ''
     return this.http.post<NsContent.IContent>(API_END_POINTS.TRENDING_CONTENT_SEARCH, req)
   }
-  
+
   fetchProgramContent(contentId: string[]): Observable<NsContent.IContent[]> {
     return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
   }
