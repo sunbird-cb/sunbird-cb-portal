@@ -47,6 +47,7 @@ const API_END_POINTS = {
   CERT_ADD_TEMPLATE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/template/add`,
   CERT_ISSUE: `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/issue`,
   CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
+  READ_KARMAPOINTS: `/apis/proxies/v8/karmapoints/read`,
 }
 
 @Injectable({
@@ -60,7 +61,6 @@ export class WidgetContentService {
   }
 
   tocConfigData: any = null
-
   currentMetaData!: NsContent.IContent
   currentBatchEnrollmentList!: NsContent.ICourse[]
 
@@ -394,4 +394,7 @@ export class WidgetContentService {
     return this.http.post<NsContent.IContent>(API_END_POINTS.TRENDING_CONTENT_SEARCH, req)
   }
 
+  getKarmaPoitns () {
+    return this.http.post(API_END_POINTS.READ_KARMAPOINTS, {}).pipe(catchError(_err => of(true)))
+  }
 }
