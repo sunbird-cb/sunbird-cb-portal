@@ -193,6 +193,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   }
   checkCondition(wData: NsContentStripWithTabs.IContentStripMultiple, data: IStripUnitContentData) {
+    if (wData.strips[0].stripConfig && wData.strips[0].stripConfig.hideShowAll) {
+      return !wData.strips[0].stripConfig.hideShowAll
+    }
     return wData.strips[0].viewMoreUrl && data.widgets && data.widgets.length >= 4
   }
   checkVisible(data: IStripUnitContentData) {
@@ -257,13 +260,27 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   checkForDateFilters(filters: any) {
+    let userData: any
+    if (this.configSvc.userProfile) {
+      userData = this.configSvc.userProfile
+    }
+
     if (filters && filters.hasOwnProperty('batches.endDate')) {
       // tslint:disable-next-line
       filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
       // tslint:disable-next-line
       filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
+    } else if (filters.organisation &&
+      filters.organisation.indexOf('<orgID>') >= 0
+    ) {
+      filters['organisation'] = userData && userData.rootOrgId
+
+    if (filters && filters.hasOwnProperty('designation')) {
+      filters['designation'] = userData.professionalDetails.length > 0 ?
+       userData.professionalDetails[0].designation : ''
     }
+  }
     return filters
   }
 
