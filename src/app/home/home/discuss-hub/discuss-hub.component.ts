@@ -73,6 +73,11 @@ export class DiscussHubComponent implements OnInit {
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
           return y.timestamp - x.timestamp;
         });
+        this.updatesPosts.data = res && res.latestPosts && res.latestPosts.filter((x: any) => {
+          if(x.upvotes > 0 || x.downvotes > 0){
+            return x
+          }
+        });
       },
       (error: HttpErrorResponse) => {
         if(!error.ok) {
