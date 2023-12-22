@@ -21,6 +21,32 @@ $text-primary: #1B4CA1;
 .displayNone {
     display: none;
 }
+
+hr {
+    width: 100%;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
+}
+
+.error-div {
+    background-color: #FFF;
+    padding: 28px;
+    border-radius: 12px;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
+
+    .mat-subheading-1 {
+        margin-bottom: 0px;
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+        font-size: 28px;
+    }
+
+    .no-data {
+        color: red;
+    }
+}
 /************ Common CSS ***************/
 
 
@@ -150,6 +176,12 @@ $text-primary: #1B4CA1;
     }
 }
 /************ Right Container CSS ***************/
+
+@media screen and (max-width: 768px) {
+    .left-container {
+        max-width: 100%;
+    }
+}
 
 @media screen and (max-width: 992px) {
     .passbook-container {

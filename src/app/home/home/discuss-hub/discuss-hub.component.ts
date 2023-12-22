@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigurationsService } from '@sunbird-cb/utils';
 import { HomePageService } from 'src/app/services/home-page.service';
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
-import {  Router } from '@angular/router'
+import { Router } from '@angular/router'
 @Component({
   selector: 'ws-discuss-hub',
   templateUrl: './discuss-hub.component.html',

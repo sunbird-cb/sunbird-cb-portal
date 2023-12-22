@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-// import { Subject } from 'rxjs';
-
-import { CompetencyPassbookService } from '../competency-passbook.service';
 import { MatTabChangeEvent } from '@angular/material';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { CompetencyPassbookService } from './../competency-passbook.service';
 
 @Component({
   selector: 'ws-competency-list',
@@ -11,10 +13,13 @@ import { MatTabChangeEvent } from '@angular/material';
   styleUrls: ['./competency-list.component.scss']
 })
 
-export class CompetencyListComponent implements OnInit {
+export class CompetencyListComponent implements OnInit, OnDestroy {
 
+  private destroySubject$ = new Subject();
   competencyArray: any;
   competency: any = {
+    skeletonLoading: false,
+    error: false,
     all: <any>[],
     behavioral: <any>[],
     functional: <any>[],
@@ -39,6 +44,7 @@ export class CompetencyListComponent implements OnInit {
   }
 
   fetchCompetencyList(): void {
+    this.competency.skeletonLoading = true;
     const payload = {
       "search": {
         "type": "Competency Area"
@@ -48,35 +54,37 @@ export class CompetencyListComponent implements OnInit {
       }
     };
 
-    this.cpService.getCompetencyList(payload).subscribe(
-      (response: any) => {
-        response.result.competency.forEach((obj: any) => {
-          if (obj.name === 'Behavioral') {
-            this.competency.behavioral = this.bindMoreData(obj.children, obj.name.toLowerCase());
-            this.competency.all = [...this.competency.all, ...this.competency.behavioral]
-          } else if (obj.name === 'Functional') {
-            this.competency.functional = this.bindMoreData(obj.children, obj.name.toLowerCase());
-            this.competency.all = [...this.competency.all, ...this.competency.functional]
-          } else {
-            this.competency.domain = this.bindMoreData(obj.children, obj.name.toLowerCase());
-            this.competency.all = [...this.competency.all, ...this.competency.domain]
-          }          
-        });
-        this.competencyArray = this.competency.all;
-      }, (error: HttpErrorResponse) => {
-        if (!error.ok) {
-          alert('Some issue!');
+    this.cpService.getCompetencyList(payload)
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe(
+        (response: any) => {
+          response.result.competency.forEach((obj: any) => {
+            if (obj.name === 'Behavioral') {
+              this.competency.behavioral = this.bindMoreData(obj.children, obj.name.toLowerCase());
+              this.competency.all = [...this.competency.all, ...this.competency.behavioral]
+            } else if (obj.name === 'Functional') {
+              this.competency.functional = this.bindMoreData(obj.children, obj.name.toLowerCase());
+              this.competency.all = [...this.competency.all, ...this.competency.functional]
+            } else {
+              this.competency.domain = this.bindMoreData(obj.children, obj.name.toLowerCase());
+              this.competency.all = [...this.competency.all, ...this.competency.domain]
+            }          
+          });
+          this.competencyArray = this.competency.all;
+          this.competency.skeletonLoading = false;
+        }, (error: HttpErrorResponse) => {
+          if (!error.ok) {
+            this.competency.error = true;
+            this.competency.skeletonLoading = false;
+          }
         }
-      }
-    )
+      );
   }
 
 
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
     this.competencyArray = this.competency[param];
-    console.log('this.competencyArray - ', this.competencyArray);
-    
   }
 
   handleClick(param: string): void {
@@ -85,6 +93,10 @@ export class CompetencyListComponent implements OnInit {
 
   handleViewMore(obj: any, flag?: string): void {
     obj.viewMore = flag ? false : true;
+  }
+
+  ngOnDestroy(): void {
+    this.destroySubject$.unsubscribe();
   }
 
 }

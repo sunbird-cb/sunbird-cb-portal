@@ -32,9 +32,49 @@
             </div>
         </div>
     </div>
+    
+    <div class="flex-1 flex-col" *ngIf="competency.error">
+        <div class="flex flex-col gap-1 error-div justify-center items-center">
+            <mat-icon class="icon">report_off</mat-icon>
+            <div class="mat-subheading-1">No data found!</div>
+            <div class="text-center">Unable to fetch discussion info due to some error.</div>
+        </div>
+    </div>
+
+    <div class="flex-1 flex-col" *ngIf="!competency.error && !competency.all.length">
+        <div class="flex flex-col gap-1 error-div justify-center items-center">
+            <mat-icon class="icon no-data">warning</mat-icon>
+            <div class="mat-subheading-1">No competencies found!</div>
+            <div class="text-center">Unable to find competencies.</div>
+        </div>
+    </div>
 </ng-template>
 
-<div class="passbook-container gap-5">
+<ng-template #skeletonLoader>
+    <div class="flex-1 flex-col" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+        <div class="detail">
+            <div class="flex flex-col">
+                <div class="flex flex-row justify-between p-4">
+                    <div class="flex flex-col gap-2 justify-center ">
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded w-48'" [height]="'28px'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded w-24'" [height]="'16px'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex justify-center items-center">
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded-full'" [width]="'72px'" [height]="'72px'"></ws-widget-skeleton-loader>
+                    </div>
+                </div>
+                <hr />
+                <div class="flex gap-4 p-3">
+                    <ng-container *ngFor="let i of [1, 2, 3]">
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded-full'" [width]="'80px'" [height]="'48px'"></ws-widget-skeleton-loader>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div class="flex justify-center passbook-container gap-5">
     <div class="left-container">
         <div class="flex flex-col gap-4 cp-container">
             <div class="flex flex-row gap-3">
@@ -57,9 +97,14 @@
     
             <div class="flex flex-row gap-3 p-4">
                 <div class="flex-1">
-                    <div class="flex flex-col gap-2">
+                    <div class="flex flex-col gap-2" (click)="handleClick('all')">
                         <div class="text-base">My competencies</div>
-                        <div class="text-4xl font-semibold">365</div>
+                        <ng-container *ngIf="competency.skeletonLoading">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'60px'" [height]="'40px'"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="!competency.skeletonLoading">
+                            <div class="text-4xl font-semibold">{{ competency.all.length }}</div>
+                        </ng-container>
                     </div>
                 </div>
                 <div class="flex justify-center items-end">
@@ -70,21 +115,39 @@
             <div class="mobile-competency-card">
                 <div class="flex flex-row justify-between ">
                     <div class="flex flex-col items-center kpi-card">
-                        <div class="text-base font-semibold">{{ competency.behavioral.length }}</div>
+                        <ng-container *ngIf="competency.skeletonLoading">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                [height]="'28px'"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="!competency.skeletonLoading">
+                            <div class="text-base font-semibold">{{ competency.behavioral.length }}</div>
+                        </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick('behavioral')" >
                             <div class="text-xs">Behavioral</div>
                             <mat-icon>navigate_next</mat-icon>
                         </div>
                     </div>
                     <div class="flex flex-col items-center kpi-card">
-                        <div class="text-base font-semibold">{{ competency.functional.length }}</div>
+                        <ng-container *ngIf="competency.skeletonLoading">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                [height]="'28px'"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="!competency.skeletonLoading">
+                            <div class="text-base font-semibold">{{ competency.functional.length }}</div>
+                        </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick('functional')">
                             <div class="text-xs">Functional</div>
                             <mat-icon>navigate_next</mat-icon>
                         </div>
                     </div>
                     <div class="flex flex-col items-center kpi-card">
-                        <div class="text-base font-semibold">{{ competency.domain.length }}</div>
+                        <ng-container *ngIf="competency.skeletonLoading">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                [height]="'28px'"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="!competency.skeletonLoading">
+                            <div class="text-base font-semibold">{{ competency.domain.length }}</div>
+                        </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick('domain')">
                             <div class="text-xs">Domain</div>
                             <mat-icon>navigate_next</mat-icon>
@@ -93,12 +156,18 @@
                 </div>
             </div>
     
-            <div class="competency-passbook-category" *ngFor="let i of [1, 2, 3]">
+            <div class="competency-passbook-category" *ngFor="let elem of ['Behavioral', 'Functional', 'Domain']">
                 <div class="p-4">
                     <div class="flex flex-row">
                         <div class="flex flex-col">
-                            <div class="text-sm">Domain</div>
-                            <div class="text-xl font-semibold">93</div>
+                            <div class="text-sm">{{ elem }}</div>
+                            <ng-container *ngIf="competency.skeletonLoading">
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                    [height]="'28px'"></ws-widget-skeleton-loader>
+                            </ng-container>
+                            <ng-container *ngIf="!competency.skeletonLoading">
+                                <div class="text-xl font-semibold">{{ competency[elem]?.length || 141 }}</div>
+                            </ng-container>
                         </div>
                         <div>
                             <img src="" />
@@ -108,11 +177,23 @@
                     <div class="flex flex-row justify-between ">
                         <div class="flex flex-col">
                             <div class="text-xs">Competency Sub Theme</div>
-                            <div class="text-base font-semibold">93</div>
+                            <ng-container *ngIf="competency.skeletonLoading">
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                    [height]="'28px'"></ws-widget-skeleton-loader>
+                            </ng-container>
+                            <ng-container *ngIf="!competency.skeletonLoading">
+                                <div class="text-base font-semibold">93</div>
+                            </ng-container>
                         </div>
                         <div class="flex flex-col">
                             <div class="text-xs">Content Consumed</div>
-                            <div class="text-base font-semibold">93</div>
+                            <ng-container *ngIf="competency.skeletonLoading">
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                    [height]="'28px'"></ws-widget-skeleton-loader>
+                            </ng-container>
+                            <ng-container *ngIf="!competency.skeletonLoading">
+                                <div class="text-base font-semibold">93</div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
@@ -128,7 +209,12 @@
                         <ws-competency-search></ws-competency-search>
                     </div>
                     <div class="flex flex-wrap gap-6">
-                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                        <ng-container *ngIf="competency.skeletonLoading">
+                            <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="!competency.skeletonLoading">
+                            <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                        </ng-container>
                     </div>
                 </div>
             </mat-tab>
@@ -169,7 +255,12 @@
         <div class="flex flex-col gap-6 px-4">
             <div class="text-base font-bold">Recently associated competencies</div>
             <div class="flex flex-wrap gap-4">
-                <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                <ng-container *ngIf="competency.skeletonLoading">
+                    <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>
+                </ng-container>
+                <ng-container *ngIf="!competency.skeletonLoading">
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </ng-container>
             </div>
         </div>
     </div>
