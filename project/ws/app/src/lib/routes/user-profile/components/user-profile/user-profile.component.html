@@ -957,18 +957,21 @@
                     </p>
                   </div>
 
-                  <div class="item1 mt-3">
-                    <label class="margin-remove-bottom form-label">External System Id</label>
-                    <mat-chip-list #chipListexternalId *ngIf="externalSystemId">
-                      <mat-chip  [selectable]="true" [removable]="true">
-                        {{ externalSystemId }}
-                      </mat-chip>
-                    </mat-chip-list>
-                    <p *ngIf="!externalSystemId" class="margin-top-xs mat-body-2">No External System Id available
-                    </p>
+                  <div class="item1 mt-4">
+                    <label class="margin-remove-bottom form-label">External System -</label>
+                    <span *ngIf="externalSystemName"> {{ externalSystemName }}</span>
+                    <span *ngIf="!externalSystemName" class="margin-top-xs mat-body-2"> No external system available
+                    </span> 
+                  </div>
+
+                  <div class="item1 mt-2">
+                    <label class="margin-remove-bottom form-label">External Identifier -</label>
+                    <span *ngIf="externalSystemId"> {{ externalSystemId }}</span>
+                    <span *ngIf="!externalSystemId" class="margin-top-xs mat-body-2"> No external identifier available
+                    </span>
                     <span class="mat-subheading-2 lock-heading">Once Your department will approve your request, System will unlock this
                       section.</span>
-                  </div>
+                  </div>              
                 </div>
               </div>
               <!-- <div class="w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
