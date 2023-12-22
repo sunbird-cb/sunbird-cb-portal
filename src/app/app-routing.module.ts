@@ -36,6 +36,7 @@ import { AppPublicGroupResolverService } from './routes/public/public-signup/gro
 import { AppTourComponent } from './component/app-tour/app-tour.component'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
+import { AppContentResolverService } from './services/app-content-read-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
@@ -951,7 +952,8 @@ const routes: Routes = [
     },
     resolve: {
       hierarchyData: AppHierarchyResolverService,
-      enrollmentData: AppEnrollmentResolverService
+      enrollmentData: AppEnrollmentResolverService,
+      contentRead: AppContentResolverService
     },
     loadChildren: () => import('./routes/route-viewer.module').then(u => u.RouteViewerModule),
     canActivate: [GeneralGuard],

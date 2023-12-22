@@ -1,4 +1,4 @@
-<div class="home-container m-auto flex flex-row gap-6" [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
+<div class="main-container m-auto flex flex-row gap-6" [ngClass]="mobileTopHeaderVisibilityStatus ? 'main-container':'main-container-without-mobile-header'">
     <ng-container *ngIf="!cbpConfig?.insightOnRight?.active">
         <div class="bg-info" [ngClass]="
         cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'left' : 

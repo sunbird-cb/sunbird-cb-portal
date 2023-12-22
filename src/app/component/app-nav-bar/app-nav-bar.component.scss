@@ -41,6 +41,9 @@
   margin-bottom: auto;
   width: 324px;
   margin-right: 2rem;
+  img {
+    height: 36px;
+  }
 }
 
 
@@ -316,4 +319,34 @@
 
 .active-icon span {
   color: rgba(27, 76, 161);
+}
+.d-flex {
+  display: flex;
+}
+.points-block {
+  height: -webkit-fill-available;
+  .karma-lbl {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: "Lato-Bold";
+    font-size: 10px;
+    font-weight: 700;
+    font-style: Bold;
+    letter-spacing: 0.5px;
+    text-align: left;
+    line-height: 12px;
+    margin-bottom: 0;
+  }
+  .karma-point {
+    opacity: 1;
+    color: rgba(27, 76, 161, 1);
+    font-family: "Lato-Bold";
+    font-size: 14px;
+    font-weight: 700;
+    font-style: Bold;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
 }

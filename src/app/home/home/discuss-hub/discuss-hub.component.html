@@ -1,31 +1,26 @@
-<div class="flex items-center mt-5"></div>
-
-<div class="flex gap-6 updates-on-posts">
-    <div class="discussion-card flex-1" *ngIf="discussConfig?.updatePosts?.active">
-        <div class="p-5">
+<div class="flex gap-6 updates-on-posts" *ngIf="!updatesPosts?.error && !discussion?.error">
+    <div class="flex-1 p-4 discussion-card" *ngIf="discussConfig?.updatePosts?.active">
+        <div class="flex h-full">
             <ws-widget-update-posts [updateConfig]="discussConfig?.updatePosts" [updatesPosts]="updatesPosts" ></ws-widget-update-posts>
         </div>
     </div>
 
-    <div class="discussion-card flex-1" *ngIf="discussConfig?.trendingDiscussions?.active">
-        <div class="flex-1">
-            <div class="flex flex-col p-5 gap-4 trending-discussion">
-                <div class="flex flex-row gap-3 mat-subheading-1">
-                    <div class="flex flex-grow">Trending Discussions</div>
-                </div>
-
-                <ws-widget-discussions [discussion]="discussion" [count]="3" [trend]="true"></ws-widget-discussions>
+    <div class="discussion-card flex-1 p-4" *ngIf="discussConfig?.trendingDiscussions?.active">
+        <div class="flex flex-col h-full gap-4">
+            <div class="flex flex-row gap-3 mat-subheading-1">
+                <div class="flex flex-grow">Trending discussions</div>
             </div>
-        </div>
 
-        <div class="flex justify-center items-center p-4" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
-            <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" (click)="navigate()" >
-                <div>Show all</div>
-                <mat-icon>
-                    chevron_right
-                </mat-icon>
+            <ws-widget-discussions [discussion]="discussion" [count]="3" [trend]="true"></ws-widget-discussions>
+
+            <div class="flex justify-center items-center" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
+                <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" (click)="navigate()" >
+                    <div>Show all</div>
+                    <mat-icon>
+                        chevron_right
+                    </mat-icon>
+                </div>
             </div>
         </div>
     </div>
-
 </div>

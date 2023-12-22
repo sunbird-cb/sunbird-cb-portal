@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
+import dayjs from 'dayjs'
 
 interface IStripUnitContentData {
   key: string
@@ -193,6 +194,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   }
   checkCondition(wData: NsContentStripWithTabs.IContentStripMultiple, data: IStripUnitContentData) {
+    if (wData.strips[0].stripConfig && wData.strips[0].stripConfig.hideShowAll) {
+      return !wData.strips[0].stripConfig.hideShowAll
+    }
     return wData.strips[0].viewMoreUrl && data.widgets && data.widgets.length >= 4
   }
   checkVisible(data: IStripUnitContentData) {
@@ -257,13 +261,27 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   checkForDateFilters(filters: any) {
+    let userData: any
+    if (this.configSvc.userProfile) {
+      userData = this.configSvc.userProfile
+    }
+
     if (filters && filters.hasOwnProperty('batches.endDate')) {
       // tslint:disable-next-line
       filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
       // tslint:disable-next-line
       filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
+    } else if (filters.organisation &&
+      filters.organisation.indexOf('<orgID>') >= 0
+    ) {
+      filters['organisation'] = userData && userData.rootOrgId
+
+    if (filters && filters.hasOwnProperty('designation')) {
+      filters['designation'] = userData.professionalDetails.length > 0 ?
+       userData.professionalDetails[0].designation : ''
     }
+  }
     return filters
   }
 
@@ -277,6 +295,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromTrendingContent(strip, calculateParentStatus)
+    this.fetchAllCbpPlans(strip, calculateParentStatus)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -782,6 +801,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
+        (strip.request.cbpList && Object.keys(strip.request.cbpList).length) ||
         (strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length)
       )
     ) {
@@ -917,5 +937,111 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     console.log('calculateParentStatus-- ', calculateParentStatus)
     // TODO: Write logic for individual filter if passed in config
     // add switch case based on config key passed
+  }
+
+  fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
+
+      let courses: NsContent.IContent[]
+      const contentNew: any[] = []
+      let tabResults: any[] = []
+
+      const systemDate = dayjs().format('YYYY-MM-DD')
+      this.userSvc.fetchCbpPlanList().subscribe((res: any) => {
+        if (res && res.count) {
+          res.content.forEach((c: any) => {
+            c.contentList.forEach((childData: any) => {
+              childData['endDate'] = c.endDate
+              childData['parentId'] = c.id
+              childData['planType'] = 'cbPlan'
+              childData['planDuration'] = dayjs(c.endDate).isAfter(systemDate) ? 'overdue' : 'upcoming'
+              contentNew.push(childData)
+              const competencyArea: any = []
+              const competencyTheme: any = []
+              const competencyThemeType: any = []
+              const competencySubTheme: any = []
+              // childData.competencies_v5.forEach((element: any) => {
+              //   competencyArea.includes(element.competencyArea) ? '' : competencyArea.push(element.competencyArea)
+              //   competencyTheme.includes(element.competencyTheme) ? '' : competencyTheme.push(element.competencyTheme)
+              //   competencyThemeType.includes(element.competencyThemeType) ? '' : competencyThemeType.push(element.competencyThemeType)
+              //   competencySubTheme.includes(element.competencySubTheme) ? '' : competencySubTheme.push(element.competencySubTheme)
+              // })
+
+              childData['competencyArea'] = competencyArea
+              childData['competencyTheme'] = competencyTheme
+              childData['competencyThemeType'] = competencyThemeType
+              childData['competencySubTheme'] = competencySubTheme
+            })
+            // contentNew = [...contentNew,...c.contentList]
+          })
+        }
+        console.log(contentNew)
+        courses = contentNew
+        console.log(res, 'res')
+        if (strip.tabs && strip.tabs.length) {
+          tabResults = this.splitCbpTabsData(courses, strip)
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(courses, strip),
+            'done',
+            calculateParentStatus,
+            '',
+            tabResults
+          )
+        } else {
+          this.processStrip(
+            strip,
+            this.transformContentsToWidgets(courses, strip),
+            'done',
+            calculateParentStatus,
+            'viewMoreUrl',
+          )
+        }
+      },                                        (_err: any) => {
+        console.log(_err, 'asdfghj')
+
+      })
+      console.log(strip, 'asdfghj')
+    }
+  }
+  splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
+    const tabResults: any[] = []
+    const splitData = this.getTabsList(
+      contentNew,
+      (e: any) => e.completionStatus === 1 || e.completionPercentage < 100,
+      strip,
+    )
+
+    if (strip.tabs && strip.tabs.length) {
+      for (let i = 0; i < strip.tabs.length; i += 1) {
+        if (strip.tabs[i]) {
+          tabResults.push(
+            {
+              ...strip.tabs[i],
+              fetchTabStatus: 'done',
+              ...(splitData.find(itmInner => {
+                if (strip.tabs && strip.tabs[i] && itmInner.value === strip.tabs[i].value) {
+                  return itmInner
+                }
+                return undefined
+              })),
+            }
+          )
+        }
+      }
+    }
+    return tabResults
+  }
+
+  getTabsList(array: NsContent.IContent[],
+              customFilter: any,
+              strip: NsContentStripWithTabs.IContentStripUnit) {
+    const upcoming: any[] = []
+    const overdue: any[] = []
+    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? upcoming : overdue).push(e))
+    return [
+    { value: 'all', widgets: this.transformContentsToWidgets([...upcoming, ...overdue], strip) },
+    { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
+    { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
   }
 }
