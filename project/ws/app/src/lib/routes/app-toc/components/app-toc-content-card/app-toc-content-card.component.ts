@@ -94,7 +94,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
       )
       
       /* tslint:disable-next-line */
-      console.log(url,'=====> content card url link <========')
+      // console.log(url,'=====> content card url link <========')
       return url
     }
     return { url: '', queryParams: {} }
