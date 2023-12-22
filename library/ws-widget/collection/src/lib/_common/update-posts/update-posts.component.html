@@ -18,23 +18,25 @@
     </ng-container>
 
     <div class="flex-1 h-full gap-4" [ngClass]="{'flex flex-col justify-center': updatePosts?.error || !updatesPosts?.data?.length}" *ngIf="!updatesPosts.loadSkeleton">
-        <ng-container *ngIf="updatesPosts?.data?.length">
-            <ng-container *ngFor="let updates of updatesPosts?.data | slice:0:3">
-                <div class="flex flex-col discussion-card gap-2 p-4" *ngIf="updates?.upvotes || updates?.downvotes">
-                    <div class="ws-mat-default-text font-semibold">
-                        <span *ngIf="updates?.upvotes">
-                            {{ updates?.upvotes }} Upvote(s) on your posts
-                        </span>
-                        <span *ngIf="updates?.upvotes && updates?.downvotes">,&nbsp;</span>
-                        <span *ngIf="updates?.downvotes">
-                            {{ updates?.downvotes }} Downvote(s) on your posts
-                        </span>
+        <div class="flex flex-col gap-4">
+            <ng-container *ngIf="updatesPosts?.data?.length">
+                <ng-container *ngFor="let updates of updatesPosts?.data | slice:0:3">
+                    <div class="flex flex-col discussion-card gap-2 p-4" *ngIf="updates?.upvotes || updates?.downvotes">
+                        <div class="ws-mat-default-text font-semibold">
+                            <span *ngIf="updates?.upvotes">
+                                {{ updates?.upvotes }} Upvote(s) on your posts
+                            </span>
+                            <span *ngIf="updates?.upvotes && updates?.downvotes">,&nbsp;</span>
+                            <span *ngIf="updates?.downvotes">
+                                {{ updates?.downvotes }} Downvote(s) on your posts
+                            </span>
+                        </div>
+                        <div class="text-base">{{ updates?.topic?.title }}</div>
                     </div>
-                    <div class="text-base">{{ updates?.topic?.title }}</div>
-                </div>
+                </ng-container>
             </ng-container>
-        </ng-container>
-
+    
+        </div>
        
         
         <ng-container *ngIf="updatesPosts?.data &&  !updatesPosts?.data?.length">
