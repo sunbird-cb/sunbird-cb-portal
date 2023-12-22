@@ -24,7 +24,7 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     private networkV2Service: NetworkV2Service,
     private eventSvc: EventService,
   ) {
-    if(this.route.snapshot.data.connectionRequests 
+    if (this.route.snapshot.data.connectionRequests
       && this.route.snapshot.data.connectionRequests.data
       && this.route.snapshot.data.connectionRequests.data.result
       && this.route.snapshot.data.connectionRequests.data.result.data) {

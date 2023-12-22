@@ -31,10 +31,10 @@ export class NetworkMyConnectionComponent implements OnInit {
     //   }
     //   return v
     // })
-    if(this.route.snapshot.data.myConnectionList 
+    if (this.route.snapshot.data.myConnectionList
       && this.route.snapshot.data.myConnectionList.data
       && this.route.snapshot.data.myConnectionList.data.result
-      && this.route.snapshot.data.myConnectionList.data.result.data){
+      && this.route.snapshot.data.myConnectionList.data.result.data) {
       this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
     }
   }

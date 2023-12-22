@@ -46,7 +46,7 @@ export class NetworkHomeComponent implements OnInit {
         return this.getName(a.personalDetails).toLowerCase().localeCompare(this.getName(b.personalDetails).toLowerCase())
       })
     }
-    if (this.route.snapshot.data.myConnectionList 
+    if (this.route.snapshot.data.myConnectionList
       && this.route.snapshot.data.myConnectionList.data
       && this.route.snapshot.data.myConnectionList.data.result
       && this.route.snapshot.data.myConnectionList.data.result.data) {
@@ -57,7 +57,7 @@ export class NetworkHomeComponent implements OnInit {
           return v
         })
       }
-      if (this.route.snapshot.data.connectionRequests 
+      if (this.route.snapshot.data.connectionRequests
         && this.route.snapshot.data.connectionRequests.data
         && this.route.snapshot.data.connectionRequests.data.result
         && this.route.snapshot.data.connectionRequests.data.result.data) {
