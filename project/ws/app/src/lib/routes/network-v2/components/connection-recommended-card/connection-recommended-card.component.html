@@ -7,15 +7,16 @@
         </div>
         <div class="name-container flex flex-col width-expand">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link" (click)="goToUserProfile(user)">
-                <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname">
+                <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname;else firstNameCheck">
                     {{user?.personalDetails?.firstname}} 
                     <span class="profile-badge" *ngIf="user && user?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
                     </span>
                 </div>
-                
-                <div class="name  text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
-                    {{user?.personalDetails?.firstName}} {{user?.personalDetails?.middlename}}
-                </div>
+                <ng-template #firstNameCheck>
+                    <div class="name  text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
+                        {{user?.personalDetails?.firstName}} {{user?.personalDetails?.middlename}}
+                    </div>
+                </ng-template>
                 <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
                     {{user?.firstName}}
                 </div>

@@ -43,7 +43,7 @@ export class NetworkHomeComponent implements OnInit {
       this.recommendedUsers = this.route.snapshot.data.recommendedUsers.data.result.data.
       find((item: any) => item.field === 'employmentDetails.departmentName').results
       this.recommendedUsers.sort((a: any, b: any) => {
-        return a.personalDetails.firstname.toLowerCase().localeCompare(b.personalDetails.firstname.toLowerCase())
+        return this.getName(a.personalDetails).toLowerCase().localeCompare(this.getName(b.personalDetails).toLowerCase())
       })
     }
     if (this.route.snapshot.data.myConnectionList 
@@ -64,6 +64,10 @@ export class NetworkHomeComponent implements OnInit {
           this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
         }
     this.getAllConnectionRequests()
+  }
+
+  getName(userDetails: any) {
+    return userDetails.firstName ? userDetails.firstName : userDetails.firstname
   }
 
   ngOnInit() {

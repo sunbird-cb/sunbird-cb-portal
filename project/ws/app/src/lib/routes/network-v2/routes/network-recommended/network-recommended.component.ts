@@ -73,13 +73,17 @@ export class NetworkRecommendedComponent implements OnInit {
       this.data = data.result.data[0].results
       this.data.forEach((value: any) => {
         if (value.profileDetails && value.profileDetails.personalDetails) {
-          value.profileDetails.personalDetails.firstname = value.profileDetails.personalDetails.firstname.toLowerCase()
+          value.profileDetails.personalDetails.firstname = this.getName(value.profileDetails.personalDetails).toLowerCase()
 
         } else if (!value.profileDetails && value.personalDetails) {
-          value.personalDetails.firstname = value.personalDetails.firstname.toLowerCase()
+          value.personalDetails.firstname = this.getName(value.personalDetails).toLowerCase()
         }
        })
     })
+  }
+
+  getName(userDetails: any) {
+    return userDetails.firstName ? userDetails.firstName : userDetails.firstname
   }
 
   updateQuery(key: string) {

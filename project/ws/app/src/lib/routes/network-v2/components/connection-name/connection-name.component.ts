@@ -65,6 +65,14 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
         } else {
           name = `${this.hoverUser.personalDetails.firstname}`
         }
+      } else if (this.hoverUser.personalDetails.firstName) {
+        // tslint:disable-next-line:max-line-length
+        if (this.hoverUser.personalDetails.surname && this.hoverUser.personalDetails.surname !== null && this.hoverUser.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
+        } else {
+          name = `${this.hoverUser.personalDetails.firstName}`
+        }
       }
     }
     // if (this.hoverUser) {
