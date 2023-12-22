@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Observable, Subject } from 'rxjs'
+import { Observable } from 'rxjs'
 
 const API_POINTS = {
     COMPETENCY_LIST: `apis/proxies/v8/competency/v4/search`
