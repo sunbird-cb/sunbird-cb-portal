@@ -3,9 +3,6 @@
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
-    
-     
-    
     <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim  items-center hidden md:flex" role="link" title="Home"
@@ -169,7 +166,7 @@
 <ng-template #karmaBadge>
   <div class="flex flex-middle points-block">
     <img src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
-    <div class="margin-left-xs">
+    <div class="margin-left-xs cursor-pointer" (click)="viewKarmapoints()">
       <p class="karma-lbl">Karma Points</p>
       <p class="karma-point">
         <ng-container *ngIf="karmaPointLoading">

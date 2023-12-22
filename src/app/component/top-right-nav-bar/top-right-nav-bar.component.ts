@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { HomePageService } from '../../services/home-page.service';
-import { Router } from '@angular/router';
 const rightNavConfig = [
   {
     "id":1,
@@ -34,7 +33,7 @@ export class TopRightNavBarComponent implements OnInit {
   @Input() item:any;
   @Input() rightNavConfig:any;
   dialogRef:any;
-  constructor(public dialog: MatDialog,  public homePageService: HomePageService, private router: Router ) { }
+  constructor(public dialog: MatDialog,  public homePageService: HomePageService) { }
 
   ngOnInit() {
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
@@ -43,12 +42,10 @@ export class TopRightNavBarComponent implements OnInit {
       if(data) {
         this.dialogRef.close();
       }
-      
     })
   }
 
   ngOnChanges() {
-
   }
 
   openDialog(): void { 
@@ -58,10 +55,5 @@ export class TopRightNavBarComponent implements OnInit {
   
     this.dialogRef.afterClosed().subscribe(() => { 
     }); 
-  } 
-
-  viewKarmapoints() {
-    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
   }
- 
 }

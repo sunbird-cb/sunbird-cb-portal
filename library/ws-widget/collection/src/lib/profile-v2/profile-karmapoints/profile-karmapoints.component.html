@@ -8,25 +8,25 @@
         Show all &nbsp;&nbsp; >
       </a>
     </mat-card-content>
-    <ng-container *ngIf="widgetData.data.length > 0">
-      <ng-container *ngFor="let karmapoints of widgetData.data | orderBy:'date':'desc'">
+    <ng-container *ngIf="widgetData.data">
+      <ng-container *ngFor="let karmapoints of widgetData.data | keyvalue | orderBy:'date':'desc'">
         <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0">
           <div class="flex flex-1 mobile-margin">
             <div class="flex-1 mat-subheading-1">
-              <div class="margin-bottom-xs">{{karmapoints.name}}</div>
-              <div class="courseName margin-bottom-xs">{{karmapoints.courseName}}</div>
-              <div class="date-of-completed margin-bottom-xs">{{karmapoints.date}}</div>
+              <div class="margin-bottom-xs">{{karmapoints.value.context_type}} {{karmapoints.value.operation_type | lowercase}}</div>
+              <div class="courseName margin-bottom-xs">{{karmapoints.value.context_id}}</div>
+              <div class="date-of-completed margin-bottom-xs">{{karmapoints.value.credit_date}}</div>
             </div>
             <div class="mat-subheading-2">
               <img class="karmapoints-icon" alt="karma points" src="/assets/icons/karma-point-logo.jpg">
-              <span class="bonus-points">+{{karmapoints.points}}</span>
-              <div *ngIf="karmapoints.bonus > 0"><span class="bonus-badge">BONUS</span></div>
+              <span class="bonus-points">+ {{karmapoints.value.points}}</span>
+              <div *ngIf="karmapoints.value.bonus > 0"><span class="bonus-badge">BONUS</span></div>
             </div>
           </div>
         </mat-card>
       </ng-container>
     </ng-container>
-    <ng-container *ngIf="!(widgetData.data.length > 0)">
+    <ng-container *ngIf="!widgetData.data">
       <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card">
         <div class="flex flex-1 mobile-margin margin-f">
           <span class="mat-subtitle flex-1 mobile-margin"> No karma points information available </span>

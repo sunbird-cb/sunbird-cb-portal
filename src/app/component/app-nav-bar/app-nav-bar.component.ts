@@ -269,5 +269,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       clearInterval(this.enrollInterval)
     }
   }
- 
+
+  viewKarmapoints() {
+    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
+  }
 }
