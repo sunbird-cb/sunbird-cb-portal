@@ -27,8 +27,10 @@ export class NetworkRecommendedComponent implements OnInit {
     private eventSvc: EventService,
   ) {
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
-    if (this.route.snapshot.data.recommendedList.data && this.route.snapshot.data.recommendedList.data.result ) {
-      this.data = this.route.snapshot.data.recommendedList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
+    if (this.route.snapshot.data.recommendedList.data 
+      && this.route.snapshot.data.recommendedList.data.result) {
+      this.data = this.route.snapshot.data.recommendedList.data.result.data.map(
+        (v: NSNetworkDataV2.INetworkUser) => {
         if (v && v.personalDetails && v.personalDetails.firstname) {
           v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
         }
