@@ -7,7 +7,7 @@
     <div class="margin-bottom-m" class="collapsible" [@collapseWeekly]="collapsed">
         <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
     </div>
-    <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'padding-top-m':!collapsed}">
+    <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'padding-top-m':!collapsed}" *ngIf="!discussion?.error">
         <div class="flex flex-col discussion-card " >
             <div class="flex mat-subheading-1 p-4">
                 <div class="flex flex-row gap-1 mat-subheading-1 cursor-pointer feed-title" (click)="navigate()">
@@ -26,7 +26,7 @@
         <ws-widget-pending-request  [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
     </section>
     <div class="empty-div margin-bottom-xl" *ngIf="collapsed">
-        <div class="empty-div2 margin-bottom-m">
+        <div class="empty-div2 margin-bottom-m"  *ngIf="!discussion?.error">
 
         </div>
     </div>

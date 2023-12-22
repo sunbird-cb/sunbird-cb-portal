@@ -272,13 +272,16 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
       // tslint:disable-next-line
       filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
-    } else if (filters && filters.hasOwnProperty('organisation')) {
+    } else if (filters.organisation &&
+      filters.organisation.indexOf('<orgID>') >= 0
+    ) {
       filters['organisation'] = userData && userData.rootOrgId
-      if (filters && filters.hasOwnProperty('designation')) {
-        filters['designation'] = userData.professionalDetails.length > 0 ?
-         userData.professionalDetails[0].designation : ''
-      }
+
+    if (filters && filters.hasOwnProperty('designation')) {
+      filters['designation'] = userData.professionalDetails.length > 0 ?
+       userData.professionalDetails[0].designation : ''
     }
+  }
     return filters
   }
 
