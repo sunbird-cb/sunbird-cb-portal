@@ -151,6 +151,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   selectedBatchSubscription: any
   serverDateSubscription: any
   serverDate: any
+  enrollBtnLoading = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -582,6 +583,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getUserEnrollmentList() {
+    this.enrollBtnLoading = true
     this.userSvc.resetTime('enrollmentService')
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
@@ -656,8 +658,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 /* tslint:disable-next-line */
                 console.log(this.resumeDataLink,'=====> home resum data link <========')
               }
+              this.enrollBtnLoading = false
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
+              this.enrollBtnLoading = false
             }
             this.batchData = {
               content: [enrolledCourse.batch],
@@ -689,6 +693,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }  else {
               this.fetchBatchDetails()
             }
+            this.enrollBtnLoading = false
           }
         }
       },
@@ -813,6 +818,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public autoBatchAssign() {
+    this.enrollBtnLoading = true
     this.userSvc.resetTime('enrollmentService')
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
       this.autoEnrollCuratedProgram()
@@ -838,8 +844,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
         (data: NsContent.IBatchListResponse) => {
           if (data) {
-            this.getUserEnrollmentList()
+            setTimeout(() => {
+              this.getUserEnrollmentList()
+            },         2000)
           }
+        }, 
+        (_error: any) => {
+          this.enrollBtnLoading = false
         }
       )
     }
@@ -864,6 +875,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 queryParamsHandling: 'merge',
               })
           }
+          this.enrollBtnLoading = false
         }
       )
     }
