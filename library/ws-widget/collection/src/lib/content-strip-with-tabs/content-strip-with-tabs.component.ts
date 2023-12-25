@@ -960,12 +960,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               const competencyTheme: any = []
               const competencyThemeType: any = []
               const competencySubTheme: any = []
-              childData.competencies_v5.forEach((element: any) => {
-                competencyArea.includes(element.competencyArea) ? '' : competencyArea.push(element.competencyArea)
-                competencyTheme.includes(element.competencyTheme) ? '' : competencyTheme.push(element.competencyTheme)
-                competencyThemeType.includes(element.competencyThemeType) ? '' : competencyThemeType.push(element.competencyThemeType)
-                competencySubTheme.includes(element.competencySubTheme) ? '' : competencySubTheme.push(element.competencySubTheme)
-              })
+              // childData.competencies_v5.forEach((element: any) => {
+              //   competencyArea.includes(element.competencyArea) ? '' : competencyArea.push(element.competencyArea)
+              //   competencyTheme.includes(element.competencyTheme) ? '' : competencyTheme.push(element.competencyTheme)
+              //   competencyThemeType.includes(element.competencyThemeType) ? '' : competencyThemeType.push(element.competencyThemeType)
+              //   competencySubTheme.includes(element.competencySubTheme) ? '' : competencySubTheme.push(element.competencySubTheme)
+              // })
 
               childData['competencyArea'] = competencyArea
               childData['competencyTheme'] = competencyTheme
