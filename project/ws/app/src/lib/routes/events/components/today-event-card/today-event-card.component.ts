@@ -23,9 +23,11 @@ export class TodayEventCardComponent implements OnInit {
       if (moment(today).isBetween(eventDate, eventendDate)) {
         this.isRecording = false
         this.isLive = true
-        if (this.eventData.event.recordedLinks && this.eventData.event.recordedLinks.length > 0) {
-          this.isRecording = true
-          this.isLive = false
+        if (today >= eventendDate) {
+          if (this.eventData.event.recordedLinks && this.eventData.event.recordedLinks.length > 0) {
+            this.isRecording = true
+            this.isLive = false
+          }
         }
       }
     }
