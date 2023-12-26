@@ -86,6 +86,14 @@ export class ConnectionPeopleCardComponent implements OnInit {
         } else {
           name = `${this.user.personalDetails.firstname}`
         }
+      } else if (this.user.personalDetails.firstName) {
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstName} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstName}`
+        }
       }
     }
     return name
