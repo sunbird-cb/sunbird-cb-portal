@@ -20,15 +20,13 @@ export class TodayEventCardComponent implements OnInit {
       const eventendDate = this.customDateFormat(this.eventData.event.endDate, this.eventData.event.endTime)
       const now = new Date()
       const today = moment(now).format('YYYY-MM-DD HH:mm')
-
-      if (eventDate < today && eventendDate < today) {
+      if (moment(today).isBetween(eventDate, eventendDate)) {
+        this.isRecording = false
+        this.isLive = true
         if (this.eventData.event.recordedLinks && this.eventData.event.recordedLinks.length > 0) {
           this.isRecording = true
           this.isLive = false
         }
-        this.isLive = false
-      } else {
-        this.isLive = true
       }
     }
   }
