@@ -15,6 +15,9 @@
                             <div class="text-base">{{ obj.children.length }}</div>
                         </div>
                     </div>
+                    <div class="flex justify-center items-center">
+                        <img src="assets/icons/competency/{{obj.competencyName}}.png" alt="{{ obj.competencyName }} image" />
+                    </div>
                 </div>
                 <div class="flex flex-wrap gap-3 px-6 py-4 chip-container">
                     <ng-container *ngFor="let child of obj.children; let i = index">
@@ -120,10 +123,10 @@
                                 [height]="'28px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
-                            <div class="text-base font-semibold">{{ competency.behavioral.length }}</div>
+                            <div class="text-base font-semibold">{{ competency?.behavioural?.length }}</div>
                         </ng-container>
-                        <div class="flex justify-center items-center" (click)="handleClick('behavioral')" >
-                            <div class="text-xs">Behavioral</div>
+                        <div class="flex justify-center items-center" (click)="handleClick('behavioural')" >
+                            <div class="text-xs">Behavioural</div>
                             <mat-icon>navigate_next</mat-icon>
                         </div>
                     </div>
@@ -133,7 +136,7 @@
                                 [height]="'28px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
-                            <div class="text-base font-semibold">{{ competency.functional.length }}</div>
+                            <div class="text-base font-semibold">{{ competency?.functional?.length }}</div>
                         </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick('functional')">
                             <div class="text-xs">Functional</div>
@@ -146,7 +149,7 @@
                                 [height]="'28px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
-                            <div class="text-base font-semibold">{{ competency.domain.length }}</div>
+                            <div class="text-base font-semibold">{{ competency?.domain?.length }}</div>
                         </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick('domain')">
                             <div class="text-xs">Domain</div>
@@ -156,21 +159,23 @@
                 </div>
             </div>
     
-            <div class="competency-passbook-category" *ngFor="let elem of ['Behavioral', 'Functional', 'Domain']">
+            <div class="competency-passbook-category" *ngFor="let elem of leftCardDetails">
                 <div class="p-4">
-                    <div class="flex flex-row">
-                        <div class="flex flex-col">
-                            <div class="text-sm">{{ elem }}</div>
-                            <ng-container *ngIf="competency.skeletonLoading">
-                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
-                                    [height]="'28px'"></ws-widget-skeleton-loader>
-                            </ng-container>
-                            <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-xl font-semibold">{{ competency[elem]?.length || 141 }}</div>
-                            </ng-container>
+                    <div class="flex flex-row items-center">
+                        <div class="flex-1">
+                            <div class="flex flex-col justify-center">
+                                <div class="text-sm">{{ elem.label }}</div>
+                                <ng-container *ngIf="competency.skeletonLoading">
+                                    <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                        [height]="'28px'"></ws-widget-skeleton-loader>
+                                </ng-container>
+                                <ng-container *ngIf="!competency.skeletonLoading">
+                                    <div class="text-xl font-semibold">{{ elem?.total || 'NA' }}</div>
+                                </ng-container>
+                            </div>
                         </div>
-                        <div>
-                            <img src="" />
+                        <div class="flex justify-center items-center">
+                            <img src="assets/icons/competency/{{elem.name}}.svg" alt="{{ elem.name }} image" />
                         </div>
                     </div>
                     <div class="separator"></div>
@@ -182,7 +187,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">93</div>
+                                <div class="text-base font-semibold">{{ elem?.competencySubTheme || 'NA' }}</div>
                             </ng-container>
                         </div>
                         <div class="flex flex-col">
@@ -192,7 +197,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">93</div>
+                                <div class="text-base font-semibold">{{ elem?.contentConsumed || 'NA' }}</div>
                             </ng-container>
                         </div>
                     </div>
@@ -218,7 +223,7 @@
                     </div>
                 </div>
             </mat-tab>
-            <mat-tab label="Behavioral" >
+            <mat-tab label="Behavioural" >
                 <div class="flex flex-col">
                     <div class="py-4">
                         <ws-competency-search></ws-competency-search>

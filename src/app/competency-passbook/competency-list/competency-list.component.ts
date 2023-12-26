@@ -21,10 +21,30 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     skeletonLoading: false,
     error: false,
     all: <any>[],
-    behavioral: <any>[],
+    behavioural: <any>[],
     functional: <any>[],
     domain: <any>[]
   };
+
+  leftCardDetails: any = [{
+    name: 'behavioural',
+    label: 'Behavioural',
+    total: 0,
+    competencySubTheme: 0,
+    contentConsumed: 0
+  },{
+    name: 'functional',
+    label: 'Functional',
+    total: 0,
+    competencySubTheme: 0,
+    contentConsumed: 0
+  }, {
+    name: 'domain',
+    label: 'Domain',
+    total: 0,
+    competencySubTheme: 0,
+    contentConsumed: 0
+  }];
 
   constructor(
     private cpService: CompetencyPassbookService
@@ -38,8 +58,14 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     obj = obj.map((obj: any) => {
       obj['viewMore'] = false;
       obj['competencyName'] = name;
+
+      this.leftCardDetails.forEach((_eachObj: any) => {
+        if (_eachObj.name === name || _eachObj.name === 'behavior') {
+          _eachObj.competencySubTheme += obj.children.length;
+        }
+      });
       return obj;
-    })
+    });
     return obj;
   }
 
@@ -60,18 +86,26 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
         (response: any) => {
           response.result.competency.forEach((obj: any) => {
             if (obj.name === 'Behavioral') {
-              this.competency.behavioral = this.bindMoreData(obj.children, obj.name.toLowerCase());
-              this.competency.all = [...this.competency.all, ...this.competency.behavioral]
+              this.competency.behavioural = this.bindMoreData(obj.children, 'behavioural');
+              this.competency.all = [...this.competency.all, ...this.competency.behavioural]
             } else if (obj.name === 'Functional') {
               this.competency.functional = this.bindMoreData(obj.children, obj.name.toLowerCase());
               this.competency.all = [...this.competency.all, ...this.competency.functional]
             } else {
               this.competency.domain = this.bindMoreData(obj.children, obj.name.toLowerCase());
               this.competency.all = [...this.competency.all, ...this.competency.domain]
-            }          
+            }
+
+            this.leftCardDetails.forEach((_eachObj: any) => {
+              if(_eachObj.name === obj.name.toLowerCase()) {
+                _eachObj.total = obj.children.length
+              }
+            });
           });
           this.competencyArray = this.competency.all;
           this.competency.skeletonLoading = false;
+          console.log('this.leftCardDetails - ', this.leftCardDetails);
+          
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.competency.error = true;
