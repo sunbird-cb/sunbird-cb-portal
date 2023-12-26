@@ -63,6 +63,7 @@ export class FilterComponent implements OnInit {
         "isDetail": true
       }
     }
+    console.log(filterObj)
     // this.trainingPlanService.getFilterEntity(filterObj).subscribe((res: any) => {
     //   console.log('entity,', res);
     //   this.competencyList = res;
