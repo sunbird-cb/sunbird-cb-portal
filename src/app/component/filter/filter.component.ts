@@ -17,6 +17,9 @@ export class FilterComponent implements OnInit {
   @Input() clearFilterFlag:any;
   @Input() from:any;
   @Input() designationList:any;
+  timeDuration: any = [{ "id": "This week", name: 'This week' }, { "id": 'This month', name: 'This month' }, { "id": 'Last 3 months', name: 'Last 3 months' }, { "id": 'Last 6 months', name: 'Last 6 months' }, { "id": 'Last year', name: 'Last year' }];
+  contentStatus: any = [{ "id": "All", name: 'All' }, { "id": 'In progress', name: 'In progress' }, { "id": 'Not started', name: 'Not started' }, { "id": 'Completed', name: 'Completed' }];
+  primaryCategoryList: any = [{ "id": "Course", name: 'Course' }, { "id": 'Program', name: 'Program' }];
   providersList: any[] = [];
   selectedProviders: any[] = [];
   competencyTypeList = [{ "id": "Behavioral", name: 'Behavioural' }, { "id": 'Functional', name: 'Functional' }, { "id": 'Domain', name: 'Domain' }];  
