@@ -1010,6 +1010,13 @@
         <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
         <span class=" ws-mat-white-text duration"> {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
       </div>
+      <ng-container>
+        <div class="cbp-mark left-0 border-top-radius">
+          <!-- <span *ngIf="widgetData?.content?.planDuration === 'upcoming'"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+          <span *ngIf="widgetData?.content?.planDuration === 'success'"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span> -->
+          <span  class="cbp-danger">Over due</span>
+        </div>
+      </ng-container>
     </div>
     <mat-card-content class="mat-text-box">
       <div class="course_widget flex flex-between margin-remove">
@@ -1041,13 +1048,6 @@
             <span class="ws-mat-black60-text font-normal mat-caption ">
               {{widgetData.content.primaryCategory || widgetData.content.contentType}}
             </span>
-          </ng-container>
-        </div>
-        <div>
-          <ng-container>
-            <span class="cbp-danger cbp-info">Over due</span>
-            <span class="cbp-warning cbp-info">15 Dec, 2023</span>
-            <span class="cbp-success cbp-info">15 Dec, 2023</span>
           </ng-container>
         </div>
       </div>
@@ -1478,6 +1478,13 @@
                     {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
                     </span>
                  </div>
+                 <ng-container>
+                   <div class="cbp-mark-portrait">
+                     <!-- <span *ngIf="widgetData?.content?.planDuration === 'upcoming'"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+                     <span *ngIf="widgetData?.content?.planDuration === 'success'"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span> -->
+                     <span  class="cbp-danger">Over due</span>
+                   </div>
+                 </ng-container>
               </div>
            </ng-container>
            <ng-container *ngIf="!widgetData.content.posterImage">
