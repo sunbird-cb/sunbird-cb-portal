@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigurationsService } from '@sunbird-cb/utils';
 import { HomePageService } from 'src/app/services/home-page.service';
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
-import {  Router } from '@angular/router'
+import { Router } from '@angular/router'
 @Component({
   selector: 'ws-discuss-hub',
   templateUrl: './discuss-hub.component.html',
@@ -72,6 +72,11 @@ export class DiscussHubComponent implements OnInit {
         this.updatesPosts.loadSkeleton = false;
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
           return y.timestamp - x.timestamp;
+        });
+        this.updatesPosts.data = res && res.latestPosts && res.latestPosts.filter((x: any) => {
+          if(x.upvotes > 0 || x.downvotes > 0){
+            return x
+          }
         });
       },
       (error: HttpErrorResponse) => {

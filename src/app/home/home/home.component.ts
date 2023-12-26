@@ -167,7 +167,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     for(let i=0; i<this.sectionList.length;i++) {
-      if(this.sectionList[i]['section'] == 'section_0' || this.sectionList[i]['section'] == 'section_1') {
+      if(this.sectionList[i]['section'] == 'section_0' 
+      || this.sectionList[i]['section'] == 'section_1'
+      || this.sectionList[i]['section'] == 'section_2') {
         this.sectionList[i]['isVisible'] = true;        
       } 
     }

@@ -159,7 +159,7 @@ TODO: edit option while preview Mode
                 && !(content?.primaryCategory === primaryCategory.PROGRAM)
                 && !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)
               ">
-                <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE">
+                <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE  && !enrollBtnLoading">
                     <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
                       <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                         Enroll
@@ -241,14 +241,18 @@ TODO: edit option while preview Mode
                 </ng-container>
               </a>
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled">
+            <ng-container *ngIf="enrollBtnLoading">
+              <ws-widget-skeleton-loader [width]="'100%'" [height]="'36px'"
+                        [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+            </ng-container>
+            <ng-container *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled && !enrollBtnLoading">
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
                 <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                   Enroll
                 </ng-container>
               </a>
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled">
+            <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled && !enrollBtnLoading">
               <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
                 <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                   Enroll

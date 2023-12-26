@@ -17,6 +17,36 @@ $text-primary: #1B4CA1;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+.displayNone {
+    display: none;
+}
+
+hr {
+    width: 100%;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
+}
+
+.error-div {
+    background-color: #FFF;
+    padding: 28px;
+    border-radius: 12px;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
+
+    .mat-subheading-1 {
+        margin-bottom: 0px;
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+        font-size: 28px;
+    }
+
+    .no-data {
+        color: red;
+    }
+}
 /************ Common CSS ***************/
 
 
@@ -37,7 +67,36 @@ $text-primary: #1B4CA1;
             color: rgba(255, 255, 255, 0.4);
         }
     }
+}
 
+.mobile-competency-card {
+    display: none;
+    border-top: 1px solid rgba($color: #FFFFFF, $alpha: 0.16);
+    padding: 16px;
+
+    .kpi-card {
+        color: #fff;
+    }
+}
+
+
+@media screen and (max-width: 992px) {
+    .left-container {
+        .cp-container {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+    }
+
+    .competency-passbook-category {
+        display: none;
+    }
+
+    .mobile-competency-card {
+        display: block;
+    }
 }
 
 ::ng-deep .mat-menu-panel {
@@ -59,6 +118,11 @@ $text-primary: #1B4CA1;
 
 
 /************ Right Container CSS ***************/
+.mobile-right-container {
+    display: none;
+    margin-top: 24px;
+}
+
 .competency-passbook-theme {
     width: 100%;
     max-width: 384px;
@@ -66,6 +130,18 @@ $text-primary: #1B4CA1;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     background-color: rgb(248, 184, 97);
+}
+
+.behavioral {
+    background-color: #F8B861;
+}
+
+.functional {
+    background-color: #E24577;
+}
+
+.domain {
+    background-color: #7B47A4;
 }
 
 .detail {
@@ -101,7 +177,11 @@ $text-primary: #1B4CA1;
 }
 /************ Right Container CSS ***************/
 
-
+@media screen and (max-width: 768px) {
+    .left-container {
+        max-width: 100%;
+    }
+}
 
 @media screen and (max-width: 992px) {
     .passbook-container {
@@ -111,5 +191,16 @@ $text-primary: #1B4CA1;
     .right-container {
         padding: 16px;
         flex-direction: column;
+        display: none;
+    }
+
+    .mobile-right-container {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .competency-passbook-theme, .detail {
+        min-width: 384px;
     }
 }

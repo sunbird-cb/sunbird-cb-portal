@@ -9,20 +9,51 @@ $text-primary: #1B4CA1;
     border: 1px solid rgba($color: #000000, $alpha: 0.08);
     padding: 16px;
     border-radius: 12px;
-
-    .chip {
-        border: 1px solid $text-primary;
-        color: $text-primary;
-    }
 }
 
-.certificate-card {
+.chip {
+    border: 1px solid $text-primary;
+    color: $text-primary;
+}
+
+.certificate-container {
     width: 100%;
     max-width: 380px;
-    height: 320px;
-    border-radius: 12px;
-    border: 1px solid rgba($color: #000000, $alpha: 0.08);
-    background: #FFF;
+
+    .certificate-card {
+        border-radius: 12px;
+        border-top: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.08);
+        background: #FFF;
+        --mask: radial-gradient(16px at 16px 100%, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    
+        .icon {
+            width: 28px;
+            height: 28px;
+            font-size: 28px;
+            color: $text-primary;
+        }
+    
+        .img-div {
+            width: 280px;
+            height: 128px;
+            // background: #eee;
+            border-radius: 8px;
+        }
+    }
+    
+    .chips-card {
+        border-top: 1px dashed rgba($color: #000000, $alpha: 0.16);
+        padding: 16px;
+        background: #FFF;
+        border-radius: 12px;
+        --mask: radial-gradient(16px at 16px 0, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
 }
 
 @media screen and (max-width: 768px) {

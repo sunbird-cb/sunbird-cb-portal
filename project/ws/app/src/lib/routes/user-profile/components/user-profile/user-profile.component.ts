@@ -132,6 +132,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   karmayogiBadge = false
   isVerifiedAlready = false
   selectedtags: any[] = []
+  externalSystemId: any
+  externalSystemName: any
 
   needApprovalList: any[] = []
   desigApvlReq: any
@@ -830,6 +832,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.userProfileData = userData
             if (this.userProfileData && this.userProfileData.additionalProperties) {
               this.selectedtags = this.userProfileData.additionalProperties.tag || []
+              this.externalSystemId = this.userProfileData.additionalProperties.externalSystemId
+              this.externalSystemName = this.userProfileData.additionalProperties.externalSystem
             }
           } else {
             if (this.configSvc.userProfile) {
@@ -842,6 +846,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               })
               if (this.userProfileData && this.userProfileData.additionalProperties) {
                 this.selectedtags = this.userProfileData.additionalProperties.tag || []
+                this.externalSystemId = this.userProfileData.additionalProperties.externalSystemId
+                this.externalSystemName = this.userProfileData.additionalProperties.externalSystem
               }
             }
           }
