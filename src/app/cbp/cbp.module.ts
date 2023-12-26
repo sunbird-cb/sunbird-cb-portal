@@ -9,7 +9,7 @@ import {
   MatExpansionModule,
   MatCheckboxModule,
   MatTabsModule,
-  MatBottomSheetModule
+  MatBottomSheetModule  
 
 } from '@angular/material'
 import { HeaderModule } from '../header/header.module';
@@ -33,8 +33,9 @@ import { OverduePlanComponent } from '../component/overdue-plan/overdue-plan.com
 import { CbpPlanFeedComponent } from '../component/cbp-plan-feed/cbp-plan-feed.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterComponent } from '../component/filter/filter.component';
+import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.module'
 @NgModule({
-  declarations: [CbpPlanComponent, CbpPlanStatsComponent, MyCompetencyPassbookComponent,
+  declarations: [CbpPlanComponent, CbpPlanStatsComponent, MyCompetencyPassbookComponent,  
     UpcomingTimelineComponent,
     OverduePlanComponent,
     CbpPlanFeedComponent,
@@ -61,7 +62,8 @@ import { FilterComponent } from '../component/filter/filter.component';
     SkeletonLoaderModule,
     PipeRelativeTimeModule,
     AvatarPhotoModule,
-    CardContentV2Module
+    CardContentV2Module,
+    FilterSearchPipeModule
   ],
   exports: [
     HeaderModule,
