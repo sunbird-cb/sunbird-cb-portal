@@ -29,6 +29,9 @@ export class TodayEventCardComponent implements OnInit {
             this.isLive = false
           }
         }
+      } else if (today >= eventendDate) {
+        this.isRecording = true
+        this.isLive = false
       }
     }
   }
