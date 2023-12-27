@@ -957,17 +957,17 @@
                     </p>
                   </div>
 
-                  <div class="item1 mt-4">
+                  <div class="item1 mt-4" *ngIf="externalSystemName && externalSystemName === 'DoPT eHRMS'">
                     <label class="margin-remove-bottom form-label">External System -</label>
-                    <span *ngIf="externalSystemName && externalSystemName === 'DoPT eHRMS'"> {{ externalSystemName }}</span>
-                    <span *ngIf="!externalSystemId && !externalSystemName === 'DoPT eHRMS'" class="margin-top-xs mat-body-2"> No external system available
+                    <span *ngIf="externalSystemName"> {{ externalSystemName }}</span>
+                    <span *ngIf="!externalSystemId" class="margin-top-xs mat-body-2"> No external system available
                     </span> 
                   </div>
 
-                  <div class="item1 mt-2">
+                  <div class="item1 mt-2" *ngIf="externalSystemName && externalSystemName === 'DoPT eHRMS'">
                     <label class="margin-remove-bottom form-label">External Identifier -</label>
-                    <span *ngIf="externalSystemId && externalSystemName === 'DoPT eHRMS'"> {{ externalSystemId }}</span>
-                    <span *ngIf="!externalSystemId && !externalSystemName === 'DoPT eHRMS'" class="margin-top-xs mat-body-2"> No external identifier available
+                    <span *ngIf="externalSystemId"> {{ externalSystemId }}</span>
+                    <span *ngIf="!externalSystemId" class="margin-top-xs mat-body-2"> No external identifier available
                     </span>
                     <span class="mat-subheading-2 lock-heading">Once Your department will approve your request, System will unlock this
                       section.</span>
