@@ -13,7 +13,7 @@
         </div>
       </div> 
       <div mat-card-avatar class="example-header-image">
-        <ng-container *ngIf="portalProfile.personalDetails?.firstname"; else elseFirstName>
+        <ng-container *ngIf="portalProfile.personalDetails?.firstname; else elseFirstName">
           <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null" [name]="portalProfile.personalDetails.firstname"  size="xxl-s">
           </ws-widget-avatar-photo>
         </ng-container>
@@ -28,7 +28,7 @@
       <div class="block md:hidden">
         <div class="mb-8">
           <div class="flex flex-4 justify-center">
-          <ng-container *ngIf="portalProfile.personalDetails.firstname"; else elseFirstNameIcon >
+          <ng-container *ngIf="portalProfile.personalDetails.firstname; else elseFirstNameIcon" >
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
               portalProfile.personalDetails.firstname 
             ">
@@ -102,7 +102,7 @@
       <div class="flex-1 hidden md:block">
         <div class="flex flex-1">
           <div class="flex flex-4">
-          <ng-container *ngIf="portalProfile.personalDetails.firstname"; else elseFirstNameIcon >
+          <ng-container *ngIf="portalProfile.personalDetails.firstname; else elseFirstNameIcon" >
             <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
               portalProfile.personalDetails.firstname 
             ">

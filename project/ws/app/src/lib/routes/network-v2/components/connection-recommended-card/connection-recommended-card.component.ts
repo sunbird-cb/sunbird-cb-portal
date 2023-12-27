@@ -45,13 +45,21 @@ export class ConnectionRecommendedCardComponent implements OnInit {
         } else {
           name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename}`
         }
-      } else {
+      } else if (this.user.personalDetails.firstname) {
         // tslint:disable-next-line:max-line-length
         if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
           // tslint:disable-next-line: max-line-length
           name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
         } else {
           name = `${this.user.personalDetails.firstname}`
+        }
+      } else {
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstName} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstName}`
         }
       }
     }
