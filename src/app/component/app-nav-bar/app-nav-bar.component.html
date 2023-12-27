@@ -170,7 +170,10 @@
   <div class="flex flex-middle points-block">
     <img src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
     <div class="margin-left-xs">
-      <p class="karma-lbl">Karma Points</p>
+      <p class="karma-lbl flex ">Karma Points <img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button  matTooltip="You'll be rewarded 5 Karma Points for completing a course, subject to a maximum of 20 Karma Points in a month."
+        [matTooltipPosition]="'below'"
+        [matTooltipHideDelay]="tooltipDelay" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
+        </p>
       <p class="karma-point">
         <ng-container *ngIf="karmaPointLoading">
           <ws-widget-skeleton-loader [width]="'34px'" [height]="'20px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
