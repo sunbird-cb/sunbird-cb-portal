@@ -172,7 +172,7 @@
     <div class="margin-left-xs">
       <p class="karma-lbl flex ">Karma Points <img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button  matTooltip="You'll be rewarded 5 Karma Points for completing a course, subject to a maximum of 20 Karma Points in a month."
         [matTooltipPosition]="'below'"
-        matTooltipHideDelay="100000000" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
+        [matTooltipHideDelay]="tooltipDelay" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
         </p>
       <p class="karma-point">
         <ng-container *ngIf="karmaPointLoading">
