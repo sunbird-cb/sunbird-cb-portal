@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CompetencyPassbookService } from './../competency-passbook.service';
+import { WidgetUserService } from '@sunbird-cb/collection/src/public-api';
+import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 
 @Component({
   selector: 'ws-competency-list',
@@ -16,6 +18,7 @@ import { CompetencyPassbookService } from './../competency-passbook.service';
 export class CompetencyListComponent implements OnInit, OnDestroy {
 
   private destroySubject$ = new Subject();
+
   competencyArray: any;
   competency: any = {
     skeletonLoading: false,
@@ -29,29 +32,64 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   leftCardDetails: any = [{
     name: 'behavioural',
     label: 'Behavioural',
+    type: 'Behavioral',
     total: 0,
     competencySubTheme: 0,
     contentConsumed: 0
   },{
     name: 'functional',
     label: 'Functional',
+    type: 'Functional',
     total: 0,
     competencySubTheme: 0,
     contentConsumed: 0
   }, {
     name: 'domain',
     label: 'Domain',
+    type: 'Domain',
     total: 0,
     competencySubTheme: 0,
     contentConsumed: 0
   }];
 
   constructor(
-    private cpService: CompetencyPassbookService
+    private cpService: CompetencyPassbookService,
+    private widgetService: WidgetUserService,
+    private configService: ConfigurationsService
   ) { }
 
   ngOnInit() {
-    this.fetchCompetencyList()
+    this.fetchCompetencyList();
+    this.getUserEnrollmentList();
+  }
+
+  getUserEnrollmentList(): void {
+    const userId: any = this.configService && this.configService.userProfile && this.configService.userProfile.userId;
+    this.widgetService.fetchUserBatchList(userId || 'b82aadca-f249-4962-841e-d82987d83b24')
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe(
+        (response: any) => {
+          let competenciesV5: any[] = [];
+          response.courses.forEach((obj: any) => {
+            if (obj.content && obj.content.competencies_v5) {
+              competenciesV5 = [...competenciesV5, ...obj.content.competencies_v5];
+            }
+          });
+          
+          competenciesV5.forEach((obj: any) => {
+            this.leftCardDetails.forEach((_eachObj: any) => {
+              if (_eachObj.type.toLowerCase() === obj.competencyArea.toLowerCase()) {
+                _eachObj.contentConsumed += 1;
+              }
+            })
+          });
+          
+        }, (error: HttpErrorResponse) => {
+          if (!error.ok) {
+            alert('Unable to pull Enrollment list details');
+          }
+        }
+    )
   }
 
   bindMoreData(obj: any, name: string) {
@@ -101,7 +139,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             console.log('abc - ', abc);
             
             this.leftCardDetails.forEach((_eachObj: any) => {
-              if(_eachObj.name === (obj.name === 'Behavioral') ? 'behavioural' : obj.name.toLowerCase()) {
+              if(_eachObj.type.toLowerCase() === obj.name.toLowerCase()) {
                 _eachObj.total = obj.children.length
               }
             });
