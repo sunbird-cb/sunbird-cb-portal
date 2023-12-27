@@ -353,6 +353,15 @@
 
 ::ng-deep .mat-tooltip {
   position: relative;
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: "Lato-Regular";
+  font-size: 12px;
+  font-weight: 400;
+  font-style: Regular;
+  letter-spacing: 0.25px;
+  text-align: left;
+  line-height: 16px;
   &::after {
     width: 0;
     height: 0;
