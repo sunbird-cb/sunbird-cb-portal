@@ -24,6 +24,57 @@
                 </div>
             </div>
         </div>
+        <div class="filter-content flex flex-1">
+            <mat-accordion>
+                <!-- (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false" -->
+                <mat-expansion-panel disableRipple [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Content Type
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of primaryCategoryList">
+                        <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="spacer" *ngIf="competencyThemeList.length"></div>
+        <div class="filter-content flex flex-1">
+            <mat-accordion>
+                <!-- (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false" -->
+                <mat-expansion-panel disableRipple [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Status
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of contentStatus">
+                        <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="spacer" *ngIf="competencyThemeList.length"></div>
+        <div class="filter-content flex flex-1">
+            <mat-accordion>
+                <!-- (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false" -->
+                <mat-expansion-panel disableRipple [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Time duration
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of timeDuration">
+                        <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="spacer" *ngIf="competencyThemeList.length"></div>
         <div class="filter-content-container">
             <div class="filter-content flex flex-1">
                 <mat-accordion>
@@ -59,6 +110,7 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div> -->
+            
             <div class="spacer" *ngIf="competencyThemeList.length"></div>
             <div class="filter-content flex flex-1" *ngIf="competencyThemeList.length">
                 <mat-accordion>
