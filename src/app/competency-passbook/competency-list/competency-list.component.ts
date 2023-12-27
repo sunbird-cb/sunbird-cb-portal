@@ -60,7 +60,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       obj['competencyName'] = name;
 
       this.leftCardDetails.forEach((_eachObj: any) => {
-        if (_eachObj.name === name || _eachObj.name === 'behavior') {
+        if (_eachObj.name === name) {
           _eachObj.competencySubTheme += obj.children.length;
         }
       });
@@ -96,8 +96,12 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               this.competency.all = [...this.competency.all, ...this.competency.domain]
             }
 
+            console.log("obj.name - ", obj.name);
+            var abc = (obj.name === 'Behavioral' ? 'behavioural' : obj.name.toLowerCase())
+            console.log('abc - ', abc);
+            
             this.leftCardDetails.forEach((_eachObj: any) => {
-              if(_eachObj.name === obj.name.toLowerCase()) {
+              if(_eachObj.name === (obj.name === 'Behavioral') ? 'behavioural' : obj.name.toLowerCase()) {
                 _eachObj.total = obj.children.length
               }
             });
