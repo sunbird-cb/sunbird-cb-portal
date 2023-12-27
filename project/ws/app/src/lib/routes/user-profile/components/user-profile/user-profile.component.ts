@@ -284,7 +284,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           data.result.data[0].wfInfo.forEach((wf: any) => {
             if (typeof wf.updateFieldValues === 'string') {
               const fields = JSON.parse(wf.updateFieldValues)
-              //console.log('fields', fields)
+              // console.log('fields', fields)
               if (fields.length > 0) {
                 fields.forEach((field: any) => {
                   const labelKey = Object.keys(field.toValue)[0]
@@ -303,7 +303,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               }
             }
           })
-          //console.log('All ApprovalList', this.needApprovalList)
+          // console.log('All ApprovalList', this.needApprovalList)
           this.getAllApprovalRequests(this.needApprovalList)
         }
       },
@@ -476,7 +476,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         //   fieldKey: this.unApprovedField,
         // }
 
-        //console.log('this.unApprovedData', this.unApprovedData)
+        // console.log('this.unApprovedData', this.unApprovedData)
       }
     })
   }
