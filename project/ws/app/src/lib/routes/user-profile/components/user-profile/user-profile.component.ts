@@ -32,6 +32,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+import { RequestDialogComponent } from '../request-dialog/request-dialog.component'
 
 /* tslint:enable */
 
@@ -1982,5 +1983,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
+  }
+
+  dialogReqHelp() {
+    const dialogRef = this.dialog.open(RequestDialogComponent, {
+      width: '420px',
+      height: '380px',
+    })
+    dialogRef.afterClosed().subscribe(() => {
+    })
   }
 }

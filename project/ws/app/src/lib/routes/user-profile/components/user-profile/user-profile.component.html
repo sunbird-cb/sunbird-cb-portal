@@ -372,7 +372,9 @@
                             </mat-select>
                           </mat-form-field>
                           <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
+                          
                         </div>
+                        <a class="pos-hint help-request ws-mat-black60-text" id="org-field"><span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="dialogReqHelp('Position')">Request for Designation</span></a>
                         <!-- <div class="item1" *ngIf="designation.value === 'Other' || showDesignationOther"
                           [ngClass]="{ disable: !isAllowed('showDesignationOther') }">
                           <p class=" margin-remove-bottom form-label"
