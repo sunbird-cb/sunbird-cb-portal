@@ -120,6 +120,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   allDept: any = []
   approvalConfig!: NsUserProfileDetails.IApprovals
   unApprovedField!: any[]
+  unApprovedData!: any[]
   changedProperties: any = {}
   otpSend = false
   otpVerified = false
@@ -136,6 +137,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   externalSystemId: any
 
   needApprovalList: any[] = []
+  needApprovalList2: any[] = []
   desigApvlReq: any
   desigOtherApvlReq: any
   grpApvlReq: any
@@ -282,6 +284,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           data.result.data[0].wfInfo.forEach((wf: any) => {
             if (typeof wf.updateFieldValues === 'string') {
               const fields = JSON.parse(wf.updateFieldValues)
+              //console.log('fields', fields)
               if (fields.length > 0) {
                 fields.forEach((field: any) => {
                   const labelKey = Object.keys(field.toValue)[0]
@@ -300,7 +303,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               }
             }
           })
-          // console.log('All ApprovalList', this.needApprovalList)
+          //console.log('All ApprovalList', this.needApprovalList)
           this.getAllApprovalRequests(this.needApprovalList)
         }
       },
@@ -461,7 +464,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   fetchPendingFields() {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
-        this.unApprovedField = _.get(res, 'result.data')
+        const keyFields = _.get(res, 'result.data')
+       // const fieldsdata = _.get(res, 'result.data')
+
+        this.unApprovedField =  Object.keys(keyFields)
+
+        // let data: any = {
+        //   feildName: fieldsdata,
+        //   label: this.unApprovedField,
+        //   value: this.unApprovedData,
+        //   fieldKey: this.unApprovedField,
+        // }
+
+        //console.log('this.unApprovedData', this.unApprovedData)
       }
     })
   }
@@ -1985,10 +2000,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     )
   }
 
-  dialogReqHelp() {
+  dialogReqHelp(type: string) {
+    const mob = this.createUserForm.controls['mobile'].value
+    const primaryEmail = this.createUserForm.controls['primaryEmail'].value
+    const fullname = this.createUserForm.controls['firstname'].value
     const dialogRef = this.dialog.open(RequestDialogComponent, {
+      hasBackdrop: false,
       width: '420px',
       height: '380px',
+      data: { reqType : type, mobile: mob, email: primaryEmail, name: fullname },
     })
     dialogRef.afterClosed().subscribe(() => {
     })
