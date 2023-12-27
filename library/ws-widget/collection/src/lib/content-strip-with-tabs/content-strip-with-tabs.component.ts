@@ -945,8 +945,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       let courses: NsContent.IContent[]
       const contentNew: any[] = []
       let tabResults: any[] = []
-
-      const systemDate = dayjs().format('YYYY-MM-DD')
       this.userSvc.fetchCbpPlanList().subscribe((res: any) => {
         if (res && res.count) {
           res.content.forEach((c: any) => {
@@ -954,7 +952,6 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               childData['endDate'] = c.endDate
               childData['parentId'] = c.id
               childData['planType'] = 'cbPlan'
-              childData['planDuration'] = dayjs(c.endDate).isAfter(systemDate) ? 'overdue' : 'upcoming'
               contentNew.push(childData)
               let competencyArea: any = []
               let competencyTheme: any = []
@@ -1014,12 +1011,18 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
   splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
     const tabResults: any[] = []
+    debugger
+    const date1 = dayjs()
     const splitData = this.getTabsList(
       contentNew,
-      (e: any) => e.completionStatus === 1 || e.completionPercentage < 100,
+      (e: any) => {
+        console.log(e,'asdfghjkjghjk')
+        const daysCount = dayjs(e.endDate).diff(date1, 'day')
+        e['planDuration'] =  daysCount <= 0 ? 'overdue' : daysCount > 31 ? 'success': 'upcoming'
+        return daysCount <= 0
+      },
       strip,
     )
-
     if (strip.tabs && strip.tabs.length) {
       for (let i = 0; i < strip.tabs.length; i += 1) {
         if (strip.tabs[i]) {
@@ -1046,10 +1049,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               strip: NsContentStripWithTabs.IContentStripUnit) {
     const upcoming: any[] = []
     const overdue: any[] = []
-    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? upcoming : overdue).push(e))
+    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? overdue : upcoming).push(e))
     return [
     { value: 'all', widgets: this.transformContentsToWidgets([...upcoming, ...overdue], strip) },
     { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
     { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
   }
 }
+     
