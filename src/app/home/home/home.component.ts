@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   mobileTopHeaderVisibilityStatus: any = true;
   sectionList:any = [];
   enableLazyLoadingFlag = true;
-  isKPPanelenabled = true
+  isKPPanelenabled = false
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
     private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
 
@@ -163,6 +163,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.handleUpdateMobileNudge();
     this.handleDefaultFontSetting();
+    this.getEnrollmentData()
   }
 
   ngAfterViewInit() {
@@ -172,6 +173,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       || this.sectionList[i]['section'] == 'section_2') {
         this.sectionList[i]['isVisible'] = true;        
       } 
+    }
+  }
+  
+  getEnrollmentData(){
+    let enrollData = localStorage.getItem('enrollmentData')
+    enrollData = JSON.parse(enrollData)
+    if (enrollData && enrollData.courses && enrollData.courses.length > 0) {
+      this.isKPPanelenabled = true
     }
   }
 
