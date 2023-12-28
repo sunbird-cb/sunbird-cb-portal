@@ -94,7 +94,7 @@ export class RequestDialogComponent implements OnInit {
           position: this.requestForm.value.designation,
         },
         fieldKey: reqType,
-        description: this.userData.addDetails || '',
+        description: this.requestForm.value.designation,
         firstName: this.userData.name || '',
         email: this.userData.email || '',
         mobile: this.userData.mobile || '',
