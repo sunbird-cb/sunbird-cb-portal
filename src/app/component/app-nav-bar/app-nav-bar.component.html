@@ -1,5 +1,5 @@
 <ng-container *ngIf="fullMenuDispaly">
-  
+
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
@@ -61,7 +61,7 @@
         </ng-container>
 
       </ng-container>
-      
+
       <!-- <div class="flex justify-between items-center w-full" *ngIf="mode === 'bottom' && !isLoggedIn">
 
       </div> -->
@@ -73,7 +73,7 @@
     </ng-container>
   </div> -->
   </mat-toolbar>
-  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode === 'bottom'" 
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode === 'bottom'"
   [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
   class="mat-elevation-z3 custom mobile-footer-fixed-nav"
   >

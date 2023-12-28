@@ -25,30 +25,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
   networkStripData = {};
   carrierStripData = {};
   clientList: {} | undefined
-  homeConfig: any = {}; 
+  homeConfig: any = {};
   isNudgeOpen = true;
   currentPosition: any;
   mobileTopHeaderVisibilityStatus: any = true;
   sectionList:any = [];
   enableLazyLoadingFlag = true;
   isKPPanelenabled = false
-  constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
+  enrollData: any
+  constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService,
     private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
 
   ngOnInit() {
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
-      this.mobileTopHeaderVisibilityStatus = status; 
+      this.mobileTopHeaderVisibilityStatus = status;
     })
     if(this.activatedRoute.snapshot.data.pageData) {
-      this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig; 
+      this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig;
     }
     if(this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
       this.contentStripData = (this.contentStripData.homeStrips || []).sort((a:any, b:any) => a.order - b.order)
       for(var i=0; i<this.contentStripData.length;i++) {
-        if(this.contentStripData[i] && 
-          this.contentStripData[i]['strips'] && 
-          this.contentStripData[i]['strips'][0] && 
+        if(this.contentStripData[i] &&
+          this.contentStripData[i]['strips'] &&
+          this.contentStripData[i]['strips'][0] &&
           this.contentStripData[i]['strips'][0]['active']) {
             let obj:any = {};
             obj['section'] = 'section_'+i;
@@ -168,19 +169,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     for(let i=0; i<this.sectionList.length;i++) {
-      if(this.sectionList[i]['section'] == 'section_0' 
+      if(this.sectionList[i]['section'] == 'section_0'
       || this.sectionList[i]['section'] == 'section_1'
       || this.sectionList[i]['section'] == 'section_2') {
-        this.sectionList[i]['isVisible'] = true;        
-      } 
+        this.sectionList[i]['isVisible'] = true;
+      }
     }
   }
-  
+
   getEnrollmentData(){
-    let enrollData = localStorage.getItem('enrollmentData')
-    enrollData = JSON.parse(enrollData)
-    if (enrollData && enrollData.courses && enrollData.courses.length > 0) {
-      this.isKPPanelenabled = true
+    this.enrollData = localStorage.getItem('enrollmentData')
+    if (this.enrollData) {
+      this.enrollData = JSON.parse(this.enrollData)
+      if (this.enrollData && this.enrollData.courses && this.enrollData.courses.length > 0) {
+        this.isKPPanelenabled = true
+      }
     }
   }
 
@@ -223,7 +226,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
        this.checkSectionVisibility(this.sectionList[i]['section']);
       }
     }
-    
+
     // let scroll = e.scrollTop;
     // console.log('scroll');
     // if (scroll > this.currentPosition) {
@@ -246,13 +249,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     var isVisible = false;
     if(className === 'section_0' || className === 'section_1') {
       isVisible = true;
-     
+
     } else {
       if(className !== 'section_0' && className !== 'section_1') {
-      for(var i=0; i<this.sectionList.length;i++) {      
+      for(var i=0; i<this.sectionList.length;i++) {
         if(this.sectionList[i]['section'] === className) {
-          if(document.getElementsByClassName(this.sectionList[i]['section']) 
-          && document.getElementsByClassName(this.sectionList[i]['section'])[0] 
+          if(document.getElementsByClassName(this.sectionList[i]['section'])
+          && document.getElementsByClassName(this.sectionList[i]['section'])[0]
           && !this.sectionList[i]['isVisible']) {
             var tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
           var eleTop = tect.top
@@ -261,23 +264,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.sectionList[i]['isVisible'] = isVisible;
           break;
         }
-          
+
         }
-       
+
       }}
     }
   }
-  
-  
+
+
   //  loadMore(): void {
   //   this.page++;
   // }
-  
-  remindlater() { 
+
+  remindlater() {
     sessionStorage.setItem('hideUpdateProfilePopUp', 'true')
     this.isNudgeOpen = false
   }
-  
+
   fetchProfile() {
     this.router.navigate(['/app/user-profile/details']);
   }

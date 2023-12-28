@@ -56,4 +56,15 @@ export class ProfileKarmapointsComponent implements OnInit {
 
   }
 
+  getName(row: any) {
+    const info = JSON.parse(row.addinfo)
+    return info.COURSENAME ? info.COURSENAME : "No course"
+  }
+
+  getAdditonInfo(row: any) {
+    const info = JSON.parse(row.addinfo)
+    console.log("info ", info)
+    return info.ACBP
+  }
+
 }

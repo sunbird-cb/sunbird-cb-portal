@@ -108,6 +108,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private contentSvc: WidgetContentService,
     private homeSvc: HomePageService,
     private matSnackBar: MatSnackBar,
+
     // @Inject(DOCUMENT) private document: Document
   ) {
     this.Math = Math
@@ -160,6 +161,12 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.fetchDiscussionsData()
     this.fetchUserBatchList()
     this.fetchRecentRequests()
+    this.contentSvc.getKarmaPoitns().subscribe((res: any) => {
+      if (res && res.kpList) {
+        console.log("res.kpList  profile view", res.kpList)
+        this.portalProfile.karmapoints = res.kpList
+      }
+    })
   }
 
   ngOnInit() {
@@ -192,7 +199,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       enrollList = JSON.parse(localStorage.getItem('enrollmentData') || '')
       this.countdata = enrollList && enrollList.userCourseEnrolmentInfo &&
        enrollList.userCourseEnrolmentInfo.karmaPoints || 0
-       console.log('this.countdata', this.countdata)
       clearInterval(this.enrollInterval)
     }
   }
