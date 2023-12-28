@@ -130,6 +130,19 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                 </a>
+                
+                <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
+                  <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+
+                <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
+                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+
+                <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
+                 <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+                 
               </ng-container>
               <ng-container *ngIf="
                 (actionBtnStatus === 'grant' &&
@@ -152,6 +165,7 @@ TODO: edit option while preview Mode
                         Enroll
                       </ng-container>
                     </a>
+                    <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -196,6 +210,18 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                 </a>
+
+                <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100)">
+                  <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+
+                <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
+                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
+
+                <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
+                 <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
+                </div>
               </ng-container>
 
             </ng-container>
@@ -373,6 +399,14 @@ TODO: edit option while preview Mode
             <!-- <span class="lowercase"> {{content?.primaryCategory}} </span> -->
           </ng-container>
         </button>
+      </div>
+
+      <div *ngIf="resumeData && !userRating">
+        <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"></ws-app-karmapoints-panel>
+      </div>
+
+      <div *ngIf="resumeData && userRating">
+        <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"></ws-app-karmapoints-panel>
       </div>
 
       <!-- action buttons -->

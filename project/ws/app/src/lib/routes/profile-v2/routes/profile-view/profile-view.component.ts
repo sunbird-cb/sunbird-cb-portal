@@ -67,6 +67,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   pendingRequestSkeleton = true
   insightsDataLoading = true
 
+  countdata: any
+  enrollInterval: any
+
   discussion = {
     loadSkeleton: false,
     data: undefined,
@@ -153,32 +156,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       /** // for loged in user only */
       this.decideAPICall()
       this.getInsightsData()
-
-    this.portalProfile.karmapoints = [
-      {
-        name: 'Course Completed',
-        courseName: 'Practise Test: Introduction to Angular',
-        date: '19 Dec 2021',
-        points: 10,
-        bonus: 0,
-      },
-      {
-        name: 'Course Rating',
-        courseName: 'Practise Test: Introduction to Angular',
-        date: '01 Apr 2001',
-        points: 10,
-        bonus: 0,
-      },
-      {
-        name: 'Course Completed',
-        courseName: 'Practise Test: Introduction to RxJS',
-        date: '21 Nov 2024',
-        points: 15,
-        bonus: 5,
-      },
-    ]
     })
-    this.fetchDiscussionsData()
+    // this.fetchDiscussionsData()
     this.fetchUserBatchList()
     this.fetchRecentRequests()
   }
@@ -189,6 +168,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     })
 
     this.getPendingRequestData()
+    this.enrollInterval = setInterval(() => {
+      this.getKarmaCount()
+    },                                1000)
   }
 
   ngAfterViewInit() {
@@ -201,6 +183,17 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         top: 360,
         behavior: 'smooth',
       })
+    }
+  }
+
+  getKarmaCount() {
+    let enrollList: any
+    if (localStorage.getItem('enrollmentData')) {
+      enrollList = JSON.parse(localStorage.getItem('enrollmentData') || '')
+      this.countdata = enrollList && enrollList.userCourseEnrolmentInfo &&
+       enrollList.userCourseEnrolmentInfo.karmaPoints || 0
+       console.log('this.countdata', this.countdata)
+      clearInterval(this.enrollInterval)
     }
   }
 

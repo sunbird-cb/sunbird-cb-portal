@@ -33,7 +33,7 @@ export class TopRightNavBarComponent implements OnInit {
   @Input() item:any;
   @Input() rightNavConfig:any;
   dialogRef:any;
-  constructor(public dialog: MatDialog,  public homePageService: HomePageService    ) { }
+  constructor(public dialog: MatDialog,  public homePageService: HomePageService) { }
 
   ngOnInit() {
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
@@ -42,12 +42,10 @@ export class TopRightNavBarComponent implements OnInit {
       if(data) {
         this.dialogRef.close();
       }
-      
     })
   }
 
   ngOnChanges() {
-
   }
 
   openDialog(): void { 
@@ -57,6 +55,5 @@ export class TopRightNavBarComponent implements OnInit {
   
     this.dialogRef.afterClosed().subscribe(() => { 
     }); 
-  } 
- 
+  }
 }
