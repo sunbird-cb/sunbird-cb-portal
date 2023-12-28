@@ -22,7 +22,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   competencyArray: any;
   competency: any = {
-    skeletonLoading: false,
+    skeletonLoading: true,
     error: false,
     all: <any>[],
     behavioural: <any>[],
@@ -37,7 +37,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     total: 0,
     competencySubTheme: 0,
     contentConsumed: 0
-  },{
+  }, {
     name: 'functional',
     label: 'Functional',
     type: 'Functional',
@@ -137,7 +137,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   fetchCompetencyList(): void {
-    this.competency.skeletonLoading = true;
     const payload = {
       "search": {
         "type": "Competency Area"

@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="flex justify-center items-center">
-                <img src="assets/icons/competency/{{params.name}}.png" alt="{{ params.name }} image" />
+                <img src="assets/icons/competency/{{params.name}}-light.svg" class="stamp-img" alt="{{ params.name }} image" />
             </div>
         </div>
 
@@ -52,25 +52,55 @@
     </div>
 
     <div class="flex flex-col gap-5">
-        <div class="text-base font-semibold">Associated Certificates ({{ stateData?.certificate?.length }})</div>
+        <div class="text-base font-semibold">Associated Certificates 
+            <span *ngIf="stateData?.certificate?.length">({{ stateData?.certificate?.length }})</span>
+        </div>
 
         <div class="flex flex-wrap gap-6">
+            <ng-container *ngIf="!stateData?.certificate || !stateData?.certificate?.length">
+                <div class="p-12 no-data-div rounded-md">
+                    <div class="flex flex-col justify-center items-center gap-2">
+                        <div class="text-lg font-semibold">No Certificates found!</div>
+                        <div class="text-base text-center">No certificates found associated with this competency theme</div>
+                    </div>
+                </div>
+            </ng-container>
+
             <div class="flex flex-col certificate-container" *ngFor="let eachCert of stateData?.certificate">
                 <div class="certificate-card">
                     <div class="flex flex-col certificate-info p-4 gap-3">
                         <div class="flex flex-row">
                             <div class="flex-1">
                                 <div class="text-base font-semibold">{{ eachCert?.courseName }}</div>
-                                <div class="text-xs font-light">Issued on July 2023</div>
+                                <div class="text-xs font-light">Issued on {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
                             </div>
                             <div class="flex justify-center">
-                                <mat-icon class="icon cursor-pointer">arrow_downward</mat-icon>
+                                <ng-container *ngIf="eachCert.loading">
+                                    <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'32px'" [height]="'32px'"></ws-widget-skeleton-loader>
+                                </ng-container>
+                                <ng-container *ngIf="!eachCert.loading && !eachCert.error">
+                                    <mat-icon class="icon cursor-pointer" (click)="handleDownloadCertificatePDF(eachCert?.printURI)" >arrow_downward</mat-icon>
+                                </ng-container>
                             </div>
                         </div>
                         <div class="flex justify-center p-3">
-                            <div class="flex justify-center items-center img-div">
-                                <img src="{{ eachCert.printURI }}" alt="{{ eachCert?.courseName }} certificate" />
-                            </div>
+                            <ng-container *ngIf="eachCert.loading">
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'280px'" [height]="'128px'"></ws-widget-skeleton-loader>
+                            </ng-container>
+                            <ng-container *ngIf="!eachCert.loading">
+                                <ng-container *ngIf="!eachCert.error">
+                                    <div class="flex justify-center items-center img-div">
+                                        <img [src]="eachCert?.printURI | pipeSafeSanitizer: 'url'" alt="{{ eachCert?.courseName }} certificate" />
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="eachCert.error">
+                                    <div class="flex justify-center items-center img-div">
+                                        <div class="mat-subheading-1">
+                                            {{ eachCert.error }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
