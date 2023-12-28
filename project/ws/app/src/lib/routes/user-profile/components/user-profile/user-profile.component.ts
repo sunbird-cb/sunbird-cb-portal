@@ -132,8 +132,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   karmayogiBadge = false
   isVerifiedAlready = false
   selectedtags: any[] = []
-  externalSystemId: any
-  externalSystemName: any
+  eHRMSId: any
+  eHRMSName: any
 
   needApprovalList: any[] = []
   desigApvlReq: any
@@ -221,6 +221,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       departmentName: new FormControl('', []),
       verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
       group: new FormControl('', [Validators.required]),
+      eHRMSId: new FormControl('', []),
+      eHRMSName: new FormControl('', []),
     })
 
   }
@@ -832,8 +834,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.userProfileData = userData
             if (this.userProfileData && this.userProfileData.additionalProperties) {
               this.selectedtags = this.userProfileData.additionalProperties.tag || []
-              this.externalSystemId = this.userProfileData.additionalProperties.externalSystemId
-              this.externalSystemName = this.userProfileData.additionalProperties.externalSystem
+              this.eHRMSId = this.userProfileData.additionalProperties.externalSystemId
+              this.eHRMSName = this.userProfileData.additionalProperties.externalSystem
             }
           } else {
             if (this.configSvc.userProfile) {
@@ -846,8 +848,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               })
               if (this.userProfileData && this.userProfileData.additionalProperties) {
                 this.selectedtags = this.userProfileData.additionalProperties.tag || []
-                this.externalSystemId = this.userProfileData.additionalProperties.externalSystemId
-                this.externalSystemName = this.userProfileData.additionalProperties.externalSystem
+                this.eHRMSId = this.userProfileData.additionalProperties.externalSystemId
+                this.eHRMSName = this.userProfileData.additionalProperties.externalSystem
               }
             }
           }
@@ -885,6 +887,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgNameOther: '',
       industryOther: '',
       designationOther: '',
+      eHRMSId: '',
+      eHRMSName: '',
     }
     if (data && data.professionalDetails && data.professionalDetails.length > 0) {
       const organisation = data.professionalDetails[0]
@@ -908,6 +912,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         doj: this.dojApvlReq && this.dojApvlReq.value ? this.getDateFromText(this.dojApvlReq.value) : this.getDateFromText(organisation.doj),
         orgDesc: this.descApvlReq && this.descApvlReq.value ? this.descApvlReq.value : organisation.description,
         completePostalAddress: organisation.completePostalAddress,
+        eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
+        eHRMSName: _.get(data, 'additionalProperties.externalSystem') || '',
       }
       if (organisation.organisationType === 'Government') {
         org.isGovtOrg = true
@@ -1046,6 +1052,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
       certificationDesc: _.get(data, 'skills.certificateDetails') || '',
       verifiedKarmayogi: data.verifiedKarmayogi,
+      eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
+      eHRMSName: _.get(data, 'additionalProperties.externalSystem') || ''
     },
       {
         emitEvent: true,

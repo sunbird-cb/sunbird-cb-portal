@@ -946,6 +946,28 @@
                     </mat-form-field>
                   </div>
 
+
+                  <div class="item1" *ngIf="eHRMSName && eHRMSName === 'DoPT eHRMS'">
+                    <label for="eHRMSId" class="margin-remove-bottom form-label"
+                      i18n="EHRMS ID label|Label which explains the user to display EHRMS ID">
+                      eHRMS ID
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="eHRMSId" matInput  type="text" formControlName="eHRMSId" i18n-placeholder
+                        placeholder="EHRMS ID" readonly/>
+                    </mat-form-field>
+                  </div>
+                  <div class="item1" *ngIf="eHRMSName && eHRMSName === 'DoPT eHRMS'">
+                    <label for="eHRMSName" class=" margin-remove-bottom form-label"
+                      i18n="EHRMS System label|Label which explains the user to display EHRMS System">
+                      eHRMS System 
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="eHRMSName" matInput type="text" formControlName="eHRMSName"  i18n-placeholder
+                        placeholder="EHRMS System" readonly/>
+                    </mat-form-field>
+                  </div>
+
                   <div class="item1">
                     <label class="margin-remove-bottom form-label">Tags</label>
                     <mat-chip-list #chipListTags *ngIf="selectedtags && selectedtags.length">
@@ -956,22 +978,6 @@
                     <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available
                     </p>
                   </div>
-
-                  <div class="item1 mt-4" *ngIf="externalSystemName && externalSystemName === 'DoPT eHRMS'">
-                    <label class="margin-remove-bottom form-label">External System -</label>
-                    <span *ngIf="externalSystemName"> {{ externalSystemName }}</span>
-                    <span *ngIf="!externalSystemId" class="margin-top-xs mat-body-2"> No external system available
-                    </span> 
-                  </div>
-
-                  <div class="item1 mt-2" *ngIf="externalSystemName && externalSystemName === 'DoPT eHRMS'">
-                    <label class="margin-remove-bottom form-label">External Identifier -</label>
-                    <span *ngIf="externalSystemId"> {{ externalSystemId }}</span>
-                    <span *ngIf="!externalSystemId" class="margin-top-xs mat-body-2"> No external identifier available
-                    </span>
-                    <span class="mat-subheading-2 lock-heading">Once Your department will approve your request, System will unlock this
-                      section.</span>
-                  </div>              
                 </div>
               </div>
               <!-- <div class="w-full profile-cols-fill bg-gray" *ngIf="!isAllowed('name')">
