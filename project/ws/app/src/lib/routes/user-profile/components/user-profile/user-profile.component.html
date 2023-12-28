@@ -341,7 +341,8 @@
                             formControlName="group">
                             <mat-option *ngFor="let option of groupsOriginal" [value]="option.name">
                               <span *ngIf="option.name !== 'Others'">
-                                {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}}
+                                <!-- {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}} -->
+                                {{unApprovedReq?.group ? unApprovedReq.group: option.name}}
                               </span>
                             </mat-option>
                           </mat-select>
@@ -365,14 +366,14 @@
                               placeholder="--Select--"
                               (selectionChange)="otherDropDownChange(designation.value, 'designation')">
                               <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
-                                <!-- {{designation.name}} -->
-                                {{desigApvlReq?.feildName == 'designation' ? desigApvlReq?.value : designation.name}}
+                                {{unApprovedReq?.designation ? unApprovedReq.designation: designation.name}}
                               </mat-option>
-                              <!-- <mat-option [value]="'Other'">Other</mat-option> -->
                             </mat-select>
                           </mat-form-field>
                           <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
+                          
                         </div>
+                        <a class="pos-hint help-request ws-mat-black60-text" id="org-field"><span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="dialogReqHelp('Position')">Request for Designation</span></a>
                         <!-- <div class="item1" *ngIf="designation.value === 'Other' || showDesignationOther"
                           [ngClass]="{ disable: !isAllowed('showDesignationOther') }">
                           <p class=" margin-remove-bottom form-label"
@@ -704,7 +705,8 @@
                         (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
                         <mat-option [value]="org" *ngFor="let org of allDept">
                           <!-- {{org}} -->
-                          {{orgNameApvlReq?.feildName === 'name' ? orgNameApvlReq.value : org}}
+                          <!-- {{orgNameApvlReq?.feildName === 'name' ? orgNameApvlReq.value : org}} -->
+                          {{unApprovedReq?.name ? unApprovedReq.name: org}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
@@ -738,7 +740,8 @@
                       <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(designation.value, 'industry')">
                         <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
-                          {{indApvlReq?.feildName === 'industry' ? indApvlReq.value : i.name}}
+                          <!-- {{indApvlReq?.feildName === 'industry' ? indApvlReq.value : i.name}} -->
+                          {{unApprovedReq?.industry ? unApprovedReq.industry: i.name}}
                         </mat-option>
                         <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
@@ -771,7 +774,8 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select formControlName="location" i18n-placeholder placeholder="--Select--">
                         <mat-option [value]="loc.name" *ngFor="let loc of countries">
-                          {{countryApvlReq?.feildName === 'location' ? countryApvlReq.value : loc.name}}
+                          <!-- {{countryApvlReq?.feildName === 'location' ? countryApvlReq.value : loc.name}} -->
+                          {{unApprovedReq?.location ? unApprovedReq.location: loc.name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>

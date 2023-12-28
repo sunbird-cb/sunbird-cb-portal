@@ -32,6 +32,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+import { RequestDialogComponent } from '../request-dialog/request-dialog.component'
 
 /* tslint:enable */
 
@@ -119,6 +120,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   allDept: any = []
   approvalConfig!: NsUserProfileDetails.IApprovals
   unApprovedField!: any[]
+  unApprovedReq!: any
   changedProperties: any = {}
   otpSend = false
   otpVerified = false
@@ -134,20 +136,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   selectedtags: any[] = []
   eHRMSId: any
   eHRMSName: any
-
-  needApprovalList: any[] = []
-  desigApvlReq: any
-  desigOtherApvlReq: any
-  grpApvlReq: any
-  indApvlReq: any
-  indOtherApvlReq: any
-  countryApvlReq: any
-  descApvlReq: any
-  dojApvlReq: any
-  orgNameApvlReq: any
-  orgOtherNameApvlReq: any
-  typeApvlReq: any
-  orgTypeApvlReq: any
 
   constructor(
     private snackBar: MatSnackBar,
@@ -166,7 +154,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
-    this.getApprovalRequests()
 
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -266,86 +253,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.isMobileVerified = false
           }
         })
-    }
-  }
-
-  getApprovalRequests() {
-    const reqBody = {
-      serviceName: 'profile',
-      applicationStatus: 'SEND_FOR_APPROVAL',
-      applicationIds: [this.configSvc.unMappedUser.id],
-      // deptName: deptNameValue,
-      offset: 0,
-      limit: 100,
-    }
-    this.userProfileSvc.getApprovalReqs(reqBody).subscribe(
-      data => {
-        if (data.result.data && data.result.data[0].wfInfo) {
-          data.result.data[0].wfInfo.forEach((wf: any) => {
-            if (typeof wf.updateFieldValues === 'string') {
-              const fields = JSON.parse(wf.updateFieldValues)
-              if (fields.length > 0) {
-                fields.forEach((field: any) => {
-                  const labelKey = Object.keys(field.toValue)[0]
-                  //   const feildNameObj = this.profileData.filter(userData => userData.key === labelKey)[0]
-                  this.needApprovalList.push(
-                    Object.assign({
-                      wf,
-                      feildName: labelKey,
-                      label: labelKey,
-                      value: field.toValue[labelKey],
-                      fieldKey: field.fieldKey,
-                      wfId: wf.wfId,
-                    })
-                  )
-                })
-              }
-            }
-          })
-          // console.log('All ApprovalList', this.needApprovalList)
-          this.getAllApprovalRequests(this.needApprovalList)
-        }
-      },
-      (_err: any) => {
-      })
-  }
-
-  getAllApprovalRequests(reqList: any[]) {
-    if (reqList && reqList.length > 0) {
-      reqList.forEach((ele: any) => {
-        if (ele.feildName === 'designation') {
-          this.desigApvlReq = ele
-        } if (ele.feildName === 'designationOther') {
-          this.desigOtherApvlReq = ele
-        } else if (ele.feildName === 'group') {
-          this.grpApvlReq = ele
-
-        } else if (ele.feildName === 'industry') {
-          this.indApvlReq = ele
-          if (ele.value === 'Other') {
-            this.showIndustryOther = true
-          }
-        } else if (ele.feildName === 'industryOther') {
-          this.indOtherApvlReq = ele
-
-        } else if (ele.feildName === 'location') {
-          this.countryApvlReq = ele
-
-        } else if (ele.feildName === 'description') {
-          this.descApvlReq = ele
-        } else if (ele.feildName === 'doj') {
-          this.dojApvlReq = ele
-        } else if (ele.feildName === 'organisationType') {
-          this.orgTypeApvlReq = ele
-
-        } else if (ele.feildName === 'name') {
-          this.orgNameApvlReq = ele
-
-        } else if (ele.feildName === 'nameOther') {
-          this.orgOtherNameApvlReq = ele
-          this.showOrgnameOther = true
-        }
-      })
     }
   }
 
@@ -463,7 +370,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   fetchPendingFields() {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
-        this.unApprovedField = _.get(res, 'result.data')
+        const keyFields = _.get(res, 'result.data')
+        this.unApprovedReq = _.get(res, 'result.data')
+        this.unApprovedField =  Object.keys(keyFields)
       }
     })
   }
@@ -886,7 +795,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       completePostalAddress: '',
       orgNameOther: '',
       industryOther: '',
-      designationOther: '',
       eHRMSId: '',
       eHRMSName: '',
     }
@@ -895,22 +803,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
       org = {
         isGovtOrg: organisation.organisationType,
-        orgName: this.orgNameApvlReq && this.orgNameApvlReq.value ? this.orgNameApvlReq.value : organisation.name,
-        orgNameOther: this.orgOtherNameApvlReq && this.orgOtherNameApvlReq.value ? this.orgOtherNameApvlReq.value : organisation.nameOther,
-        industry: this.indApvlReq && this.indApvlReq.value ? this.indApvlReq.value : organisation.industry || 'Other',
-        industryOther: this.indOtherApvlReq && this.indOtherApvlReq.value ? this.indOtherApvlReq.value : organisation.industryOther,
-        // tslint:disable-next-line
-        // designation: pendingDesignation ? this.desigApvlReq.value : isDesiAvailable ? organisation.designation : 'Other',
-        // designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
-        designation: this.desigApvlReq && this.desigApvlReq.value ? this.desigApvlReq.value : organisation.designation,
-        // tslint:disable-next-line: max-line-length
-        designationOther: this.desigOtherApvlReq && this.desigOtherApvlReq.value ? this.desigOtherApvlReq.value : organisation.designationOther,
-        group: this.grpApvlReq && this.grpApvlReq.value ? this.grpApvlReq.value : organisation.group,
-        location: this.countryApvlReq && this.countryApvlReq.value ? this.countryApvlReq.value : organisation.location,
+        orgName: this.unApprovedReq && this.unApprovedReq.name ? this.unApprovedReq.name : organisation.name,
+        orgNameOther: this.unApprovedReq && this.unApprovedReq.nameOther ? this.unApprovedReq.nameOther : organisation.nameOther,
+        industry: this.unApprovedReq && this.unApprovedReq.industry ? this.unApprovedReq.industry : organisation.industry || 'Other',
+       // tslint:disable-next-line: max-line-length
+        industryOther: this.unApprovedReq && this.unApprovedReq.industryOther ? this.unApprovedReq.industryOther : organisation.industryOther,
+        designation: this.unApprovedReq && this.unApprovedReq.designation ? this.unApprovedReq.designation : organisation.designation,
+        group: this.unApprovedReq && this.unApprovedReq.group ? this.unApprovedReq.group : organisation.group,
+        location: this.unApprovedReq && this.unApprovedReq.location ? this.unApprovedReq.location : organisation.location,
         responsibilities: organisation.responsibilities,
         // tslint:disable-next-line: max-line-length
-        doj: this.dojApvlReq && this.dojApvlReq.value ? this.getDateFromText(this.dojApvlReq.value) : this.getDateFromText(organisation.doj),
-        orgDesc: this.descApvlReq && this.descApvlReq.value ? this.descApvlReq.value : organisation.description,
+        doj: this.unApprovedReq && this.unApprovedReq.doj ? this.getDateFromText(this.unApprovedReq.doj) : this.getDateFromText(organisation.doj),
+        orgDesc: this.unApprovedReq && this.unApprovedReq.description ? this.unApprovedReq.description : organisation.description,
         completePostalAddress: organisation.completePostalAddress,
         eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
         eHRMSName: _.get(data, 'additionalProperties.externalSystem') || '',
@@ -1993,5 +1897,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
+  }
+
+  dialogReqHelp(type: string) {
+    const mob = this.createUserForm.controls['mobile'].value
+    const primaryEmail = this.createUserForm.controls['primaryEmail'].value
+    const fullname = this.createUserForm.controls['firstname'].value
+    const dialogRef = this.dialog.open(RequestDialogComponent, {
+      hasBackdrop: false,
+      width: '420px',
+      height: '380px',
+      data: { reqType : type, mobile: mob, email: primaryEmail, name: fullname },
+    })
+    dialogRef.afterClosed().subscribe(() => {
+    })
   }
 }
