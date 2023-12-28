@@ -851,7 +851,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.getUserEnrollmentList()
             },         2000)
           }
-        }, 
+        },
         (_error: any) => {
           this.enrollBtnLoading = false
         }

@@ -11,7 +11,7 @@ import { Router } from '@angular/router'
 export class CardNotifyComponent extends WidgetBaseComponent
   implements OnInit, NsWidgetResolver.IWidgetData<any> {
   @Input() widgetData: any
-  showMsg = true
+  showMsg = false
 
   constructor(
     private configSvc: ConfigurationsService,

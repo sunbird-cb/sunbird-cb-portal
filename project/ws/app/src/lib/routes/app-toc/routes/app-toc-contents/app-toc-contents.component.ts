@@ -153,7 +153,7 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
   resourceLink(resource: NsContent.IContent): { url: string; queryParams: { [key: string]: any } } {
     const url = viewerRouteGenerator(resource.identifier, resource.mimeType)
     /* tslint:disable-next-line */
-    console.log(url,'=====> toc content resource url link <========')
+    // console.log(url,'=====> toc content resource url link <========')
     return url
   }
 
