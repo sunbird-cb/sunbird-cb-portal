@@ -3,8 +3,7 @@
         <div class="competency-passbook-theme" [ngClass]="{'behavioral': obj.competencyName === 'behavioral', 'functional': obj.competencyName === 'functional', 'domain': obj.competencyName === 'domain'}"  ></div>
         <div class="detail flex flex-col">
             <div class="flex flex-col">
-                <div class="flex flex-row justify-between px-6 py-4 cursor-pointer"
-                    [routerLink]="['/page/competency-passbook/details']">
+                <div class="flex flex-row justify-between px-6 py-4 cursor-pointer" (click)="handleNavigate(obj)">
                     <div class="flex flex-col gap-3 text-primary">
                         <div class="flex flex-row gap-3 items-center">
                             <div class="text-xl font-semibold">{{ obj.name }}</div>
@@ -211,7 +210,7 @@
             <mat-tab label="All">
                 <div class="flex flex-col">
                     <div class="py-4">
-                        <ws-competency-search></ws-competency-search>
+                        <ws-competency-search (searchValue)="handleSearch($event, 'All')"></ws-competency-search>
                     </div>
                     <div class="flex flex-wrap gap-6">
                         <ng-container *ngIf="competency.skeletonLoading">
@@ -226,7 +225,7 @@
             <mat-tab label="Behavioural" >
                 <div class="flex flex-col">
                     <div class="py-4">
-                        <ws-competency-search></ws-competency-search>
+                        <ws-competency-search (searchValue)="handleSearch($event, 'Behavioural')"></ws-competency-search>
                     </div>
                     <div class="flex flex-wrap gap-6">
                         <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
@@ -236,7 +235,7 @@
             <mat-tab label="Functional">
                 <div class="flex flex-col">
                     <div class="py-4">
-                        <ws-competency-search></ws-competency-search>
+                        <ws-competency-search (searchValue)="handleSearch($event, 'Functional')"></ws-competency-search>
                     </div>
                     <div class="flex flex-wrap gap-6">
                         <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
@@ -246,7 +245,7 @@
             <mat-tab label="Domain">
                 <div class="flex flex-col">
                     <div class="py-4">
-                        <ws-competency-search></ws-competency-search>
+                        <ws-competency-search (searchValue)="handleSearch($event, 'Domain')"></ws-competency-search>
                     </div>
                     <div class="flex flex-wrap gap-6">
                         <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>

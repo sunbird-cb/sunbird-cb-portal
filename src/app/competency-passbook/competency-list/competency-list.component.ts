@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTabChangeEvent } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -52,14 +53,17 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     contentConsumed: 0
   }];
 
+  courseWithCompetencyArray: any[] = [];
+  certificateMappedObject: any = {}; 
+
   constructor(
     private cpService: CompetencyPassbookService,
     private widgetService: WidgetUserService,
-    private configService: ConfigurationsService
+    private configService: ConfigurationsService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.fetchCompetencyList();
     this.getUserEnrollmentList();
   }
 
@@ -69,9 +73,12 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroySubject$))
       .subscribe(
         (response: any) => {
+          this.fetchCompetencyList();
+
           let competenciesV5: any[] = [];
           response.courses.forEach((obj: any) => {
             if (obj.content && obj.content.competencies_v5) {
+              this.courseWithCompetencyArray.push(obj);
               competenciesV5 = [...competenciesV5, ...obj.content.competencies_v5];
             }
           });
@@ -83,7 +90,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               }
             })
           });
-          
+
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
             alert('Unable to pull Enrollment list details');
@@ -102,8 +109,30 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
           _eachObj.competencySubTheme += obj.children.length;
         }
       });
+
+      this.courseWithCompetencyArray.forEach((eachCourse: any) => {
+        if (eachCourse.issuedCertificates && eachCourse.issuedCertificates.length) {
+          eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.forEach((cObj: any) => {
+            eachCourse.issuedCertificates.forEach((eObj: any) => {
+              eObj ['courseName'] = eachCourse.courseName
+            });
+
+            if (cObj.competencyTheme.toLowerCase().trim() === obj.name.toLowerCase().trim()) {
+              if (this.certificateMappedObject[obj.name]) {
+                this.certificateMappedObject[obj.name] = [...this.certificateMappedObject[obj.name], ...eachCourse.issuedCertificates]
+              } else {
+                this.certificateMappedObject[obj.name] = [];
+                this.certificateMappedObject[obj.name] = eachCourse.issuedCertificates;
+              }
+            }
+          })
+        }
+      });
+      
       return obj;
     });
+
+    console.log("this.certificateMappedObject - ", this.certificateMappedObject);
     return obj;
   }
 
@@ -133,10 +162,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               this.competency.domain = this.bindMoreData(obj.children, obj.name.toLowerCase());
               this.competency.all = [...this.competency.all, ...this.competency.domain]
             }
-
-            console.log("obj.name - ", obj.name);
-            var abc = (obj.name === 'Behavioral' ? 'behavioural' : obj.name.toLowerCase())
-            console.log('abc - ', abc);
             
             this.leftCardDetails.forEach((_eachObj: any) => {
               if(_eachObj.type.toLowerCase() === obj.name.toLowerCase()) {
@@ -144,10 +169,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               }
             });
           });
+
           this.competencyArray = this.competency.all;
           this.competency.skeletonLoading = false;
-          console.log('this.leftCardDetails - ', this.leftCardDetails);
-          
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.competency.error = true;
@@ -156,7 +180,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
         }
       );
   }
-
 
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
@@ -169,6 +192,17 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   handleViewMore(obj: any, flag?: string): void {
     obj.viewMore = flag ? false : true;
+  }
+
+  handleNavigate(obj: any): void {
+    const state =  {certificate: this.certificateMappedObject[obj.name]};
+    this.router.navigate(['/page/competency-passbook/details'], {queryParams: {theme: obj.name, name: obj.competencyName}, state});
+  }
+
+  handleSearch(event: string, competencyTheme: string): void {
+    competencyTheme = competencyTheme.toLowerCase()
+    if (!this.competency[competencyTheme].length) return;
+    this.competencyArray = (!event.length) ? this.competency[competencyTheme] : this.competency[competencyTheme].filter((obj: any) => obj.name.toLowerCase().trim().includes(event.toLowerCase()));
   }
 
   ngOnDestroy(): void {

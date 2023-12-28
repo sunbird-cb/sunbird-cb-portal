@@ -1,13 +1,15 @@
 <div class="flex flex-col gap-8 mobile-container">
     <div class="flex flex-col gap-5">
-        <div class="flex flex-row">
+        <div class="flex flex-row items-center">
             <div class="flex-1">
                 <div class="flex flex-col gap-2 justify-center">
-                    <div class="text-2xl font-semibold header text-primary">Self-Awareness</div>
+                    <div class="text-2xl font-semibold header text-primary">{{ params.theme }}</div>
                     <div class="text-sm">Issued on May 2023</div>
                 </div>
             </div>
-            <div class="flex justify-center items-center"></div>
+            <div class="flex justify-center items-center">
+                <img src="assets/icons/competency/{{params.name}}.png" alt="{{ params.name }} image" />
+            </div>
         </div>
 
         <div class="chips-container">
@@ -50,16 +52,16 @@
     </div>
 
     <div class="flex flex-col gap-5">
-        <div class="text-base font-semibold">Associated Certificates (5)</div>
+        <div class="text-base font-semibold">Associated Certificates ({{ stateData?.certificate?.length }})</div>
 
         <div class="flex flex-wrap gap-6">
-            <div class="flex flex-col certificate-container" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+            <div class="flex flex-col certificate-container" *ngFor="let eachCert of stateData?.certificate">
                 <div class="certificate-card">
                     <div class="flex flex-col certificate-info p-4 gap-3">
                         <div class="flex flex-row">
                             <div class="flex-1">
-                                <div class="text-base font-semibold">Basics of Administrative law</div>
-                                <div class="text-xs font-light">Issue on July 2023</div>
+                                <div class="text-base font-semibold">{{ eachCert?.courseName }}</div>
+                                <div class="text-xs font-light">Issued on July 2023</div>
                             </div>
                             <div class="flex justify-center">
                                 <mat-icon class="icon cursor-pointer">arrow_downward</mat-icon>
@@ -67,7 +69,7 @@
                         </div>
                         <div class="flex justify-center p-3">
                             <div class="flex justify-center items-center img-div">
-                                <img src="assets/icons/competency/certificate.svg" alt="cp arrow img" />
+                                <img src="{{ eachCert.printURI }}" alt="{{ eachCert?.courseName }} certificate" />
                             </div>
                         </div>
                     </div>
