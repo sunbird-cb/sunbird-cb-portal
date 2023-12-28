@@ -353,6 +353,15 @@
 
 ::ng-deep .mat-tooltip {
   position: relative;
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: "Lato-Regular";
+  font-size: 12px;
+  font-weight: 400;
+  font-style: Regular;
+  letter-spacing: 0.25px;
+  text-align: left;
+  line-height: 16px;
   &::after {
     width: 0;
     height: 0;
@@ -399,6 +408,22 @@
       right: -0.75rem;
       top: calc(50% - 0.25rem);
       transform: rotate(90deg);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  ::ng-deep .mat-tooltip {
+    position: relative;
+    &.below {
+      padding: 8px;
+      overflow: initial;
+      margin-top: 1rem;
+      &:after {
+        top: -0.5rem;
+        right: calc(50% - -1.5rem);
+        transform: rotate(0);
+      }
     }
   }
 }
