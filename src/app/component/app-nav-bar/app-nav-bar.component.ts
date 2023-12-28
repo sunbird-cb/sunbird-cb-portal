@@ -46,6 +46,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   countdata: any
   enrollInterval: any
   karmaPointLoading: boolean = true
+  tooltipDelay: any = 1000
 
   constructor(
     private domSanitizer: DomSanitizer,
