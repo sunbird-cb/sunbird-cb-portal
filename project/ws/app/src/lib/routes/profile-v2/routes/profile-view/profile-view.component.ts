@@ -192,7 +192,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       enrollList = JSON.parse(localStorage.getItem('enrollmentData') || '')
       this.countdata = enrollList && enrollList.userCourseEnrolmentInfo &&
        enrollList.userCourseEnrolmentInfo.karmaPoints || 0
-       console.log('this.countdata', this.countdata)
       clearInterval(this.enrollInterval)
     }
   }

@@ -9,8 +9,8 @@ import {
   MatExpansionModule,
   MatCheckboxModule,
   MatTabsModule,
-  MatBottomSheetModule  
-
+  MatBottomSheetModule,  
+  MatMenuModule
 } from '@angular/material'
 import { HeaderModule } from '../header/header.module';
 import {
@@ -22,7 +22,6 @@ import { PipeRelativeTimeModule } from '@sunbird-cb/utils';
 import { SharedModule } from '../shared/shared.module';
 
 import { CbpPlanComponent } from './cbp-plan/cbp-plan.component';
-import { NoDataComponent } from '../component/no-data/no-data.component';
 import { CbpSideBarComponent } from '../component/cbp-side-bar/cbp-side-bar.component';
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module';
 
@@ -40,7 +39,7 @@ import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.mod
     OverduePlanComponent,
     CbpPlanFeedComponent,
     FilterComponent,
-    NoDataComponent, CbpSideBarComponent],
+     CbpSideBarComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -63,7 +62,8 @@ import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.mod
     PipeRelativeTimeModule,
     AvatarPhotoModule,
     CardContentV2Module,
-    FilterSearchPipeModule
+    FilterSearchPipeModule,
+    MatMenuModule,
   ],
   exports: [
     HeaderModule,

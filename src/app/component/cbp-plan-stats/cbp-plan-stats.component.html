@@ -1,21 +1,33 @@
 <div class="flex flex-col gap-4 mt-8 mb-8 my-cbp">
     <div class="flex flex-middle flex-between">
         <p class="title">My CBP plans stats</p>
-        <mat-icon   class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer">filter_list</mat-icon>
+        <mat-icon mat-icon-button [matMenuTriggerFor]="menu"   class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer">filter_list</mat-icon>
     </div>
     <hr class="divider">
     <div class="flex flex-middle flex-between">
         <div>
             <p class="group-title">All</p>
-            <p class="group-count">4</p>
+            <p class="group-count">{{cbpCount?.all || 0}}</p>
         </div>
         <div>
             <p class="group-title">Upcoming</p>
-            <p class="group-count">4</p>
+            <p class="group-count">{{cbpCount?.upcoming || 0}}</p>
         </div>
         <div>
             <p class="group-title">Over due</p>
-            <p class="group-count">4</p>
+            <p class="group-count">{{cbpCount?.overdue || 0}}</p>
         </div>
     </div>
  </div>
+ 
+  <mat-menu #menu="matMenu" class="filter-menu"> 
+    <!-- give local reference and tell this is manu by assigning 'matMenu' -->
+    <div class="p-4">
+        <ng-container *ngFor="let data of filterList">
+            <button class="padding-remove" mat-menu-item>
+                {{data.value}}
+            </button>
+        </ng-container>
+    </div>
+   
+  </mat-menu>
