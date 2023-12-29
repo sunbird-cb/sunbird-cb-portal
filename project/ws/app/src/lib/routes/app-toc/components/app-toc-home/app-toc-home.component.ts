@@ -151,6 +151,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   selectedBatchSubscription: any
   serverDateSubscription: any
   serverDate: any
+  kparray: any = []
   enrollBtnLoading = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -212,10 +213,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
         this.tocSvc.showDescription = data.pageData.data.showDescription || false
         this.tocConfig = data.pageData.data
+        this.kparray = this.tocConfig.karmaPoints
         this.initData(data)
       })
       this.route.data.subscribe(data => {
         this.tocConfig = data.pageData.data
+        this.kparray = this.tocConfig.karmaPoints
         if (this.content && this.isPostAssessment) {
           this.tocSvc.fetchPostAssessmentStatus(this.content.identifier).subscribe(res => {
             const assessmentData = res.result

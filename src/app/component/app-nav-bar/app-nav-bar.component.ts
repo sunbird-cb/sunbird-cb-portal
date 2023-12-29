@@ -46,6 +46,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   countdata: any
   enrollInterval: any
   karmaPointLoading: boolean = true
+  tooltipDelay: any = 1000
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -269,5 +270,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       clearInterval(this.enrollInterval)
     }
   }
- 
+
+  viewKarmapoints() {
+    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
+  }
 }

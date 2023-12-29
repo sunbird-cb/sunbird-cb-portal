@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
@@ -13,38 +14,45 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 export class ProfileKarmapointsComponent implements OnInit {
   currentUser: any
   karmaPointsHistory: any = []
+  kpTooltiptext = 'Karma Points are a reward for high learning engagement at iGOT. For more information, visit Karma Points FAQs.'
 
   constructor(
     private configSvc: ConfigurationsService,
     public router: Router,
+    private contentSvc: WidgetContentService,
   ) {
     this.currentUser = this.configSvc && this.configSvc.userProfile
-    this.karmaPointsHistory = [
-      {
-        name: 'Course Completed',
-        courseName: 'Practise Test: Introduction to Angular',
-        date: '19 Dec 2021',
-        points: 10,
-        bonus: 0,
-      },
-      {
-        name: 'Course Rating',
-        courseName: 'Practise Test: Introduction to Angular',
-        date: '01 Apr 2001',
-        points: 10,
-        bonus: 0,
-      },
-      {
-        name: 'Course Completed',
-        courseName: 'Practise Test: Introduction to RxJS',
-        date: '21 Nov 2024',
-        points: 15,
-        bonus: 5,
-      },
-    ]
+    // this.karmaPointsHistory = [
+    //   {
+    //     name: 'Course Completed',
+    //     courseName: 'Practise Test: Introduction to Angular',
+    //     date: '19 Dec 2021',
+    //     points: 10,
+    //     bonus: 0,
+    //   },
+    //   {
+    //     name: 'Course Rating',
+    //     courseName: 'Practise Test: Introduction to Angular',
+    //     date: '01 Apr 2001',
+    //     points: 10,
+    //     bonus: 0,
+    //   },
+    //   {
+    //     name: 'Course Completed',
+    //     courseName: 'Practise Test: Introduction to RxJS',
+    //     date: '21 Nov 2024',
+    //     points: 15,
+    //     bonus: 5,
+    //   },
+    // ]
   }
 
   ngOnInit() {
+    this.contentSvc.getKarmaPoitns().subscribe((res: any) => {
+      if (res && res.kpList) {
+        this.karmaPointsHistory = res.kpList
+      }
+    })
 
   }
 

@@ -3,9 +3,6 @@
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
-    
-     
-    
     <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim  items-center hidden md:flex" role="link" title="Home"
@@ -170,8 +167,11 @@
   <div class="flex flex-middle points-block">
     <img src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
     <div class="margin-left-xs">
-      <p class="karma-lbl">Karma Points</p>
-      <p class="karma-point">
+      <p class="karma-lbl flex ">Karma Points <img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button  matTooltip="You'll be rewarded 5 Karma Points for completing a course, subject to a maximum of 20 Karma Points in a month."
+        [matTooltipPosition]="'below'"
+        [matTooltipHideDelay]="tooltipDelay" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
+        </p>
+      <p class="karma-point" (click)="viewKarmapoints()">
         <ng-container *ngIf="karmaPointLoading">
           <ws-widget-skeleton-loader [width]="'34px'" [height]="'20px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </ng-container>
