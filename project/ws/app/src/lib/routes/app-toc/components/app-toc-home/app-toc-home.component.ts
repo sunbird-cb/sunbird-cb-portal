@@ -153,6 +153,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   serverDate: any
   kparray: any = []
   enrollBtnLoading = false
+  isAcbpCourse = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -313,6 +314,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
+
+    this.route.queryParamMap.subscribe(qParamsMap => {
+      const acbp = qParamsMap.get('planType')
+      if (acbp && acbp === 'cbPlan') {
+        this.isAcbpCourse = true
+      }
+    })
   }
 
   ngAfterViewInit() {

@@ -14,3 +14,33 @@
       vertical-align: text-bottom;
     }
   }
+.karmapoints-panel-claim {
+  text-align: center;
+  color: white!important;
+  border-radius: 4px;
+  padding: 7px 0;
+  font-weight: bold;
+  animation-name: backgroundColorPalette;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: linear;
+}
+@keyframes backgroundColorPalette {
+	0% {
+		background: #EF951E;
+	}
+	25% {
+		background: #ee9c31;
+	}
+	50% {
+		background: #f4bb71;
+	}
+	75% {
+		background: #ee9c31;
+	}
+	100% {
+		background: #ecd9c1;
+	}
+}
+

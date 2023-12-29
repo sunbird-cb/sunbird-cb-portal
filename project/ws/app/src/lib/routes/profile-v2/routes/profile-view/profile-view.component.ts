@@ -161,9 +161,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.fetchDiscussionsData()
     this.fetchUserBatchList()
     this.fetchRecentRequests()
-    this.contentSvc.getKarmaPoitns().subscribe((res: any) => {
+    this.contentSvc.getKarmaPoitns(3).subscribe((res: any) => {
       if (res && res.kpList) {
-        console.log("res.kpList  profile view", res.kpList)
         this.portalProfile.karmapoints = res.kpList
       }
     })

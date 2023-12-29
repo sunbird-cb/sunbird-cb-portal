@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core'
 export class KarmaPointsPanelComponent implements OnInit {
     @Input() btntype: any
     @Input() data: any = []
+    @Input() btnCategory = ''
     kpData: any
 
   constructor() { }

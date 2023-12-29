@@ -94,8 +94,8 @@ TODO: edit option while preview Mode
           content?.status !== 'Expired'
         ">
           <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
-            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM 
-            && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM 
+            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM
+            && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM
             && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
             content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM">
               <ng-container *ngIf="
@@ -130,7 +130,7 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                 </a>
-                
+
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
                   <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                 </div>
@@ -142,7 +142,11 @@ TODO: edit option while preview Mode
                 <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
                  <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
                 </div>
-                 
+
+                <div *ngIf="!isAcbpCourse" >
+                  <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'"></ws-app-karmapoints-panel>
+                 </div>
+
               </ng-container>
               <ng-container *ngIf="
                 (actionBtnStatus === 'grant' &&
