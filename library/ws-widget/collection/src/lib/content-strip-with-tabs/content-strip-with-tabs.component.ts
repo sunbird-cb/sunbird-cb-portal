@@ -968,7 +968,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
             )
           }
         }
-      }, (_err: any) => {
+      },                                        (_err: any) => {
 
       })
     }
