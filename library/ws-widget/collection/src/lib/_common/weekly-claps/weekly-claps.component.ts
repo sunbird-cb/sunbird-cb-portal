@@ -21,6 +21,9 @@ export class WeeklyClapsComponent implements OnInit {
     // }
   }
 
+  ngOnChanges() {
+  }
+
   openInfo(myDialog: any) {
     const confirmDialog = this.dialog.open(InfoDialogComponent, {
         width: '613px',
