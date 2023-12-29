@@ -17,16 +17,24 @@ export class FilterComponent implements OnInit {
   @Input() clearFilterFlag:any;
   @Input() from:any;
   @Input() designationList:any;
-  timeDuration: any = [{ "id": "This week", name: 'This week' }, { "id": 'This month', name: 'This month' }, { "id": 'Last 3 months', name: 'Last 3 months' }, { "id": 'Last 6 months', name: 'Last 6 months' }, { "id": 'Last year', name: 'Last year' }];
-  contentStatus: any = [{ "id": "All", name: 'All' }, { "id": 'In progress', name: 'In progress' }, { "id": 'Not started', name: 'Not started' }, { "id": 'Completed', name: 'Completed' }];
+  timeDuration: any = [{ "id": "This week", name: 'This week', checked: false }, { "id": 'This month', name: 'This month', checked: false }, { "id": 'Last 3 months', name: 'Last 3 months', checked: false }, { "id": 'Last 6 months', name: 'Last 6 months', checked: false }, { "id": 'Last year', name: 'Last year', checked: false }];
+  contentStatus: any = [{ "id": "All", name: 'All', checked: false }, { "id": 'In progress', name: 'In progress', checked: false }, { "id": 'Not started', name: 'Not started', checked: false }, { "id": 'Completed', name: 'Completed', checked: false }];
   primaryCategoryList: any = [{ "id": "Course", name: 'Course' }, { "id": 'Program', name: 'Program' }];
   providersList: any[] = [];
   selectedProviders: any[] = [];
-  competencyTypeList = [{ "id": "Behavioral", name: 'Behavioural' }, { "id": 'Functional', name: 'Functional' }, { "id": 'Domain', name: 'Domain' }];  
+  competencyTypeList = [{ "id": "Behavioral", name: 'Behavioural', checked: false }, { "id": 'Functional', name: 'Functional', checked: false }, { "id": 'Domain', name: 'Domain', checked: false }];  
   competencyList: any = [];
   competencyThemeList: any[] = [];
   competencySubThemeList: any[] = [];
-  filterObj: any = { "competencyArea": [], "competencyTheme": [], "competencySubTheme": [], "providers": [] };
+  filterObj: any = {
+    "primaryCategory":[],
+    "status":[],
+    "timeDuration":[], 
+    "competencyArea": [], 
+    "competencyTheme": [], 
+    "competencySubTheme": [], 
+    "providers": [] 
+  };
   searchThemeControl = new FormControl();
   @ViewChildren("checkboxes") checkboxes!: QueryList<ElementRef>;
   constructor(
@@ -51,16 +59,16 @@ export class FilterComponent implements OnInit {
         "isDetail": true
       }
     }
-    console.log(filterObj)
+    // console.log(filterObj)
     this.appCbpPlansService.getFilterEntity(filterObj).subscribe((res: any) => {
-      console.log('entity,', res);
+      // console.log('entity,', res);
       this.competencyList = res;
 
     })
   }
   getProviders() {
     this.appCbpPlansService.getProviders().subscribe((res: any) => {
-      console.log('providers,', res);
+      // console.log('providers,', res);
       this.providersList = res;
     })
   }
@@ -82,11 +90,11 @@ export class FilterComponent implements OnInit {
   }
 
   getCompetencyTheme(event: any, ctype: any) {
-    console.log('ctype', ctype, this.competencyList, event);
+    // console.log('ctype', ctype, this.competencyList, event);
     if (event.checked) {
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
-          console.log(citem.name, ctype.name, citem.children)
+          // console.log(citem.name, ctype.name, citem.children)
           citem.children.map((themechild: any) => {
             themechild['parent'] = ctype.id;
           })
@@ -94,7 +102,7 @@ export class FilterComponent implements OnInit {
             this.filterObj['competencyArea'].push(citem.name);
           }          
           this.competencyThemeList = this.competencyThemeList.concat(citem.children);
-          console.log('competencyThemeList', this.competencyThemeList)
+          // console.log('competencyThemeList', this.competencyThemeList)
         }
       })
     } else {     
@@ -106,11 +114,11 @@ export class FilterComponent implements OnInit {
         this.filterObj['competencyArea'].splice(index, 1);
       }
     }
-    console.log('competencyThemeList', this.competencyThemeList)
+    // console.log('competencyThemeList', this.competencyThemeList)
   }
 
   getCompetencySubTheme(event: any, cstype: any) {
-    console.log('cstype.parent', cstype.name)
+    // console.log('cstype.parent', cstype.name)
     if (event.checked) {
       this.competencyThemeList.map((csitem: any) => {
         if (csitem.name === cstype.name) {
@@ -131,13 +139,13 @@ export class FilterComponent implements OnInit {
         this.filterObj['competencyTheme'].splice(index, 1)
       }
     }
-    console.log('this.competencySubThemeList', this.competencySubThemeList);
+    // console.log('this.competencySubThemeList', this.competencySubThemeList);
   }
 
 
 
   manageCompetencySubTheme(event: any, csttype: any) {
-    console.log('cstype, event --', event, csttype);
+    // console.log('cstype, event --', event, csttype);
     if (event.checked) {
       this.filterObj['competencySubTheme'].push(csttype.name);
     } else {
@@ -150,8 +158,8 @@ export class FilterComponent implements OnInit {
   }
 
   applyFilter() {
-   
-    console.log(this.filterObj);
+    this.getFilterData.emit(this.filterObj)
+    // console.log(this.filterObj);
   }
 
   clearFilter() {
@@ -169,5 +177,15 @@ export class FilterComponent implements OnInit {
         element['checked'] = false;
       });
     }
+  }
+  getFilterType(event: any, ctype: any,filterType: any) {
+      if(event.checked && !this.filterObj[filterType].includes(ctype.id || ctype)) {
+        this.filterObj[filterType].push(ctype.id || ctype)
+      } else {
+        const index = this.filterObj[filterType].indexOf(ctype.id  || ctype);
+        if (index > -1) { // only splice array when item is found
+          this.filterObj[filterType].splice(index, 1); // 2nd parameter means remove one item only
+        }
+      }
   }
 }

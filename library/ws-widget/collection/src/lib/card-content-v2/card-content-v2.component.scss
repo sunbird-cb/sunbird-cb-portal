@@ -1396,6 +1396,13 @@ $title-line-count: 2;
     line-height: 12px;
   }
 }
+
+.cbpwidth {
+  width: 340px;
+}
+.card-portrait-padding{
+  padding: 12px 8px;
+}
 @media only screen and (max-width:768px) {
   .card-portrait {
     width: calc(100vw - 66px);
@@ -1408,6 +1415,10 @@ $title-line-count: 2;
         border-radius: 12px 12px 0 0 !important;
       }
     }
+  }
+
+  .cbpwidth {
+    width: calc(100vw - 100px);
   }
 }
 

@@ -943,83 +943,44 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
 
       let courses: NsContent.IContent[]
-      const contentNew: any[] = []
       let tabResults: any[] = []
       this.userSvc.fetchCbpPlanList().subscribe((res: any) => {
-        if (res && res.count) {
-          res.content.forEach((c: any) => {
-            c.contentList.forEach((childData: any) => {
-              childData['endDate'] = c.endDate
-              childData['parentId'] = c.id
-              childData['planType'] = 'cbPlan'
-              contentNew.push(childData)
-              let competencyArea: any = []
-              let competencyTheme: any = []
-              let competencyThemeType: any = []
-              let competencySubTheme: any = []
-              childData.competencies_v5.forEach((element: any) => {
-                if(!competencyArea.includes(element.competencyArea)) {
-                  competencyArea.push(element.competencyArea)
-                }
-                if(!competencyTheme.includes(element.competencyTheme)) {
-                  competencyTheme.push(element.competencyTheme)
-                }
-                if(!competencyThemeType.includes(element.competencyThemeType)) {
-                  competencyThemeType.push(element.competencyThemeType)
-                }
-                if(!competencySubTheme.includes(element.competencySubTheme)) {
-                  competencySubTheme.push(element.competencySubTheme)
-                }
-              })
-
-              childData['competencyArea'] = competencyArea
-              childData['competencyTheme'] = competencyTheme
-              childData['competencyThemeType'] = competencyThemeType
-              childData['competencySubTheme'] = competencySubTheme
-            })
-            // contentNew = [...contentNew,...c.contentList]
-          })
-        }
-        console.log(contentNew)
-        courses = contentNew
-        console.log(res, 'res')
-        if (strip.tabs && strip.tabs.length) {
-          tabResults = this.splitCbpTabsData(courses, strip)
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(courses, strip),
-            'done',
-            calculateParentStatus,
-            '',
-            tabResults
-          )
-        } else {
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(courses, strip),
-            'done',
-            calculateParentStatus,
-            'viewMoreUrl',
-          )
+        if (res) {
+          courses = res
+          if (strip.tabs && strip.tabs.length) {
+            tabResults = this.splitCbpTabsData(courses, strip)
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(courses, strip),
+              'done',
+              calculateParentStatus,
+              '',
+              tabResults
+            )
+          } else {
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(courses, strip),
+              'done',
+              calculateParentStatus,
+              'viewMoreUrl',
+            )
+          }
         }
       },                                        (_err: any) => {
-        console.log(_err, 'asdfghj')
 
       })
-      console.log(strip, 'asdfghj')
     }
   }
   splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
     const tabResults: any[] = []
-    debugger
     const date1 = dayjs()
     const splitData = this.getTabsList(
       contentNew,
       (e: any) => {
-        console.log(e,'asdfghjkjghjk')
         const daysCount = dayjs(e.endDate).diff(date1, 'day')
-        e['planDuration'] =  daysCount <= 0 ? 'overdue' : daysCount > 31 ? 'success': 'upcoming'
-        return daysCount <= 0
+        e['planDuration'] =  daysCount < 0 ? 'overdue' : daysCount > 31 ? 'success' : 'upcoming'
+        return daysCount < 0
       },
       strip,
     )
@@ -1056,4 +1017,3 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
   }
 }
-     

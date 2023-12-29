@@ -144,14 +144,79 @@ export class WidgetUserService {
   }
 
   fetchCbpPlanList() {
-    const result: any =  this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
+
+    // let data = JSON.parse(localStorage.getItem('cbpData')|| '')
+    // if(!data) {
+    //   this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
+    //     (data: any) => {
+    //       const courseData = this.mapData(data.result)
+    //       return courseData
+    //     }
+    //   )
+    //   )
+    // } else {
+    //   return this.getData('cbpData')
+
+    // }
+    const result = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
       (data: any) => {
-        // localStorage.setItem('enrollmentData', JSON.stringify(data.result))
-        return data.result
+        const courseData = this.mapData(data.result)
+        return courseData
       }
     )
-  )
-  // this.setTime('enrollmentService')
-  return result
+    )
+    return result
+  }
+  mapData(data: any) {
+    const contentNew: any = []
+    const todayDate = dayjs()
+    if (data && data.count) {
+      data.content.forEach((c: any) => {
+        c.contentList.forEach((childData: any) => {
+          const daysCount = dayjs(c.endDate).diff(todayDate, 'day')
+          childData['planDuration'] =  daysCount < 0 ? 'overdue' : daysCount > 31 ? 'success' : 'upcoming'
+          childData['endDate'] = c.endDate
+          childData['parentId'] = c.id
+          childData['planType'] = 'cbPlan'
+          contentNew.push(childData)
+          const competencyArea: any = []
+          const competencyTheme: any = []
+          const competencyThemeType: any = []
+          const competencySubTheme: any = []
+          const competencyAreaId: any = []
+          const competencyThemeId: any = []
+          const competencySubThemeId: any = []
+         if (childData.competencies_v5) {
+          childData.competencies_v5.forEach((element: any) => {
+            if (!competencyArea.includes(element.competencyArea)) {
+              competencyArea.push(element.competencyArea)
+              competencyAreaId.push(element.competencyAreaId)
+            }
+            if (!competencyTheme.includes(element.competencyTheme)) {
+              competencyTheme.push(element.competencyTheme)
+              competencyThemeId.push(element.competencyThemeId)
+            }
+            if (!competencyThemeType.includes(element.competencyThemeType)) {
+              competencyThemeType.push(element.competencyThemeType)
+            }
+            if (!competencySubTheme.includes(element.competencySubTheme)) {
+              competencySubTheme.push(element.competencySubTheme)
+              competencySubThemeId.push(element.competencySubThemeId)
+            }
+          })
+         }
+
+          childData['competencyArea'] = competencyArea
+          childData['competencyTheme'] = competencyTheme
+          childData['competencyThemeType'] = competencyThemeType
+          childData['competencySubTheme'] = competencySubTheme
+          childData['competencyAreaId'] = competencyAreaId
+          childData['competencyThemeId'] = competencyThemeId
+          childData['competencySubThemeId'] = competencySubThemeId
+        })
+      })
+      localStorage.setItem('cbpData', JSON.stringify(contentNew))
+      return contentNew
+    }
   }
 }

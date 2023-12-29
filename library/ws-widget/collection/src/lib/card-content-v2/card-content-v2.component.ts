@@ -70,7 +70,7 @@ export class CardContentV2Component extends WidgetBaseComponent
       if (this.widgetData.context && this.widgetData.context.pageSection === 'curatedCollections') {
         this.widgetData.content.linkUrl = '/app/curatedCollections/'+ this.widgetData.content.identifier
       }
-      if(this.widgetData.content) {
+      if(this.widgetData && this.widgetData.content) {
         this.btnPlaylistConfig = {
           contentId: this.widgetData.content.identifier,
           contentName: this.widgetData.content.name,
@@ -89,7 +89,7 @@ export class CardContentV2Component extends WidgetBaseComponent
       this.modifySensibleContentRating()
     }
 
-    if(this.widgetData.content) {
+  if(this.widgetData && this.widgetData.content) {
 
       // required for knowledge board
       // TODO: make it more generic

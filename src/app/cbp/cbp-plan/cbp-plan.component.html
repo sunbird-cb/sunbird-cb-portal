@@ -4,7 +4,7 @@
         cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'left' : 
         (cbpConfig?.leftSection?.active &&  !cbpConfig?.rightSection?.active) ? 'full' : ''" *ngIf="cbpConfig?.leftSection?.active">
            <!-- Cbp Side bar component --> 
-           <ws-cbp-side-bar></ws-cbp-side-bar>
+           <ws-cbp-side-bar [cbpCount]="usersCbpCount" [upcommingList]="upcommingList" [overDueList]="overDueList"></ws-cbp-side-bar>
         </div>
 
         <div class="bg-primary" [ngClass]="
@@ -16,7 +16,10 @@
                 </ng-container>
                 <ng-container *ngIf="!enableLazyLoadingFlag">
                     <!-- cbp plans list without skeleton here-->
-                    <ws-cbp-plan-feed></ws-cbp-plan-feed>
+                    <ws-cbp-plan-feed [contenFeedList]="contentFeedList" (searchRequest)="searchData($event)" (toggleFilterEvent)="toggleFilterEvent($event)"></ws-cbp-plan-feed>
+                    <ng-container *ngIf="toggleFilter">
+                        <ws-app-filter (toggleFilter)="toggleFilterMethod($event)" (getFilterData)="applyFilter($event)"></ws-app-filter>
+                    </ng-container>
                 </ng-container>
             </div>
         </div>
