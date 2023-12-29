@@ -4,6 +4,10 @@ $text-primary: #1B4CA1;
     color: $text-primary;
 }
 
+.stamp-img {
+    width: 128px;
+}
+
 .chips-container {
     background: #FFF;
     border: 1px solid rgba($color: #000000, $alpha: 0.08);
@@ -40,8 +44,11 @@ $text-primary: #1B4CA1;
         .img-div {
             width: 280px;
             height: 128px;
-            // background: #eee;
             border-radius: 8px;
+
+            img {
+                width: 280px;
+            }
         }
     }
     
@@ -54,6 +61,12 @@ $text-primary: #1B4CA1;
         -webkit-mask: var(--mask);
         mask: var(--mask);
     }
+}
+
+.no-data-div {
+    background-color: #FFF;
+    width: 100%;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
 }
 
 @media screen and (max-width: 768px) {

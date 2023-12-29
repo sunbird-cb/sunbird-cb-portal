@@ -3,6 +3,9 @@
         <div class="flex flex-row search-div">
             <mat-icon (click)="handleFocus()" class="cursor-pointer">search</mat-icon>
             <input #searchInput type="text" class="search-input flex" placeholder="Search" />
+            <ng-container *ngIf="clearIcon" >
+                <mat-icon (click)="handleClear()" class="cursor-pointer">close</mat-icon>
+            </ng-container>
         </div>
     </div>
     <div class="flex items-center justify-center">
