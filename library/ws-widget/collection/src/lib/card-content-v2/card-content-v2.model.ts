@@ -44,4 +44,8 @@ export namespace NsCardContent {
     SUCCESS = 'success',
   }
 
+  export enum IGOTConst {
+    COMPETENCIES = 'competencies_v5',
+  }
+
 }

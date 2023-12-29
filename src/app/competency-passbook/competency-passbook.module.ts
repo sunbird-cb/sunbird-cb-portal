@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api';
 import { CompetencyPassbookRoutingModule } from './competency-passbook-routing.module';
 
 import { CompetencyPassbookComponent } from './competency-passbook/competency-passbook.component';
@@ -23,7 +24,8 @@ import { CompetencySearchComponent } from './competency-search/competency-search
     MatMenuModule,
     MatTabsModule,
     CompetencyPassbookRoutingModule,
-    SkeletonLoaderModule
+    SkeletonLoaderModule,
+    PipeSafeSanitizerModule
   ]
 })
 
