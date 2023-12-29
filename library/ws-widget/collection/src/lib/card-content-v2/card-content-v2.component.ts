@@ -7,7 +7,6 @@ import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
 import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content-v2.model'
-
 /* tslint:disable*/
 import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
@@ -24,6 +23,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   @Input() widgetData!: NsCardContent.ICard
   @HostBinding('id')
   primaryCategory = NsContent.EPrimaryCategory
+  acbpConstants = NsCardContent.ACBPConst
   public id = `ws-card_${Math.random()}`
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   defaultThumbnail = ''
@@ -70,7 +70,7 @@ export class CardContentV2Component extends WidgetBaseComponent
       if (this.widgetData.context && this.widgetData.context.pageSection === 'curatedCollections') {
         this.widgetData.content.linkUrl = '/app/curatedCollections/'+ this.widgetData.content.identifier
       }
-      if(this.widgetData.content) {
+      if(this.widgetData && this.widgetData.content) {
         this.btnPlaylistConfig = {
           contentId: this.widgetData.content.identifier,
           contentName: this.widgetData.content.name,
@@ -89,7 +89,7 @@ export class CardContentV2Component extends WidgetBaseComponent
       this.modifySensibleContentRating()
     }
 
-    if(this.widgetData.content) {
+  if(this.widgetData && this.widgetData.content) {
 
       // required for knowledge board
       // TODO: make it more generic

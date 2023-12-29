@@ -1,11 +1,12 @@
+// Core imports
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { jsPDF } from 'jspdf'
-
+// RxJS imports
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+// Project files and components
 import { CompetencyPassbookService } from '../competency-passbook.service';
 
 @Component({
@@ -27,7 +28,6 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     
     this.router.data.subscribe((_data: any) => {
       this.stateData = window.history.state
-      console.log("this.stateData - ", this.stateData);
       this.stateData.certificate && this.stateData.certificate.forEach((obj: any) => {
         obj['loading'] = true;
         this.getCertificateSVG(obj);

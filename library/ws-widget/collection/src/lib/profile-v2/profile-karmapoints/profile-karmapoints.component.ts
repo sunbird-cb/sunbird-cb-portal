@@ -14,19 +14,15 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   @HostBinding('id')
   public id = 'profile-karmapoints'
 
-  constructor(private contentSvc: WidgetContentService,) {
+  constructor(private contentSvc: WidgetContentService) {
     super()
   }
 
   ngOnInit() {
-    console.log('kp')
-    console.log('widgetData', this.widgetData)
 
     this.contentSvc.getKarmaPoitns().subscribe((res: any) => {
-      console.log(res)
       if (res && res.kpList && res.kpList.length > 0) {
         this.widgetData.data = res.kpList
-        console.log('widgetData', this.widgetData)
       }
     })
   }

@@ -1,14 +1,15 @@
+// Core imports
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTabChangeEvent } from '@angular/material';
 import { Router } from '@angular/router';
-
+// RxJS imports
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+// Project files and components
+import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { CompetencyPassbookService } from './../competency-passbook.service';
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 
 @Component({
   selector: 'ws-competency-list',
@@ -19,6 +20,21 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 export class CompetencyListComponent implements OnInit, OnDestroy {
 
   private destroySubject$ = new Subject();
+
+  TYPE_CONST = {
+    behavioral: {
+      capsValue: 'Behavioural',
+      value: 'behavioural'
+    },
+    functional: {
+      capsValue: 'Functional',
+      value: 'functional'
+    },
+    domain: {
+      capsValue: 'Domain',
+      value: 'domain'
+    }
+  }
 
   competencyArray: any;
   competency: any = {
@@ -69,7 +85,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   getUserEnrollmentList(): void {
     const userId: any = this.configService && this.configService.userProfile && this.configService.userProfile.userId;
-    this.widgetService.fetchUserBatchList(userId || 'b82aadca-f249-4962-841e-d82987d83b24')
+    this.widgetService.fetchUserBatchList(userId)
       .pipe(takeUntil(this.destroySubject$))
       .subscribe(
         (response: any) => {
@@ -104,11 +120,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       eObj['courseName'] = eachCourse.courseName;
       eObj['competencyTheme'] = v5Obj.competencyTheme;
       if (themeObj && themeObj.name) {
-        console.log("themeObj - ", themeObj);
         eObj['subThemes'] = themeObj.children.map((subObj: any) => {
           return subObj.name
         });
-        console.log("eObj - ", eObj);
       }
     });
   }
@@ -150,7 +164,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       });
     });
 
-    console.log("this.certificateMappedObject - ", this.certificateMappedObject);
     return typeObj;
   }
 

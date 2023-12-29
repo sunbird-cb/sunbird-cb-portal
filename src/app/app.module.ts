@@ -94,6 +94,7 @@ import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
 import { SocialLinkComponent } from './component/social-link/social-link.component';
 import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
 import { AppLogoComponent } from './component/app-logo/app-logo.component';
+import { NoDataComponent } from './component/no-data/no-data.component'
 
 
 @Injectable()
@@ -121,6 +122,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     LoginComponent,
     // AppNavBarComponent,
     AppPublicNavBarComponent,
+    NoDataComponent,
     TncComponent,
     AppIntroComponent,
     TncRendererComponent,

@@ -26,7 +26,6 @@ import { PageContainerComponent } from '../component/page-container/page-contain
 import { FeedListComponent } from './home/feed-list/feed-list.component';
 import { ClientSliderComponent } from '../component/client-slider/client-slider.component';
 import { HomeOtherPortalComponent } from '../component/home-other-portal/home-other-portal.component';
-import { NoDataComponent } from '../component/no-data/no-data.component';
 import { HomeContainerComponent } from '../component/home-container/home-container.component';
 import { DiscussHubComponent } from './home/discuss-hub/discuss-hub.component';
 import { NetworkHubComponent } from './home/network-hub/network-hub.component';
@@ -34,7 +33,7 @@ import { HomePageService } from '../services/home-page.service';
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module';
 
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent, HomeOtherPortalComponent, NoDataComponent, HomeContainerComponent, DiscussHubComponent, NetworkHubComponent],
+  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent, HomeOtherPortalComponent, HomeContainerComponent, DiscussHubComponent, NetworkHubComponent],
   imports: [
     CommonModule,
     RouterModule,
