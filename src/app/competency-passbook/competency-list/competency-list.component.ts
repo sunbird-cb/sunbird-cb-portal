@@ -99,8 +99,22 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     )
   }
 
-  bindMoreData(obj: any, name: string) {
-    obj = obj.map((obj: any) => {
+  loopCertificateData(eachCourse: any, v5Obj: any, themeObj?: any): void {
+    eachCourse.issuedCertificates.forEach((eObj: any) => {
+      eObj['courseName'] = eachCourse.courseName;
+      eObj['competencyTheme'] = v5Obj.competencyTheme;
+      if (themeObj && themeObj.name) {
+        console.log("themeObj - ", themeObj);
+        eObj['subThemes'] = themeObj.children.map((subObj: any) => {
+          return subObj.name
+        });
+        console.log("eObj - ", eObj);
+      }
+    });
+  }
+
+  bindMoreData(typeObj: any, name: string) {
+    typeObj.forEach((obj: any) => {
       obj['viewMore'] = false;
       obj['competencyName'] = name;
 
@@ -113,27 +127,31 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       this.courseWithCompetencyArray.forEach((eachCourse: any) => {
         if (eachCourse.issuedCertificates && eachCourse.issuedCertificates.length) {
           eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.forEach((cObj: any) => {
-            eachCourse.issuedCertificates.forEach((eObj: any) => {
-              eObj ['courseName'] = eachCourse.courseName
-            });
-
             if (cObj.competencyTheme.toLowerCase().trim() === obj.name.toLowerCase().trim()) {
               if (this.certificateMappedObject[obj.name]) {
-                this.certificateMappedObject[obj.name] = [...this.certificateMappedObject[obj.name], ...eachCourse.issuedCertificates]
+                this.certificateMappedObject[obj.name].forEach((certificateObj: any) => {
+                  eachCourse.issuedCertificates.forEach((courseObj: any) => {
+                    if (certificateObj.identifier !== courseObj.identifier) {
+                      this.certificateMappedObject[obj.name] = [...this.certificateMappedObject[obj.name], courseObj];
+                    }
+                  });
+                });
               } else {
                 this.certificateMappedObject[obj.name] = [];
                 this.certificateMappedObject[obj.name] = eachCourse.issuedCertificates;
               }
+
+              this.loopCertificateData(eachCourse, cObj, obj);
+            } else {
+              this.loopCertificateData(eachCourse, cObj);
             }
           })
         }
       });
-      
-      return obj;
     });
 
     console.log("this.certificateMappedObject - ", this.certificateMappedObject);
-    return obj;
+    return typeObj;
   }
 
   fetchCompetencyList(): void {

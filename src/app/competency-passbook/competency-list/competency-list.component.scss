@@ -47,6 +47,7 @@ hr {
         color: red;
     }
 }
+
 /************ Common CSS ***************/
 
 
@@ -174,6 +175,10 @@ hr {
         background-color: rgba(255, 255, 255, 0.08);
         margin: 16px 0;
     }
+}
+
+::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
 }
 /************ Right Container CSS ***************/
 

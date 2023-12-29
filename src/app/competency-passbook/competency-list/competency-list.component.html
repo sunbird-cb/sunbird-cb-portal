@@ -102,7 +102,7 @@
                     <div class="flex flex-col gap-2" (click)="handleClick('all')">
                         <div class="text-base">My competencies</div>
                         <ng-container *ngIf="competency.skeletonLoading">
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'60px'" [height]="'40px'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-2-loader'" [width]="'60px'" [height]="'40px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
                             <div class="text-4xl font-semibold">{{ competency.all.length }}</div>
@@ -118,7 +118,7 @@
                 <div class="flex flex-row justify-between ">
                     <div class="flex flex-col items-center kpi-card">
                         <ng-container *ngIf="competency.skeletonLoading">
-                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                 [height]="'28px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
@@ -165,7 +165,7 @@
                             <div class="flex flex-col justify-center">
                                 <div class="text-sm">{{ elem.label }}</div>
                                 <ng-container *ngIf="competency.skeletonLoading">
-                                    <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                    <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                         [height]="'28px'"></ws-widget-skeleton-loader>
                                 </ng-container>
                                 <ng-container *ngIf="!competency.skeletonLoading">
@@ -182,7 +182,7 @@
                         <div class="flex flex-col">
                             <div class="text-xs">Competency Sub Theme</div>
                             <ng-container *ngIf="competency.skeletonLoading">
-                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
@@ -192,7 +192,7 @@
                         <div class="flex flex-col">
                             <div class="text-xs">Content Consumed</div>
                             <ng-container *ngIf="competency.skeletonLoading">
-                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'40px'"
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
