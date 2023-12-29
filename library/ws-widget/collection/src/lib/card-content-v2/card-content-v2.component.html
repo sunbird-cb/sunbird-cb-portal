@@ -716,9 +716,9 @@
             </div>
             <ng-container *ngIf="widgetData?.content?.endDate">
               <div class="cbp-mark">
-                <span *ngIf="widgetData?.content?.planDuration === 'upcoming'"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                <span *ngIf="widgetData?.content?.planDuration === 'success'"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                <span *ngIf="widgetData?.content?.planDuration === 'overdue'" class="cbp-danger">Over due</span>
+                <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+                <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+                <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE" class="cbp-danger">Over due</span>
               </div>
             </ng-container>
             <div class="duration-box right-corner" *ngIf="widgetData?.content?.duration > 0">
@@ -1012,9 +1012,9 @@
       </div>
       <ng-container *ngIf="widgetData?.content?.endDate">
         <div class="cbp-mark left-0 border-top-radius">
-          <span *ngIf="widgetData?.content?.planDuration === 'upcoming'"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-          <span *ngIf="widgetData?.content?.planDuration === 'success'"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-          <span  *ngIf="widgetData?.content?.planDuration === 'overdue'"    class="cbp-danger">Over due</span>
+          <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+          <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+          <span  *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE"    class="cbp-danger">Over due</span>
         </div>
       </ng-container>
     </div>
@@ -1480,9 +1480,9 @@
                  </div>
                  <ng-container *ngIf="widgetData?.content?.endDate">
                   <div class="cbp-mark left-0 card-portrait-padding border-top-radius">
-                    <span *ngIf="widgetData?.content?.planDuration === 'upcoming'"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                    <span *ngIf="widgetData?.content?.planDuration === 'success'"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                    <span  *ngIf="widgetData?.content?.planDuration === 'overdue'"    class="cbp-danger">Over due</span>
+                    <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+                    <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
+                    <span  *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE"    class="cbp-danger">Over due</span>
                   </div>
                 </ng-container>
               </div>

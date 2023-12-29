@@ -7,6 +7,7 @@ import { NsContent } from './widget-content.model'
 import 'rxjs/add/observable/of'
 import dayjs from 'dayjs'
 import { environment } from 'src/environments/environment'
+import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
@@ -174,7 +175,8 @@ export class WidgetUserService {
       data.content.forEach((c: any) => {
         c.contentList.forEach((childData: any) => {
           const daysCount = dayjs(c.endDate).diff(todayDate, 'day')
-          childData['planDuration'] =  daysCount < 0 ? 'overdue' : daysCount > 31 ? 'success' : 'upcoming'
+          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
+          ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
           childData['endDate'] = c.endDate
           childData['parentId'] = c.id
           childData['planType'] = 'cbPlan'

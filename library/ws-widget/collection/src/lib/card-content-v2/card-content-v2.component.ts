@@ -7,7 +7,6 @@ import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
 import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content-v2.model'
-
 /* tslint:disable*/
 import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
@@ -24,6 +23,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   @Input() widgetData!: NsCardContent.ICard
   @HostBinding('id')
   primaryCategory = NsContent.EPrimaryCategory
+  acbpConstants = NsCardContent.ACBPConst
   public id = `ws-card_${Math.random()}`
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   defaultThumbnail = ''

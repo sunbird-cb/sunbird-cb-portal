@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment'
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
 import dayjs from 'dayjs'
+import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 
 interface IStripUnitContentData {
   key: string
@@ -979,7 +980,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       contentNew,
       (e: any) => {
         const daysCount = dayjs(e.endDate).diff(date1, 'day')
-        e['planDuration'] =  daysCount < 0 ? 'overdue' : daysCount > 31 ? 'success' : 'upcoming'
+        e['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31 ?
+         NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
         return daysCount < 0
       },
       strip,
