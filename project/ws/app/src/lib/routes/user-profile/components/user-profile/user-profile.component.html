@@ -414,7 +414,13 @@
                         </mat-form-field>
                       </div>
 
-                      <div class="input-wrapper margin-top-s">
+                      <div class="input-wrapper" *ngIf="!isVerifiedAlready">
+                        <div class="flex flex-1 flex-middle">
+                          <img width="18px" height="18px" mat-raised-button src="assets/icons/info.svg" alt="">
+                          <span class="ml-2">Once you've filled in all the mandatory fields in your profile and receive approval, you will be recognized as a Verified Karmayogi.</span>
+                        </div>
+                      </div>
+                      <!-- <div class="input-wrapper margin-top-s">
                         <div class="flex flex-1 flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
                           <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge"
                             formControlName="verifiedKarmayogi" #verifiedKarmayogi [checked]="karmayogiBadge"
@@ -428,7 +434,7 @@
                             </label>
                           </mat-checkbox>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="input-wrapper margin-top-l">
                         <div class="flex flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
                           <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi')">{{inReview}}</span>
