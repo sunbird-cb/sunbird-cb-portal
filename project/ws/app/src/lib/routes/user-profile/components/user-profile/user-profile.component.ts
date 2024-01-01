@@ -33,6 +33,7 @@ import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
 import { RequestDialogComponent } from '../request-dialog/request-dialog.component'
+import { USER_PROFILE_MSG_CONFIG } from './user-profile-constant'
 
 /* tslint:enable */
 
@@ -136,6 +137,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   selectedtags: any[] = []
   eHRMSId: any
   eHRMSName: any
+  verifiedKarmayogiMsg!: any
 
   constructor(
     private snackBar: MatSnackBar,
@@ -221,6 +223,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
     // })
+    this.verifiedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.verifiedKarmayogi
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
       return v.approvalRequired ? { [k]: v } : null
     }))
