@@ -20,10 +20,7 @@ export class WeeklyClapsComponent implements OnInit {
     // && this.activatedRoute.snapshot.data.pageData.data.weeklyClaps || []
     // }
   }
-
-  ngOnChanges() {
-  }
-
+  
   openInfo(myDialog: any) {
     const confirmDialog = this.dialog.open(InfoDialogComponent, {
         width: '613px',
