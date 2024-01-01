@@ -12,7 +12,7 @@
         </div>
       </div>
       <div mat-card-avatar class="example-header-image">
-        <ng-container *ngIf="portalProfile.personalDetails?.firstname" ; else elseFirstName>
+        <ng-container *ngIf="portalProfile?.personalDetails?.firstname" ; else elseFirstName>
           <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null"
             [name]="portalProfile?.personalDetails?.firstname" size="xxl-s">
           </ws-widget-avatar-photo>
