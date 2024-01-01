@@ -162,7 +162,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
     })
-
     this.getPendingRequestData()
   }
 
