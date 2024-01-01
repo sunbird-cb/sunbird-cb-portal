@@ -20,7 +20,7 @@ export class WeeklyClapsComponent implements OnInit {
     // && this.activatedRoute.snapshot.data.pageData.data.weeklyClaps || []
     // }
   }
-
+  
   openInfo(myDialog: any) {
     const confirmDialog = this.dialog.open(InfoDialogComponent, {
         width: '613px',
