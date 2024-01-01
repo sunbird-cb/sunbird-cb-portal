@@ -7,7 +7,7 @@
     </p>
   </div>
   <div class="mat-caption karmapoints-panel karmapoints-panel-claim margin-top-xs" *ngIf="kpData && btnCategory === 'claim'">
-    <p class="margin-remove">{{kpData.textBeforeIcon}}
+    <p class="margin-remove">{{kpData.textBeforeIcon}} (click)="onClickOfClaim()"
         <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints">
         <span class="font-bold"> {{kpData.points}} </span>
         <span *ngIf="kpData.textAfterIcon">{{kpData.textAfterIcon}}</span>

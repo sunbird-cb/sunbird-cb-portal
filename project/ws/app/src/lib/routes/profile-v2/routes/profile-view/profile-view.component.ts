@@ -14,6 +14,8 @@ import { NetworkV2Service } from '../../../network-v2/services/network-v2.servic
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
 import { map } from 'rxjs/operators'
+import moment from 'moment'
+
 import {
   WidgetUserService,
   NsContent,
@@ -161,7 +163,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.fetchDiscussionsData()
     this.fetchUserBatchList()
     this.fetchRecentRequests()
-    this.contentSvc.getKarmaPoitns(3).subscribe((res: any) => {
+    this.contentSvc.getKarmaPoitns(3, moment(new Date()).valueOf()).subscribe((res: any) => {
       if (res && res.kpList) {
         this.portalProfile.karmapoints = res.kpList
       }

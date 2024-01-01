@@ -22,7 +22,7 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
 
   getName(row: any) {
     const info = JSON.parse(row.addinfo)
-    return info.COURSENAME ? info.COURSENAME : "No course"
+    return info.COURSENAME ? info.COURSENAME : 'No course'
   }
   getAdditonInfo(row: any) {
     const info = JSON.parse(row.addinfo)

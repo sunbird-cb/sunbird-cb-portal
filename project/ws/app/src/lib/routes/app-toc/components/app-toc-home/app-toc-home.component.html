@@ -136,17 +136,17 @@ TODO: edit option while preview Mode
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
-                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  <div *ngIf="isAcbpCourse">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (claimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                   </div>
+                   <div *ngIf="!isAcbpCourse">
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
                 </div>
 
                 <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
                  <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
                 </div>
-
-                <div *ngIf="!isAcbpCourse" >
-                  <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'"></ws-app-karmapoints-panel>
-                 </div>
-
               </ng-container>
               <ng-container *ngIf="
                 (actionBtnStatus === 'grant' &&
@@ -220,7 +220,12 @@ TODO: edit option while preview Mode
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
-                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  <div *ngIf="isAcbpCourse">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (claimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="!isAcbpCourse">
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
                 </div>
 
                 <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >

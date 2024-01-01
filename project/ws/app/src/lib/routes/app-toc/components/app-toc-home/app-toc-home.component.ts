@@ -317,10 +317,32 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     this.route.queryParamMap.subscribe(qParamsMap => {
       const acbp = qParamsMap.get('planType')
-      if (acbp && acbp === 'cbPlan') {
-        this.isAcbpCourse = true
+      const endPlan = qParamsMap.get('endPlan')
+      const contextId = qParamsMap.get('contextId')
+      if (acbp && endPlan && acbp === 'cbPlan') {
+        const planDate = dayjs(endPlan)
+        const currentDate = dayjs(new Date())
+        if (currentDate <= planDate) {
+          const requestObj = {
+            filters: {
+              contextType: 'Course',
+              contextId: contextId
+            }
+          }
+          this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
+            if (res && res.kpList) {
+              this.isAcbpCourse = false
+            } else {
+              this.isAcbpCourse = true
+            }
+          })
+        }
       }
     })
+  }
+
+  claimKarmaPoints(event: any) {
+    console.log("event ", event)
   }
 
   ngAfterViewInit() {

@@ -28,6 +28,11 @@
           </mat-card>
         </ng-container>
       </div>
+      <div class="text-right margin-right-xxl margin-bottom-m ng-star-inserted" *ngIf="count < total">
+        <button class="mat-raised-button mat-button-base mat-primary" (click)="loadMore()">
+          Load more...
+        </button>
+      </div>
     </ng-container>
     <ng-container *ngIf="!karmaPointsHistory">
       <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card">
