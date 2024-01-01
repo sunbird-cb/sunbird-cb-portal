@@ -7,19 +7,21 @@
     <div class="flex flex-middle flex-between">
         <div>
             <p class="group-title">All</p>
-            <p class="group-count">{{cbpCount?.all || 0}}</p>
+            <ws-widget-skeleton-loader *ngIf="cbpLoader" [width]="'28px'" [height]="'20px'" [bindingClass]="'flex rounded h-16 margin-right-xs'"></ws-widget-skeleton-loader>
+            <p class="group-count" *ngIf="!cbpLoader">{{cbpCount?.all || 0}}</p>
         </div>
         <div>
             <p class="group-title">Upcoming</p>
-            <p class="group-count">{{cbpCount?.upcoming || 0}}</p>
+            <ws-widget-skeleton-loader *ngIf="cbpLoader" [width]="'28px'" [height]="'20px'" [bindingClass]="'flex rounded h-16 margin-right-xs'"></ws-widget-skeleton-loader>
+            <p class="group-count" *ngIf="!cbpLoader">{{cbpCount?.upcoming || 0}}</p>
         </div>
         <div>
             <p class="group-title">Over due</p>
-            <p class="group-count">{{cbpCount?.overdue || 0}}</p>
+            <ws-widget-skeleton-loader *ngIf="cbpLoader" [width]="'28px'" [height]="'20px'" [bindingClass]="'flex rounded h-16 margin-right-xs'"></ws-widget-skeleton-loader>
+            <p class="group-count" *ngIf="!cbpLoader">{{cbpCount?.overdue || 0}}</p>
         </div>
     </div>
  </div>
- 
   <mat-menu #menu="matMenu" class="filter-menu"> 
     <!-- give local reference and tell this is manu by assigning 'matMenu' -->
     <div class="p-4">

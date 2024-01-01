@@ -18,6 +18,8 @@ export class CbpPlanFeedComponent implements OnInit {
   cbpConfig: any
   @Input()
   contenFeedList: any
+  @Input()
+  filterObject: any
   @Output() toggleFilterEvent = new EventEmitter()
   @Output() searchRequest = new EventEmitter()
 

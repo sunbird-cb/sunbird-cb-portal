@@ -2,6 +2,7 @@ import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, 
 import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import { FormControl } from '@angular/forms';
 import { AppCbpPlansService } from 'src/app/services/app-cbp-plans.service';
+import _ from 'lodash';
 @Component({
   selector: 'ws-app-filter',
   templateUrl: './filter.component.html',
@@ -14,19 +15,21 @@ import { AppCbpPlansService } from 'src/app/services/app-cbp-plans.service';
 export class FilterComponent implements OnInit {
   @Output() toggleFilter = new EventEmitter()
   @Output() getFilterData = new EventEmitter();
+  @Output() clearFilterObj = new EventEmitter();
   @Input() clearFilterFlag:any;
   @Input() from:any;
   @Input() designationList:any;
-  timeDuration: any = [{ "id": "This week", name: 'This week', checked: false }, { "id": 'This month', name: 'This month', checked: false }, { "id": 'Last 3 months', name: 'Last 3 months', checked: false }, { "id": 'Last 6 months', name: 'Last 6 months', checked: false }, { "id": 'Last year', name: 'Last year', checked: false }];
-  contentStatus: any = [{ "id": "All", name: 'All', checked: false }, { "id": 'In progress', name: 'In progress', checked: false }, { "id": 'Not started', name: 'Not started', checked: false }, { "id": 'Completed', name: 'Completed', checked: false }];
-  primaryCategoryList: any = [{ "id": "Course", name: 'Course' }, { "id": 'Program', name: 'Program' }];
+  @Input() filterObj:any;
+  timeDuration: any = [{ "id": '1w', name: 'This week', checked: false }, { "id": '1m', name: 'This month', checked: false }, { "id": 3, name: 'Last 3 months', checked: false }, { "id": 6, name: 'Last 6 months', checked: false }, { "id": 12, name: 'Last year', checked: false }];
+  contentStatus: any = [{ "id": "all", name: 'All', checked: false }, { "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
+  primaryCategoryList: any = [{ "id": "Course", name: 'Course',checked: false }, { "id": 'Program', name: 'Program',checked: false }];
   providersList: any[] = [];
   selectedProviders: any[] = [];
-  competencyTypeList = [{ "id": "Behavioral", name: 'Behavioural', checked: false }, { "id": 'Functional', name: 'Functional', checked: false }, { "id": 'Domain', name: 'Domain', checked: false }];  
+  competencyTypeList: any = [];  
   competencyList: any = [];
   competencyThemeList: any[] = [];
   competencySubThemeList: any[] = [];
-  filterObj: any = {
+  filterObjEmpty: any = {
     "primaryCategory":[],
     "status":[],
     "timeDuration":[], 
@@ -48,6 +51,7 @@ export class FilterComponent implements OnInit {
   ngOnInit() {
       this.getFilterEntity();
       this.getProviders();
+      this.bindFilter()
   }
 
   getFilterEntity() {
@@ -59,17 +63,30 @@ export class FilterComponent implements OnInit {
         "isDetail": true
       }
     }
-    // console.log(filterObj)
     this.appCbpPlansService.getFilterEntity(filterObj).subscribe((res: any) => {
-      // console.log('entity,', res);
       this.competencyList = res;
+      this.manageCompetency();
 
     })
   }
+  manageCompetency() {
+    this.competencyList.forEach((competency : any) => {
+      let data: any = {
+        id: competency.name,
+        name:competency.name,
+        checked: false,
+        children: competency.children
+      }
+      this.competencyTypeList.push(data)
+    });
+    this.competencyTypeList =  _.orderBy(this.competencyTypeList, ['id'],['asc'])
+
+    this.bindFilter()
+  }
   getProviders() {
     this.appCbpPlansService.getProviders().subscribe((res: any) => {
-      // console.log('providers,', res);
-      this.providersList = res;
+      this.providersList = res
+      this.bindProviders()
     })
   }
 
@@ -89,20 +106,17 @@ export class FilterComponent implements OnInit {
     }
   }
 
-  getCompetencyTheme(event: any, ctype: any) {
-    // console.log('ctype', ctype, this.competencyList, event);
+  getCompetencyTheme(event: any, ctype: any, pushValue: boolean = true) {
     if (event.checked) {
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
-          // console.log(citem.name, ctype.name, citem.children)
           citem.children.map((themechild: any) => {
             themechild['parent'] = ctype.id;
           })
-          if(this.filterObj['competencyArea']) {
+          if(this.filterObj['competencyArea'] && pushValue) {
             this.filterObj['competencyArea'].push(citem.name);
           }          
           this.competencyThemeList = this.competencyThemeList.concat(citem.children);
-          // console.log('competencyThemeList', this.competencyThemeList)
         }
       })
     } else {     
@@ -114,11 +128,10 @@ export class FilterComponent implements OnInit {
         this.filterObj['competencyArea'].splice(index, 1);
       }
     }
-    // console.log('competencyThemeList', this.competencyThemeList)
+    this.bindCompetencyTheme()
   }
 
-  getCompetencySubTheme(event: any, cstype: any) {
-    // console.log('cstype.parent', cstype.name)
+  getCompetencySubTheme(event: any, cstype: any, pushValue: boolean = true) {
     if (event.checked) {
       this.competencyThemeList.map((csitem: any) => {
         if (csitem.name === cstype.name) {
@@ -127,7 +140,9 @@ export class FilterComponent implements OnInit {
             subthemechild['parent'] = csitem.name;
           })
           this.competencySubThemeList = this.competencySubThemeList.concat(csitem.children);
-          this.filterObj['competencyTheme'].push(cstype.name);
+          if(pushValue) {
+            this.filterObj['competencyTheme'].push(cstype.name)
+          }
         }
       })
     } else {
@@ -139,13 +154,12 @@ export class FilterComponent implements OnInit {
         this.filterObj['competencyTheme'].splice(index, 1)
       }
     }
-    // console.log('this.competencySubThemeList', this.competencySubThemeList);
+    this.bindCompetencySubTheme()
   }
 
 
 
   manageCompetencySubTheme(event: any, csttype: any) {
-    // console.log('cstype, event --', event, csttype);
     if (event.checked) {
       this.filterObj['competencySubTheme'].push(csttype.name);
     } else {
@@ -159,15 +173,10 @@ export class FilterComponent implements OnInit {
 
   applyFilter() {
     this.getFilterData.emit(this.filterObj)
-    // console.log(this.filterObj);
   }
 
   clearFilter() {
-    if(this.checkboxes) {
-      this.checkboxes.forEach((element: any) => {
-        element['checked'] = false;
-      });
-    }
+    this.getFilterData.emit(this.filterObjEmpty)
     
   }
 
@@ -180,12 +189,75 @@ export class FilterComponent implements OnInit {
   }
   getFilterType(event: any, ctype: any,filterType: any) {
       if(event.checked && !this.filterObj[filterType].includes(ctype.id || ctype)) {
-        this.filterObj[filterType].push(ctype.id || ctype)
+        let data = ctype.id ?ctype.id : ctype
+        this.filterObj[filterType].push(data)
       } else {
         const index = this.filterObj[filterType].indexOf(ctype.id  || ctype);
         if (index > -1) { // only splice array when item is found
           this.filterObj[filterType].splice(index, 1); // 2nd parameter means remove one item only
         }
       }
+      if(ctype.id === 'all' && filterType === 'status'){
+        if(event.checked) {
+          this.filterObj[filterType] = []
+          this.filterObj[filterType] = ['all']
+        } else {
+          this.filterObj[filterType] = []
+        }
+      }
+  }
+
+  bindFilter() {
+    if(this.filterObj['primaryCategory'].length) {
+      this.primaryCategoryList.forEach((content: any) => {
+        content.checked = this.filterObj['primaryCategory'].includes(content.id)
+      })
+    }
+    if(this.filterObj['timeDuration'].length) {
+      this.timeDuration.forEach((content: any) => {
+        content.checked = this.filterObj['timeDuration'].includes(content.id)
+      })
+    }
+
+    if(this.filterObj['status'].length) {
+      this.contentStatus.forEach((content: any) => {
+        content.checked = this.filterObj['status'].includes(content.id)
+      })
+    }
+    
+    if(this.filterObj['competencyArea'].length) {
+      this.competencyTypeList.forEach((content: any) => {
+        content.checked = this.filterObj['competencyArea'].includes(content.id)
+        if(this.filterObj['competencyArea'].includes(content.id)) {
+          this.getCompetencyTheme({checked: true}, content, false)
+        }
+      })
+    }
+  }
+  bindCompetencyTheme() {
+    if(this.filterObj['competencyTheme'].length) {
+      this.competencyThemeList.forEach((content: any) => {
+        content.checked = this.filterObj['competencyTheme'].includes(content.name)
+        if(this.filterObj['competencyTheme'].includes(content.name)) {
+          this.getCompetencySubTheme({checked: true}, content , false)
+        }
+      })
+    }
+  }
+
+  bindCompetencySubTheme() {
+    if(this.filterObj['competencySubTheme'].length) {
+      this.competencySubThemeList.forEach((content: any) => {
+        content.checked = this.filterObj['competencySubTheme'].includes(content.name)
+      })
+    }
+  }
+
+  bindProviders() {
+    if(this.filterObj['providers'].length) {
+      this.providersList.forEach((content: any) => {
+        content.checked = this.filterObj['providers'].includes(content.name)
+      })
+    }
   }
 }

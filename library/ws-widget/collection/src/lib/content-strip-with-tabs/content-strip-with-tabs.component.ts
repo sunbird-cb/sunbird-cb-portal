@@ -82,6 +82,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   environment!: any
   changeEventSubscription: Subscription | null = null
   defaultMaxWidgets = 12
+  enrollInterval: any
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -296,7 +297,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromTrendingContent(strip, calculateParentStatus)
-    this.fetchAllCbpPlans(strip, calculateParentStatus)
+    this.enrollInterval = setInterval(() => {
+      this.fetchAllCbpPlans(strip, calculateParentStatus)
+    },                                1000)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -941,7 +944,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
-    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length
+    && localStorage.getItem('enrollmentData')) {
 
       let courses: NsContent.IContent[]
       let tabResults: any[] = []
@@ -971,6 +975,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       },                                        (_err: any) => {
 
       })
+
+      clearInterval(this.enrollInterval)
     }
   }
   splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {

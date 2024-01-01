@@ -5,6 +5,13 @@ import {
   NsContent,
 } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import _ from 'lodash';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
+dayjs.extend(isBetween)
 @Component({
   selector: 'ws-cbp-plan',
   templateUrl: './cbp-plan.component.html',
@@ -21,6 +28,16 @@ export class CbpPlanComponent implements OnInit {
   filteredData: any
   contentFeedListCopy: any
   contentFeedList: any
+  cbpLoader:boolean = false
+  filterObjData: any = {
+    "primaryCategory":[],
+    "status":[],
+    "timeDuration":[], 
+    "competencyArea": [], 
+    "competencyTheme": [], 
+    "competencySubTheme": [], 
+    "providers": [] 
+  }
   mobileTopHeaderVisibilityStatus = true;
   constructor(
     private activatedRoute:ActivatedRoute,
@@ -34,11 +51,12 @@ export class CbpPlanComponent implements OnInit {
     }
     this.upcommingList = this.transformSkeletonToWidgets(this.cbpAllConfig.cbpUpcomingStrips)
     this.overDueList = this.transformSkeletonToWidgets(this.cbpAllConfig.cbpUpcomingStrips)
-    this.contentFeedList = this.transformSkeletonToWidgets(this.cbpAllConfig.cbpFeedStrip)
+    this.contentFeedList = this.transformSkeletonToWidgets(this.getFeedStrip())
     this.getCbPlans()
   }
 
   async getCbPlans() {
+    this.cbpLoader = true
     this.widgetSvc.fetchCbpPlanList().subscribe(async (res: any) => {
       if(res.length) {
         this.cbpOriginalData = res
@@ -53,7 +71,7 @@ export class CbpPlanComponent implements OnInit {
           }
         })
         this.contentFeedListCopy = res
-        this.contentFeedList = this.transformContentsToWidgets(res, this.cbpAllConfig.cbpFeedStrip);
+        this.contentFeedList = this.transformContentsToWidgets(res, this.getFeedStrip());
         this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips);
         this.overDueList = this.transformContentsToWidgets(this.overDueList, this.cbpAllConfig.cbpUpcomingStrips);
         const all = this.overDueList.length + this.upcommingList.length;
@@ -63,6 +81,7 @@ export class CbpPlanComponent implements OnInit {
           all: all
         }
       }
+      this.cbpLoader =false
     })
   }
   private transformContentsToWidgets(
@@ -105,38 +124,112 @@ export class CbpPlanComponent implements OnInit {
       },
     }))
   }
+  getFeedStrip(){
+    return window.screen.width < 768 ? this.cbpAllConfig.cbpFeedMobileStrip : this.cbpAllConfig.cbpFeedStrip
+  }
 
   toggleFilterEvent(event: any) {
     this.toggleFilter = event
   }
   applyFilter(event: any){
     this.toggleFilter = false
+    this.filterObjData = event
     this.filterData(event)
   }
-  filterData(filterValue: any) {
-    this.filteredData = this.cbpOriginalData
-    let finalFilterValue: any = []
-    this.filteredData.forEach((data: any)=> {
-    if((filterValue['primaryCategory'].length > 0 && filterValue['primaryCategory'].includes(data.primaryCategory))){
-        finalFilterValue.push(data)
-      }
-      //   Object.keys(filterValue).forEach((ele: any) => {
-      //       if(filterValue[ele].length > 0) {
-      //         if(filterValue[ele].includes(data.primaryCategory))  {
-      //           finalFilterValue.push(data)
-      //         }
-      //       }
-      // })
-    })
+  clearFilterObj(event: any){
+    this.filterObjData = event
+    this.filterData(event)
 
+  }
+  filterData(filterValue: any) {
+    debugger
+    let finalFilterValue: any = []
+    if(filterValue['primaryCategory'].length ||
+    filterValue['status'].length ||
+    filterValue['timeDuration'].length ||
+    filterValue['competencyArea'].length ||
+    filterValue['competencyTheme'].length ||
+    filterValue['competencySubTheme'].length ||
+    filterValue['providers'].length
+    ) {
+      this.filteredData = this.cbpOriginalData
+     
+        if(filterValue['primaryCategory'].length){
+          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['primaryCategory'].includes(data.primaryCategory)) {
+              return data 
+            }
+          })
+        }
+
+        if(filterValue['competencyArea'].length){
+          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['competencyArea'].some((r: any)=> data.competencyArea.includes(r))) {
+              return data 
+            }
+          })
+        }
+
+        if(filterValue['competencyTheme'].length){
+          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['competencyTheme'].some((r: any)=> data.competencyTheme.includes(r))) {
+              return data 
+            }
+          })
+        }
+
+        if(filterValue['competencySubTheme'].length){
+          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['competencySubTheme'].some((r: any)=> data.competencySubTheme.includes(r))) {
+              return data 
+            }
+          })
+        }
+        if(filterValue['status'].length){
+          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            let statusData = filterValue['status'].includes('all')? ['0','1','2']: filterValue['status']
+            if(statusData.includes(String(data.contentStatus))) {
+              return data 
+            }
+          })
+        }
+        if(filterValue['providers'].length){
+          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['providers'].includes(data.organisation[0])) {
+              return data 
+            }
+          })
+        }
+        if(filterValue['timeDuration'].length){
+          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['timeDuration'].some((r: any)=> {
+              if(r === '1w' || r === '1m') {
+                const today = dayjs()
+                const startOfWeek = today.startOf(r === '1w'? 'week': 'month')
+
+                // Get the end of the current week
+                const endOfWeek = today.endOf(r === '1w'? 'week': 'month')
+                return dayjs(data.endDate).isSameOrAfter(dayjs(startOfWeek)) && dayjs(data.endDate).isSameOrBefore(endOfWeek)
+              } else {
+                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(r, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
+              }
+            })
+            ) {
+              return data 
+            }
+          })
+        }
+  
+    } else {
+      finalFilterValue= this.cbpOriginalData
+    }
     this.contentFeedListCopy = finalFilterValue
    
-    this.contentFeedList = this.transformContentsToWidgets(finalFilterValue, this.cbpAllConfig.cbpFeedStrip);
+    this.contentFeedList = this.transformContentsToWidgets(finalFilterValue, this.getFeedStrip());
 
   }
 
   searchData(event: any) {
-    debugger
     let searchData = this.contentFeedListCopy
     let searchFilterData = []
     if (event.query) {
@@ -146,6 +239,6 @@ export class CbpPlanComponent implements OnInit {
     }
 
 
-    this.contentFeedList = this.transformContentsToWidgets(searchFilterData, this.cbpAllConfig.cbpFeedStrip)
+    this.contentFeedList = this.transformContentsToWidgets(searchFilterData, this.getFeedStrip())
   }
 }
