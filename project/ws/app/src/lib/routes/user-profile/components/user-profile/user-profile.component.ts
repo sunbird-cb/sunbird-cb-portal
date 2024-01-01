@@ -552,10 +552,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  verifiedKarmayogiCheck() {
-    this.karmayogiBadge = !this.karmayogiBadge
-    this.createUserForm.patchValue({ verifiedKarmayogi: this.karmayogiBadge })
-  }
+  // verifiedKarmayogiCheck() {
+  //   this.karmayogiBadge = !this.karmayogiBadge
+  //   this.createUserForm.patchValue({ verifiedKarmayogi: this.karmayogiBadge })
+  // }
 
   private filterNationality(name: string): INation[] {
 
@@ -965,9 +965,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (data.verifiedKarmayogi) {
       this.isVerifiedAlready = data.verifiedKarmayogi
       this.karmayogiBadge = data.verifiedKarmayogi
-      this.createUserForm.patchValue({
-        verifiedKarmayogi: data.verifiedKarmayogi
-      })
+      // this.createUserForm.patchValue({
+      //   verifiedKarmayogi: data.verifiedKarmayogi
+      // })
     }
     /* tslint:enable */
     this.cd.detectChanges()
