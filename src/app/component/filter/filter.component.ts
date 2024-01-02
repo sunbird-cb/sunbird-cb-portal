@@ -1,5 +1,5 @@
-import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren } from '@angular/core'
-import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetRef} from '@angular/material/bottom-sheet'
+import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren, Inject } from '@angular/core'
+import { MAT_BOTTOM_SHEET_DATA, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import { FormControl } from '@angular/forms';
 import { AppCbpPlansService } from 'src/app/services/app-cbp-plans.service';
 import _ from 'lodash';
@@ -9,7 +9,8 @@ import _ from 'lodash';
   styleUrls: ['./filter.component.scss'],
   providers: [
     { provide: MatBottomSheetRef, useValue: {} },
-    {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+    {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    { provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }
   ],
 })
 export class FilterComponent implements OnInit {
@@ -40,8 +41,14 @@ export class FilterComponent implements OnInit {
   };
   searchThemeControl = new FormControl();
   @ViewChildren("checkboxes") checkboxes!: QueryList<ElementRef>;
-  constructor(
-    private bottomSheetRef: MatBottomSheetRef<FilterComponent>, private appCbpPlansService : AppCbpPlansService) { }
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    private bottomSheetRef: MatBottomSheetRef<FilterComponent>, private appCbpPlansService : AppCbpPlansService) {
+      if(this.data) {
+        console.log(this.data)
+        this.filterObj = this.data.filterObj
+
+      }
+     }
 
 
   openLink(): void {

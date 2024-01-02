@@ -45,7 +45,10 @@ export class CbpPlanFeedComponent implements OnInit {
   showBottomSheet(): void {
     this.bottomSheet.open(FilterComponent,{
       panelClass: 'filter-cbp',
-      ariaLabel: 'Share on social media'
+      ariaLabel: 'Share on social media',
+      data: {
+        filterObj: this.filterObject
+      }
     });
   }
   
