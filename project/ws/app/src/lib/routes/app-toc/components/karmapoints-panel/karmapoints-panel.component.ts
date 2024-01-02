@@ -9,7 +9,7 @@ export class KarmaPointsPanelComponent implements OnInit {
     @Input() btntype: any
     @Input() data: any = []
     @Input() btnCategory = ''
-    @Output() newItemEvent = new EventEmitter<string>();
+    @Output() clickClaimKarmaPoints = new EventEmitter<string>();
     kpData: any
 
   constructor() { }
@@ -23,7 +23,7 @@ export class KarmaPointsPanelComponent implements OnInit {
   }
 
   onClickOfClaim() {
-    this.newItemEvent.emit('claim')
+    this.clickClaimKarmaPoints.emit('claim')
   }
 
 }

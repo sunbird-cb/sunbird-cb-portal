@@ -21,12 +21,21 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   }
 
   getName(row: any) {
-    const info = JSON.parse(row.addinfo)
-    return info.COURSENAME ? info.COURSENAME : 'No course'
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
+      return info.COURSENAME ? info.COURSENAME : 'No course'
+    } else {
+      return 'No course'
+    }
+
   }
   getAdditonInfo(row: any) {
-    const info = JSON.parse(row.addinfo)
-    return info.ACBP
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
+      return info.ACBP
+    } else {
+      return false
+    }
   }
 
 }

@@ -4,12 +4,12 @@
       <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
         Karma Points
       </span>
-      <a class="flex-4 mobile-margin show-all">
+      <a class="flex-4 mobile-margin show-all" [routerLink]="['/public/faq']" >
         <!-- <img class="info-icon" alt="info" src="/assets/icons/info.svg"> -->
         <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="kpTooltiptext">info_outline</mat-icon>
       </a>
     </mat-card-content>
-    <ng-container *ngIf="karmaPointsHistory">
+    <ng-container *ngIf="karmaPointsHistory.length > 0">
       <div class="karmapoints-container">
         <ng-container *ngFor="let karmapoints of karmaPointsHistory | keyvalue">
           <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0"  *ngIf="karmapoints.key !== 'undefined'">
@@ -27,15 +27,18 @@
             </div>
           </mat-card>
         </ng-container>
+        <div *ngIf="showLoader" class="text-center my-2">
+          <mat-spinner class="inline-block"></mat-spinner>
+        </div>
       </div>
-      <div class="text-right margin-right-xxl margin-bottom-m ng-star-inserted" *ngIf="count < total">
+      <div class="text-right margin-right-xxl margin-bottom-m ng-star-inserted" *ngIf="showMoreBtn">
         <button class="mat-raised-button mat-button-base mat-primary" (click)="loadMore()">
           Load more...
         </button>
       </div>
     </ng-container>
-    <ng-container *ngIf="!karmaPointsHistory">
-      <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card">
+    <ng-container *ngIf="karmaPointsHistory.length === 0">
+      <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item">
         <div class="flex flex-1 mobile-margin margin-f">
           <span class="mat-subtitle flex-1 mobile-margin"> No karma points information available </span>
         </div>

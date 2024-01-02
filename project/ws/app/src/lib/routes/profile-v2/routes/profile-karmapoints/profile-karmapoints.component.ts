@@ -19,6 +19,8 @@ export class ProfileKarmapointsComponent implements OnInit {
   total = 0
   count = 0
   lastDate: any = moment(new Date()).valueOf()
+  showLoader = false
+  showMoreBtn = false
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -26,29 +28,6 @@ export class ProfileKarmapointsComponent implements OnInit {
     private contentSvc: WidgetContentService,
   ) {
     this.currentUser = this.configSvc && this.configSvc.userProfile
-    // this.karmaPointsHistory = [
-    //   {
-    //     name: 'Course Completed',
-    //     courseName: 'Practise Test: Introduction to Angular',
-    //     date: '19 Dec 2021',
-    //     points: 10,
-    //     bonus: 0,
-    //   },
-    //   {
-    //     name: 'Course Rating',
-    //     courseName: 'Practise Test: Introduction to Angular',
-    //     date: '01 Apr 2001',
-    //     points: 10,
-    //     bonus: 0,
-    //   },
-    //   {
-    //     name: 'Course Completed',
-    //     courseName: 'Practise Test: Introduction to RxJS',
-    //     date: '21 Nov 2024',
-    //     points: 15,
-    //     bonus: 5,
-    //   },
-    // ]
   }
 
   ngOnInit() {
@@ -56,19 +35,23 @@ export class ProfileKarmapointsComponent implements OnInit {
   }
 
   getKarmaPoints() {
-    this.contentSvc.getKarmaPoitns(1, this.lastDate).subscribe((res: any) => {
-      if (res && res.kpList) {
-        console.log("result ", res.kpList)
-        console.log("total ", res.count)
-        console.log("count ", res.total + res.total.length)
-
+    this.showLoader = true
+    this.contentSvc.getKarmaPoitns(10, this.lastDate).subscribe((res: any) => {
+      if (res && res.kpList && res.kpList.length > 0) {
         this.karmaPointsHistory = [...this.karmaPointsHistory, ...res.kpList]
         this.total = res.count
-        this.count = res.total + res.total.length
+        this.count = this.count + res.kpList.length
         let lastRecord = res.kpList[res.kpList.length - 1]
-        console.log("lastRecord ", lastRecord)
-        this.lastDate = moment(lastRecord.credit_date).valueOf()
-        console.log(" lastDate ", this.lastDate)
+        this.lastDate = lastRecord.credit_date
+        if (this.total > this.count) {
+          this.showMoreBtn = true
+        } else {
+          this.showMoreBtn = false
+        }
+        this.showLoader = false
+      } else {
+        this.showLoader = false
+        this.showMoreBtn = false
       }
     })
   }
@@ -78,13 +61,19 @@ export class ProfileKarmapointsComponent implements OnInit {
   }
 
   getName(row: any) {
-    const info = JSON.parse(row.addinfo)
-    return info.COURSENAME ? info.COURSENAME : 'No course'
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
+      return info.COURSENAME ? info.COURSENAME : 'No course'
+    }
+    return 'No course'
   }
 
   getAdditonInfo(row: any) {
-    const info = JSON.parse(row.addinfo)
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
     return info.ACBP
+    }
+    return false
   }
 
 }
