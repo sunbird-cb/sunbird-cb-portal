@@ -323,25 +323,24 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   }
 
-  findACPB(){
+  findACPB() {
     this.route.queryParamMap.subscribe(qParamsMap => {
       const acbp = qParamsMap.get('planType')
       const endPlan = qParamsMap.get('endPlan')
       if (acbp && endPlan && acbp === 'cbPlan') {
         this.isAcbpCourse = true
         const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
-        const eDate = dayjs(endPlan.split("T")[0]).format('YYYY-MM-DD')
+        const eDate = dayjs(endPlan.split('T')[0]).format('YYYY-MM-DD')
         if (dayjs(sDate).isSameOrBefore(eDate)) {
           const requestObj = {
             request: {
               filters: {
                 contextType: 'Course',
-                contextId: this.courseID
-              }
-            }
+                contextId: this.courseID,
+              },
+            },
           }
           this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
-            console.log("reso ", res)
             if (res && res.kpList) {
               this.isAcbpClaim = false
             } else {
@@ -358,14 +357,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     console.log(event)
     const request = {
       userId: this.configSvc.unMappedUser.identifier,
-      courseId: this.courseID
+      courseId: this.courseID,
     }
     this.contentSvc.claimKarmapoints(request).subscribe((res: any) => {
       // tslint:disable:no-console
       console.log(res)
       this.isAcbpCourse = false
       this.openSnackbar('Karma points are successfully claimed.')
-    }, (error: any) => {
+    },                                                  (error: any) => {
       // tslint:disable:no-console
       console.log(error)
       this.openSnackbar('something went wrong.')

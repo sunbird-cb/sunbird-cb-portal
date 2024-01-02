@@ -49,8 +49,8 @@ const API_END_POINTS = {
   CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
   READ_KARMAPOINTS: `/apis/proxies/v8/karmapoints/read`,
   CONTENT_READ: (contentId: any) => `/apis/proxies/v8/action/content/v3/read/${contentId}`,
-  READ_COURSE_KARMAPOINTS: "/apis/proxies/v8/karmapoints/user/course/read",
-  CLAIM_KARMAPOINTS: "/apis/proxies/v8/claimkarmapoints"
+  READ_COURSE_KARMAPOINTS: '/apis/proxies/v8/karmapoints/user/course/read',
+  CLAIM_KARMAPOINTS: '/apis/proxies/v8/claimkarmapoints',
 }
 
 @Injectable({
@@ -399,7 +399,7 @@ export class WidgetContentService {
   }
 
   getKarmaPoitns (limit: number, offset: any) {
-    return this.http.post(API_END_POINTS.READ_KARMAPOINTS, {limit: limit, offset: offset}).pipe(catchError(_err => of(true)))
+    return this.http.post(API_END_POINTS.READ_KARMAPOINTS, { limit, offset }).pipe(catchError(_err => of(true)))
   }
   fetchProgramContent(contentId: string[]): Observable<NsContent.IContent[]> {
     return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))

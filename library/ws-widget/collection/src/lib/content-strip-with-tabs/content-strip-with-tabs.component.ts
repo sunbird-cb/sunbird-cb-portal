@@ -956,21 +956,21 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               childData['planType'] = 'cbPlan'
               childData['planDuration'] = dayjs(c.endDate).isAfter(systemDate) ? 'overdue' : 'upcoming'
               contentNew.push(childData)
-              let competencyArea: any = []
-              let competencyTheme: any = []
-              let competencyThemeType: any = []
-              let competencySubTheme: any = []
+              const competencyArea: any = []
+              const competencyTheme: any = []
+              const competencyThemeType: any = []
+              const competencySubTheme: any = []
               childData.competencies_v5.forEach((element: any) => {
-                if(!competencyArea.includes(element.competencyArea)) {
+                if (!competencyArea.includes(element.competencyArea)) {
                   competencyArea.push(element.competencyArea)
                 }
-                if(!competencyTheme.includes(element.competencyTheme)) {
+                if (!competencyTheme.includes(element.competencyTheme)) {
                   competencyTheme.push(element.competencyTheme)
                 }
-                if(!competencyThemeType.includes(element.competencyThemeType)) {
+                if (!competencyThemeType.includes(element.competencyThemeType)) {
                   competencyThemeType.push(element.competencyThemeType)
                 }
-                if(!competencySubTheme.includes(element.competencySubTheme)) {
+                if (!competencySubTheme.includes(element.competencySubTheme)) {
                   competencySubTheme.push(element.competencySubTheme)
                 }
               })

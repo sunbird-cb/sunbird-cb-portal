@@ -41,7 +41,7 @@ export class ProfileKarmapointsComponent implements OnInit {
         this.karmaPointsHistory = [...this.karmaPointsHistory, ...res.kpList]
         this.total = res.count
         this.count = this.count + res.kpList.length
-        let lastRecord = res.kpList[res.kpList.length - 1]
+        const lastRecord = res.kpList[res.kpList.length - 1]
         this.lastDate = lastRecord.credit_date
         if (this.total > this.count) {
           this.showMoreBtn = true
@@ -56,7 +56,7 @@ export class ProfileKarmapointsComponent implements OnInit {
     })
   }
 
-  loadMore(){
+  loadMore() {
     this.getKarmaPoints()
   }
 
