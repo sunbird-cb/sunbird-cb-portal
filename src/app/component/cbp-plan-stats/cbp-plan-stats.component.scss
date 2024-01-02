@@ -28,3 +28,10 @@
         margin-bottom: 0;
     }
 }
+
+::ng-deep .mat-menu-panel.filter-menu {
+    border-radius: 12px;
+    .mat-menu-content {
+        padding: 0;
+    }
+}

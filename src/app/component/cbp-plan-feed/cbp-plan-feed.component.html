@@ -4,16 +4,27 @@
         <form class="w-full">
             <div appearance="none" class="w-full relative search-block">
               <input name="search" [formControl]="searchControl"  i18n-placeholder placeholder="Search">
-              <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color absolute" role="img"> search </mat-icon>
+              <mat-icon  aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color absolute" role="img"> search </mat-icon>
             </div>
         </form>
-        <mat-icon aria-hidden="true" (click)="openFilter()" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color filter-acbp" role="img"> filter_list </mat-icon>
+        <mat-icon aria-hidden="true" (click)="openFilter()" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color filter-acbp cursor-pointer" role="img"> filter_list </mat-icon>
     </div>
 
-    <ng-container *ngIf="toggleFilter">
-        <ws-app-filter (toggleFilter)="toggleFilterMethod($event)"></ws-app-filter>
+    <div class="flex flex-wrap">
+    <ng-container  *ngFor="let item of filterObject | keyvalue">
+        <ng-container *ngIf="item?.value?.length">
+                <ng-container  *ngFor="let item1 of item.value">
+                    <div class="tag-wrap flex margin-right-xs margin-bottom-xs">
+                        <p>{{item1}}</p>
+                        <mat-icon aria-hidden="true" (click)="openFilter()" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color filter-acbp cursor-pointer" role="img"> close </mat-icon>
+                    </div>
+                </ng-container>
+        </ng-container>
     </ng-container>
-    <div class="mr-2 mb-5" *ngFor="let c of contentDataList">
-        <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
-    </div>
+</div>
+    <ng-container *ngIf="contenFeedList?.length">
+        <div class="mr-2 mb-5" *ngFor="let c of contenFeedList">
+            <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+        </div>
+    </ng-container>
 </div>

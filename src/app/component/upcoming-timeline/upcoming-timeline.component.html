@@ -1,43 +1,98 @@
 
-<div class="mt-8 mb-8 highlight-block hidden md:block">
-    <div class="flex flex-middle">
-        <p class="title">Upcoming timelines</p>
-        <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> chevron_right </mat-icon>
+<ng-container *ngIf="upcommingList.length">
+    <div class="mt-8 mb-8 highlight-block hidden md:block">
+        <div class="flex flex-middle">
+            <p class="title">Upcoming timelines</p>
+            <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> chevron_right </mat-icon>
+        </div>
+        <div>
+            <p class="description">These plans are close to CBP deadline, need to complete before deadline.</p>
+        </div>
+        <div class="mb-5" *ngFor="let c of upcommingList  | slice:0:2">
+            <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+        </div>
+     </div>
+</ng-container>
+
+<ng-container *ngIf="overDueList.length">
+    <div class="mt-8 mb-8 highlight-block hidden md:block" *ngIf="overDueList.length">
+        <div class="flex flex-middle">
+            <p class="title">Over due plans</p>
+            <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> chevron_right </mat-icon>
+        </div>
+        <div>
+            <p class="description">CBP Deadline passed</p>
+        </div>
+        <div class="mb-5" *ngFor="let c of overDueList  | slice:0:2">
+            <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+        </div>
+     </div>
+</ng-container>
+<div class=" block md:hidden">
+    <div class="mt-8 mb-8 highlight-block padding-remove "  *ngIf="upcommingList.length && overDueList.length;else nextTemplate">
+        <div class="seeAll-home-container m-auto gap-4">
+            <mat-tab-group>
+                <mat-tab label="Upcoming">
+                    <ng-container *ngIf="upcommingList.length">
+                        <div class="p-4 pb-0">
+                            <div class="mb-5" *ngFor="let c of upcommingList  | slice:0:2">
+                                <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+                            </div>
+                            <div class="flex flex-center">
+                                <p class="ws-mat-default-text">Show all</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                </mat-tab>
+                <mat-tab label="Over due">
+                    <ng-container *ngIf="overDueList.length">
+                        <div class="p-4 pb-0">
+                            <div class="mb-5" *ngFor="let c of overDueList  | slice:0:2">
+                                <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+                            </div>
+                            <div class="flex flex-center">
+                                <p class="ws-mat-default-text">Show all</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        
     </div>
-    <div>
-        <p class="description">These plans are close to CBP deadline, need to complete before deadline.</p>
-    </div>
-    <div class="mb-5" *ngFor="let c of contentDataList">
-        <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
-    </div>
- </div>
- <div class="mt-8 mb-8 highlight-block block md:hidden">
- <div class="seeAll-home-container m-auto gap-4">
-    <ng-container>
-        <!-- <div class="flex flex-row flex-wrap content-container" 
-            *ngIf="tabResults.length === 0">
-            <div class="mr-2 mb-5" *ngFor="let c of contentDataList">
-                <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
-            </div>
-        </div> -->
-        <!-- <div class="flex flex-row flex-wrap content-container "
-            *ngIf="tabResults.length > 0">
-            <mat-tab-group animationDuration="0ms" 
-                  class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
-                  (selectedTabChange)="tabClicked($event, seeAllPageConfig, seeAllPageConfig.key)" [(selectedIndex)]="dynamicTabIndex">
-            <mat-tab *ngFor="let tab of tabResults; let last = last;" [label]="tab?.label">
-                <ng-template mat-tab-label>
-                    <span>{{tab?.label}} &nbsp;</span>
-                    <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
-                </ng-template>
-                <div class="flex flex-row flex-wrap content-container mt-10 mb-10">
-                    <div class="mr-2 mb-5" *ngFor="let c of tab?.widgets">
-                        <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
-                    </div>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-        </div> -->
-    </ng-container>
+
+    <ng-template #nextTemplate>
+        <ng-container *ngIf="upcommingList.length">
+            <ng-container [ngTemplateOutlet]="detail"
+                            [ngTemplateOutletContext]="{ data:{
+                       data: upcommingList,
+                       title: 'Upcoming timelines',
+                       subTitle:'These plans are close to CBP deadline, need to complete before deadline.'
+                      }}"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="overDueList.length">
+            <ng-container [ngTemplateOutlet]="detail"
+                            [ngTemplateOutletContext]="{ data:{
+                       data: overDueList,
+                       title: 'Over due plans',
+                       subTitle:'CBP Deadline passed'
+                      }}"></ng-container>
+        </ng-container>
+    </ng-template>
 </div>
-</div>
+ 
+
+<ng-template #detail let-data="data">
+    <div class="mt-8 mb-8 highlight-block">
+        <div class="flex flex-middle">
+            <p class="title">{{data.title}}</p>
+            <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> chevron_right </mat-icon>
+        </div>
+        <div>
+            <p class="description">{{data.subTitle}}</p>
+        </div>
+        <div class="mb-5" *ngFor="let c of data.data  | slice:0:2">
+            <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+        </div>
+    </div>
+</ng-template>

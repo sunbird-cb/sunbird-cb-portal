@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment'
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
 import dayjs from 'dayjs'
+import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 
 interface IStripUnitContentData {
   key: string
@@ -81,6 +82,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   environment!: any
   changeEventSubscription: Subscription | null = null
   defaultMaxWidgets = 12
+  enrollInterval: any
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -295,7 +297,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromTrendingContent(strip, calculateParentStatus)
-    this.fetchAllCbpPlans(strip, calculateParentStatus)
+    this.enrollInterval = setInterval(() => {
+      this.fetchAllCbpPlans(strip, calculateParentStatus)
+    },                                1000)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -940,86 +944,54 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
-    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length
+    && localStorage.getItem('enrollmentData')) {
 
       let courses: NsContent.IContent[]
-      const contentNew: any[] = []
       let tabResults: any[] = []
-
-      const systemDate = dayjs().format('YYYY-MM-DD')
       this.userSvc.fetchCbpPlanList().subscribe((res: any) => {
-        if (res && res.count) {
-          res.content.forEach((c: any) => {
-            c.contentList.forEach((childData: any) => {
-              childData['endDate'] = c.endDate
-              childData['parentId'] = c.id
-              childData['planType'] = 'cbPlan'
-              childData['planDuration'] = dayjs(c.endDate).isAfter(systemDate) ? 'overdue' : 'upcoming'
-              contentNew.push(childData)
-              const competencyArea: any = []
-              const competencyTheme: any = []
-              const competencyThemeType: any = []
-              const competencySubTheme: any = []
-              childData.competencies_v5.forEach((element: any) => {
-                if (!competencyArea.includes(element.competencyArea)) {
-                  competencyArea.push(element.competencyArea)
-                }
-                if (!competencyTheme.includes(element.competencyTheme)) {
-                  competencyTheme.push(element.competencyTheme)
-                }
-                if (!competencyThemeType.includes(element.competencyThemeType)) {
-                  competencyThemeType.push(element.competencyThemeType)
-                }
-                if (!competencySubTheme.includes(element.competencySubTheme)) {
-                  competencySubTheme.push(element.competencySubTheme)
-                }
-              })
-
-              childData['competencyArea'] = competencyArea
-              childData['competencyTheme'] = competencyTheme
-              childData['competencyThemeType'] = competencyThemeType
-              childData['competencySubTheme'] = competencySubTheme
-            })
-            // contentNew = [...contentNew,...c.contentList]
-          })
-        }
-        console.log(contentNew)
-        courses = contentNew
-        console.log(res, 'res')
-        if (strip.tabs && strip.tabs.length) {
-          tabResults = this.splitCbpTabsData(courses, strip)
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(courses, strip),
-            'done',
-            calculateParentStatus,
-            '',
-            tabResults
-          )
-        } else {
-          this.processStrip(
-            strip,
-            this.transformContentsToWidgets(courses, strip),
-            'done',
-            calculateParentStatus,
-            'viewMoreUrl',
-          )
+        if (res) {
+          courses = res
+          if (strip.tabs && strip.tabs.length) {
+            tabResults = this.splitCbpTabsData(courses, strip)
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(courses, strip),
+              'done',
+              calculateParentStatus,
+              '',
+              tabResults
+            )
+          } else {
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(courses, strip),
+              'done',
+              calculateParentStatus,
+              'viewMoreUrl',
+            )
+          }
         }
       },                                        (_err: any) => {
-        console.log(_err, 'asdfghj')
 
       })
-      console.log(strip, 'asdfghj')
+
+      clearInterval(this.enrollInterval)
     }
   }
   splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
     const tabResults: any[] = []
+    const date1 = dayjs()
     const splitData = this.getTabsList(
       contentNew,
-      (e: any) => e.completionStatus === 1 || e.completionPercentage < 100,
+      (e: any) => {
+        const daysCount = dayjs(e.endDate).diff(date1, 'day')
+        e['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31 ?
+         NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
+        return daysCount < 0
+      },
       strip,
     )
-
     if (strip.tabs && strip.tabs.length) {
       for (let i = 0; i < strip.tabs.length; i += 1) {
         if (strip.tabs[i]) {
@@ -1046,7 +1018,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               strip: NsContentStripWithTabs.IContentStripUnit) {
     const upcoming: any[] = []
     const overdue: any[] = []
-    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? upcoming : overdue).push(e))
+    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? overdue : upcoming).push(e))
     return [
     { value: 'all', widgets: this.transformContentsToWidgets([...upcoming, ...overdue], strip) },
     { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
