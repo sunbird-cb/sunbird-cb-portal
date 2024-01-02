@@ -142,7 +142,6 @@ export class CbpPlanComponent implements OnInit {
 
   }
   filterData(filterValue: any) {
-    debugger
     let finalFilterValue: any = []
     if(filterValue['primaryCategory'].length ||
     filterValue['status'].length ||
