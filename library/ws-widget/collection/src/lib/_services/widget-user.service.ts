@@ -63,6 +63,7 @@ export class WidgetUserService {
       const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
           (data: any) => {
             localStorage.setItem('enrollmentData', JSON.stringify(data.result))
+            this.mapEnrollmentData(data.result)
             return data.result
           }
         )
@@ -168,12 +169,17 @@ export class WidgetUserService {
     )
     return result
   }
+
   mapData(data: any) {
     const contentNew: any = []
     const todayDate = dayjs()
+
+    const enrollList = JSON.parse(localStorage.getItem('enrollmentMapData') || '')
+
     if (data && data.count) {
       data.content.forEach((c: any) => {
         c.contentList.forEach((childData: any) => {
+          const childEnrollData = enrollList[childData.identifier]
           const daysCount = dayjs(c.endDate).diff(todayDate, 'day')
           childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
@@ -188,6 +194,10 @@ export class WidgetUserService {
           const competencyAreaId: any = []
           const competencyThemeId: any = []
           const competencySubThemeId: any = []
+          childData['contentStatus'] = 0
+          if (childEnrollData) {
+            childData['contentStatus'] = childEnrollData.status
+          }
          if (childData.competencies_v5) {
           childData.competencies_v5.forEach((element: any) => {
             if (!competencyArea.includes(element.competencyArea)) {
@@ -220,5 +230,15 @@ export class WidgetUserService {
       localStorage.setItem('cbpData', JSON.stringify(contentNew))
       return contentNew
     }
+  }
+
+  mapEnrollmentData(courseData: any) {
+    const enrollData: any = {}
+    if (courseData && courseData.courses.length) {
+      courseData.courses.forEach((data: any) => {
+          enrollData[data.collectionId] = data
+      })
+    }
+    localStorage.setItem('enrollmentMapData', JSON.stringify(enrollData))
   }
 }

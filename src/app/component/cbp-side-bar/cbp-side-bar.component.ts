@@ -10,6 +10,7 @@ export class CbpSideBarComponent implements OnInit {
   @Input() cbpCount: any
   @Input() upcommingList: any
   @Input() overDueList: any
+  @Input() cbpLoader: any
 
   constructor() { }
 

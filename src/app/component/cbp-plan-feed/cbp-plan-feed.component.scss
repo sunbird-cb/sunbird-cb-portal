@@ -22,3 +22,23 @@
     letter-spacing: 0.12px;
     text-align: left;
 }
+
+.tag-wrap {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 1;
+    width: fit-content;
+    padding: 8px;
+    p{
+        opacity: 1;
+        color: rgba(0, 0, 0, 0.87);
+        font-family: "Lato-Regular";
+        font-size: 14px;
+        font-weight: 400;
+        font-style: Regular;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 20px;
+        margin-bottom: 0;
+    }
+}
