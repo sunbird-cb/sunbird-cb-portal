@@ -10,7 +10,8 @@ import {
   MatCheckboxModule,
   MatTabsModule,
   MatBottomSheetModule,  
-  MatMenuModule
+  MatMenuModule,
+  MatRadioModule
 } from '@angular/material'
 import { HeaderModule } from '../header/header.module';
 import {
@@ -64,6 +65,7 @@ import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.mod
     CardContentV2Module,
     FilterSearchPipeModule,
     MatMenuModule,
+    MatRadioModule
   ],
   exports: [
     HeaderModule,

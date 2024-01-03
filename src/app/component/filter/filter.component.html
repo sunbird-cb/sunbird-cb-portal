@@ -70,8 +70,12 @@
                             Time duration
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of timeDuration">
-                        <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]= "ctype?.checked"  (change)="getFilterType($event, ctype,'timeDuration')">{{ctype?.name}}</mat-checkbox>
+                    <div class="flex flex-1 flex-row category-item" >
+                        <mat-radio-group aria-label="Select an option">
+                            <ng-container *ngFor="let ctype of timeDuration">
+                                <mat-radio-button class="py-2"  (change)="timeDurationFilter(ctype,'timeDuration')" [checked]="ctype.checked" [value]="ctype">{{ctype?.name}}</mat-radio-button><br>
+                            </ng-container>
+                        </mat-radio-group>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>

@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router'
 export class UpcomingTimelineComponent implements OnInit {
 
   @Output()
-  upcoming = new EventEmitter()
+  filterValueEmit = new EventEmitter()
   @Input() upcommingList: any
   @Input() overDueList: any
 
@@ -29,7 +29,25 @@ export class UpcomingTimelineComponent implements OnInit {
     }
   }
 
-  upComingMethod(_event: any){
-    this.upcoming.emit('hiiiiiiiii')
+  upComingMethod(event: any){
+    let upcomingData: any = {
+      "primaryCategory":[],
+      "status":['0','1','2'],
+      "timeDuration":[1], 
+      "competencyArea": [], 
+      "competencyTheme": [], 
+      "competencySubTheme": [], 
+      "providers": [] 
+    }
+    let overDue: any = {
+      "primaryCategory":[],
+      "status":['0','1'],
+      "timeDuration":[3], 
+      "competencyArea": [], 
+      "competencyTheme": [], 
+      "competencySubTheme": [], 
+      "providers": [] 
+    }
+    this.filterValueEmit.emit(event === 'upcoming'? upcomingData: overDue)
   }
 }

@@ -1016,11 +1016,15 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   getTabsList(array: NsContent.IContent[],
               customFilter: any,
               strip: NsContentStripWithTabs.IContentStripUnit) {
+    const all: any[] = []
     const upcoming: any[] = []
     const overdue: any[] = []
-    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? overdue : upcoming).push(e))
+    array.forEach((e: any, idx: number, arr: any[]) => {
+      all.push(e)
+      return (customFilter(e, idx, arr) ? overdue : upcoming).push(e)
+    })
     return [
-    { value: 'all', widgets: this.transformContentsToWidgets([...upcoming, ...overdue], strip) },
+    { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },
     { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
     { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
   }

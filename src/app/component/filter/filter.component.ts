@@ -21,8 +21,8 @@ export class FilterComponent implements OnInit {
   @Input() from:any;
   @Input() designationList:any;
   @Input() filterObj:any;
-  timeDuration: any = [{ "id": '1w', name: 'This week', checked: false }, { "id": '1m', name: 'This month', checked: false }, { "id": 3, name: 'Last 3 months', checked: false }, { "id": 6, name: 'Last 6 months', checked: false }, { "id": 12, name: 'Last year', checked: false }];
-  contentStatus: any = [{ "id": "all", name: 'All', checked: false }, { "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
+  timeDuration: any = [{ "id": '1w', name: 'Last week', checked: false }, { "id": 1, name: 'Last month', checked: false }, { "id": 3, name: 'Last 3 months', checked: false }, { "id": 6, name: 'Last 6 months', checked: false }, { "id": 12, name: 'Last year', checked: false }];
+  contentStatus: any = [{ "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
   primaryCategoryList: any = [{ "id": "Course", name: 'Course',checked: false }, { "id": 'Program', name: 'Program',checked: false }];
   providersList: any[] = [];
   selectedProviders: any[] = [];
@@ -44,7 +44,6 @@ export class FilterComponent implements OnInit {
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private bottomSheetRef: MatBottomSheetRef<FilterComponent>, private appCbpPlansService : AppCbpPlansService) {
       if(this.data) {
-        console.log(this.data)
         this.filterObj = this.data.filterObj
 
       }
@@ -266,5 +265,8 @@ export class FilterComponent implements OnInit {
         content.checked = this.filterObj['providers'].includes(content.name)
       })
     }
+  }
+  timeDurationFilter(ctype: any,filterType: any){
+    this.filterObj[filterType] = [ctype.id]
   }
 }

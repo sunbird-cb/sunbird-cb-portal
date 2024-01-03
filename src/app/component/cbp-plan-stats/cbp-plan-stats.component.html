@@ -1,7 +1,10 @@
 <div class="flex flex-col gap-4 mt-8 mb-8 my-cbp">
-    <div class="flex flex-middle flex-between">
+    <div class="flex flex-middle flex-between position-relative ">
         <p class="title">My CBP plans stats</p>
         <mat-icon mat-icon-button [matMenuTriggerFor]="menu"   class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer">filter_list</mat-icon>
+        <ng-container *ngIf="filterLoaded">
+            <span  class="filter-dot"></span>
+        </ng-container>
     </div>
     <hr class="divider">
     <div class="flex flex-middle flex-between">
@@ -26,7 +29,7 @@
     <!-- give local reference and tell this is manu by assigning 'matMenu' -->
     <div class="p-4">
         <ng-container *ngFor="let data of filterList">
-            <button class="padding-remove" mat-menu-item>
+            <button class="padding-remove" mat-menu-item (click)="onfilterChange(data)">
                 {{data.value}}
             </button>
         </ng-container>

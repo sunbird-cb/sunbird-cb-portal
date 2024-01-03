@@ -3,7 +3,7 @@
     <div class="mt-8 mb-8 highlight-block hidden md:block">
         <div class="flex flex-middle">
             <p class="title">Upcoming timelines</p>
-            <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> chevron_right </mat-icon>
+            <mat-icon aria-hidden="true" (click)="upComingMethod('upcoming')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
         <div>
             <p class="description">These plans are close to CBP deadline, need to complete before deadline.</p>
@@ -18,7 +18,7 @@
     <div class="mt-8 mb-8 highlight-block hidden md:block" *ngIf="overDueList.length">
         <div class="flex flex-middle">
             <p class="title">Over due plans</p>
-            <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> chevron_right </mat-icon>
+            <mat-icon aria-hidden="true" (click)="upComingMethod('overdue')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
         <div>
             <p class="description">CBP Deadline passed</p>
@@ -31,27 +31,35 @@
 <div class=" block md:hidden">
     <div class="mt-8 mb-8 highlight-block padding-remove "  *ngIf="upcommingList.length && overDueList.length;else nextTemplate">
         <div class="seeAll-home-container m-auto gap-4">
-            <mat-tab-group>
-                <mat-tab label="Upcoming">
+            <mat-tab-group mat-stretch-tabs>
+                <mat-tab >
+                    <ng-template mat-tab-label>
+                        Upcoming timelines&nbsp;
+                        <span *ngIf="upcommingList.length">({{upcommingList.length}})</span>
+                      </ng-template>
                     <ng-container *ngIf="upcommingList.length">
                         <div class="p-4 pb-0">
                             <div class="mb-5" *ngFor="let c of upcommingList  | slice:0:2">
                                 <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
                             </div>
                             <div class="flex flex-center">
-                                <p class="ws-mat-default-text">Show all</p>
+                                <p class="ws-mat-default-text" (click)="upComingMethod('upcoming')">Show all</p>
                             </div>
                         </div>
                     </ng-container>
                 </mat-tab>
-                <mat-tab label="Over due">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        Over due timelines&nbsp;
+                        <span *ngIf="upcommingList.length">({{upcommingList.length}})</span>
+                      </ng-template>
                     <ng-container *ngIf="overDueList.length">
                         <div class="p-4 pb-0">
                             <div class="mb-5" *ngFor="let c of overDueList  | slice:0:2">
                                 <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
                             </div>
                             <div class="flex flex-center">
-                                <p class="ws-mat-default-text">Show all</p>
+                                <p class="ws-mat-default-text" (click)="upComingMethod('overdue')">Show all</p>
                             </div>
                         </div>
                     </ng-container>
@@ -67,7 +75,8 @@
                             [ngTemplateOutletContext]="{ data:{
                        data: upcommingList,
                        title: 'Upcoming timelines',
-                       subTitle:'These plans are close to CBP deadline, need to complete before deadline.'
+                       subTitle:'These plans are close to CBP deadline, need to complete before deadline.',
+                       key:'upcoming'
                       }}"></ng-container>
         </ng-container>
         <ng-container *ngIf="overDueList.length">
@@ -75,7 +84,8 @@
                             [ngTemplateOutletContext]="{ data:{
                        data: overDueList,
                        title: 'Over due plans',
-                       subTitle:'CBP Deadline passed'
+                       subTitle:'CBP Deadline passed',
+                       key:'overdue'
                       }}"></ng-container>
         </ng-container>
     </ng-template>
@@ -86,7 +96,7 @@
     <div class="mt-8 mb-8 highlight-block">
         <div class="flex flex-middle">
             <p class="title">{{data.title}}</p>
-            <mat-icon aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img"> chevron_right </mat-icon>
+            <mat-icon aria-hidden="true" (click)="upComingMethod(data.key)" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
         <div>
             <p class="description">{{data.subTitle}}</p>
