@@ -4,7 +4,7 @@
         cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'left' : 
         (cbpConfig?.leftSection?.active &&  !cbpConfig?.rightSection?.active) ? 'full' : ''" *ngIf="cbpConfig?.leftSection?.active">
            <!-- Cbp Side bar component --> 
-           <ws-cbp-side-bar [cbpCount]="usersCbpCount" [upcommingList]="upcommingList" [cbpLoader]="cbpLoader" [overDueList]="overDueList"></ws-cbp-side-bar>
+           <ws-cbp-side-bar [cbpCount]="usersCbpCount" (filterValueEmit)="filterValueEmitMethod($event)" [cbpOriginalData]="cbpOriginalData" [upcommingList]="upcommingList" [cbpLoader]="cbpLoader" [overDueList]="overDueList"></ws-cbp-side-bar>
         </div>
 
         <div class="bg-primary" [ngClass]="
@@ -17,9 +17,9 @@
                 <ng-container *ngIf="!enableLazyLoadingFlag">
                     <!-- {{filterObjData |json}} -->
                     <!-- cbp plans list without skeleton here-->
-                    <ws-cbp-plan-feed [contenFeedList]="contentFeedList" [filterObject]="filterObjData"  (searchRequest)="searchData($event)" (toggleFilterEvent)="toggleFilterEvent($event)"></ws-cbp-plan-feed>
+                    <ws-cbp-plan-feed (closeFilterKey)="closeFilterKey($event)" [contenFeedList]="contentFeedList" [filterObject]="filterObjData" [filterApplied]="filterApplied"  (searchRequest)="searchData($event)" (toggleFilterEvent)="toggleFilterEvent($event)"></ws-cbp-plan-feed>
                     <ng-container *ngIf="toggleFilter">
-                        <ws-app-filter (toggleFilter)="toggleFilterMethod($event)" (clearFilterObj)="clearFilterObj($event)" [filterObj]="filterObjData" (getFilterData)="applyFilter($event)"></ws-app-filter>
+                        <ws-app-filter (toggleFilter)="toggleFilterMethod($event)"  (clearFilterObj)="clearFilterObj($event)" [filterObj]="filterObjData" (getFilterData)="applyFilter($event)"></ws-app-filter>
                     </ng-container>
                 </ng-container>
             </div>

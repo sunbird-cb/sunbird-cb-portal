@@ -20,8 +20,25 @@ export class CbpPlanFeedComponent implements OnInit {
   contenFeedList: any
   @Input()
   filterObject: any
+  @Input() filterApplied:boolean = false
   @Output() toggleFilterEvent = new EventEmitter()
   @Output() searchRequest = new EventEmitter()
+  @Output() closeFilterKey = new EventEmitter()
+
+  filterValuesBinding: any ={
+    'status':{
+      '0': 'Not started',
+      '1':'In progress',
+      '2': 'Completed'
+    },
+    'timeDuration': {
+      '1w': 'Last week',
+      1: 'Last month',
+      3: 'Last 3 month',
+      6: 'Last 6 month',
+      12: 'Last year'
+    }
+  }
 
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -59,6 +76,9 @@ export class CbpPlanFeedComponent implements OnInit {
       this.toggleFilter = true
       this.toggleFilterEvent.emit(this.toggleFilter)
     }
+  }
+  CloseFilter(value: any,key: any){
+    this.closeFilterKey.emit({value, key})
   }
 
 }
