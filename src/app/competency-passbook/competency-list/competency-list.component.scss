@@ -5,9 +5,23 @@ $text-primary: #1B4CA1;
     color: $text-primary;
 }
 
+.hide {
+    display: none;
+}
+
 .passbook-container {
     display: flex;
     flex-direction: row;
+}
+
+.mobile-right-container {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-right-container {
+        display: block;
+    }
 }
 
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
@@ -207,7 +221,6 @@ hr {
     .right-container {
         padding: 16px;
         flex-direction: column;
-        display: none;
     }
 
     .mobile-right-container {

@@ -52,8 +52,61 @@
     </div>
 </ng-template>
 
+<ng-template #rightContainer>
+    <mat-tab-group (selectedTabChange)="handleTabChange($event)">
+        <mat-tab label="All">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search (searchValue)="handleSearch($event, 'All')"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container *ngIf="competency.skeletonLoading">
+                        <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!competency.skeletonLoading">
+                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{ TYPE_CONST.behavioral.capsValue }}">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search
+                        (searchValue)="handleSearch($event, TYPE_CONST.behavioral.capsValue)"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{ TYPE_CONST.functional.capsValue }}">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search
+                        (searchValue)="handleSearch($event, TYPE_CONST.functional.capsValue)"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{ TYPE_CONST.domain.capsValue }}">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search
+                        (searchValue)="handleSearch($event, TYPE_CONST.domain.capsValue)"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</ng-template>
+
 <ng-template #skeletonLoader>
-    <div class="flex-1 flex-col" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+    <div class="flex-1 flex-col" *ngFor="let i of skeletonArr">
         <div class="detail">
             <div class="flex flex-col">
                 <div class="flex flex-row justify-between p-4">
@@ -67,7 +120,7 @@
                 </div>
                 <hr />
                 <div class="flex gap-4 p-3">
-                    <ng-container *ngFor="let i of [1, 2, 3]">
+                    <ng-container *ngFor="let j of [1, 2, 3]">
                         <ws-widget-skeleton-loader [bindingClass]="'flex rounded-full'" [width]="'80px'" [height]="'48px'"></ws-widget-skeleton-loader>
                     </ng-container>
                 </div>
@@ -77,7 +130,10 @@
 </ng-template>
 
 <div class="flex justify-center passbook-container gap-5">
-    <div class="left-container">
+    <div class="flex flex-row items-center px-4 ws-mat-default-text gap-2" *ngIf="isMobile && showAll" (click)="handleShowAll()">
+        <mat-icon>keyboard_backspace</mat-icon> Show less
+    </div>
+    <div class="left-container" [ngClass]="{'hide': isMobile && showAll}" >
         <div class="flex flex-col gap-4 cp-container">
             <div class="flex flex-row gap-3">
                 <div class="flex-1 text-xl font-semibold">Competency passbook</div>
@@ -178,7 +234,7 @@
                         </div>
                     </div>
                     <div class="separator"></div>
-                    <div class="flex flex-row justify-between ">
+                    <div class="flex flex-row justify-between">
                         <div class="flex flex-col">
                             <div class="text-xs">Competency Sub Theme</div>
                             <ng-container *ngIf="competency.skeletonLoading">
@@ -205,57 +261,7 @@
         </div>
     </div>
     
-    <div class="right-container">
-        <mat-tab-group (selectedTabChange)="handleTabChange($event)">
-            <mat-tab label="All">
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, 'All')"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container *ngIf="competency.skeletonLoading">
-                            <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>
-                        </ng-container>
-                        <ng-container *ngIf="!competency.skeletonLoading">
-                            <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                        </ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{ TYPE_CONST.behavioral.capsValue }}" >
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.behavioral.capsValue)"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{ TYPE_CONST.functional.capsValue }}">
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.functional.capsValue)"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{ TYPE_CONST.domain.capsValue }}">
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.domain.capsValue)"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
-
-    <div class="mobile-right-container">
+    <div class="mobile-right-container" *ngIf="!showAll">
         <div class="flex flex-col gap-6 px-4">
             <div class="text-base font-bold">Recently associated competencies</div>
             <div class="flex flex-wrap gap-4">
@@ -266,6 +272,12 @@
                     <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
                 </ng-container>
             </div>
+            <div *ngIf="!competency.skeletonLoading" class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" (click)="handleShowAll()">Show all</div>
         </div>
     </div>
+
+    <div class="right-container" *ngIf="showAll">
+        <ng-container [ngTemplateOutlet]="rightContainer"></ng-container>
+    </div>
+
 </div>
