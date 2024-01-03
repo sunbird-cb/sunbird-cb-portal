@@ -350,6 +350,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 } else {
                   this.isAcbpClaim = true
                 }
+              } else {
+                this.isAcbpClaim = true
               }
             } else {
               this.isAcbpClaim = true

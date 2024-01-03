@@ -1,14 +1,14 @@
 <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs marg margin-bottom-xs">
-  <mat-card class="flex-custom" [attr.id]='widgetData.key'>
+  <mat-card class="flex-custom" [attr.id]="widgetData?.key">
     <mat-card-content>
       <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
         {{widgetData.name}}
       </span>
-      <a class="flex-4 mobile-margin show-all" href = "app/person-profile/karma-points" role="link" tabindex="0">
+      <a class="flex-4 mobile-margin show-all" (click)="navigateTo()" *ngIf="widgetData?.data?.length">
         Show all &nbsp;&nbsp; >
       </a>
     </mat-card-content>
-    <ng-container *ngIf="widgetData.data">
+    <ng-container *ngIf="widgetData?.data?.length">
       <ng-container *ngFor="let karmapoints of widgetData.data | keyvalue | orderBy:'date':'desc'">
         <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0">
           <div class="flex flex-1 mobile-margin">
@@ -26,7 +26,7 @@
         </mat-card>
       </ng-container>
     </ng-container>
-    <ng-container *ngIf="!widgetData.data">
+    <ng-container *ngIf="!widgetData?.data?.length">
       <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card">
         <div class="flex flex-1 mobile-margin margin-f">
           <span class="mat-subtitle flex-1 mobile-margin"> No karma points information available </span>
