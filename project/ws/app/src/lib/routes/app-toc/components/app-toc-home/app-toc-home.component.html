@@ -136,9 +136,12 @@ TODO: edit option while preview Mode
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
-                  <div *ngIf="isAcbpCourse && isAcbpClaim">
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
                     <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
-                   </div>
+                  </div>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'CLAIMED ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
                    <div *ngIf="!isAcbpCourse">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
@@ -220,8 +223,11 @@ TODO: edit option while preview Mode
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
-                  <div *ngIf="isAcbpCourse && isAcbpClaim">
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
                     <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'CLAIMED ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
                   <div *ngIf="!isAcbpCourse">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>

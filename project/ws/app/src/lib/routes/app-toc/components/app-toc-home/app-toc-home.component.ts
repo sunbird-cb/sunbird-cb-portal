@@ -158,7 +158,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isAcbpCourse = false
   isAcbpClaim = false
   courseID: any
-  disableClaim = false
+  isClaimed = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -326,7 +326,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   findACPB() {
     this.route.queryParamMap.subscribe(qParamsMap => {
       const acbp = qParamsMap.get('planType')
-      const endPlan = qParamsMap.get('endPlan')
+      const endPlan = qParamsMap.get('endDate')
       if (acbp && endPlan && acbp === 'cbPlan') {
         this.isAcbpCourse = true
         const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
@@ -341,12 +341,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             },
           }
           this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
+            console.log("res ", res)
             if (res && res.kpList) {
-              this.isAcbpClaim = false
+              const row = res.kpList
+              if (row.addinfo) {
+                if (JSON.parse(row.addinfo).ACBP) {
+                  this.isAcbpClaim = false
+                  this.isClaimed = true
+                } else {
+                  this.isAcbpClaim = true
+                }
+              }
             } else {
               this.isAcbpClaim = true
             }
           })
+        } else {
+          this.isAcbpCourse = false
         }
       }
     })
@@ -362,7 +373,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.contentSvc.claimKarmapoints(request).subscribe((res: any) => {
       // tslint:disable:no-console
       console.log(res)
-      this.isAcbpCourse = false
+      this.isClaimed = true
       this.openSnackbar('Karma points are successfully claimed.')
     },                                                  (error: any) => {
       // tslint:disable:no-console
