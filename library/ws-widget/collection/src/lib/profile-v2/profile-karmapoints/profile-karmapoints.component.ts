@@ -1,6 +1,5 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
-import { WidgetContentService } from '../../_services/widget-content.service'
 @Component({
   selector: 'ws-widget-profile-v2-karmapoints',
   templateUrl: './profile-karmapoints.component.html',
@@ -14,17 +13,27 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   @HostBinding('id')
   public id = 'profile-karmapoints'
 
-  constructor(private contentSvc: WidgetContentService) {
+  constructor() {
     super()
   }
 
   ngOnInit() {
+  }
 
-    this.contentSvc.getKarmaPoitns().subscribe((res: any) => {
-      if (res && res.kpList && res.kpList.length > 0) {
-        this.widgetData.data = res.kpList
-      }
-    })
+  getName(row: any) {
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
+      return info.COURSENAME ? info.COURSENAME : 'No course'
+    }
+    return 'No course'
+  }
+
+  getAdditonInfo(row: any) {
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
+      return info.ACBP
+    }
+    return false
   }
 
 }

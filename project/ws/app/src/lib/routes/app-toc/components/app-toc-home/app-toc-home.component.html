@@ -94,8 +94,8 @@ TODO: edit option while preview Mode
           content?.status !== 'Expired'
         ">
           <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
-            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM 
-            && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM 
+            <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM
+            && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM
             && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
             content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM">
               <ng-container *ngIf="
@@ -130,19 +130,26 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                 </a>
-                
+
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
                   <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
-                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'CLAIMED ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
+                   <div *ngIf="!isAcbpCourse">
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
                 </div>
 
                 <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
                  <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
                 </div>
-                 
               </ng-container>
               <ng-container *ngIf="
                 (actionBtnStatus === 'grant' &&
@@ -216,7 +223,15 @@ TODO: edit option while preview Mode
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
-                  <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'CLAIMED ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="!isAcbpCourse">
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
                 </div>
 
                 <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" >
@@ -422,7 +437,16 @@ TODO: edit option while preview Mode
         <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [showText]="true" [widgetData]="content">
         </ws-widget-btn-content-share>
     </div> -->
-
+    <ng-container *ngIf="cbPlanEndDate">
+      <div class="cb-plan-wrap">
+        <p>CBP plan deadline</p>
+        <p>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.OVERDUE" class="cb-danger">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.SUCCESS" class="cb-success">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.UPCOMING" class="cb-warning">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+        </p>
+      </div>
+    </ng-container>
       <!-- at glance -->
       <div class="margin-top-l glance-container">
         <div class="margin-bottom-m">
