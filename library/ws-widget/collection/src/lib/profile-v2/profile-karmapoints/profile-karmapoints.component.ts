@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
 @Component({
   selector: 'ws-widget-profile-v2-karmapoints',
@@ -13,7 +14,7 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   @HostBinding('id')
   public id = 'profile-karmapoints'
 
-  constructor() {
+  constructor(private router: Router) {
     super()
   }
 
@@ -34,6 +35,10 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
       return info.ACBP
     }
     return false
+  }
+
+  navigateTo(){
+    this.router.navigateByUrl(`/app/person-profile/karma-points`)
   }
 
 }

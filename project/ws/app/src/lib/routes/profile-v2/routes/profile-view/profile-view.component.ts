@@ -63,7 +63,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   orgId: any
   selectedTabIndex: any
-  karmaPoints = 10
+  karmaPoints = 0
 
   pendingRequestData: any = []
   pendingRequestSkeleton = true
