@@ -341,7 +341,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             },
           }
           this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
-            console.log("res ", res)
             if (res && res.kpList) {
               const row = res.kpList
               if (row.addinfo) {

@@ -12,7 +12,7 @@
     <ng-container *ngIf="karmaPointsHistory.length > 0">
       <div class="karmapoints-container">
         <ng-container *ngFor="let karmapoints of karmaPointsHistory | keyvalue">
-          <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0"  *ngIf="karmapoints.key !== 'undefined'">
+          <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0">
             <div class="flex flex-1 mobile-margin">
               <div class="flex-1 mat-subheading-1">
                 <div class="margin-bottom-xs">{{karmapoints.value.context_type}} {{karmapoints.value.operation_type | lowercase}}</div>
@@ -37,7 +37,7 @@
         </button>
       </div>
     </ng-container>
-    <ng-container *ngIf="karmaPointsHistory.length === 0">
+    <ng-container *ngIf="!karmaPointsHistory.length">
       <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item">
         <div class="flex flex-1 mobile-margin margin-f">
           <span class="mat-subtitle flex-1 mobile-margin"> No karma points information available </span>

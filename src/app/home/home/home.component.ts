@@ -181,7 +181,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.enrollData = localStorage.getItem('enrollmentData')
     if (this.enrollData) {
       this.enrollData = JSON.parse(this.enrollData)
-      if (this.enrollData && this.enrollData.courses && this.enrollData.courses.length > 0) {
+      if (this.enrollData && this.enrollData.courses && this.enrollData.courses) {
         this.isKPPanelenabled = true
       }
     }
