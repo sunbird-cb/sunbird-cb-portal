@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import moment from 'moment'
 
 @Component({
   selector: 'app-profile-karmapoints',
@@ -15,6 +16,11 @@ export class ProfileKarmapointsComponent implements OnInit {
   currentUser: any
   karmaPointsHistory: any = []
   kpTooltiptext = 'Karma Points are a reward for high learning engagement at iGOT. For more information, visit Karma Points FAQs.'
+  total = 0
+  count = 0
+  lastDate: any = moment(new Date()).valueOf()
+  showLoader = false
+  showMoreBtn = false
 
   constructor(
     private configSvc: ConfigurationsService,
@@ -22,38 +28,52 @@ export class ProfileKarmapointsComponent implements OnInit {
     private contentSvc: WidgetContentService,
   ) {
     this.currentUser = this.configSvc && this.configSvc.userProfile
-    // this.karmaPointsHistory = [
-    //   {
-    //     name: 'Course Completed',
-    //     courseName: 'Practise Test: Introduction to Angular',
-    //     date: '19 Dec 2021',
-    //     points: 10,
-    //     bonus: 0,
-    //   },
-    //   {
-    //     name: 'Course Rating',
-    //     courseName: 'Practise Test: Introduction to Angular',
-    //     date: '01 Apr 2001',
-    //     points: 10,
-    //     bonus: 0,
-    //   },
-    //   {
-    //     name: 'Course Completed',
-    //     courseName: 'Practise Test: Introduction to RxJS',
-    //     date: '21 Nov 2024',
-    //     points: 15,
-    //     bonus: 5,
-    //   },
-    // ]
   }
 
   ngOnInit() {
-    this.contentSvc.getKarmaPoitns().subscribe((res: any) => {
-      if (res && res.kpList) {
-        this.karmaPointsHistory = res.kpList
+    this.getKarmaPoints()
+  }
+
+  getKarmaPoints() {
+    this.showLoader = true
+    this.contentSvc.getKarmaPoitns(10, this.lastDate).subscribe((res: any) => {
+      if (res && res.kpList && res.kpList.length > 0) {
+        this.karmaPointsHistory = [...this.karmaPointsHistory, ...res.kpList]
+        this.total = res.count
+        this.count = this.count + res.kpList.length
+        const lastRecord = res.kpList[res.kpList.length - 1]
+        this.lastDate = lastRecord.credit_date
+        if (this.total > this.count) {
+          this.showMoreBtn = true
+        } else {
+          this.showMoreBtn = false
+        }
+        this.showLoader = false
+      } else {
+        this.showLoader = false
+        this.showMoreBtn = false
       }
     })
+  }
 
+  loadMore() {
+    this.getKarmaPoints()
+  }
+
+  getName(row: any) {
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
+      return info.COURSENAME ? info.COURSENAME : 'No course'
+    }
+    return 'No course'
+  }
+
+  getAdditonInfo(row: any) {
+    if (row.addinfo) {
+      const info = JSON.parse(row.addinfo)
+    return info.ACBP
+    }
+    return false
   }
 
 }
