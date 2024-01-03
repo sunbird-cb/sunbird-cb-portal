@@ -31,6 +31,7 @@ import { RatingService } from '../../../../../../../../../library/ws-widget/coll
 import { environment } from 'src/environments/environment'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
 dayjs.extend(isSameOrBefore)
 
 export enum ErrorType {
@@ -63,6 +64,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   contentReadData: NsContent.IContent | null = null
   errorCode: NsAppToc.EWsTocErrorCode | null = null
   resumeData: any = null
+  nsCardContentData: any = NsCardContent
   batchData: NsContent.IBatchListResponse | null = null
   currentCourseBatchId: string | null = null
   userEnrollmentList!: NsContent.ICourse[]
@@ -71,6 +73,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isCohortsRestricted = false
   sticky = false
   isInIframe = false
+  cbPlanEndDate: any
+  cbPlanDuration: any
   forPreview = window.location.href.includes('/author/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
@@ -326,11 +330,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   findACPB() {
     this.route.queryParamMap.subscribe(qParamsMap => {
       const acbp = qParamsMap.get('planType')
-      const endPlan = qParamsMap.get('endDate')
-      if (acbp && endPlan && acbp === 'cbPlan') {
+      this.cbPlanEndDate = qParamsMap.get('endDate')
+      const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
+      const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
+      this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
+      ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
+      if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
         this.isAcbpCourse = true
-        const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
-        const eDate = dayjs(endPlan.split('T')[0]).format('YYYY-MM-DD')
+        const eDate = dayjs(this.cbPlanEndDate.split('T')[0]).format('YYYY-MM-DD')
         if (dayjs(sDate).isSameOrBefore(eDate)) {
           const requestObj = {
             request: {

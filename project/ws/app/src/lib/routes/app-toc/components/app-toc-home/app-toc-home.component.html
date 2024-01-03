@@ -437,7 +437,16 @@ TODO: edit option while preview Mode
         <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [showText]="true" [widgetData]="content">
         </ws-widget-btn-content-share>
     </div> -->
-
+    <ng-container *ngIf="cbPlanEndDate">
+      <div class="cb-plan-wrap">
+        <p>CBP plan deadline</p>
+        <p>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.OVERDUE" class="cb-danger">{{cbPlanEndDate | date: 'dd-MM-yyyy'}}</span>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.SUCCESS" class="cb-success">{{cbPlanEndDate | date: 'dd-MM-yyyy'}}</span>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.UPCOMING" class="cb-warning">{{cbPlanEndDate | date: 'dd-MM-yyyy'}}</span>
+        </p>
+      </div>
+    </ng-container>
       <!-- at glance -->
       <div class="margin-top-l glance-container">
         <div class="margin-bottom-m">

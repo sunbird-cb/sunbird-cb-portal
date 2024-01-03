@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model';
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 dayjs.extend(isBetween)
@@ -65,6 +66,13 @@ export class CbpPlanComponent implements OnInit {
         this.upcommingList = []
         this.contentFeedList = []
         this.overDueList = []
+        res = res.sort((a: any, b: any): any => {
+          if(a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+            const firstDate: any = new Date(a.endDate)
+            const secondDate: any = new Date(b.endDate)
+            return  firstDate > secondDate  ? -1 : 1
+          }
+        })
         await res.forEach((ele: any) => {
           if (ele.planDuration === 'overdue') {
             this.overDueList.push(ele);
@@ -72,6 +80,7 @@ export class CbpPlanComponent implements OnInit {
             this.upcommingList.push(ele);
           }
         })
+
         this.contentFeedListCopy = res
         this.contentFeedList = this.transformContentsToWidgets(res, this.getFeedStrip());
         this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips);
