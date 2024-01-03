@@ -42,6 +42,7 @@ export namespace NSProfileDataV2 {
     date: string,
     points: number,
     bonus: number
+    additionalProperties: IAdditionalProperties
   }
   export interface IAcademics {
     nameOfInstitute: string
@@ -71,6 +72,10 @@ export namespace NSProfileDataV2 {
     payType: string
     pinCode: string
     service: string
+  }
+  export interface IAdditionalProperties {
+    externalSystem: string
+    externalSystemId: string
   }
 
   export interface IInterests {
