@@ -441,9 +441,9 @@ TODO: edit option while preview Mode
       <div class="cb-plan-wrap">
         <p>CBP plan deadline</p>
         <p>
-          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.OVERDUE" class="cb-danger">{{cbPlanEndDate | date: 'dd-MM-yyyy'}}</span>
-          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.SUCCESS" class="cb-success">{{cbPlanEndDate | date: 'dd-MM-yyyy'}}</span>
-          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.UPCOMING" class="cb-warning">{{cbPlanEndDate | date: 'dd-MM-yyyy'}}</span>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.OVERDUE" class="cb-danger">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.SUCCESS" class="cb-success">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.UPCOMING" class="cb-warning">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
         </p>
       </div>
     </ng-container>

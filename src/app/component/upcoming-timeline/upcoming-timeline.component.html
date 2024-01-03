@@ -2,7 +2,7 @@
 <ng-container *ngIf="upcommingList.length">
     <div class="mt-8 mb-8 highlight-block hidden md:block">
         <div class="flex flex-middle">
-            <p class="title">Upcoming timelines</p>
+            <p class="title">Upcoming</p>
             <mat-icon aria-hidden="true" (click)="upComingMethod('upcoming')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
         <div>
@@ -34,7 +34,7 @@
             <mat-tab-group mat-stretch-tabs>
                 <mat-tab >
                     <ng-template mat-tab-label>
-                        Upcoming timelines&nbsp;
+                        Upcoming&nbsp;
                         <span *ngIf="upcommingList.length">({{upcommingList.length}})</span>
                       </ng-template>
                     <ng-container *ngIf="upcommingList.length">
@@ -50,7 +50,7 @@
                 </mat-tab>
                 <mat-tab>
                     <ng-template mat-tab-label>
-                        Over due timelines&nbsp;
+                        Over due&nbsp;
                         <span *ngIf="upcommingList.length">({{upcommingList.length}})</span>
                       </ng-template>
                     <ng-container *ngIf="overDueList.length">
