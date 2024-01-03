@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
   selector: 'ws-app-karmapoints-panel',
@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core'
 export class KarmaPointsPanelComponent implements OnInit {
     @Input() btntype: any
     @Input() data: any = []
+    @Input() btnCategory = ''
+    @Output() clickClaimKarmaPoints = new EventEmitter<string>()
     kpData: any
 
   constructor() { }
@@ -18,6 +20,10 @@ export class KarmaPointsPanelComponent implements OnInit {
             this.kpData = item
         }
     })
+  }
+
+  onClickOfClaim() {
+    this.clickClaimKarmaPoints.emit('claim')
   }
 
 }

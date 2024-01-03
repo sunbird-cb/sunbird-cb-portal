@@ -30,6 +30,8 @@ import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { environment } from 'src/environments/environment'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(isSameOrBefore)
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -153,6 +155,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   serverDate: any
   kparray: any = []
   enrollBtnLoading = false
+  isAcbpCourse = false
+  isAcbpClaim = false
+  courseID: any
+  isClaimed = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -205,6 +211,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
+        this.courseID = data.content.data.identifier
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentReadData = res.result.content
         })
@@ -313,6 +320,65 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
+
+  }
+
+  findACPB() {
+    this.route.queryParamMap.subscribe(qParamsMap => {
+      const acbp = qParamsMap.get('planType')
+      const endPlan = qParamsMap.get('endDate')
+      if (acbp && endPlan && acbp === 'cbPlan') {
+        this.isAcbpCourse = true
+        const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
+        const eDate = dayjs(endPlan.split('T')[0]).format('YYYY-MM-DD')
+        if (dayjs(sDate).isSameOrBefore(eDate)) {
+          const requestObj = {
+            request: {
+              filters: {
+                contextType: 'Course',
+                contextId: this.courseID,
+              },
+            },
+          }
+          this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
+            if (res && res.kpList) {
+              const row = res.kpList
+              if (row.addinfo) {
+                if (JSON.parse(row.addinfo).ACBP) {
+                  this.isAcbpClaim = false
+                  this.isClaimed = true
+                } else {
+                  this.isAcbpClaim = true
+                }
+              }
+            } else {
+              this.isAcbpClaim = true
+            }
+          })
+        } else {
+          this.isAcbpCourse = false
+        }
+      }
+    })
+  }
+
+  onClickOfClaim(event: any) {
+    // tslint:disable:no-console
+    console.log(event)
+    const request = {
+      userId: this.configSvc.unMappedUser.identifier,
+      courseId: this.courseID,
+    }
+    this.contentSvc.claimKarmapoints(request).subscribe((res: any) => {
+      // tslint:disable:no-console
+      console.log(res)
+      this.isClaimed = true
+      this.openSnackbar('Karma points are successfully claimed.')
+    },                                                  (error: any) => {
+      // tslint:disable:no-console
+      console.log(error)
+      this.openSnackbar('something went wrong.')
+    })
   }
 
   ngAfterViewInit() {
@@ -1449,12 +1515,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   getServerDateTime() {
     this.tocSvc.getServerDate().subscribe((response: any) => {
       if (response && response.systemDate) {
-        // this.tocSvc.changeServerDate(response.systemDate)
-        this.tocSvc.changeServerDate(new Date().getTime())
-        this.serverDate = new Date().getTime()
+        this.tocSvc.changeServerDate(response.systemDate)
+        this.tocSvc.changeServerDate(response.systemDate)
+        this.serverDate = response.systemDate
       } else {
         this.tocSvc.changeServerDate(new Date().getTime())
       }
+      this.findACPB()
     },                                    (_err: any) => {
       this.tocSvc.changeServerDate(new Date().getTime())
     })

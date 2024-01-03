@@ -1,8 +1,18 @@
-<div class="mat-caption karmapoints-panel margin-top-xs" *ngIf="kpData">
+<div class="mat-caption karmapoints-panel margin-top-xs" *ngIf="kpData && btnCategory !== 'claim'">
     <p class="margin-remove">{{kpData.textBeforeIcon}}
-        <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints"> 
-        <span class="font-bold"> {{kpData.points}} </span> 
+        <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints">
+        <span class="font-bold"> {{kpData.points}} </span>
         <span *ngIf="kpData.textAfterIcon">{{kpData.textAfterIcon}}</span>
         <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="kpData.toolTipText" *ngIf="kpData.toolTipText">info_outline</mat-icon>
     </p>
   </div>
+
+  <button class="mat-caption karmapoints-panel karmapoints-panel-claim margin-top-m width-1-1"
+    *ngIf="kpData && btnCategory === 'claim'" (click)="onClickOfClaim()">
+    <p class="margin-remove">{{kpData.textBeforeIcon}}
+        <img src="/assets/icons/KPIcon.svg" alt="KarmaPoints">
+        <span class="font-bold"> {{kpData.points}} </span>
+        <span *ngIf="kpData.textAfterIcon">{{kpData.textAfterIcon}}</span>
+        <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="kpData.toolTipText" *ngIf="kpData.toolTipText">info_outline</mat-icon>
+    </p>
+  </button>

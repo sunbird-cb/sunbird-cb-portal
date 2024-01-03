@@ -4,31 +4,41 @@
       <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
         Karma Points
       </span>
-      <a class="flex-4 mobile-margin show-all">
+      <a class="flex-4 mobile-margin show-all" [routerLink]="['/public/faq']" >
         <!-- <img class="info-icon" alt="info" src="/assets/icons/info.svg"> -->
         <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="kpTooltiptext">info_outline</mat-icon>
       </a>
     </mat-card-content>
-    <ng-container *ngIf="karmaPointsHistory">
-      <ng-container *ngFor="let karmapoints of karmaPointsHistory | keyvalue">
-        <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0"  *ngIf="karmapoints.key !== 'undefined'">
-          <div class="flex flex-1 mobile-margin">
-            <div class="flex-1 mat-subheading-1">
-              <div class="margin-bottom-xs">{{karmapoints.value.context_type}} {{karmapoints.value.operation_type | lowercase}}</div>
-              <div class="courseName margin-bottom-xs">{{karmapoints.value.context_id}}</div>
-              <div class="date-of-completed margin-bottom-xs">{{karmapoints.value.credit_date}}</div>
+    <ng-container *ngIf="karmaPointsHistory.length > 0">
+      <div class="karmapoints-container">
+        <ng-container *ngFor="let karmapoints of karmaPointsHistory | keyvalue">
+          <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0">
+            <div class="flex flex-1 mobile-margin">
+              <div class="flex-1 mat-subheading-1">
+                <div class="margin-bottom-xs">{{karmapoints.value.context_type}} {{karmapoints.value.operation_type | lowercase}}</div>
+                <div class="courseName margin-bottom-xs">{{getName(karmapoints.value)}}</div>
+                <div class="date-of-completed margin-bottom-xs">{{karmapoints.value.credit_date | date: 'd MMM yyyy'}}</div>
+              </div>
+              <div class="mat-subheading-2">
+                <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+                <span class="bonus-points">+ {{karmapoints.value.points}}</span>
+                <div *ngIf="getAdditonInfo(karmapoints.value) > 0"><span class="bonus-badge">BONUS</span></div>
+              </div>
             </div>
-            <div class="mat-subheading-2">
-              <img class="karmapoints-icon" alt="karma points" src="/assets/icons/karma-point-logo.jpg">
-              <span class="bonus-points">+ {{karmapoints.value.points}}</span>
-              <div *ngIf="karmapoints.value.bonus > 0"><span class="bonus-badge">BONUS</span></div>
-            </div>
-          </div>
-        </mat-card>
-      </ng-container>
+          </mat-card>
+        </ng-container>
+        <div *ngIf="showLoader" class="text-center my-2">
+          <mat-spinner class="inline-block"></mat-spinner>
+        </div>
+      </div>
+      <div class="text-right margin-right-xxl margin-bottom-m ng-star-inserted" *ngIf="showMoreBtn">
+        <button class="mat-raised-button mat-button-base mat-primary" (click)="loadMore()">
+          Load more...
+        </button>
+      </div>
     </ng-container>
-    <ng-container *ngIf="!karmaPointsHistory">
-      <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card">
+    <ng-container *ngIf="!karmaPointsHistory.length">
+      <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item">
         <div class="flex flex-1 mobile-margin margin-f">
           <span class="mat-subtitle flex-1 mobile-margin"> No karma points information available </span>
         </div>
