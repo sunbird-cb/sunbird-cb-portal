@@ -1055,7 +1055,7 @@
       <div class="flex main_title_box">
         <p class="mat-subheading-1 title-text font-bold-imp cursor-pointer content-title">
           <a [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
-            [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+            [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData">
             {{widgetData.content.name}}
           </a>
       </p>
