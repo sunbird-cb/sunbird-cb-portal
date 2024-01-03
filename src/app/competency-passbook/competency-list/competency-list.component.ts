@@ -24,6 +24,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   private destroySubject$ = new Subject();
   skeletonArr = <any>[];
   showAll = false;
+  three_month_back = new Date(new Date().setMonth(new Date().getMonth() - 3));
+  six_month_back = new Date(new Date().setMonth(new Date().getMonth() - 6));
+  one_year_back = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+  showFilterIndicator: boolean = false;
 
   TYPE_CONST = {
     behavioral: {
@@ -47,7 +51,11 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     all: <any>[],
     behavioural: <any>[],
     functional: <any>[],
-    domain: <any>[]
+    domain: <any>[],
+    allValue: 0,
+    behaviouralValue: 0,
+    functionalValue: 0,
+    domainValue: 0
   };
 
   leftCardDetails: any = [{
@@ -56,21 +64,39 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     type: 'Behavioral',
     total: 0,
     competencySubTheme: 0,
-    contentConsumed: 0
+    contentConsumed: 0,
+    filter: {
+      all: 0,
+      threeMonths: 0,
+      sixMonths: 0,
+      lastYear: 0
+    }
   }, {
     name: this.TYPE_CONST.functional.value,
     label: this.TYPE_CONST.functional.capsValue,
     type: this.TYPE_CONST.functional.capsValue,
     total: 0,
     competencySubTheme: 0,
-    contentConsumed: 0
+    contentConsumed: 0,
+    filter: {
+      all: 0,
+      threeMonths: 0,
+      sixMonths: 0,
+      lastYear: 0
+    }
   }, {
     name: this.TYPE_CONST.domain.value,
     label: this.TYPE_CONST.domain.capsValue,
     type: this.TYPE_CONST.domain.capsValue,
     total: 0,
     competencySubTheme: 0,
-    contentConsumed: 0
+    contentConsumed: 0,
+    filter: {
+      all: 0,
+      threeMonths: 0,
+      sixMonths: 0,
+      lastYear: 0
+    }
   }];
 
   courseWithCompetencyArray: any[] = [];
@@ -144,9 +170,23 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   bindMoreData(typeObj: any, name: string) {
+    const leftCardObj = this.leftCardDetails.find((obj: any) => obj.name === name);
+
     typeObj.forEach((obj: any) => {
       obj['viewMore'] = false;
       obj['competencyName'] = name;
+
+      if (new Date(obj.createdDate) > this.one_year_back) {
+        leftCardObj.filter.lastYear += 1;
+
+        if (new Date(obj.createdDate) > this.six_month_back) {
+          leftCardObj.filter.sixMonths += 1
+        }
+
+        if (new Date(obj.createdDate) > this.three_month_back) {
+          leftCardObj.filter.threeMonths += 1
+        } 
+      }
 
       this.leftCardDetails.forEach((_eachObj: any) => {
         if (_eachObj.name === name) {
@@ -213,6 +253,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               if(_eachObj.type.toLowerCase() === obj.name.toLowerCase()) {
                 _eachObj.total = obj.children.length
               }
+
+              _eachObj.filter.all = _eachObj.filter.threeMonths + _eachObj.filter.sixMonths + _eachObj.filter.lastYear;
             });
           });
 
@@ -225,6 +267,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+  handleLeftFilter(months: string): void {
+    this.leftCardDetails.forEach((_obj: any) => {
+      this.competency[`${_obj.name}Value`] = _obj.filter[months]
+    });
+    this.showFilterIndicator = (months === 'all') ? false : true;
   }
 
   handleTabChange(event: MatTabChangeEvent ): void {

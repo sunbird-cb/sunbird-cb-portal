@@ -9,6 +9,16 @@ $text-primary: #1B4CA1;
     display: none;
 }
 
+.filter-dot {
+    background-color: #d13924;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    position: relative;
+    top: -6px;
+    right: -28px;
+}
+
 .passbook-container {
     display: flex;
     flex-direction: row;
