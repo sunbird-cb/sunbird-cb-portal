@@ -15,7 +15,7 @@
           <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0">
             <div class="flex flex-1 mobile-margin">
               <div class="flex-1 mat-subheading-1">
-                <div class="margin-bottom-xs">{{karmapoints.value.context_type}} {{karmapoints.value.operation_type | lowercase}}</div>
+                <div class="margin-bottom-xs">{{getTitle(karmapoints.value)}}</div>
                 <div class="courseName margin-bottom-xs">{{getName(karmapoints.value)}}</div>
                 <div class="date-of-completed margin-bottom-xs">{{karmapoints.value.credit_date | date: 'd MMM yyyy'}}</div>
               </div>

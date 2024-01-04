@@ -13,6 +13,5 @@
         <img src="/assets/icons/home/karma-badge.svg" alt="KarmaPoints">
         <span class="font-bold"> {{kpData.points}} </span>
         <span *ngIf="kpData.textAfterIcon">{{kpData.textAfterIcon}}</span>
-        <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="kpData.toolTipText" *ngIf="kpData.toolTipText">info_outline</mat-icon>
     </p>
   </button>
