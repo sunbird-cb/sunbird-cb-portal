@@ -194,14 +194,14 @@ export class CbpPlanComponent implements OnInit {
         if(filterValue['timeDuration'].length){
           filterAppliedonLocal = filterAppliedonLocal? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
-            if(filterValue['timeDuration'].some((r: any)=> 
+            if(filterValue['timeDuration'].some((time: any)=> 
             {
-              let count = Number(r.slice(0,-2))
-              if(r.includes('sw')) {
+              let count = Number(time.slice(0,-2))
+              if(time.includes('sw')) {
                 return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'week'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
-              } else if(r.includes('ad')) {
+              } else if(time.includes('ad')) {
                 return dayjs(data.endDate).isSameOrBefore(dayjs(dayjs().add(count, 'day'))) && dayjs(data.endDate).isSameOrAfter(dayjs())
-              }  else if(r.includes('sm')) {
+              }  else if(time.includes('sm')) {
                 return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
               }
               return true

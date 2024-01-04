@@ -64,16 +64,17 @@ export class CbpPlanFeedComponent implements OnInit {
   }
 
   showBottomSheet(): void {
-    const bottomSheetRef = this.bottomSheet.open(FilterComponent,{
+    // const bottomSheetRef = this.bottomSheet.open(FilterComponent,{
+    this.bottomSheet.open(FilterComponent,{
       panelClass: 'filter-cbp',
       ariaLabel: 'Share on social media',
       data: {
         filterObj: this.filterObject
       }
     });
-    bottomSheetRef.afterDismissed().subscribe((dataFromChild) => {
-      console.log(dataFromChild,'datadfghjkjhgfghj');
-    });
+    // bottomSheetRef.afterDismissed().subscribe((dataFromChild) => {
+    //   // console.log(dataFromChild,'datadfghjkjhgfghj');
+    // });
   }
   
   openFilter() {
