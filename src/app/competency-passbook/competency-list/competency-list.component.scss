@@ -5,6 +5,10 @@ $text-primary: #1B4CA1;
     color: $text-primary;
 }
 
+.highlightFilter {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
 .hide {
     display: none;
 }

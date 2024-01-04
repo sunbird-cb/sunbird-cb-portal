@@ -133,21 +133,23 @@
     <div class="flex flex-row items-center px-4 ws-mat-default-text gap-2" *ngIf="isMobile && showAll" (click)="handleShowAll()">
         <mat-icon>keyboard_backspace</mat-icon> Show less
     </div>
+
+    <!-- left card starts here -->
     <div class="left-container" [ngClass]="{'hide': isMobile && showAll}" >
         <div class="flex flex-col gap-4 cp-container">
             <div class="flex flex-row gap-3">
                 <div class="flex-1 text-xl font-semibold">Competency passbook</div>
                 <div class="flex items-center">
-                    <span class="filter-dot" *ngIf="showFilterIndicator"></span>
+                    <span class="filter-dot" *ngIf="showFilterIndicator !== 'all'"></span>
                     <mat-icon class="cursor-pointer" [matMenuTriggerFor]="filter">filter_list</mat-icon>
                     <mat-menu #filter="matMenu" xPosition="before">
-                        <button mat-menu-item class="px-3" (click)="handleLeftFilter('threeMonths')" >
+                        <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'threeMonths'}" (click)="handleLeftFilter('threeMonths')" >
                             <span>Last 3 months</span>
                         </button>
-                        <button mat-menu-item class="px-3" (click)="handleLeftFilter('sixMonths')">
+                        <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'sixMonths'}" (click)="handleLeftFilter('sixMonths')">
                             <span>Last 6 months</span>
                         </button>
-                        <button mat-menu-item class="px-3" (click)="handleLeftFilter('lastYear')">
+                        <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'lastYear'}" (click)="handleLeftFilter('lastYear')">
                             <span>Last year</span>
                         </button>
                         <button mat-menu-item class="px-3" (click)="handleLeftFilter('all')">
@@ -246,7 +248,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">{{ elem?.competencySubTheme || 'NA' }}</div>
+                                <div class="text-base font-semibold">{{ (competency[elem.name + 'SubTheme'] || elem.competencySubTheme) || 'NA' }}</div>
                             </ng-container>
                         </div>
                         <div class="flex flex-col">

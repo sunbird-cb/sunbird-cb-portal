@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { CompetencyPassbookService } from './../competency-passbook.service';
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api';
+import { A } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'ws-competency-list',
@@ -27,7 +28,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   three_month_back = new Date(new Date().setMonth(new Date().getMonth() - 3));
   six_month_back = new Date(new Date().setMonth(new Date().getMonth() - 6));
   one_year_back = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
-  showFilterIndicator: boolean = false;
+  showFilterIndicator: string = 'all';
 
   TYPE_CONST = {
     behavioral: {
@@ -55,7 +56,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     allValue: 0,
     behaviouralValue: 0,
     functionalValue: 0,
-    domainValue: 0
+    domainValue: 0,
+    behaviouralSubTheme: 0,
+    functionalSubTheme: 0,
+    domainSubTheme: 0
   };
 
   leftCardDetails: any = [{
@@ -69,7 +73,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       all: 0,
       threeMonths: 0,
       sixMonths: 0,
-      lastYear: 0
+      lastYear: 0,
+      threeMonthsSubTheme: 0,
+      sixMonthsSubTheme: 0,
+      lastYearSubTheme: 0
     }
   }, {
     name: this.TYPE_CONST.functional.value,
@@ -82,7 +89,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       all: 0,
       threeMonths: 0,
       sixMonths: 0,
-      lastYear: 0
+      lastYear: 0,
+      threeMonthsSubTheme: 0,
+      sixMonthsSubTheme: 0,
+      lastYearSubTheme: 0
     }
   }, {
     name: this.TYPE_CONST.domain.value,
@@ -95,7 +105,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       all: 0,
       threeMonths: 0,
       sixMonths: 0,
-      lastYear: 0
+      lastYear: 0,
+      threeMonthsSubTheme: 0,
+      sixMonthsSubTheme: 0,
+      lastYearSubTheme: 0
     }
   }];
 
@@ -109,7 +122,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     private router: Router,
     private matSnackBar: MatSnackBar
   ) { 
-    console.log("isMobile - ", this.isMobile);
     if (window.innerWidth < 768) {
       this.isMobile = true;
       this.skeletonArr = [1, 2, 3];
@@ -178,14 +190,17 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
       if (new Date(obj.createdDate) > this.one_year_back) {
         leftCardObj.filter.lastYear += 1;
+        leftCardObj.filter.lastYearSubTheme += obj.children.length;
 
         if (new Date(obj.createdDate) > this.six_month_back) {
           leftCardObj.filter.sixMonths += 1
+          leftCardObj.filter.sixMonthsSubTheme += obj.children.length;
         }
 
         if (new Date(obj.createdDate) > this.three_month_back) {
           leftCardObj.filter.threeMonths += 1
-        } 
+          leftCardObj.filter.threeMonthsSubTheme += obj.children.length;
+        }
       }
 
       this.leftCardDetails.forEach((_eachObj: any) => {
@@ -254,7 +269,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
                 _eachObj.total = obj.children.length
               }
 
-              _eachObj.filter.all = _eachObj.filter.threeMonths + _eachObj.filter.sixMonths + _eachObj.filter.lastYear;
+              // _eachObj.filter.all = _eachObj.filter.threeMonths + _eachObj.filter.sixMonths + _eachObj.filter.lastYear;
             });
           });
 
@@ -272,8 +287,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   handleLeftFilter(months: string): void {
     this.leftCardDetails.forEach((_obj: any) => {
       this.competency[`${_obj.name}Value`] = _obj.filter[months]
+      if (months === 'all') {
+        this.competency[`${_obj.name}SubTheme`] = _obj.competencySubTheme
+      } else {
+        this.competency[`${_obj.name}SubTheme`] = _obj.filter[`${months}SubTheme`]
+      }
     });
-    this.showFilterIndicator = (months === 'all') ? false : true;
+    this.showFilterIndicator = months;
   }
 
   handleTabChange(event: MatTabChangeEvent ): void {
