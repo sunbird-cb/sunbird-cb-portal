@@ -52,6 +52,7 @@ const endpoint = {
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
+  FIRST_LOGIN_API: '/apis/proxies/v8/login/entry'
 }
 
 @Injectable({
@@ -217,6 +218,7 @@ export class InitService {
     //   .catch(() => {
     //     // throw new DataResponseError('COOKIE_SET_FAILURE')
     //   })
+    this.logFirstLogin()
     return true
   }
   async initFeatured() {
@@ -323,6 +325,16 @@ export class InitService {
       localStorage.removeItem('telemetrySessionId')
     }
     localStorage.setItem('telemetrySessionId', uuid())
+  }
+
+  private logFirstLogin() {
+    if (!localStorage.getItem('firsLogin')) {
+      this.http.get<any>(endpoint.FIRST_LOGIN_API).pipe(map((res: any) => {
+        if (res && res.result) {
+          localStorage.setItem('firsLogin', 'true')
+        }
+      })).toPromise()
+    }
   }
   private async fetchStartUpDetails(): Promise<any> {
     // const userRoles: string[] = []
