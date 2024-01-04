@@ -271,9 +271,9 @@
                                 </a>
                               </button>
                               <div *ngIf="otpSend" class="flex flex-1 flex-column">
-                                <div class="flex flex-1 flex-row">
+                                <div class="flex flex-1 flex-row margin-bottom-m">
                                   <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w50">
-                                    <input class="margin-bottom-m margin-top-m" id="mobileNumber" #otp type="number"
+                                    <input id="mobileNumber" #otp type="number"
                                       matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input"
                                       onKeyPress="if(this.value.length === 8) return false;">
                                     <mat-hint *ngIf="timeLeftforOTP > 0 ">
@@ -306,7 +306,7 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs no-pb">
                           <input id="primaryEmail" name="primaryEmailField" type="email" matInput
-                            placeholder="Primary Email" #primaryEmail formControlName="primaryEmail" readonly
+                            placeholder="Primary Email" #primaryEmail formControlName="primaryEmail"
                             i18n-aria-label aria-label="Primary Email readonly input" maxlength="320">
                           <mat-error [hidden]="false" i18n="Primary Email Error|Explains name is required">
                             Primary Email is mandatory
@@ -338,11 +338,11 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
                           <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group"
-                            formControlName="group">
+                            formControlName="group" [disabled]="!isAllowed('group')">
                             <ng-container *ngFor="let option of groupsOriginal">
-                              <mat-option  *ngIf="option.name !== 'Others'" [value]="option.name">
-                                  <!-- {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}} -->
-                                  {{unApprovedReq?.group ? unApprovedReq.group: option.name}}
+                              <mat-option *ngIf="option.name !== 'Others'" [value]="option.name">
+                                <!-- {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}} -->
+                                {{unApprovedReq?.group ? unApprovedReq.group: option.name}}
                               </mat-option>
                             </ng-container>
                           </mat-select>
@@ -364,7 +364,8 @@
                           <mat-form-field appearance="outline" class="margin-top-s w-full">
                             <mat-select #designation formControlName="designation" i18n-placeholder
                               placeholder="--Select--"
-                              (selectionChange)="otherDropDownChange(designation.value, 'designation')">
+                              (selectionChange)="otherDropDownChange(designation.value, 'designation')"
+                              [disabled]="!isAllowed('designation')">
                               <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
                                 {{unApprovedReq?.designation ? unApprovedReq.designation: designation.name}}
                               </mat-option>
@@ -424,8 +425,8 @@
                           </ng-container>
                           <ng-container *ngIf="!isVerifiedAlready && isReqVKBuser">
                             <span class="ml-2 verifiy-user-msg">{{rejectedKarmayogiMsg}}</span>
-                          </ng-container>                       
-                          <div class="flex flex-1 flex-end"  *ngIf="isReqVKBuser"
+                          </ng-container>
+                          <div class="flex flex-1 flex-end" *ngIf="isReqVKBuser"
                             [ngClass]="{ disable: !isAllowed('verifiedKarmayogi')}">
                             <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" class="mr-2"
                               formControlName="verifiedKarmayogi" #verifiedKarmayogi [checked]="karmayogiBadge"
@@ -435,7 +436,8 @@
                             </mat-checkbox>
                             <a class="pos-hint ws-mat-black60-text" id="org-field"
                               [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
-                              <span class="float-right ws-mat-accent-text cursor-pointer font-bold">Request for Verified Karmayogi
+                              <span class="float-right ws-mat-accent-text cursor-pointer font-bold">Request for Verified
+                                Karmayogi
                               </span>
                             </a>
                           </div>
@@ -588,7 +590,7 @@
                       <mat-form-field appearance="outline" class="margin-top-xs">
                         <input id="chooseDOJ" matInput #doj formControlName="doj" [matDatepicker]="dojPicker"
                           i18n-placeholder placeholder="Choose Date of Joining" (focus)="dojPicker.open()" [min]=""
-                          [max]="today">
+                          [max]="today" [disabled]="!isAllowed('doj')">
                         <mat-datepicker-toggle matSuffix [for]="dojPicker"></mat-datepicker-toggle>
                         <mat-datepicker #dojPicker (closed)="doj.blur()"></mat-datepicker>
                         <mat-error [hidden]="false" i18n="Date of Joining Error|Explains name is required">
@@ -718,14 +720,17 @@
               </div>
 
               <div class="flex flex-col w-full profile-cols-full bg-grey margin-top-m">
-                <div class="radio-toolbar flex-1" [ngClass]="{ disable: !isAllowed('isGovtOrg') }">
-                  <input type="radio" id="govtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="true">
+                <div class="radio-toolbar flex-1" [ngClass]="{ disable: !isAllowed('organisationType') }">
+                  <input type="radio" id="govtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="true"
+                    [disabled]="!isAllowed('organisationType')">
                   <label for="govtOrg">Government Organisation</label>
-                  <input type="radio" id="nonGovtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="false">
+                  <input type="radio" id="nonGovtOrg" name="isGovtOrg" formControlName="isGovtOrg" [value]="false"
+                    [disabled]="!isAllowed('organisationType')">
                   <label for="nonGovtOrg">Non-Government Organisation</label>
                   <br>
-                  <span class="txt" *ngIf="!isAllowed('isGovtOrg')">{{inReview}}</span>
+                  <span class="txt" *ngIf="!isAllowed('organisationType')">{{inReview}}</span>
                 </div>
+
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item1" [ngClass]="{ disable: !isAllowed('name') }">
                     <p class=" margin-remove-bottom form-label"
@@ -734,7 +739,8 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
-                        (selectionChange)="otherDropDownChange(designation.value, 'orgname')">
+                        (selectionChange)="otherDropDownChange(designation.value, 'orgname')"
+                        [disabled]="!isAllowed('name')">
                         <mat-option [value]="org" *ngFor="let org of allDept">
                           <!-- {{org}} -->
                           <!-- {{orgNameApvlReq?.feildName === 'name' ? orgNameApvlReq.value : org}} -->
@@ -753,7 +759,8 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #orgNameOther formControlName="orgNameOther" i18n-placeholder
-                        placeholder="Enter Other Organisation Name" maxlength="50" />
+                        placeholder="Enter Other Organisation Name" maxlength="50"
+                        [disabled]="!isAllowed('orgNameOther')" />
                       <mat-error [hidden]="false" i18n="Other Organisation Name  Error|Explains name is required">
                         Other Organisation Name is mandatory
                       </mat-error>
@@ -770,7 +777,8 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
-                        (selectionChange)="otherDropDownChange(designation.value, 'industry')">
+                        (selectionChange)="otherDropDownChange(designation.value, 'industry')"
+                        [disabled]="!isAllowed('industry')">
                         <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
                           <!-- {{indApvlReq?.feildName === 'industry' ? indApvlReq.value : i.name}} -->
                           {{unApprovedReq?.industry ? unApprovedReq.industry: i.name}}
@@ -788,7 +796,8 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #industryOther formControlName="industryOther" i18n-placeholder
-                        placeholder="Enter Other Industry Name" maxlength="50" />
+                        placeholder="Enter Other Industry Name" maxlength="50"
+                        [disabled]="!isAllowed('industryOther')" />
                       <mat-error [hidden]="false" i18n="Other Industry Name  Error|Explains name is required">
                         Other Industry Name is mandatory
                       </mat-error>
@@ -804,7 +813,8 @@
                       Country
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <mat-select formControlName="location" i18n-placeholder placeholder="--Select--">
+                      <mat-select formControlName="location" i18n-placeholder placeholder="--Select--"
+                        [disabled]="!isAllowed('location')">
                         <mat-option [value]="loc.name" *ngFor="let loc of countries">
                           <!-- {{countryApvlReq?.feildName === 'location' ? countryApvlReq.value : loc.name}} -->
                           {{unApprovedReq?.location ? unApprovedReq.location: loc.name}}
@@ -826,7 +836,8 @@
                     <mat-form-field appearance="outline" class="margin-top-xs full-width">
                       <textarea id="description" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="4" maxlength="500" formControlName="orgDesc"
-                        placeholder="Type Your Residence Address Here" i18n-placeholder #orgDesc></textarea>
+                        placeholder="Please enter your organisation description" i18n-placeholder #orgDesc
+                        [attr.disabled]="!isAllowed('description')"></textarea>
                       <mat-hint align="end">{{ orgDesc.value.length }} /500 characters</mat-hint>
                       <mat-error i18n>
                         You have exceeded 500 characters.
@@ -837,7 +848,6 @@
                   </div>
                 </div>
                 <p class="heading mt-10">Other Details For Government Employees (If Applicable)</p>
-
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
                   <div class="item1">
                     <p class=" margin-remove-bottom form-label"
@@ -990,7 +1000,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="eHRMSId" matInput type="text" formControlName="eHRMSId" i18n-placeholder
-                        placeholder="EHRMS ID" readonly />
+                        placeholder="EHRMS ID" [disabled]="true" />
                     </mat-form-field>
                   </div>
                   <div class="item1" *ngIf="eHRMSName && eHRMSName === 'DoPT eHRMS'">
@@ -1000,7 +1010,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="eHRMSName" matInput type="text" formControlName="eHRMSName" i18n-placeholder
-                        placeholder="EHRMS System" readonly />
+                        placeholder="EHRMS System" [disabled]="true" />
                     </mat-form-field>
                   </div>
 

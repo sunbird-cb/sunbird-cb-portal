@@ -25,6 +25,7 @@
 .disable {
   pointer-events: none !important;
   cursor: text !important;
+  // opacity: 0.9 !important;
   // background: gainsboro;
 
   .txt {
@@ -36,7 +37,6 @@
     // tslint:disable-next-line
     -webkit-animation: blink 3000ms infinite;
     /* Safari and Chrome */
-
 
     @keyframes blink {
       from {
@@ -587,7 +587,7 @@ input.mat-input-element {
 
 .otp {
   flex: 1;
-  max-height: 49px;
+  max-height: 37px;
   margin-right: 0;
   margin-left: 16px;
 }
@@ -733,4 +733,10 @@ input.mat-input-element {
 
 .verifiy-user-msg{
   font-size: 14px;
+}
+
+.mat-form-field-disabled {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  opacity: 0.9 !important;
 }

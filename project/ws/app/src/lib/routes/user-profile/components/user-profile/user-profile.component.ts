@@ -171,7 +171,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       countryCode: new FormControl('+91', [Validators.required]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       telephone: new FormControl('', [Validators.pattern(this.telephonePattern)]),
-      primaryEmail: new FormControl('', [Validators.required, Validators.email]),
+      primaryEmail: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
       nationality: new FormControl('', []),
@@ -216,8 +216,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       departmentName: new FormControl('', []),
       verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
       group: new FormControl('', [Validators.required]),
-      eHRMSId: new FormControl('', []),
-      eHRMSName: new FormControl('', []),
+      eHRMSId: new FormControl({ value: '', disabled: true }, []),
+      eHRMSName: new FormControl({ value: '', disabled: true }, []),
     })
 
   }
@@ -830,7 +830,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       eHRMSId: '',
       eHRMSName: '',
     }
-    if ((data && data.professionalDetails && data.professionalDetails.length > 0) || this.unApprovedField.length > 0) {
+    // tslint:disable-next-line: max-line-length
+    if ((data && data.professionalDetails && data.professionalDetails.length > 0) || (this.unApprovedField && this.unApprovedField.length > 0)) {
       const organisation = data && data.professionalDetails ? data.professionalDetails[0] : null
       org = {
         isGovtOrg: organisation && organisation.organisationType ? organisation.organisationType : true,
@@ -1353,7 +1354,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       'otherDetailsOfficeAddress', 'otherDetailsOfficePinCode', 'orgName', 'orgNameOther',
     ]
     const professionalDetailsFields = ['isGovtOrg', 'industry', 'designation', 'location',
-      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName', 'group']
+      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'orgName', 'group']
     const professionalDetails: any = []
     const organisations: any = {}
     // let academics = {}
