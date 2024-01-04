@@ -285,5 +285,9 @@
     <div class="right-container" *ngIf="showAll">
         <ng-container [ngTemplateOutlet]="rightContainer"></ng-container>
     </div>
-
 </div>
+
+<!-- <ng-container *ngIf="toggleFilter">
+    <ws-app-filter (toggleFilter)="toggleFilterMethod($event)" (clearFilterObj)="clearFilterObj($event)"
+        [filterObj]="filterObjData" (getFilterData)="applyFilter($event)"></ws-app-filter>
+</ng-container> -->
