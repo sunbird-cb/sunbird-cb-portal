@@ -78,12 +78,12 @@ export class CbpPlanFeedComponent implements OnInit {
   }
   
   openFilter() {
-    if(window.screen.width < 768) {
-      this.showBottomSheet()
-    } else {
+    // if(window.screen.width < 768) {
+    //   this.showBottomSheet()
+    // } else {
       this.toggleFilter = true
       this.toggleFilterEvent.emit(this.toggleFilter)
-    }
+    // }
   }
   CloseFilter(value: any,key: any){
     this.closeFilterKey.emit({value, key})

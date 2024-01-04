@@ -1,18 +1,18 @@
 <ng-container class="">
-    <div class="filter-overlay hidden md:block">
+    <div class="filter-overlay ">
         <div class="filter filter-md ">
             <ng-container [ngTemplateOutlet]="filter"></ng-container>
         </div>
     </div>
 </ng-container>
 <!-- block md:hidden -->
-<div  class="block md:hidden">
+<!-- <div  class="block md:hidden">
     <div>
         <div class="filter">
             <ng-container [ngTemplateOutlet]="filter"></ng-container>
         </div>
     </div>
-</div>
+</div> -->
 
 <ng-template #filter>
     <div class="filter-block">
@@ -182,15 +182,14 @@
                 </mat-accordion>
             </div>
         </div>
-        
-    </div>
-    <div class="filter-footer flex flex-1">
-        <div class="flex flex-2 flex-row">
-            <div class="filter-clear" (click)="clearFilter()">
-                Clear
-            </div>
-            <div class="filter-apply" (click)="applyFilter()">
-                Apply
+        <div class="filter-footer flex flex-1">
+            <div class="flex flex-2 flex-row">
+                <div class="filter-clear" (click)="clearFilter()">
+                    Clear
+                </div>
+                <div class="filter-apply" (click)="applyFilter()">
+                    Apply
+                </div>
             </div>
         </div>
     </div>
