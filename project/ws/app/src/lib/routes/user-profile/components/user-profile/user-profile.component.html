@@ -339,12 +339,12 @@
                         <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
                           <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group"
                             formControlName="group">
-                            <mat-option *ngFor="let option of groupsOriginal" [value]="option.name">
-                              <span *ngIf="option.name !== 'Others'">
-                                <!-- {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}} -->
-                                {{unApprovedReq?.group ? unApprovedReq.group: option.name}}
-                              </span>
-                            </mat-option>
+                            <ng-container *ngFor="let option of groupsOriginal">
+                              <mat-option  *ngIf="option.name !== 'Others'" [value]="option.name">
+                                  <!-- {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}} -->
+                                  {{unApprovedReq?.group ? unApprovedReq.group: option.name}}
+                              </mat-option>
+                            </ng-container>
                           </mat-select>
                           <mat-error [hidden]="false" i18n="txt txt-reviewGroup Error | Explains Group is required"
                             *ngIf="createUserForm?.controls['group'].errors?.required" i18n-aria-label
@@ -418,12 +418,15 @@
 
                       <div class="input-wrapper">
                         <div class="flex flex-1 flex-middle">
-                          <ng-container *ngIf="!isVerifiedAlready">
+                          <ng-container *ngIf="!isVerifiedAlready && isAllowed('verifiedKarmayogi') && !isReqVKBuser">
                             <img width="18px" height="18px" mat-raised-button src="assets/icons/info.svg" alt="">
                             <span class="ml-2 verifiy-user-msg">{{verifiedKarmayogiMsg}}</span>
                           </ng-container>
+                          <ng-container *ngIf="!isVerifiedAlready && isReqVKBuser">
+                            <span class="ml-2 verifiy-user-msg">{{rejectedKarmayogiMsg}}</span>
+                          </ng-container>                       
                           <div class="flex flex-1 flex-end"  *ngIf="isReqVKBuser"
-                            [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
+                            [ngClass]="{ disable: !isAllowed('verifiedKarmayogi')}">
                             <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" class="mr-2"
                               formControlName="verifiedKarmayogi" #verifiedKarmayogi [checked]="karmayogiBadge"
                               (change)="verifiedKarmayogiCheck()" i18n-aria-label
@@ -432,7 +435,7 @@
                             </mat-checkbox>
                             <a class="pos-hint ws-mat-black60-text" id="org-field"
                               [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
-                              <span class="float-right ws-mat-accent-text cursor-pointer font-bold">Request again for Verified Karmayogi
+                              <span class="float-right ws-mat-accent-text cursor-pointer font-bold">Request for Verified Karmayogi
                               </span>
                             </a>
                           </div>

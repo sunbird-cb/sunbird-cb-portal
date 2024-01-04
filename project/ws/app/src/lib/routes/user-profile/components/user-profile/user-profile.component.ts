@@ -138,6 +138,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   eHRMSId: any
   eHRMSName: any
   verifiedKarmayogiMsg!: any
+  rejectedKarmayogiMsg!: any
   rejectedReq!: any
   isverifiedKBKeyExist!: boolean
   isverifiedKeyInAppv!: boolean
@@ -229,6 +230,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     //   console.log('ngOnInit - value', value);
     // })
     this.verifiedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.verifiedKarmayogi
+    this.rejectedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.rejectedKarmayogiMsg
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
       return v.approvalRequired ? { [k]: v } : null
     }))
@@ -743,7 +745,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   removeHobbies(interest: any) {
     const index = this.selectedHobbies.indexOf(interest)
-
     if (index >= 0) {
       this.selectedHobbies.splice(index, 1)
     }
@@ -829,28 +830,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       eHRMSId: '',
       eHRMSName: '',
     }
-    if (data && data.professionalDetails && data.professionalDetails.length > 0) {
-      const organisation = data.professionalDetails[0]
-      // const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
+    if ((data && data.professionalDetails && data.professionalDetails.length > 0) || this.unApprovedField.length > 0) {
+      const organisation = data && data.professionalDetails ? data.professionalDetails[0] : null
       org = {
-        isGovtOrg: organisation.organisationType,
-        orgName: this.unApprovedReq && this.unApprovedReq.name ? this.unApprovedReq.name : organisation.name,
-        orgNameOther: this.unApprovedReq && this.unApprovedReq.nameOther ? this.unApprovedReq.nameOther : organisation.nameOther,
-        industry: this.unApprovedReq && this.unApprovedReq.industry ? this.unApprovedReq.industry : organisation.industry || 'Other',
+        isGovtOrg: organisation && organisation.organisationType ? organisation.organisationType : true,
+        orgName: this.unApprovedReq && this.unApprovedReq.name ? this.unApprovedReq.name : organisation ? organisation.name : '',
         // tslint:disable-next-line: max-line-length
-        industryOther: this.unApprovedReq && this.unApprovedReq.industryOther ? this.unApprovedReq.industryOther : organisation.industryOther,
-        designation: this.unApprovedReq && this.unApprovedReq.designation ? this.unApprovedReq.designation : organisation.designation,
-        group: this.unApprovedReq && this.unApprovedReq.group ? this.unApprovedReq.group : organisation.group,
-        location: this.unApprovedReq && this.unApprovedReq.location ? this.unApprovedReq.location : organisation.location,
-        responsibilities: organisation.responsibilities,
+        orgNameOther: this.unApprovedReq && this.unApprovedReq.nameOther ? this.unApprovedReq.nameOther : organisation ? organisation.nameOther : '',
+            // tslint:disable-next-line: max-line-length
+        industry: this.unApprovedReq && this.unApprovedReq.industry ? this.unApprovedReq.industry : organisation ? organisation.industry : '',
         // tslint:disable-next-line: max-line-length
-        doj: this.unApprovedReq && this.unApprovedReq.doj ? this.getDateFromText(this.unApprovedReq.doj) : this.getDateFromText(organisation.doj),
-        orgDesc: this.unApprovedReq && this.unApprovedReq.description ? this.unApprovedReq.description : organisation.description,
-        completePostalAddress: organisation.completePostalAddress,
+        industryOther: this.unApprovedReq && this.unApprovedReq.industryOther ? this.unApprovedReq.industryOther : organisation ? organisation.industryOther : '',
+        // tslint:disable-next-line: max-line-length
+        designation: this.unApprovedReq && this.unApprovedReq.designation ? this.unApprovedReq.designation : organisation ? organisation.designation : '',
+        // tslint:disable-next-line: max-line-length
+        group: this.unApprovedReq && this.unApprovedReq.group ? this.unApprovedReq.group : organisation ? organisation.group : '',
+        // tslint:disable-next-line: max-line-length
+        location: this.unApprovedReq && this.unApprovedReq.location ? this.unApprovedReq.location : organisation ? organisation.location : '',
+        responsibilities: organisation ? organisation.responsibilities : '',
+        // tslint:disable-next-line: max-line-length
+        doj: this.unApprovedReq && this.unApprovedReq.doj ? this.getDateFromText(this.unApprovedReq.doj) : organisation ? this.getDateFromText(organisation.doj) : '',
+        // tslint:disable-next-line: max-line-length
+        orgDesc: this.unApprovedReq && this.unApprovedReq.description ? this.unApprovedReq.description : organisation ? organisation.description : '',
+        completePostalAddress: organisation ? organisation.completePostalAddress : '',
         eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
         eHRMSName: _.get(data, 'additionalProperties.externalSystem') || '',
       }
-      if (organisation.organisationType === 'Government') {
+      if (organisation && organisation.organisationType === 'Government') {
         org.isGovtOrg = true
       } else {
         org.isGovtOrg = false
@@ -1048,6 +1054,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
+    } else {
+      this.showOrgnameOther = false
     }
     if (organisation.industry === 'Other') {
       this.showIndustryOther = true
