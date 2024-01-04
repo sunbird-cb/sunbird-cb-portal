@@ -1,8 +1,9 @@
 // Core imports
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTabChangeEvent } from '@angular/material';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 // RxJS imports
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { CompetencyPassbookService } from './../competency-passbook.service';
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api';
+import { A } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'ws-competency-list',
@@ -19,7 +21,14 @@ import { WidgetUserService } from '@sunbird-cb/collection/src/public-api';
 
 export class CompetencyListComponent implements OnInit, OnDestroy {
 
+  isMobile = false;
   private destroySubject$ = new Subject();
+  skeletonArr = <any>[];
+  showAll = false;
+  three_month_back = new Date(new Date().setMonth(new Date().getMonth() - 3));
+  six_month_back = new Date(new Date().setMonth(new Date().getMonth() - 6));
+  one_year_back = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+  showFilterIndicator: string = 'all';
 
   TYPE_CONST = {
     behavioral: {
@@ -43,30 +52,64 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     all: <any>[],
     behavioural: <any>[],
     functional: <any>[],
-    domain: <any>[]
+    domain: <any>[],
+    allValue: 0,
+    behaviouralValue: 0,
+    functionalValue: 0,
+    domainValue: 0,
+    behaviouralSubTheme: 0,
+    functionalSubTheme: 0,
+    domainSubTheme: 0
   };
 
   leftCardDetails: any = [{
-    name: 'behavioural',
-    label: 'Behavioural',
+    name: this.TYPE_CONST.behavioral.value,
+    label: this.TYPE_CONST.behavioral.capsValue,
     type: 'Behavioral',
     total: 0,
     competencySubTheme: 0,
-    contentConsumed: 0
+    contentConsumed: 0,
+    filter: {
+      all: 0,
+      threeMonths: 0,
+      sixMonths: 0,
+      lastYear: 0,
+      threeMonthsSubTheme: 0,
+      sixMonthsSubTheme: 0,
+      lastYearSubTheme: 0
+    }
   }, {
-    name: 'functional',
-    label: 'Functional',
-    type: 'Functional',
+    name: this.TYPE_CONST.functional.value,
+    label: this.TYPE_CONST.functional.capsValue,
+    type: this.TYPE_CONST.functional.capsValue,
     total: 0,
     competencySubTheme: 0,
-    contentConsumed: 0
+    contentConsumed: 0,
+    filter: {
+      all: 0,
+      threeMonths: 0,
+      sixMonths: 0,
+      lastYear: 0,
+      threeMonthsSubTheme: 0,
+      sixMonthsSubTheme: 0,
+      lastYearSubTheme: 0
+    }
   }, {
-    name: 'domain',
-    label: 'Domain',
-    type: 'Domain',
+    name: this.TYPE_CONST.domain.value,
+    label: this.TYPE_CONST.domain.capsValue,
+    type: this.TYPE_CONST.domain.capsValue,
     total: 0,
     competencySubTheme: 0,
-    contentConsumed: 0
+    contentConsumed: 0,
+    filter: {
+      all: 0,
+      threeMonths: 0,
+      sixMonths: 0,
+      lastYear: 0,
+      threeMonthsSubTheme: 0,
+      sixMonthsSubTheme: 0,
+      lastYearSubTheme: 0
+    }
   }];
 
   courseWithCompetencyArray: any[] = [];
@@ -76,8 +119,18 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     private cpService: CompetencyPassbookService,
     private widgetService: WidgetUserService,
     private configService: ConfigurationsService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private matSnackBar: MatSnackBar
+  ) { 
+    if (window.innerWidth < 768) {
+      this.isMobile = true;
+      this.skeletonArr = [1, 2, 3];
+    } else {
+      this.skeletonArr = [1, 2, 3, 4, 5, 6];
+      this.showAll = true;
+      this.isMobile = false;
+    }
+  }
 
   ngOnInit() {
     this.getUserEnrollmentList();
@@ -109,7 +162,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
-            alert('Unable to pull Enrollment list details');
+            this.matSnackBar.open("Unable to pull Enrollment list details!");
           }
         }
     )
@@ -125,12 +178,30 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
         });
       }
     });
+    // console.log("eachCourse.issuedCertificates - ", eachCourse.issuedCertificates);
   }
 
   bindMoreData(typeObj: any, name: string) {
+    const leftCardObj = this.leftCardDetails.find((obj: any) => obj.name === name);
+
     typeObj.forEach((obj: any) => {
       obj['viewMore'] = false;
       obj['competencyName'] = name;
+
+      if (new Date(obj.createdDate) > this.one_year_back) {
+        leftCardObj.filter.lastYear += 1;
+        leftCardObj.filter.lastYearSubTheme += obj.children.length;
+
+        if (new Date(obj.createdDate) > this.six_month_back) {
+          leftCardObj.filter.sixMonths += 1
+          leftCardObj.filter.sixMonthsSubTheme += obj.children.length;
+        }
+
+        if (new Date(obj.createdDate) > this.three_month_back) {
+          leftCardObj.filter.threeMonths += 1
+          leftCardObj.filter.threeMonthsSubTheme += obj.children.length;
+        }
+      }
 
       this.leftCardDetails.forEach((_eachObj: any) => {
         if (_eachObj.name === name) {
@@ -197,10 +268,12 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               if(_eachObj.type.toLowerCase() === obj.name.toLowerCase()) {
                 _eachObj.total = obj.children.length
               }
+
+              // _eachObj.filter.all = _eachObj.filter.threeMonths + _eachObj.filter.sixMonths + _eachObj.filter.lastYear;
             });
           });
 
-          this.competencyArray = this.competency.all;
+          this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
           this.competency.skeletonLoading = false;
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
@@ -211,13 +284,30 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       );
   }
 
+  handleLeftFilter(months: string): void {
+    this.leftCardDetails.forEach((_obj: any) => {
+      this.competency[`${_obj.name}Value`] = _obj.filter[months]
+      if (months === 'all') {
+        this.competency[`${_obj.name}SubTheme`] = _obj.competencySubTheme
+      } else {
+        this.competency[`${_obj.name}SubTheme`] = _obj.filter[`${months}SubTheme`]
+      }
+    });
+    this.showFilterIndicator = months;
+  }
+
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
     this.competencyArray = this.competency[param];
   }
 
+  handleShowAll(): void {
+    this.showAll = !this.showAll;
+    this.competencyArray = (this.showAll) ? this.competency['all'] : this.competency['all'].slice(0, 3); 
+  }
+
   handleClick(param: string): void {
-    this.competencyArray = this.competency[param];
+    this.competencyArray = (this.isMobile) ? this.competency[param].slice(0, 3) : this.competency[param];
   }
 
   handleViewMore(obj: any, flag?: string): void {

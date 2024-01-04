@@ -21,6 +21,8 @@ export class FilterComponent implements OnInit {
   @Input() from:any;
   @Input() designationList:any;
   @Input() filterObj:any;
+  @Input() showAdditionalFilters: boolean = true;
+
   timeDuration: any = [{ "id": '1w', name: 'Last week', checked: false }, { "id": 1, name: 'Last month', checked: false }, { "id": 3, name: 'Last 3 months', checked: false }, { "id": 6, name: 'Last 6 months', checked: false }, { "id": 12, name: 'Last year', checked: false }];
   contentStatus: any = [{ "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
   primaryCategoryList: any = [{ "id": "Course", name: 'Course',checked: false }, { "id": 'Program', name: 'Program',checked: false }];

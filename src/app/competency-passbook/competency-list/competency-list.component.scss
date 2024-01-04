@@ -5,9 +5,37 @@ $text-primary: #1B4CA1;
     color: $text-primary;
 }
 
+.highlightFilter {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.hide {
+    display: none;
+}
+
+.filter-dot {
+    background-color: #d13924;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    position: relative;
+    top: -6px;
+    right: -28px;
+}
+
 .passbook-container {
     display: flex;
     flex-direction: row;
+}
+
+.mobile-right-container {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-right-container {
+        display: block;
+    }
 }
 
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
@@ -170,6 +198,7 @@ hr {
         .chip {
             border: 1px solid $text-primary;
             color: $text-primary;
+            line-height: 14px;
         }
     }
 }
@@ -207,7 +236,6 @@ hr {
     .right-container {
         padding: 16px;
         flex-direction: column;
-        display: none;
     }
 
     .mobile-right-container {
