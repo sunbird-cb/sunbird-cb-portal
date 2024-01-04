@@ -283,7 +283,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       })
       this.onGroupChange()
     },
-      (_err: any) => {
+                                              (_err: any) => {
       })
 
     this.userProfileSvc.getMasterNationlity().subscribe(
@@ -398,12 +398,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isVerifiedKBReq() {
     if (this.isVerifiedAlready) {
       this.isReqVKBuser = false
-    } else if(this.isverifiedKeyInAppv) {
-      this.isReqVKBuser = true //if inreview
+    } else if (this.isverifiedKeyInAppv) {
+      this.isReqVKBuser = true // if inreview
     } else if ((!this.isVerifiedAlready || !this.isverifiedKeyInAppv) && this.isverifiedKBKeyExist) {
-      this.isReqVKBuser = true //reject case
+      this.isReqVKBuser = true // reject case
     } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
-      this.isReqVKBuser = false //firsttime user
+      this.isReqVKBuser = false // firsttime user
     }
   }
 
