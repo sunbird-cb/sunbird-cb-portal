@@ -399,7 +399,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (this.isVerifiedAlready) {
       this.isReqVKBuser = false
     } else if (this.isverifiedKeyInAppv) {
-      this.isReqVKBuser = true // if inreview
+      this.isReqVKBuser = false // if inreview
     } else if ((!this.isVerifiedAlready || !this.isverifiedKeyInAppv) && this.isverifiedKBKeyExist) {
       this.isReqVKBuser = true // reject case
     } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
