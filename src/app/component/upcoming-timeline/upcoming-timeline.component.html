@@ -43,7 +43,7 @@
                                 <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
                             </div>
                             <div class="flex flex-center">
-                                <p class="ws-mat-default-text" (click)="upComingMethod('upcoming')">Show all</p>
+                                <p class="ws-mat-default-text"  (click)="upComingMethod('upcoming');scroll('listPage')">Show all</p>
                             </div>
                         </div>
                     </ng-container>
@@ -59,7 +59,7 @@
                                 <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
                             </div>
                             <div class="flex flex-center">
-                                <p class="ws-mat-default-text" (click)="upComingMethod('overdue')">Show all</p>
+                                <p class="ws-mat-default-text" (click)="upComingMethod('overdue');scroll('listPage')">Show all</p>
                             </div>
                         </div>
                     </ng-container>
@@ -96,7 +96,7 @@
     <div class="mt-8 mb-8 highlight-block">
         <div class="flex flex-middle">
             <p class="title">{{data.title}}</p>
-            <mat-icon aria-hidden="true" (click)="upComingMethod(data.key)" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
+            <mat-icon aria-hidden="true" (click)="upComingMethod(data.key);scroll('listPage')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
         <div>
             <p class="description">{{data.subTitle}}</p>

@@ -23,15 +23,33 @@ export class FilterComponent implements OnInit {
   @Input() filterObj:any;
   @Input() showAdditionalFilters: boolean = true;
 
-  timeDuration: any = [{ "id": '1w', name: 'Last week', checked: false }, { "id": 1, name: 'Last month', checked: false }, { "id": 3, name: 'Last 3 months', checked: false }, { "id": 6, name: 'Last 6 months', checked: false }, { "id": 12, name: 'Last year', checked: false }];
+  timeDuration: any = [
+    { "id": '7ad', name: 'Upcoming 7 Days', checked: false }, 
+    { "id": '30ad', name: 'Upcoming 30 Days', checked: false }, 
+    { "id": '90ad', name: 'Upcoming 3 Months', checked: false }, 
+    { "id": '182ad', name: 'Upcoming 6 Months', checked: false }, 
+    { "id": '1sw', name: 'Last week', checked: false },
+    { "id": '1sm', name: 'Last month', checked: false }, 
+    { "id": '3sm', name: 'Last 3 months', checked: false }, 
+    { "id": '6sm', name: 'Last 6 months', checked: false }, 
+    { "id": '12sm', name: 'Last year', checked: false }
+  ];
   contentStatus: any = [{ "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
-  primaryCategoryList: any = [{ "id": "Course", name: 'Course',checked: false }, { "id": 'Program', name: 'Program',checked: false }];
+  primaryCategoryList: any = [
+    { "id": "Course", name: 'Course',checked: false }, 
+    { "id": 'Curated program', name: 'Curated program',checked: false },
+    { "id": 'Curated program', name: 'Curated program',checked: false },
+    { "id": "Blended program", name: 'Blended program',checked: false }, 
+    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false }
+  ];
   providersList: any[] = [];
   selectedProviders: any[] = [];
   competencyTypeList: any = [];  
   competencyList: any = [];
   competencyThemeList: any[] = [];
   competencySubThemeList: any[] = [];
+  competencyThemeOriginalList: any[] = [];
+  competencySubThemeOriginalList: any[] = [];
   filterObjEmpty: any = {
     "primaryCategory":[],
     "status":[],
@@ -122,15 +140,25 @@ export class FilterComponent implements OnInit {
             themechild['parent'] = ctype.id;
           })
           if(this.filterObj['competencyArea'] && pushValue) {
-            this.filterObj['competencyArea'].push(citem.name);
+            this.filterObj['competencyArea'].push(citem.name)
           }          
-          this.competencyThemeList = this.competencyThemeList.concat(citem.children);
+          this.competencyThemeList = this.competencyThemeList.concat(citem.children)
+          this.competencyThemeOriginalList = this.competencyThemeList
         }
       })
     } else {     
       this.competencyThemeList = this.competencyThemeList.filter((sitem) => {
+        if(sitem.parent === ctype.id) {
+          const index = this.filterObj['competencyTheme'].indexOf(sitem.name);
+          if (index > -1) { // only splice array when item is found
+            this.filterObj['competencyTheme'].splice(index, 1); // 2nd parameter means remove one item only
+          }
+          sitem.checked = false
+          this.getCompetencySubTheme({checked: false},sitem)
+        }
         return sitem.parent != ctype.id
       })
+      this.competencyThemeOriginalList = this.competencyThemeList
       if (this.filterObj['competencyArea'].indexOf(ctype.id) > -1) {
         const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
         this.filterObj['competencyArea'].splice(index, 1);
@@ -148,6 +176,7 @@ export class FilterComponent implements OnInit {
             subthemechild['parent'] = csitem.name;
           })
           this.competencySubThemeList = this.competencySubThemeList.concat(csitem.children);
+          this.competencySubThemeOriginalList = this.competencySubThemeList
           if(pushValue) {
             this.filterObj['competencyTheme'].push(cstype.name)
           }
@@ -155,8 +184,17 @@ export class FilterComponent implements OnInit {
       })
     } else {
       this.competencySubThemeList = this.competencySubThemeList.filter((sitem) => {
+        if(sitem.parent === cstype.name) {
+          const index = this.filterObj['competencySubTheme'].indexOf(sitem.name);
+          if (index > -1) { // only splice array when item is found
+            this.filterObj['competencySubTheme'].splice(index, 1); // 2nd parameter means remove one item only
+          }
+          sitem.checked = false
+          // this.getCompetencySubTheme({checked: false},sitem)
+        }
         return sitem.parent != cstype.name
       })
+      this.competencySubThemeOriginalList = this.competencySubThemeList
       if (this.filterObj['competencyTheme'].indexOf(cstype.name) > -1) {
         const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === cstype.name)
         this.filterObj['competencyTheme'].splice(index, 1)
@@ -270,5 +308,21 @@ export class FilterComponent implements OnInit {
   }
   timeDurationFilter(ctype: any,filterType: any){
     this.filterObj[filterType] = [ctype.id]
+  }
+  onCompetencyTheme(event: any){
+    let searchValue = event.target.value
+    let list: any = this.competencyThemeOriginalList
+    list.filter((ele: any) => {
+      return ele.name.toLowerCase() === searchValue.toLowerCase()
+    })
+    this.competencyThemeList = this.competencyThemeOriginalList
+  }
+  onCompetencySubTheme(event: any){
+    let searchValue = event.target.value
+    let list: any = this.competencySubThemeOriginalList
+    list.filter((ele: any) => {
+      return ele.name.toLowerCase() === searchValue.toLowerCase()
+    })
+    this.competencySubThemeList = this.competencySubThemeOriginalList
   }
 }

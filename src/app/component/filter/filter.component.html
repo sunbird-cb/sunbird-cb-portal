@@ -1,18 +1,18 @@
 <ng-container class="">
-    <div class="filter-overlay hidden md:block">
+    <div class="filter-overlay ">
         <div class="filter filter-md ">
             <ng-container [ngTemplateOutlet]="filter"></ng-container>
         </div>
     </div>
 </ng-container>
 <!-- block md:hidden -->
-<div  class="block md:hidden">
+<!-- <div  class="block md:hidden">
     <div>
         <div class="filter">
             <ng-container [ngTemplateOutlet]="filter"></ng-container>
         </div>
     </div>
-</div>
+</div> -->
 
 <ng-template #filter>
     <div class="filter-block">
@@ -42,7 +42,7 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-            <div class="spacer" *ngIf="competencyThemeList.length"></div>
+            <div class="spacer" ></div>
             <div class="filter-content flex flex-1">
                 <mat-accordion>
                     <!-- (opened)="panelOpenState = true"
@@ -59,7 +59,7 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-            <div class="spacer" *ngIf="competencyThemeList.length"></div>
+            <div class="spacer" ></div>
             <div class="filter-content flex flex-1">
                 <mat-accordion>
                     <!-- (opened)="panelOpenState = true"
@@ -80,7 +80,7 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-            <div class="spacer" *ngIf="competencyThemeList.length"></div>
+            <div class="spacer" ></div>
         </ng-container>
         <div class="filter-content flex flex-1">
             <mat-accordion>
@@ -129,7 +129,7 @@
                             <div class="search-container">
                                 <div class="rsearch"><mat-icon
                                     class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-                                <input #searchInput id="searchInput" class="sinput color-60" label="" placeholder="Enter competency theme" type="Standard">
+                                <input #searchInput id="searchInput" (keyup)="onCompetencyTheme($event)" class="sinput color-60" label="" placeholder="Enter competency theme" type="Standard">
                                 </div>
                             </div>
                             <div class="category-content">
@@ -153,7 +153,7 @@
                         <div class="search-container">
                             <div class="rsearch"><mat-icon
                                 class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-                            <input #searchThemeInput class="sinput color-60" label="" placeholder="Enter competency sub-theme" type="Standard">
+                            <input #searchThemeInput class="sinput color-60" (keyup)="onCompetencySubTheme($event)" label="" placeholder="Enter competency sub-theme" type="Standard">
                             </div>
                         </div>
                         <div class="category-content">
@@ -182,15 +182,14 @@
                 </mat-accordion>
             </div>
         </div>
-        
-    </div>
-    <div class="filter-footer flex flex-1">
-        <div class="flex flex-2 flex-row">
-            <div class="filter-clear" (click)="clearFilter()">
-                Clear
-            </div>
-            <div class="filter-apply" (click)="applyFilter()">
-                Apply
+        <div class="filter-footer flex flex-1">
+            <div class="flex flex-2 flex-row">
+                <div class="filter-clear" (click)="clearFilter()">
+                    Clear
+                </div>
+                <div class="filter-apply" (click)="applyFilter()">
+                    Apply
+                </div>
             </div>
         </div>
     </div>
