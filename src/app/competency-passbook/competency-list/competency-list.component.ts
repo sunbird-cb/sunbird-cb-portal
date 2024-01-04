@@ -11,7 +11,6 @@ import { takeUntil } from 'rxjs/operators';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { CompetencyPassbookService } from './../competency-passbook.service';
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api';
-import { A } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'ws-competency-list',
@@ -172,13 +171,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     eachCourse.issuedCertificates.forEach((eObj: any) => {
       eObj['courseName'] = eachCourse.courseName;
       eObj['competencyTheme'] = v5Obj.competencyTheme;
+      eObj['viewMore'] = false;
       if (themeObj && themeObj.name) {
         eObj['subThemes'] = themeObj.children.map((subObj: any) => {
-          return subObj.name
+          return subObj;
         });
       }
     });
-    // console.log("eachCourse.issuedCertificates - ", eachCourse.issuedCertificates);
   }
 
   bindMoreData(typeObj: any, name: string) {

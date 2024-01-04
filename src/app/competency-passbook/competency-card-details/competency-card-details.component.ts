@@ -14,10 +14,15 @@ import { CompetencyPassbookService } from '../competency-passbook.service';
   templateUrl: './competency-card-details.component.html',
   styleUrls: ['./competency-card-details.component.scss']
 })
+
 export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   private destroySubject$ = new Subject();
   params: any;
   stateData: any;
+  subThemeArray: any[] = [];
+  viewMoreST: boolean = false;
+  viewLessST: boolean = false;
+
   constructor(
     private router: ActivatedRoute,
     private cpService: CompetencyPassbookService
@@ -31,6 +36,16 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
       this.stateData.certificate && this.stateData.certificate.forEach((obj: any) => {
         obj['loading'] = true;
         this.getCertificateSVG(obj);
+        obj.subThemes.forEach((stObj: any) => {
+          if (this.subThemeArray.length) {
+            const index = this.subThemeArray.findIndex((_obj: any) => _obj.name ===  stObj.name);
+            if (index === -1) {
+              this.subThemeArray.push(stObj);  
+            }
+          } else {
+            this.subThemeArray.push(stObj);
+          }
+        });
       });
     })
   }
@@ -73,6 +88,10 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
         pdf.save('Certificate.pdf')
       }
     }
+  }
+
+  handleViewMore(obj: any, flag?: string): void {
+    obj.viewMore = flag ? false : true;
   }
 
   ngOnDestroy(): void {

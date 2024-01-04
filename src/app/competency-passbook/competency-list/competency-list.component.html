@@ -20,7 +20,7 @@
                 </div>
                 <div class="flex flex-wrap gap-3 px-6 py-4 chip-container">
                     <ng-container *ngFor="let child of obj.children; let i = index">
-                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'displayNone': (i > 1 && !obj?.viewMore)}" >
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (i > 1 && !obj?.viewMore)}" >
                             {{ child.name }}
                         </div>
                     </ng-container>
@@ -231,7 +231,7 @@
                                         [height]="'28px'"></ws-widget-skeleton-loader>
                                 </ng-container>
                                 <ng-container *ngIf="!competency.skeletonLoading">
-                                    <div class="text-xl font-semibold">{{ elem?.total || 'NA' }}</div>
+                                    <div class="text-xl font-semibold">{{ elem?.total || '0' }}</div>
                                 </ng-container>
                             </div>
                         </div>
@@ -248,7 +248,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">{{ (competency[elem.name + 'SubTheme'] || elem.competencySubTheme) || 'NA' }}</div>
+                                <div class="text-base font-semibold">{{ (competency[elem.name + 'SubTheme'] || elem.competencySubTheme) || '0' }}</div>
                             </ng-container>
                         </div>
                         <div class="flex flex-col">
@@ -258,7 +258,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">{{ elem?.contentConsumed || 'NA' }}</div>
+                                <div class="text-base font-semibold">{{ elem?.contentConsumed || '0' }}</div>
                             </ng-container>
                         </div>
                     </div>
