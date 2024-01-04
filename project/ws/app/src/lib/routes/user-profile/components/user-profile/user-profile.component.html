@@ -371,9 +371,11 @@
                             </mat-select>
                           </mat-form-field>
                           <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
-                          
+
                         </div>
-                        <a class="pos-hint help-request ws-mat-black60-text" id="org-field"><span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="dialogReqHelp('Position')">Request for Designation</span></a>
+                        <a class="pos-hint help-request ws-mat-black60-text" id="org-field"><span
+                            class="float-right ws-mat-accent-text cursor-pointer font-bold"
+                            (click)="dialogReqHelp('Position')">Request for Designation</span></a>
                         <!-- <div class="item1" *ngIf="designation.value === 'Other' || showDesignationOther"
                           [ngClass]="{ disable: !isAllowed('showDesignationOther') }">
                           <p class=" margin-remove-bottom form-label"
@@ -414,12 +416,35 @@
                         </mat-form-field>
                       </div>
 
-                      <div class="input-wrapper" *ngIf="!isVerifiedAlready">
+                      <div class="input-wrapper">
                         <div class="flex flex-1 flex-middle">
-                          <img width="18px" height="18px" mat-raised-button src="assets/icons/info.svg" alt="">
-                          <span class="ml-2">{{verifiedKarmayogiMsg}}</span>
+                          <ng-container *ngIf="!isVerifiedAlready">
+                            <img width="18px" height="18px" mat-raised-button src="assets/icons/info.svg" alt="">
+                            <span class="ml-2 verifiy-user-msg">{{verifiedKarmayogiMsg}}</span>
+                          </ng-container>
+                          <div class="flex flex-1 flex-end"  *ngIf="isReqVKBuser"
+                            [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
+                            <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" class="mr-2"
+                              formControlName="verifiedKarmayogi" #verifiedKarmayogi [checked]="karmayogiBadge"
+                              (change)="verifiedKarmayogiCheck()" i18n-aria-label
+                              aria-label="Get Karmayogi badge checkbox"
+                              [disabled]="userProfileData && userProfileData?.verifiedKarmayogi || !isAllowed('verifiedKarmayogi')">
+                            </mat-checkbox>
+                            <a class="pos-hint ws-mat-black60-text" id="org-field"
+                              [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
+                              <span class="float-right ws-mat-accent-text cursor-pointer font-bold">Request again for Verified Karmayogi
+                              </span>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="flex flex-end" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
+                          <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi') && isReqVKBuser">{{inReview}}</span>
                         </div>
                       </div>
+
+
+
+
                       <!-- <div class="input-wrapper margin-top-s">
                         <div class="flex flex-1 flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
                           <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge"
@@ -435,20 +460,18 @@
                           </mat-checkbox>
                         </div>
                       </div> -->
-                      <div class="input-wrapper margin-top-l">
+                      <!-- <div class="input-wrapper margin-top-l">
                         <div class="flex flex-middle" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
                           <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi')">{{inReview}}</span>
                         </div>
-                      </div>
+                      </div> -->
 
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-          <!-- </div> -->
         </mat-tab>
         <mat-tab label="Academics" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
@@ -963,18 +986,18 @@
                       eHRMS ID
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="eHRMSId" matInput  type="text" formControlName="eHRMSId" i18n-placeholder
-                        placeholder="EHRMS ID" readonly/>
+                      <input id="eHRMSId" matInput type="text" formControlName="eHRMSId" i18n-placeholder
+                        placeholder="EHRMS ID" readonly />
                     </mat-form-field>
                   </div>
                   <div class="item1" *ngIf="eHRMSName && eHRMSName === 'DoPT eHRMS'">
                     <label for="eHRMSName" class=" margin-remove-bottom form-label"
                       i18n="EHRMS System label|Label which explains the user to display EHRMS System">
-                      eHRMS System 
+                      eHRMS System
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="eHRMSName" matInput type="text" formControlName="eHRMSName"  i18n-placeholder
-                        placeholder="EHRMS System" readonly/>
+                      <input id="eHRMSName" matInput type="text" formControlName="eHRMSName" i18n-placeholder
+                        placeholder="EHRMS System" readonly />
                     </mat-form-field>
                   </div>
 
