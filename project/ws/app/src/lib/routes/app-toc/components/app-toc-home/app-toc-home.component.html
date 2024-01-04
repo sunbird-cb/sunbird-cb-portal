@@ -137,7 +137,7 @@ TODO: edit option while preview Mode
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
                   <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
-                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                    <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
                    <div *ngIf="!isAcbpCourse">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
@@ -169,7 +169,12 @@ TODO: edit option while preview Mode
                         Enroll
                       </ng-container>
                     </a>
-                    <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
+                    <ng-container *ngIf="isAcbpCourse">
+                      <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                    </ng-container>
+                    <ng-container *ngIf="!isAcbpCourse">
+                     <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
+                    </ng-container>
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -221,7 +226,7 @@ TODO: edit option while preview Mode
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
                   <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
-                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                    <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
                   <div *ngIf="!isAcbpCourse">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
