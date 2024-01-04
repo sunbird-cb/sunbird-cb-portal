@@ -1,17 +1,16 @@
 // Core imports
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatTabChangeEvent } from '@angular/material';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { HttpErrorResponse } from '@angular/common/http'
+import { MatTabChangeEvent } from '@angular/material'
+import { MatSnackBar } from '@angular/material'
 // RxJS imports
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 // Project files and components
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
-import { CompetencyPassbookService } from './../competency-passbook.service';
-import { WidgetUserService } from '@sunbird-cb/collection/src/public-api';
-import { A } from '@angular/cdk/keycodes';
+import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { CompetencyPassbookService } from './../competency-passbook.service'
+import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
   selector: 'ws-competency-list',

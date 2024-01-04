@@ -91,6 +91,10 @@ export class CbpPlanComponent implements OnInit {
           overdue: this.overDueList.length,
           all: all
         }
+      } else {
+        this.upcommingList = []
+        this.overDueList = []
+        this.contentFeedList = []
       }
       this.cbpLoader =false
     })
@@ -192,17 +196,15 @@ export class CbpPlanComponent implements OnInit {
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
             if(filterValue['timeDuration'].some((r: any)=> 
             {
-              if(r === '1w' || r === '1m') {
-                // const today = dayjs()
-                // const startOfWeek = today.startOf(r === '1w'? 'week': 'month')
-
-                // // Get the end of the current week
-                // const endOfWeek = today.endOf(r === '1w'? 'week': 'month')
-                // return dayjs(data.endDate).isSameOrAfter(dayjs(startOfWeek)) && dayjs(data.endDate).isSameOrBefore(endOfWeek)
-                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(1, 'week'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
-              } else {
-                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(r, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
+              let count = Number(r.slice(0,-2))
+              if(r.includes('sw')) {
+                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'week'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
+              } else if(r.includes('ad')) {
+                return dayjs(data.endDate).isSameOrBefore(dayjs(dayjs().add(count, 'day'))) && dayjs(data.endDate).isSameOrAfter(dayjs())
+              }  else if(r.includes('sm')) {
+                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
               }
+              return true
             })
             ) {
               return data 

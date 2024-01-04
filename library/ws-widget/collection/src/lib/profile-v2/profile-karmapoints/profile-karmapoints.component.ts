@@ -37,7 +37,7 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
     return false
   }
 
-  navigateTo(){
+  navigateTo() {
     this.router.navigateByUrl(`/app/person-profile/karma-points`)
   }
 

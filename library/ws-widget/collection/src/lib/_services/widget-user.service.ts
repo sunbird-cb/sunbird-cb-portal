@@ -163,8 +163,11 @@ export class WidgetUserService {
     // }
     const result = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
       (data: any) => {
-        const courseData = this.mapData(data.result)
-        return courseData
+        if (data.result) {
+          const courseData = this.mapData(data.result)
+          return courseData
+        }
+        return data
       }
     )
     )
