@@ -554,8 +554,9 @@ input.mat-input-element {
 }
 
 ::ng-deep .mat-checkbox-inner-container {
-  height: 23px !important;
-  width: 23px !important;
+  height: 21px !important;
+  width: 21px !important;
+  margin-top: -5px !important;
 }
 
 .w80 {
@@ -718,11 +719,18 @@ input.mat-input-element {
   cursor: pointer;
  // right: 2px;
 }
-
+.help-request-verify{
+  position: relative;
+   top: -20px;
+}
 .pos-request {
   margin-right: 8px;
 }
 
 #org-field {
   font: 400 12px/18px Lato !important;
+}
+
+.verifiy-user-msg{
+  font-size: 14px;
 }

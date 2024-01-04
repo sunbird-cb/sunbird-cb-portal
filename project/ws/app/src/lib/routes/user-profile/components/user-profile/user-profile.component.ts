@@ -138,6 +138,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   eHRMSId: any
   eHRMSName: any
   verifiedKarmayogiMsg!: any
+  rejectedReq!: any
+  isverifiedKBKeyExist!: boolean
+  isverifiedKeyInAppv!: boolean
+  isReqVKBuser = false
 
   constructor(
     private snackBar: MatSnackBar,
@@ -156,6 +160,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
+    this.fetchRejectedFields()
 
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -375,9 +380,31 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       if (res && res.result && res.result.data) {
         const keyFields = _.get(res, 'result.data')
         this.unApprovedReq = _.get(res, 'result.data')
-        this.unApprovedField =  Object.keys(keyFields)
+        this.unApprovedField = Object.keys(keyFields)
+        this.isverifiedKeyInAppv = this.unApprovedReq.hasOwnProperty('verifiedKarmayogi')
       }
     })
+  }
+
+  fetchRejectedFields() {
+    this.userProfileSvc.listRejectedFields().subscribe(res => {
+      if (res && res.result && res.result.data) {
+        this.rejectedReq = _.get(res, 'result.data')
+        this.isverifiedKBKeyExist = this.rejectedReq.hasOwnProperty('verifiedKarmayogi')
+      }
+    })
+  }
+
+  isVerifiedKBReq() {
+    if (this.isVerifiedAlready) {
+      this.isReqVKBuser = false
+    } else if (this.isverifiedKeyInAppv) {
+      this.isReqVKBuser = false // if inreview
+    } else if ((!this.isVerifiedAlready || !this.isverifiedKeyInAppv) && this.isverifiedKBKeyExist) {
+      this.isReqVKBuser = true // reject case
+    } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
+      this.isReqVKBuser = false // firsttime user
+    }
   }
 
   isAllowed(name: string) {
@@ -555,10 +582,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  // verifiedKarmayogiCheck() {
-  //   this.karmayogiBadge = !this.karmayogiBadge
-  //   this.createUserForm.patchValue({ verifiedKarmayogi: this.karmayogiBadge })
-  // }
+  verifiedKarmayogiCheck() {
+    this.karmayogiBadge = !this.karmayogiBadge
+    this.createUserForm.patchValue({ verifiedKarmayogi: this.karmayogiBadge })
+  }
 
   private filterNationality(name: string): INation[] {
 
@@ -743,6 +770,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             const organisations = this.populateOrganisationDetails(userData)
             this.constructFormFromRegistry(userData, academics, organisations)
             this.populateChips(userData)
+            this.isVerifiedKBReq()
             this.userProfileData = userData
             if (this.userProfileData && this.userProfileData.additionalProperties) {
               this.selectedtags = this.userProfileData.additionalProperties.tag || []
@@ -809,7 +837,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         orgName: this.unApprovedReq && this.unApprovedReq.name ? this.unApprovedReq.name : organisation.name,
         orgNameOther: this.unApprovedReq && this.unApprovedReq.nameOther ? this.unApprovedReq.nameOther : organisation.nameOther,
         industry: this.unApprovedReq && this.unApprovedReq.industry ? this.unApprovedReq.industry : organisation.industry || 'Other',
-       // tslint:disable-next-line: max-line-length
+        // tslint:disable-next-line: max-line-length
         industryOther: this.unApprovedReq && this.unApprovedReq.industryOther ? this.unApprovedReq.industryOther : organisation.industryOther,
         designation: this.unApprovedReq && this.unApprovedReq.designation ? this.unApprovedReq.designation : organisation.designation,
         group: this.unApprovedReq && this.unApprovedReq.group ? this.unApprovedReq.group : organisation.group,
@@ -968,9 +996,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (data.verifiedKarmayogi) {
       this.isVerifiedAlready = data.verifiedKarmayogi
       this.karmayogiBadge = data.verifiedKarmayogi
-      // this.createUserForm.patchValue({
-      //   verifiedKarmayogi: data.verifiedKarmayogi
-      // })
+      this.createUserForm.patchValue({
+        verifiedKarmayogi: data.verifiedKarmayogi
+      })
     }
     /* tslint:enable */
     this.cd.detectChanges()
@@ -1469,7 +1497,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
     //   reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
     // }
-    if (!this.isVerifiedAlready) {
+    if (!this.isVerifiedAlready && !this.unApprovedReq.hasOwnProperty('verifiedKarmayogi')
+      && form.value.verifiedKarmayogi === true) {
+      reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
       reqUpdates.request.profileDetails.verifiedKarmayogi = true
     }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
@@ -1913,7 +1944,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       hasBackdrop: false,
       width: '420px',
       height: '380px',
-      data: { reqType : type, mobile: mob, email: primaryEmail, name: fullname },
+      data: { reqType: type, mobile: mob, email: primaryEmail, name: fullname },
     })
     dialogRef.afterClosed().subscribe(() => {
     })
