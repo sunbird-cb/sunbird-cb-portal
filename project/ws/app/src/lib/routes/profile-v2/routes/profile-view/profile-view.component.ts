@@ -69,7 +69,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   pendingRequestSkeleton = true
   insightsDataLoading = true
 
-  countdata: any
+  countdata = 0
   enrollInterval: any
 
   discussion = {
