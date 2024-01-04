@@ -138,6 +138,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   eHRMSId: any
   eHRMSName: any
   verifiedKarmayogiMsg!: any
+  rejectedKarmayogiMsg!: any
   rejectedReq!: any
   isverifiedKBKeyExist!: boolean
   isverifiedKeyInAppv!: boolean
@@ -229,6 +230,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     //   console.log('ngOnInit - value', value);
     // })
     this.verifiedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.verifiedKarmayogi
+    this.rejectedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.rejectedKarmayogiMsg
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
       return v.approvalRequired ? { [k]: v } : null
     }))

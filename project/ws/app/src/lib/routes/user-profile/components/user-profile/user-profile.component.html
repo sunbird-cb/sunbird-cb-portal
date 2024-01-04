@@ -418,12 +418,15 @@
 
                       <div class="input-wrapper">
                         <div class="flex flex-1 flex-middle">
-                          <ng-container *ngIf="!isVerifiedAlready">
+                          <ng-container *ngIf="!isVerifiedAlready && isAllowed('verifiedKarmayogi') && !isReqVKBuser">
                             <img width="18px" height="18px" mat-raised-button src="assets/icons/info.svg" alt="">
                             <span class="ml-2 verifiy-user-msg">{{verifiedKarmayogiMsg}}</span>
                           </ng-container>
+                          <ng-container *ngIf="!isVerifiedAlready && isReqVKBuser">
+                            <span class="ml-2 verifiy-user-msg">{{rejectedKarmayogiMsg}}</span>
+                          </ng-container>                       
                           <div class="flex flex-1 flex-end"  *ngIf="isReqVKBuser"
-                            [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
+                            [ngClass]="{ disable: !isAllowed('verifiedKarmayogi')}">
                             <mat-checkbox aria-label="Get Karmayogi badge" id="kb-badge" class="mr-2"
                               formControlName="verifiedKarmayogi" #verifiedKarmayogi [checked]="karmayogiBadge"
                               (change)="verifiedKarmayogiCheck()" i18n-aria-label
