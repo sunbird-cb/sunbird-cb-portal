@@ -739,7 +739,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
-                        (selectionChange)="otherDropDownChange(designation.value, 'orgname')"
+                        (selectionChange)="otherDropDownChange(orgNameSelect.value, 'orgname')"
                         [disabled]="!isAllowed('name')">
                         <mat-option [value]="org" *ngFor="let org of allDept">
                           <!-- {{org}} -->
@@ -777,7 +777,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
-                        (selectionChange)="otherDropDownChange(designation.value, 'industry')"
+                        (selectionChange)="otherDropDownChange(industrySelect.value, 'industry')"
                         [disabled]="!isAllowed('industry')">
                         <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
                           <!-- {{indApvlReq?.feildName === 'industry' ? indApvlReq.value : i.name}} -->
