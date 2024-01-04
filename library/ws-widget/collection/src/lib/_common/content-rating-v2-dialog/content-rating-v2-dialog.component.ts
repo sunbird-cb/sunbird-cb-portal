@@ -109,9 +109,6 @@ export class ContentRatingV2DialogComponent implements OnInit {
           } else {
             this.showSuccessScreen = true
           }
-          if (localStorage.getItem('enrollmentData')) {
-            localStorage.removeItem('enrollmentData')
-          }
           // this.dialogRef.close(true)
         },
         (err: any) => {
