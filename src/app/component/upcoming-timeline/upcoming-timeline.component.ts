@@ -33,7 +33,7 @@ export class UpcomingTimelineComponent implements OnInit {
     let upcomingData: any = {
       "primaryCategory":[],
       "status":['0','1','2'],
-      "timeDuration":[1], 
+      "timeDuration":['30ad'], 
       "competencyArea": [], 
       "competencyTheme": [], 
       "competencySubTheme": [], 
@@ -42,12 +42,18 @@ export class UpcomingTimelineComponent implements OnInit {
     let overDue: any = {
       "primaryCategory":[],
       "status":['0','1'],
-      "timeDuration":[3], 
+      "timeDuration":['3sm'], 
       "competencyArea": [], 
       "competencyTheme": [], 
       "competencySubTheme": [], 
       "providers": [] 
     }
     this.filterValueEmit.emit(event === 'upcoming'? upcomingData: overDue)
+  }
+  scroll(el: any) {
+    let element = el
+    let topOfElement: any = document.getElementById(element)
+    topOfElement = topOfElement.offsetTop - 140
+    window.scroll({ top: topOfElement, behavior: "smooth" });
   }
 }

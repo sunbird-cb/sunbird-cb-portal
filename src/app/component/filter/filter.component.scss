@@ -174,21 +174,27 @@
         min-height: 80vh;
         padding: 0px;
     }
+    // .filter-block {
+    //     height: calc(100vh - 250px);
+    //     max-height: calc(100vh - 250px);
+    //     min-height: calc(100vh - 250px);
+    //     overflow-y: auto;
+    // }
     .filter-block {
-        height: calc(100vh - 250px);
-        max-height: calc(100vh - 250px);
-        min-height: calc(100vh - 250px);
+            height: calc(100vh - 50px);
+    }
+    .filter-content-container {
         overflow-y: auto;
     }
     .filter-content {  
         padding: 18px 24px;
-        margin: 0px 25px 0px 0px;
+        margin: unset;
     }
     .filter-footer {
         margin: unset;
         position: fixed;
-        bottom: 0;
-        padding: 24px 19px;
+        bottom: 65px;
+        padding: 0px 19px;
     }
 
 }

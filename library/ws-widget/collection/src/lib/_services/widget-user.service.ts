@@ -90,14 +90,27 @@ export class WidgetUserService {
       Pragma: 'no-cache',
       Expires: '0',
     })
-    return this.http
-      .get(path, { headers })
-      .pipe(
-        catchError(this.handleError),
-        map(
-          (data: any) => data.result
+    // return this.http
+    //   .get(path, { headers })
+    //   .pipe(
+    //     catchError(this.handleError),
+    //     map(
+    //       (data: any) => data.result
+    //     )
+    //   )
+    if (this.checkStorageData('enrollmentService')) {
+      const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
+          (data: any) => {
+            localStorage.setItem('enrollmentData', JSON.stringify(data.result))
+            this.mapEnrollmentData(data.result)
+            return data.result
+          }
         )
       )
+      this.setTime('enrollmentService')
+      return result
+    }
+    return this.getData('enrollmentData')
   }
 
   checkStorageData(key: any) {
@@ -163,8 +176,11 @@ export class WidgetUserService {
     // }
     const result = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
       (data: any) => {
-        const courseData = this.mapData(data.result)
-        return courseData
+        if (data && data.result) {
+          const courseData = this.mapData(data.result)
+          return courseData
+        }
+        return data
       }
     )
     )
