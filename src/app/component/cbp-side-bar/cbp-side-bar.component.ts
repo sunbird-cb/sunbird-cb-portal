@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'ws-cbp-side-bar',
@@ -11,10 +11,15 @@ export class CbpSideBarComponent implements OnInit {
   @Input() upcommingList: any
   @Input() overDueList: any
   @Input() cbpLoader: any
+  @Input() cbpOriginalData: any 
+  @Output()
+  filterValueEmit = new EventEmitter()
 
   constructor() { }
 
   ngOnInit() {
   }
-
+  filterValueEmitMethod(event: any){
+    this.filterValueEmit.emit(event)
+  }
 }

@@ -5,6 +5,7 @@
         opacity: 1;
         padding: 14px 48px;
         width: -webkit-fill-available;
+        width: -moz-available;
     }
     mat-icon {
         left: 12px;
@@ -41,4 +42,25 @@
         line-height: 20px;
         margin-bottom: 0;
     }
+}
+
+.filter-dot {
+    background-color: #d13924;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    right: 0px;
+}
+.search-help-text {
+    opacity: 1;
+color: rgba(0, 0, 0, 0.87);
+font-family: "Lato-Regular";
+font-size: 14px;
+font-weight: 400;
+font-style: Regular;
+letter-spacing: 0.25px;
+text-align: center;
+line-height: 20px;
 }

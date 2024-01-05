@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of'
 import dayjs from 'dayjs'
 import { environment } from 'src/environments/environment'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
+import lodash from 'lodash'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
@@ -175,8 +176,11 @@ export class WidgetUserService {
     // }
     const result = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
       (data: any) => {
-        const courseData = this.mapData(data.result)
-        return courseData
+        if (data && data.result) {
+          const courseData = this.mapData(data.result)
+          return courseData
+        }
+        return data
       }
     )
     )
@@ -240,9 +244,19 @@ export class WidgetUserService {
           childData['competencySubThemeId'] = competencySubThemeId
         })
       })
-      localStorage.setItem('cbpData', JSON.stringify(contentNew))
-      return contentNew
+      const sortedData: any = contentNew.sort((a: any, b: any) => {
+          const firstDate: any = new Date(a.endDate)
+          const secondDate: any = new Date(b.endDate)
+
+        return  secondDate > firstDate  ? -1 : 1
+      })
+      const uniqueUsersByID = lodash.uniqBy(sortedData, 'identifier')
+      // const sortedByStatus = uniqueUsersByID.sort((a: any, b: any) => b.contentStatus > a.contentStatus ? -1 : 1)
+      const sortedByStatus =  lodash.orderBy(uniqueUsersByID, ['contentStatus'], ['asc'])
+      localStorage.setItem('cbpData', JSON.stringify(sortedByStatus))
+      return sortedByStatus
     }
+    return []
   }
 
   mapEnrollmentData(courseData: any) {

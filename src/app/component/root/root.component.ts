@@ -256,6 +256,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           || !!this.currentUrl.startsWith('/public/signup')
           || !!this.currentUrl.startsWith('/public/welcome')
           || !!this.currentUrl.startsWith('/viewer/')
+          || !!this.currentUrl.startsWith('/public/request')
         ) {
           this.showFooter = false
           this.showNavbar = false
@@ -342,6 +343,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     || window.location.pathname.includes('/public/faq')
     || window.location.pathname.includes('/public/contact')
     || window.location.pathname.includes('/public/signup')
+    || window.location.pathname.includes('/public/request')
     ) {
       this.customHeight = true
     }

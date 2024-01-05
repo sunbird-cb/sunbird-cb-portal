@@ -432,3 +432,40 @@ p.certificate_text {
     color: #0074b6;
   }
 }
+
+.cb-plan-wrap {
+  opacity: 1;
+  color: rgba(27,76,161,1);
+  font-family: "Lato-Regular";
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.25px;
+  text-align: left;
+  line-height: 16px;
+  .cb-danger {
+    border-radius: 2px;
+    padding: 4px 8px;
+    border: 1px solid #d13924;
+    background-color: #d13924 !important;
+    color: rgba(255,255,255,1) !important;
+    opacity: 1;
+    
+  }
+  .cb-success {
+    padding: 4px 8px;
+    border-radius: 2px;
+    border: 1px solid #1d8922;
+    background-color: #1d8922 !important;
+    color: rgba(255,255,255,1) !important;
+    opacity: 1;
+  }
+  .cb-warning {
+    padding: 4px 8px;
+    border-radius: 2px;
+    border: 1px solid #ef951e;
+    background-color: #ef951e !important;
+    color: rgba(255,255,255,1) !important;
+    opacity: 1;
+  }
+}

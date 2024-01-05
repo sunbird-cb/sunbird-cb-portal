@@ -63,7 +63,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   orgId: any
   selectedTabIndex: any
-  karmaPoints = 0
 
   pendingRequestData: any = []
   pendingRequestSkeleton = true
@@ -174,7 +173,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
     })
-
     this.getPendingRequestData()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()

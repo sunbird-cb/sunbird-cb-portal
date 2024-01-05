@@ -20,7 +20,7 @@
                 </div>
                 <div class="flex flex-wrap gap-3 px-6 py-4 chip-container">
                     <ng-container *ngFor="let child of obj.children; let i = index">
-                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'displayNone': (i > 1 && !obj?.viewMore)}" >
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (i > 1 && !obj?.viewMore)}" >
                             {{ child.name }}
                         </div>
                     </ng-container>
@@ -52,8 +52,61 @@
     </div>
 </ng-template>
 
+<ng-template #rightContainer>
+    <mat-tab-group (selectedTabChange)="handleTabChange($event)">
+        <mat-tab label="All">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search (searchValue)="handleSearch($event, 'All')"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container *ngIf="competency.skeletonLoading">
+                        <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!competency.skeletonLoading">
+                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{ TYPE_CONST.behavioral.capsValue }}">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search
+                        (searchValue)="handleSearch($event, TYPE_CONST.behavioral.capsValue)"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{ TYPE_CONST.functional.capsValue }}">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search
+                        (searchValue)="handleSearch($event, TYPE_CONST.functional.capsValue)"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{ TYPE_CONST.domain.capsValue }}">
+            <div class="flex flex-col">
+                <div class="py-4">
+                    <ws-competency-search
+                        (searchValue)="handleSearch($event, TYPE_CONST.domain.capsValue)"></ws-competency-search>
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</ng-template>
+
 <ng-template #skeletonLoader>
-    <div class="flex-1 flex-col" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+    <div class="flex-1 flex-col" *ngFor="let i of skeletonArr">
         <div class="detail">
             <div class="flex flex-col">
                 <div class="flex flex-row justify-between p-4">
@@ -67,7 +120,7 @@
                 </div>
                 <hr />
                 <div class="flex gap-4 p-3">
-                    <ng-container *ngFor="let i of [1, 2, 3]">
+                    <ng-container *ngFor="let j of [1, 2, 3]">
                         <ws-widget-skeleton-loader [bindingClass]="'flex rounded-full'" [width]="'80px'" [height]="'48px'"></ws-widget-skeleton-loader>
                     </ng-container>
                 </div>
@@ -77,21 +130,30 @@
 </ng-template>
 
 <div class="flex justify-center passbook-container gap-5">
-    <div class="left-container">
+    <div class="flex flex-row items-center px-4 ws-mat-default-text gap-2" *ngIf="isMobile && showAll" (click)="handleShowAll()">
+        <mat-icon>keyboard_backspace</mat-icon> Show less
+    </div>
+
+    <!-- left card starts here -->
+    <div class="left-container" [ngClass]="{'hide': isMobile && showAll}" >
         <div class="flex flex-col gap-4 cp-container">
             <div class="flex flex-row gap-3">
                 <div class="flex-1 text-xl font-semibold">Competency passbook</div>
                 <div class="flex items-center">
+                    <span class="filter-dot" *ngIf="showFilterIndicator !== 'all'"></span>
                     <mat-icon class="cursor-pointer" [matMenuTriggerFor]="filter">filter_list</mat-icon>
                     <mat-menu #filter="matMenu" xPosition="before">
-                        <button mat-menu-item class="px-3">
+                        <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'threeMonths'}" (click)="handleLeftFilter('threeMonths')" >
                             <span>Last 3 months</span>
                         </button>
-                        <button mat-menu-item class="px-3">
+                        <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'sixMonths'}" (click)="handleLeftFilter('sixMonths')">
                             <span>Last 6 months</span>
                         </button>
-                        <button mat-menu-item class="px-3">
+                        <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'lastYear'}" (click)="handleLeftFilter('lastYear')">
                             <span>Last year</span>
+                        </button>
+                        <button mat-menu-item class="px-3" (click)="handleLeftFilter('all')">
+                            <span>Clear</span>
                         </button>
                     </mat-menu>
                 </div>
@@ -122,7 +184,7 @@
                                 [height]="'28px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
-                            <div class="text-base font-semibold">{{ competency?.behavioural?.length }}</div>
+                            <div class="text-base font-semibold">{{ competency?.behaviouralValue || competency?.behavioural?.length }}</div>
                         </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick(TYPE_CONST.behavioral.value)" >
                             <div class="text-xs">{{ TYPE_CONST.behavioral.capsValue }}</div>
@@ -135,7 +197,7 @@
                                 [height]="'28px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
-                            <div class="text-base font-semibold">{{ competency?.functional?.length }}</div>
+                            <div class="text-base font-semibold">{{ competency?.functionalValue || competency?.functional?.length }}</div>
                         </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick(TYPE_CONST.functional.value)">
                             <div class="text-xs">{{ TYPE_CONST.functional.capsValue }}</div>
@@ -148,7 +210,7 @@
                                 [height]="'28px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!competency.skeletonLoading">
-                            <div class="text-base font-semibold">{{ competency?.domain?.length }}</div>
+                            <div class="text-base font-semibold">{{ competency?.domainValue || competency?.domain?.length }}</div>
                         </ng-container>
                         <div class="flex justify-center items-center" (click)="handleClick(TYPE_CONST.domain.value)">
                             <div class="text-xs">{{ TYPE_CONST.domain.capsValue }}</div>
@@ -169,7 +231,7 @@
                                         [height]="'28px'"></ws-widget-skeleton-loader>
                                 </ng-container>
                                 <ng-container *ngIf="!competency.skeletonLoading">
-                                    <div class="text-xl font-semibold">{{ elem?.total || 'NA' }}</div>
+                                    <div class="text-xl font-semibold">{{ elem?.total || '0' }}</div>
                                 </ng-container>
                             </div>
                         </div>
@@ -178,7 +240,7 @@
                         </div>
                     </div>
                     <div class="separator"></div>
-                    <div class="flex flex-row justify-between ">
+                    <div class="flex flex-row justify-between">
                         <div class="flex flex-col">
                             <div class="text-xs">Competency Sub Theme</div>
                             <ng-container *ngIf="competency.skeletonLoading">
@@ -186,7 +248,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">{{ elem?.competencySubTheme || 'NA' }}</div>
+                                <div class="text-base font-semibold">{{ (competency[elem.name + 'SubTheme'] || elem.competencySubTheme) || '0' }}</div>
                             </ng-container>
                         </div>
                         <div class="flex flex-col">
@@ -196,7 +258,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">{{ elem?.contentConsumed || 'NA' }}</div>
+                                <div class="text-base font-semibold">{{ elem?.contentConsumed || '0' }}</div>
                             </ng-container>
                         </div>
                     </div>
@@ -205,57 +267,7 @@
         </div>
     </div>
     
-    <div class="right-container">
-        <mat-tab-group (selectedTabChange)="handleTabChange($event)">
-            <mat-tab label="All">
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, 'All')"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container *ngIf="competency.skeletonLoading">
-                            <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>
-                        </ng-container>
-                        <ng-container *ngIf="!competency.skeletonLoading">
-                            <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                        </ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{ TYPE_CONST.behavioral.capsValue }}" >
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.behavioral.capsValue)"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{ TYPE_CONST.functional.capsValue }}">
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.functional.capsValue)"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab label="{{ TYPE_CONST.domain.capsValue }}">
-                <div class="flex flex-col">
-                    <div class="py-4">
-                        <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.domain.capsValue)"></ws-competency-search>
-                    </div>
-                    <div class="flex flex-wrap gap-6">
-                        <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
-                    </div>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
-
-    <div class="mobile-right-container">
+    <div class="mobile-right-container" *ngIf="!showAll">
         <div class="flex flex-col gap-6 px-4">
             <div class="text-base font-bold">Recently associated competencies</div>
             <div class="flex flex-wrap gap-4">
@@ -266,6 +278,16 @@
                     <ng-container [ngTemplateOutlet]="competencyCard"></ng-container>
                 </ng-container>
             </div>
+            <div *ngIf="!competency.skeletonLoading" class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" (click)="handleShowAll()">Show all</div>
         </div>
     </div>
+
+    <div class="right-container" *ngIf="showAll">
+        <ng-container [ngTemplateOutlet]="rightContainer"></ng-container>
+    </div>
 </div>
+
+<!-- <ng-container *ngIf="toggleFilter">
+    <ws-app-filter (toggleFilter)="toggleFilterMethod($event)" (clearFilterObj)="clearFilterObj($event)"
+        [filterObj]="filterObjData" (getFilterData)="applyFilter($event)"></ws-app-filter>
+</ng-container> -->

@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model';
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 dayjs.extend(isBetween)
@@ -29,6 +30,8 @@ export class CbpPlanComponent implements OnInit {
   contentFeedListCopy: any
   contentFeedList: any
   cbpLoader:boolean = false
+  filterApplied: boolean = false
+  filterCheckOnFilter: boolean= false
   filterObjData: any = {
     "primaryCategory":[],
     "status":[],
@@ -63,6 +66,13 @@ export class CbpPlanComponent implements OnInit {
         this.upcommingList = []
         this.contentFeedList = []
         this.overDueList = []
+        res = res.sort((a: any, b: any): any => {
+          if(a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+            const firstDate: any = new Date(a.endDate)
+            const secondDate: any = new Date(b.endDate)
+            return  firstDate > secondDate  ? -1 : 1
+          }
+        })
         await res.forEach((ele: any) => {
           if (ele.planDuration === 'overdue') {
             this.overDueList.push(ele);
@@ -70,6 +80,7 @@ export class CbpPlanComponent implements OnInit {
             this.upcommingList.push(ele);
           }
         })
+
         this.contentFeedListCopy = res
         this.contentFeedList = this.transformContentsToWidgets(res, this.getFeedStrip());
         this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips);
@@ -80,6 +91,10 @@ export class CbpPlanComponent implements OnInit {
           overdue: this.overDueList.length,
           all: all
         }
+      } else {
+        this.upcommingList = []
+        this.overDueList = []
+        this.contentFeedList = []
       }
       this.cbpLoader =false
     })
@@ -151,75 +166,98 @@ export class CbpPlanComponent implements OnInit {
     filterValue['competencySubTheme'].length ||
     filterValue['providers'].length
     ) {
+      let filterAppliedonLocal = false
       this.filteredData = this.cbpOriginalData
-     
+      this.filterApplied = true
         if(filterValue['primaryCategory'].length){
-          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+          filterAppliedonLocal = filterAppliedonLocal? true : false
+          finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
             if(filterValue['primaryCategory'].includes(data.primaryCategory)) {
+              if(filterValue['primaryCategory'].includes('Moderated Courses') && data.secureSettings){
+                return data
+              }
               return data 
             }
           })
+          filterAppliedonLocal = true
         }
 
-        if(filterValue['competencyArea'].length){
-          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
-            if(filterValue['competencyArea'].some((r: any)=> data.competencyArea.includes(r))) {
-              return data 
-            }
-          })
-        }
-
-        if(filterValue['competencyTheme'].length){
-          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
-            if(filterValue['competencyTheme'].some((r: any)=> data.competencyTheme.includes(r))) {
-              return data 
-            }
-          })
-        }
-
-        if(filterValue['competencySubTheme'].length){
-          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
-            if(filterValue['competencySubTheme'].some((r: any)=> data.competencySubTheme.includes(r))) {
-              return data 
-            }
-          })
-        }
         if(filterValue['status'].length){
-          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
+          filterAppliedonLocal = filterAppliedonLocal? true : false
+          finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
             let statusData = filterValue['status'].includes('all')? ['0','1','2']: filterValue['status']
             if(statusData.includes(String(data.contentStatus))) {
               return data 
             }
           })
+          filterAppliedonLocal = true
         }
-        if(filterValue['providers'].length){
-          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
-            if(filterValue['providers'].includes(data.organisation[0])) {
-              return data 
-            }
-          })
-        }
-        if(filterValue['timeDuration'].length){
-          finalFilterValue = (finalFilterValue.length ? finalFilterValue : this.filteredData).filter((data: any)=> {
-            if(filterValue['timeDuration'].some((r: any)=> {
-              if(r === '1w' || r === '1m') {
-                const today = dayjs()
-                const startOfWeek = today.startOf(r === '1w'? 'week': 'month')
 
-                // Get the end of the current week
-                const endOfWeek = today.endOf(r === '1w'? 'week': 'month')
-                return dayjs(data.endDate).isSameOrAfter(dayjs(startOfWeek)) && dayjs(data.endDate).isSameOrBefore(endOfWeek)
-              } else {
-                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(r, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
+
+        if(filterValue['timeDuration'].length){
+          filterAppliedonLocal = filterAppliedonLocal? true : false
+          finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['timeDuration'].some((time: any)=> 
+            {
+              let count = Number(time.slice(0,-2))
+              if(time.includes('sw')) {
+                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'week'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
+              } else if(time.includes('ad')) {
+                return dayjs(data.endDate).isSameOrBefore(dayjs(dayjs().add(count, 'day'))) && dayjs(data.endDate).isSameOrAfter(dayjs())
+              }  else if(time.includes('sm')) {
+                return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
               }
+              return true
             })
             ) {
               return data 
             }
           })
+          filterAppliedonLocal = true
+        }
+
+        if(filterValue['competencyArea'].length){
+          filterAppliedonLocal = filterAppliedonLocal? true : false
+          finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['competencyArea'].some((r: any)=> data.competencyArea.includes(r))) {
+              return data 
+            }
+          })
+          filterAppliedonLocal = true
+        }
+
+        if(filterValue['competencyTheme'].length){
+          filterAppliedonLocal = filterAppliedonLocal? true : false
+          finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['competencyTheme'].some((r: any)=> data.competencyTheme.includes(r))) {
+              return data 
+            }
+          })
+          filterAppliedonLocal = true
+        }
+
+        if(filterValue['competencySubTheme'].length){
+          filterAppliedonLocal = filterAppliedonLocal? true : false
+          finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['competencySubTheme'].some((r: any)=> data.competencySubTheme.includes(r))) {
+              return data 
+            }
+          })
+          filterAppliedonLocal = true
+        }
+
+        if(filterValue['providers'].length){
+          filterAppliedonLocal = filterAppliedonLocal? true : false
+          finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
+            if(filterValue['providers'].includes(data.organisation[0])) {
+              return data 
+            }
+          })
+          filterAppliedonLocal = true
         }
   
     } else {
+      this.filterApplied = false
       finalFilterValue= this.cbpOriginalData
     }
     this.contentFeedListCopy = finalFilterValue
@@ -229,15 +267,36 @@ export class CbpPlanComponent implements OnInit {
   }
 
   searchData(event: any) {
-    let searchData = this.contentFeedListCopy
+    this.filterObjData = {
+      "primaryCategory":[],
+      "status":[],
+      "timeDuration":[], 
+      "competencyArea": [], 
+      "competencyTheme": [], 
+      "competencySubTheme": [], 
+      "providers": [] 
+    }
+    this.applyFilter(this.filterObjData)
+    let searchData = this.cbpOriginalData
     let searchFilterData = []
     if (event.query) {
       searchFilterData = searchData.filter((ele :any) => ele.name.toLowerCase().includes(event.query.toLowerCase()))
     } else {
-      searchFilterData = this.contentFeedListCopy
+      searchFilterData = this.cbpOriginalData
     }
 
 
     this.contentFeedList = this.transformContentsToWidgets(searchFilterData, this.getFeedStrip())
+  }
+  closeFilterKey(data:any){
+    const index = this.filterObjData[data.key].indexOf(data.value);
+    if (index > -1) { // only splice array when item is found
+      this.filterObjData[data.key].splice(index, 1); // 2nd parameter means remove one item only
+    }
+    this.applyFilter(this.filterObjData)
+  }
+  filterValueEmitMethod(event: any) {
+    this.filterObjData = event
+    this.applyFilter(event)
   }
 }

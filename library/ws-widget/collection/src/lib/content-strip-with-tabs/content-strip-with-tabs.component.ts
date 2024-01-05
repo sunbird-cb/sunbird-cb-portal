@@ -1016,11 +1016,33 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   getTabsList(array: NsContent.IContent[],
               customFilter: any,
               strip: NsContentStripWithTabs.IContentStripUnit) {
+    let all: any[] = []
     const upcoming: any[] = []
-    const overdue: any[] = []
-    array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? overdue : upcoming).push(e))
+    let overdue: any[] = []
+    array.forEach((e: any, idx: number, arr: any[]) => {
+      all.push(e)
+      return (customFilter(e, idx, arr) ? overdue : upcoming).push(e)
+    })
+
+    all = all.sort((a: any, b: any): any => {
+      if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        return  firstDate > secondDate  ? -1 : 1
+      }
+    })
+    overdue = overdue.sort((a: any, b: any): any => {
+      if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        if (b.contentStatus !== 2 &&  a.contentStatus !== 2) {
+          return  firstDate > secondDate  ? -1 : 1
+        }
+        return  b.contentStatus > a.contentStatus  ? -1 : 1
+      }
+    })
     return [
-    { value: 'all', widgets: this.transformContentsToWidgets([...upcoming, ...overdue], strip) },
+    { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },
     { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
     { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
   }
