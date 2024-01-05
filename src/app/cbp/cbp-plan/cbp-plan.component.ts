@@ -173,6 +173,9 @@ export class CbpPlanComponent implements OnInit {
           filterAppliedonLocal = filterAppliedonLocal? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any)=> {
             if(filterValue['primaryCategory'].includes(data.primaryCategory)) {
+              if(filterValue['primaryCategory'].includes('Moderated Courses') && data.secureSettings){
+                return data
+              }
               return data 
             }
           })

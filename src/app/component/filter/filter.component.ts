@@ -37,10 +37,11 @@ export class FilterComponent implements OnInit {
   contentStatus: any = [{ "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
   primaryCategoryList: any = [
     { "id": "Course", name: 'Course',checked: false }, 
-    { "id": 'Curated program', name: 'Curated program',checked: false },
+    { "id": 'Program', name: 'Program',checked: false },
     { "id": 'Curated program', name: 'Curated program',checked: false },
     { "id": "Blended program", name: 'Blended program',checked: false }, 
-    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false }
+    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false },
+    { "id": "Moderated Courses", name: 'Moderated Courses',checked: false }
   ];
   providersList: any[] = [];
   selectedProviders: any[] = [];

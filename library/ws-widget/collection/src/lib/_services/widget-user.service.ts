@@ -251,7 +251,8 @@ export class WidgetUserService {
         return  secondDate > firstDate  ? -1 : 1
       })
       const uniqueUsersByID = lodash.uniqBy(sortedData, 'identifier')
-      const sortedByStatus = uniqueUsersByID.sort((a: any, b: any) => b.contentStatus > a.contentStatus ? -1 : 1)
+      // const sortedByStatus = uniqueUsersByID.sort((a: any, b: any) => b.contentStatus > a.contentStatus ? -1 : 1)
+      const sortedByStatus =  lodash.orderBy(uniqueUsersByID, ['contentStatus'], ['asc'])
       localStorage.setItem('cbpData', JSON.stringify(sortedByStatus))
       return sortedByStatus
     }
