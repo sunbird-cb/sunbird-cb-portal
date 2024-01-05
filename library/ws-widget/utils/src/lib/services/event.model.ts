@@ -202,6 +202,7 @@ export namespace WsEvents {
     PROFILE = 'profile',
     NETWORK = 'network',
     SUPPORT = 'support',
+    KARMAPOINTS = 'karmapoints',
   }
   export enum EnumInteractTypes {
     CLICK = 'click',

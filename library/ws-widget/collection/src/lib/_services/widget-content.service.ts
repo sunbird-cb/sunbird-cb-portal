@@ -51,6 +51,7 @@ const API_END_POINTS = {
   CONTENT_READ: (contentId: any) => `/apis/proxies/v8/action/content/v3/read/${contentId}`,
   READ_COURSE_KARMAPOINTS: '/apis/proxies/v8/karmapoints/user/course/read',
   CLAIM_KARMAPOINTS: '/apis/proxies/v8/claimkarmapoints',
+  USER_KARMA_POINTS: '/apis/proxies/v8/user/totalkarmapoints',
 }
 
 @Injectable({
@@ -411,6 +412,10 @@ export class WidgetContentService {
 
   claimKarmapoints(request: any) {
     return this.http.post<any>(API_END_POINTS.CLAIM_KARMAPOINTS, request)
+  }
+
+  userKarmaPoints() {
+    return this.http.post<any>(API_END_POINTS.USER_KARMA_POINTS, {})
   }
 
 }
