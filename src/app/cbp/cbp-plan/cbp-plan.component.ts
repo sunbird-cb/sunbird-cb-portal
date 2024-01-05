@@ -260,7 +260,6 @@ export class CbpPlanComponent implements OnInit {
     this.contentFeedListCopy = finalFilterValue
    
     this.contentFeedList = this.transformContentsToWidgets(finalFilterValue, this.getFeedStrip());
-
   }
 
   searchData(event: any) {

@@ -20,10 +20,11 @@ import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 
 export class CompetencyListComponent implements OnInit, OnDestroy {
 
-  isMobile = false;
-  private destroySubject$ = new Subject();
+  isMobile: boolean = false;
+  toggleFilter: boolean = false;
   skeletonArr = <any>[];
   showAll = false;
+  private destroySubject$ = new Subject();
   three_month_back = new Date(new Date().setMonth(new Date().getMonth() - 3));
   six_month_back = new Date(new Date().setMonth(new Date().getMonth() - 6));
   one_year_back = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
@@ -110,6 +111,16 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       lastYearSubTheme: 0
     }
   }];
+
+  filterObjData: any = {
+    "primaryCategory":[],
+    "status":[],
+    "timeDuration":[], 
+    "competencyArea": [], 
+    "competencyTheme": [], 
+    "competencySubTheme": [], 
+    "providers": [] 
+  }
 
   courseWithCompetencyArray: any[] = [];
   certificateMappedObject: any = {}; 
@@ -322,6 +333,27 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     competencyTheme = competencyTheme.toLowerCase()
     if (!this.competency[competencyTheme].length) return;
     this.competencyArray = (!event.length) ? this.competency[competencyTheme] : this.competency[competencyTheme].filter((obj: any) => obj.name.toLowerCase().trim().includes(event.toLowerCase()));
+  }
+
+  // Filters related functionalities...
+  handleFilter(event: boolean): void {
+    console.log("event - ", event);
+    this.toggleFilter = event;
+  }
+
+  handleApplyFilter(event: any){
+    this.toggleFilter = false
+    this.filterObjData = event
+    this.filterData(event)
+  }
+
+  handleClearFilterObj(event: any){
+    this.filterObjData = event;
+    this.filterData(event);
+  }
+
+  filterData(filterValue: any) {
+    console.log("filterValue - ", filterValue);
   }
 
   ngOnDestroy(): void {
