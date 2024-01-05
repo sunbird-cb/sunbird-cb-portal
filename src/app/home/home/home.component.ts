@@ -181,7 +181,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.enrollData = localStorage.getItem('enrollmentData')
     if (this.enrollData) {
       this.enrollData = JSON.parse(this.enrollData)
-      if (this.enrollData && this.enrollData.courses && this.enrollData.courses) {
+      if (this.enrollData && this.enrollData.courses && this.enrollData.courses.length) {
         this.isKPPanelenabled = true
       }
     }
@@ -286,7 +286,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   closeKarmaPointsPanel() {
-    this.isKPPanelenabled = false
+    this.isKPPanelenabled = true
   }
 
 }
