@@ -83,7 +83,7 @@ export class ProfileKarmapointsComponent implements OnInit {
       return 'Course Rating'
     }  if (row && row.operation_type === 'FIRST_LOGIN') {
       return 'First Login'
-    } else if (row && row.operation_type === 'FIRST_ENROLMENT') {
+    }  if (row && row.operation_type === 'FIRST_ENROLMENT') {
       return 'First Enrollment'
     }
     return `${row ? row.operation_type.split('_').join(' ') : 'No Title'}`
