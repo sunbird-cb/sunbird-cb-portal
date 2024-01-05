@@ -52,7 +52,7 @@ const endpoint = {
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
-  FIRST_LOGIN_API: '/apis/proxies/v8/login/entry'
+  FIRST_LOGIN_API: '/apis/proxies/v8/login/entry',
 }
 
 @Injectable({

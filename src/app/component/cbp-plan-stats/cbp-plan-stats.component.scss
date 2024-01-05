@@ -6,6 +6,12 @@
     border-radius: 12px;
     .title {
         margin-bottom: 0;
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font: 600 16px/24px Montserrat-SemiBold;
+        font-style: normal;
+        letter-spacing: 0.12px;
+        text-align: left;
     }
     .divider {
         width: 100%;
@@ -18,6 +24,7 @@
         font-style: normal;
         letter-spacing: 0.25px;
         text-align: left;
+        opacity: 1;
     }
     .group-count {
         opacity: 1;
