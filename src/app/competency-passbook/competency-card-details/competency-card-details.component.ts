@@ -21,7 +21,6 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   stateData: any;
   subThemeArray: any[] = [];
   viewMoreST: boolean = false;
-  viewLessST: boolean = false;
 
   constructor(
     private router: ActivatedRoute,
