@@ -9,7 +9,7 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -159,6 +159,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isAcbpClaim = false
   courseID: any
   isClaimed = false
+  monthlyCapExceed = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -188,6 +189,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private telemertyService: TelemetryService,
+    private events: EventService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -323,6 +325,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   }
 
+  getKarmapointsLimit() {
+    this.contentSvc.userKarmaPoints().subscribe((res: any) => {
+      if (res && res.kpList) {
+        const info = res.kpList.addinfo
+        if (info) {
+          this.monthlyCapExceed = JSON.parse(info).nonACBPCourseKarmaQuotaClaimed >= 4
+        }
+      }
+    })
+  }
+
   findACPB() {
     this.route.queryParamMap.subscribe(qParamsMap => {
       const acbp = qParamsMap.get('planType')
@@ -364,6 +377,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
+  raiseTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'karmpoints-claim',
+        id: this.courseID,
+      },
+      {
+        id: this.courseID,
+        type: 'course',
+      },
+      {
+        pageIdExt: 'btn-acbp-claim',
+        module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
+    })
+  }
+
   onClickOfClaim(event: any) {
     // tslint:disable:no-console
     console.log(event)
@@ -371,6 +401,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       userId: this.configSvc.unMappedUser.identifier,
       courseId: this.courseID,
     }
+    this.raiseTelemetry()
     this.contentSvc.claimKarmapoints(request).subscribe((res: any) => {
       // tslint:disable:no-console
       console.log(res)
@@ -1526,6 +1557,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.changeServerDate(new Date().getTime())
       }
       this.findACPB()
+      this.getKarmapointsLimit()
     },                                    (_err: any) => {
       this.tocSvc.changeServerDate(new Date().getTime())
     })

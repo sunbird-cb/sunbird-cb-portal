@@ -132,14 +132,16 @@ TODO: edit option while preview Mode
                 </a>
 
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
-                  <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                  <ng-container *ngIf="!monthlyCapExceed">
+                    <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </ng-container>
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
                   <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
-                   <div *ngIf="!isAcbpCourse">
+                   <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
                 </div>
@@ -172,7 +174,7 @@ TODO: edit option while preview Mode
                     <ng-container *ngIf="isAcbpCourse">
                       <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
                     </ng-container>
-                    <ng-container *ngIf="!isAcbpCourse">
+                    <ng-container *ngIf="!isAcbpCourse && !monthlyCapExceed">
                      <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
                     </ng-container>
                 </ng-container>
@@ -221,14 +223,17 @@ TODO: edit option while preview Mode
                 </a>
 
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100)">
-                  <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                  <ng-container *ngIf="!monthlyCapExceed">
+                    <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </ng-container>
+
                 </div>
 
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
                   <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
-                  <div *ngIf="!isAcbpCourse">
+                  <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
                 </div>
