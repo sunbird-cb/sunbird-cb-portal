@@ -171,13 +171,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     eachCourse.issuedCertificates.forEach((eObj: any) => {
       eObj['courseName'] = eachCourse.courseName;
       eObj['competencyTheme'] = v5Obj.competencyTheme;
+      eObj['viewMore'] = false;
       if (themeObj && themeObj.name) {
         eObj['subThemes'] = themeObj.children.map((subObj: any) => {
-          return subObj.name
+          return subObj;
         });
       }
     });
-    // console.log("eachCourse.issuedCertificates - ", eachCourse.issuedCertificates);
   }
 
   bindMoreData(typeObj: any, name: string) {
