@@ -40,7 +40,8 @@ export class FilterComponent implements OnInit {
     { "id": 'Program', name: 'Program',checked: false },
     { "id": 'Curated program', name: 'Curated program',checked: false },
     { "id": "Blended program", name: 'Blended program',checked: false }, 
-    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false }
+    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false },
+    { "id": "Moderated Courses", name: 'Moderated Courses',checked: false }
   ];
   providersList: any[] = [];
   selectedProviders: any[] = [];

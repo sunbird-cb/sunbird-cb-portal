@@ -26,3 +26,30 @@
         line-height: 20px;
             }
 }
+::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+    opacity: 1;
+    color: rgba(0,0,0,0.87) !important;
+    font-family: "Lato-Bold";
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 21px;
+}
+::ng-deep .theme-igot.day-mode .mat-ink-bar {
+    background-color: rgba(0,0,0,0.87) !important;
+}
+::ng-deep.mat-tab-label.mat-tab-label,
+::ng-deep.mat-tab-label.mat-tab-label {
+    opacity: 1;
+    color: rgba(0,0,0,0.6) !important;
+    font-family: "Lato-Regular";
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 20px;
+}
