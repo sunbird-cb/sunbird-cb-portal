@@ -383,6 +383,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       console.log(res)
       this.isClaimed = true
       this.openSnackbar('Karma points are successfully claimed.')
+      this.getUserEnrollmentList()
     },                                                  (error: any) => {
       // tslint:disable:no-console
       console.log(error)
@@ -1495,6 +1496,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.getUserRating(true)
+        this.getUserEnrollmentList()
       }
     })
   }

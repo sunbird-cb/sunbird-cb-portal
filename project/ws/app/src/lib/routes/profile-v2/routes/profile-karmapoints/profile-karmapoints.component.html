@@ -11,18 +11,18 @@
     </mat-card-content>
     <ng-container *ngIf="karmaPointsHistory.length > 0">
       <div class="karmapoints-container">
-        <ng-container *ngFor="let karmapoints of karmaPointsHistory | keyvalue">
+        <ng-container *ngFor="let karmapoints of karmaPointsHistory">
           <mat-card class="no-shadow mt-2 mat-list-item" role="link" tabindex="0">
             <div class="flex flex-1 mobile-margin">
               <div class="flex-1 mat-subheading-1">
-                <div class="margin-bottom-xs">{{karmapoints.value.context_type}} {{karmapoints.value.operation_type | lowercase}}</div>
-                <div class="courseName margin-bottom-xs">{{getName(karmapoints.value)}}</div>
-                <div class="date-of-completed margin-bottom-xs">{{karmapoints.value.credit_date | date: 'd MMM yyyy'}}</div>
+                <div class="margin-bottom-xs">{{getTitle(karmapoints)}}</div>
+                <div class="courseName margin-bottom-xs">{{getName(karmapoints)}}</div>
+                <div class="date-of-completed margin-bottom-xs">{{karmapoints.credit_date | date: 'd MMM yyyy'}}</div>
               </div>
               <div class="mat-subheading-2">
                 <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
-                <span class="bonus-points">+ {{karmapoints.value.points}}</span>
-                <div *ngIf="getAdditonInfo(karmapoints.value) > 0"><span class="bonus-badge">BONUS</span></div>
+                <span class="bonus-points">+ {{karmapoints.points}}</span>
+                <div *ngIf="getAdditonInfo(karmapoints) > 0"><span class="bonus-badge">BONUS</span></div>
               </div>
             </div>
           </mat-card>
