@@ -245,7 +245,7 @@ export class CbpFiltersComponent implements OnInit {
     }
   }
 
-  getFilterType(event: any, ctype: any,filterType: any) {
+  handleGetFilterType(event: any, ctype: any,filterType: any) {
     if(event.checked && !this.filterObj[filterType].includes(ctype.id || ctype)) {
       let data = ctype.id ?ctype.id : ctype
       this.filterObj[filterType].push(data)
