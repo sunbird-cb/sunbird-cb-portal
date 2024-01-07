@@ -18,7 +18,7 @@ import { CompetencyPassbookService } from '../competency-passbook.service';
 export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   private destroySubject$ = new Subject();
   params: any;
-  stateData: any;
+  certificateData: any = [];
   subThemeArray: any[] = [];
   viewMoreST: boolean = false;
 
@@ -30,12 +30,12 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
       this.params = params;
     });
     
-    this.router.data.subscribe((_data: any) => {
-      this.stateData = window.history.state
-      this.stateData.certificate && this.stateData.certificate.forEach((obj: any) => {
+    if (localStorage.getItem('details_page') !== 'undefined') {
+      this.certificateData = JSON.parse(localStorage.getItem('details_page') as any);
+      this.certificateData && this.certificateData.forEach((obj: any) => {
         obj['loading'] = true;
         this.getCertificateSVG(obj);
-        obj.subThemes.forEach((stObj: any) => {
+        obj.subThemes && obj.subThemes.forEach((stObj: any) => {
           if (this.subThemeArray.length) {
             const index = this.subThemeArray.findIndex((_obj: any) => _obj.name ===  stObj.name);
             if (index === -1) {
@@ -46,7 +46,7 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
           }
         });
       });
-    })
+    }
   }
 
   ngOnInit() {}
@@ -94,6 +94,7 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    localStorage.setItem('details_page', '');
     this.destroySubject$.unsubscribe();
   }
 

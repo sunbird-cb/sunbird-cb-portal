@@ -113,6 +113,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   courseWithCompetencyArray: any[] = [];
   certificateMappedObject: any = {}; 
+  subThemeMappedObject: any = {};
 
   constructor(
     private cpService: CompetencyPassbookService,
@@ -167,13 +168,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     )
   }
 
-  loopCertificateData(eachCourse: any, v5Obj: any, themeObj?: any): void {
-    eachCourse.issuedCertificates.forEach((eObj: any) => {
-      eObj['courseName'] = eachCourse.courseName;
-      eObj['competencyTheme'] = v5Obj.competencyTheme;
-      eObj['viewMore'] = false;
+  loopCertificateData(eachCourse: any, _v5Obj: any, themeObj?: any): void {
+    eachCourse.issuedCertificates.forEach((certObj: any) => {
+      certObj['courseName'] = eachCourse.courseName;
+      // certObj['competencyTheme'] = v5Obj.competencyTheme;
+      certObj['viewMore'] = false;
       if (themeObj && themeObj.name) {
-        eObj['subThemes'] = themeObj.children.map((subObj: any) => {
+        certObj['subThemes'] = themeObj.children.map((subObj: any) => {
           return subObj;
         });
       }
@@ -209,33 +210,52 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       });
 
       this.courseWithCompetencyArray.forEach((eachCourse: any) => {
-        if (eachCourse.issuedCertificates && eachCourse.issuedCertificates.length) {
-          eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.forEach((cObj: any) => {
-            if (cObj.competencyTheme.toLowerCase().trim() === obj.name.toLowerCase().trim()) {
+        if ((eachCourse.issuedCertificates && eachCourse.issuedCertificates.length) && (eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
+
+          eachCourse.content.competencies_v5.forEach((v5Obj: any) => {
+            if (v5Obj.competencyTheme.toLowerCase().trim() === obj.name.toLowerCase().trim()) {
+              
               if (this.certificateMappedObject[obj.name]) {
-                this.certificateMappedObject[obj.name].forEach((certificateObj: any) => {
-                  eachCourse.issuedCertificates.forEach((courseObj: any) => {
-                    if (certificateObj.identifier !== courseObj.identifier) {
-                      this.certificateMappedObject[obj.name] = [...this.certificateMappedObject[obj.name], courseObj];
-                    }
-                  });
+                eachCourse.issuedCertificates.forEach((certObj: any) => {
+                  if (this.certificateMappedObject[obj.name].findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
+                    this.certificateMappedObject[obj.name].push(certObj);
+                  }
                 });
               } else {
                 this.certificateMappedObject[obj.name] = [];
                 this.certificateMappedObject[obj.name] = eachCourse.issuedCertificates;
               }
 
-              this.loopCertificateData(eachCourse, cObj, obj);
-            } else {
-              this.loopCertificateData(eachCourse, cObj);
+              // if (this.subThemeMappedObject[obj.name]) {
+              //   this.subThemeMappedObject[obj.name] = [...this.subThemeMappedObject[obj.name], ...obj.children];
+              // } else {
+              //   this.subThemeMappedObject[obj.name] = [];
+              //   this.subThemeMappedObject[obj.name] = obj.children;
+              // }
+
+              this.loopCertificateData(eachCourse, v5Obj);
             }
+            
           })
         }
       });
     });
 
+    // console.log("this.courseWithCompetencyArray - ", this.courseWithCompetencyArray);
+    console.log("certificateMappedObject = ", this.certificateMappedObject);
     return typeObj;
   }
+
+  // bindSubThemeToEachCertificate(certificateArray: any, themeObj: any): void {
+  //   certificateArray.forEach((certObj: any) => {
+  //     if (!certObj.courseSubTheme.length) {
+  //       certObj.courseSubTheme = themeObj.children;
+  //     } else {
+  //       certObj.courseSubTheme = [...certObj.courseSubTheme, ...themeObj.children];
+  //     }
+  //   });
+  //   console.log("competency theme - ", certificateArray);
+  // }
 
   fetchCompetencyList(): void {
     const payload = {
@@ -314,8 +334,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   handleNavigate(obj: any): void {
-    const state =  {certificate: this.certificateMappedObject[obj.name]};
-    this.router.navigate(['/page/competency-passbook/details'], {queryParams: {theme: obj.name, name: obj.competencyName}, state});
+    localStorage.setItem('details_page', JSON.stringify(this.certificateMappedObject[obj.name]));
+    this.router.navigate(['/page/competency-passbook/details'], {queryParams: {theme: obj.name, name: obj.competencyName}});
   }
 
   handleSearch(event: string, competencyTheme: string): void {
