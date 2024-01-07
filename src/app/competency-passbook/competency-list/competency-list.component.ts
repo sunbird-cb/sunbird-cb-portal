@@ -112,8 +112,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }];
 
   courseWithCompetencyArray: any[] = [];
-  certificateMappedObject: any = {}; 
-  subThemeMappedObject: any = {};
+  certificateMappedObject: any = {};
 
   constructor(
     private cpService: CompetencyPassbookService,
@@ -171,7 +170,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   loopCertificateData(eachCourse: any, _v5Obj: any, themeObj?: any): void {
     eachCourse.issuedCertificates.forEach((certObj: any) => {
       certObj['courseName'] = eachCourse.courseName;
-      // certObj['competencyTheme'] = v5Obj.competencyTheme;
       certObj['viewMore'] = false;
       if (themeObj && themeObj.name) {
         certObj['subThemes'] = themeObj.children.map((subObj: any) => {
@@ -217,21 +215,22 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               
               if (this.certificateMappedObject[obj.name]) {
                 eachCourse.issuedCertificates.forEach((certObj: any) => {
-                  if (this.certificateMappedObject[obj.name].findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
-                    this.certificateMappedObject[obj.name].push(certObj);
+                  if (this.certificateMappedObject[obj.name].certificate.findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
+                    this.certificateMappedObject[obj.name].certificate.push(certObj);
                   }
                 });
-              } else {
-                this.certificateMappedObject[obj.name] = [];
-                this.certificateMappedObject[obj.name] = eachCourse.issuedCertificates;
-              }
 
-              // if (this.subThemeMappedObject[obj.name]) {
-              //   this.subThemeMappedObject[obj.name] = [...this.subThemeMappedObject[obj.name], ...obj.children];
-              // } else {
-              //   this.subThemeMappedObject[obj.name] = [];
-              //   this.subThemeMappedObject[obj.name] = obj.children;
-              // }
+                obj.children.forEach((_cObj: any) => {
+                  if (this.certificateMappedObject[obj.name].subTheme.findIndex((_stObj: any) => _stObj.name.toLowerCase() === _cObj.name.toLowerCase()) === -1) {
+                    this.certificateMappedObject[obj.name].subTheme.push(_cObj);
+                  }  
+                });
+              } else {
+                this.certificateMappedObject[obj.name] = {
+                  'certificate': eachCourse.issuedCertificates,
+                  'subTheme': obj.children
+                };
+              }
 
               this.loopCertificateData(eachCourse, v5Obj);
             }
@@ -241,8 +240,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       });
     });
 
-    // console.log("this.courseWithCompetencyArray - ", this.courseWithCompetencyArray);
-    console.log("certificateMappedObject = ", this.certificateMappedObject);
     return typeObj;
   }
 
