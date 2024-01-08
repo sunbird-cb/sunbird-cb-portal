@@ -289,5 +289,5 @@
 
 <ng-container *ngIf="toggleFilter">
     <ws-widget-cbp-filters (clearFilterObj)="handleClearFilterObj($event)"
-        [filterObj]="filterObjData" (getFilterData)="handleApplyFilter($event)"></ws-widget-cbp-filters>
+        [filterObj]="filterObjData" (getFilterData)="handleApplyFilter($event)" [showAdditionalFilters]="false"></ws-widget-cbp-filters>
 </ng-container>

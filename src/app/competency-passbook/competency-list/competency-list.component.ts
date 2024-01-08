@@ -350,7 +350,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   // Filters related functionalities...
   handleFilter(event: boolean): void {
-    console.log("event - ", event);
     this.toggleFilter = event;
   }
 
@@ -366,96 +365,41 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   filterData(filterValue: any) {
-    console.log("filterValue - ", filterValue);
     let finalFilterValue: any = [];
-    if( filterValue['primaryCategory'].length || filterValue['status'].length || filterValue['timeDuration'].length || filterValue['competencyArea'].length || filterValue['competencyTheme'].length || filterValue['competencySubTheme'].length || filterValue['providers'].length ) {
+    if( filterValue['competencyArea'].length || filterValue['competencyTheme'].length || filterValue['competencySubTheme'].length ) {
       let filterAppliedOnLocal = false;
-      this.filteredData = this.competencyArray;
+      this.filteredData = this.competency['all'];
 
-      if(filterValue['primaryCategory'].length) {
-        filterAppliedOnLocal = filterAppliedOnLocal ? true : false;
+      if(filterValue['competencyArea'].length) {
+        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['primaryCategory'].includes(data.primaryCategory)) {
-            return data;
-          }
-        });
-        filterAppliedOnLocal = true;
-      }
-
-      if(filterValue['status'].length) {
-        filterAppliedOnLocal = filterAppliedOnLocal ? true : false;
-        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          let statusData = filterValue['status'].includes('all')? ['0','1','2']: filterValue['status']
-          if(statusData.includes(String(data.contentStatus))) {
+          if(filterValue['competencyArea'].some((r: any) =>  data.competencyName.includes(r.toLowerCase()))) {
             return data 
           }
         })
         filterAppliedOnLocal = true;
       }
 
-      if(filterValue['timeDuration'].length) {
-        filterAppliedOnLocal = filterAppliedOnLocal ? true : false;
+      if(filterValue['competencyTheme'].length) {
+        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['timeDuration'].some((time: any) => {
-            let count = Number(time.slice(0,-2))
-            if(time.includes('sw')) {
-              return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'week'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
-            } else if(time.includes('ad')) {
-              return dayjs(data.endDate).isSameOrBefore(dayjs(dayjs().add(count, 'day'))) && dayjs(data.endDate).isSameOrAfter(dayjs())
-            }  else if(time.includes('sm')) {
-              return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
-            }
-            return true
+          return filterValue['competencyTheme'].includes(data.name);
+        })
+        filterAppliedOnLocal = true;
+      }
+
+      if(filterValue['competencySubTheme'].length) {
+        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
+        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
+          let returnedValue = data.children.filter((childObj: any) => { 
+            return filterValue['competencySubTheme'].includes(childObj.name)
           })
-          ) {
-            return data 
-          }
-        })
-        filterAppliedOnLocal = true
-      }
-
-      if(filterValue['competencyArea'].length){
-        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
-        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['competencyArea'].some((r: any) => data.competencyArea.includes(r))) {
-            return data 
-          }
+          return (returnedValue.length) ? data : false;
         })
         filterAppliedOnLocal = true;
       }
 
-      if(filterValue['competencyTheme'].length){
-        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
-        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['competencyTheme'].some((r: any) => data.competencyTheme.includes(r))) {
-            return data 
-          }
-        })
-        filterAppliedOnLocal = true;
-      }
-
-      if(filterValue['competencySubTheme'].length){
-        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
-        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['competencySubTheme'].some((r: any) => data.competencySubTheme.includes(r))) {
-            return data 
-          }
-        })
-        filterAppliedOnLocal = true;
-      }
-
-      if(filterValue['providers'].length){
-        filterAppliedOnLocal = filterAppliedOnLocal? true : false
-        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['providers'].includes(data.organisation[0])) {
-            return data 
-          }
-        })
-        filterAppliedOnLocal = true;
-      }
-
-      console.log("finalFilterValue - ", finalFilterValue);
-      
+      this.competencyArray = finalFilterValue;
     } else {
       this.filterApplied = false;
       finalFilterValue = this.competencyArray;

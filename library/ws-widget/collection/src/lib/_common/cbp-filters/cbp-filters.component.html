@@ -144,23 +144,25 @@
                 </mat-accordion>
             </div>
             <div class="spacer"></div>
-            <div class="filter-content flex flex-1">
-                <mat-accordion>
-                    <mat-expansion-panel disableRipple [expanded]="true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Provider
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="category-content">
-                            <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList">
-                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="item?.checked"
-                                    (change)="handleGetFilterType($event, item?.name,'providers')">{{item?.name}}</mat-checkbox>
+            <ng-container *ngIf="showAdditionalFilters">
+                <div class="filter-content flex flex-1">
+                    <mat-accordion>
+                        <mat-expansion-panel disableRipple [expanded]="true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Provider
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="category-content">
+                                <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList">
+                                    <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="item?.checked"
+                                        (change)="handleGetFilterType($event, item?.name,'providers')">{{item?.name}}</mat-checkbox>
+                                </div>
                             </div>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </ng-container>
         </div>
         <div class="filter-footer flex flex-1">
             <div class="flex flex-2 flex-row">
