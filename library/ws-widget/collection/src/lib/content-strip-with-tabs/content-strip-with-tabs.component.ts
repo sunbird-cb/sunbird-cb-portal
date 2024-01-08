@@ -1050,13 +1050,13 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   getSelectedIndex(stripsResultDataMap: any, key: any): number {
     let returnValue = 0
-    if(key === 'cbpPlan') {
+    if (key === 'cbpPlan') {
       if (stripsResultDataMap.tabs.length) {
-        let data = stripsResultDataMap.tabs.filter((ele: any) => ele.value === "upcoming")
-        returnValue = data[0].widgets && data[0].widgets.length > 0 ? 1: 0
+        const data = stripsResultDataMap.tabs.filter((ele: any) => ele.value === 'upcoming')
+        returnValue = data[0].widgets && data[0].widgets.length > 0 ? 1 : 0
       }
     }
     return returnValue
   }
-  
+
 }
