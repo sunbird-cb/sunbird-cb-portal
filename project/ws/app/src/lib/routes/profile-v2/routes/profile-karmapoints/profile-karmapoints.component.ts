@@ -79,11 +79,14 @@ export class ProfileKarmapointsComponent implements OnInit {
   getTitle(row: any) {
     if (row && row.operation_type === 'COURSE_COMPLETION') {
       return 'Course Completion'
-    }  if (row && row.operation_type === 'RATING') {
+    }
+    if (row && row.operation_type === 'RATING') {
       return 'Course Rating'
-    }  if (row && row.operation_type === 'FIRST_LOGIN') {
+    }
+    if (row && row.operation_type === 'FIRST_LOGIN') {
       return 'First Login'
-    }  if (row && row.operation_type === 'FIRST_ENROLMENT') {
+    }
+    if (row && row.operation_type === 'FIRST_ENROLMENT') {
       return 'First Enrollment'
     }
     return `${row ? row.operation_type.split('_').join(' ') : 'No Title'}`

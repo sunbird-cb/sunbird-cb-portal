@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { MatBottomSheet } from '@angular/material/bottom-sheet'
-import { FilterComponent } from './../filter/filter.component'
 import { ActivatedRoute } from '@angular/router'
 import { distinctUntilChanged } from 'rxjs/operators'
 
@@ -45,7 +43,6 @@ export class CbpPlanFeedComponent implements OnInit {
   }
 
   constructor(
-    private bottomSheet: MatBottomSheet,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -62,31 +59,12 @@ export class CbpPlanFeedComponent implements OnInit {
   emitSearchEvent() {
     this.searchRequest.emit({ query: this.searchControl.value })
   }
-
-  showBottomSheet(): void {
-    // const bottomSheetRef = this.bottomSheet.open(FilterComponent,{
-    this.bottomSheet.open(FilterComponent,{
-      panelClass: 'filter-cbp',
-      ariaLabel: 'Share on social media',
-      data: {
-        filterObj: this.filterObject
-      }
-    });
-    // bottomSheetRef.afterDismissed().subscribe((dataFromChild) => {
-    //   // console.log(dataFromChild,'datadfghjkjhgfghj');
-    // });
-  }
   
   openFilter() {
-    // if(window.screen.width < 768) {
-    //   this.showBottomSheet()
-    // } else {
       this.toggleFilter = true
       this.toggleFilterEvent.emit(this.toggleFilter)
-    // }
   }
   CloseFilter(value: any,key: any){
     this.closeFilterKey.emit({value, key})
   }
-
 }
