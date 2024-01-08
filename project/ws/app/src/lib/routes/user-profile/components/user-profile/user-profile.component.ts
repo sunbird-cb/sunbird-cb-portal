@@ -32,6 +32,8 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+import { RequestDialogComponent } from '../request-dialog/request-dialog.component'
+import { USER_PROFILE_MSG_CONFIG } from './user-profile-constant'
 
 /* tslint:enable */
 
@@ -119,6 +121,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   allDept: any = []
   approvalConfig!: NsUserProfileDetails.IApprovals
   unApprovedField!: any[]
+  unApprovedReq!: any
   changedProperties: any = {}
   otpSend = false
   otpVerified = false
@@ -132,20 +135,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   karmayogiBadge = false
   isVerifiedAlready = false
   selectedtags: any[] = []
-
-  needApprovalList: any[] = []
-  desigApvlReq: any
-  desigOtherApvlReq: any
-  grpApvlReq: any
-  indApvlReq: any
-  indOtherApvlReq: any
-  countryApvlReq: any
-  descApvlReq: any
-  dojApvlReq: any
-  orgNameApvlReq: any
-  orgOtherNameApvlReq: any
-  typeApvlReq: any
-  orgTypeApvlReq: any
+  eHRMSId: any
+  eHRMSName: any
+  verifiedKarmayogiMsg!: any
+  rejectedKarmayogiMsg!: any
+  rejectedReq!: any
+  isverifiedKBKeyExist!: boolean
+  isverifiedKeyInAppv!: boolean
+  isReqVKBuser = false
 
   constructor(
     private snackBar: MatSnackBar,
@@ -164,7 +161,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
-    this.getApprovalRequests()
+    this.fetchRejectedFields()
 
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -174,7 +171,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       countryCode: new FormControl('+91', [Validators.required]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       telephone: new FormControl('', [Validators.pattern(this.telephonePattern)]),
-      primaryEmail: new FormControl('', [Validators.required, Validators.email]),
+      primaryEmail: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
       nationality: new FormControl('', []),
@@ -219,6 +216,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       departmentName: new FormControl('', []),
       verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
       group: new FormControl('', [Validators.required]),
+      eHRMSId: new FormControl({ value: '', disabled: true }, []),
+      eHRMSName: new FormControl({ value: '', disabled: true }, []),
     })
 
   }
@@ -230,6 +229,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
     // })
+    this.verifiedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.verifiedKarmayogi
+    this.rejectedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.rejectedKarmayogiMsg
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
       return v.approvalRequired ? { [k]: v } : null
     }))
@@ -262,86 +263,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.isMobileVerified = false
           }
         })
-    }
-  }
-
-  getApprovalRequests() {
-    const reqBody = {
-      serviceName: 'profile',
-      applicationStatus: 'SEND_FOR_APPROVAL',
-      applicationIds: [this.configSvc.unMappedUser.id],
-      // deptName: deptNameValue,
-      offset: 0,
-      limit: 100,
-    }
-    this.userProfileSvc.getApprovalReqs(reqBody).subscribe(
-      data => {
-        if (data.result.data && data.result.data[0].wfInfo) {
-          data.result.data[0].wfInfo.forEach((wf: any) => {
-            if (typeof wf.updateFieldValues === 'string') {
-              const fields = JSON.parse(wf.updateFieldValues)
-              if (fields.length > 0) {
-                fields.forEach((field: any) => {
-                  const labelKey = Object.keys(field.toValue)[0]
-                  //   const feildNameObj = this.profileData.filter(userData => userData.key === labelKey)[0]
-                  this.needApprovalList.push(
-                    Object.assign({
-                      wf,
-                      feildName: labelKey,
-                      label: labelKey,
-                      value: field.toValue[labelKey],
-                      fieldKey: field.fieldKey,
-                      wfId: wf.wfId,
-                    })
-                  )
-                })
-              }
-            }
-          })
-          // console.log('All ApprovalList', this.needApprovalList)
-          this.getAllApprovalRequests(this.needApprovalList)
-        }
-      },
-      (_err: any) => {
-      })
-  }
-
-  getAllApprovalRequests(reqList: any[]) {
-    if (reqList && reqList.length > 0) {
-      reqList.forEach((ele: any) => {
-        if (ele.feildName === 'designation') {
-          this.desigApvlReq = ele
-        } if (ele.feildName === 'designationOther') {
-          this.desigOtherApvlReq = ele
-        } else if (ele.feildName === 'group') {
-          this.grpApvlReq = ele
-
-        } else if (ele.feildName === 'industry') {
-          this.indApvlReq = ele
-          if (ele.value === 'Other') {
-            this.showIndustryOther = true
-          }
-        } else if (ele.feildName === 'industryOther') {
-          this.indOtherApvlReq = ele
-
-        } else if (ele.feildName === 'location') {
-          this.countryApvlReq = ele
-
-        } else if (ele.feildName === 'description') {
-          this.descApvlReq = ele
-        } else if (ele.feildName === 'doj') {
-          this.dojApvlReq = ele
-        } else if (ele.feildName === 'organisationType') {
-          this.orgTypeApvlReq = ele
-
-        } else if (ele.feildName === 'name') {
-          this.orgNameApvlReq = ele
-
-        } else if (ele.feildName === 'nameOther') {
-          this.orgOtherNameApvlReq = ele
-          this.showOrgnameOther = true
-        }
-      })
     }
   }
 
@@ -459,9 +380,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   fetchPendingFields() {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
-        this.unApprovedField = _.get(res, 'result.data')
+        const keyFields = _.get(res, 'result.data')
+        this.unApprovedReq = _.get(res, 'result.data')
+        this.unApprovedField = Object.keys(keyFields)
+        this.isverifiedKeyInAppv = this.unApprovedReq.hasOwnProperty('verifiedKarmayogi')
       }
     })
+  }
+
+  fetchRejectedFields() {
+    this.userProfileSvc.listRejectedFields().subscribe(res => {
+      if (res && res.result && res.result.data) {
+        this.rejectedReq = _.get(res, 'result.data')
+        this.isverifiedKBKeyExist = this.rejectedReq.hasOwnProperty('verifiedKarmayogi')
+      }
+    })
+  }
+
+  isVerifiedKBReq() {
+    if (this.isVerifiedAlready) {
+      this.isReqVKBuser = false
+    } else if (this.isverifiedKeyInAppv) {
+      this.isReqVKBuser = false // if inreview
+    } else if ((!this.isVerifiedAlready || !this.isverifiedKeyInAppv) && this.isverifiedKBKeyExist) {
+      this.isReqVKBuser = true // reject case
+    } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
+      this.isReqVKBuser = false // firsttime user
+    }
   }
 
   isAllowed(name: string) {
@@ -800,7 +745,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   removeHobbies(interest: any) {
     const index = this.selectedHobbies.indexOf(interest)
-
     if (index >= 0) {
       this.selectedHobbies.splice(index, 1)
     }
@@ -827,9 +771,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             const organisations = this.populateOrganisationDetails(userData)
             this.constructFormFromRegistry(userData, academics, organisations)
             this.populateChips(userData)
+            this.isVerifiedKBReq()
             this.userProfileData = userData
             if (this.userProfileData && this.userProfileData.additionalProperties) {
               this.selectedtags = this.userProfileData.additionalProperties.tag || []
+              this.eHRMSId = this.userProfileData.additionalProperties.externalSystemId
+              this.eHRMSName = this.userProfileData.additionalProperties.externalSystem
             }
           } else {
             if (this.configSvc.userProfile) {
@@ -842,6 +789,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               })
               if (this.userProfileData && this.userProfileData.additionalProperties) {
                 this.selectedtags = this.userProfileData.additionalProperties.tag || []
+                this.eHRMSId = this.userProfileData.additionalProperties.externalSystemId
+                this.eHRMSName = this.userProfileData.additionalProperties.externalSystem
               }
             }
           }
@@ -878,32 +827,37 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       completePostalAddress: '',
       orgNameOther: '',
       industryOther: '',
-      designationOther: '',
+      eHRMSId: '',
+      eHRMSName: '',
     }
-    if (data && data.professionalDetails && data.professionalDetails.length > 0) {
-      const organisation = data.professionalDetails[0]
-      // const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
+    // tslint:disable-next-line: max-line-length
+    if ((data && data.professionalDetails && data.professionalDetails.length > 0) || (this.unApprovedField && this.unApprovedField.length > 0)) {
+      const organisation = data && data.professionalDetails ? data.professionalDetails[0] : null
       org = {
-        isGovtOrg: organisation.organisationType,
-        orgName: this.orgNameApvlReq && this.orgNameApvlReq.value ? this.orgNameApvlReq.value : organisation.name,
-        orgNameOther: this.orgOtherNameApvlReq && this.orgOtherNameApvlReq.value ? this.orgOtherNameApvlReq.value : organisation.nameOther,
-        industry: this.indApvlReq && this.indApvlReq.value ? this.indApvlReq.value : organisation.industry || 'Other',
-        industryOther: this.indOtherApvlReq && this.indOtherApvlReq.value ? this.indOtherApvlReq.value : organisation.industryOther,
-        // tslint:disable-next-line
-        // designation: pendingDesignation ? this.desigApvlReq.value : isDesiAvailable ? organisation.designation : 'Other',
-        // designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
-        designation: this.desigApvlReq && this.desigApvlReq.value ? this.desigApvlReq.value : organisation.designation || 'Other',
+        isGovtOrg: organisation && organisation.organisationType ? organisation.organisationType : true,
+        orgName: this.unApprovedReq && this.unApprovedReq.name ? this.unApprovedReq.name : organisation ? organisation.name : '',
         // tslint:disable-next-line: max-line-length
-        designationOther: this.desigOtherApvlReq && this.desigOtherApvlReq.value ? this.desigOtherApvlReq.value : organisation.designationOther,
-        group: organisation.group,
-        location: this.countryApvlReq && this.countryApvlReq.value ? this.countryApvlReq.value : organisation.location,
-        responsibilities: organisation.responsibilities,
+        orgNameOther: this.unApprovedReq && this.unApprovedReq.nameOther ? this.unApprovedReq.nameOther : organisation ? organisation.nameOther : '',
+            // tslint:disable-next-line: max-line-length
+        industry: this.unApprovedReq && this.unApprovedReq.industry ? this.unApprovedReq.industry : organisation ? organisation.industry : '',
         // tslint:disable-next-line: max-line-length
-        doj: this.dojApvlReq && this.dojApvlReq.value ? this.getDateFromText(this.dojApvlReq.value) : this.getDateFromText(organisation.doj),
-        orgDesc: this.descApvlReq && this.descApvlReq.value ? this.descApvlReq.value : organisation.description,
-        completePostalAddress: organisation.completePostalAddress,
+        industryOther: this.unApprovedReq && this.unApprovedReq.industryOther ? this.unApprovedReq.industryOther : organisation ? organisation.industryOther : '',
+        // tslint:disable-next-line: max-line-length
+        designation: this.unApprovedReq && this.unApprovedReq.designation ? this.unApprovedReq.designation : organisation ? organisation.designation : '',
+        // tslint:disable-next-line: max-line-length
+        group: this.unApprovedReq && this.unApprovedReq.group ? this.unApprovedReq.group : organisation ? organisation.group : '',
+        // tslint:disable-next-line: max-line-length
+        location: this.unApprovedReq && this.unApprovedReq.location ? this.unApprovedReq.location : organisation ? organisation.location : '',
+        responsibilities: organisation ? organisation.responsibilities : '',
+        // tslint:disable-next-line: max-line-length
+        doj: this.unApprovedReq && this.unApprovedReq.doj ? this.getDateFromText(this.unApprovedReq.doj) : organisation ? this.getDateFromText(organisation.doj) : '',
+        // tslint:disable-next-line: max-line-length
+        orgDesc: this.unApprovedReq && this.unApprovedReq.description ? this.unApprovedReq.description : organisation ? organisation.description : '',
+        completePostalAddress: organisation ? organisation.completePostalAddress : '',
+        eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
+        eHRMSName: _.get(data, 'additionalProperties.externalSystem') || '',
       }
-      if (organisation.organisationType === 'Government') {
+      if (organisation && organisation.organisationType === 'Government') {
         org.isGovtOrg = true
       } else {
         org.isGovtOrg = false
@@ -1040,6 +994,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
       certificationDesc: _.get(data, 'skills.certificateDetails') || '',
       verifiedKarmayogi: data.verifiedKarmayogi,
+      eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
+      eHRMSName: _.get(data, 'additionalProperties.externalSystem') || ''
     },
       {
         emitEvent: true,
@@ -1099,6 +1055,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
+    } else {
+      this.showOrgnameOther = false
     }
     if (organisation.industry === 'Other') {
       this.showIndustryOther = true
@@ -1396,7 +1354,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       'otherDetailsOfficeAddress', 'otherDetailsOfficePinCode', 'orgName', 'orgNameOther',
     ]
     const professionalDetailsFields = ['isGovtOrg', 'industry', 'designation', 'location',
-      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName', 'group']
+      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'orgName', 'group']
     const professionalDetails: any = []
     const organisations: any = {}
     // let academics = {}
@@ -1545,8 +1503,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     reqUpdates.request.profileDetails.personalDetails['knownLanguages'] = this.selectedKnowLangs
     reqUpdates.request.profileDetails.personalDetails['nationality'] = form.value.nationality
-    if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
+    // if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
+    //   reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    // }
+    if (!this.isVerifiedAlready && !this.unApprovedReq.hasOwnProperty('verifiedKarmayogi')
+      && form.value.verifiedKarmayogi === true) {
       reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
+      reqUpdates.request.profileDetails.verifiedKarmayogi = true
     }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
@@ -1979,5 +1943,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
+  }
+
+  dialogReqHelp(type: string) {
+    const mob = this.createUserForm.controls['mobile'].value
+    const primaryEmail = this.createUserForm.controls['primaryEmail'].value
+    const fullname = this.createUserForm.controls['firstname'].value
+    const dialogRef = this.dialog.open(RequestDialogComponent, {
+      hasBackdrop: false,
+      width: '420px',
+      height: '380px',
+      data: { reqType: type, mobile: mob, email: primaryEmail, name: fullname },
+    })
+    dialogRef.afterClosed().subscribe(() => {
+    })
   }
 }

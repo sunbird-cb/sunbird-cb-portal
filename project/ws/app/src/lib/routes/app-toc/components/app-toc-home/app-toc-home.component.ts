@@ -151,6 +151,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   selectedBatchSubscription: any
   serverDateSubscription: any
   serverDate: any
+  enrollBtnLoading = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -582,6 +583,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getUserEnrollmentList() {
+    this.enrollBtnLoading = true
     this.userSvc.resetTime('enrollmentService')
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
@@ -625,7 +627,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
             // this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
-            if (this.content && this.content.cumulativeTracking) {
+            if (this.contentReadData && this.contentReadData.cumulativeTracking) {
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
               this.tocSvc.resumeData.subscribe((res: any) => {
                 this.resumeData = res
@@ -653,9 +655,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                   this.content.name,
                 )
                 this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
+                /* tslint:disable-next-line */
+                console.log(this.resumeDataLink,'=====> home resum data link <========')
               }
+              this.enrollBtnLoading = false
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
+              this.enrollBtnLoading = false
             }
             this.batchData = {
               content: [enrolledCourse.batch],
@@ -687,6 +693,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }  else {
               this.fetchBatchDetails()
             }
+            this.enrollBtnLoading = false
           }
         }
       },
@@ -811,6 +818,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public autoBatchAssign() {
+    this.enrollBtnLoading = true
     this.userSvc.resetTime('enrollmentService')
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
       this.autoEnrollCuratedProgram()
@@ -836,8 +844,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
         (data: NsContent.IBatchListResponse) => {
           if (data) {
-            this.getUserEnrollmentList()
+            setTimeout(() => {
+              this.getUserEnrollmentList()
+            },         2000)
           }
+        },
+        (_error: any) => {
+          this.enrollBtnLoading = false
         }
       )
     }
@@ -862,6 +875,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 queryParamsHandling: 'merge',
               })
           }
+          this.enrollBtnLoading = false
         }
       )
     }
@@ -1233,6 +1247,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory,
         this.getBatchId(),
       )
+
+      /* tslint:disable-next-line */
+      console.log(this.firstResourceLink,'=====> home first data link <========')
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
         this.updateProgress(2, firstPlayableContent.identifier)
       }

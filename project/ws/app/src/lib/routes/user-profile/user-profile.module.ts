@@ -34,11 +34,13 @@ import { LoaderService } from '@ws/author/src/public-api'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { OtpService } from './services/otp.services'
+import { RequestDialogComponent } from './components/request-dialog/request-dialog.component'
 
 @NgModule({
   declarations: [
     UserProfileComponent,
     TabDirective,
+    RequestDialogComponent,
   ],
   imports: [
     BtnPageBackModule,
@@ -75,5 +77,6 @@ import { OtpService } from './services/otp.services'
     PipeDurationTransformModule,
   ],
   providers: [UserProfileService, LoaderService, OtpService],
+  entryComponents: [RequestDialogComponent],
 })
 export class UserProfileModule { }

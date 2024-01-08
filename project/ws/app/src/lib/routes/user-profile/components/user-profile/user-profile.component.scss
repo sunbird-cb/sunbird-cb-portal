@@ -25,6 +25,7 @@
 .disable {
   pointer-events: none !important;
   cursor: text !important;
+  // opacity: 0.9 !important;
   // background: gainsboro;
 
   .txt {
@@ -36,7 +37,6 @@
     // tslint:disable-next-line
     -webkit-animation: blink 3000ms infinite;
     /* Safari and Chrome */
-
 
     @keyframes blink {
       from {
@@ -554,8 +554,9 @@ input.mat-input-element {
 }
 
 ::ng-deep .mat-checkbox-inner-container {
-  height: 23px !important;
-  width: 23px !important;
+  height: 21px !important;
+  width: 21px !important;
+  margin-top: -5px !important;
 }
 
 .w80 {
@@ -586,7 +587,7 @@ input.mat-input-element {
 
 .otp {
   flex: 1;
-  max-height: 49px;
+  max-height: 37px;
   margin-right: 0;
   margin-left: 16px;
 }
@@ -709,4 +710,33 @@ input.mat-input-element {
 .lock-heading {
   display: flex;
   justify-content: end;
+}
+
+.help-request {
+  position: relative;
+ // top: -10px;
+  top: -15px;
+  cursor: pointer;
+ // right: 2px;
+}
+.help-request-verify{
+  position: relative;
+   top: -20px;
+}
+.pos-request {
+  margin-right: 8px;
+}
+
+#org-field {
+  font: 400 12px/18px Lato !important;
+}
+
+.verifiy-user-msg{
+  font-size: 14px;
+}
+
+.mat-form-field-disabled {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  opacity: 0.9 !important;
 }

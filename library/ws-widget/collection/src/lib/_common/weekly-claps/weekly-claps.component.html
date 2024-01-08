@@ -75,7 +75,7 @@
             </div>
             <div class="clap-qus-ans">
                 <p class="clap-qus">What Should I Do to Maintain the Claps?</p>
-                <p class="clap-ans">Simply Spend a Minimum of<span class="clap-highlight"><b>60 minutes</b></span>, Engaging on the Platform Each Week to Maintain Your Claps.</p>
+                <p class="clap-ans">Simply Spend a Minimum of <span class="clap-highlight"><b>60 minutes</b></span>, Engaging on the Platform Each Week to Maintain Your Claps.</p>
             </div>
         </div>
         <div class="clap-info-qus-list flex flex-middle">
@@ -84,7 +84,7 @@
             </div>
             <div class="clap-qus-ans">
                 <p class="clap-qus">Why Did I Lose My Claps?</p>
-                <p class="clap-ans">If You Engage Less Than <span class="clap-highlight"><b>60 minutes</b></span>in a Week, Your Claps Count Resets to Zero.</p>
+                <p class="clap-ans">If You Engage Less Than <span class="clap-highlight"><b>60 minutes</b></span> in a Week, Your Claps Count Resets to Zero.</p>
                 
             </div>
         </div>
@@ -98,8 +98,9 @@
             <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
         </p>
         <p class="flex weeks-count  flex-middle  margin-remove">
-            <img class="margin-right-s cursor-pointer" width="34" height="34" src="assets/icons/home/clap_icon.svg" >
-            {{insightsData?.weeklyClaps?.total_claps || 0}} Weeks
+            <img class="margin-right-s cursor-pointer" width="34" height="34" [src]="insightsData?.weeklyClaps?.total_claps ? 'assets/icons/home/clap_icon.svg' : 'assets/icons/home/clap_disable_icon.svg'" >
+            <span *ngIf="insightsData?.weeklyClaps?.total_claps > 1 else elseWeeklyClaps">{{insightsData?.weeklyClaps?.total_claps}} Weeks</span>            
+            <ng-template #elseWeeklyClaps>{{insightsData?.weeklyClaps?.total_claps || 0}} Week</ng-template>
         </p>
     </div>
 </ng-template>

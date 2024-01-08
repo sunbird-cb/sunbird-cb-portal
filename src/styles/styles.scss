@@ -952,7 +952,8 @@ ngx-guided-tour {
   }
 
   .tour_discuss_mobile_container {
-    top: 28% !important;
+    top: 27% !important;
+    left: 25px !important;
 
     .arrow {
       .circle {
@@ -980,7 +981,7 @@ ngx-guided-tour {
 
   .tour_search_mobile_container {
     top: 86% !important;
-    left: 8% !important;
+    left: 12% !important;
 
     &::after {
       left: 49% !important;
@@ -1008,7 +1009,7 @@ ngx-guided-tour {
 
   .tour_profile_mobile_container {
     top: 120px !important;
-    left: 40px !important;
+    left: 5% !important;
 
     .tour-buttons {
       margin-top: 16px;
@@ -1034,6 +1035,18 @@ ngx-guided-tour {
         transform: rotate(0deg) !important;
         margin-top: 0px !important;
       }
+    }
+  }
+
+  @media screen and (min-width: 420px) and (max-width: 576px) {
+    .tour_profile_mobile_container {
+      left: 15% !important;
+    }
+  }
+
+  @media screen and (min-width: 577px) and (max-width: 768px) {
+    .tour_profile_mobile_container {
+      left: 51% !important;
     }
   }
 
@@ -1130,11 +1143,18 @@ ngx-guided-tour {
 }
 
 .tour_search {
-  border-radius: 60%;
-  height: 40rem !important;
+  width: 65% !important;
+  left: 12% !important;
   top: -30rem !important;
-  width: 40rem !important;
-  left: 15.5vw !important;
+  height: 36rem !important;
+  border-radius: 60%;
+}
+
+@media only screen and (max-width: 1440px) {
+  .tour_search {
+    width: 65% !important;
+    left: 7% !important;
+  }
 }
 
 .tour_profile {

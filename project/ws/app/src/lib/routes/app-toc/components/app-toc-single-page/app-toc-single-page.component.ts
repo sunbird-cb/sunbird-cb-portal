@@ -247,21 +247,11 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
     }
-    if (this.content && this.content.competencies_v4) {
-      this.content.competencies_v4 = JSON.parse(this.content.competencies_v4)
-      // let competencies =  this.content && this.content.competencies_v4
-      // const isString = typeof (competencies) === 'string'
-      // if (competencies && isString) {
-      //   try {
-      //     competencies = JSON.parse(competencies)
-      //   } catch (ex) {
-      //     competencies = []
-      //     this.logger.error('Competency Parse Error', ex)
-      //   }
-      // }
-      this.competencies = this.content.competencies_v4 || []
+    if (this.content && this.content.competencies_v5) {
+      this.content.competencies_v5 = this.content.competencies_v5
+      this.competencies = this.content.competencies_v5 || []
     }
-    
+
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
     if (this.content) {
       this.discussionConfig.categoryObj = {

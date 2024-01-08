@@ -41,6 +41,9 @@
   margin-bottom: auto;
   width: 324px;
   margin-right: 2rem;
+  img {
+    height: 36px;
+  }
 }
 
 
@@ -145,7 +148,7 @@
   text-align: center;
   flex: 10;
   max-width: 486px;
-  margin-right: 4.88rem;
+  margin-right: 1rem;
 }
 
 .mobile-download-app-desc {
@@ -316,4 +319,111 @@
 
 .active-icon span {
   color: rgba(27, 76, 161);
+}
+.d-flex {
+  display: flex;
+}
+.points-block {
+  height: -webkit-fill-available;
+  .karma-lbl {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: "Lato-Bold";
+    font-size: 10px;
+    font-weight: 700;
+    font-style: Bold;
+    letter-spacing: 0.5px;
+    text-align: left;
+    line-height: 12px;
+    margin-bottom: 0;
+  }
+  .karma-point {
+    opacity: 1;
+    color: rgba(27, 76, 161, 1);
+    font-family: "Lato-Bold";
+    font-size: 14px;
+    font-weight: 700;
+    font-style: Bold;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+}
+
+::ng-deep .mat-tooltip {
+  position: relative;
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: "Lato-Regular";
+  font-size: 12px;
+  font-weight: 400;
+  font-style: Regular;
+  letter-spacing: 0.25px;
+  text-align: left;
+  line-height: 16px;
+  &::after {
+    width: 0;
+    height: 0;
+    content: '';
+    position: absolute;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid #0000008c;
+  }
+  &.below {
+    overflow: initial;
+    margin-top: 1rem;
+    &:after {
+      top: -0.5rem;
+      right: calc(50% - 0.5rem);
+      transform: rotate(0);
+    }
+  }
+
+  &.above {
+    overflow: initial;
+    margin-bottom: 1rem;
+    &:after {
+      bottom: -0.5rem;
+      right: calc(50% - 0.5rem);
+      transform: rotate(180deg);
+    }
+  }
+
+  &.right {
+    overflow: initial;
+    margin-left: 1rem;
+    &:after {
+      left: -0.75rem;
+      top: calc(50% - 0.25rem);
+      transform: rotate(270deg);
+    }
+  }
+
+  &.left {
+    overflow: initial;
+    margin-right: 1rem;
+    &:after {
+      right: -0.75rem;
+      top: calc(50% - 0.25rem);
+      transform: rotate(90deg);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  ::ng-deep .mat-tooltip {
+    position: relative;
+    &.below {
+      padding: 8px;
+      overflow: initial;
+      margin-top: 1rem;
+      &:after {
+        top: -0.5rem;
+        right: calc(50% - -1.5rem);
+        transform: rotate(0);
+      }
+    }
+  }
 }

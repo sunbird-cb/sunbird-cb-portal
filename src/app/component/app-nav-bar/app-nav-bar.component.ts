@@ -43,6 +43,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isLoggedIn = false
   fontContainerFlag = false;
   activeRoute = '';
+  countdata: any
+  enrollInterval: any
+  karmaPointLoading: boolean = true
+  tooltipDelay: any = 1000
+
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
@@ -126,6 +131,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       }
     })
     this.startTour()
+    this.enrollInterval = setInterval(() => {
+      this.getKarmaCount()
+    },                                1000)
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -252,5 +260,15 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.configSvc.openExploreMenuForMWeb.next(true);
   }
 
+  getKarmaCount() {
+    let enrollList: any
+    if (localStorage.getItem('enrollmentData')) {
+      enrollList = JSON.parse(localStorage.getItem('enrollmentData') || '')
+      this.countdata = enrollList && enrollList.userCourseEnrolmentInfo &&
+       enrollList.userCourseEnrolmentInfo.karmaPoints || 0
+      this.karmaPointLoading = false
+      clearInterval(this.enrollInterval)
+    }
+  }
  
 }
