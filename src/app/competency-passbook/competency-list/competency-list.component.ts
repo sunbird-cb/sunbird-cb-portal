@@ -148,7 +148,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUserEnrollmentList();
-    // this.document.body.classList.add('hideOverflow');
   }
 
   getUserEnrollmentList(): void {
