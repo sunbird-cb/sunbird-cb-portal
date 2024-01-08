@@ -1,17 +1,11 @@
 import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren, Inject } from '@angular/core'
-import { MAT_BOTTOM_SHEET_DATA, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import { FormControl } from '@angular/forms';
 import { AppCbpPlansService } from 'src/app/services/app-cbp-plans.service';
 import _ from 'lodash';
 @Component({
   selector: 'ws-app-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss'],
-  providers: [
-    { provide: MatBottomSheetRef, useValue: {} },
-    {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
-    { provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }
-  ],
+  styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
   @Output() toggleFilter = new EventEmitter()
@@ -62,19 +56,10 @@ export class FilterComponent implements OnInit {
   };
   searchThemeControl = new FormControl();
   @ViewChildren("checkboxes") checkboxes!: QueryList<ElementRef>;
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-    private bottomSheetRef: MatBottomSheetRef<FilterComponent>, private appCbpPlansService : AppCbpPlansService) {
-      if(this.data) {
-        this.filterObj = this.data.filterObj
-
-      }
+  constructor(private appCbpPlansService : AppCbpPlansService) {
+      
      }
 
-
-  openLink(): void {
-    if( this.bottomSheetRef)
-      this.bottomSheetRef.dismiss(); 
-  } 
   ngOnInit() {
       this.getFilterEntity();
       this.getProviders();
