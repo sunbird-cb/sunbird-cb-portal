@@ -6,12 +6,12 @@
                 <div class="flex flex-row justify-between px-6 py-4 cursor-pointer" (click)="handleNavigate(obj)">
                     <div class="flex flex-col gap-3 text-primary">
                         <div class="flex flex-row gap-3 items-center">
-                            <div class="text-xl font-semibold">{{ obj.name }}</div>
+                            <div class="text-xl font-semibold">{{ obj?.name }}</div>
                             <img src="assets/icons/competency/cp-arrow.svg" alt="cp arrow img" />
                         </div>
                         <div class="flex flex-row gap-3">
                             <mat-icon>school</mat-icon>
-                            <div class="text-base">{{ obj.children.length }}</div>
+                            <div class="text-base">{{ obj?.children?.length }}</div>
                         </div>
                     </div>
                     <div class="flex justify-center items-center">
@@ -19,9 +19,9 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-3 px-6 py-4 chip-container">
-                    <ng-container *ngFor="let child of obj.children; let i = index">
+                    <ng-container *ngFor="let child of obj?.children; let i = index">
                         <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (i > 1 && !obj?.viewMore)}" >
-                            {{ child.name }}
+                            {{ child?.name }}
                         </div>
                     </ng-container>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="obj?.children?.length > 2 && !obj?.viewMore" (click)="handleViewMore(obj)" >
@@ -57,7 +57,7 @@
         <mat-tab label="All">
             <div class="flex flex-col">
                 <div class="py-4">
-                    <ws-competency-search (searchValue)="handleSearch($event, 'All')"></ws-competency-search>
+                    <ws-competency-search (searchValue)="handleSearch($event, 'All')" (enableFilter)="handleFilter($event)"></ws-competency-search>
                 </div>
                 <div class="flex flex-wrap gap-6">
                     <ng-container *ngIf="competency.skeletonLoading">
@@ -248,7 +248,7 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
-                                <div class="text-base font-semibold">{{ (competency[elem.name + 'SubTheme'] || elem.competencySubTheme) || '0' }}</div>
+                                <div class="text-base font-semibold">{{ (competency[elem?.name + 'SubTheme'] || elem.competencySubTheme) || '0' }}</div>
                             </ng-container>
                         </div>
                         <div class="flex flex-col">
@@ -287,7 +287,7 @@
     </div>
 </div>
 
-<!-- <ng-container *ngIf="toggleFilter">
-    <ws-app-filter (toggleFilter)="toggleFilterMethod($event)" (clearFilterObj)="clearFilterObj($event)"
-        [filterObj]="filterObjData" (getFilterData)="applyFilter($event)"></ws-app-filter>
-</ng-container> -->
+<ng-container *ngIf="toggleFilter">
+    <ws-widget-cbp-filters (clearFilterObj)="handleClearFilterObj($event)"
+        [filterObj]="filterObjData" (getFilterData)="handleApplyFilter($event)" [showAdditionalFilters]="false"></ws-widget-cbp-filters>
+</ng-container>

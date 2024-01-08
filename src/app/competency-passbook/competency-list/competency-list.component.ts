@@ -7,10 +7,21 @@ import { MatSnackBar } from '@angular/material'
 // RxJS imports
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
+
+import _ from 'lodash';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+
 // Project files and components
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 import { CompetencyPassbookService } from './../competency-passbook.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
+
+dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
+dayjs.extend(isBetween)
 
 @Component({
   selector: 'ws-competency-list',
@@ -20,14 +31,17 @@ import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 
 export class CompetencyListComponent implements OnInit, OnDestroy {
 
-  isMobile = false;
-  private destroySubject$ = new Subject();
+  isMobile: boolean = false;
+  toggleFilter: boolean = false;
   skeletonArr = <any>[];
   showAll = false;
+  private destroySubject$ = new Subject();
   three_month_back = new Date(new Date().setMonth(new Date().getMonth() - 3));
   six_month_back = new Date(new Date().setMonth(new Date().getMonth() - 6));
   one_year_back = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
   showFilterIndicator: string = 'all';
+  filteredData: any[] = [];
+  filterApplied: boolean = false;
 
   TYPE_CONST = {
     behavioral: {
@@ -111,8 +125,18 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     }
   }];
 
+  filterObjData: any = {
+    "primaryCategory":[],
+    "status":[],
+    "timeDuration":[], 
+    "competencyArea": [], 
+    "competencyTheme": [], 
+    "competencySubTheme": [], 
+    "providers": [] 
+  }
+
   courseWithCompetencyArray: any[] = [];
-  certificateMappedObject: any = {}; 
+  certificateMappedObject: any = {};
 
   constructor(
     private cpService: CompetencyPassbookService,
@@ -167,13 +191,12 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     )
   }
 
-  loopCertificateData(eachCourse: any, v5Obj: any, themeObj?: any): void {
-    eachCourse.issuedCertificates.forEach((eObj: any) => {
-      eObj['courseName'] = eachCourse.courseName;
-      eObj['competencyTheme'] = v5Obj.competencyTheme;
-      eObj['viewMore'] = false;
+  loopCertificateData(eachCourse: any, _v5Obj: any, themeObj?: any): void {
+    eachCourse.issuedCertificates.forEach((certObj: any) => {
+      certObj['courseName'] = eachCourse.courseName;
+      certObj['viewMore'] = false;
       if (themeObj && themeObj.name) {
-        eObj['subThemes'] = themeObj.children.map((subObj: any) => {
+        certObj['subThemes'] = themeObj.children.map((subObj: any) => {
           return subObj;
         });
       }
@@ -209,26 +232,33 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       });
 
       this.courseWithCompetencyArray.forEach((eachCourse: any) => {
-        if (eachCourse.issuedCertificates && eachCourse.issuedCertificates.length) {
-          eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.forEach((cObj: any) => {
-            if (cObj.competencyTheme.toLowerCase().trim() === obj.name.toLowerCase().trim()) {
+        if ((eachCourse.issuedCertificates && eachCourse.issuedCertificates.length) && (eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
+
+          eachCourse.content.competencies_v5.forEach((v5Obj: any) => {
+            if (v5Obj.competencyTheme.toLowerCase().trim() === obj.name.toLowerCase().trim()) {
+              
               if (this.certificateMappedObject[obj.name]) {
-                this.certificateMappedObject[obj.name].forEach((certificateObj: any) => {
-                  eachCourse.issuedCertificates.forEach((courseObj: any) => {
-                    if (certificateObj.identifier !== courseObj.identifier) {
-                      this.certificateMappedObject[obj.name] = [...this.certificateMappedObject[obj.name], courseObj];
-                    }
-                  });
+                eachCourse.issuedCertificates.forEach((certObj: any) => {
+                  if (this.certificateMappedObject[obj.name].certificate.findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
+                    this.certificateMappedObject[obj.name].certificate.push(certObj);
+                  }
+                });
+
+                obj.children.forEach((_cObj: any) => {
+                  if (this.certificateMappedObject[obj.name].subTheme.findIndex((_stObj: any) => _stObj.name.toLowerCase() === _cObj.name.toLowerCase()) === -1) {
+                    this.certificateMappedObject[obj.name].subTheme.push(_cObj);
+                  }  
                 });
               } else {
-                this.certificateMappedObject[obj.name] = [];
-                this.certificateMappedObject[obj.name] = eachCourse.issuedCertificates;
+                this.certificateMappedObject[obj.name] = {
+                  'certificate': eachCourse.issuedCertificates,
+                  'subTheme': obj.children
+                };
               }
 
-              this.loopCertificateData(eachCourse, cObj, obj);
-            } else {
-              this.loopCertificateData(eachCourse, cObj);
+              this.loopCertificateData(eachCourse, v5Obj);
             }
+            
           })
         }
       });
@@ -236,6 +266,17 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
     return typeObj;
   }
+
+  // bindSubThemeToEachCertificate(certificateArray: any, themeObj: any): void {
+  //   certificateArray.forEach((certObj: any) => {
+  //     if (!certObj.courseSubTheme.length) {
+  //       certObj.courseSubTheme = themeObj.children;
+  //     } else {
+  //       certObj.courseSubTheme = [...certObj.courseSubTheme, ...themeObj.children];
+  //     }
+  //   });
+  //   console.log("competency theme - ", certificateArray);
+  // }
 
   fetchCompetencyList(): void {
     const payload = {
@@ -314,14 +355,72 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   handleNavigate(obj: any): void {
-    const state =  {certificate: this.certificateMappedObject[obj.name]};
-    this.router.navigate(['/page/competency-passbook/details'], {queryParams: {theme: obj.name, name: obj.competencyName}, state});
+    localStorage.setItem('details_page', JSON.stringify(this.certificateMappedObject[obj.name]));
+    this.router.navigate(['/page/competency-passbook/details'], {queryParams: {theme: obj.name, name: obj.competencyName}});
   }
 
   handleSearch(event: string, competencyTheme: string): void {
     competencyTheme = competencyTheme.toLowerCase()
     if (!this.competency[competencyTheme].length) return;
     this.competencyArray = (!event.length) ? this.competency[competencyTheme] : this.competency[competencyTheme].filter((obj: any) => obj.name.toLowerCase().trim().includes(event.toLowerCase()));
+  }
+
+  // Filters related functionalities...
+  handleFilter(event: boolean): void {
+    this.toggleFilter = event;
+  }
+
+  handleApplyFilter(event: any){
+    this.toggleFilter = false
+    this.filterObjData = event
+    this.filterData(event)
+  }
+
+  handleClearFilterObj(event: any){
+    this.filterObjData = event;
+    this.filterData(event);
+  }
+
+  filterData(filterValue: any) {
+    let finalFilterValue: any = [];
+    if( filterValue['competencyArea'].length || filterValue['competencyTheme'].length || filterValue['competencySubTheme'].length ) {
+      let filterAppliedOnLocal = false;
+      this.filteredData = this.competency['all'];
+
+      if(filterValue['competencyArea'].length) {
+        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
+        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
+          if(filterValue['competencyArea'].some((r: any) =>  data.competencyName.includes(r.toLowerCase()))) {
+            return data 
+          }
+        })
+        filterAppliedOnLocal = true;
+      }
+
+      if(filterValue['competencyTheme'].length) {
+        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
+        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
+          return filterValue['competencyTheme'].includes(data.name);
+        })
+        filterAppliedOnLocal = true;
+      }
+
+      if(filterValue['competencySubTheme'].length) {
+        filterAppliedOnLocal = filterAppliedOnLocal ? true : false
+        finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
+          let returnedValue = data.children.filter((childObj: any) => { 
+            return filterValue['competencySubTheme'].includes(childObj.name)
+          })
+          return (returnedValue.length) ? data : false;
+        })
+        filterAppliedOnLocal = true;
+      }
+
+      this.competencyArray = finalFilterValue;
+    } else {
+      this.filterApplied = false;
+      finalFilterValue = this.competencyArray;
+    }
   }
 
   ngOnDestroy(): void {

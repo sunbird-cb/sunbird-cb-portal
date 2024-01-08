@@ -1,20 +1,29 @@
-import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren } from '@angular/core'
+import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren, Inject } from '@angular/core'
 import { FormControl } from '@angular/forms';
+import { MAT_BOTTOM_SHEET_DATA, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import { AppCbpPlansService } from 'src/app/services/app-cbp-plans.service';
 import _ from 'lodash';
+
 @Component({
-  selector: 'ws-app-filter',
-  templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  selector: 'ws-widget-cbp-filters',
+  templateUrl: './cbp-filters.component.html',
+  styleUrls: ['./cbp-filters.component.scss'],
+  providers: [
+    { provide: MatBottomSheetRef, useValue: {} },
+    { provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+    { provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }
+  ],
 })
-export class FilterComponent implements OnInit {
+
+export class CbpFiltersComponent implements OnInit {
   @Output() toggleFilter = new EventEmitter()
   @Output() getFilterData = new EventEmitter();
   @Output() clearFilterObj = new EventEmitter();
-  @Input() clearFilterFlag:any;
-  @Input() from:any;
-  @Input() designationList:any;
-  @Input() filterObj:any;
+
+  @Input() clearFilterFlag: any;
+  @Input() from: any;
+  @Input() designationList: any;
+  @Input() filterObj: any;
   @Input() showAdditionalFilters: boolean = true;
 
   timeDuration: any = [
@@ -28,15 +37,21 @@ export class FilterComponent implements OnInit {
     { "id": '6sm', name: 'Last 6 months', checked: false }, 
     { "id": '12sm', name: 'Last year', checked: false }
   ];
-  contentStatus: any = [{ "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
+
+  contentStatus: any = [
+    { "id": '1', name: 'In progress', checked: false }, 
+    { "id": '0', name: 'Not started', checked: false }, 
+    { "id": '2', name: 'Completed', checked: false }
+  ]
+  ;
   primaryCategoryList: any = [
     { "id": "Course", name: 'Course',checked: false }, 
-    { "id": 'Program', name: 'Program',checked: false },
+    { "id": 'Curated program', name: 'Curated program',checked: false },
     { "id": 'Curated program', name: 'Curated program',checked: false },
     { "id": "Blended program", name: 'Blended program',checked: false }, 
-    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false },
-    { "id": "Moderated Courses", name: 'Moderated Courses',checked: false }
+    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false }
   ];
+
   providersList: any[] = [];
   selectedProviders: any[] = [];
   competencyTypeList: any = [];  
@@ -54,16 +69,28 @@ export class FilterComponent implements OnInit {
     "competencySubTheme": [], 
     "providers": [] 
   };
+
   searchThemeControl = new FormControl();
   @ViewChildren("checkboxes") checkboxes!: QueryList<ElementRef>;
-  constructor(private appCbpPlansService : AppCbpPlansService) {
-      
-     }
+
+  constructor(
+  @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+  private bottomSheetRef: MatBottomSheetRef<CbpFiltersComponent>, 
+  private appCbpPlansService : AppCbpPlansService) {
+    if(this.data) {
+      this.filterObj = this.data.filterObj
+    }
+  }
 
   ngOnInit() {
-      this.getFilterEntity();
-      this.getProviders();
-      this.bindFilter()
+    this.getFilterEntity();
+    this.getProviders();
+    this.bindFilter();
+  }
+
+  openLink(): void {
+    if( this.bottomSheetRef)
+      this.bottomSheetRef.dismiss(); 
   }
 
   getFilterEntity() {
@@ -75,12 +102,13 @@ export class FilterComponent implements OnInit {
         "isDetail": true
       }
     }
+
     this.appCbpPlansService.getFilterEntity(filterObj).subscribe((res: any) => {
       this.competencyList = res;
       this.manageCompetency();
-
     })
   }
+
   manageCompetency() {
     this.competencyList.forEach((competency : any) => {
       let data: any = {
@@ -91,10 +119,11 @@ export class FilterComponent implements OnInit {
       }
       this.competencyTypeList.push(data)
     });
-    this.competencyTypeList =  _.orderBy(this.competencyTypeList, ['id'],['asc'])
 
+    this.competencyTypeList =  _.orderBy(this.competencyTypeList, ['id'],['asc'])
     this.bindFilter()
   }
+
   getProviders() {
     this.appCbpPlansService.getProviders().subscribe((res: any) => {
       this.providersList = res
@@ -189,8 +218,6 @@ export class FilterComponent implements OnInit {
     this.bindCompetencySubTheme()
   }
 
-
-
   manageCompetencySubTheme(event: any, csttype: any) {
     if (event.checked) {
       this.filterObj['competencySubTheme'].push(csttype.name);
@@ -200,7 +227,6 @@ export class FilterComponent implements OnInit {
         this.filterObj['competencySubTheme'].splice(index, 1)
       }
     }
-
   }
 
   applyFilter() {
@@ -208,8 +234,7 @@ export class FilterComponent implements OnInit {
   }
 
   clearFilter() {
-    this.getFilterData.emit(this.filterObjEmpty)
-    
+    this.getFilterData.emit(this.filterObjEmpty) 
   }
 
   clearFilterWhileSearch() {
@@ -219,24 +244,25 @@ export class FilterComponent implements OnInit {
       });
     }
   }
-  getFilterType(event: any, ctype: any,filterType: any) {
-      if(event.checked && !this.filterObj[filterType].includes(ctype.id || ctype)) {
-        let data = ctype.id ?ctype.id : ctype
-        this.filterObj[filterType].push(data)
+
+  handleGetFilterType(event: any, ctype: any,filterType: any) {
+    if(event.checked && !this.filterObj[filterType].includes(ctype.id || ctype)) {
+      let data = ctype.id ?ctype.id : ctype
+      this.filterObj[filterType].push(data)
+    } else {
+      const index = this.filterObj[filterType].indexOf(ctype.id  || ctype);
+      if (index > -1) { // only splice array when item is found
+        this.filterObj[filterType].splice(index, 1); // 2nd parameter means remove one item only
+      }
+    }
+    if(ctype.id === 'all' && filterType === 'status'){
+      if(event.checked) {
+        this.filterObj[filterType] = []
+        this.filterObj[filterType] = ['all']
       } else {
-        const index = this.filterObj[filterType].indexOf(ctype.id  || ctype);
-        if (index > -1) { // only splice array when item is found
-          this.filterObj[filterType].splice(index, 1); // 2nd parameter means remove one item only
-        }
+        this.filterObj[filterType] = []
       }
-      if(ctype.id === 'all' && filterType === 'status'){
-        if(event.checked) {
-          this.filterObj[filterType] = []
-          this.filterObj[filterType] = ['all']
-        } else {
-          this.filterObj[filterType] = []
-        }
-      }
+    }
   }
 
   bindFilter() {
@@ -266,6 +292,7 @@ export class FilterComponent implements OnInit {
       })
     }
   }
+
   bindCompetencyTheme() {
     if(this.filterObj['competencyTheme'].length) {
       this.competencyThemeList.forEach((content: any) => {
@@ -292,9 +319,11 @@ export class FilterComponent implements OnInit {
       })
     }
   }
+
   timeDurationFilter(ctype: any,filterType: any){
     this.filterObj[filterType] = [ctype.id]
   }
+
   onCompetencyTheme(event: any){
     let searchValue = event.target.value
     let list: any = this.competencyThemeOriginalList
@@ -303,6 +332,7 @@ export class FilterComponent implements OnInit {
     })
     this.competencyThemeList = this.competencyThemeOriginalList
   }
+
   onCompetencySubTheme(event: any){
     let searchValue = event.target.value
     let list: any = this.competencySubThemeOriginalList

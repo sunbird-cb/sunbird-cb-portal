@@ -13,6 +13,7 @@ export class CompetencySearchComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>;
   clearIcon: boolean = false;
   @Output() searchValue = new EventEmitter<string>()
+  @Output() enableFilter = new EventEmitter<boolean>()
   constructor() { }
 
   ngOnInit() {
@@ -40,6 +41,10 @@ export class CompetencySearchComponent implements OnInit, AfterViewInit {
 
   handleFocus(): void {
     this.searchInput.nativeElement.focus();
+  }
+
+  handleFilter(): void {
+    this.enableFilter.emit(true);
   }
 
   handleClear(): void {

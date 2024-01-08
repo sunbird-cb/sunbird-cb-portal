@@ -154,8 +154,8 @@ export class CbpPlanComponent implements OnInit {
   clearFilterObj(event: any){
     this.filterObjData = event
     this.filterData(event)
-
   }
+  
   filterData(filterValue: any) {
     let finalFilterValue: any = []
     if(filterValue['primaryCategory'].length ||
@@ -263,7 +263,6 @@ export class CbpPlanComponent implements OnInit {
     this.contentFeedListCopy = finalFilterValue
    
     this.contentFeedList = this.transformContentsToWidgets(finalFilterValue, this.getFeedStrip());
-
   }
 
   searchData(event: any) {
