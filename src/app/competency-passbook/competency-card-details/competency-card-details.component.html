@@ -42,11 +42,11 @@
 
     <div class="flex flex-col gap-5">
         <div class="text-base font-semibold">Associated Certificates 
-            <span *ngIf="certificateData?.length">({{ certificateData?.length }})</span>
+            <span *ngIf="certificateData?.certificate?.length">({{ certificateData?.certificate?.length }})</span>
         </div>
 
         <div class="flex flex-wrap gap-6">
-            <ng-container *ngIf="!certificateData || !certificateData?.length">
+            <ng-container *ngIf="!certificateData.certificate || !certificateData?.certificate?.length">
                 <div class="p-12 no-data-div rounded-md">
                     <div class="flex flex-col justify-center items-center gap-2">
                         <div class="text-lg font-semibold">No Certificates found!</div>
@@ -55,7 +55,7 @@
                 </div>
             </ng-container>
 
-            <div class="flex flex-col certificate-container" *ngFor="let eachCert of certificateData">
+            <div class="flex flex-col certificate-container" *ngFor="let eachCert of certificateData?.certificate">
                 <div class="certificate-card">
                     <div class="flex flex-col certificate-info p-4 gap-3">
                         <div class="flex flex-row">

@@ -32,19 +32,21 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     
     if (localStorage.getItem('details_page') !== 'undefined') {
       this.certificateData = JSON.parse(localStorage.getItem('details_page') as any);
-      this.certificateData && this.certificateData.forEach((obj: any) => {
+      
+      this.certificateData.certificate && this.certificateData.certificate.forEach((obj: any) => {
         obj['loading'] = true;
         this.getCertificateSVG(obj);
-        obj.subThemes && obj.subThemes.forEach((stObj: any) => {
-          if (this.subThemeArray.length) {
-            const index = this.subThemeArray.findIndex((_obj: any) => _obj.name ===  stObj.name);
-            if (index === -1) {
-              this.subThemeArray.push(stObj);  
-            }
-          } else {
-            this.subThemeArray.push(stObj);
+      });
+
+      this.certificateData.subTheme && this.certificateData.subTheme.forEach((stObj: any) => {
+        if (this.subThemeArray.length) {
+          const index = this.subThemeArray.findIndex((_obj: any) => _obj.name ===  stObj.name);
+          if (index === -1) {
+            this.subThemeArray.push(stObj);  
           }
-        });
+        } else {
+          this.subThemeArray.push(stObj);
+        }
       });
     }
   }
