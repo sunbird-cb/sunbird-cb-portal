@@ -16,7 +16,7 @@ export class FilterComponent implements OnInit {
   @Input() designationList:any;
   @Input() filterObj:any;
   @Input() showAdditionalFilters: boolean = true;
-
+  filterEmpty: any = false
   timeDuration: any = [
     { "id": '7ad', name: 'Upcoming 7 Days', checked: false }, 
     { "id": '30ad', name: 'Upcoming 30 Days', checked: false }, 
@@ -237,33 +237,36 @@ export class FilterComponent implements OnInit {
           this.filterObj[filterType] = []
         }
       }
+      this.checkFilterEmpty()
   }
 
   bindFilter() {
-    if(this.filterObj['primaryCategory'].length) {
-      this.primaryCategoryList.forEach((content: any) => {
-        content.checked = this.filterObj['primaryCategory'].includes(content.id)
-      })
-    }
-    if(this.filterObj['timeDuration'].length) {
-      this.timeDuration.forEach((content: any) => {
-        content.checked = this.filterObj['timeDuration'].includes(content.id)
-      })
-    }
+    if(!this.checkFilterEmpty()) {
+      if(this.filterObj['primaryCategory'].length) {
+        this.primaryCategoryList.forEach((content: any) => {
+          content.checked = this.filterObj['primaryCategory'].includes(content.id)
+        })
+      }
+      if(this.filterObj['timeDuration'].length) {
+        this.timeDuration.forEach((content: any) => {
+          content.checked = this.filterObj['timeDuration'].includes(content.id)
+        })
+      }
 
-    if(this.filterObj['status'].length) {
-      this.contentStatus.forEach((content: any) => {
-        content.checked = this.filterObj['status'].includes(content.id)
-      })
-    }
-    
-    if(this.filterObj['competencyArea'].length) {
-      this.competencyTypeList.forEach((content: any) => {
-        content.checked = this.filterObj['competencyArea'].includes(content.id)
-        if(this.filterObj['competencyArea'].includes(content.id)) {
-          this.getCompetencyTheme({checked: true}, content, false)
-        }
-      })
+      if(this.filterObj['status'].length) {
+        this.contentStatus.forEach((content: any) => {
+          content.checked = this.filterObj['status'].includes(content.id)
+        })
+      }
+      
+      if(this.filterObj['competencyArea'].length) {
+        this.competencyTypeList.forEach((content: any) => {
+          content.checked = this.filterObj['competencyArea'].includes(content.id)
+          if(this.filterObj['competencyArea'].includes(content.id)) {
+            this.getCompetencyTheme({checked: true}, content, false)
+          }
+        })
+      }
     }
   }
   bindCompetencyTheme() {
@@ -310,5 +313,22 @@ export class FilterComponent implements OnInit {
       return ele.name.toLowerCase() === searchValue.toLowerCase()
     })
     this.competencySubThemeList = this.competencySubThemeOriginalList
+  }
+
+  checkFilterEmpty(){
+    if(this.filterObj['primaryCategory'].length ||
+    this.filterObj['status'].length ||
+    this.filterObj['timeDuration'].length ||
+    this.filterObj['competencyArea'].length ||
+    this.filterObj['competencyTheme'].length ||
+    this.filterObj['competencySubTheme'].length ||
+    this.filterObj['providers'].length
+    ) {
+      this.filterEmpty = false
+      return false
+    } else {
+      this.filterEmpty = true
+      return true
+    }
   }
 }

@@ -1041,9 +1041,22 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         return  b.contentStatus > a.contentStatus  ? -1 : 1
       }
     })
+    // this.getSelectedIndex(1)
     return [
     { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },
     { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
     { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
   }
+
+  getSelectedIndex(stripsResultDataMap: any, key: any): number {
+    let returnValue = 0
+    if(key === 'cbpPlan') {
+      if (stripsResultDataMap.tabs.length) {
+        let data = stripsResultDataMap.tabs.filter((ele: any) => ele.value === "upcoming")
+        returnValue = data[0].widgets && data[0].widgets.length > 0 ? 1: 0
+      }
+    }
+    return returnValue
+  }
+  
 }
