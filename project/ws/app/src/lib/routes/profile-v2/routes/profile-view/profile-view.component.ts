@@ -184,12 +184,14 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
     }
 
-    if (this.selectedTabIndex) {
-      window.scrollTo({
-        top: 360,
-        behavior: 'smooth',
-      })
-    }
+    this.route.fragment.subscribe(data => {
+      if (data) {
+        const el = document.getElementById(data)
+        if (el != null) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
+        }
+      }
+    })
   }
 
   getKarmaCount() {
