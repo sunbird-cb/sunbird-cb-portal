@@ -20,7 +20,7 @@ export class AppTocSessionsComponent implements OnInit {
 
     if (this.batchData) {
       // tslint:disable-next-line:max-line-length
-      if (this.batchData.content[0].batchAttributes.sessionDetails_v2 && this.batchData.content[0].batchAttributes.sessionDetails_v2.length > 0) {
+      if (this.batchData.content[0] && this.batchData.content[0].batchAttributes && this.batchData.content[0].batchAttributes.sessionDetails_v2 && this.batchData.content[0].batchAttributes.sessionDetails_v2.length > 0) {
         this.sessionList = this.batchData.content[0].batchAttributes.sessionDetails_v2
         this.sessionList = this.sessionList.sort((a: any, b: any) => {
           const dateA: any = new Date(a.startDate)
