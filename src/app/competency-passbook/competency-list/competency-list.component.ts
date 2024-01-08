@@ -1,5 +1,6 @@
 // Core imports
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, Inject } from '@angular/core'
+import { DOCUMENT } from '@angular/common'
 import { Router } from '@angular/router'
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatTabChangeEvent } from '@angular/material'
@@ -7,21 +8,10 @@ import { MatSnackBar } from '@angular/material'
 // RxJS imports
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
-
-import _ from 'lodash';
-import dayjs from 'dayjs';
-import isBetween from 'dayjs/plugin/isBetween'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-
 // Project files and components
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 import { CompetencyPassbookService } from './../competency-passbook.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
-
-dayjs.extend(isSameOrBefore)
-dayjs.extend(isSameOrAfter)
-dayjs.extend(isBetween)
 
 @Component({
   selector: 'ws-competency-list',
@@ -143,7 +133,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     private widgetService: WidgetUserService,
     private configService: ConfigurationsService,
     private router: Router,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    @Inject(DOCUMENT) private document: Document
   ) { 
     if (window.innerWidth < 768) {
       this.isMobile = true;
@@ -157,6 +148,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUserEnrollmentList();
+    // this.document.body.classList.add('hideOverflow');
   }
 
   getUserEnrollmentList(): void {
@@ -244,12 +236,14 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
                   }
                 });
 
+                // still working on this logic
                 obj.children.forEach((_cObj: any) => {
                   if (this.certificateMappedObject[obj.name].subTheme.findIndex((_stObj: any) => _stObj.name.toLowerCase() === _cObj.name.toLowerCase()) === -1) {
                     this.certificateMappedObject[obj.name].subTheme.push(_cObj);
                   }  
                 });
               } else {
+                
                 this.certificateMappedObject[obj.name] = {
                   'certificate': eachCourse.issuedCertificates,
                   'subTheme': obj.children
@@ -308,8 +302,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               if(_eachObj.type.toLowerCase() === obj.name.toLowerCase()) {
                 _eachObj.total = obj.children.length
               }
-
-              // _eachObj.filter.all = _eachObj.filter.threeMonths + _eachObj.filter.sixMonths + _eachObj.filter.lastYear;
             });
           });
 
@@ -368,6 +360,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   // Filters related functionalities...
   handleFilter(event: boolean): void {
     this.toggleFilter = event;
+    this.document.body.classList.add('overflow-hidden')
   }
 
   handleApplyFilter(event: any){
@@ -383,6 +376,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   filterData(filterValue: any) {
     let finalFilterValue: any = [];
+    this.document.body.classList.remove('overflow-hidden');
     if( filterValue['competencyArea'].length || filterValue['competencyTheme'].length || filterValue['competencySubTheme'].length ) {
       let filterAppliedOnLocal = false;
       this.filteredData = this.competency['all'];
