@@ -79,6 +79,12 @@ export class UserProfileService {
       applicationStatus: 'SEND_FOR_APPROVAL',
     })
   }
+  listRejectedFields() {
+    return this.http.post<any>(API_ENDPOINTS.getPendingFields, {
+      serviceName: 'profile',
+      applicationStatus: 'REJECTED',
+    })
+  }
 
   getDesignations(_req: any): Observable<IProfileMetaApiData> {
     return this.http.get<IProfileMetaApiData>(API_ENDPOINTS.getDesignation)
