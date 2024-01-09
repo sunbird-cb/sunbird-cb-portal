@@ -19,6 +19,7 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   private destroySubject$ = new Subject();
   params: any;
   certificateData: any = [];
+  // certificateSubTheme: any = [];
   subThemeArray: any[] = [];
   viewMoreST: boolean = false;
 
@@ -31,23 +32,24 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     });
     
     if (localStorage.getItem('details_page') !== 'undefined') {
-      this.certificateData = JSON.parse(localStorage.getItem('details_page') as any);
-      
+      const details_data = JSON.parse(localStorage.getItem('details_page') as any);
+      this.certificateData = details_data.certificateArr;
       this.certificateData.certificate && this.certificateData.certificate.forEach((obj: any) => {
         obj['loading'] = true;
         this.getCertificateSVG(obj);
       });
 
-      this.certificateData.subTheme && this.certificateData.subTheme.forEach((stObj: any) => {
-        if (this.subThemeArray.length) {
-          const index = this.subThemeArray.findIndex((_obj: any) => _obj.name ===  stObj.name);
-          if (index === -1) {
-            this.subThemeArray.push(stObj);  
-          }
-        } else {
-          this.subThemeArray.push(stObj);
-        }
-      });
+      this.subThemeArray = details_data.subThemes;
+      // this.certificateData.subTheme && this.certificateData.subTheme.forEach((stObj: any) => {
+      //   if (this.subThemeArray.length) {
+      //     const index = this.subThemeArray.findIndex((_obj: any) => _obj.name ===  stObj.name);
+      //     if (index === -1) {
+      //       this.subThemeArray.push(stObj);  
+      //     }
+      //   } else {
+      //     this.subThemeArray.push(stObj);
+      //   }
+      // });
     }
   }
 
