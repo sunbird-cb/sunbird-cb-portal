@@ -187,7 +187,7 @@
                 <div class="filter-clear" (click)="clearFilter()">
                     Clear
                 </div>
-                <div class="filter-apply" (click)="applyFilter()">
+                <div class="filter-apply" [ngClass]="{'grey-filter': filterEmpty}" (click)="applyFilter()">
                     Apply
                 </div>
             </div>
