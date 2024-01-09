@@ -197,6 +197,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
+    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
   }
 
   ngOnInit() {
