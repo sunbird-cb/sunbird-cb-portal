@@ -388,7 +388,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.events.raiseInteractTelemetry(
       {
         type: 'click',
-        subType: 'karmpoints-claim',
+        subType: 'karmapoints-claim',
         id: this.courseID,
       },
       {

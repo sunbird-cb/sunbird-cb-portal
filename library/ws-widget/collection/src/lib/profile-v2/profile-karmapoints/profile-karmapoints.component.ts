@@ -47,8 +47,8 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
     this.events.raiseInteractTelemetry(
       {
         type: 'click',
-        subType: 'show-all-karmpoints',
-        id: 'show-all-karmpoints',
+        subType: 'show-all-karmapoints',
+        id: 'show-all-karmapoints',
       },
       {},
       {
