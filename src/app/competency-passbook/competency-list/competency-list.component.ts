@@ -202,7 +202,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             }
           });
           
-          console.log("this.certificateMappedObject - ", this.certificateMappedObject);
           competenciesV5.forEach((obj: any) => {
             this.leftCardDetails.forEach((_eachObj: any) => {
               if (_eachObj.type.toLowerCase() === obj.competencyArea.toLowerCase()) {
