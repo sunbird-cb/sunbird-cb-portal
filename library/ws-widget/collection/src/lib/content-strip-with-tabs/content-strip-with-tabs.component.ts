@@ -845,13 +845,13 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         } else if (currentTabFromMap.request.trendingSearch) {
           this.getTabDataByNewReqTrending(currentStrip, tabEvent.index, currentTabFromMap, true)
         }
-        if(stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+        if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
           stripMap.tabs[tabEvent.index]['tabLoading'] = false
         }
       } else {
         this.getTabDataByfilter(currentStrip, currentTabFromMap, true)
         setTimeout(() => {
-          if(stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]){
+          if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
               stripMap.tabs[tabEvent.index]['tabLoading'] = false
               stripMap.tabs[tabEvent.index].fetchTabStatus = 'done'
               stripMap.showOnLoader = false
