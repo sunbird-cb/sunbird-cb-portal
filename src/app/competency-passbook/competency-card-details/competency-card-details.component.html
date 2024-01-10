@@ -99,7 +99,7 @@
                             {{ subTheme }}
                         </div>
                     </ng-container>
-                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="certificateData.subThemes[i]?.length > 1 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="certificateData.subThemes[i]?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
                         View more
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="eachCert?.viewMore"
