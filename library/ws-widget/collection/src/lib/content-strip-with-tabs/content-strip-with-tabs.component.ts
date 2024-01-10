@@ -1032,8 +1032,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               customFilter: any,
               strip: NsContentStripWithTabs.IContentStripUnit) {
     let all: any[] = []
-    let upcoming: any[] = []
-    let overdue: any[] = []
+    const upcoming: any[] = []
+    const overdue: any[] = []
     array.forEach((e: any, idx: number, arr: any[]) => {
       all.push(e)
       return (customFilter(e, idx, arr) ? overdue : upcoming).push(e)
@@ -1055,12 +1055,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     //     }
     //   }
     // })
-    overdue = overdue.filter((data: any): any => {
-      return data.contentStatus < 2
-    })
-    upcoming = upcoming.filter((data: any): any => {
-      return data.contentStatus < 2
-    })
+    // overdue = overdue.filter((data: any): any => {
+    //   return data.contentStatus < 2
+    // })
+    // upcoming = upcoming.filter((data: any): any => {
+    //   return data.contentStatus < 2
+    // })
     // this.getSelectedIndex(1)
     return [
     { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },
