@@ -1001,7 +1001,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       contentNew,
       (e: any) => {
         const daysCount = dayjs(e.endDate).diff(date1, 'day')
-        e['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31 ?
+        e['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 30 ?
          NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
         return daysCount < 0
       },
@@ -1032,7 +1032,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               customFilter: any,
               strip: NsContentStripWithTabs.IContentStripUnit) {
     let all: any[] = []
-    const upcoming: any[] = []
+    let upcoming: any[] = []
     let overdue: any[] = []
     array.forEach((e: any, idx: number, arr: any[]) => {
       all.push(e)
@@ -1046,15 +1046,20 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         return  firstDate > secondDate  ? -1 : 1
       }
     })
-    overdue = overdue.sort((a: any, b: any): any => {
-      if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
-        const firstDate: any = new Date(a.endDate)
-        const secondDate: any = new Date(b.endDate)
-        if (b.contentStatus !== 2 &&  a.contentStatus !== 2) {
-          return  firstDate > secondDate  ? -1 : 1
-        }
-        return  b.contentStatus > a.contentStatus  ? -1 : 1
-      }
+    // overdue = overdue.sort((a: any, b: any): any => {
+    //   if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+    //     const firstDate: any = new Date(a.endDate)
+    //     const secondDate: any = new Date(b.endDate)
+    //     if (b.contentStatus !== 2 &&  a.contentStatus !== 2) {
+    //       return  firstDate > secondDate  ? -1 : 1
+    //     }
+    //   }
+    // })
+    overdue = overdue.filter((data: any): any => {
+      return data.contentStatus < 2
+    })
+    upcoming = upcoming.filter((data: any): any => {
+      return data.contentStatus < 2
     })
     // this.getSelectedIndex(1)
     return [
