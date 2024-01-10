@@ -11,7 +11,7 @@
             <div class="flex-1">
                 <div class="flex flex-col gap-2 justify-center">
                     <div class="text-2xl font-semibold header text-primary">{{ params?.theme }}</div>
-                    <div class="text-sm">Issued on May 2023</div>
+                    <div class="text-sm" *ngIf="updatedTime" >Last updated on {{ updatedTime | date: 'MMM yyyy' }} </div>
                 </div>
             </div>
             <div class="flex justify-center items-center">
@@ -55,7 +55,7 @@
                 </div>
             </ng-container>
 
-            <div class="flex flex-col certificate-container" *ngFor="let eachCert of certificateData?.certificate">
+            <div class="flex flex-col certificate-container" *ngFor="let eachCert of certificateData?.certificate; let i = index">
                 <div class="certificate-card">
                     <div class="flex flex-col certificate-info p-4 gap-3">
                         <div class="flex flex-row">
@@ -94,12 +94,12 @@
                     </div>
                 </div>
                 <div class="chips-card flex flex-wrap gap-3">
-                    <ng-container *ngFor="let chip of eachCert?.subThemes; let i = index">
-                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (i > 1 && !eachCert?.viewMore)}">
-                            {{ chip?.name }}
+                    <ng-container *ngFor="let subTheme of certificateData.subThemes[i]; let j = index">
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (j > 1 && !eachCert?.viewMore)}">
+                            {{ subTheme }}
                         </div>
                     </ng-container>
-                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="eachCert?.subThemes?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="certificateData.subThemes[i]?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
                         View more
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="eachCert?.viewMore"

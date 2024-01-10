@@ -218,7 +218,9 @@ export class InitService {
     //   .catch(() => {
     //     // throw new DataResponseError('COOKIE_SET_FAILURE')
     //   })
-    this.logFirstLogin()
+    if (!window.location.href.includes('/public/')) {
+      this.logFirstLogin()
+    }
     return true
   }
   async initFeatured() {

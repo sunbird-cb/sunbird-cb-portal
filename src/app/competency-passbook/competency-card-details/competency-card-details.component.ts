@@ -21,6 +21,7 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   certificateData: any = [];
   subThemeArray: any[] = [];
   viewMoreST: boolean = false;
+  updatedTime: any;
 
   constructor(
     private router: ActivatedRoute,
@@ -31,23 +32,15 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     });
     
     if (localStorage.getItem('details_page') !== 'undefined') {
-      this.certificateData = JSON.parse(localStorage.getItem('details_page') as any);
-      
+      const details_data = JSON.parse(localStorage.getItem('details_page') as any);
+      this.certificateData = details_data.certificateArr;
       this.certificateData.certificate && this.certificateData.certificate.forEach((obj: any) => {
         obj['loading'] = true;
         this.getCertificateSVG(obj);
+        this.updatedTime =  this.updatedTime ? (new Date(this.updatedTime) > new Date(obj.lastIssuedOn)) ? this.updatedTime : obj.lastIssuedOn : obj.lastIssuedOn; 
       });
 
-      this.certificateData.subTheme && this.certificateData.subTheme.forEach((stObj: any) => {
-        if (this.subThemeArray.length) {
-          const index = this.subThemeArray.findIndex((_obj: any) => _obj.name ===  stObj.name);
-          if (index === -1) {
-            this.subThemeArray.push(stObj);  
-          }
-        } else {
-          this.subThemeArray.push(stObj);
-        }
-      });
+      this.subThemeArray = details_data.subThemes;
     }
   }
 
