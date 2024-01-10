@@ -21,6 +21,7 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   certificateData: any = [];
   subThemeArray: any[] = [];
   viewMoreST: boolean = false;
+  updatedTime: any;
 
   constructor(
     private router: ActivatedRoute,
@@ -32,13 +33,16 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     
     if (localStorage.getItem('details_page') !== 'undefined') {
       const details_data = JSON.parse(localStorage.getItem('details_page') as any);
+      console.log("details_data - ", details_data);
       this.certificateData = details_data.certificateArr;
       this.certificateData.certificate && this.certificateData.certificate.forEach((obj: any) => {
         obj['loading'] = true;
         this.getCertificateSVG(obj);
+        this.updatedTime =  this.updatedTime ? (new Date(this.updatedTime) > new Date(obj.lastIssuedOn)) ? this.updatedTime : obj.lastIssuedOn : obj.lastIssuedOn; 
       });
 
       this.subThemeArray = details_data.subThemes;
+      console.log("this.updatedTime - ", this.updatedTime);
     }
   }
 
