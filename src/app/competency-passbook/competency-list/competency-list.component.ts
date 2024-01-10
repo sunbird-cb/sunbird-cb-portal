@@ -36,7 +36,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   TYPE_CONST = {
     behavioral: {
       capsValue: 'Behavioural',
-      value: 'behavioural'
+      value: 'behavioural',
+      otherValue: 'behavioral'
     },
     functional: {
       capsValue: 'Functional',
@@ -127,6 +128,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   courseWithCompetencyArray: any[] = [];
   certificateMappedObject: any = {};
+  competencyMappedObject: any = {};
 
   constructor(
     private cpService: CompetencyPassbookService,
@@ -158,6 +160,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
         (response: any) => {
           let competenciesV5: any[] = [];
           let contentConsumed: any= {};
+
           response.courses.forEach((eachCourse: any) => {
             if (eachCourse.content && eachCourse.content.competencies_v5) {
               this.courseWithCompetencyArray.push(eachCourse);
@@ -201,7 +204,52 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               }
             }
           });
+
+          competenciesV5.forEach((v5Obj: any) => {
+            v5Obj.subTheme = [];
+            
+            if (v5Obj.competencyArea.toLowerCase() === 'behavioral') {
+              if (this.competency.behavioural.findIndex((obj: any) => obj.competencyTheme === v5Obj.competencyTheme ) === -1) {
+                this.competency.behavioural.push(v5Obj);
+              }
+
+              this.competency.behavioural.forEach((_obj: any) => {
+                if (_obj.competencyTheme === v5Obj.competencyTheme) {
+                  if (_obj.subTheme.indexOf(v5Obj.competencySubTheme) === -1) {
+                    _obj.subTheme.push(v5Obj.competencySubTheme);
+                  }
+                }
+              });
+            } else if (v5Obj.competencyArea.toLowerCase() === 'functional') {
+              if (this.competency.functional.findIndex((obj: any) => obj.competencyTheme === v5Obj.competencyTheme ) === -1) {
+                this.competency.functional.push(v5Obj);
+              }
+
+              this.competency.functional.forEach((_obj: any) => {
+                if (_obj.competencyTheme === v5Obj.competencyTheme) {
+                  if (_obj.subTheme.indexOf(v5Obj.competencySubTheme) === -1) {
+                    _obj.subTheme.push(v5Obj.competencySubTheme);
+                  }
+                }
+              });
+            } else {
+              if (this.competency.domain.findIndex((obj: any) => obj.competencyTheme === v5Obj.competencyTheme ) === -1) {
+                this.competency.domain.push(v5Obj);
+              }
+
+              this.competency.domain.forEach((_obj: any) => {
+                if (_obj.competencyTheme === v5Obj.competencyTheme) {
+                  if (_obj.subTheme.indexOf(v5Obj.competencySubTheme) === -1) {
+                    _obj.subTheme.push(v5Obj.competencySubTheme);
+                  }
+                }
+              });
+            }
+          });
           
+          this.competency.all = [...this.competency.behavioural, ...this.competency.functional, ...this.competency.domain];
+          this.competencyArray = this.competency.all;
+
           competenciesV5.forEach((obj: any) => {
             this.leftCardDetails.forEach((_eachObj: any) => {
               if (_eachObj.type.toLowerCase() === obj.competencyArea.toLowerCase()) {
@@ -219,11 +267,12 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             }
           });
 
-          this.fetchCompetencyList(contentConsumed);
-
+          // this.fetchCompetencyList(contentConsumed);
+          this.competency.skeletonLoading = false;
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.matSnackBar.open("Unable to pull Enrollment list details!");
+            this.competency.skeletonLoading = false;
           }
         }
     )
@@ -350,7 +399,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   handleSearch(event: string, competencyTheme: string): void {
     competencyTheme = competencyTheme.toLowerCase()
     if (!this.competency[competencyTheme].length) return;
-    this.competencyArray = (!event.length) ? this.competency[competencyTheme] : this.competency[competencyTheme].filter((obj: any) => obj.name.toLowerCase().trim().includes(event.toLowerCase()));
+    this.competencyArray = (!event.length) ? this.competency[competencyTheme] : this.competency[competencyTheme].filter((obj: any) => obj.competencyTheme.toLowerCase().trim().includes(event.toLowerCase()));
   }
 
   // Filters related functionalities...
