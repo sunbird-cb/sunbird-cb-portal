@@ -349,7 +349,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (localCbp) {
       const storeageCbp = JSON.parse(localCbp)
       const cbp = this.filteredAcbpList(storeageCbp)
-      console.log("cbp ", cbp)
       if (cbp.length) {
         const acbp = 'cbPlan'
         this.cbPlanEndDate = cbp[0].endDate
