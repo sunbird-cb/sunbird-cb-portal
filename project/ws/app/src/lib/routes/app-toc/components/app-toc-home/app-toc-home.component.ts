@@ -340,55 +340,64 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
+  filteredAcbpList(res: any) {
+    return res.filter((v: any) => v.identifier === this.courseID)
+  }
+
   findACPB() {
-    this.route.queryParamMap.subscribe(qParamsMap => {
-      const acbp = qParamsMap.get('planType')
-      this.cbPlanEndDate = qParamsMap.get('endDate')
-      const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
-      const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
-      this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
-      ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
-      if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
-        this.isAcbpCourse = true
-        const eDate = dayjs(this.cbPlanEndDate.split('T')[0]).format('YYYY-MM-DD')
-        if (dayjs(sDate).isSameOrBefore(eDate)) {
-          const requestObj = {
-            request: {
-              filters: {
-                contextType: 'Course',
-                contextId: this.courseID,
+    const localCbp = localStorage.getItem('cbpData')
+    if (localCbp) {
+      const storeageCbp = JSON.parse(localCbp)
+      const cbp = this.filteredAcbpList(storeageCbp)
+      if (cbp.length) {
+        const acbp = 'cbPlan'
+        this.cbPlanEndDate = cbp[0].endDate
+        const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
+        const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
+        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
+          ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
+        if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
+          this.isAcbpCourse = true
+          const eDate = dayjs(this.cbPlanEndDate.split('T')[0]).format('YYYY-MM-DD')
+          if (dayjs(sDate).isSameOrBefore(eDate)) {
+            const requestObj = {
+              request: {
+                filters: {
+                  contextType: 'Course',
+                  contextId: this.courseID,
+                },
               },
-            },
-          }
-          this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
-            if (res && res.kpList) {
-              const row = res.kpList
-              if (row.addinfo) {
-                if (JSON.parse(row.addinfo).ACBP) {
-                  this.isAcbpClaim = false
-                  this.isClaimed = true
+            }
+            this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
+              if (res && res.kpList) {
+                const row = res.kpList
+                if (row.addinfo) {
+                  if (JSON.parse(row.addinfo).ACBP) {
+                    this.isAcbpClaim = false
+                    this.isClaimed = true
+                  } else {
+                    this.isAcbpClaim = true
+                  }
                 } else {
                   this.isAcbpClaim = true
                 }
               } else {
                 this.isAcbpClaim = true
               }
-            } else {
-              this.isAcbpClaim = true
-            }
-          })
-        } else {
-          this.isAcbpCourse = false
+            })
+          } else {
+            this.isAcbpCourse = false
+          }
         }
       }
-    })
+    }
   }
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
       {
         type: 'click',
-        subType: 'karmpoints-claim',
+        subType: 'karmapoints-claim',
         id: this.courseID,
       },
       {
