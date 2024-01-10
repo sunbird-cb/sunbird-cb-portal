@@ -132,7 +132,10 @@ TODO: edit option while preview Mode
                 </a>
 
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
-                  <ng-container *ngIf="!monthlyCapExceed">
+                  <ng-container *ngIf="isAcbpClaim">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </ng-container>
+                  <ng-container *ngIf="!isAcbpClaim && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                   </ng-container>
                 </div>
@@ -223,7 +226,10 @@ TODO: edit option while preview Mode
                 </a>
 
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100)">
-                  <ng-container *ngIf="!monthlyCapExceed">
+                  <ng-container *ngIf="isAcbpClaim">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </ng-container>
+                  <ng-container *ngIf="!isAcbpClaim && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                   </ng-container>
 
