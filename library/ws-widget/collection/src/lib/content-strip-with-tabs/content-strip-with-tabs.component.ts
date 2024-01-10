@@ -815,6 +815,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent, stripMap: IStripUnitContentData, stripKey: string) {
+    if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+      stripMap.tabs[tabEvent.index].fetchTabStatus = 'inprogress'
+      stripMap.tabs[tabEvent.index]['tabLoading'] = true
+      stripMap.showOnLoader = true
+    }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
@@ -823,7 +828,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
       data,
     )
-    const currentTabFromMap = stripMap.tabs && stripMap.tabs[tabEvent.index]
+    const currentTabFromMap: any = stripMap.tabs && stripMap.tabs[tabEvent.index]
     const currentStrip = this.widgetData.strips.find(s => s.key === stripKey)
     if (this.stripsResultDataMap[stripKey] && currentTabFromMap) {
       this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams = {
@@ -840,8 +845,18 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         } else if (currentTabFromMap.request.trendingSearch) {
           this.getTabDataByNewReqTrending(currentStrip, tabEvent.index, currentTabFromMap, true)
         }
+        if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+          stripMap.tabs[tabEvent.index]['tabLoading'] = false
+        }
       } else {
         this.getTabDataByfilter(currentStrip, currentTabFromMap, true)
+        setTimeout(() => {
+          if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+              stripMap.tabs[tabEvent.index]['tabLoading'] = false
+              stripMap.tabs[tabEvent.index].fetchTabStatus = 'done'
+              stripMap.showOnLoader = false
+          }
+        },         200)
       }
     }
   }

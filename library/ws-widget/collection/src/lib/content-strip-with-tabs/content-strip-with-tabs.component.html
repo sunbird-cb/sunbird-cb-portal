@@ -93,9 +93,9 @@
                               </ng-container>
                             </ws-utils-horizontal-scroller-v2>
                       </div>
-                      <div *ngIf="((tab.fetchTabStatus && tab.fetchTabStatus === 'done') && 
+                      <div *ngIf="((tab?.fetchTabStatus && tab?.fetchTabStatus === 'done') && 
                       (!tab?.widgets || !tab?.widgets?.length))">
-                      <ng-container *ngIf="tab.value === 'inprogress'; else msgTemp">
+                      <ng-container *ngIf="tab?.value === 'inprogress'; else msgTemp">
                         <div class="w-full flex flex-col items-center justify-center">
                           <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.svg">
                           <div class="mat-subheading-1 text-center info-content">Get ready for your next learning adventure - 
@@ -109,16 +109,19 @@
                         </div>
                       </ng-template>
                       </div>
-                      <ng-container *ngIf="tab.fetchTabStatus === 'done' || tab?.widgets?.length">
-                        <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab.widgets?.length"
-                          *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
-                          [loadStatus]="'done'" [defaultMaxWidgets]="tab.maxWidgets ||
-                          stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
-                          <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets ||
-                          stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
-                              <ng-container [wsResolverWidget]="widget"></ng-container>
-                          </ng-container>
-                        </ws-utils-horizontal-scroller-v2>
+                      <ng-container *ngIf="(tab?.fetchTabStatus === 'done' || tab?.widgets?.length)">
+                        <ng-container  *ngIf="!tab?.tabLoading">
+                       
+                          <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab?.widgets?.length"
+                            *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
+                            [loadStatus]="'done'" [defaultMaxWidgets]="tab?.maxWidgets ||
+                            stripsResultDataMap[key]?.sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
+                            <ng-container *ngFor="let widget of tab?.widgets| slice:0:(tab?.maxWidgets ||
+                            stripsResultDataMap[key]?.sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
+                                <ng-container [wsResolverWidget]="widget"></ng-container>
+                            </ng-container>
+                          </ws-utils-horizontal-scroller-v2>
+                        </ng-container>
                       </ng-container>
                     </div>
                   </mat-tab>
