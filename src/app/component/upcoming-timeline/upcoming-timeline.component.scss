@@ -39,7 +39,7 @@
     line-height: 21px;
 }
 ::ng-deep .theme-igot.day-mode .mat-ink-bar {
-    background-color: rgba(0,0,0,0.87) !important;
+    background-color: #0074b6 !important;
 }
 ::ng-deep.mat-tab-label.mat-tab-label,
 ::ng-deep.mat-tab-label.mat-tab-label {
@@ -52,4 +52,7 @@
     letter-spacing: 0.25px;
     text-align: left;
     line-height: 20px;
+}
+::ng-deep.mat-tab-header-pagination-disabled {
+    display: none !important;
 }
