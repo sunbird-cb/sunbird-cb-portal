@@ -10,7 +10,7 @@
         <div class="bg-primary" [ngClass]="
         cbpConfig?.leftSection?.active &&  cbpConfig?.rightSection?.active ? 'right' : 
         (!cbpConfig?.rightSection?.active && !cbpConfig?.leftSection?.active) ? 'full' : ''" *ngIf="cbpConfig?.rightSection?.active">
-            <div class="flex flex-col gap-4 mt-8">
+            <div class="flex flex-col gap-4 mt-0 md:mt-8">
                 <ng-container *ngIf="enableLazyLoadingFlag">
                     <!-- cbp plans list here-->
                 </ng-container>

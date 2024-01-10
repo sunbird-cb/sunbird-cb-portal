@@ -109,16 +109,19 @@
                         </div>
                       </ng-template>
                       </div>
-                      <ng-container *ngIf="tab.fetchTabStatus === 'done' || tab?.widgets?.length">
-                        <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab.widgets?.length"
-                          *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
-                          [loadStatus]="'done'" [defaultMaxWidgets]="tab.maxWidgets ||
-                          stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
-                          <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets ||
-                          stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
-                              <ng-container [wsResolverWidget]="widget"></ng-container>
-                          </ng-container>
-                        </ws-utils-horizontal-scroller-v2>
+                      <ng-container *ngIf="(tab.fetchTabStatus === 'done' || tab?.widgets?.length)">
+                        <ng-container  *ngIf="!tab?.tabLoading">
+                       
+                          <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab.widgets?.length"
+                            *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
+                            [loadStatus]="'done'" [defaultMaxWidgets]="tab.maxWidgets ||
+                            stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
+                            <ng-container *ngFor="let widget of tab.widgets| slice:0:(tab.maxWidgets ||
+                            stripsResultDataMap[key].sliderConfig?.maxWidgets || defaultMaxWidgets); trackBy: tracker">
+                                <ng-container [wsResolverWidget]="widget"></ng-container>
+                            </ng-container>
+                          </ws-utils-horizontal-scroller-v2>
+                        </ng-container>
                       </ng-container>
                     </div>
                   </mat-tab>
