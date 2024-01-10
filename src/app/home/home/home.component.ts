@@ -224,7 +224,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
     for(let i=0; i<this.sectionList.length;i++) {
-      if(this.sectionList[i]['section'] !== 'section_0' && this.sectionList[i]['section'] !== 'section_1') {
+      if(this.sectionList[i]['section'] !== 'section_0' &&
+       this.sectionList[i]['section'] !== 'section_1' &&
+       this.sectionList[i]['section'] !== 'section_2' &&
+       this.sectionList[i]['section'] !== 'section_3' &&
+       this.sectionList[i]['section'] !== 'section_4') {
        this.checkSectionVisibility(this.sectionList[i]['section']);
       }
     }
@@ -249,11 +253,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   checkSectionVisibility(className:string) {
     var isVisible = false;
-    if(className === 'section_0' || className === 'section_1') {
+    if(className === 'section_0' || 
+    className === 'section_1' ||
+    className === 'section_2' ||
+    className === 'section_3' ||
+    className === 'section_4') {
       isVisible = true;
 
     } else {
-      if(className !== 'section_0' && className !== 'section_1') {
+      if(className !== 'section_0' &&
+       className !== 'section_1' &&
+       className !== 'section_2' &&
+       className !== 'section_3' &&
+       className !== 'section_4') {
       for(var i=0; i<this.sectionList.length;i++) {
         if(this.sectionList[i]['section'] === className) {
           if(document.getElementsByClassName(this.sectionList[i]['section'])
