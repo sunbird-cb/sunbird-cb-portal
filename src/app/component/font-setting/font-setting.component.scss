@@ -1,9 +1,12 @@
 .font-icon {
-    vertical-align: middle;
-    
+    vertical-align: middle;   
 }
 
-
+@media screen and (max-width: 768px) {
+    .mobile-margin {
+        margin-top: 6px;
+    }
+}
 
 .font-container {
     height: 50px;
@@ -52,21 +55,21 @@
     height: 3px;
     width: 1px;
     border-right: 1px solid rgb(27, 76, 161);
-    margin: 0 20px 0 20px;
+    margin: 0 18px 0 18px;
 }
 
 .scale-3 {
     height: 3px;
     width: 1px;
     border-right: 1px solid rgb(27, 76, 161);
-    margin: 0 18px 0 0px;
+    margin: 0 16px 0 0px;
 }
 
 .scale-4 {
     height: 3px;
     width: 1px;
     border-right: 1px solid rgb(27, 76, 161);
-    margin: 0 18px 0 0px;
+    margin: 0 16px 0 0px;
 }
 
 .scale-5 {

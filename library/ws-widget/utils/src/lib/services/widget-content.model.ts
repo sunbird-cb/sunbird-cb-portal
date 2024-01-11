@@ -77,6 +77,7 @@ export namespace NsContent {
     }
     proctorUrl?: string
     progress?: IMarkAsCompleteProgress
+    programDuration?: any
     publishedOn: string
     recentCertificationAttemptScore?: number
     recommendationReasons?: string[]

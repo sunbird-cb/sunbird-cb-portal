@@ -1,11 +1,11 @@
-import { AfterViewInit, Inject, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { HttpErrorResponse } from '@angular/common/http'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussService } from '../../../discuss/services/discuss.service'
-import { DOCUMENT } from '@angular/common'
+// import { DOCUMENT } from '@angular/common'
 // import { ProfileV2Service } from '../../services/profile-v2.servive'
 /* tslint:disable */
 import _ from 'lodash'
@@ -14,7 +14,8 @@ import { NetworkV2Service } from '../../../network-v2/services/network-v2.servic
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
 import { map } from 'rxjs/operators'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import moment from 'moment'
+
 import {
   WidgetUserService,
   NsContent,
@@ -67,6 +68,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   pendingRequestSkeleton = true
   insightsDataLoading = true
 
+  countdata = 0
+  enrollInterval: any
+
   discussion = {
     loadSkeleton: false,
     data: undefined,
@@ -104,9 +108,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private userSvc: WidgetUserService,
     private contentSvc: WidgetContentService,
     private homeSvc: HomePageService,
-    private matSnackBar: MatSnackBar,
-    private translate: TranslateService,
-    @Inject(DOCUMENT) private document: Document
+    private matSnackBar: MatSnackBar
+    // @Inject(DOCUMENT) private document: Document
   ) {
     this.Math = Math
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
@@ -156,39 +159,48 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.decideAPICall()
       this.getInsightsData()
     })
-    this.fetchDiscussionsData()
+    // this.fetchDiscussionsData()
     this.fetchUserBatchList()
     this.fetchRecentRequests()
-
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
-      this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
-    }
+    this.contentSvc.getKarmaPoitns(3, moment(new Date()).valueOf()).subscribe((res: any) => {
+      if (res && res.kpList) {
+        this.portalProfile.karmapoints = res.kpList
+      }
+    })
   }
 
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
     })
-    if (this.selectedTabIndex) {
-      if (this.document.getElementById('activityTab')) {
-        const element =  this.document.getElementById('activityTab')
-        if (element !== null) {
-          element.scrollIntoView()
-        }
-      }
-    }
     this.getPendingRequestData()
+    this.enrollInterval = setInterval(() => {
+      this.getKarmaCount()
+    },                                1000)
   }
 
   ngAfterViewInit() {
     if (this.menuElement) {
       this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    }
+
+    this.route.fragment.subscribe(data => {
+      if (data) {
+        const el = document.getElementById(data)
+        if (el != null) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
+        }
+      }
+    })
+  }
+
+  getKarmaCount() {
+    let enrollList: any
+    if (localStorage.getItem('enrollmentData')) {
+      enrollList = JSON.parse(localStorage.getItem('enrollmentData') || '')
+      this.countdata = enrollList && enrollList.userCourseEnrolmentInfo &&
+       enrollList.userCourseEnrolmentInfo.karmaPoints || 0
+      clearInterval(this.enrollInterval)
     }
   }
 
@@ -386,6 +398,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.homeSvc.getInsightsData(request).subscribe((res: any) => {
       if (res.result.response) {
         this.insightsData = res.result.response
+        this.constructNudgeData()
         if (this.insightsData && this.insightsData['weekly-claps']) {
           this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
         }
@@ -394,6 +407,35 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
    },                                               (_error: any) => {
       this.insightsDataLoading = false
    })
+  }
+  constructNudgeData() {
+    this.insightsDataLoading = true
+    const nudgeData: any = {
+      type: 'data',
+      iconsDisplay: false,
+      cardClass: 'slider-container',
+      height: 'auto',
+      width: '',
+      sliderData: [],
+      negativeDisplay: false,
+      'dot-default': 'dot-grey',
+      'dot-active': 'dot-active',
+    }
+    const sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
+    this.insightsData.nudges.forEach((ele: any) => {
+      if (ele) {
+        const data = {
+          title: ele.label,
+          icon: ele.growth === 'positive' ?  'arrow_upward' : 'arrow_downward',
+          data: ele.growth === 'positive' && ele.progress > 1 ? `+${Math.round(ele.progress)}%` : '',
+          colorData: ele.growth === 'positive' ? 'color-green' : 'color-red',
+        }
+        sliderData.push(data)
+      }
+    })
+    nudgeData.sliderData = sliderData
+    this.insightsData['sliderData'] = nudgeData
+    this.insightsDataLoading = false
   }
 
   getPendingRequestData() {

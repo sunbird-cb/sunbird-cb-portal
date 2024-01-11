@@ -53,6 +53,7 @@ const endpoint = {
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
+  FIRST_LOGIN_API: '/apis/proxies/v8/login/entry',
 }
 
 @Injectable({
@@ -233,6 +234,9 @@ export class InitService {
     //   .catch(() => {
     //     // throw new DataResponseError('COOKIE_SET_FAILURE')
     //   })
+    if (!window.location.href.includes('/public/')) {
+      this.logFirstLogin()
+    }
     return true
   }
   async initFeatured() {
@@ -340,6 +344,16 @@ export class InitService {
     }
     localStorage.setItem('telemetrySessionId', uuid())
   }
+
+  private logFirstLogin() {
+    if (!localStorage.getItem('firsLogin')) {
+      this.http.get<any>(endpoint.FIRST_LOGIN_API).pipe(map((res: any) => {
+        if (res && res.result) {
+          localStorage.setItem('firsLogin', 'true')
+        }
+      })).toPromise()
+    }
+  }
   private async fetchStartUpDetails(): Promise<any> {
     // const userRoles: string[] = []
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
@@ -383,6 +397,8 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
+            profileImageUrl: _.get(userPidProfile, 'profileDetails.profileImageUrl') || '',
+            professionalDetails: _.get(userPidProfile, 'profileDetails.professionalDetails') || [],
           }
 
           this.configSvc.userProfileV2 = {
@@ -507,6 +523,8 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             profileUpdateCompletion: _.get(userPidProfile, 'profileUpdateCompletion') || 0,
+            profileImageUrl: _.get(userPidProfile, 'profileDetails.profileImageUrl') || '',
+            professionalDetails: _.get(userPidProfile, 'profileDetails.professionalDetails') || [],
           }
           this.configSvc.userProfileV2 = {
             userId: _.get(profileV2, 'userId') || userPidProfile.userId,

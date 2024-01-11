@@ -1,23 +1,22 @@
 <mat-menu #fontMenu="matMenu" class="font-panel-container">
     <div class="font-container">
-    <div class="font-slider">
-    <span class="smaller-size">A</span>
-    <mat-slider min="10" max="18" step="2" [value]="fontValue" (input)="changeFont($event)">
-      <input matSliderThumb>
-    </mat-slider>
-    
-    <span class="larger-size">A</span>
-</div>
-<div class="scale">
-    <div class="scale-1"></div>
-    <div class="scale-2"></div>
-    <div class="scale-3"></div>
-    <div class="scale-4"></div>
-    <div class="scale-5"></div>
-</div>
+      <div class="font-slider">
+        <span class="smaller-size">A</span>
+        <mat-slider min="10" max="18" step="2" [value]="fontValue" (input)="changeFont($event)" class="font-setting" showTickMarks>
+          <input matSliderThumb>
+        </mat-slider>
+        <span class="larger-size">A</span>
+      </div>
+      <div class="scale">
+        <div class="scale-1"></div>
+        <div class="scale-2"></div>
+        <div class="scale-3"></div>
+        <div class="scale-4"></div>
+        <div class="scale-5"></div>
+      </div>
 </div>
 </mat-menu>
 
-<div [matMenuTriggerFor]="fontMenu">
+<div [matMenuTriggerFor]="fontMenu" class="mobile-margin">
   <img class="font-icon" src="/assets/icons/top-nav/Accessibility_icon.svg">
 </div>

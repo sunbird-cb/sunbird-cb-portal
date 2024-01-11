@@ -9,7 +9,7 @@ $spaceFromEnd: 0;
   position: relative;
   width: 100%;
   width: inherit;
-  min-height: 100px;
+  // min-height: 100px;
   // padding: 0 20px;
   // margin-top: 24px;
 
@@ -117,4 +117,14 @@ $spaceFromEnd: 0;
     //   display: none;
     // }
   }
+}
+
+
+@media screen  and (max-width: '768px') {
+  .nextBtn {
+    right: -16px;
+  } 
+  .prevBtn {
+    left: -16px;
+  }  
 }

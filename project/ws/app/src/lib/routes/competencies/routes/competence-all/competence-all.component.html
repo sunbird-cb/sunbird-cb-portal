@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <div class="flex flex-1 flex-row margin-fix search">
+        <div class="flex flex-col md:flex-row margin-fix search">
           <form (submit)="updateQuery(queryControl.value)" class="flex-1 search_form">
             <mat-form-field appearance="outline" class="autocomplete-form comp-search" color="primary" [floatLabel]="'never'">
               <mat-icon matPrefix class="flex items-center justify-center">search</mat-icon>
@@ -70,16 +70,10 @@
                 i18-aria-label aria-label="Query" matInput [formControl]="queryControl" accesskey="F" maxlength="50" />
             </mat-form-field>
           </form>
-          <div class="flex"
-            *ngIf="myCompetencies && myCompetencies.length > 0 && currentFilter && currentFilter === 'acquired_by_you'">
+          <div class="flex justify-center" *ngIf="myCompetencies && myCompetencies.length > 0 && currentFilter && currentFilter === 'acquired_by_you'">
             <a class="add_competency_btn text-white flex items-center justify-center cursor-pointer mat-subheading-2"
               routerLink="/app/competencies/all">{{ 'competencies.addCompetency' | translate }}</a>
           </div>
-          <!-- <div class="flex"
-            *ngIf="desiredCompetencies && desiredCompetencies.length > 0 && currentFilter && currentFilter === 'desired_competencies'">
-            <a class="add_competency_btn text-white flex items-center justify-center cursor-pointer mat-subheading-2"
-              routerLink="/app/competencies/all" [queryParams]="{desiredCompetencies: true}">Add a competency</a>
-          </div> -->
         </div>
 
         <div *ngIf="currentFilter && currentFilter === 'acquired_by_you'">
@@ -98,16 +92,15 @@
             <ng-container *ngIf="myCompetencies && myCompetencies.length > 0">
               <ng-container *ngFor="let comp of myCompetencies | pipeFilterV2:'name': searchInput.value">
                 <!--  | pipeFilterV2:'name': searchInput.value   -->
-                <mat-card class="cursor-pointer margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}"
-                  (click)=view(comp)>
+                <mat-card class="cursor-pointer margin-bottom-m position-relative mat-card" [ngClass]="{'mat-copmetence': isSelected}" (click)=view(comp)>
                   <a role="button">
                     <mat-card-content>
-                      <div class="card_inner_content flex flex-row justify-between">
+                      <div class="card_inner_content flex flex-col md:flex-row justify-between">
                         <div class="card_inner_title_box flex-col">
                           <h4 class="mat-h4">{{comp.name}}</h4>
                           <p class="mat-body-2 ws-mat-black60-text">{{comp.competencyType}}</p>
                         </div>
-                        <div class="flex-col proficiency_text_box">
+                        <div class="proficiency_text_box">
                           <!-- <div class="flex flex-row justify-between">
                                   <div>
                                       <p>WPCAS:</p>
@@ -137,7 +130,7 @@
                                     </ul>
                                   </div>
                                 </div> -->
-                          <div class="flex flex-row justify-between">
+                          <div class="flex md:flex-row justify-between">
                             <div>
                                 <p>{{ 'competencies.cbpCourse' | translate }}</p>
                             </div>

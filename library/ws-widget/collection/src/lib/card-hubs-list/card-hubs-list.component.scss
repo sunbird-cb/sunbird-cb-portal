@@ -3,7 +3,6 @@
 @import '~@sunbird-cb/design-system/src/styles/ws-mixins';
 
 %page-center {
-  // max-width: $page-center;
   max-width: $max-screen;
   margin-left: auto !important;
   margin-right: auto !important;
@@ -12,7 +11,6 @@
 .container-balanced {
   @extend %page-center;
   height: auto;
-  // min-height: 400px;
 }
 
 .grid-container {
@@ -50,21 +48,26 @@
 
   .mat-icon {
     padding:18px 16px;
+    filter: grayscale(1);
   }
 }
 
 h2 {
   width: 98%;
 }
+
 a[target=_blank] {
   color: rgba(0, 0, 0, 0.87)!important;
 }
+
 h4.nav_sub_heading {
   margin:0!important;
 }
+
 .more_btn {
   color: rgba(0, 0, 0, 0.6)!important;
 }
+
 mat-form-field {
   width: 100%;
 }
@@ -75,12 +78,10 @@ mat-grid-list {
 }
 
 .base-layout {
-  // margin-top: 10px;
   box-shadow: none !important;
   border: none !important;
   padding: 0;
   margin: auto;
-  // background: inherit !important;
 }
 
 .mat-elevation-z {
@@ -91,14 +92,11 @@ mat-grid-list {
 .cohorts-head {
   padding: $size-xs $size-l;
   margin: 0;
-  // background: #fff !important;
   border-radius: $size-xs $size-xs 0 0;
-  // color: #222222 !important;
 }
 
 .unit-hubs {
   display: inline-flex;
-  // align-items: center;
   margin-bottom: $size-l;
 
   .cohort-image {
@@ -111,9 +109,7 @@ mat-grid-list {
 
 .cohorts-name {
   letter-spacing: 0px;
-  // color: #5f5f5f;
   font-size: 0.9rem;
-  // font-weight: normal;
 }
 
 .cohortSection {
@@ -126,8 +122,8 @@ mat-grid-list {
 }
 
 .secondary-nav {
-  // margin-left: 150px;
   justify-content: center;
+  margin: 4px 0px !important;
 }
 
 .margin-0 {
@@ -148,31 +144,30 @@ mat-grid-list {
 }
 
 .simple-hubs-link {
-  margin: auto $size-s;
   display: flex;
+  margin: auto $size-s;
   cursor: pointer;
 }
 
 .center {
   text-align: center;
-  // color: #187bcd;
   padding-top: $size-s;
 }
 
 .new-more {
   background: rgb(216, 216, 216);
-    border-radius: 63px;
-    min-width: 100px;
-    color: rgb(0,0,0,0.6);
-    height: 32px;
+  border-radius: 63px;
+  min-width: 100px;
+  color: rgb(0,0,0,0.6);
+  height: 32px;
 }
 
 .new-more-active {
   background: rgb(27, 76, 161,0.2);
-    border-radius: 63px;
-    min-width: 100px;
-    color: rgb(0,0,0,0.6);
-    height: 32px;
+  border-radius: 63px;
+  min-width: 100px;
+  color: rgb(0,0,0,0.6);
+  height: 32px;
 }
 
 .more-drop-down:after {
@@ -188,48 +183,114 @@ mat-grid-list {
 }
 
 .active-text{
-color:rgb(27, 76, 161)
+  color:rgb(27, 76, 161)
 }
 
 .active-icon{
   vertical-align: middle;
   color:rgb(27, 76, 161)
-
 }
 
 .new-box-hubs {
   height: 550px !important;
 }
 
+@media (max-width: 576px) {
+  .secondary-nav {
+    margin: 4px 0px !important;
+  }
+
+  .secondary-nav::-webkit-scrollbar {
+    padding: 0px !important;
+  }
+
+  .simple-hubs-link {
+    min-width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+      display: flex;
+      justify-content: center;
+      width: 24px;
+      margin: 0px;
+    }
+
+    span {
+      margin-left: 0px !important;
+      line-height: normal;
+    }
+  }
+}
+
 @media (max-width : 768px) {    
-.secondary-nav {
-  margin-left: 0;
-  margin-right:0;
-  
-  overflow-x: auto;
-  margin-top:60px;
-  justify-content: left;
-}
+  .secondary-nav {
+    margin: 4px 0px !important;
+    overflow-x: auto;
+    margin-top: 60px;
+    justify-content: left;
 
-.mobile {
-  background-color: rgb(239,243,249);
+    // &::-webkit-scrollbar {
+    //   padding: 0px !important;
+    // }
+  }
 
-}
-a.mobile {
-  background: #fff;
+  .simple-hubs-link {
+    min-width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      display: flex;
+      justify-content: center;
+      width: 24px;
+      margin: 0px;
+    }
+
+    span {
+      margin-left: 0px !important;
+      line-height: normal;
+    }
+  }
+
+  .mobile {
+    background-color: rgb(239,243,249);
+  }
+
+  a.mobile {
+    background: #fff;
     padding: 16px;
     border-radius: 4px;
-}
-.secondary-nav::-webkit-scrollbar{ width :6px; } 
+  }
 
-.secondary-nav  ::-webkit-scrollbar {
-  display: none;
-}
+  .mobile-div {
+    width: 100%;
+  }
 
+  .secondary-nav::-webkit-scrollbar{ width :6px; } 
+  .secondary-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-hub {
+    overflow-y: auto;
+    height: calc(100vh - 260px);
+  }
+
+  .new-more {
+    display: none !important;
+  }
+
+  // .nav-menu {
+  //   padding-top: 16px;
+  // }
 }
 
 .simple-hubs-link:hover  {
-  // filter: invert(34%) sepia(88%) saturate(50) hue-rotate(193deg) brightness(60%) contrast(97%) !important;
   .text-gray {
     color: #1B4CA1 !important;
   }

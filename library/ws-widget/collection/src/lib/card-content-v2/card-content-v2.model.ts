@@ -36,4 +36,16 @@ export namespace NsCardContent {
     DELETED = 'Deleted',
     MARK_FOR_DELETION = 'MarkedForDeletion',
   }
+
+  export enum ACBPConst {
+    UPCOMING = 'upcoming',
+    ALL = 'All',
+    OVERDUE = 'overdue',
+    SUCCESS = 'success',
+  }
+
+  export enum IGOTConst {
+    COMPETENCIES = 'competencies_v5',
+  }
+
 }

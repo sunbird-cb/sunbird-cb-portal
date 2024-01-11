@@ -23,7 +23,7 @@ ws-app-nav-bar {
 }
 
 .height-on-top {
-  padding-top: 105px;
+  padding-top: 96px;
 }
 
 .top-nav-bar {
@@ -92,8 +92,14 @@ ws-app-nav-bar {
   background: #333 !important;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 576px) {
   .container-margin {
-      margin-top: 192px;
+    margin-top: 200px;
+  }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  .container-margin {
+    margin-top: 120px;
   }
 }

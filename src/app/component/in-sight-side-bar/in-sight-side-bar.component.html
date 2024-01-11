@@ -7,7 +7,7 @@
     <div class="margin-bottom-m" class="collapsible" [@collapseWeekly]="collapsed">
         <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
     </div>
-    <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'padding-top-m':!collapsed}">
+    <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'padding-top-m':!collapsed}" *ngIf="!discussion?.error">
         <div class="flex flex-col discussion-card " >
             <div class="flex mat-subheading-1 p-4">
                 <div class="flex flex-row gap-1 mat-subheading-1 cursor-pointer feed-title" (click)="navigate()">
@@ -17,15 +17,8 @@
                     </mat-icon>
                 </div>
             </div>
-            <ng-container *ngIf="discussion && (!(discussion?.error) && discussion?.data?.length)">
+            <ng-container>
                 <ws-widget-discussions [discussion]="discussion" [count]="2" ></ws-widget-discussions>
-            </ng-container>
-            <ng-container *ngIf="discussion && (discussion?.error || !discussion?.data?.length)">
-                <div class="flex flex-col items-center gap-3 p-10">
-                    <mat-icon class="no-data-found">report_off</mat-icon>
-                    <div class="mat-subheading-1">No data found!</div>
-                    <div class="text-center">Unable to fetch discussion info due to some error.</div>
-                </div>
             </ng-container>
         </div>
     </section>
@@ -33,7 +26,7 @@
         <ws-widget-pending-request  [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
     </section>
     <div class="empty-div margin-bottom-xl" *ngIf="collapsed">
-        <div class="empty-div2 margin-bottom-m">
+        <div class="empty-div2 margin-bottom-m"  *ngIf="!discussion?.error">
 
         </div>
     </div>

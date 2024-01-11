@@ -1,51 +1,65 @@
 <div class="flex flex-4 flex-column" id="activityTab">
   <mat-card class="flex-custom" [attr.id]="tabsData && tabsData[0] && tabsData[0].key">
     <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile.personalDetails">
+      <div class="flex flex-1 flex-row-reverse absolute right-0 profile-edit-icon">
+        <div *ngIf="
+            portalProfile.id === currentUser?.userId ||
+            portalProfile.userId === currentUser?.userId
+          " class="">
+          <a [routerLink]="'/app/user-profile/details'">
+            <mat-icon class="">edit</mat-icon>
+          </a>
+        </div>
+      </div>
       <div mat-card-avatar class="example-header-image">
-        <ng-container *ngIf="portalProfile.personalDetails?.firstname"; else elseFirstName>
-          <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="portalProfile.personalDetails.firstname"  size="xxl-s">
+        <ng-container *ngIf="portalProfile?.personalDetails?.firstname" ; else elseFirstName>
+          <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null"
+            [name]="portalProfile?.personalDetails?.firstname" size="xxl-s">
           </ws-widget-avatar-photo>
         </ng-container>
         <ng-template #elseFirstName>
-          <ng-container *ngIf="portalProfile.personalDetails.firstName">
-            <ws-widget-avatar-photo [photoUrl]="portalProfile.photo || null" [name]="
-                portalProfile.personalDetails.firstName" size="xxl-s">
+          <ng-container *ngIf="portalProfile?.personalDetails?.firstName">
+            <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null" [name]="
+                portalProfile?.personalDetails?.firstName" size="xxl-s">
             </ws-widget-avatar-photo>
-            </ng-container>
+          </ng-container>
         </ng-template>
       </div>
       <div class="block md:hidden">
-        <div class="">
+        <div class="mb-8">
           <div class="flex flex-4 justify-center">
-          <ng-container *ngIf="portalProfile.personalDetails.firstname"; else elseFirstNameIcon >
-            <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstname 
+            <ng-container *ngIf="portalProfile?.personalDetails?.firstname; else elseFirstNameIcon">
+              <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
+              portalProfile?.personalDetails?.firstname
             ">
-            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
-            </span>
-           </mat-card-title>
+                <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
+                    src="fusion-assets/images/profile-badge.png" height="18">
+                </span>
+              </mat-card-title>
             </ng-container>
             <ng-template #elseFirstNameIcon>
-              <ng-container *ngIf="portalProfile.personalDetails.firstName">
+              <ng-container *ngIf="portalProfile?.personalDetails?.firstName">
                 <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-                  portalProfile.personalDetails.firstName 
+                  portalProfile?.personalDetails?.firstName
                 ">
-                <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
-                </span>
-               </mat-card-title>
-               
+                  <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
+                      src="fusion-assets/images/profile-badge.png" height="18">
+                  </span>
+                </mat-card-title>
+
               </ng-container>
             </ng-template>
-            
-          
+
+
             <!-- <div class="flex verified">
               <mat-icon class="ws-mat-green-text" svgIcon="verified"></mat-icon>
             </div> -->
-            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
+                src="fusion-assets/images/profile-badge.png" height="18">
             </span>
-           
+
           </div>
-          <div class="flex flex-1 flex-row-reverse">
+          <!-- <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser?.userId ||
                 portalProfile.userId === currentUser?.userId
@@ -55,14 +69,19 @@
                 <span i18n>{{ 'Edit Profile' }}</span>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
         </mat-card-subtitle>
-        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
+        <!-- <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.officialPostalAddress }}
-        </mat-card-subtitle>
+        </mat-card-subtitle> -->
+
+        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label
+        *ngIf="portalProfile?.additionalProperties?.externalSystem === 'DoPT eHRMS'">
+        eHRMS Id - {{ portalProfile?.additionalProperties?.externalSystemId }}
+      </mat-card-subtitle>
         <!-- <mat-card-subtitle>{{discussProfileData.email}}</mat-card-subtitle> -->
         <ng-container>
           <div class="flex flex-1 custom margin-0 margin-top-m bottom-fix mob" role="link" tabindex="0">
@@ -82,7 +101,6 @@
               </span>
             </div>
             <!-- <div class="flex flex-1" class="text-right mobile2">
-
                 <span class="noocoments" mat-card-subtitle>Last online
                   {{discussProfileData.lastonline | pipeRelativeTime}}</span>
               </div> -->
@@ -92,22 +110,24 @@
       <div class="flex-1 hidden md:block">
         <div class="flex flex-1">
           <div class="flex flex-4">
-          <ng-container *ngIf="portalProfile.personalDetails.firstname"; else elseFirstNameIcon >
-            <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstname
+            <ng-container *ngIf="portalProfile?.personalDetails?.firstname; else elseFirstNameIcon">
+              <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
+              portalProfile?.personalDetails?.firstname
             ">
-            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
-            </span>
-           </mat-card-title>
+                <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
+                    src="fusion-assets/images/profile-badge.png" height="18">
+                </span>
+              </mat-card-title>
             </ng-container>
             <ng-template #elseFirstNameIcon>
-              <ng-container *ngIf="portalProfile.personalDetails.firstName">
+              <ng-container *ngIf="portalProfile?.personalDetails?.firstName">
                 <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-                  portalProfile.personalDetails.firstName
+                  portalProfile?.personalDetails?.firstName
                 ">
-                <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
-                </span>
-               </mat-card-title>
+                  <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
+                      src="fusion-assets/images/profile-badge.png" height="18">
+                  </span>
+                </mat-card-title>
 
               </ng-container>
             </ng-template>
@@ -116,11 +136,12 @@
             <!-- <div class="flex verified">
               <mat-icon class="ws-mat-green-text" svgIcon="verified"></mat-icon>
             </div> -->
-            <span *ngIf="verifiedBadge" class="profile-badge">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
+                src="fusion-assets/images/profile-badge.png" height="18">
             </span>
 
           </div>
-          <div class="flex flex-1 flex-row-reverse">
+          <!-- <div class="flex flex-1 flex-row-reverse">
             <div *ngIf="
                 portalProfile.id === currentUser?.userId ||
                 portalProfile.userId === currentUser?.userId
@@ -130,18 +151,31 @@
                 <span i18n>{{ 'profileView.editProfile' | translate }}</span>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
         </mat-card-subtitle>
-        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
+        <!-- <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.officialPostalAddress }}
+        </mat-card-subtitle> -->
+
+        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label
+          *ngIf="portalProfile?.additionalProperties?.externalSystem === 'DoPT eHRMS'">
+          eHRMS Id - {{ portalProfile?.additionalProperties?.externalSystemId }}
         </mat-card-subtitle>
         <!-- <mat-card-subtitle>{{discussProfileData.email}}</mat-card-subtitle> -->
         <ng-container>
           <div class="flex flex-1 custom margin-0 margin-top-m bottom-fix mob" role="link" tabindex="0">
             <div class="flex flex-1">
+              <span class="flex margin-right-l mobile">
+                <span class="ws-mat-default-text">
+                  <img class="karmapoints-icon" alt="karma points" src="/assets/icons/karma-point-logo.jpg">
+                </span>
+                <span class="ws-mat-default-text">
+                  {{ countdata }}</span>
+                <span class="pad-4"> Karma points</span>
+              </span>
               <span class="flex margin-right-l mobile">
                 <span class="ws-mat-default-text">{{
                   connectionRequests?.length
@@ -156,11 +190,11 @@
                 <span class="pad-4">{{ 'profileView.discussions' | translate }}</span>
               </span>
             </div>
-            <!-- <div class="flex flex-1" class="text-right mobile2">
 
-                <span class="noocoments" mat-card-subtitle>Last online
-                  {{discussProfileData.lastonline | pipeRelativeTime}}</span>
-              </div> -->
+            <!-- <div class="flex flex-1" class="text-right mobile2">
+              <span class="noocoments" mat-card-subtitle>Last online
+                {{discussProfileData.lastonline | pipeRelativeTime}}</span>
+            </div> -->
           </div>
         </ng-container>
       </div>
@@ -175,15 +209,16 @@
       </div>
     </mat-card-header>
   </mat-card>
-  <div   class=" hidden md:block">
+
+  <div class=" hidden md:block">
     <ng-container [ngTemplateOutlet]="profileSection"></ng-container>
   </div>
   <div class=" block md:hidden">
-    <div class="flex flex-custom ">
+    <div class="flex flex-custom" id="profile_activity">
       <mat-tab-group class="profile-tabs" (selectedTabChange)="tabClicked($event)" [selectedIndex]="selectedTabIndex">
         <mat-tab label="Profile">
           <ng-template matTabContent>
-              <ng-container [ngTemplateOutlet]="profileSection"></ng-container>
+            <ng-container [ngTemplateOutlet]="profileSection"></ng-container>
           </ng-template>
         </mat-tab>
         <mat-tab label="My activities" *ngIf="
@@ -194,38 +229,37 @@
             <p class="margin-top-s tab-heading">{{ 'profileView.yourStats' | translate }}</p>
             <div class="margin-bottom-m margin-top-m">
               <div class="profile-section">
-                <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" [profileData]="pageData.profileCard" [isLoading]="false"></ws-widget-profile-card-stats>
+                <ws-widget-profile-card-stats [isMobile]="true" (expandCollapse)="expandCollapse($event)"
+                  [insightsData]="insightsData" [profileData]="pageData.profileCard"
+                  [isLoading]="insightsDataLoading"></ws-widget-profile-card-stats>
               </div>
             </div>
             <div class="margin-bottom-m">
-              <ws-widget-weekly-claps [weeklyData]="pageData.weeklyClaps" [insightsData]="insightsData" [isLoading]="insightsDataLoading"></ws-widget-weekly-claps>
+              <ws-widget-weekly-claps [weeklyData]="pageData.weeklyClaps" [insightsData]="insightsData"
+                [isLoading]="insightsDataLoading"></ws-widget-weekly-claps>
             </div>
 
             <div class="flex flex-col margin-bottom-m mt-3 gap-3 discussion-card ">
               <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
                 <div class="flex flex-grow">{{ 'profileView.myDiscussions' | translate }}</div>
                 <div class="text-2xl ws-mat-default-text">
-                  <ng-container>
-                    <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" >{{ 'profileView.showAll' | translate }}</div>
-                  </ng-container>
+                  <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Show all
+                  </div>
                 </div>
               </div>
-              <!-- <div class="flex flex-row">
-                <div class="flex flex-grow mat-subheading-1">My Discussions</div>
-                <div class="flex text-sm font-weight-400 ws-mat-default-text" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Show all</div>
-              </div> -->
               <ws-widget-discussions [discussion]="discussion" [count]="2"></ws-widget-discussions>
             </div>
 
-            <div class="margin-bottom-m mt-4">
+            <!-- <div class="margin-bottom-m mt-4">
               <ws-widget-update-posts [isMobile]="true" [updatesPosts]="updatesPosts"></ws-widget-update-posts>
-            </div>
+            </div> -->
 
-            <div class="margin-bottom-m mt-4 discussion-card">
+            <!-- <div class="margin-bottom-m mt-4 discussion-card">
               <ws-widget-recent-requests [recentRequests]="recentRequests" (updateRequest)="handleUpdateRequest($event)"></ws-widget-recent-requests>
-            </div>
-            <div class="mt-4">
-              <ws-widget-pending-request [pendingRequestData]="pendingRequestData" [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
+            </div> -->
+            <div class="mt-4 mb-4">
+              <ws-widget-pending-request [pendingRequestData]="pendingRequestData"
+                [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
             </div>
 
           </ng-template>
@@ -300,28 +334,28 @@
               }"></ng-container>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="discussionList">
+        <!-- <ng-container *ngIf="discussionList">
           <div [attr.id]="discussions"
             class="flex flex-1 flex-column margin-top-xs margin-botton-xs dark-card discussion-card"
-            style="box-shadow: none">
-            <!-- <mat-card [attr.id]='discussions' class="margin-left-xs margin-top-xs margin-botton-xs dark-card discussion-card"
+            style="box-shadow: none"> -->
+        <!-- <mat-card [attr.id]='discussions' class="margin-left-xs margin-top-xs margin-botton-xs dark-card discussion-card"
           style="box-shadow: none;"> -->
 
-            <!-- <mat-card-content> -->
-            <div class="flex flex-1">
+        <!-- <mat-card-content> -->
+        <!-- <div class="flex flex-1">
               <span class="margin-bottom-xs margin-top-l mat-title flex-1">{{
                 'Discussions'
-                }}</span>
-              <!-- <div
+                }}</span> -->
+        <!-- <div
                 class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important">
                 <a mat-button [routerLink]="'/app/discuss/my-discussions'">
                    <span i18n>{{'Go to discussion profile'}}</span>
                 </a>
               </div> -->
-            </div>
-            <ng-container>
-              <!-- <mat-card class="recent-tabs"> -->
-              <div class="w-full">
+        <!-- </div>
+            <ng-container> -->
+        <!-- <mat-card class="recent-tabs"> -->
+        <!-- <div class="w-full">
                 <div class="flex flex-1 flex-column filter_outer_box">
                   <div class="flex flex-1 filter flex-wrap">
                     <a href="javascript:void(0)" class="filter-option font-normal" i18n-aria-label role="button"
@@ -352,9 +386,9 @@
                       {{ 'profileView.savedPosts' | translate }}
                     </a>
                   </div>
-                </div>
-                <!-- </mat-card> -->
-              </div>
+                </div> -->
+        <!-- </mat-card> -->
+        <!-- </div>
             </ng-container>
             <ng-container *ngIf="discussionList && discussionList.length > 0">
               <ng-container *ngFor="let data of discussionList">
@@ -370,11 +404,11 @@
                   <span>&nbsp;</span>
                 </mat-card-content>
               </mat-card>
-            </ng-container>
-            <!-- </mat-card-content> -->
-            <!-- </mat-card> -->
-          </div>
-        </ng-container>
+            </ng-container> -->
+        <!-- </mat-card-content> -->
+        <!-- </mat-card> -->
+        <!-- </div>
+        </ng-container> -->
       </div>
     </mat-sidenav-content>
 

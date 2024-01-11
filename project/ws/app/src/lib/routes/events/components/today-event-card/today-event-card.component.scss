@@ -9,7 +9,7 @@
     // flex-direction: column;
     display: flex;
     width: 91%;
-    height: 112px;
+    min-height: 112px;
   }
   .mat-card-footer{
     justify-self: flex-end;
@@ -18,6 +18,15 @@
   .mat-card-header{
     display: block !important;
   }
+}
+
+.textoverflow-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 
 .custom-title {
@@ -127,7 +136,7 @@
 }
 
 .imgbox {
-  width: 147px;
+  width: 150px;
   height: 116px;
   overflow: hidden;
   border-radius: 8px;

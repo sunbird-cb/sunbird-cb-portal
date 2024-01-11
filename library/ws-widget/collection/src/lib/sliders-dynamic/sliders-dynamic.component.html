@@ -10,7 +10,7 @@
     </a>
   </ng-container>
   <ng-container *ngIf="widgetData.type === 'data'">
-    <div class="banner WidgetInstanceId flex margin-xs" *ngFor="let slide of widgetData.sliderData; let i = index" [hidden]="i !== currentIndex">
+    <div class="banner WidgetInstanceId flex margin-bottom-xs" *ngFor="let slide of widgetData.sliderData; let i = index" [hidden]="i !== currentIndex">
       <div class="banner-data flex margin-right-m ">
         {{widgetData.sliderData[currentIndex].title}}
       </div>

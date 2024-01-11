@@ -88,6 +88,7 @@ import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.s
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { AppContentResolverService } from './services/app-content-read-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 import { HeaderModule } from './header/header.module';
@@ -95,6 +96,7 @@ import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
 import { SocialLinkComponent } from './component/social-link/social-link.component';
 import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
 import { AppLogoComponent } from './component/app-logo/app-logo.component';
+import { NoDataComponent } from './component/no-data/no-data.component'
 
 
 @Injectable()
@@ -127,6 +129,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     // AppNavBarComponent,
     AppPublicNavBarComponent,
+    NoDataComponent,
     TncComponent,
     AppIntroComponent,
     TncRendererComponent,
@@ -145,7 +148,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogBoxComponent,
     SocialLinkComponent,
     FooterSectionComponent,
-    AppLogoComponent,
+    AppLogoComponent
   ],
   imports: [
     FormsModule,
@@ -245,6 +248,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PipeContentRoutePipe,
     AppTocResolverService,
     AppHierarchyResolverService,
+    AppContentResolverService,
     AppEnrollmentResolverService,
     HttpClient,
     {

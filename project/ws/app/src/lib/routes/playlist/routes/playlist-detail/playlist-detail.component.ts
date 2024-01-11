@@ -241,6 +241,9 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
               undefined,
               firstPlayableContent.primaryCategory
             )
+
+            /* tslint:disable-next-line */
+            console.log(this.playlistPlayLink,'=====> playlist  firstPlayableContent url link <========')
           }
         })
       },                                                         _err => {
@@ -255,6 +258,9 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
               undefined,
               firstPlayableContent.primaryCategory
             )
+
+            /* tslint:disable-next-line */
+            console.log(this.playlistPlayLink,'=====> playlist  firstPlayableContent url 252 link <========')
           }
         })
       })

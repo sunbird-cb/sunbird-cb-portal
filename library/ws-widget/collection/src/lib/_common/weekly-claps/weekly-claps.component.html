@@ -15,7 +15,7 @@
                             </ng-container>
                             <ng-container *ngIf="week?.activeWeek">
                                 <p class="margin-remove active-week margin-right-xs week-name">{{week.label}} </p>
-                                <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/highlight.svg' : 'assets/icons/home/decline_icon.svg'}}" alt="">
+                                <img width="24" height="24" src="{{insightsData.weeklyClaps[week.key]?.timespent > 60 ? 'assets/icons/home/check_icon.svg' : 'assets/icons/home/highlight.svg'}}" alt="">
                             </ng-container>
                         </div>
                     </ng-container>
@@ -66,16 +66,16 @@
     <div class="clap-info-wrapper">
         <div class="clap-info-center flex-wrapped flex flex-middle flex-center">
             <img class="" src="assets/icons/home/clap_icon.svg" width="42" height="42" alt="">
-            <p class="w-full clap-ques">{{ 'weeklyclaps.whatIsWeeklyClaps' | translate }} What is weekly claps?</p>
-            <p class="w-full clap-ans">{{ 'weeklyclaps.weeklyClapsDesc' | translate }}</p>
+            <p class="w-full clap-ques">What Is Weekly Claps?</p>
+            <p class="w-full clap-ans">Weekly Claps Are a Fun Way to Track Your Engagement on the Platform. They Reflect Your Commitment and Activity Levels.</p>
         </div>
         <div class="clap-info-qus-list flex flex-middle">
             <div class="img-clap-block">
                 <img class="" width="28px" height="28px" src="assets/icons/home/clap_icon.svg" alt="">
             </div>
             <div class="clap-qus-ans">
-                <p class="clap-qus">{{ 'weeklyclaps.whatToDo' | translate }}</p>
-                <p class="clap-ans">{{ 'weeklyclaps.spendAtLeast' | translate }} <span class="clap-highlight"><b>{{ 'weeklyclaps.60mins' | translate }}</b></span> {{ 'weeklyclaps.engageWithPlatform' | translate }}</p>
+                <p class="clap-qus">What Should I Do to Maintain the Claps?</p>
+                <p class="clap-ans">Simply Spend a Minimum of <span class="clap-highlight"><b>60 minutes</b></span>, Engaging on the Platform Each Week to Maintain Your Claps.</p>
             </div>
         </div>
         <div class="clap-info-qus-list flex flex-middle">
@@ -83,8 +83,8 @@
                 <img class="" width="28px" height="28px" src="assets/icons/home/clap_disable_icon.svg" alt="">
             </div>
             <div class="clap-qus-ans">
-                <p class="clap-qus">{{ 'weeklyclaps.whyDidILoose' | translate }}</p>
-                <p class="clap-ans">{{ 'weeklyclaps.ifYouFallShort' | translate }} <span class="clap-highlight"><b>{{ 'weeklyclaps.60mins' | translate }}</b></span> {{ 'weeklyclaps.engageRequired' | translate }}</p>
+                <p class="clap-qus">Why Did I Lose My Claps?</p>
+                <p class="clap-ans">If You Engage Less Than <span class="clap-highlight"><b>60 minutes</b></span> in a Week, Your Claps Count Resets to Zero.</p>
                 
             </div>
         </div>
@@ -94,12 +94,13 @@
 
 <ng-template #headder>
     <div class="flex flex-between flex-middle">
-        <p class="flex-align-start weekly-title flex flex-middle margin-remove">{{ 'weeklyclaps.weeklyClaps' | translate }} 
+        <p class="flex-align-start weekly-title flex flex-middle margin-remove">Weekly Claps
             <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
         </p>
         <p class="flex weeks-count  flex-middle  margin-remove">
-            <img class="margin-right-s cursor-pointer" width="34" height="34" src="assets/icons/home/clap_icon.svg" >
-            {{insightsData?.weeklyClaps?.total_claps || 0}} {{ 'weeklyclaps.weeks' | translate }}
+            <img class="margin-right-s cursor-pointer" width="34" height="34" [src]="insightsData?.weeklyClaps?.total_claps ? 'assets/icons/home/clap_icon.svg' : 'assets/icons/home/clap_disable_icon.svg'" >
+            <span *ngIf="insightsData?.weeklyClaps?.total_claps > 1 else elseWeeklyClaps">{{insightsData?.weeklyClaps?.total_claps}} Weeks</span>            
+            <ng-template #elseWeeklyClaps>{{insightsData?.weeklyClaps?.total_claps || 0}} Week</ng-template>
         </p>
     </div>
 </ng-template>

@@ -1,14 +1,18 @@
 <ng-container *ngIf="fullMenuDispaly">
-  
+
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
     <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
-        <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim flex items-center" role="link" title="Home"
+        <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim  items-center hidden md:flex" role="link" title="Home"
           i18n-aria-title i18n-aria-label>
           <img [src]="appIcon" alt="Application Logo" class="app-logo" />
         </a>
+        <div  class="md:hidden sm:flex" >
+          <ng-container [ngTemplateOutlet]="karmaBadge">
+          </ng-container>
+        </div>
         <!-- <span class="spacer"></span> -->
         <ng-container *ngIf="primaryNavbarConfig?.mediumScreen">
           <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
@@ -22,16 +26,16 @@
           <span class="spacer"></span>
           <div *ngIf="!isforPreview" ngClass="search-small-logo">
             <ng-container [wsResolverWidget]="{
-        'widgetType': 'actionButton',
-        'widgetSubType': 'buttonFeature',
-        'widgetData': {
-          'toolTop': 'Search',
-          'actionBtnId': 'feature_search',
-          'config': {
-            'type': 'mat-icon-button'
-          }
-        }
-      }"></ng-container>
+              'widgetType': 'actionButton',
+              'widgetSubType': 'buttonFeature',
+              'widgetData': {
+                'toolTop': 'Search',
+                'actionBtnId': 'feature_search',
+                'config': {
+                  'type': 'mat-icon-button'
+                }
+              }
+            }"></ng-container>
           </div>
 <!--           <div class="flex items-center">
             <img [src]="appIconSecondary" alt="Application Logo" class="app-logo" />
@@ -42,6 +46,10 @@
         <mat-icon>help_outline</mat-icon>
       </button> -->
           <ng-container *ngIf="!isforPreview">
+            <div  class="hidden md:block md:flex" >
+              <ng-container [ngTemplateOutlet]="karmaBadge">
+              </ng-container>
+            </div>
             <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
               *ngFor="let item of primaryNavbarConfig?.mediumScreen?.right">
             </ng-container>
@@ -53,7 +61,7 @@
         </ng-container>
 
       </ng-container>
-      
+
       <!-- <div class="flex justify-between items-center w-full" *ngIf="mode === 'bottom' && !isLoggedIn">
 
       </div> -->
@@ -65,7 +73,7 @@
     </ng-container>
   </div> -->
   </mat-toolbar>
-  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode === 'bottom'" 
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode === 'bottom'"
   [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
   class="mat-elevation-z3 custom mobile-footer-fixed-nav"
   >
@@ -114,8 +122,8 @@
         <ng-container *ngFor="let item of primaryNavbarConfig?.smallScreen?.all">
           <!-- item?.config?.path -->
           <li *ngIf="item?.type !== 'explorerButton'" [ngClass]="activeRoute === item?.config?.label ? 'active-icon': ''" class="mobile-footer-fixed-nav-list-item" (click)="redirectToPath(item?.config)">
-            <div class="icon-container">
-              <img   src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
+            <div class="icon-container" [id]="item?.config?.label?.toLowerCase() === 'search' ? 'feature_mobile_search' : ''">
+              <img src="/assets/icons/footer-nav/{{item?.config?.icon}}.svg" id="draft" alt="draft" title="draft" />
               <span>{{item?.config?.label | titlecase}}</span>
             </div>
           </li>
@@ -154,6 +162,25 @@
 </ng-container>
 <ng-template #navbarSide let-item="item">
    <ws-top-right-nav-bar [item]="item" [rightNavConfig]="headerFooterConfigData"></ws-top-right-nav-bar>
+</ng-template>
+<ng-template #karmaBadge>
+  <div class="flex flex-middle points-block">
+    <img (click)="viewKarmapoints()" src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
+    <div class="margin-left-xs">
+      <p class="karma-lbl flex ">Karma Points <img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button  matTooltip="You'll be rewarded 5 Karma Points for completing a course, subject to a maximum of 20 Karma Points in a month."
+        [matTooltipPosition]="'below'"  (click)="tooltip.show()"
+        [matTooltipHideDelay]="tooltipDelay" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
+        </p>
+      <p class="karma-point" (click)="viewKarmapoints()">
+        <ng-container *ngIf="karmaPointLoading">
+          <ws-widget-skeleton-loader [width]="'34px'" [height]="'20px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+        </ng-container>
+        <ng-container *ngIf="!karmaPointLoading">
+          {{countdata}}
+        </ng-container>
+      </p>
+    </div>
+  </div>
 </ng-template>
 
 <mat-menu #helpMenu="matMenu">

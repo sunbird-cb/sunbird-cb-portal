@@ -10,6 +10,11 @@
   align-content: center;
   text-align: center;
 }
+.karmapoints-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
 
 .verified {
   margin-left: $size-xs;
@@ -404,7 +409,7 @@ span.profile-badge {
   border: 1px solid rgba(0,0,0, 0.08);
   opacity: 1;
   background-color: rgba(255,255,255, 1);
-  padding: 16px 16px 0px 16px;
+  padding: 16px 16px 16px 16px;
 }
 .tab-heading {
   font-size: 1rem;
@@ -420,4 +425,9 @@ span.profile-badge {
 ::ng-deep .mat-tab-label-active {
   color: #000000 !important;
   font-weight: 700 !important;
-} 
+}
+.profile-edit-icon {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}

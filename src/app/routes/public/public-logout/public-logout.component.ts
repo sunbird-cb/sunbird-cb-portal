@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { AuthKeycloakService, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable-next-line
@@ -22,6 +22,7 @@ export class PublicLogoutComponent implements OnInit, OnDestroy {
   constructor(
     private configSvc: ConfigurationsService,
     private activateRoute: ActivatedRoute,
+    private authSvc: AuthKeycloakService,
     // private authSvc: AuthKeycloakService,
   ) { }
 
@@ -38,6 +39,10 @@ export class PublicLogoutComponent implements OnInit, OnDestroy {
     }
     this.routerSubsc = this.activateRoute.queryParamMap.subscribe(params => {
       this.message = _.get(params, 'params.error')
+
+      if(this.message || this.message !== 'undefined' || this.message !== null || this.message !== ''){
+        this.authSvc.force_logout()
+      }
     })
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs

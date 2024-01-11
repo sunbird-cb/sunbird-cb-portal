@@ -6,8 +6,8 @@
 .download-app {
     display: flex; 
     flex-direction: row; 
-    width:1200px;
-    height:489px;
+    width: 1200px;
+    height: 488px;
     margin:0 auto;
     align-items: center;
     justify-content: center;
@@ -28,7 +28,7 @@
 }
 
 .download-app .left-side {
-    margin:64px 0;
+    margin: 64px 0;
 }
 .download-app .right-side {
     margin-left: 170px;
@@ -110,13 +110,20 @@
     cursor: pointer;
 }
 
-@media (max-width : 768px) {    
+@media (max-width : 1200px) {  
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        margin-left: 50% !important;
+    }
+
     .download-app {
-        height:529px!important;
+        height:528px!important;
         width: 100%;
         
     }
-
     .mobile-download {
         padding:16px;
         display: flex;
@@ -144,16 +151,12 @@
         width: 375px;
     }
 
-    .right-side {
+    .left-side {
         display: flex;
         flex-direction: column;
+        align-items: center;
         justify-content: center;
-        text-align: center;
-        margin-left: 50%!important;
-    }
-
-    .left-side {
-        margin-top:26px!important;
+        margin-top: 26px !important;
     }
     
     .circle {
@@ -163,15 +166,18 @@
         border-radius: 50%;
         margin-top: 10px;
         margin-left: -76px;
+        display: block;
     }
-    
     
     .vertical-image {
         position: relative;
         margin-top: -48%;
-        // margin-left: 6%;
     }
+
     .vertical-image img{
         height: 241px;
     }
+}
+
+@media screen and (max-width: 1200px) {
 }

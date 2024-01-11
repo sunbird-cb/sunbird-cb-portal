@@ -120,6 +120,9 @@ ws-app-nav-bar {
     top:0;
   }
 
+  .mobile-download-app-desc {
+    margin-left:8px;
+  }
 
 
   .kb-symbol {
@@ -145,28 +148,30 @@ ws-app-nav-bar {
     color: rgba(0, 0, 0, 0.16)
   }
 
-  .mobile-download-app-desc {
-    margin-left:8px;
-  }
+ 
   .mobile-download-app-desc-heading {
-    margin: 0;
+    margin: 0 !important;
     padding: 0;
     line-height: 1;
     font-weight: 900;
   }
   .mobile-download-app-desc-sub-heading {
+    margin: 0 !important;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.4);
     font-weight: 400;
   }
+
   .download-app-chip-top-header {
     border-radius: 63px;
     background: #F3962F;
     color: #fff;
-    // min-width: 129px;
+    max-width: 136px;
     text-align: center;
-    padding: 6px 16px;
+    padding: 6px 10px;
     list-style: none;
+    line-height: 18px;
+    margin-right: 16px;
   }
 
   .top-nav-bar {
@@ -175,4 +180,147 @@ ws-app-nav-bar {
     margin-top:5px;
   }
 
+}
+
+@media (min-width : 360px) and (max-width : 360px){  
+  .mobile-download-app-desc {
+    margin-left:8px;
+    width: 38%
+  }
+
+  .download-app-chip-top-header {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    // min-width: 129px;
+    text-align: center;
+    padding: 5px 5px !important;
+    list-style: none;
+  }
+}
+
+@media (min-width : 375px) and (max-width : 375px){  
+  .mobile-download-app-desc {
+    margin-left:8px;
+    width: 38%
+  }
+
+  .download-app-chip-top-header {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    // min-width: 129px;
+    text-align: center;
+    padding: 6px 8px !important;
+    list-style: none;
+  }
+  
+}
+@media (min-width : 393px) and (max-width : 393px){  
+  .mobile-download-app-desc {
+    margin-left:8px;
+    width: 38%
+  }
+
+  .download-app-chip-top-header {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    text-align: center;
+    padding: 6px 7px !important;
+    list-style: none;
+  }
+}
+
+@media (min-width : 412px) and (max-width : 412px){  
+  .mobile-download-app-desc {
+    margin-left:8px;
+    width: 38%
+  }
+
+  .download-app-chip-top-header {
+    border-radius: 64px;
+    background: #F3962F;
+    color: #fff;
+    // min-width: 129px;
+    text-align: center;
+    padding: 6px 9px !important;
+    list-style: none;
+  }
+}
+@media (min-width : 414px) and (max-width : 414px){  
+  .mobile-download-app-desc {
+    margin-left: 8px;
+    width: 47%
+  }
+
+  .download-app-chip-top-header {
+    border-radius: 64px;
+    background: #F3962F;
+    color: #fff;
+    text-align: center;
+    padding: 6px 10px;
+    list-style: none;
+  }
+}
+@media (min-width : 390px) and (max-width : 390px){  
+  .mobile-download-app-desc {
+    margin-left: 8px;
+    width: 36%
+  }
+
+  .download-app-chip-top-header {
+    border-radius: 64px;
+    background: #F3962F;
+    color: #fff;
+    text-align: center;
+    padding: 6px 10px;
+    list-style: none;
+  }
+}
+@media (min-width : 768px) and (max-width : 768px){  
+  .mobile-download-app-desc {
+    margin-left: 8px;
+    width: 60%
+  }
+  
+  .download-app-chip-top-header {
+    border-radius: 64px;
+    background: #F3962F;
+    color: #fff;
+    min-width: 136px;
+    text-align: center;
+    padding: 6px 10px;
+    list-style: none;
+  }
+}
+@media (min-width : 540px) and (max-width : 540px){  
+  .mobile-download-app-desc {
+    margin-left:8px;
+    width:50%
+  }
+  .download-app-chip-top-header {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    // min-width: 129px;
+    text-align: center;
+    padding: 6px 10px;
+    list-style: none;
+  }
+}
+@media (min-width : 280px) and (max-width : 280px){  
+  .mobile-download-app-desc {
+    margin-left:8px;
+    width:20%
+  }
+  .download-app-chip-top-header {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    // min-width: 129px;
+    text-align: center;
+    padding: 5px 5px !important;
+    list-style: none;
+  }
 }

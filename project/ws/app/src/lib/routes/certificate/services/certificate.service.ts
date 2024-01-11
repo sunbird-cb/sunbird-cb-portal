@@ -3,7 +3,8 @@ import { Observable } from 'rxjs'
 import * as _ from 'lodash'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ServerResponse } from 'http'
-import { ApiService } from '@ws/author/src/public-api'
+import { ApiService } from '@ws/author/src/lib/modules/shared/services/api.service'
+// /lib/modules/shared/services/api.service.ts'
 
 const urls = {
   HIERARCHY: 'course/v1/hierarchy',
