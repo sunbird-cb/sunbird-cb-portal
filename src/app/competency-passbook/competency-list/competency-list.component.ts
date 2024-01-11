@@ -10,7 +10,6 @@ import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 // Project files and components
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
-import { CompetencyPassbookService } from './../competency-passbook.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
@@ -36,7 +35,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   TYPE_CONST = {
     behavioral: {
       capsValue: 'Behavioural',
-      value: 'behavioural'
+      value: 'behavioural',
+      otherValue: 'behavioral'
     },
     functional: {
       capsValue: 'Functional',
@@ -53,16 +53,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     skeletonLoading: true,
     error: false,
     all: <any>[],
+    allValue: 0,
     behavioural: <any>[],
     functional: <any>[],
-    domain: <any>[],
-    allValue: 0,
-    behaviouralValue: 0,
-    functionalValue: 0,
-    domainValue: 0,
-    behaviouralSubTheme: 0,
-    functionalSubTheme: 0,
-    domainSubTheme: 0
+    domain: <any>[]
   };
 
   leftCardDetails: any = [{
@@ -123,13 +117,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     "competencyTheme": [], 
     "competencySubTheme": [], 
     "providers": [] 
-  }
-
-  courseWithCompetencyArray: any[] = [];
+  };
   certificateMappedObject: any = {};
 
   constructor(
-    private cpService: CompetencyPassbookService,
     private widgetService: WidgetUserService,
     private configService: ConfigurationsService,
     private router: Router,
@@ -157,35 +148,45 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: any) => {
           let competenciesV5: any[] = [];
-          let contentConsumed: any= {};
+
           response.courses.forEach((eachCourse: any) => {
             if (eachCourse.content && eachCourse.content.competencies_v5) {
-              this.courseWithCompetencyArray.push(eachCourse);
               competenciesV5 = [...competenciesV5, ...eachCourse.content.competencies_v5];
             }
 
-            if ((eachCourse.issuedCertificates && eachCourse.issuedCertificates.length) && (eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
+            if ((eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
 
               eachCourse.issuedCertificates.forEach((icObj: any) => {
                 icObj['courseName'] = eachCourse.courseName;
                 icObj['viewMore'] = false;
+                icObj['batchId'] = eachCourse.batchId;
+                icObj['contentId'] = eachCourse.contentId;
               });
 
               let subThemeMapping: any = {};
               eachCourse.content.competencies_v5.forEach((v5Obj: any) => {
                 if (this.certificateMappedObject[v5Obj.competencyTheme]) {
+
+                  // Certificate consumed logic...
                   eachCourse.issuedCertificates.forEach((certObj: any) => {
                     if (this.certificateMappedObject[v5Obj.competencyTheme].certificate.findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
                       this.certificateMappedObject[v5Obj.competencyTheme].certificate.push(certObj);
                     }
                   });
+
+                  // Content consumed logic...
+                  if (this.certificateMappedObject[v5Obj.competencyTheme].contentConsumed.indexOf(eachCourse.courseName.trim()) === -1) {
+                    this.certificateMappedObject[v5Obj.competencyTheme].contentConsumed.push(eachCourse.courseName.trim());
+                  }
                 } else {
                   this.certificateMappedObject[v5Obj.competencyTheme] = {
                     'certificate': eachCourse.issuedCertificates,
+                    'contentConsumed': [eachCourse.courseName],
                     'subThemes': []
                   };
                 }
 
+                // Sub theme mapping logic...
                 if (subThemeMapping[v5Obj.competencyTheme]) {
                   if (subThemeMapping[v5Obj.competencyTheme].indexOf(v5Obj.competencySubTheme) === -1) {
                     subThemeMapping[v5Obj.competencyTheme].push(v5Obj.competencySubTheme);
@@ -202,121 +203,63 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             }
           });
           
-          competenciesV5.forEach((obj: any) => {
-            this.leftCardDetails.forEach((_eachObj: any) => {
-              if (_eachObj.type.toLowerCase() === obj.competencyArea.toLowerCase()) {
-                _eachObj.contentConsumed += 1;
-              }
-            })
-
-            if (contentConsumed[obj.competencyTheme]) {
-              if (contentConsumed[obj.competencyTheme].indexOf(obj.competencySubTheme) === -1) {
-                contentConsumed[obj.competencyTheme].push(obj.competencySubTheme);  
-              }
-            } else {
-              contentConsumed[obj.competencyTheme] = [];
-              contentConsumed[obj.competencyTheme].push(obj.competencySubTheme);
+          competenciesV5.forEach((v5Obj: any) => {
+            v5Obj.subTheme = [];
+            v5Obj.contentConsumed = [];
+            v5Obj.issuedCertificates = [];
+            const competencyArea = (v5Obj.competencyArea.toLowerCase() === 'behavioral') ? 'behavioural' : v5Obj.competencyArea.toLowerCase();
+            if (this.competency[competencyArea].findIndex((obj: any) => obj.competencyTheme === v5Obj.competencyTheme ) === -1) {
+              this.competency[competencyArea].push(v5Obj);
             }
+
+            this.competency[competencyArea].forEach((_obj: any) => {
+              if (_obj.competencyTheme === v5Obj.competencyTheme) {
+                if (_obj.subTheme.indexOf(v5Obj.competencySubTheme) === -1) {
+                  _obj.subTheme.push(v5Obj.competencySubTheme);
+                }
+              }
+            });
           });
+          
+          this.competency.all = [...this.competency.behavioural, ...this.competency.functional, ...this.competency.domain];
+          this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
 
-          this.fetchCompetencyList(contentConsumed);
-
+          this.getOtherData();
+          this.competency.skeletonLoading = false;
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.matSnackBar.open("Unable to pull Enrollment list details!");
+            this.competency.skeletonLoading = false;
           }
         }
     )
   }
 
-  bindMoreData(typeObj: any, name: string, contentConsumed: any) {
-    const leftCardObj = this.leftCardDetails.find((obj: any) => obj.name === name);
+  getOtherData(): void {
+    this.competency.all.forEach((allObj: any) => {
+      allObj.issuedCertificates = this.certificateMappedObject[allObj.competencyTheme].certificate;
+      allObj.contentConsumed = this.certificateMappedObject[allObj.competencyTheme].contentConsumed;
+      allObj.courseSubThemes = this.certificateMappedObject[allObj.competencyTheme].subThemes;
 
-    typeObj.forEach((obj: any) => {
-      obj['viewMore'] = false;
-      obj['competencyName'] = name;
-
-      if (contentConsumed[obj.name]) {
-        obj['contentConsumed'] = contentConsumed[obj.name];
-      }
-
-      if (new Date(obj.createdDate) > this.one_year_back) {
-        leftCardObj.filter.lastYear += 1;
-        leftCardObj.filter.lastYearSubTheme += obj.children.length;
-
-        if (new Date(obj.createdDate) > this.six_month_back) {
-          leftCardObj.filter.sixMonths += 1
-          leftCardObj.filter.sixMonthsSubTheme += obj.children.length;
-        }
-
-        if (new Date(obj.createdDate) > this.three_month_back) {
-          leftCardObj.filter.threeMonths += 1
-          leftCardObj.filter.threeMonthsSubTheme += obj.children.length;
-        }
-      }
-
-      this.leftCardDetails.forEach((_eachObj: any) => {
-        if (_eachObj.name === name) {
-          _eachObj.competencySubTheme += obj.children.length;
+      this.leftCardDetails.forEach((_lObj: any) => {
+        if (_lObj.type === allObj.competencyArea) {
+          _lObj.competencySubTheme += allObj.subTheme.length;
+          _lObj.contentConsumed += allObj.contentConsumed.length;
         }
       });
     });
-    return typeObj;
-  }
-
-  fetchCompetencyList(contentConsumed: any): void {
-    const payload = {
-      "search": {
-        "type": "Competency Area"
-      },
-      "filter": {
-        "isDetail": true
-      }
-    };
-
-    this.cpService.getCompetencyList(payload)
-      .pipe(takeUntil(this.destroySubject$))
-      .subscribe(
-        (response: any) => {
-          response.result.competency.forEach((obj: any) => {
-            if (obj.name === 'Behavioral') {
-              this.competency.behavioural = this.bindMoreData(obj.children, 'behavioural', contentConsumed);
-              this.competency.all = [...this.competency.all, ...this.competency.behavioural]
-            } else if (obj.name === 'Functional') {
-              this.competency.functional = this.bindMoreData(obj.children, obj.name.toLowerCase(), contentConsumed);
-              this.competency.all = [...this.competency.all, ...this.competency.functional]
-            } else {
-              this.competency.domain = this.bindMoreData(obj.children, obj.name.toLowerCase(), contentConsumed);
-              this.competency.all = [...this.competency.all, ...this.competency.domain]
-            }
-            
-            this.leftCardDetails.forEach((_eachObj: any) => {
-              if(_eachObj.type.toLowerCase() === obj.name.toLowerCase()) {
-                _eachObj.total = obj.children.length
-              }
-            });
-          });
-
-          this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
-          this.competency.skeletonLoading = false;
-        }, (error: HttpErrorResponse) => {
-          if (!error.ok) {
-            this.competency.error = true;
-            this.competency.skeletonLoading = false;
-          }
-        }
-      );
   }
 
   handleLeftFilter(months: string): void {
-    this.leftCardDetails.forEach((_obj: any) => {
-      this.competency[`${_obj.name}Value`] = _obj.filter[months]
-      if (months === 'all') {
-        this.competency[`${_obj.name}SubTheme`] = _obj.competencySubTheme
-      } else {
-        this.competency[`${_obj.name}SubTheme`] = _obj.filter[`${months}SubTheme`]
-      }
-    });
+    // Do not delete, need to work on this...
+    // this.leftCardDetails.forEach((_obj: any) => {
+    //   this.competency[`${_obj.name}Value`] = _obj.filter[months]
+    //   if (months === 'all') {
+    //     this.competency[`${_obj.name}SubTheme`] = _obj.competencySubTheme
+    //   } else {
+    //     this.competency[`${_obj.name}SubTheme`] = _obj.filter[`${months}SubTheme`]
+    //   }
+    // });
     this.showFilterIndicator = months;
   }
 
@@ -339,18 +282,14 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   handleNavigate(obj: any): void {
-    const detailsPage = {
-      certificateArr: this.certificateMappedObject[obj.name],
-      subThemes: obj.children
-    };
-    localStorage.setItem('details_page', JSON.stringify(detailsPage));
-    this.router.navigate(['/page/competency-passbook/details'], {queryParams: {theme: obj.name, name: obj.competencyName}});
+    localStorage.setItem('details_page', JSON.stringify(obj));
+    this.router.navigate(['/page/competency-passbook/details']);
   }
 
   handleSearch(event: string, competencyTheme: string): void {
     competencyTheme = competencyTheme.toLowerCase()
     if (!this.competency[competencyTheme].length) return;
-    this.competencyArray = (!event.length) ? this.competency[competencyTheme] : this.competency[competencyTheme].filter((obj: any) => obj.name.toLowerCase().trim().includes(event.toLowerCase()));
+    this.competencyArray = (!event.length) ? this.competency[competencyTheme] : this.competency[competencyTheme].filter((obj: any) => obj.competencyTheme.toLowerCase().trim().includes(event.toLowerCase()));
   }
 
   // Filters related functionalities...
@@ -380,7 +319,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       if(filterValue['competencyArea'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['competencyArea'].some((r: any) =>  data.competencyName.includes(r.toLowerCase()))) {
+          if(filterValue['competencyArea'].some((r: any) =>  data.competencyArea.toLowerCase().trim().includes((r.toLowerCase() === 'behavior') ? 'behavioural' : r.toLowerCase()))) {
             return data 
           }
         })
@@ -390,7 +329,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       if(filterValue['competencyTheme'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          return filterValue['competencyTheme'].includes(data.name);
+          return filterValue['competencyTheme'].includes(data.competencyTheme);
         })
         filterAppliedOnLocal = true;
       }
@@ -398,8 +337,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       if(filterValue['competencySubTheme'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          let returnedValue = data.children.filter((childObj: any) => { 
-            return filterValue['competencySubTheme'].includes(childObj.name)
+          let returnedValue = data.subTheme.filter((stName: any) => { 
+            return filterValue['competencySubTheme'].includes(stName)
           })
           return (returnedValue.length) ? data : false;
         })

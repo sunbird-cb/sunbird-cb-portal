@@ -52,7 +52,7 @@ export class FilterComponent implements OnInit {
   setDefaultValues() {
     this.primaryCategoryList = [
       { "id": "Course", name: 'Course',checked: false }, 
-      { "id": 'Program', name: 'Program',checked: false },
+      // { "id": 'Program', name: 'Program',checked: false },
       { "id": 'Curated Program', name: 'Curated program',checked: false },
       { "id": "Blended Program", name: 'Blended program',checked: false }, 
       { "id": "Standalone Assessment", name: 'Standalone assessment',checked: false },
