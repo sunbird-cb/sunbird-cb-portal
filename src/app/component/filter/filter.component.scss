@@ -38,6 +38,7 @@
     height: calc(100vh - 200px);
     overflow-y: auto;
   -ms-overflow-style: none;
+  -webkit-overflow-style: none;
   scrollbar-width: none;
 }
 
@@ -152,6 +153,7 @@
     overflow-y: auto;
 
   -ms-overflow-style: none;
+  -webkit-overflow-style: none;
   scrollbar-width: none;
 }
 
@@ -205,6 +207,7 @@
         overflow-y: auto;
 
   -ms-overflow-style: none;
+  -webkit-overflow-style: none;
   scrollbar-width: none;
     }
     .filter-content {  

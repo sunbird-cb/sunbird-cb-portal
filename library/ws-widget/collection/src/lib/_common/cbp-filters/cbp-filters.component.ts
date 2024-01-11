@@ -242,6 +242,8 @@ export class CbpFiltersComponent implements OnInit {
 		this.competencyThemeList = []
 		this.competencySubThemeList = []
 		this.clearFilterObj.emit(data)
+		this.filterObj = data
+		this.checkFilterEmpty()
 	}
 
 	clearFilterWhileSearch() {
