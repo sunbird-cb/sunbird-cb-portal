@@ -17,26 +17,9 @@ export class FilterComponent implements OnInit {
   @Input() filterObj:any;
   @Input() showAdditionalFilters: boolean = true;
   filterEmpty: any = false
-  timeDuration: any = [
-    { "id": '7ad', name: 'Upcoming 7 Days', checked: false }, 
-    { "id": '30ad', name: 'Upcoming 30 Days', checked: false }, 
-    { "id": '90ad', name: 'Upcoming 3 Months', checked: false }, 
-    { "id": '182ad', name: 'Upcoming 6 Months', checked: false }, 
-    { "id": '1sw', name: 'Last week', checked: false },
-    { "id": '1sm', name: 'Last month', checked: false }, 
-    { "id": '3sm', name: 'Last 3 months', checked: false }, 
-    { "id": '6sm', name: 'Last 6 months', checked: false }, 
-    { "id": '12sm', name: 'Last year', checked: false }
-  ];
-  contentStatus: any = [{ "id": '1', name: 'In progress', checked: false }, { "id": '0', name: 'Not started', checked: false }, { "id": '2', name: 'Completed', checked: false }];
-  primaryCategoryList: any = [
-    { "id": "Course", name: 'Course',checked: false }, 
-    { "id": 'Program', name: 'Program',checked: false },
-    { "id": 'Curated program', name: 'Curated program',checked: false },
-    { "id": "Blended program", name: 'Blended program',checked: false }, 
-    { "id": "Standalone Assessment", name: 'Standalone Assessment',checked: false },
-    { "id": "Moderated Courses", name: 'Moderated Courses',checked: false }
-  ];
+  timeDuration: any 
+  contentStatus: any
+  primaryCategoryList: any
   providersList: any[] = [];
   selectedProviders: any[] = [];
   competencyTypeList: any = [];  
@@ -61,9 +44,36 @@ export class FilterComponent implements OnInit {
      }
 
   ngOnInit() {
+      this.setDefaultValues()
       this.getFilterEntity();
       this.getProviders();
       this.bindFilter()
+  }
+  setDefaultValues() {
+    this.primaryCategoryList = [
+      { "id": "Course", name: 'Course',checked: false }, 
+      { "id": 'Program', name: 'Program',checked: false },
+      { "id": 'Curated Program', name: 'Curated program',checked: false },
+      { "id": "Blended Program", name: 'Blended program',checked: false }, 
+      { "id": "Standalone Assessment", name: 'Standalone assessment',checked: false },
+      { "id": "Moderated Courses", name: 'Moderated courses',checked: false }
+    ];
+    this.timeDuration = [
+      { "id": '7ad', name: 'Upcoming 7 Days', checked: false }, 
+      { "id": '30ad', name: 'Upcoming 30 Days', checked: false }, 
+      { "id": '90ad', name: 'Upcoming 3 Months', checked: false }, 
+      { "id": '182ad', name: 'Upcoming 6 Months', checked: false }, 
+      { "id": '1sw', name: 'Last week', checked: false },
+      { "id": '1sm', name: 'Last month', checked: false }, 
+      { "id": '3sm', name: 'Last 3 months', checked: false }, 
+      { "id": '6sm', name: 'Last 6 months', checked: false }, 
+      { "id": '12sm', name: 'Last year', checked: false }
+    ]
+    this.contentStatus = [
+      { "id": '1', name: 'In progress', checked: false },
+      { "id": '0', name: 'Not started', checked: false }, 
+      { "id": '2', name: 'Completed', checked: false }
+    ]
   }
 
   getFilterEntity() {
@@ -151,6 +161,7 @@ export class FilterComponent implements OnInit {
       }
     }
     this.bindCompetencyTheme()
+    this.checkFilterEmpty()
   }
 
   getCompetencySubTheme(event: any, cstype: any, pushValue: boolean = true) {
@@ -187,6 +198,7 @@ export class FilterComponent implements OnInit {
       }
     }
     this.bindCompetencySubTheme()
+    this.checkFilterEmpty()
   }
 
 
@@ -208,8 +220,13 @@ export class FilterComponent implements OnInit {
   }
 
   clearFilter() {
-    this.getFilterData.emit(this.filterObjEmpty)
-    
+    this.clearFilterWhileSearch()
+    let data = JSON.parse(JSON.stringify(this.filterObjEmpty))
+    this.competencyThemeList = []
+    this.competencySubThemeList = []
+    this.clearFilterObj.emit(data)
+		this.filterObj = data
+		this.checkFilterEmpty()
   }
 
   clearFilterWhileSearch() {
@@ -297,6 +314,7 @@ export class FilterComponent implements OnInit {
   }
   timeDurationFilter(ctype: any,filterType: any){
     this.filterObj[filterType] = [ctype.id]
+    this.checkFilterEmpty()
   }
   onCompetencyTheme(event: any){
     let searchValue = event.target.value
