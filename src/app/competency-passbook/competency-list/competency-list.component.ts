@@ -222,7 +222,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
           });
           
           this.competency.all = [...this.competency.behavioural, ...this.competency.functional, ...this.competency.domain];
-          this.competencyArray = this.competency.all;
+          this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
 
           this.getOtherData();
           this.competency.skeletonLoading = false;
@@ -319,7 +319,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       if(filterValue['competencyArea'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          if(filterValue['competencyArea'].some((r: any) =>  data.competencyArea.toLowerCase().trim().includes(r.toLowerCase()))) {
+          if(filterValue['competencyArea'].some((r: any) =>  data.competencyArea.toLowerCase().trim().includes((r.toLowerCase() === 'behavior') ? 'behavioural' : r.toLowerCase()))) {
             return data 
           }
         })
