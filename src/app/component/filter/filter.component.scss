@@ -37,6 +37,8 @@
 .filter-content-container {
     height: calc(100vh - 200px);
     overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .filter-content:last-child {
@@ -148,6 +150,9 @@
 .filter .category-content {
     max-height: 232px;
     overflow-y: auto;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
@@ -198,6 +203,9 @@
     }
     .filter-content-container {
         overflow-y: auto;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
     }
     .filter-content {  
         padding: 18px 24px;

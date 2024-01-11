@@ -19,7 +19,6 @@ import { environment } from 'src/environments/environment'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
-import dayjs from 'dayjs'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 
 interface IStripUnitContentData {
@@ -1024,7 +1023,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   getTabsList(array: NsContent.IContent[],
               strip: NsContentStripWithTabs.IContentStripUnit) {
     let all: any[] = []
-    const upcoming: any[] = []
+    let upcoming: any[] = []
     let overdue: any[] = []
     array.forEach((e: any) => {
       all.push(e)
@@ -1051,9 +1050,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         const secondDate: any = new Date(b.endDate)
         return  firstDate > secondDate  ? -1 : 1
     })
-    // upcoming = upcoming.filter((data: any): any => {
-    //   return data.contentStatus < 2
-    // })
+    upcoming = upcoming.filter((data: any): any => {
+      return data.contentStatus < 2
+    })
     // this.getSelectedIndex(1)
     return [
     { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },

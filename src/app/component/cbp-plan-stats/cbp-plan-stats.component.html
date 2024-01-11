@@ -19,7 +19,7 @@
             <p class="group-count" *ngIf="!cbpLoader">{{cbpCount?.upcoming || 0}}</p>
         </div>
         <div>
-            <p class="group-title">Over due</p>
+            <p class="group-title">Overdue</p>
             <ws-widget-skeleton-loader *ngIf="cbpLoader" [width]="'28px'" [height]="'20px'" [bindingClass]="'flex rounded h-16 margin-right-xs'"></ws-widget-skeleton-loader>
             <p class="group-count" *ngIf="!cbpLoader">{{cbpCount?.overdue || 0}}</p>
         </div>
