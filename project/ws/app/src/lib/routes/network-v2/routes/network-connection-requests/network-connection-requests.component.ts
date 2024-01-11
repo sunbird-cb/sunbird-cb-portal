@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-network-connection-requests',

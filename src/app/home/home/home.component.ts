@@ -9,7 +9,7 @@ import _ from 'lodash';
 import { BtnSettingsService } from '@sunbird-cb/collection';
 import { MobileAppsService } from '../../services/mobile-apps.service';
 import { Router } from '@angular/router'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
 }
@@ -35,7 +35,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isKPPanelenabled = false
   enrollData: any
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService,
-    private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
+    private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router, 
+    private translate: TranslateService) { }
 
   ngOnInit() {
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {

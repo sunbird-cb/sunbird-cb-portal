@@ -14,7 +14,6 @@ import { NetworkV2Service } from '../../../network-v2/services/network-v2.servic
 import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
 import { ConfigurationsService, ValueService } from '@sunbird-cb/utils';
 import { map } from 'rxjs/operators'
-import { TranslateService } from '@ngx-translate/core'
 import moment from 'moment'
 
 import {
@@ -109,9 +108,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private userSvc: WidgetUserService,
     private contentSvc: WidgetContentService,
     private homeSvc: HomePageService,
-    private matSnackBar: MatSnackBar,
-    private translate: TranslateService,
-    @Inject(DOCUMENT) private document: Document
+    private matSnackBar: MatSnackBar
+    // @Inject(DOCUMENT) private document: Document
   ) {
     this.Math = Math
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
