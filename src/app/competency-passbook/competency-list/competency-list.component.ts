@@ -10,7 +10,6 @@ import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 // Project files and components
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
-import { CompetencyPassbookService } from './../competency-passbook.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
@@ -122,7 +121,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   certificateMappedObject: any = {};
 
   constructor(
-    private cpService: CompetencyPassbookService,
     private widgetService: WidgetUserService,
     private configService: ConfigurationsService,
     private router: Router,
@@ -161,6 +159,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               eachCourse.issuedCertificates.forEach((icObj: any) => {
                 icObj['courseName'] = eachCourse.courseName;
                 icObj['viewMore'] = false;
+                icObj['batchId'] = eachCourse.batchId;
+                icObj['contentId'] = eachCourse.contentId;
               });
 
               let subThemeMapping: any = {};

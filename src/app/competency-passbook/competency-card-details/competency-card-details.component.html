@@ -60,7 +60,7 @@
                     <div class="flex flex-col certificate-info p-4 gap-3">
                         <div class="flex flex-row">
                             <div class="flex-1">
-                                <div class="text-base font-semibold">{{ eachCert?.courseName }}</div>
+                                <div class="text-base font-semibold cursor-pointer" (click)="handleNavigate(eachCert)" >{{ eachCert?.courseName }}</div>
                                 <div class="text-xs font-light">Issued on {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
                             </div>
                             <div class="flex justify-center">

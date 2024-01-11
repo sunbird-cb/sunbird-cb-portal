@@ -1,6 +1,6 @@
 // Core imports
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { jsPDF } from 'jspdf'
 // RxJS imports
@@ -25,15 +25,17 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   themeDetails: any;
 
   constructor(
-    private router: ActivatedRoute,
+    private actRouter: ActivatedRoute,
+    private router: Router,
     private cpService: CompetencyPassbookService
   ) {
-    this.router.queryParams.subscribe((params: any) => {
+    this.actRouter.queryParams.subscribe((params: any) => {
       this.params = params;
     });
     
     if (localStorage.getItem('details_page') !== 'undefined') {
       const details_data = JSON.parse(localStorage.getItem('details_page') as any);
+      
       this.themeDetails = details_data;
       this.certificateData = details_data.issuedCertificates;
       this.certificateData.forEach((obj: any) => {
@@ -84,12 +86,15 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  handleNavigate(courseObj: any): void {
+    this.router.navigateByUrl(`app/toc/${courseObj.contentId}/overview?batchId=${courseObj.batchId}`);
+  }
+
   handleViewMore(obj: any, flag?: string): void {
     obj.viewMore = flag ? false : true;
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem('details_page', '');
     this.destroySubject$.unsubscribe();
   }
 
