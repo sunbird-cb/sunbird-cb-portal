@@ -198,7 +198,7 @@ export class WidgetUserService {
         c.contentList.forEach((childData: any) => {
           const childEnrollData = enrollList[childData.identifier]
           const daysCount = dayjs(c.endDate).diff(todayDate, 'day')
-          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
+          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 30
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
           childData['endDate'] = c.endDate
           childData['parentId'] = c.id
@@ -248,11 +248,11 @@ export class WidgetUserService {
           const firstDate: any = new Date(a.endDate)
           const secondDate: any = new Date(b.endDate)
 
-        return  secondDate > firstDate  ? -1 : 1
+        return  secondDate > firstDate  ? 1 : -1
       })
       const uniqueUsersByID = lodash.uniqBy(sortedData, 'identifier')
-      // const sortedByStatus = uniqueUsersByID.sort((a: any, b: any) => b.contentStatus > a.contentStatus ? -1 : 1)
-      const sortedByStatus =  lodash.orderBy(uniqueUsersByID, ['contentStatus'], ['asc'])
+      const sortedByEndDate =  lodash.orderBy(uniqueUsersByID, ['endDate'], ['asc'])
+      const sortedByStatus =  lodash.orderBy(sortedByEndDate, ['contentStatus'], ['asc'])
       localStorage.setItem('cbpData', JSON.stringify(sortedByStatus))
       return sortedByStatus
     }

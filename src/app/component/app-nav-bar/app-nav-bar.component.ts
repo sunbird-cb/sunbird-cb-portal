@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 @Component({
   selector: 'ws-app-nav-bar',
@@ -52,8 +52,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
-    private router: Router
-    
+    private router: Router,
+    private events: EventService
+
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -82,7 +83,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             let route = localStorage.getItem("activeRoute");
             this.activeRoute = route ? route.toLowerCase().toString() : '';
           }
-          
+
           if (event.url.includes('/page/home')) {
             this.activeRoute = 'home'
           } else if (event.url.includes('/page/explore')) {
@@ -93,7 +94,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             this.activeRoute = 'Career'
           } else if (event.url.includes('app/seeAll?key=continueLearning')) {
             this.activeRoute = 'my learnings'
-          } 
+          }
 
       }
     })
@@ -272,6 +273,21 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   viewKarmapoints() {
+    this.raiseTelemetry()
     this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
   }
+
+  raiseTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'nav-karmapoints',
+        id: 'nav-karmapoints',
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
+    })
+  }
+
 }

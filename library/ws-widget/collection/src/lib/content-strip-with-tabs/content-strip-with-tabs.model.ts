@@ -124,5 +124,6 @@ export namespace NsContentStripWithTabs {
     maxWidgets?: number,
     fetchTabStatus?: string
     nodataMsg?: string
+    tabLoading?: boolean
   }
 }

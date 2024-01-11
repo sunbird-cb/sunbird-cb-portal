@@ -180,8 +180,21 @@
     //     min-height: calc(100vh - 250px);
     //     overflow-y: auto;
     // }
+    .filter-md  {
+        width: 100%;
+    }
     .filter-block {
             height: calc(100vh - 50px);
+            justify-content: space-between;
+            .filter-header {
+                .heading-block {
+                    justify-content: space-between;
+                    width: 100%;
+                }
+            }
+            .label {
+                width: unset;
+            }
     }
     .filter-content-container {
         overflow-y: auto;
@@ -189,13 +202,26 @@
     .filter-content {  
         padding: 18px 24px;
         margin: unset;
+        display: block !important;
     }
     .filter-footer {
         margin: unset;
         position: fixed;
         bottom: 65px;
         padding: 0px 19px;
+        width: 93%;
+        div {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .filter-apply {
+            width: 35%;
+        }
+        .filter-clear {
+            width: 35%;
+        }
     }
+    
 
 }
 .grey-filter {
