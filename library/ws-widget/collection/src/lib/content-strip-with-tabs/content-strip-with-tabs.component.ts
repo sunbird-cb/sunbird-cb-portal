@@ -1024,14 +1024,13 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   getTabsList(array: NsContent.IContent[],
               strip: NsContentStripWithTabs.IContentStripUnit) {
     let all: any[] = []
-    let upcoming: any[] = []
+    const upcoming: any[] = []
     let overdue: any[] = []
     array.forEach((e: any) => {
-
       all.push(e)
-      if (e.planDuration === NsCardContent.ACBPConst.OVERDUE ){
+      if (e.planDuration === NsCardContent.ACBPConst.OVERDUE) {
         overdue.push(e)
-      } else if (e.planDuration === NsCardContent.ACBPConst.UPCOMING){
+      } else if (e.planDuration === NsCardContent.ACBPConst.UPCOMING) {
         upcoming.push(e)
       }
       // return (customFilter(e, idx, arr) === NsCardContent.ACBPConst.OVERDUE ? overdue : upcoming).push(e)
