@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatDialogModule, MatIconModule } from '@angular/material'
 import { InfoDialogModule } from './../info-dialog/info-dialog.module'
 import { SkeletonLoaderModule } from './../skeleton-loader/skeleton-loader.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [WeeklyClapsComponent],
@@ -16,6 +17,7 @@ import { SkeletonLoaderModule } from './../skeleton-loader/skeleton-loader.modul
     MatIconModule,
     InfoDialogModule,
     SkeletonLoaderModule,
+    TranslateModule
   ],
   exports: [
     WeeklyClapsComponent,
