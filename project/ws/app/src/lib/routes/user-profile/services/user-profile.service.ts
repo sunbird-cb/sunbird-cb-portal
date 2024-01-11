@@ -27,6 +27,9 @@ const API_ENDPOINTS = {
   getPendingFields: '/apis/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
   getDesignation: '/apis/proxies/v8/user/v1/positions',
   editProfileDetails: '/apis/proxies/v8/user/v1/extPatch',
+  updateProfilePic: '/apis/proxies/v8/storage/profilePhotoUpload/profileImage',
+  GET_GROUPS: '/api/user/v1/groups',
+  getApprovalReqs: '/apis/protected/v8/workflowhandler/applicationsSearch',
 }
 
 @Injectable()
@@ -76,8 +79,23 @@ export class UserProfileService {
       applicationStatus: 'SEND_FOR_APPROVAL',
     })
   }
+  listRejectedFields() {
+    return this.http.post<any>(API_ENDPOINTS.getPendingFields, {
+      serviceName: 'profile',
+      applicationStatus: 'REJECTED',
+    })
+  }
 
   getDesignations(_req: any): Observable<IProfileMetaApiData> {
     return this.http.get<IProfileMetaApiData>(API_ENDPOINTS.getDesignation)
+  }
+  uploadProfilePhoto(req: any): Observable<any> {
+    return this.http.post<any>(`${API_ENDPOINTS.updateProfilePic}`, req)
+  }
+  getGroups(): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.GET_GROUPS)
+  }
+  getApprovalReqs(data: any): Observable<any> {
+    return this.http.post<any>(API_ENDPOINTS.getApprovalReqs, data)
   }
 }

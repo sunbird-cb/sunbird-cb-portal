@@ -28,10 +28,14 @@
 
 .card-notify {
     min-height: 74px;
+    word-wrap: break-word;
 }
 
 .blue-border {
     border: 2px solid #0074b6!important;
+}
+.w-60 {
+  width: 60%;
 }
 @media (max-width:768px) {
   .actbutton {

@@ -149,7 +149,6 @@ export class InsightSideBarComponent implements OnInit {
     this.discussion.loadSkeleton = true;
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        console.log("this.discussion",this.discussion.data);
         this.discussion.loadSkeleton = false;
         this.discussion.data = res && res.latestPosts;
       },
@@ -163,23 +162,6 @@ export class InsightSideBarComponent implements OnInit {
   }
 
   getPendingRequestData() {
-    // this.pendingRequestData =  {
-    //   'result': {
-    //       "data": [
-    //           {
-    //               "id": "9029b54d-c167-4d88-a1fe-0c31b940c07f",
-    //               "fullName": "Karthik Test",
-    //               "departmentName": "RKCbp",
-    //               "updatedAt": null
-    //           }
-    //       ],
-    //       "message": "Successful",
-    //       "status": "OK"
-    //   }
-    // };
-    // setTimeout(()=>{
-    //   this.pendingRequestSkeleton = false;
-    // })
     this.homePageSvc.getRecentRequests().subscribe(
       (res: any) => {
         
@@ -209,7 +191,7 @@ export class InsightSideBarComponent implements OnInit {
   }
   
   goToActivity(_e: any) {
-    this.router.navigateByUrl(`app/person-profile/me?tab=0`);
+    this.router.navigateByUrl(`app/person-profile/me?tab=1`);
   }
 
   navigate() {

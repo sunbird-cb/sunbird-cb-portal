@@ -71,6 +71,11 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   }
   ngAfterViewInit() {
     this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    this.activateRoute.fragment.subscribe(data => {
+      if (data) {
+        this.onSideNavTabClick(data)
+      }
+    })
   }
   ngOnDestroy() {
     if (this.subscriptionContact) {

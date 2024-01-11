@@ -274,6 +274,8 @@ export namespace NsUser {
     desiredCompetencies?: any
     userRoles?: any
     profileUpdateCompletion?: number
+    profileImageUrl?: string
+    professionalDetails?: any
   }
 
   export interface INodebbUserProfile {

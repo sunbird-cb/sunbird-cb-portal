@@ -83,7 +83,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   }
   get resourceLink(): { url: string; queryParams: { [key: string]: any } } {
     if (this.content) {
-      return viewerRouteGenerator(
+      let url = viewerRouteGenerator(
         this.content.identifier,
         this.content.mimeType,
         this.rootId,
@@ -92,6 +92,10 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         this.content.primaryCategory,
         this.batchId
       )
+      
+      /* tslint:disable-next-line */
+      // console.log(url,'=====> content card url link <========')
+      return url
     }
     return { url: '', queryParams: {} }
   }

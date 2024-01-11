@@ -1,15 +1,14 @@
 <mat-card class="base-layout container-balanced" role="navigation">
   <mat-card-content>
     <div class="flex flex-1 flex-column" role="presentation">
-      <div class="flex flex-1 margin-bottom-xs margin-top-xs secondary-nav" role="menubar">
+      <div class="flex flex-1 secondary-nav" role="menubar">
         <!-- <a id="menuToggleMobile" class="flex cursor-pointer simple-hubs-link margin-left-0 menuToggleMobile" href="javascript:void(0)" role="menuitem"
           accesskey="H" i18n-aria-label (click)="toggleVisibility()">
-
           <mat-icon class="margin-right-xs ws-mat-default-text">menu</mat-icon>
           <span class="margin-auto ws-mat-default-text mat-subheading-2">EXPLORE</span>
         </a> -->
         <ng-container [@enterAnimation]="visible">
-          <div *ngFor="let hub of hubsList" class="flex items-center">
+          <div *ngFor="let hub of hubsList" class="flex items-center nav-menu">
             <ng-container *ngIf="(hub.hubname == 'Discuss' && hub.active)">
               <a [id]="hub.hubname" class="simple-hubs-link" i18n-aria-label role="menuitem" (click)="navigate()">
                 <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
@@ -37,7 +36,7 @@
         </ng-container>
       </div>
 
-      <div class="mobile flex flex-col" *ngIf="visible" [@enterAnimation]="visible">
+      <div class="mobile flex flex-col mobile-hub" *ngIf="visible" (wsWidgetClickOutside)="visible = false" [@enterAnimation]="visible">
         <div class="flex flex-1 margin-xs" *ngIf="inactiveHubList.length">
           <h4 class="mat-h4 nav_sub_heading">{{ 'common.hubs' | translate }}</h4>
         </div>
@@ -109,13 +108,25 @@
           <h4 class="mat-h4 margin-bottom-remove nav_sub_heading">{{ 'cardshublist.quickLinks' | translate }}</h4>
         </div>
         <div class="flex flex-1">
-          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2 mobile-div">
             <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
               <ng-container *ngIf="(portal.isPublic || isAllowed(portal.id)) && portal.name !== 'Frac Dictionary'">
-                <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [attr.href]="portal.uriPath" target="_blank">
+                <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" [attr.href]="portal.uriPath" target="_blank">
                   <div class="icon ws-mat-primary-tags">
-                    <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
-                      aria-hidden="true">{{portal.icon || 'info'}}</mat-icon>
+                    <!-- <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                      aria-hidden="true">{{portal.icon || 'info'}}</mat-icon> -->
+                      <ng-container *ngIf="portal.name === 'CBP Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/CBP_portal.svg">
+                      </ng-container>
+                      <ng-container *ngIf="portal.name === 'MDO Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/MDO_portal.svg">
+                      </ng-container>
+                      <ng-container *ngIf="portal.name === 'SPV Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/SPV_portal.svg">
+                      </ng-container>
+                      <ng-container *ngIf="portal.name === 'CBC Portal'">
+                        <img class="m-auto mat-icon" src="/assets/icons/CBC_portal.svg">
+                      </ng-container>
                   </div>
                   <div class="width-expand padding-left-xs cursor-pointer">
                     <div class="margin-0 mat-subheading-2">{{ translateLabels(portal.name, 'common') }}</div>

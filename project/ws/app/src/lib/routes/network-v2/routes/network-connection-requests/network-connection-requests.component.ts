@@ -26,24 +26,19 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     private eventSvc: EventService,
     private translate: TranslateService,
   ) {
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-     
-      this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
-    }
-    this.datalist = this.route.snapshot.data.connectionRequests.data.result.data
-    this.data = this.route.snapshot.data.connectionRequests.data.result.data
-    this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    if (this.route.snapshot.data.connectionRequests
+      && this.route.snapshot.data.connectionRequests.data
+      && this.route.snapshot.data.connectionRequests.data.result
+      && this.route.snapshot.data.connectionRequests.data.result.data) {
+        this.datalist = this.route.snapshot.data.connectionRequests.data.result.data
+        this.data = this.route.snapshot.data.connectionRequests.data.result.data
+        this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
+          if (v && v.personalDetails && v.personalDetails.firstname) {
+            v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+          }
+          return v
+        })
       }
-      return v
-    })
    }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-<div class="flex flex-col item-center mt-8">
+<div class="flex flex-col item-center mt-10">
     <div class="flex flex-col card-container">
         <div class="photo-container flex items-center justify-center cursor-pointer" (click)="goToUserProfile(user)">
             <!-- <a *ngIf="user?.photo" href="javascript:void(0)" class="" i18n-aria-label role="link" -->
@@ -29,7 +29,7 @@
                     {{user?.employmentDetails?.departmentName}}
                 </div>
                 <div class="designation ws-mat-black60-text mat-body-2" *ngIf="!user?.employmentDetails">
-                    {{user?.rootOrg.orgName}}
+                    {{user?.rootOrg?.orgName}}
                 </div>
             </div>
         </div>

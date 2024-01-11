@@ -165,15 +165,19 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
         ? document.getElementsByClassName(this.cardSubType)[0].clientWidth : 245)
         if (document.getElementsByClassName('horizontal-scroll-container') &&
         document.getElementsByClassName('horizontal-scroll-container')[0]) {
-        const scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth
-          arrLength = (scrollerWidth / cardWidth)
-          arrLength = this.defaultMaxWidgets / arrLength
-          // console.log(scrollerWidth, cardWidth)
-          for (let i = 0; i < arrLength; i += 1) {
-            this.bottomDotsArray.push(i)
-          }
-          // console.log('this.cardSubType', this.cardSubType, arrLength, this.widgetsLength ,
-          // this.defaultMaxWidgets, scrollerWidth, this.bottomDotsArray)
+          const scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth
+          const totalCardsLength = cardWidth * this.widgetsLength
+            if (totalCardsLength > scrollerWidth) {
+              arrLength = (scrollerWidth / cardWidth)
+              this.defaultMaxWidgets = this.defaultMaxWidgets ?  this.widgetsLength < this.defaultMaxWidgets ?
+               this.widgetsLength : this.defaultMaxWidgets : this.defaultMaxWidgets
+              arrLength = this.defaultMaxWidgets / arrLength
+              for (let i = 0; i < arrLength; i += 1) {
+                this.bottomDotsArray.push(i)
+              }
+              // console.log('this.cardSubType', this.cardSubType, arrLength, this.widgetsLength ,
+              // this.defaultMaxWidgets, scrollerWidth, this.bottomDotsArray)
+            }
           }
       } else {
           setTimeout(() => {

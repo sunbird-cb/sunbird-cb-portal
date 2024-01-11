@@ -9,6 +9,7 @@ import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } fro
 import { IMAGE_MAX_SIZE, PROFILE_IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
+import { PipeCertificateImageURL } from '@sunbird-cb/utils/src/public-api'
 
 import {
   INationality,
@@ -32,6 +33,8 @@ import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { RequestDialogComponent } from '../request-dialog/request-dialog.component'
+import { USER_PROFILE_MSG_CONFIG } from './user-profile-constant'
 
 /* tslint:enable */
 
@@ -54,6 +57,7 @@ export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
   providers: [
+    PipeCertificateImageURL,
     { provide: DateAdapter, useClass: AppDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
   ],
@@ -64,6 +68,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   unseenCtrlSub!: Subscription
   uploadSaveData = false
   selectedIndex = 0
+  groupsOriginal: any = []
+  masterGroup: any
   masterNationality: Observable<INation[]> | undefined
   country: Observable<INation[]> | undefined
   masterLanguages: Observable<ILanguages[]> | undefined
@@ -116,6 +122,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   allDept: any = []
   approvalConfig!: NsUserProfileDetails.IApprovals
   unApprovedField!: any[]
+  unApprovedReq!: any
   changedProperties: any = {}
   otpSend = false
   otpVerified = false
@@ -129,6 +136,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   karmayogiBadge = false
   isVerifiedAlready = false
   selectedtags: any[] = []
+  eHRMSId: any
+  eHRMSName: any
+  verifiedKarmayogiMsg!: any
+  rejectedKarmayogiMsg!: any
+  rejectedReq!: any
+  isverifiedKBKeyExist!: boolean
+  isverifiedKeyInAppv!: boolean
+  isReqVKBuser = false
+
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -142,6 +158,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private eventSvc: EventService,
     private otpService: OtpService,
     private translate: TranslateService,
+    private pipeImgUrl: PipeCertificateImageURL
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -155,7 +172,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
-    // console.log('page data', this.approvalConfig)
+    this.fetchRejectedFields()
+
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
@@ -164,16 +182,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       countryCode: new FormControl('+91', [Validators.required]),
       mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
       telephone: new FormControl('', [Validators.pattern(this.telephonePattern)]),
-      primaryEmail: new FormControl('', [Validators.required, Validators.email]),
+      primaryEmail: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
-      nationality: new FormControl('', [Validators.required]),
+      nationality: new FormControl('', []),
       dob: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
-      maritalStatus: new FormControl('', [Validators.required]),
-      domicileMedium: new FormControl('', [Validators.required]),
+      maritalStatus: new FormControl('', []),
+      domicileMedium: new FormControl('', []),
       knownLanguages: new FormControl([], []),
-      residenceAddress: new FormControl('', [Validators.required]),
+      residenceAddress: new FormControl('', []),
       category: new FormControl('', [Validators.required]),
       pincode: new FormControl('', [Validators.required, Validators.pattern(this.pincodePattern)]),
       schoolName10: new FormControl('', []),
@@ -191,7 +209,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgNameOther: new FormControl('', []),
       industry: new FormControl('', []),
       industryOther: new FormControl('', []),
-      designation: new FormControl('', []),
+      designation: new FormControl('', [Validators.required]),
       designationOther: new FormControl('', []),
       location: new FormControl('', []),
       locationOther: new FormControl('', []),
@@ -208,18 +226,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
       verifiedKarmayogi: new FormControl(this.karmayogiBadge, []),
+      group: new FormControl('', [Validators.required]),
+      eHRMSId: new FormControl({ value: '', disabled: true }, []),
+      eHRMSName: new FormControl({ value: '', disabled: true }, []),
     })
 
   }
   async init() {
     await this.loadDesignations()
     this.fetchMeta()
-
   }
   ngOnInit() {
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
     // })
+    this.verifiedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.verifiedKarmayogi
+    this.rejectedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.rejectedKarmayogiMsg
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
       return v.approvalRequired ? { [k]: v } : null
     }))
@@ -227,11 +249,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (approvalData.length > 0) {
       // need to call search API
     }
-
     this.getUserDetails()
     this.init()
     this.checkIfMobileNoChanged()
     this.onPhoneChange()
+    // this.onGroupChange()
   }
 
   displayFnPosition = (value: any) => {
@@ -254,6 +276,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         })
     }
   }
+
   fetchMeta() {
     this.userProfileSvc.getMasterCountries().subscribe(
       data => {
@@ -264,6 +287,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.onChangesCountry()
       },
       (_err: any) => {
+      })
+
+    this.userProfileSvc.getGroups().subscribe(data => {
+      const res = data.result.response
+      res.map((value: any) => {
+        this.groupsOriginal.push({ name: value })
+      })
+      this.onGroupChange()
+    },
+                                              (_err: any) => {
       })
 
     this.userProfileSvc.getMasterNationlity().subscribe(
@@ -316,27 +349,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         })
         this.allDept = newData.sort((a: any, b: any) => {
           return a.toLowerCase().localeCompare(b.toLowerCase())
-      })
+        })
 
       },
       (_err: any) => {
       })
-
-    // const desreq = {
-    //   searches: [
-    //     {
-    //       type: 'POSITION',
-    //       field: 'name',
-    //       keyword: '',
-    //     },
-    //     {
-    //       field: 'status',
-    //       keyword: 'VERIFIED',
-    //       type: 'POSITION',
-    //     },
-    //   ],
-    // }
   }
+
   async loadDesignations() {
     await this.userProfileSvc.getDesignations({}).subscribe(
       (data: any) => {
@@ -372,9 +391,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   fetchPendingFields() {
     this.userProfileSvc.listApprovalPendingFields().subscribe(res => {
       if (res && res.result && res.result.data) {
-        this.unApprovedField = _.get(res, 'result.data')
+        const keyFields = _.get(res, 'result.data')
+        this.unApprovedReq = _.get(res, 'result.data')
+        this.unApprovedField = Object.keys(keyFields)
+        this.isverifiedKeyInAppv = this.unApprovedReq.hasOwnProperty('verifiedKarmayogi')
       }
     })
+  }
+
+  fetchRejectedFields() {
+    this.userProfileSvc.listRejectedFields().subscribe(res => {
+      if (res && res.result && res.result.data) {
+        this.rejectedReq = _.get(res, 'result.data')
+        this.isverifiedKBKeyExist = this.rejectedReq.hasOwnProperty('verifiedKarmayogi')
+      }
+    })
+  }
+
+  isVerifiedKBReq() {
+    if (this.isVerifiedAlready) {
+      this.isReqVKBuser = false
+    } else if (this.isverifiedKeyInAppv) {
+      this.isReqVKBuser = false // if inreview
+    } else if ((!this.isVerifiedAlready || !this.isverifiedKeyInAppv) && this.isverifiedKBKeyExist) {
+      this.isReqVKBuser = true // reject case
+    } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
+      this.isReqVKBuser = false // firsttime user
+    }
   }
 
   isAllowed(name: string) {
@@ -429,6 +472,30 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public removePostDegrees(i: number) {
     this.postDegrees.removeAt(i)
   }
+  onGroupChange() {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.masterGroup = this.createUserForm.get('group')!.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        startWith(''),
+        map((value: any) => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
+        map((name: any) => name ? this.filterGroups(name) : this.groupsOriginal.slice())
+      )
+    // this.masterGroup.subscribe(() => {
+    //   // tslint:disable-next-line: no-non-null-assertion
+    //   this.createUserForm.get('group')!.setValidators([Validators.required])
+    //   this.createUserForm.updateValueAndValidity()
+    // })
+  }
+
+  private filterGroups(name: string): any {
+    if (name) {
+      const filterValue = name.toLowerCase()
+      return this.groupsOriginal.filter((option: any) => option.toLowerCase().includes(filterValue))
+    }
+    return this.groupsOriginal
+  }
 
   onChangesNationality(): void {
 
@@ -455,7 +522,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onChangesCountry(): void {
-
     // tslint:disable-next-line: no-non-null-assertion
     this.country = this.createUserForm.get('location')!.valueChanges
       .pipe(
@@ -465,7 +531,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
         map(name => name ? this.filterCountry(name) : this.countries.slice()),
       )
-     // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesLanuage(): void {
@@ -478,7 +543,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map(value => typeof (value) === 'string' ? value : (value && value.name ? value.name : '')),
         map(name => name ? this.filterLanguage(name) : this.masterLanguagesEntries.slice()),
       )
-     // console.log('this.masterLanguagesEntries', this.masterLanguages)
   }
 
   onChangesKnownLanuage(): void {
@@ -692,7 +756,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   removeHobbies(interest: any) {
     const index = this.selectedHobbies.indexOf(interest)
-
     if (index >= 0) {
       this.selectedHobbies.splice(index, 1)
     }
@@ -719,9 +782,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             const organisations = this.populateOrganisationDetails(userData)
             this.constructFormFromRegistry(userData, academics, organisations)
             this.populateChips(userData)
+            this.isVerifiedKBReq()
             this.userProfileData = userData
             if (this.userProfileData && this.userProfileData.additionalProperties) {
               this.selectedtags = this.userProfileData.additionalProperties.tag || []
+              this.eHRMSId = this.userProfileData.additionalProperties.externalSystemId
+              this.eHRMSName = this.userProfileData.additionalProperties.externalSystem
             }
           } else {
             if (this.configSvc.userProfile) {
@@ -734,6 +800,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               })
               if (this.userProfileData && this.userProfileData.additionalProperties) {
                 this.selectedtags = this.userProfileData.additionalProperties.tag || []
+                this.eHRMSId = this.userProfileData.additionalProperties.externalSystemId
+                this.eHRMSName = this.userProfileData.additionalProperties.externalSystem
               }
             }
           }
@@ -742,22 +810,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         (_err: any) => {
         })
     } else {
-      // if (this.configSvc.userProfile) {
-      //   this.userProfileSvc.getUserdetails(this.configSvc.userProfile.email).subscribe(
-      //     data => {
-      //       if (data && data.length) {
-      //         this.createUserForm.patchValue({
-      //           firstname: data[0].first_name,
-      //           surname: data[0].last_name,
-      //           primaryEmail: data[0].email,
-      //           orgName: data[0].department_name,
-      //         })
-      //       }
-      //     },
-      //     () => {
-      //       // console.log('err :', err)
-      //     })
-      // }
       if (this.configSvc.userProfile) {
         const tempData = this.configSvc.userProfile
         this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
@@ -778,6 +830,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       orgName: '',
       industry: '',
       designation: '',
+      group: '',
       location: '',
       responsibilities: '',
       doj: '',
@@ -785,35 +838,42 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       completePostalAddress: '',
       orgNameOther: '',
       industryOther: '',
-      designationOther: '',
+      eHRMSId: '',
+      eHRMSName: '',
     }
-    if (data && data.professionalDetails && data.professionalDetails.length > 0) {
-      // console.log("org", data.professionalDetails[0].industryOther);
-      const organisation = data.professionalDetails[0]
-      const isDesiAvailable = _.findIndex(this.designationsMeta, { name: organisation.designation }) !== -1
+    // tslint:disable-next-line: max-line-length
+    if ((data && data.professionalDetails && data.professionalDetails.length > 0) || (this.unApprovedField && this.unApprovedField.length > 0)) {
+      const organisation = data && data.professionalDetails ? data.professionalDetails[0] : null
       org = {
-        isGovtOrg: organisation.organisationType,
-        orgName: organisation.name,
-        orgNameOther: organisation.nameOther,
-        industry: organisation.industry,
-        industryOther: organisation.industryOther,
-        // tslint:disable-next-line
-        // designation: isDesiAvailable ? organisation.designation : 'Other',
-        designation: organisation.designation || 'Other',
-        designationOther: isDesiAvailable ? '' : organisation.designation || organisation.designationOther,
-        location: organisation.location,
-        responsibilities: organisation.responsibilities,
-        doj: this.getDateFromText(organisation.doj),
-        orgDesc: organisation.description,
-        completePostalAddress: organisation.completePostalAddress,
+        isGovtOrg: organisation && organisation.organisationType ? organisation.organisationType : true,
+        orgName: this.unApprovedReq && this.unApprovedReq.name ? this.unApprovedReq.name : organisation ? organisation.name : '',
+        // tslint:disable-next-line: max-line-length
+        orgNameOther: this.unApprovedReq && this.unApprovedReq.nameOther ? this.unApprovedReq.nameOther : organisation ? organisation.nameOther : '',
+            // tslint:disable-next-line: max-line-length
+        industry: this.unApprovedReq && this.unApprovedReq.industry ? this.unApprovedReq.industry : organisation ? organisation.industry : '',
+        // tslint:disable-next-line: max-line-length
+        industryOther: this.unApprovedReq && this.unApprovedReq.industryOther ? this.unApprovedReq.industryOther : organisation ? organisation.industryOther : '',
+        // tslint:disable-next-line: max-line-length
+        designation: this.unApprovedReq && this.unApprovedReq.designation ? this.unApprovedReq.designation : organisation ? organisation.designation : '',
+        // tslint:disable-next-line: max-line-length
+        group: this.unApprovedReq && this.unApprovedReq.group ? this.unApprovedReq.group : organisation ? organisation.group : '',
+        // tslint:disable-next-line: max-line-length
+        location: this.unApprovedReq && this.unApprovedReq.location ? this.unApprovedReq.location : organisation ? organisation.location : '',
+        responsibilities: organisation ? organisation.responsibilities : '',
+        // tslint:disable-next-line: max-line-length
+        doj: this.unApprovedReq && this.unApprovedReq.doj ? this.getDateFromText(this.unApprovedReq.doj) : organisation ? this.getDateFromText(organisation.doj) : '',
+        // tslint:disable-next-line: max-line-length
+        orgDesc: this.unApprovedReq && this.unApprovedReq.description ? this.unApprovedReq.description : organisation ? organisation.description : '',
+        completePostalAddress: organisation ? organisation.completePostalAddress : '',
+        eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
+        eHRMSName: _.get(data, 'additionalProperties.externalSystem') || '',
       }
-      if (organisation.organisationType === 'Government') {
+      if (organisation && organisation.organisationType === 'Government') {
         org.isGovtOrg = true
       } else {
         org.isGovtOrg = false
       }
     }
-
     return org
   }
 
@@ -922,9 +982,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       schoolName12: academics.XII_STANDARD.schoolName12,
       yop12: academics.XII_STANDARD.yop12,
       isGovtOrg: organisation.isGovtOrg,
-      // orgName: organisation.orgName,
+      //orgName: organisation.orgName,
       industry: organisation.industry,
       designation: organisation.designation || _.get(data, 'professionalDetails.designation'),
+      group: organisation.group || _.get(data, 'professionalDetails.group'),
       location: organisation.location,
       doj: organisation.doj,
       orgDesc: organisation.orgDesc,
@@ -944,11 +1005,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       skillAquiredDesc: _.get(data, 'skills.additionalSkills') || '',
       certificationDesc: _.get(data, 'skills.certificateDetails') || '',
       verifiedKarmayogi: data.verifiedKarmayogi,
+      eHRMSId: _.get(data, 'additionalProperties.externalSystemId') || '',
+      eHRMSName: _.get(data, 'additionalProperties.externalSystem') || ''
     },
       {
         emitEvent: true,
       })
-
     if (data.verifiedKarmayogi) {
       this.isVerifiedAlready = data.verifiedKarmayogi
       this.karmayogiBadge = data.verifiedKarmayogi
@@ -993,7 +1055,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   setProfilePhotoValue(data: any) {
-    this.photoUrl = data.photo || undefined
+    this.photoUrl = data.profileImageUrl || undefined
   }
 
   setDropDownOther(organisation?: any, academics?: any) {
@@ -1004,6 +1066,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
     if (organisation.orgName === 'Other') {
       this.showOrgnameOther = true
+    } else {
+      this.showOrgnameOther = false
     }
     if (organisation.industry === 'Other') {
       this.showIndustryOther = true
@@ -1301,7 +1365,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       'otherDetailsOfficeAddress', 'otherDetailsOfficePinCode', 'orgName', 'orgNameOther',
     ]
     const professionalDetailsFields = ['isGovtOrg', 'industry', 'designation', 'location',
-      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'designationOther', 'locationOther', 'orgName']
+      'doj', 'orgDesc', 'orgNameOther', 'industryOther', 'orgName', 'group']
     const professionalDetails: any = []
     const organisations: any = {}
     // let academics = {}
@@ -1311,7 +1375,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     Object.keys(this.createUserForm.controls).forEach(name => {
       const currentControl = this.createUserForm.controls[name]
-      // console.log(name, form.value.primaryEmailType)
       if (form.value.primaryEmailType === this.ePrimaryEmailType.OFFICIAL) {
         personalDetail['officialEmail'] = form.value.primaryEmail
       } else {
@@ -1328,7 +1391,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
               case 'knownLanguages': return personalDetail['knownLanguages'] = form.value.knownLanguages
               case 'dob': return personalDetail['dob'] = form.value.dob
-              case 'nationality': return personalDetail['nationality']  = form.value.nationality
+              case 'nationality': return personalDetail['nationality'] = form.value.nationality
               case 'secondaryEmail': return personalDetail['personalEmail'] = form.value.secondaryEmail
               case 'residenceAddress': return personalDetail['postalAddress'] = form.value.residenceAddress
               case 'telephone': return personalDetail['telephone'] = `${form.value.telephone}` || ''
@@ -1369,13 +1432,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         professionalDetailsFields.forEach(item => {
 
           if (item === name) {
-            // console.log(name)
             switch (name) {
               case 'orgName': return organisations['name'] = form.value.orgName
               // tslint:disable-next-line
               case 'orgNameOther': return organisations['nameOther'] = form.value.orgNameOther
               // tslint:disable-next-line
               case 'designation': return organisations['designation'] = form.value.designation === 'Other' ? form.value.designationOther : form.value.designation
+              case 'group': return organisations['group'] = form.value.group
               case 'doj': return organisations['doj'] = form.value.doj
               case 'orgDesc': return organisations['description'] = form.value.orgDesc
               case 'isGovtOrg': {
@@ -1389,25 +1452,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
 
         })
-        // academicsFields.forEach((item)=>{
-        //   if(item === name ){
-        //     academics = this.getAcademics(form);
-        //   }
-        // })
-
-        // let obj:any = { }
-        // obj[name] = currentControl.value
-        // this.changedProperties.push(name);
-        // this.changedProperties = Object.assign({name: currentControl.value},   )
-        // this object will have dirty field key and value
-        // this.changedProperties.push(name)
       }
 
     })
 
     if (Object.keys(organisations).length > 0) { professionalDetails.push(organisations) }
-    // console.log(organisations, professionalDetails);
-
     this.changedProperties = {
       profileDetails: {
         ...(Object.keys(personalDetail).length > 0) && { personalDetails: personalDetail },
@@ -1415,7 +1464,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         ...(Object.keys(interests).length > 0) && { interests },
         ...(Object.keys(employmentDetails).length > 0) && { employmentDetails },
         ...(Object.keys(professionalDetails).length > 0) && { professionalDetails },
-
+        ...(this.userProfileData && this.userProfileData.profileImageUrl !== this.photoUrl ?
+          { profileImageUrl: this.photoUrl } : null),
         academics: this.getAcademics(form),
       },
     }
@@ -1454,15 +1504,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const reqUpdates = {
       request: {
         userId: this.configSvc.unMappedUser.id,
-        avatar: this.photoUrl,
+        profileDetails:
+        {
+          profileImageUrl: this.photoUrl,
+        },
         ...this.changedProperties,
       },
 
     }
-    reqUpdates.request.profileDetails.personalDetails['knownLanguages']  = this.selectedKnowLangs
-    reqUpdates.request.profileDetails.personalDetails['nationality']  = form.value.nationality
-    if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
+    reqUpdates.request.profileDetails.personalDetails['knownLanguages'] = this.selectedKnowLangs
+    reqUpdates.request.profileDetails.personalDetails['nationality'] = form.value.nationality
+    // if (!this.isVerifiedAlready && form.value.verifiedKarmayogi === true) {
+    //   reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    // }
+    if (!this.isVerifiedAlready && !this.unApprovedReq.hasOwnProperty('verifiedKarmayogi')
+      && form.value.verifiedKarmayogi === true) {
       reqUpdates.request.profileDetails.verifiedKarmayogi = form.value.verifiedKarmayogi
+    } else if (!this.isVerifiedAlready && !this.isverifiedKeyInAppv && !this.isverifiedKBKeyExist) {
+      reqUpdates.request.profileDetails.verifiedKarmayogi = true
     }
     this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(
       res => {
@@ -1511,7 +1570,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       },
       (err: any) => {
-        // console.log('err -----', err)
         const errMsg = _.get(err, 'error.params.errmsg')
         if (errMsg) {
           this.openSnackbar(errMsg)
@@ -1760,21 +1818,34 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe({
       next: (result: File) => {
         if (result) {
-          formdata.append('content', result, fileName)
+          formdata.append('data', result, fileName)
+          this.createUrl(result, fileName)
           this.loader.changeLoad.next(true)
-          const reader = new FileReader()
-          reader.readAsDataURL(result)
-          reader.onload = _event => {
-            this.photoUrl = reader.result
-            if (this.createUserForm.get('photo') !== undefined) {
-              // tslint:disable-next-line: no-non-null-assertion
-              this.createUserForm.get('photo')!.setValue(this.photoUrl)
-            }
-          }
+          // const reader = new FileReader()
+          // reader.readAsDataURL(result)
+          // reader.onload = _event => {
+          //   this.photoUrl = reader.result
+          //   if (this.createUserForm.get('photo') !== undefined) {
+          //     // tslint:disable-next-line: no-non-null-assertion
+          //     this.createUserForm.get('photo')!.setValue(this.photoUrl)
+          //   }
+          // }
         }
       },
     })
   }
+
+  createUrl(file: File, fileName: string) {
+    const formdata = new FormData()
+    formdata.append('data', file, fileName)
+    this.userProfileSvc.uploadProfilePhoto(formdata).subscribe((res: any) => {
+      if (res && res.result) {
+        this.photoUrl = this.pipeImgUrl.transform(res.result.url)
+        this.onSubmit(this.createUserForm)
+      }
+    })
+  }
+
   sendOtp() {
     const mob = this.createUserForm.get('mobile')
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
@@ -1832,7 +1903,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               if (updateRes) {
                 this.isMobileVerified = true
               }
-            // tslint:disable-next-line:align
+              // tslint:disable-next-line:align
             }, (error: any) => {
 
               this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
@@ -1887,5 +1958,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   translateTo(menuName: string): string {
     const translationKey = 'userProfile.' + menuName.replace(/\s/g, "")
     return this.translate.instant(translationKey);
+  }
+  dialogReqHelp(type: string) {
+    const mob = this.createUserForm.controls['mobile'].value
+    const primaryEmail = this.createUserForm.controls['primaryEmail'].value
+    const fullname = this.createUserForm.controls['firstname'].value
+    const dialogRef = this.dialog.open(RequestDialogComponent, {
+      hasBackdrop: false,
+      width: '420px',
+      height: '380px',
+      data: { reqType: type, mobile: mob, email: primaryEmail, name: fullname },
+    })
+    dialogRef.afterClosed().subscribe(() => {
+    })
   }
 }

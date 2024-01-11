@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 // import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
 import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-network-my-connection',
@@ -33,17 +33,12 @@ export class NetworkMyConnectionComponent implements OnInit {
     //   }
     //   return v
     // })
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-     
-      this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
+    if (this.route.snapshot.data.myConnectionList
+      && this.route.snapshot.data.myConnectionList.data
+      && this.route.snapshot.data.myConnectionList.data.result
+      && this.route.snapshot.data.myConnectionList.data.result.data) {
+      this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
     }
-    this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
   }
 
   ngOnInit() {

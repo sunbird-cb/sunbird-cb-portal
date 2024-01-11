@@ -13,6 +13,9 @@
     min-height: calc(100vh - 182px);
   }
 }
+.mat-tab-body.mat-tab-body-active {
+  overflow-y: hidden!important;
+}
 
 .flex-align {
   align-items: center;
@@ -22,6 +25,7 @@
 .disable {
   pointer-events: none !important;
   cursor: text !important;
+  // opacity: 0.9 !important;
   // background: gainsboro;
 
   .txt {
@@ -33,7 +37,6 @@
     // tslint:disable-next-line
     -webkit-animation: blink 3000ms infinite;
     /* Safari and Chrome */
-
 
     @keyframes blink {
       from {
@@ -156,6 +159,7 @@ input[type=number] {
   .profile-cols-full {
     margin: 20px 0;
     padding: 1rem 3rem;
+    box-sizing: border-box;
 
     &:first-child {
       margin: 0;
@@ -184,7 +188,7 @@ input[type=number] {
       }
       .item1 {
         margin-right: 0;
-        width: 60%;
+        width: 100%;
         min-width: 340px;
       }
     }
@@ -210,9 +214,13 @@ input[type=number] {
     border-radius: 8px;
     height: 100%;
   }
+  .new-mobile {
+    overflow: hidden;
+  }
 
   .img-column {
     flex: 100px 0 0;
+    height: 100px;
   }
 
   .input-column {
@@ -278,7 +286,7 @@ input[type=number] {
 
   .combined-field {
     width: 100%;
-    max-width: 340px;
+    min-width: 340px;
   }
 
   .w-full-imp {
@@ -546,8 +554,9 @@ input.mat-input-element {
 }
 
 ::ng-deep .mat-checkbox-inner-container {
-  height: 23px !important;
-  width: 23px !important;
+  height: 21px !important;
+  width: 21px !important;
+  margin-top: -5px !important;
 }
 
 .w80 {
@@ -566,9 +575,19 @@ input.mat-input-element {
   max-width: calc(100% - 50%) !important;
 }
 
+.profile-top-col {
+  padding: 1rem 3rem;
+  margin: 0px 10px !important;
+  min-height: 500px;
+
+      &:first-child {
+        margin: 0px 10px 0px 0px !important;
+      }
+}
+
 .otp {
   flex: 1;
-  max-height: 49px;
+  max-height: 37px;
   margin-right: 0;
   margin-left: 16px;
 }
@@ -593,6 +612,10 @@ input.mat-input-element {
     .btn-success {
       // margin-right: 0;
       // margin: 0 8px!important;
+    }
+    .profile-top-col {
+      padding: 1rem;
+      min-height:auto;
     }
 
     .profile-cols {
@@ -619,6 +642,8 @@ input.mat-input-element {
         }
       }
     }
+
+   
 
     .profile-cols-full {
       padding: 1rem;
@@ -651,6 +676,10 @@ input.mat-input-element {
   color: #f44336;
   top: 33px;
 }
+
+// .postal-address {
+//   min-height: 60px;
+// }
 .profile-pic {
  font-size: 12px;
  line-height: 1.3;
@@ -658,8 +687,8 @@ input.mat-input-element {
 }
 .profile-pic-div {
   position: relative;
-    margin-top: 70px;
-    margin-left: 8px;
+    margin-top: 40px;
+    margin-left: 12px;
 }
 
 .info-icon {
@@ -668,4 +697,46 @@ input.mat-input-element {
 
 ::ng-deep .mobile-country-code .mat-select-value {
   text-overflow: inherit !important;
+}
+
+.txt-review{
+  margin-top: -16px;
+}
+
+.heading-details {
+  font-size: 18px !important;
+}
+
+.lock-heading {
+  display: flex;
+  justify-content: end;
+}
+
+.help-request {
+  position: relative;
+ // top: -10px;
+  top: -15px;
+  cursor: pointer;
+ // right: 2px;
+}
+.help-request-verify{
+  position: relative;
+   top: -20px;
+}
+.pos-request {
+  margin-right: 8px;
+}
+
+#org-field {
+  font: 400 12px/18px Lato !important;
+}
+
+.verifiy-user-msg{
+  font-size: 14px;
+}
+
+.mat-form-field-disabled {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  opacity: 0.9 !important;
 }

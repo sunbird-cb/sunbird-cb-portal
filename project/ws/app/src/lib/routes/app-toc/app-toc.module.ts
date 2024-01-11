@@ -126,6 +126,8 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
 import { HttpClient } from '@angular/common/http'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { HttpLoaderFactory } from '../knowledge-resource/knowledge-resource.module'
+import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 
 @NgModule({
   declarations: [
@@ -155,6 +157,7 @@ import { HttpLoaderFactory } from '../knowledge-resource/knowledge-resource.modu
     AppTocSessionsComponent,
     AppTocSessionCardComponent,
     EnrollQuestionnaireComponent,
+    KarmaPointsPanelComponent,
   ],
   imports: [
     CommonModule,
@@ -208,6 +211,7 @@ import { HttpLoaderFactory } from '../knowledge-resource/knowledge-resource.modu
     CertificateDialogModule,
     ConfirmDialogModule,
     BtnGoalsModule,
+    SkeletonLoaderModule,
     BtnPlaylistModule,
     BtnMailUserModule,
     BtnPageBackModule,

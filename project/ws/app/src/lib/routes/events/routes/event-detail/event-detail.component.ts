@@ -48,7 +48,9 @@ export class EventDetailComponent implements OnInit {
       this.eventData = data.result.event
       const creatordata = this.eventData.creatorDetails
       const str = creatordata.replace(/\\/g, '')
-      this.eventData.creatorDetails = JSON.parse(str)
+      if (str.length > 0) {
+        this.eventData.creatorDetails = JSON.parse(str)
+      }
       const eventDate = this.customDateFormat(this.eventData.startDate, this.eventData.startTime)
       const eventendDate = this.customDateFormat(this.eventData.endDate, this.eventData.endTime)
       // const isToday = this.compareDate(eventDate, eventendDate, this.eventData)

@@ -40,24 +40,25 @@
 }
 
 .search {
+  @include breakpoint-xs {
+    padding-bottom: 12px;
+  }
+
   @media (max-width:768px) {
     width: 100%;
     margin: 0px !important;
   }
   form.search_form {
     @include breakpoint-xs  {
-      width: 55%;
+      width: 100%;
     }
-    .autocomplete-form {
-      // @media (max-width:768px) {
-      //   width: calc(100%- 170px);
-      // }
 
+    .autocomplete-form {
       @include breakpoint-s  {
         width: 90%;
       }
       @include breakpoint-xs  {
-        width: 95%;
+        width: 100%;
       }
     }
   }
@@ -385,7 +386,6 @@ a:not([href]):not([tabindex]) {
   }
 
   .card_inner_title_box {
-  //    display: column;
       width: 210px;
       padding: 24px;
 
@@ -510,7 +510,8 @@ a.work_order_link {
   background: #0074b6;
   border-radius: 4px 4px;
   // padding: 14px 16px;
-  width: 152px;
+  min-width: 152px;
+  padding: 0 12px;
   height: 42px;
   margin: 5px 0 0;
   color: #fff!important;
@@ -559,28 +560,47 @@ span.disableTagIcon, span.disableLevelIcon {
   background-color: rgba(0, 0, 0, 0.08);
   border: 2px solid rgba(0, 0, 0, 0.08);
 }
+
 .card_inner_content {
   width: 100%;
 
   .card_inner_title_box {
-    width: 30%;
+    width: 35%;
     @include breakpoint-xs {
       word-wrap: break-word;
       white-space: initial;
     }
   }
+  
   .proficiency_text_box {
-    width: 30%;
+    width: 35%;
   }
+
   .proficient_level_box {
-    width: 25%;
+    width: 22%;
   }
-  .prof_txt_data {
-    @include breakpoint-xs {
-      flex-direction: column;
+}
+
+@media screen and (max-width: 640px) {
+  .card_inner_content {
+    .mat-h4 {
+      margin-bottom: 0px;
+    }
+
+    .card_inner_title_box {
+      width: 100%;
+    }
+
+    .proficiency_text_box {
+      width: 100%;
+    }
+
+    .proficient_level_box {
+      width: 100%;
     }
   }
 }
+
 
 p.deactivate_text {
   opacity: 0.4;

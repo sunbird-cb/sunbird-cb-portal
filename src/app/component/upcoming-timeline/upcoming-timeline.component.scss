@@ -1,0 +1,58 @@
+.highlight-block {
+    border-radius: 12px;
+    opacity: 1;
+    background-color: rgb(218,226,240);
+    padding: 16px;
+    border-color: rgba(27,76,161, 1) !important;
+    border: 1px solid;
+    .title {
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font: 600 16px/24px Montserrat-SemiBold;
+        font-style: normal;
+        letter-spacing: 0.12px;
+        text-align: left;
+        margin-bottom: 0;
+    }
+    .description {
+        opacity: 1;
+        color: rgba(0,0,0,0.6);
+        font-family: "Lato-Regular";
+        font-size: 14px;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 20px;
+            }
+}
+::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+    opacity: 1;
+    color: rgba(0,0,0,0.87) !important;
+    font-family: "Lato-Bold";
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 21px;
+}
+::ng-deep .theme-igot.day-mode .mat-ink-bar {
+    background-color: #0074b6 !important;
+}
+::ng-deep.mat-tab-label.mat-tab-label,
+::ng-deep.mat-tab-label.mat-tab-label {
+    opacity: 1;
+    color: rgba(0,0,0,0.6) !important;
+    font-family: "Lato-Regular";
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    text-align: left;
+    line-height: 20px;
+}
+::ng-deep.mat-tab-header-pagination-disabled {
+    display: none !important;
+}

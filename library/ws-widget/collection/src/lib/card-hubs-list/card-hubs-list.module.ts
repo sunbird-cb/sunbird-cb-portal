@@ -8,9 +8,11 @@ import { RouterModule } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { HttpLoaderFactory } from 'src/app/app.module'
+import { ClickOutsideDirective } from './clickoutside.directive'
 
 @NgModule({
-  declarations: [CardHubsListComponent],
+  declarations: [CardHubsListComponent,
+    ClickOutsideDirective],
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule,
     MatExpansionModule, MatIconModule, MatProgressSpinnerModule, AvatarPhotoModule,
     HorizontalScrollerModule, PipeNameTransformModule, PipeOrderByModule, RouterModule,

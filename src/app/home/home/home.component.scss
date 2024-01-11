@@ -69,8 +69,9 @@
     font-family: 'Montserrat';
   }
   .update-mobile-number-flex .update-now {
-    margin-top: 42px;
+    margin-top: 38px;
     margin-left: 20px;
+    padding: 6px 16px;
   }
   .update-mobile-number-flex .inline-info{
     margin-top: 42px;
@@ -513,3 +514,24 @@
 }
 
 
+.karmapoints-panel {
+  background: #C9CCD1;
+  padding: 13px 0;
+  text-align: center;
+  position: relative;
+
+  img {
+    vertical-align: bottom !important;
+    width: 24px;
+    margin-right: 2px;
+  }
+
+  .mat-icon {
+    position: absolute;
+    right: 16%;
+    top: 16px;
+    color: #505254;
+    font-size: 20px;
+    height: 20px;
+  }
+}

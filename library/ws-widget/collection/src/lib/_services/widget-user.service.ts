@@ -7,14 +7,17 @@ import { NsContent } from './widget-content.model'
 import 'rxjs/add/observable/of'
 import dayjs from 'dayjs'
 import { environment } from 'src/environments/environment'
+import { NsCardContent } from '../card-content-v2/card-content-v2.model'
+import lodash from 'lodash'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   FETCH_USER_GROUPS: (userId: string) =>
     `${PROTECTED_SLAG_V8}/user/group/fetchUserGroup?userId=${userId}`,
+    FETCH_CPB_PLANS: `/apis/proxies/v8/user/v1/cbplan`,
   FETCH_USER_ENROLLMENT_LIST: (userId: string | undefined) =>
     // tslint:disable-next-line: max-line-length
-    `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey,avgRating,additionalTags&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes`,
+    `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey,avgRating,additionalTags,${NsCardContent.IGOTConst.COMPETENCIES}&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes`,
   FETCH_USER_ENROLLMENT_LIST_PROFILE: (userId: string | undefined) =>
     // tslint:disable-next-line: max-line-length
     `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey,avgRating,additionalTags&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes&retiredCoursesEnabled=true`,
@@ -61,6 +64,7 @@ export class WidgetUserService {
       const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
           (data: any) => {
             localStorage.setItem('enrollmentData', JSON.stringify(data.result))
+            this.mapEnrollmentData(data.result)
             return data.result
           }
         )
@@ -86,14 +90,27 @@ export class WidgetUserService {
       Pragma: 'no-cache',
       Expires: '0',
     })
-    return this.http
-      .get(path, { headers })
-      .pipe(
-        catchError(this.handleError),
-        map(
-          (data: any) => data.result
+    // return this.http
+    //   .get(path, { headers })
+    //   .pipe(
+    //     catchError(this.handleError),
+    //     map(
+    //       (data: any) => data.result
+    //     )
+    //   )
+    if (this.checkStorageData('enrollmentService')) {
+      const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
+          (data: any) => {
+            localStorage.setItem('enrollmentData', JSON.stringify(data.result))
+            this.mapEnrollmentData(data.result)
+            return data.result
+          }
         )
       )
+      this.setTime('enrollmentService')
+      return result
+    }
+    return this.getData('enrollmentData')
   }
 
   checkStorageData(key: any) {
@@ -140,5 +157,115 @@ export class WidgetUserService {
        localStorage.setItem('timeCheck', JSON.stringify(parsedData))
       }
     }
+  }
+
+  fetchCbpPlanList() {
+
+    // let data = JSON.parse(localStorage.getItem('cbpData')|| '')
+    // if(!data) {
+    //   this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
+    //     (data: any) => {
+    //       const courseData = this.mapData(data.result)
+    //       return courseData
+    //     }
+    //   )
+    //   )
+    // } else {
+    //   return this.getData('cbpData')
+
+    // }
+    const result = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
+      (data: any) => {
+        if (data && data.result) {
+          const courseData = this.mapData(data.result)
+          return courseData
+        }
+        return data
+      }
+    )
+    )
+    return result
+  }
+
+  mapData(data: any) {
+    const contentNew: any = []
+    const todayDate = dayjs()
+
+    const enrollList = JSON.parse(localStorage.getItem('enrollmentMapData') || '')
+
+    if (data && data.count) {
+      data.content.forEach((c: any) => {
+        c.contentList.forEach((childData: any) => {
+          const childEnrollData = enrollList[childData.identifier]
+          const daysCount = dayjs(c.endDate).diff(todayDate, 'day')
+          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 30
+          ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
+          childData['endDate'] = c.endDate
+          childData['parentId'] = c.id
+          childData['planType'] = 'cbPlan'
+          contentNew.push(childData)
+          const competencyArea: any = []
+          const competencyTheme: any = []
+          const competencyThemeType: any = []
+          const competencySubTheme: any = []
+          const competencyAreaId: any = []
+          const competencyThemeId: any = []
+          const competencySubThemeId: any = []
+          childData['contentStatus'] = 0
+          if (childEnrollData) {
+            childData['contentStatus'] = childEnrollData.status
+          }
+         if (childData.competencies_v5) {
+          childData.competencies_v5.forEach((element: any) => {
+            if (!competencyArea.includes(element.competencyArea)) {
+              competencyArea.push(element.competencyArea)
+              competencyAreaId.push(element.competencyAreaId)
+            }
+            if (!competencyTheme.includes(element.competencyTheme)) {
+              competencyTheme.push(element.competencyTheme)
+              competencyThemeId.push(element.competencyThemeId)
+            }
+            if (!competencyThemeType.includes(element.competencyThemeType)) {
+              competencyThemeType.push(element.competencyThemeType)
+            }
+            if (!competencySubTheme.includes(element.competencySubTheme)) {
+              competencySubTheme.push(element.competencySubTheme)
+              competencySubThemeId.push(element.competencySubThemeId)
+            }
+          })
+         }
+
+          childData['competencyArea'] = competencyArea
+          childData['competencyTheme'] = competencyTheme
+          childData['competencyThemeType'] = competencyThemeType
+          childData['competencySubTheme'] = competencySubTheme
+          childData['competencyAreaId'] = competencyAreaId
+          childData['competencyThemeId'] = competencyThemeId
+          childData['competencySubThemeId'] = competencySubThemeId
+        })
+      })
+      const sortedData: any = contentNew.sort((a: any, b: any) => {
+          const firstDate: any = new Date(a.endDate)
+          const secondDate: any = new Date(b.endDate)
+
+        return  secondDate > firstDate  ? 1 : -1
+      })
+      const uniqueUsersByID = lodash.uniqBy(sortedData, 'identifier')
+      const sortedByEndDate =  lodash.orderBy(uniqueUsersByID, ['endDate'], ['asc'])
+      const sortedByStatus =  lodash.orderBy(sortedByEndDate, ['contentStatus'], ['asc'])
+      localStorage.setItem('cbpData', JSON.stringify(sortedByStatus))
+      return sortedByStatus
+    }
+    return []
+  }
+
+  mapEnrollmentData(courseData: any) {
+    const enrollData: any = {}
+    if (courseData && courseData.courses.length) {
+      courseData.courses.forEach((data: any) => {
+          enrollData[data.collectionId] = data
+      })
+    }
+    localStorage.setItem('enrollmentMapData', JSON.stringify(enrollData))
   }
 }

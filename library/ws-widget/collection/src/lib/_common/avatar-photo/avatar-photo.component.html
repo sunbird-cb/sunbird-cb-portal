@@ -9,8 +9,9 @@
 'circle-r-m': size=== 'round-m',
 'circle-r-p-m': size=== 'profile-round-m',
 'circle-m-side': size=== 'm-side',
+'circle-m-recommended': size==='m-recommended',
 'circle-xxl-s': size=== 'xxl-s'}" [ngStyle]="{'background-color':  circleColor }">
-  <img *ngIf="!showInitials" src="{{photoUrl}}" [alt]="photoUrl? '' :(name || userInitials || size || random)">
+  <img *ngIf="!showInitials" loading="lazy" src="{{photoUrl}}" [alt]="photoUrl? '' :(name || userInitials || size || random)">
 
   <div *ngIf="showInitials" class="initials" i18n-aria-label>
     {{ userInitials }} 

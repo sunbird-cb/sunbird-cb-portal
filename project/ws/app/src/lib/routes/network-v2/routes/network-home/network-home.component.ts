@@ -58,17 +58,31 @@ export class NetworkHomeComponent implements OnInit {
       this.recommendedUsers = this.route.snapshot.data.recommendedUsers.data.result.data.
       find((item: any) => item.field === 'employmentDetails.departmentName').results
       this.recommendedUsers.sort((a: any, b: any) => {
-        return a.personalDetails.firstname.toLowerCase().localeCompare(b.personalDetails.firstname.toLowerCase())
+        return this.getName(a.personalDetails).toLowerCase().localeCompare(this.getName(b.personalDetails).toLowerCase())
       })
     }
-    this.establishedConnections = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    if (this.route.snapshot.data.myConnectionList
+      && this.route.snapshot.data.myConnectionList.data
+      && this.route.snapshot.data.myConnectionList.data.result
+      && this.route.snapshot.data.myConnectionList.data.result.data) {
+        this.establishedConnections = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
+          if (v && v.personalDetails && v.personalDetails.firstname) {
+            v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+          }
+          return v
+        })
       }
-      return v
-    })
-    this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
+      if (this.route.snapshot.data.connectionRequests
+        && this.route.snapshot.data.connectionRequests.data
+        && this.route.snapshot.data.connectionRequests.data.result
+        && this.route.snapshot.data.connectionRequests.data.result.data) {
+          this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
+        }
     this.getAllConnectionRequests()
+  }
+
+  getName(userDetails: any) {
+    return userDetails.firstName ? userDetails.firstName : userDetails.firstname
   }
 
   ngOnInit() {
@@ -76,12 +90,23 @@ export class NetworkHomeComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         const param = params['page']
         if (param === 'people_you_may_know') {
-          if (this.document.getElementById('people_you_may_know')) {
-            const element =  this.document.getElementById('people_you_may_know')
-            if (element !== null) {
-              element.scrollIntoView()
+            if (this.document.getElementById('people_you_may_know')) {
+              if (navigator.userAgent.search('Firefox') < 0) {
+                const element =  this.document.getElementById('people_you_may_know')
+                if (element !== null) {
+                  element.scrollIntoView()
+                }
+              } else {
+                setTimeout(() => {
+                  const element =  this.document.getElementById('people_you_may_know')
+                  if (element !== null) {
+                    element.scrollIntoView()
+                  }
+                },         500)
+              }
+
             }
-          }
+
         }
       })
     }
@@ -90,10 +115,21 @@ export class NetworkHomeComponent implements OnInit {
         const param = params['page']
         if (param === 'people_connection_request') {
           if (this.document.getElementById('people_connection_request')) {
-            const element =  this.document.getElementById('people_connection_request')
-            if (element !== null) {
-              element.scrollIntoView()
+            if (navigator.userAgent.search('Firefox') < 0) {
+              const element =  this.document.getElementById('people_connection_request')
+              if (element !== null) {
+                element.scrollIntoView()
+              }
+            } else {
+              setTimeout(() => {
+                const element =  this.document.getElementById('people_connection_request')
+                if (element !== null) {
+                  element.scrollIntoView()
+                }
+              },         500)
+
             }
+
           }
         }
       })

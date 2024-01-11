@@ -35,8 +35,9 @@
 .download-app-chip:hover {
   background-color: #C37024;
 }
+
 .help-icon img{
-    vertical-align: middle;
+  vertical-align: middle;
 }
 .custom-lang {
   font: 400 14px/21px Lato;
@@ -74,7 +75,9 @@
     .help-icon {
       height: 20px;
       width: 20px;
+      margin-top: 6px;
     }
+
     .download-app-chip {
       display: none !important;
     }
@@ -90,7 +93,25 @@
 
     .right-side-nav-items {
         display: inline-block;
-        margin: 12px -3px;
+        margin: 5px 0;
+        // margin: 7px -7px;
     }
     
   }
+
+// .karmapoints {
+//   img {
+//     margin-right: 4px;
+//     vertical-align: top;
+//     width: 28px;
+//   }
+
+//   .text{
+//     font: 700 10px/12px Lato
+//   }
+
+//   .points{
+//     color: rgb(27, 76, 161);
+//     font-weight: 700 !important;
+//   }
+// }

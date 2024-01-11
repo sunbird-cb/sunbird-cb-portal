@@ -63,6 +63,9 @@ export class LogoutComponent implements OnInit {
     if (localStorage.getItem('faq-languages')) {
       localStorage.removeItem('faq-languages')
     }
+    if (sessionStorage.getItem('hideUpdateProfilePopUp')) {
+      sessionStorage.removeItem('hideUpdateProfilePopUp')
+    }
   }
 
   get isDownloadable() {

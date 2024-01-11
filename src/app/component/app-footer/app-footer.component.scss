@@ -24,6 +24,12 @@
   height: 32px;
 }
 
+@media screen and (max-width: 768px) {
+  .logo-dim img {
+    height: 36px;
+  }
+}
+
 .copyright-content {
   display: inline-block;
   margin: 26px 0 16px 0;

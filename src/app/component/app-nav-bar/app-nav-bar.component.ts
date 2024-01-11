@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 @Component({
@@ -44,12 +44,19 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isLoggedIn = false
   fontContainerFlag = false;
   activeRoute = '';
+  countdata: any
+  enrollInterval: any
+  karmaPointLoading: boolean = true
+  tooltipDelay: any = 1000
+
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private events: EventService
+
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -78,18 +85,18 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             let route = localStorage.getItem("activeRoute");
             this.activeRoute = route ? route.toLowerCase().toString() : '';
           }
-          
+
           if (event.url.includes('/page/home')) {
             this.activeRoute = 'home'
           } else if (event.url.includes('/page/explore')) {
             this.activeRoute = 'explorer'
-          } else if (event.url.includes('app/globalsearch')) {
+          } else if (event.url.includes('app/globalsearch')  || event.url.includes('/app/search/home')) {
             this.activeRoute = 'search'
           } else if (event.url.includes('app/careers')) {
             this.activeRoute = 'Career'
-          } else if (event.url.includes('app/my-learning')) {
+          } else if (event.url.includes('app/seeAll?key=continueLearning')) {
             this.activeRoute = 'my learnings'
-          } 
+          }
 
       }
     })
@@ -127,6 +134,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       }
     })
     this.startTour()
+    this.enrollInterval = setInterval(() => {
+      this.getKarmaCount()
+    },                                1000)
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -249,10 +259,42 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
     } else {
       this.router.navigate([pathConfig.path]);
-    } 
+    }
+    this.configSvc.openExploreMenuForMWeb.next(false);
   }
 
   openExploreMenu() {
+    this.activeRoute = 'explore';
     this.configSvc.openExploreMenuForMWeb.next(true);
   }
+
+  getKarmaCount() {
+    let enrollList: any
+    if (localStorage.getItem('enrollmentData')) {
+      enrollList = JSON.parse(localStorage.getItem('enrollmentData') || '')
+      this.countdata = enrollList && enrollList.userCourseEnrolmentInfo &&
+       enrollList.userCourseEnrolmentInfo.karmaPoints || 0
+      this.karmaPointLoading = false
+      clearInterval(this.enrollInterval)
+    }
+  }
+
+  viewKarmapoints() {
+    this.raiseTelemetry()
+    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
+  }
+
+  raiseTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'nav-karmapoints',
+        id: 'nav-karmapoints',
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
+    })
+  }
+
 }

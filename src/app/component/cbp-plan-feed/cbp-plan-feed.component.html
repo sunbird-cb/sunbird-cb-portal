@@ -1,0 +1,49 @@
+<div class="flex flex-col gap-4 mt-0 md:mt-8" id="listPage">
+    <h5 class="heading">My CBP plans</h5>
+    <div class="flex flex-middle">
+        <form class="w-full">
+            <div appearance="none" class="w-full relative search-block">
+              <input name="search" [formControl]="searchControl"  i18n-placeholder placeholder="Search">
+              <mat-icon  aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color absolute" role="img"> search </mat-icon>
+            </div>
+        </form>
+        <div class=" position-relative ">
+            <mat-icon aria-hidden="true" (click)="openFilter()" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color filter-acbp cursor-pointer" role="img"> filter_list </mat-icon>
+            <ng-container *ngIf="filterApplied">
+                <span  class="filter-dot"></span>
+            </ng-container>
+        </div>
+    </div>
+    <div class="flex flex-wrap" *ngIf="filterApplied">
+    <ng-container  *ngFor="let item of filterObject | keyvalue">
+        <ng-container *ngIf="item?.value?.length">
+                <ng-container  *ngFor="let item1 of item.value">
+                    <div class="tag-wrap flex margin-right-xs margin-bottom-xs">
+                        <ng-container *ngIf="item.key === 'status' || item.key === 'timeDuration' ;else allEle">
+                            <p>{{filterValuesBinding[item.key][item1]}}</p>
+                        </ng-container>
+                        <ng-template #allEle>
+                            <p>{{item1}}</p>
+                        </ng-template>
+                        <mat-icon aria-hidden="true" (click)="CloseFilter(item1,item.key)" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color filter-acbp cursor-pointer" role="img"> close </mat-icon>
+                    </div>
+                </ng-container>
+        </ng-container>
+    </ng-container>
+</div>
+    <ng-container *ngIf="contenFeedList?.length;else emptyTemplate">
+        <div class="mr-2 mb-5" *ngFor="let c of contenFeedList">
+            <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+        </div>
+    </ng-container>
+    <ng-template #emptyTemplate>
+        <div class="w-full flex flex-col items-center justify-center">
+            <img alt="" class="mt-4 mb-4" src="assets/icons/search-empty.svg">
+            <div class="mat-subheading-1 text-center">
+                <p>No results found</p>
+                <p class="search-help-text">Try adjusting your search
+                    to find what you are looking for</p>
+            </div>
+          </div>
+    </ng-template>
+</div>

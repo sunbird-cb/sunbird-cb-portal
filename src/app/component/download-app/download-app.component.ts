@@ -12,7 +12,7 @@ export class DownloadAppComponent implements OnInit {
 
   ngOnInit() {
     // console.log('popupClass',this.popupClass,window.innerWidth);
-    if(window.innerWidth <= 768) {
+    if(window.innerWidth <= 1200) {
       this.isMobile = true;
     } else {
       this.isMobile = false;

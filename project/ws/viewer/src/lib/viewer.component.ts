@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs'
 import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
+import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
@@ -59,8 +60,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private widgetServ: WidgetContentService,
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
+    private abc: MobileAppsService
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
+    this.abc.mobileTopHeaderVisibilityStatus.next(false)
   }
 
   getContentData(e: any) {

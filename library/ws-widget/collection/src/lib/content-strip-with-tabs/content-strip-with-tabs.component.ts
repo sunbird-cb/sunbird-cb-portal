@@ -19,6 +19,8 @@ import { environment } from 'src/environments/environment'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
+import dayjs from 'dayjs'
+import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 
 interface IStripUnitContentData {
   key: string
@@ -80,6 +82,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   environment!: any
   changeEventSubscription: Subscription | null = null
   defaultMaxWidgets = 12
+  enrollInterval: any
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -193,6 +196,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
 
   }
   checkCondition(wData: NsContentStripWithTabs.IContentStripMultiple, data: IStripUnitContentData) {
+    if (wData.strips[0].stripConfig && wData.strips[0].stripConfig.hideShowAll) {
+      return !wData.strips[0].stripConfig.hideShowAll
+    }
     return wData.strips[0].viewMoreUrl && data.widgets && data.widgets.length >= 4
   }
   checkVisible(data: IStripUnitContentData) {
@@ -257,13 +263,27 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   checkForDateFilters(filters: any) {
+    let userData: any
+    if (this.configSvc.userProfile) {
+      userData = this.configSvc.userProfile
+    }
+
     if (filters && filters.hasOwnProperty('batches.endDate')) {
       // tslint:disable-next-line
       filters['batches.endDate']['>='] = eval(filters['batches.endDate']['>='])
     } else if (filters && filters.hasOwnProperty('batches.enrollmentEndDate')) {
       // tslint:disable-next-line
       filters['batches.enrollmentEndDate']['>='] = eval(filters['batches.enrollmentEndDate']['>='])
+    } else if (filters.organisation &&
+      filters.organisation.indexOf('<orgID>') >= 0
+    ) {
+      filters['organisation'] = userData && userData.rootOrgId
+
+    if (filters && filters.hasOwnProperty('designation')) {
+      filters['designation'] = userData.professionalDetails.length > 0 ?
+       userData.professionalDetails[0].designation : ''
     }
+  }
     return filters
   }
 
@@ -277,6 +297,9 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromTrendingContent(strip, calculateParentStatus)
+    this.enrollInterval = setInterval(() => {
+      this.fetchAllCbpPlans(strip, calculateParentStatus)
+    },                                1000)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -406,7 +429,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     array.forEach((e: any, idx: number, arr: any[]) => (customFilter(e, idx, arr) ? inprogress : completed).push(e))
     return [
       { value: 'inprogress', widgets: this.transformContentsToWidgets(inprogress, strip) },
-      { value: 'completed', widgets: [] }]
+      { value: 'completed', widgets: this.transformContentsToWidgets(completed, strip) }]
   }
 
   async fetchFromSearchV6(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -646,21 +669,28 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     contents: NsContent.IContent[],
     strip: NsContentStripWithTabs.IContentStripUnit,
   ) {
-    return (contents || []).map((content, idx) => ({
-      widgetType: 'card',
-      widgetSubType: 'cardContent',
-      widgetHostClass: 'mb-2',
-      widgetData: {
-        content,
-        ...(content.batch && { batch: content.batch }),
-        cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
-        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
-        context: { pageSection: strip.key, position: idx },
-        intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
-        deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
-        contentTags: strip.stripConfig && strip.stripConfig.contentTags,
-      },
-    }))
+    return (contents || []).map((content, idx) => (
+      content ?  {
+        widgetType: 'card',
+        widgetSubType: 'cardContent',
+        widgetHostClass: 'mb-2',
+        widgetData: {
+          content,
+          ...(content.batch && { batch: content.batch }),
+          cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+          cardCustomeClass: strip.customeClass ? strip.customeClass : '',
+          context: { pageSection: strip.key, position: idx },
+          intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
+          deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
+          contentTags: strip.stripConfig && strip.stripConfig.contentTags,
+        },
+      } : {
+        widgetType: 'card',
+        widgetSubType: 'cardContent',
+        widgetHostClass: 'mb-2',
+        widgetData: {},
+      }
+    ))
   }
 
   private transformSkeletonToWidgets(
@@ -775,6 +805,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
+        (strip.request.cbpList && Object.keys(strip.request.cbpList).length) ||
         (strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length)
       )
     ) {
@@ -784,6 +815,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent, stripMap: IStripUnitContentData, stripKey: string) {
+    if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+      stripMap.tabs[tabEvent.index].fetchTabStatus = 'inprogress'
+      stripMap.tabs[tabEvent.index]['tabLoading'] = true
+      stripMap.showOnLoader = true
+    }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
@@ -792,12 +828,12 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
       data,
     )
-    const currentTabFromMap = stripMap.tabs && stripMap.tabs[tabEvent.index]
+    const currentTabFromMap: any = stripMap.tabs && stripMap.tabs[tabEvent.index]
     const currentStrip = this.widgetData.strips.find(s => s.key === stripKey)
     if (this.stripsResultDataMap[stripKey] && currentTabFromMap) {
       this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams = {
         ...this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams,
-        tabSelected: currentTabFromMap.label
+        tabSelected: currentTabFromMap.label,
       }
     }
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {
@@ -809,8 +845,18 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         } else if (currentTabFromMap.request.trendingSearch) {
           this.getTabDataByNewReqTrending(currentStrip, tabEvent.index, currentTabFromMap, true)
         }
+        if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+          stripMap.tabs[tabEvent.index]['tabLoading'] = false
+        }
       } else {
         this.getTabDataByfilter(currentStrip, currentTabFromMap, true)
+        setTimeout(() => {
+          if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+              stripMap.tabs[tabEvent.index]['tabLoading'] = false
+              stripMap.tabs[tabEvent.index].fetchTabStatus = 'done'
+              stripMap.showOnLoader = false
+          }
+        },         200)
       }
     }
   }
@@ -911,4 +957,126 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // TODO: Write logic for individual filter if passed in config
     // add switch case based on config key passed
   }
+
+  fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length
+    && localStorage.getItem('enrollmentData')) {
+
+      let courses: NsContent.IContent[]
+      let tabResults: any[] = []
+      this.userSvc.fetchCbpPlanList().subscribe((res: any) => {
+        if (res) {
+          courses = res
+          if (strip.tabs && strip.tabs.length) {
+            tabResults = this.splitCbpTabsData(courses, strip)
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(courses, strip),
+              'done',
+              calculateParentStatus,
+              '',
+              tabResults
+            )
+          } else {
+            this.processStrip(
+              strip,
+              this.transformContentsToWidgets(courses, strip),
+              'done',
+              calculateParentStatus,
+              'viewMoreUrl',
+            )
+          }
+        }
+      },                                        (_err: any) => {
+
+      })
+
+      clearInterval(this.enrollInterval)
+    }
+  }
+  splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
+    const tabResults: any[] = []
+    const date1 = dayjs()
+    const splitData = this.getTabsList(
+      contentNew,
+      (e: any) => {
+        const daysCount = dayjs(e.endDate).diff(date1, 'day')
+        e['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 30 ?
+         NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
+        return daysCount < 0
+      },
+      strip,
+    )
+    if (strip.tabs && strip.tabs.length) {
+      for (let i = 0; i < strip.tabs.length; i += 1) {
+        if (strip.tabs[i]) {
+          tabResults.push(
+            {
+              ...strip.tabs[i],
+              fetchTabStatus: 'done',
+              ...(splitData.find(itmInner => {
+                if (strip.tabs && strip.tabs[i] && itmInner.value === strip.tabs[i].value) {
+                  return itmInner
+                }
+                return undefined
+              })),
+            }
+          )
+        }
+      }
+    }
+    return tabResults
+  }
+
+  getTabsList(array: NsContent.IContent[],
+              customFilter: any,
+              strip: NsContentStripWithTabs.IContentStripUnit) {
+    let all: any[] = []
+    const upcoming: any[] = []
+    const overdue: any[] = []
+    array.forEach((e: any, idx: number, arr: any[]) => {
+      all.push(e)
+      return (customFilter(e, idx, arr) ? overdue : upcoming).push(e)
+    })
+
+    all = all.sort((a: any, b: any): any => {
+      if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        return  firstDate > secondDate  ? -1 : 1
+      }
+    })
+    // overdue = overdue.sort((a: any, b: any): any => {
+    //   if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+    //     const firstDate: any = new Date(a.endDate)
+    //     const secondDate: any = new Date(b.endDate)
+    //     if (b.contentStatus !== 2 &&  a.contentStatus !== 2) {
+    //       return  firstDate > secondDate  ? -1 : 1
+    //     }
+    //   }
+    // })
+    // overdue = overdue.filter((data: any): any => {
+    //   return data.contentStatus < 2
+    // })
+    // upcoming = upcoming.filter((data: any): any => {
+    //   return data.contentStatus < 2
+    // })
+    // this.getSelectedIndex(1)
+    return [
+    { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },
+    { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
+    { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
+  }
+
+  getSelectedIndex(stripsResultDataMap: any, key: any): number {
+    let returnValue = 0
+    if (key === 'cbpPlan') {
+      if (stripsResultDataMap.tabs.length) {
+        const data = stripsResultDataMap.tabs.filter((ele: any) => ele.value === 'upcoming')
+        returnValue = data[0].widgets && data[0].widgets.length > 0 ? 1 : 0
+      }
+    }
+    return returnValue
+  }
+
 }

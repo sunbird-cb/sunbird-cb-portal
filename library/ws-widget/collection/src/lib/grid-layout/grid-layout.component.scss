@@ -31,8 +31,14 @@
 
 .new-box-hubs {
   margin: 0 0 $size-s 0;
-  height:52px;
+  height:40px;
   background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  // .new-box-hubs {
+  //   margin: 6px 0px;
+  // }
 }
 
 .new-box-left {
@@ -775,6 +781,7 @@
 
   .mob-16 {
     padding: 0 16px;
+    height: 64px;
   }
 
 }

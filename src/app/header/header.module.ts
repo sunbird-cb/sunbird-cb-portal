@@ -31,6 +31,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
 @NgModule({
   declarations: [HeaderComponent, AppNavBarComponent, FontSettingComponent, TopRightNavBarComponent],
   imports: [
@@ -61,6 +62,7 @@ import { HttpLoaderFactory } from '../app.module';
         deps: [HttpClient],
       },
     }),
+    SkeletonLoaderModule
   ],
   exports: [
     HeaderComponent,
