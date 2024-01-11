@@ -163,25 +163,43 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
                 icObj['viewMore'] = false;
               });
 
-              // let subThemeMapping: any = {};
+              let subThemeMapping: any = {};
               eachCourse.content.competencies_v5.forEach((v5Obj: any) => {
                 if (this.certificateMappedObject[v5Obj.competencyTheme]) {
+
+                  // Certificate consumed logic...
                   eachCourse.issuedCertificates.forEach((certObj: any) => {
                     if (this.certificateMappedObject[v5Obj.competencyTheme].certificate.findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
                       this.certificateMappedObject[v5Obj.competencyTheme].certificate.push(certObj);
                     }
                   });
 
+                  // Content consumed logic...
                   if (this.certificateMappedObject[v5Obj.competencyTheme].contentConsumed.indexOf(eachCourse.courseName.trim()) === -1) {
                     this.certificateMappedObject[v5Obj.competencyTheme].contentConsumed.push(eachCourse.courseName.trim());
                   }
                 } else {
                   this.certificateMappedObject[v5Obj.competencyTheme] = {
                     'certificate': eachCourse.issuedCertificates,
-                    'contentConsumed': [eachCourse.courseName]
+                    'contentConsumed': [eachCourse.courseName],
+                    'subThemes': []
                   };
                 }
-              });  
+
+                // Sub theme mapping logic...
+                if (subThemeMapping[v5Obj.competencyTheme]) {
+                  if (subThemeMapping[v5Obj.competencyTheme].indexOf(v5Obj.competencySubTheme) === -1) {
+                    subThemeMapping[v5Obj.competencyTheme].push(v5Obj.competencySubTheme);
+                  }
+                } else {
+                  subThemeMapping[v5Obj.competencyTheme] = [];
+                  subThemeMapping[v5Obj.competencyTheme].push(v5Obj.competencySubTheme);
+                }
+              });
+              
+              for (let key in subThemeMapping) {
+                this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
+              }
             }
           });
           
@@ -204,11 +222,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
           });
           
           this.competency.all = [...this.competency.behavioural, ...this.competency.functional, ...this.competency.domain];
-          this.competency.all.forEach((allObj: any) => {
-            allObj.issuedCertificates = this.certificateMappedObject[allObj.competencyTheme].certificate;
-            allObj.contentConsumed = this.certificateMappedObject[allObj.competencyTheme].contentConsumed;
-          });
           this.competencyArray = this.competency.all;
+
+          this.getOtherData();
           this.competency.skeletonLoading = false;
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
@@ -219,94 +235,31 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     )
   }
 
-  bindMoreData(typeObj: any, name: string, contentConsumed: any) {
-    const leftCardObj = this.leftCardDetails.find((obj: any) => obj.name === name);
+  getOtherData(): void {
+    this.competency.all.forEach((allObj: any) => {
+      allObj.issuedCertificates = this.certificateMappedObject[allObj.competencyTheme].certificate;
+      allObj.contentConsumed = this.certificateMappedObject[allObj.competencyTheme].contentConsumed;
+      allObj.courseSubThemes = this.certificateMappedObject[allObj.competencyTheme].subThemes;
 
-    typeObj.forEach((obj: any) => {
-      obj['viewMore'] = false;
-      obj['competencyName'] = name;
-
-      if (contentConsumed[obj.name]) {
-        obj['contentConsumed'] = contentConsumed[obj.name];
-      }
-
-      if (new Date(obj.createdDate) > this.one_year_back) {
-        leftCardObj.filter.lastYear += 1;
-        leftCardObj.filter.lastYearSubTheme += obj.children.length;
-
-        if (new Date(obj.createdDate) > this.six_month_back) {
-          leftCardObj.filter.sixMonths += 1
-          leftCardObj.filter.sixMonthsSubTheme += obj.children.length;
-        }
-
-        if (new Date(obj.createdDate) > this.three_month_back) {
-          leftCardObj.filter.threeMonths += 1
-          leftCardObj.filter.threeMonthsSubTheme += obj.children.length;
-        }
-      }
-
-      this.leftCardDetails.forEach((_eachObj: any) => {
-        if (_eachObj.name === name) {
-          _eachObj.competencySubTheme += obj.children.length;
+      this.leftCardDetails.forEach((_lObj: any) => {
+        if (_lObj.type === allObj.competencyArea) {
+          _lObj.competencySubTheme += allObj.subTheme.length;
+          _lObj.contentConsumed += allObj.contentConsumed.length;
         }
       });
     });
-    return typeObj;
-  }
-
-  fetchCompetencyList(contentConsumed: any): void {
-    const payload = {
-      "search": {
-        "type": "Competency Area"
-      },
-      "filter": {
-        "isDetail": true
-      }
-    };
-
-    this.cpService.getCompetencyList(payload)
-      .pipe(takeUntil(this.destroySubject$))
-      .subscribe(
-        (response: any) => {
-          response.result.competency.forEach((obj: any) => {
-            if (obj.name === 'Behavioral') {
-              this.competency.behavioural = this.bindMoreData(obj.children, 'behavioural', contentConsumed);
-              this.competency.all = [...this.competency.all, ...this.competency.behavioural]
-            } else if (obj.name === 'Functional') {
-              this.competency.functional = this.bindMoreData(obj.children, obj.name.toLowerCase(), contentConsumed);
-              this.competency.all = [...this.competency.all, ...this.competency.functional]
-            } else {
-              this.competency.domain = this.bindMoreData(obj.children, obj.name.toLowerCase(), contentConsumed);
-              this.competency.all = [...this.competency.all, ...this.competency.domain]
-            }
-            
-            this.leftCardDetails.forEach((_eachObj: any) => {
-              if(_eachObj.type.toLowerCase() === obj.name.toLowerCase()) {
-                _eachObj.total = obj.children.length
-              }
-            });
-          });
-
-          this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
-          this.competency.skeletonLoading = false;
-        }, (error: HttpErrorResponse) => {
-          if (!error.ok) {
-            this.competency.error = true;
-            this.competency.skeletonLoading = false;
-          }
-        }
-      );
   }
 
   handleLeftFilter(months: string): void {
-    this.leftCardDetails.forEach((_obj: any) => {
-      this.competency[`${_obj.name}Value`] = _obj.filter[months]
-      if (months === 'all') {
-        this.competency[`${_obj.name}SubTheme`] = _obj.competencySubTheme
-      } else {
-        this.competency[`${_obj.name}SubTheme`] = _obj.filter[`${months}SubTheme`]
-      }
-    });
+    // Do not delete, need to work on this...
+    // this.leftCardDetails.forEach((_obj: any) => {
+    //   this.competency[`${_obj.name}Value`] = _obj.filter[months]
+    //   if (months === 'all') {
+    //     this.competency[`${_obj.name}SubTheme`] = _obj.competencySubTheme
+    //   } else {
+    //     this.competency[`${_obj.name}SubTheme`] = _obj.filter[`${months}SubTheme`]
+    //   }
+    // });
     this.showFilterIndicator = months;
   }
 

@@ -29,12 +29,12 @@
                             {{ chip }}
                         </div>
                     </ng-container>
-                    <!-- <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="subThemeArray?.length > 7 && !viewMoreST" (click)="viewMoreST = !viewMoreST">
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="themeDetails?.subTheme?.length > 8 && !viewMoreST" (click)="viewMoreST = !viewMoreST">
                         View more
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="viewMoreST" (click)="viewMoreST = !viewMoreST">
                         View less
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,20 +93,20 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="chips-card flex flex-wrap gap-3">
-                    <ng-container *ngFor="let subTheme of certificateData.subThemes[i]; let j = index">
+                <div class="chips-card flex flex-wrap gap-3">
+                    <ng-container *ngFor="let subTheme of themeDetails.courseSubThemes[i]; let j = index">
                         <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (j > 1 && !eachCert?.viewMore)}">
                             {{ subTheme }}
                         </div>
                     </ng-container>
-                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="certificateData.subThemes[i]?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="themeDetails.courseSubThemes[i]?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
                         View more
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="eachCert?.viewMore"
                         (click)="handleViewMore(eachCert, 'less')">
                         View less
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
