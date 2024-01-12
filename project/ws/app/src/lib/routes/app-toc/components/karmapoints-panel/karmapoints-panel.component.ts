@@ -28,7 +28,7 @@ export class KarmaPointsPanelComponent implements OnInit {
   }
 
   getDynamicText(helText: string) {
-    if (this.pCategory !== ''){
+    if (this.pCategory !== '') {
       return helText.replace('course', this.pCategory.toLowerCase())
     }
     return helText

@@ -46,7 +46,7 @@ export namespace NsCardContent {
 
   export enum IGOTConst {
     COMPETENCIES = 'competencies_v5',
-    RETIRED = 'Retired'
+    RETIRED = 'Retired',
   }
 
 }
