@@ -118,6 +118,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     "competencySubTheme": [], 
     "providers": [] 
   };
+  filterObjData2 = {...this.filterObjData};
+  tabValue: string = '';
   certificateMappedObject: any = {};
 
   constructor(
@@ -273,7 +275,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
+    this.tabValue = param;
     this.competencyArray = this.competency[param];
+    this.filterObjData2 = {...this.filterObjData};
   }
 
   handleShowAll(): void {
@@ -303,26 +307,31 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   // Filters related functionalities...
   handleFilter(event: boolean): void {
     this.toggleFilter = event;
-    this.document.body.classList.add('overflow-hidden')
+    if (event) {
+      this.document.body.classList.add('overflow-hidden')
+    } else {
+      this.document.body.classList.remove('overflow-hidden');
+    }
   }
 
-  handleApplyFilter(event: any){
+  handleApplyFilter(event: any) {
     this.toggleFilter = false;
     this.filterObjData = event;
     this.document.body.classList.remove('overflow-hidden');
     this.filterData(event)
   }
 
-  handleClearFilterObj(event: any){
-    this.filterObjData = event;
+  handleClearFilterObj(event: any) {
+    this.filterObjData2 = event;
     this.filterData(event);
+    this.competencyArray = this.competency[this.tabValue || 'all'];
   }
 
   filterData(filterValue: any) {
     let finalFilterValue: any = [];
     if( filterValue['competencyArea'].length || filterValue['competencyTheme'].length || filterValue['competencySubTheme'].length ) {
       let filterAppliedOnLocal = false;
-      this.filteredData = this.competency['all'];
+      this.filteredData = this.competency[this.tabValue || 'all'];
 
       if(filterValue['competencyArea'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
