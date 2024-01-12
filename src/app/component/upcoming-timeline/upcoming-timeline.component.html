@@ -5,9 +5,9 @@
             <p class="title">Upcoming</p>
             <mat-icon aria-hidden="true" (click)="upComingMethod('upcoming')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
-        <div>
+        <!-- <div>
             <p class="description">These plans are close to CBP deadline, need to complete before deadline.</p>
-        </div>
+        </div> -->
         <div class="mb-5" *ngFor="let c of upcommingList  | slice:0:2">
             <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
         </div>
@@ -17,12 +17,12 @@
 <ng-container *ngIf="overDueList.length">
     <div class="mt-8 mb-8 highlight-block hidden md:block" *ngIf="overDueList.length">
         <div class="flex flex-middle">
-            <p class="title">Over due plans</p>
+            <p class="title">Overdue</p>
             <mat-icon aria-hidden="true" (click)="upComingMethod('overdue')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
-        <div>
+        <!-- <div>
             <p class="description">CBP Deadline passed</p>
-        </div>
+        </div> -->
         <div class="mb-5" *ngFor="let c of overDueList  | slice:0:2">
             <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
         </div>
@@ -74,8 +74,8 @@
             <ng-container [ngTemplateOutlet]="detail"
                             [ngTemplateOutletContext]="{ data:{
                        data: upcommingList,
-                       title: 'Upcoming timelines',
-                       subTitle:'These plans are close to CBP deadline, need to complete before deadline.',
+                       title: 'Upcoming',
+                       subTitle:'',
                        key:'upcoming'
                       }}"></ng-container>
         </ng-container>
@@ -83,8 +83,8 @@
             <ng-container [ngTemplateOutlet]="detail"
                             [ngTemplateOutletContext]="{ data:{
                        data: overDueList,
-                       title: 'Over due plans',
-                       subTitle:'CBP Deadline passed',
+                       title: 'Overdue',
+                       subTitle:'',
                        key:'overdue'
                       }}"></ng-container>
         </ng-container>

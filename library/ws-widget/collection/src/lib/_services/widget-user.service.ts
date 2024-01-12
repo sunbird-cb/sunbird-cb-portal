@@ -204,14 +204,14 @@ export class WidgetUserService {
           childData['endDate'] = c.endDate
           childData['parentId'] = c.id
           childData['planType'] = 'cbPlan'
-          if(childData.status !== NsCardContent.IGOTConst.RETIRED){
+          if (childData.status !== NsCardContent.IGOTConst.RETIRED) {
             contentNew.push(childData)
           } else {
             if (childEnrollData && childEnrollData.status === 2) {
               contentNew.push(childData)
             }
           }
-          
+
           const competencyArea: any = []
           const competencyTheme: any = []
           const competencyThemeType: any = []

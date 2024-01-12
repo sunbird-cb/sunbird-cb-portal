@@ -3,24 +3,26 @@
         <div class="competency-passbook-theme" [ngClass]="{'behavioral': obj.competencyArea.toLowerCase() === TYPE_CONST.behavioral.otherValue, 'functional': obj.competencyArea.toLowerCase() === TYPE_CONST.functional.value, 'domain': obj.competencyArea.toLowerCase() === TYPE_CONST.domain.value}" ></div>
         <div class="detail flex flex-col">
             <div class="flex flex-col">
-                <div class="flex flex-row justify-between px-6 py-4 cursor-pointer" (click)="handleNavigate(obj)">
+                <div class="flex flex-row justify-between p-4 cursor-pointer gap-6" (click)="handleNavigate(obj)">
                     <div class="flex flex-col gap-3 text-primary">
-                        <div class="flex flex-row gap-3 items-center">
-                            <div class="text-xl font-semibold">{{ obj?.competencyTheme }}</div>
-                            <img src="assets/icons/competency/cp-arrow.svg" alt="cp arrow img" />
+                        <div class="flex flex-row gap-2 align-baseline">
+                            <div class="competency-name font-semibold" [title]="obj?.competencyTheme" >{{ obj?.competencyTheme }}</div>
+                            <div class="flex items-baseline">
+                                <img src="assets/icons/competency/cp-arrow.svg" class="arrow-img" alt="cp arrow img" />
+                            </div>
                         </div>
                         <div class="flex flex-row gap-3">
                             <mat-icon>school</mat-icon>
                             <div class="text-base">{{ obj?.contentConsumed?.length || 0 }}</div>
                         </div>
                     </div>
-                    <div class="flex justify-center items-center">
+                    <div class="flex items-baseline">
                         <img src="assets/icons/competency/{{(obj?.competencyArea.toLowerCase() === 'behavioral') ? 'behavioural' : obj?.competencyArea.toLowerCase() }}-light.svg" alt="{{ obj?.competencyArea.toLowerCase() }} image" />
                     </div>
                 </div>
-                <div class="flex flex-wrap gap-3 px-6 py-4 chip-container">
+                <div class="flex flex-wrap gap-3 p-4 chip-container">
                     <ng-container *ngFor="let child of obj?.subTheme; let i = index">
-                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (i > 1 && !obj?.viewMore)}" >
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (i > 1 && !obj?.viewMore), 'chip-ellipsis': !obj?.viewMore && obj?.subTheme?.length > 1 }" [title]="child" >
                             {{ child }}
                         </div>
                     </ng-container>
@@ -35,7 +37,7 @@
         </div>
     </div>
     
-    <div class="flex-1 flex-col" *ngIf="competency.error">
+    <div class="flex-1 flex-col" *ngIf="competency?.error">
         <div class="flex flex-col gap-1 error-div justify-center items-center">
             <mat-icon class="icon">report_off</mat-icon>
             <div class="mat-subheading-1">No data found!</div>
@@ -43,11 +45,11 @@
         </div>
     </div>
 
-    <div class="flex-1 flex-col" *ngIf="!competency.error && !competency.all.length">
+    <div class="flex-1 flex-col" *ngIf="!competencyArray?.length && !competency?.error">
         <div class="flex flex-col gap-1 error-div justify-center items-center">
             <mat-icon class="icon no-data">warning</mat-icon>
-            <div class="mat-subheading-1">No competencies found!</div>
-            <div class="text-center">Unable to find competencies.</div>
+            <div class="mat-subheading-1">Unable to find competencies.</div>
+            <!-- <div class="text-center">Unable to find competencies.</div> -->
         </div>
     </div>
 </ng-template>
@@ -282,6 +284,6 @@
 </div>
 
 <ng-container *ngIf="toggleFilter">
-    <ws-widget-cbp-filters (clearFilterObj)="handleClearFilterObj($event)"
-        [filterObj]="filterObjData" (getFilterData)="handleApplyFilter($event)" [showAdditionalFilters]="false"></ws-widget-cbp-filters>
+    <ws-widget-cbp-filters (clearFilterObj)="handleClearFilterObj($event)" (toggleFilter)="handleFilter($event)"
+        [filterObj]="filterObjData2" (getFilterData)="handleApplyFilter($event)" [showAdditionalFilters]="false"></ws-widget-cbp-filters>
 </ng-container>
