@@ -189,7 +189,7 @@ export class WidgetUserService {
 
   mapData(data: any) {
     const contentNew: any = []
-    const todayDate = dayjs()
+    const todayDate = dayjs().format('YYYY-MM-DD')
 
     const enrollList = JSON.parse(localStorage.getItem('enrollmentMapData') || '')
 
@@ -197,8 +197,9 @@ export class WidgetUserService {
       data.content.forEach((c: any) => {
         c.contentList.forEach((childData: any) => {
           const childEnrollData = enrollList[childData.identifier]
-          const daysCount = dayjs(c.endDate).diff(todayDate, 'day')
-          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 30
+          const endDate = dayjs(c.endDate).format('YYYY-MM-DD')
+          const daysCount = dayjs(endDate).diff(todayDate, 'day')
+          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
           childData['endDate'] = c.endDate
           childData['parentId'] = c.id

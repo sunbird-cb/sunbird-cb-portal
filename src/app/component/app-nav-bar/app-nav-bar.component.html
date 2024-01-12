@@ -172,7 +172,7 @@
         [matTooltipPosition]="'below'"  (click)="tooltip.show()"
         [matTooltipHideDelay]="tooltipDelay" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
         </p>
-      <p class="karma-point" (click)="viewKarmapoints()">
+      <p class="karma-point">
         <ng-container *ngIf="karmaPointLoading">
           <ws-widget-skeleton-loader [width]="'34px'" [height]="'20px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </ng-container>

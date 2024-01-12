@@ -357,7 +357,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.cbPlanEndDate = cbp[0].endDate
         const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
         const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
-        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
+        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
         if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
           this.isAcbpCourse = true
