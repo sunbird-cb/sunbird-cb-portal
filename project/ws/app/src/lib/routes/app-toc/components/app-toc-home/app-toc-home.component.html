@@ -145,7 +145,7 @@ TODO: edit option while preview Mode
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
                    <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
-                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                    <!-- <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel> -->
                   </div>
                 </div>
 
@@ -177,7 +177,7 @@ TODO: edit option while preview Mode
                     <ng-container *ngIf="isAcbpCourse">
                       <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
                     </ng-container>
-                    <ng-container *ngIf="!isAcbpCourse && !monthlyCapExceed">
+                    <ng-container *ngIf="!isAcbpCourse && !monthlyCapExceed && userEnrollmentList && !userEnrollmentList.length">
                      <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
                     </ng-container>
                 </ng-container>
@@ -240,7 +240,7 @@ TODO: edit option while preview Mode
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
                   <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
-                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                    <!-- <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel> -->
                   </div>
                 </div>
 
@@ -427,11 +427,11 @@ TODO: edit option while preview Mode
       </div>
 
       <div *ngIf="resumeData && !userRating">
-        <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"></ws-app-karmapoints-panel>
+        <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray" [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
       </div>
 
       <div *ngIf="resumeData && userRating">
-        <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"></ws-app-karmapoints-panel>
+        <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray" [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
       </div>
 
       <!-- action buttons -->
