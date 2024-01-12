@@ -155,7 +155,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             }
 
             const courseDetails = {
-              'courseName': eachCourse.courseName,
+              'courseName': eachCourse.courseName.trim(),
               'viewMore': false,
               'batchId': eachCourse.batchId,
               'contentId': eachCourse.contentId
@@ -164,26 +164,19 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               eachCourse.issuedCertificates = eachCourse.issuedCertificates.map((icObj: any) => {
                 icObj = { ...icObj, ...courseDetails };
                 return icObj;
-                
-                // icObj['courseName'] = eachCourse.courseName;
-                // icObj['viewMore'] = false;
-                // icObj['batchId'] = eachCourse.batchId;
-                // icObj['contentId'] = eachCourse.contentId;
               });
             } else {
               eachCourse.issuedCertificates.push(courseDetails);
             }
-            if ((eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
-              console.log("eachCourse.issuedCertificates - ", eachCourse.issuedCertificates);
-              
 
+            if ((eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
               let subThemeMapping: any = {};
               eachCourse.content.competencies_v5.forEach((v5Obj: any) => {
                 if (this.certificateMappedObject[v5Obj.competencyTheme]) {
 
                   // Certificate consumed logic...
                   eachCourse.issuedCertificates.forEach((certObj: any) => {
-                    if (this.certificateMappedObject[v5Obj.competencyTheme].certificate.findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
+                    if (this.certificateMappedObject[v5Obj.competencyTheme].certificate.findIndex((_obj: any) => _obj.courseName === certObj.courseName) === -1) {
                       this.certificateMappedObject[v5Obj.competencyTheme].certificate.push(certObj);
                     }
                   });
@@ -217,8 +210,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             }
           });
           
-          console.log("this.certificateMappedObject - ", this.certificateMappedObject);
-          
           competenciesV5.forEach((v5Obj: any) => {
             v5Obj.subTheme = [];
             v5Obj.contentConsumed = [];
@@ -242,7 +233,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
           this.getOtherData();
           this.competency.skeletonLoading = false;
-          console.log("response. - ", response);
           
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {

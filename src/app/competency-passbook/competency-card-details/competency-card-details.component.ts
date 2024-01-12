@@ -35,8 +35,6 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     
     if (localStorage.getItem('details_page') !== 'undefined') {
       const details_data = JSON.parse(localStorage.getItem('details_page') as any);
-      console.log("details_data - ", details_data);
-
       this.themeDetails = details_data;
       this.certificateData = details_data.issuedCertificates;
       this.certificateData.forEach((obj: any) => {
