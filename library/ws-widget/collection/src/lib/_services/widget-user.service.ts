@@ -189,21 +189,29 @@ export class WidgetUserService {
 
   mapData(data: any) {
     const contentNew: any = []
-    const todayDate = dayjs()
+    const todayDate = dayjs().format('YYYY-MM-DD')
 
-    const enrollList = JSON.parse(localStorage.getItem('enrollmentMapData') || '')
+    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
 
     if (data && data.count) {
       data.content.forEach((c: any) => {
         c.contentList.forEach((childData: any) => {
-          const childEnrollData = enrollList[childData.identifier]
-          const daysCount = dayjs(c.endDate).diff(todayDate, 'day')
-          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 30
+          const childEnrollData = enrollList[childData.identifier] || {}
+          const endDate = dayjs(c.endDate).format('YYYY-MM-DD')
+          const daysCount = dayjs(endDate).diff(todayDate, 'day')
+          childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
           childData['endDate'] = c.endDate
           childData['parentId'] = c.id
           childData['planType'] = 'cbPlan'
-          contentNew.push(childData)
+          if(childData.status !== NsCardContent.IGOTConst.RETIRED){
+            contentNew.push(childData)
+          } else {
+            if (childEnrollData && childEnrollData.status === 2) {
+              contentNew.push(childData)
+            }
+          }
+          
           const competencyArea: any = []
           const competencyTheme: any = []
           const competencyThemeType: any = []
