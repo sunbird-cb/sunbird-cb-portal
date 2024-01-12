@@ -174,7 +174,7 @@
                     </button>
                 </div>
                 <div class="flex-1">
-                    <button class="filter-apply" (click)="applyFilter()">
+                    <button class="filter-apply"  [ngClass]="{'grey-filter': filterEmpty}"  (click)="applyFilter()">
                         Apply
                     </button>
                 </div>
