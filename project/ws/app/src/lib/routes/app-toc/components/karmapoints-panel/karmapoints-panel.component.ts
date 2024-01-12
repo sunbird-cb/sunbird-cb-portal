@@ -9,6 +9,7 @@ export class KarmaPointsPanelComponent implements OnInit {
     @Input() btntype: any
     @Input() data: any = []
     @Input() btnCategory = ''
+    @Input() pCategory = ''
     @Output() clickClaimKarmaPoints = new EventEmitter<string>()
     kpData: any
 
@@ -24,6 +25,13 @@ export class KarmaPointsPanelComponent implements OnInit {
 
   onClickOfClaim() {
     this.clickClaimKarmaPoints.emit('claim')
+  }
+
+  getDynamicText(helText: string) {
+    if (this.pCategory !== ''){
+      return helText.replace('course', this.pCategory.toLowerCase())
+    }
+    return helText
   }
 
 }
