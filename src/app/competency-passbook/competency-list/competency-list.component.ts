@@ -144,14 +144,18 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   getUserEnrollmentList(): void {
+    const enrollmentMapData = JSON.parse(localStorage.getItem('enrollmentMapData') as any);
     const userId: any = this.configService && this.configService.userProfile && this.configService.userProfile.userId;
     this.widgetService.fetchUserBatchList(userId)
       .pipe(takeUntil(this.destroySubject$))
       .subscribe(
         (response: any) => {
           let competenciesV5: any[] = [];
-
           response.courses.forEach((eachCourse: any) => {
+
+            // To eliminate In progress or Yet to start courses...
+            if (enrollmentMapData[eachCourse.contentId].status !== 2) return;
+
             if (eachCourse.content && eachCourse.content.competencies_v5) {
               competenciesV5 = [...competenciesV5, ...eachCourse.content.competencies_v5];
             }
