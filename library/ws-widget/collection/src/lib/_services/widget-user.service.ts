@@ -196,7 +196,7 @@ export class WidgetUserService {
     if (data && data.count) {
       data.content.forEach((c: any) => {
         c.contentList.forEach((childData: any) => {
-          const childEnrollData = enrollList[childData.identifier] || {}
+          const childEnrollData = enrollList[childData.identifier]
           const endDate = dayjs(c.endDate).format('YYYY-MM-DD')
           const daysCount = dayjs(endDate).diff(todayDate, 'day')
           childData['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
