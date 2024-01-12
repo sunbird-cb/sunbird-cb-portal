@@ -1033,11 +1033,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         upcoming.push(e)
       }
     })
-    let allCompleted = all.filter((allData: any) => allData.contentStatus === 2)
+    const allCompleted = all.filter((allData: any) => allData.contentStatus === 2)
     let allInCompleted = all.filter((allData: any) => allData.contentStatus < 2)
 
     let allCompletedOverDue = allCompleted.filter((allData: any) => allData.planDuration === NsCardContent.ACBPConst.OVERDUE)
-    let allCompletedAll = allCompleted.filter((allData: any) =>  allData.planDuration !== NsCardContent.ACBPConst.OVERDUE)
+    const allCompletedAll = allCompleted.filter((allData: any) =>  allData.planDuration !== NsCardContent.ACBPConst.OVERDUE)
 
     allCompletedOverDue = allCompletedOverDue.sort((a: any, b: any): any => {
       if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
@@ -1055,7 +1055,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
     })
 
-    all = [...allInCompleted,...allCompletedAll,...allCompletedOverDue]
+    all = [...allInCompleted, ...allCompletedAll, ...allCompletedOverDue]
 
     overdue = overdue.filter((data: any): any => {
       return data.contentStatus < 2
@@ -1066,7 +1066,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         const secondDate: any = new Date(b.endDate)
         return  firstDate > secondDate  ? -1 : 1
     })
-    
+
     upcoming = upcoming.filter((data: any): any => {
       return data.contentStatus < 2
     })
