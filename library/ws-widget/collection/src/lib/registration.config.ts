@@ -264,7 +264,7 @@ export const WIDGET_REGISTERED_MODULES = [
   LeftMenuModule,
   UIORGTableModule,
   BreadcrumbsOrgModule,
-  CardEventHubModule
+  CardEventHubModule,
 ]
 
 export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] = [
