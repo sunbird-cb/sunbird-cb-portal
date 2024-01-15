@@ -335,7 +335,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (res && res.kpList) {
         const info = res.kpList.addinfo
         if (info) {
-          this.monthlyCapExceed = JSON.parse(info).nonACBPCourseKarmaQuotaClaimed >= 4
+          this.monthlyCapExceed = JSON.parse(info).claimedNonACBPCourseKarmaQuota >= 4
         }
       }
     })
