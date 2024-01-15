@@ -20,7 +20,7 @@
         <li matTooltipClass="right-nav-tooltip" matTooltip="Font" *ngIf="item.type === 'fontButton' && rnc.section === 'font-setting' && rnc.active">
             <ws-font-setting></ws-font-setting>
         </li>
-        <li matTooltipClass="right-nav-tooltip" matTooltip="Need Help" class="help-icon" id="help-icon" *ngIf="item.type === 'helpButton' && rnc.section === 'help' && rnc.active">
+        <li matTooltipClass="right-nav-tooltip" matTooltip="Need Help" (click)="getZohoForm()" class="help-icon" id="help-icon" *ngIf="item.type === 'helpButton' && rnc.section === 'help' && rnc.active">
             <img  src="/assets/icons/top-nav/help_icon.svg">
         </li>
         <li matTooltipClass="right-nav-tooltip" matTooltip="Profile">

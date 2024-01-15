@@ -82,13 +82,18 @@
       <div class="loader-ripple">
         <div></div>
         <div></div>
+
       </div>
+    </div>
+
+    <div id="zoho-form-box">
+
     </div>
   </ws-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 
   <!-- <script type="text/javascript" nonce="{place_your_nonce_value_here}" src="https://desk.zoho.in/portal/api/web/inapp/120349000000222059?orgId=60023043070" defer></script> -->
-        <script src="https://desk.zoho.in/portal/api/feedbackwidget/120349000000212259?orgId=60023043070&displayType=popout"></script>
+        <!-- <script src="https://desk.zoho.in/portal/api/feedbackwidget/120349000000212259?orgId=60023043070&displayType=popout"></script> -->
         <script src="https://cdn.userway.org/widget.js" data-account="pam3S93IQ7"></script>
         <script>
     (function(d){
@@ -142,8 +147,12 @@
 <script>
   setTimeout(()=>{
     document.getElementById("feedbacklabelspan").style.display = 'none';
+    
+    let htm = this.sanitizer.bypassSecurityTrustHtml(this.html);
       document.getElementById("help-icon").addEventListener('click',function() {
-      zsLoadAutoSuggestions();
+
+      //   console.log("btn clickedddd!!!!!!!")
+      // zsLoadAutoSuggestions();
     })
   },10000)
   
