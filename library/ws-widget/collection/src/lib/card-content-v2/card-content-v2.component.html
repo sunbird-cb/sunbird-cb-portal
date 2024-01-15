@@ -24,77 +24,8 @@
     <ng-container *ngSwitchCase="'card-standard-skeleton'" [ngTemplateOutlet]="cardStandardSkeleton"></ng-container>
     <!-- cardPortraitSkeleton -->
     <ng-container *ngSwitchCase="'cardCuratedCollection'" [ngTemplateOutlet]="cardCuratedCollection"></ng-container>
-    <ng-container *ngSwitchCase="'card-events'" [ngTemplateOutlet]="cardEvents"></ng-container>
-    <ng-container *ngSwitchCase="'card-events-skeleton'" [ngTemplateOutlet]="cardEventsSkeleton"></ng-container>
   </ng-container>
 </div>
-
-
-<ng-template #cardEvents>
-  <mat-card class="event-card-portrait cursor-pointer mr-5 mt-4" [routerLink]="['/app/event-hub/home/' + widgetData?.content?.event.identifier]">
-    <div class="flex pt-1">
-      <div class="margin-right-s">
-        <ng-container>
-          <div class="img-block-portrait position-relative">
-            <img mat-card-image [src]="widgetData?.content?.eventThumbnail" loading="lazy"
-              class="card-image ws-mat-primary-lite-background margin-remove"
-              [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData?.content?.eventName" />
-          </div>
-        </ng-container>
-      </div>
-      <div class="width-1-1">
-        <div class="event-type mat-body-2 mat-card-subtitle">
-          <mat-icon>event</mat-icon> {{widgetData?.content?.event.resourceType}}
-        </div>
-        <div class="portrait-subheading mat-subheading-1 event-text">
-          <span class="mt-2">{{widgetData?.content.eventName}} </span>
-          <span class="portrait-org-name mat-body-2">{{widgetData?.content?.eventStartTime}} - {{widgetData?.content?.eventEndTime}}</span>
-        </div>
-        <div class="flex w-full flex-middle" *ngIf="isEventLive && !isEventRecording">
-          <span class="light-font livecss mr-2 no-box-shadow"><span class="dot"></span> {{widgetData?.content?.event.status}} </span>
-          <button mat-raised-button type="button" class="ws-mat-primary-background mr-1 no-box-shadow join-event">Join event</button>
-        </div>
-        <div class="flex w-full flex-middle" *ngIf="!isEventLive && isEventRecording">
-          <button mat-raised-button type="button" class="ws-mat-primary-background no-box-shadow"><img class="recordicon"
-              src="/assets/icons/recording@2x.png" alt="Recording">View recording</button>
-        </div>
-      </div>
-    </div>
-  </mat-card>
-</ng-template>
-
-<ng-template #cardEventsSkeleton>
-  <mat-card class="event-card-portrait cursor-pointer mr-5">
-    <div class="flex">
-      <div class="margin-right-s">
-        <ng-container>
-          <ws-widget-skeleton-loader [width]="'147px'" [height]="'110px'"
-            [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
-        </ng-container>
-      </div>
-      <div class="width-1-1">
-        <div class="title-text">
-          <span class=""><ws-widget-skeleton-loader [width]="'100px'" [height]="'22px'"
-            [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
-        </div>
-        <div class="mt-2 title-text"><ws-widget-skeleton-loader [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
-        </div>
-        <div class="mt-2 mb-2 title-text">
-          <span class=""><ws-widget-skeleton-loader [width]="'80px'" [height]="'20px'"
-            [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
-        </div>
-        <div class="flex w-full flex-wrap flex-middle">
-          <div class="margin-right-xs">
-            <span class=""> <ws-widget-skeleton-loader [width]="'80px'" [height]="'20px'"
-              [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader> </span>  
-          </div>
-          <span class=""><ws-widget-skeleton-loader [width]="'80px'" [height]="'20px'"
-              [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
-        </div>
-      </div>
-    </div>
-  </mat-card>
-</ng-template>
 
 
 <ng-template #cardMinimal>

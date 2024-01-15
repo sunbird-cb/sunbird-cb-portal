@@ -704,10 +704,10 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     contents: ITodayEvents[],
     strip: NsContentStripWithTabs.IContentStripUnit,
   ) {
-    this.setEventListData(contents)
-    return (this.todaysEvents || []).map((content: any, idx: any) => (content ? {
+    this.eventSvc.setEventListData(contents)
+    return (this.eventSvc.todaysEvents || []).map((content: any, idx: any) => (content ? {
       widgetType: 'card',
-      widgetSubType: 'cardContent',
+      widgetSubType: 'eventHubCard',
       widgetHostClass: 'mb-2',
       widgetData: {
         content,
@@ -720,7 +720,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       },
     } : {
       widgetType: 'card',
-      widgetSubType: 'cardContent',
+      widgetSubType: 'eventHubCard',
       widgetHostClass: 'mb-2',
       widgetData: {},
     }
@@ -973,52 +973,5 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     console.log('calculateParentStatus-- ', calculateParentStatus)
     // TODO: Write logic for individual filter if passed in config
     // add switch case based on config key passed
-  }
-
-  setEventListData(eventObj: any) {
-    if (eventObj !== undefined) {
-      const data = eventObj
-      Object.keys(data).forEach((index: any) => {
-        const obj = data[index]
-        const floor = Math.floor
-        const hours = floor(obj.duration / 60)
-        const minutes = obj.duration % 60
-        const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
-          `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
-          `${hours} hours ${minutes} minutes`
-        const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
-        const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
-        const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
-
-        const stime = obj.startTime.split('+')[0]
-        const hour = stime.substr(0, 2)
-        const min = stime.substr(2, 3)
-        const starttime = `${hour}${min}`
-
-        const etime = obj.endTime.split('+')[0]
-        const ehour = etime.substr(0, 2)
-        const emin = etime.substr(2, 3)
-        const endtime = `${ehour}${emin}`
-
-        const eventDataObj = {
-          event: obj,
-          eventName: obj.name,
-          eventStartTime: starttime,
-          eventEndTime: endtime,
-          eventStartDate: obj.startDate,
-          eventCreatedOn: this.eventSvc.allEventDateFormat(obj.createdOn),
-          eventDuration: duration,
-          eventjoined: creatorDetails.length,
-          eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ?
-            this.eventSvc.getPublicUrl(obj.appIcon) :
-            '/assets/icons/Events_default.png',
-          pastevent: false,
-        }
-        const isToday = this.eventSvc.compareDate(obj.startDate)
-        if (isToday) {
-          this.todaysEvents.push(eventDataObj)
-        }
-      })
-    }
   }
 }

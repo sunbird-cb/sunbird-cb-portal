@@ -12,7 +12,6 @@ import { NsCardContent } from './card-content-v2.model'
 import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
-import moment from 'moment'
 // import { Router } from '@angular/router'
 
 @Component({
@@ -34,8 +33,6 @@ export class CardContentV2Component extends WidgetBaseComponent
   showIsMode = false
   showContentTag = false
   downloadCertificateLoading: boolean = false
-  isEventLive = false
-  isEventRecording = false
 
   btnPlaylistConfig: NsPlaylist.IBtnPlaylist | null = null
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
@@ -102,28 +99,6 @@ export class CardContentV2Component extends WidgetBaseComponent
       if (this.widgetData.contentTags) {
         this.showContentTag =
           this.checkCriteria() && this.checkContentTypeCriteria() && this.checkMimeTypeCriteria()
-      }
-    }
-
-    if(this.widgetData && this.widgetData.context && this.widgetData.context.pageSection === 'todaysevents') {
-      if(this.widgetData.content) {
-        const eventDate = this.events.customDateFormat(this.widgetData.content.event.startDate, this.widgetData.content.event.startTime)
-        const eventendDate = this.events.customDateFormat(this.widgetData.content.event.endDate, this.widgetData.content.event.endTime)
-        const now = new Date()
-        const today = moment(now).format('YYYY-MM-DD HH:mm')
-        if (moment(today).isBetween(eventDate, eventendDate)) {
-          this.isEventRecording = false
-          this.isEventLive = true
-          if (today >= eventendDate) {
-            if (this.widgetData.content.event.recordedLinks && this.widgetData.content.event.recordedLinks.length > 0) {
-              this.isEventRecording = true
-              this.isEventLive = false
-            }
-          }
-        } else if (today >= eventendDate) {
-          this.isEventRecording = true
-          this.isEventLive = false
-        }
       }
     }
   }
