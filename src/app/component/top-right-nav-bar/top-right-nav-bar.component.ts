@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
+
 import { HomePageService } from '../../services/home-page.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { HttpClient } from '@angular/common/http';
+import { DialogBoxComponent as ZohoDialogComponent } from '@ws/app/src/lib/routes/profile-v3/components/dialog-box/dialog-box.component';
 const rightNavConfig = [
   {
     "id": 1,
@@ -47,33 +49,23 @@ export class TopRightNavBarComponent implements OnInit {
       if (data) {
         this.dialogRef.close();
       }
-
     })
 
     this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
       this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res);
-      //console.log(this.zohoHtml , "resp=")
     })
   }
 
-  // getZohoFormData():any {
-  //    this.http.get<any>(`${API_END_POINTS.FETCH_ZOHO_FORM}`).subscribe((data:any)=> {
-  //     // this.zohoForm = data
-  //     console.log(data, "data=========")
-  //   })
-  // }
-
   getZohoForm() {
-    // const dialogRef = this.dialog.open(DialogBoxComponent, {
-    //   width: '500px',
-    //   data: {
-    //     view: 'zohoform',
-    //     value: this.zohoHtml
-    //   }
-    // });
-    // dialogRef.afterClosed().subscribe((res) => {
-    //   console.log('hsdfghsf', res)
-    // });
+    const dialogRef = this.dialog.open(ZohoDialogComponent, {
+      width: '460px',
+      data: {
+        view: 'zohoform',
+        value: this.zohoHtml
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+    });
   }
 
 

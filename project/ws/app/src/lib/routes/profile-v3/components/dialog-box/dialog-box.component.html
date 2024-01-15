@@ -18,9 +18,9 @@
 
 </ng-container>
 
-<!-- <ng-container  [ngTemplateOutlet]="zohoform" *ngIf="data.view === 'zohoform'">
+<ng-container  [ngTemplateOutlet]="zohoform" *ngIf="data.view === 'zohoform'">
 
-</ng-container> -->
+</ng-container>
 
 <ng-template #ccomp>
     <p class="mat-subheading-2 margin-bottom-xs">What are competencies?</p>
@@ -120,9 +120,9 @@
 </ng-template>
 
 
-<!-- <ng-template #zohoform>
-    {{data.value}}
-</ng-template> -->
+<ng-template #zohoform>
+    <div [innerHtml]="data?.value"></div>
+</ng-template>
 
 
 
