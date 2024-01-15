@@ -4,6 +4,8 @@ import { WsEvents } from './event.model'
 import { UtilityService } from './utility.service'
 /* tslint:disable*/
 import _ from 'lodash'
+import { environment } from 'src/environments/environment'
+import moment from 'moment'
 @Injectable({
   providedIn: 'root',
 })
@@ -151,4 +153,48 @@ export class EventService {
       pageIdExt: `${_.camelCase(data.label)}-tab`,
     })
   }
+
+  getPublicUrl(url: string): string {
+    const mainUrl = url.split('/content').pop() || ''
+    return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
+  }
+
+  allEventDateFormat(datetime: any) {
+    const date = new Date(datetime).getDate()
+    const year = new Date(datetime).getFullYear()
+    const month = new Date(datetime).getMonth()
+    const hours = new Date(datetime).getHours()
+    const minutes = new Date(datetime).getMinutes()
+    const seconds = new Date(datetime).getSeconds()
+    const formatedDate = new Date(year, month, date, hours, minutes, seconds, 0)
+    // let format = 'YYYY-MM-DD hh:mm a'
+    // if (!timeAllow) {
+    const format = 'YYYY-MM-DD'
+    // }
+    const readableDateMonth = moment(formatedDate).format(format)
+    const finalDateTimeValue = `${readableDateMonth}`
+    return finalDateTimeValue
+  }
+
+  compareDate(startDate: any) {
+    const now = new Date()
+
+    // tslint:disable-next-line:prefer-template
+    const day =  ('0' + (new Date().getDate())).slice(-2)
+    const year = new Date().getFullYear()
+    // tslint:disable-next-line:prefer-template
+    const month = ('0' + (now.getMonth() + 1)).slice(-2)
+    const todaysdate = `${year}-${month}-${day}`
+    if (startDate === todaysdate)  {
+      return true
+    }
+    return false
+  }
+
+  customDateFormat(date: any, time: any) {
+    const stime = time.split('+')[0]
+    const hour = stime.substr(0, 2)
+    const min = stime.substr(2, 3)
+    return `${date} ${hour}${min}`
+ }
 }
