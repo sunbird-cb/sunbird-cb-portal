@@ -1439,7 +1439,7 @@ $title-line-count: 2;
   border-radius: 12px;
   border: 1px solid rgba(0,0,0, 0.08);
   opacity: 1;
-  width: 328px;
+  width: 340px;
   min-height: 150px;
   padding: 16px;
   box-sizing: border-box;
@@ -1579,7 +1579,7 @@ $title-line-count: 2;
   border-radius: 16px;
   font: 400 10px/12px Lato;
   display: inline;
-  padding: 3% 2%;
+  padding: 3% 5%;
 
   mat-icon {
     color: #ef951e;
@@ -1593,10 +1593,10 @@ $title-line-count: 2;
 
 .livecss {
   background: #d13924;
-  padding: 0px 4% 1% 8%;
+  padding: 0px 7% 1% 5%;
   text-transform: uppercase;
   border-radius: 16px;
-  width: 50px;
+  width: 55px;
   display: inline-block;
   font-size: 12px;
 
@@ -1626,6 +1626,10 @@ button.ws-mat-primary-background {
   height: 11px;
   width: 16px;
   vertical-align: baseline;
+}
+
+.join-event {
+  width: 100%;
 }
 ::ng-deep.mat-raised-button {
   font-weight: 500 !important;

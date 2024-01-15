@@ -51,11 +51,11 @@
           <span class="portrait-org-name mat-body-2">{{widgetData?.content?.eventStartTime}} - {{widgetData?.content?.eventEndTime}}</span>
         </div>
         <div class="flex w-full flex-middle" *ngIf="isEventLive && !isEventRecording">
-          <span class="light-font livecss mr-2"><span class="dot"></span> {{widgetData?.content?.event.status}} </span>
-          <button mat-raised-button type="button" class="ws-mat-primary-background mr-2">Join event</button>
+          <span class="light-font livecss mr-2 no-box-shadow"><span class="dot"></span> {{widgetData?.content?.event.status}} </span>
+          <button mat-raised-button type="button" class="ws-mat-primary-background mr-1 no-box-shadow join-event">Join event</button>
         </div>
         <div class="flex w-full flex-middle" *ngIf="!isEventLive && isEventRecording">
-          <button mat-raised-button type="button" class="ws-mat-primary-background"><img class="recordicon"
+          <button mat-raised-button type="button" class="ws-mat-primary-background no-box-shadow"><img class="recordicon"
               src="/assets/icons/recording@2x.png" alt="Recording">View recording</button>
         </div>
       </div>
