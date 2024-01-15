@@ -1182,16 +1182,13 @@ $title-line-count: 2;
   padding: 16px;
   .img-block-portrait {
     line-height: 10px;
-    border:1px solid #ddd;
-    border-radius: 8px;
-    width: 147px;
-    height: 100px;
   }
   .card-image {
-   background-position: center;
-   object-fit: cover;
+    border-radius: 8px;
     opacity: 1;
     background-size: 100%;
+    width: 147px;
+    height: 100px;
     
   }
   .portrait-subheading {
