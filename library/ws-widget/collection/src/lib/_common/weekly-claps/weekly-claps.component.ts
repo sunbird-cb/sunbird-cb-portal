@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { InfoDialogComponent } from '../info-dialog/info-dialog.component'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-widget-weekly-claps',
