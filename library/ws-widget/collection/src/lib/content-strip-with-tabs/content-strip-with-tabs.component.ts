@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
+import { ITodayEvents } from '@ws/app/src/lib/routes/events/models/event'
 
 interface IStripUnitContentData {
   key: string
@@ -80,6 +81,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   environment!: any
   changeEventSubscription: Subscription | null = null
   defaultMaxWidgets = 12
+  todaysEvents: any = []
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -206,31 +208,31 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return data.widgets ? data.widgets.length : 0
   }
   getLength(data: IStripUnitContentData) {
-   if (!data.tabs || !data.tabs.length) {
-     return data.widgets ? data.widgets.length : 0
-   }  {
-    // if tabs are there check if each tab has widgets and get the tab with max widgets
-    const tabWithMaxWidgets = data.tabs.reduce(
-      (prev, current) => {
-        if (!prev.widgets && !current.widgets) {
+    if (!data.tabs || !data.tabs.length) {
+      return data.widgets ? data.widgets.length : 0
+    } {
+      // if tabs are there check if each tab has widgets and get the tab with max widgets
+      const tabWithMaxWidgets = data.tabs.reduce(
+        (prev, current) => {
+          if (!prev.widgets && !current.widgets) {
+            return current
+          }
+          if (prev.widgets && current.widgets) {
+            return (prev.widgets.length > current.widgets.length) ? prev : current
+          }
+          if (current.widgets && !prev.widgets) {
+            return current
+          }
+          if (!current.widgets && prev.widgets) {
+            return prev
+          }
           return current
-        }
-        if (prev.widgets && current.widgets) {
-          return (prev.widgets.length > current.widgets.length) ? prev : current
-        }
-        if (current.widgets && !prev.widgets) {
-          return current
-        }
-        if (!current.widgets && prev.widgets) {
-          return prev
-        }
-        return current
-        // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
-        // tslint:disable-next-line: align
-      }, data.tabs[0])
-    // if tabs has atleast 1 widgets then strip will show or else not
-    return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
-   }
+          // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
+          // tslint:disable-next-line: align
+        }, data.tabs[0])
+      // if tabs has atleast 1 widgets then strip will show or else not
+      return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
+    }
   }
 
   private getFiltersFromArray(v6filters: any) {
@@ -276,11 +278,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     ) {
       filters['organisation'] = userData && userData.rootOrgId
 
-    if (filters && filters.hasOwnProperty('designation')) {
-      filters['designation'] = userData.professionalDetails.length > 0 ?
-       userData.professionalDetails[0].designation : ''
+      if (filters && filters.hasOwnProperty('designation')) {
+        filters['designation'] = userData.professionalDetails.length > 0 ?
+          userData.professionalDetails[0].designation : ''
+      }
     }
-  }
     return filters
   }
 
@@ -466,13 +468,24 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           // console.log('calling  after - response, ', response)
           if (response && response.results) {
             // console.log('calling  after-- ')
-            this.processStrip(
-              strip,
-              this.transformContentsToWidgets(response.results.result.content, strip),
-              'done',
-              calculateParentStatus,
-              response.viewMoreUrl,
-            )
+            if (response.results.result.content) {
+              this.processStrip(
+                strip,
+                this.transformContentsToWidgets(response.results.result.content, strip),
+                'done',
+                calculateParentStatus,
+                response.viewMoreUrl,
+              )
+            } else if (response.results.result.Event) {
+              this.processStrip(
+                strip,
+                this.transformEventsToWidgets(response.results.result.Event, strip),
+                'done',
+                calculateParentStatus,
+                response.viewMoreUrl,
+              )
+            }
+
           } else {
             this.processStrip(strip, [], 'error', calculateParentStatus, null)
           }
@@ -566,7 +579,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         try {
           const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
           if (response && response.results && response.results.response) {
-              const content = response.results.response[strip.request.trendingSearch.responseKey] || []
+            const content = response.results.response[strip.request.trendingSearch.responseKey] || []
             this.processStrip(
               strip,
               this.transformContentsToWidgets(content, strip),
@@ -664,7 +677,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     strip: NsContentStripWithTabs.IContentStripUnit,
   ) {
     return (contents || []).map((content, idx) => (
-      content ?  {
+      content ? {
         widgetType: 'card',
         widgetSubType: 'cardContent',
         widgetHostClass: 'mb-2',
@@ -687,6 +700,32 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     ))
   }
 
+  private transformEventsToWidgets(
+    contents: ITodayEvents[],
+    strip: NsContentStripWithTabs.IContentStripUnit,
+  ) {
+    this.eventSvc.setEventListData(contents)
+    return (this.eventSvc.todaysEvents || []).map((content: any, idx: any) => (content ? {
+      widgetType: 'card',
+      widgetSubType: 'eventHubCard',
+      widgetHostClass: 'mb-2',
+      widgetData: {
+        content,
+        cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
+        context: { pageSection: strip.key, position: idx },
+        intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
+        deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
+        contentTags: strip.stripConfig && strip.stripConfig.contentTags,
+      },
+    } : {
+      widgetType: 'card',
+      widgetSubType: 'eventHubCard',
+      widgetHostClass: 'mb-2',
+      widgetData: {},
+    }
+    ))
+  }
   private transformSkeletonToWidgets(
     strip: any
   ) {
