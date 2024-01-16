@@ -200,6 +200,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.historyData = history.state
     this.handleBreadcrumbs()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -1583,6 +1588,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   translateLabels(label: string, type: any) {
+    label = label.toLowerCase();
     label = label.replace(/\s/g, "")
     const translationKey = type + '.' +  label;
     return this.translate.instant(translationKey);

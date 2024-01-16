@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router'
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-provider-all-cbp',
@@ -54,8 +55,13 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
   constructor(
     private browseProviderSvc: BrowseProviderService,
     private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
   ) {
-    
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
