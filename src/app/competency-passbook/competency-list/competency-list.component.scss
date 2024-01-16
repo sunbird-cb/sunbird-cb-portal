@@ -5,12 +5,23 @@ $text-primary: #1B4CA1;
     color: $text-primary;
 }
 
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .highlightFilter {
     background: rgba(0, 0, 0, 0.04) !important;
 }
 
 .hide {
     display: none;
+}
+
+.arrow-img {
+    margin-top: 2px;
 }
 
 .filter-dot {
@@ -31,6 +42,35 @@ $text-primary: #1B4CA1;
 .mobile-right-container {
     display: none;
 }
+
+$title-line-count: 2;
+.text-ellipsis {
+    white-space: initial;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+}
+
+.competency-name {
+    @extend .text-ellipsis;
+    @extend .mat-subheading-1;
+    min-height: $title-line-count * 24px;
+}
+
+// .competency-name {
+//     height: 44px;
+//     font-size: 14px;
+//     line-height: 21px;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     word-wrap: break-word;
+//     overflow: hidden;
+
+//     @extend .mat-subheading-1;
+// }
 
 @media screen and (max-width: 768px) {
     .mobile-right-container {

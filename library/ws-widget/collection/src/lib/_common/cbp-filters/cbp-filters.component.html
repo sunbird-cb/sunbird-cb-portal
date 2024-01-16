@@ -13,8 +13,8 @@
                 <div class="flex-1">
                     <div class="label">Filters</div>
                 </div>
-                <div class="flex items-center justify-center" (click)="applyFilter()">
-                    <mat-icon aria-hidden="true" class="cursor-pointer ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img">
+                <div class="flex items-center justify-center">
+                    <mat-icon aria-hidden="true" class="cursor-pointer ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" role="img" (click)="hideFilter()" >
                         close 
                     </mat-icon>
                 </div>
@@ -174,7 +174,7 @@
                     </button>
                 </div>
                 <div class="flex-1">
-                    <button class="filter-apply" (click)="applyFilter()">
+                    <button class="filter-apply"  [ngClass]="{'grey-filter': filterEmpty}"  (click)="handleApplyFilter()">
                         Apply
                     </button>
                 </div>
