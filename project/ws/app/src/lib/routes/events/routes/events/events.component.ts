@@ -7,7 +7,7 @@ import moment from 'moment'
 import { ConfigurationsService, WsEvents, EventService as EventServiceGlobal } from '@sunbird-cb/utils'
 import { MatTabChangeEvent } from '@angular/material'
 import { environment } from 'src/environments/environment'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core' 
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-events',
@@ -45,7 +45,7 @@ export class EventsComponent implements OnInit {
     private eventService: EventServiceGlobal,
     private translate: TranslateService,
   ) {
-   
+
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['eventsCategoryId'] || 1
@@ -57,7 +57,7 @@ export class EventsComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
-     
+
       this.translate.use(lang)
       console.log('current lang ------', this.translate.getBrowserLang())
       this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
