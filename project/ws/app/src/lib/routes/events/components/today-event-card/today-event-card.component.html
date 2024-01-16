@@ -6,7 +6,7 @@
         <mat-card-header>
             <mat-card-subtitle class="margin-bottom-xs">
                 <div class="event-type mat-body-2">
-                    <mat-icon>event</mat-icon> {{eventData?.event?.resourceType}}
+                    <mat-icon>event</mat-icon> {{translateLabels(eventData?.event?.resourceType, 'event')}}
                 </div>
             </mat-card-subtitle>
             <mat-card-title class="margin-bottom-xs textoverflow-title">
@@ -22,11 +22,11 @@
                 <span class="light-font livecss"><span class="dot"></span> {{eventData?.event.status}} </span>
             </div>
             <div class="float-right">
-                <button mat-raised-button type="button" class="ws-mat-primary-background">Join event</button>
+                <button mat-raised-button type="button" class="ws-mat-primary-background">{{ 'eventDetailsRightCard.joinEvent' | translate }}</button>
             </div>
         </mat-card-content>
         <mat-card-content *ngIf="!isLive && isRecording">
-            <button mat-raised-button type="button" class="ws-mat-primary-background"><img class="recordicon" src="/assets/icons/recording@2x.png" alt="Recording">View recording</button>
+            <button mat-raised-button type="button" class="ws-mat-primary-background"><img class="recordicon" src="/assets/icons/recording@2x.png" alt="Recording">{{ 'eventDetailsRightCard.viewRecording' | translate }}</button>
         </mat-card-content>
     </div>
 </mat-card>

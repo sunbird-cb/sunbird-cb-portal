@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 import moment from 'moment'
 
 @Component({
@@ -12,7 +13,13 @@ export class TodayEventCardComponent implements OnInit {
   isLive = false
   isRecording = false
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private translate: TranslateService) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+   }
 
   ngOnInit() {
     if (this.eventData) {
@@ -44,5 +51,12 @@ export class TodayEventCardComponent implements OnInit {
   getEventDetails(eventID: any) {
     // this.router.navigate([`/app/event-hub/home/${this.discuss.tid}`])
     this.router.navigate([`/app/event-hub/home/${eventID}`])
+  }
+
+  translateLabels(label: string, type: any) {
+    console.log(label)
+    label = label.replace(/\s/g, "").toLocaleLowerCase()
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
   }
 }

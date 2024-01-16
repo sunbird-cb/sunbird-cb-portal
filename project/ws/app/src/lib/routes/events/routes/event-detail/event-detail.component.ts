@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import _ from 'lodash'
 import moment from 'moment'
 import { EventService } from '../../services/events.service'
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
 /* tslint:enable */
 
 @Component({
@@ -32,9 +33,16 @@ export class EventDetailComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private eventSvc: EventService,
+    private translate: TranslateService
     // private discussService: DiscussService,
     // private snackBar: MatSnackBar,
-  ) { }
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
