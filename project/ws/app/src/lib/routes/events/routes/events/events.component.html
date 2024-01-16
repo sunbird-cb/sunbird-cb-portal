@@ -98,7 +98,7 @@
         </div>
     </div> -->
     <mat-tab-group [selectedIndex]="0" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
-        <mat-tab label="All" *ngIf="alltypeEvents?.length">
+        <mat-tab label="{{ 'event.all' | translate }}" *ngIf="alltypeEvents?.length">
             <ng-template matTabContent>
                 <section id="content">
                     <div class="w-full margin-top-xl margin-bottom-m event_card_box">
@@ -110,7 +110,7 @@
                 </section>
             </ng-template>
         </mat-tab>
-        <mat-tab label="Events in your MDO" *ngIf="featuredEvents?.length">
+        <mat-tab label="{{ 'event.mdoEvents' | translate }}" *ngIf="featuredEvents?.length">
             <ng-template matTabContent>
                 <section id="content">
                     <div class="w-full margin-top-xl margin-bottom-m">
@@ -122,7 +122,7 @@
                 </section>
             </ng-template>
         </mat-tab>
-        <mat-tab label="Curated events" *ngIf="curatedEvents?.length">
+        <mat-tab label="{{ 'event.curatedEvents' | translate }}" *ngIf="curatedEvents?.length">
             <ng-template matTabContent>
                 <section id="content">
                     <div class="w-full margin-top-xl margin-bottom-m">

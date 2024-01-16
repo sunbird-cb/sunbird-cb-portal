@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, Input } from '@angular/core'
 import moment from 'moment'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { environment } from 'src/environments/environment'
+import { TranslateService } from '@ngx-translate/core'
 // import { ActivatedRoute } from '@angular/router'
 // import { ConfigurationsService } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../models/profile-v2.model'
@@ -31,14 +32,14 @@ export class RightMenuCardComponent implements OnInit, OnDestroy {
   constructor(
     // private route: ActivatedRoute,
     // configSvc: ConfigurationsService,
-    private events: EventService
+    private events: EventService,
+    private translate: TranslateService
   ) {
-    // this.currentEvent = configSvc.userProfile && configSvc.userProfile.eventId
-    // this.badgesSubscription = this.route.data.subscribe(response => {
-    //   this.badges = response && response.badges && response.badges.data
-    //   this.portalProfile = response && response.profile && response.profile.data[0]
-    //   this.completedPercent = this.calculatePercent(this.portalProfile || null)
-    // })
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
   ngOnInit(): void {
     // this.completedPercent = 86
