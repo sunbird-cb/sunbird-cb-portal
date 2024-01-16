@@ -25,6 +25,13 @@ $text-primary: #1B4CA1;
     line-height: 14px;
 }
 
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .certificate-container {
     width: 100%;
     max-width: 380px;
@@ -48,12 +55,21 @@ $text-primary: #1B4CA1;
     
         .img-div {
             width: 280px;
-            height: 128px;
+            height: 160px;
             border-radius: 8px;
 
             img {
                 width: 280px;
             }
+        }
+
+        .error-img-div {
+            height: 180px;
+        }
+
+        .no-certificate-found {
+            text-align: center;
+            margin-bottom: 0px !important;
         }
     }
     

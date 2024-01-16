@@ -19,7 +19,6 @@ import { environment } from 'src/environments/environment'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
-import dayjs from 'dayjs'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 
 interface IStripUnitContentData {
@@ -996,15 +995,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
   splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
     const tabResults: any[] = []
-    const date1 = dayjs()
     const splitData = this.getTabsList(
       contentNew,
-      (e: any) => {
-        const daysCount = dayjs(e.endDate).diff(date1, 'day')
-        e['planDuration'] =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 30 ?
-         NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
-        return daysCount < 0
-      },
       strip,
     )
     if (strip.tabs && strip.tabs.length) {
@@ -1029,38 +1021,55 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   getTabsList(array: NsContent.IContent[],
-              customFilter: any,
               strip: NsContentStripWithTabs.IContentStripUnit) {
     let all: any[] = []
-    const upcoming: any[] = []
-    const overdue: any[] = []
-    array.forEach((e: any, idx: number, arr: any[]) => {
+    let upcoming: any[] = []
+    let overdue: any[] = []
+    array.forEach((e: any) => {
       all.push(e)
-      return (customFilter(e, idx, arr) ? overdue : upcoming).push(e)
+      if (e.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        overdue.push(e)
+      } else if (e.planDuration === NsCardContent.ACBPConst.UPCOMING) {
+        upcoming.push(e)
+      }
     })
+    const allCompleted = all.filter((allData: any) => allData.contentStatus === 2)
+    let allInCompleted = all.filter((allData: any) => allData.contentStatus < 2)
 
-    all = all.sort((a: any, b: any): any => {
+    let allCompletedOverDue = allCompleted.filter((allData: any) => allData.planDuration === NsCardContent.ACBPConst.OVERDUE)
+    const allCompletedAll = allCompleted.filter((allData: any) =>  allData.planDuration !== NsCardContent.ACBPConst.OVERDUE)
+
+    allCompletedOverDue = allCompletedOverDue.sort((a: any, b: any): any => {
       if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
         const firstDate: any = new Date(a.endDate)
         const secondDate: any = new Date(b.endDate)
         return  firstDate > secondDate  ? -1 : 1
       }
     })
-    // overdue = overdue.sort((a: any, b: any): any => {
-    //   if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
-    //     const firstDate: any = new Date(a.endDate)
-    //     const secondDate: any = new Date(b.endDate)
-    //     if (b.contentStatus !== 2 &&  a.contentStatus !== 2) {
-    //       return  firstDate > secondDate  ? -1 : 1
-    //     }
-    //   }
-    // })
-    // overdue = overdue.filter((data: any): any => {
-    //   return data.contentStatus < 2
-    // })
-    // upcoming = upcoming.filter((data: any): any => {
-    //   return data.contentStatus < 2
-    // })
+
+    allInCompleted = allInCompleted.sort((a: any, b: any): any => {
+      if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        return  firstDate > secondDate  ? -1 : 1
+      }
+    })
+
+    all = [...allInCompleted, ...allCompletedAll, ...allCompletedOverDue]
+
+    overdue = overdue.filter((data: any): any => {
+      return data.contentStatus < 2
+    })
+
+    overdue = overdue.sort((a: any, b: any): any => {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        return  firstDate > secondDate  ? -1 : 1
+    })
+
+    upcoming = upcoming.filter((data: any): any => {
+      return data.contentStatus < 2
+    })
     // this.getSelectedIndex(1)
     return [
     { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },

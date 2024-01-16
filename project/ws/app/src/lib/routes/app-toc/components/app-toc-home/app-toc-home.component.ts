@@ -200,6 +200,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.historyData = history.state
     this.handleBreadcrumbs()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -337,7 +342,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (res && res.kpList) {
         const info = res.kpList.addinfo
         if (info) {
-          this.monthlyCapExceed = JSON.parse(info).nonACBPCourseKarmaQuotaClaimed >= 4
+          this.monthlyCapExceed = JSON.parse(info).claimedNonACBPCourseKarmaQuota >= 4
         }
       }
     })
@@ -357,7 +362,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.cbPlanEndDate = cbp[0].endDate
         const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
         const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
-        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 31
+        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
         if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
           this.isAcbpCourse = true
@@ -1583,6 +1588,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   translateLabels(label: string, type: any) {
+    label = label.toLowerCase();
     label = label.replace(/\s/g, "")
     const translationKey = type + '.' +  label;
     return this.translate.instant(translationKey);
