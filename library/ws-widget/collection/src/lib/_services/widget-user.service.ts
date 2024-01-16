@@ -20,11 +20,11 @@ const API_END_POINTS = {
     `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey,avgRating,additionalTags,${NsCardContent.IGOTConst.COMPETENCIES}&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes`,
   FETCH_USER_ENROLLMENT_LIST_PROFILE: (userId: string | undefined) =>
     // tslint:disable-next-line: max-line-length
-    `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey,avgRating,additionalTags&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes&retiredCoursesEnabled=true`,
+    `/apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=orgName,email&licenseDetails=name,description,url&fields=contentType,primaryCategory,topic,name,channel,mimeType,appIcon,gradeLevel,resourceType,identifier,medium,pkgVersion,board,subject,trackable,posterImage,duration,creatorLogo,license,version,versionKey,avgRating,additionalTags,${NsCardContent.IGOTConst.COMPETENCIES}&batchDetails=name,endDate,startDate,status,enrollmentType,createdBy,certificates,batchAttributes&retiredCoursesEnabled=true`,
   // tslint:disable-next-line: max-line-length
   FETCH_USER_ENROLLMENT_LIST_V2: (userId: string | undefined, orgdetails: string, licenseDetails: string, fields: string, batchDetails: string) =>
     // tslint:disable-next-line: max-line-length
-    `apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=${orgdetails}&licenseDetails=${licenseDetails}&fields=${fields}&batchDetails=${batchDetails}`,
+    `apis/proxies/v8/learner/course/v1/user/enrollment/list/${userId}?orgdetails=${orgdetails}&licenseDetails=${licenseDetails}&fields=${fields},${NsCardContent.IGOTConst.COMPETENCIES}&batchDetails=${batchDetails}`,
 }
 
 @Injectable({
@@ -90,27 +90,27 @@ export class WidgetUserService {
       Pragma: 'no-cache',
       Expires: '0',
     })
-    // return this.http
-    //   .get(path, { headers })
-    //   .pipe(
-    //     catchError(this.handleError),
-    //     map(
-    //       (data: any) => data.result
-    //     )
-    //   )
-    if (this.checkStorageData('enrollmentService')) {
-      const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
-          (data: any) => {
-            localStorage.setItem('enrollmentData', JSON.stringify(data.result))
-            this.mapEnrollmentData(data.result)
-            return data.result
-          }
+    return this.http
+      .get(path, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(
+          (data: any) => data.result
         )
       )
-      this.setTime('enrollmentService')
-      return result
-    }
-    return this.getData('enrollmentData')
+    // if (this.checkStorageData('enrollmentService')) {
+    //   const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
+    //       (data: any) => {
+    //         localStorage.setItem('enrollmentData', JSON.stringify(data.result))
+    //         this.mapEnrollmentData(data.result)
+    //         return data.result
+    //       }
+    //     )
+    //   )
+    //   this.setTime('enrollmentService')
+    //   return result
+    // }
+    // return this.getData('enrollmentData')
   }
 
   checkStorageData(key: any) {
@@ -191,7 +191,7 @@ export class WidgetUserService {
     const contentNew: any = []
     const todayDate = dayjs().format('YYYY-MM-DD')
 
-    const enrollList = JSON.parse(localStorage.getItem('enrollmentMapData') || '')
+    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
 
     if (data && data.count) {
       data.content.forEach((c: any) => {
@@ -204,7 +204,14 @@ export class WidgetUserService {
           childData['endDate'] = c.endDate
           childData['parentId'] = c.id
           childData['planType'] = 'cbPlan'
-          contentNew.push(childData)
+          if (childData.status !== NsCardContent.IGOTConst.RETIRED) {
+            contentNew.push(childData)
+          } else {
+            if (childEnrollData && childEnrollData.status === 2) {
+              contentNew.push(childData)
+            }
+          }
+
           const competencyArea: any = []
           const competencyTheme: any = []
           const competencyThemeType: any = []

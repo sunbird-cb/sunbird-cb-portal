@@ -118,6 +118,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     "competencySubTheme": [], 
     "providers": [] 
   };
+  filterObjData2 = {...this.filterObjData};
+  tabValue: string = '';
   certificateMappedObject: any = {};
 
   constructor(
@@ -142,34 +144,45 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   getUserEnrollmentList(): void {
+    const enrollmentMapData = JSON.parse(localStorage.getItem('enrollmentMapData') as any);
     const userId: any = this.configService && this.configService.userProfile && this.configService.userProfile.userId;
     this.widgetService.fetchUserBatchList(userId)
       .pipe(takeUntil(this.destroySubject$))
       .subscribe(
         (response: any) => {
           let competenciesV5: any[] = [];
-
           response.courses.forEach((eachCourse: any) => {
+
+            // To eliminate In progress or Yet to start courses...
+            if (enrollmentMapData[eachCourse.contentId].status !== 2) return;
+
             if (eachCourse.content && eachCourse.content.competencies_v5) {
               competenciesV5 = [...competenciesV5, ...eachCourse.content.competencies_v5];
             }
 
-            if ((eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
-
-              eachCourse.issuedCertificates.forEach((icObj: any) => {
-                icObj['courseName'] = eachCourse.courseName;
-                icObj['viewMore'] = false;
-                icObj['batchId'] = eachCourse.batchId;
-                icObj['contentId'] = eachCourse.contentId;
+            const courseDetails = {
+              'courseName': eachCourse.courseName.trim(),
+              'viewMore': false,
+              'batchId': eachCourse.batchId,
+              'contentId': eachCourse.contentId
+            }
+            if (eachCourse.issuedCertificates.length) {
+              eachCourse.issuedCertificates = eachCourse.issuedCertificates.map((icObj: any) => {
+                icObj = { ...icObj, ...courseDetails };
+                return icObj;
               });
+            } else {
+              eachCourse.issuedCertificates.push(courseDetails);
+            }
 
+            if ((eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
               let subThemeMapping: any = {};
               eachCourse.content.competencies_v5.forEach((v5Obj: any) => {
                 if (this.certificateMappedObject[v5Obj.competencyTheme]) {
 
                   // Certificate consumed logic...
                   eachCourse.issuedCertificates.forEach((certObj: any) => {
-                    if (this.certificateMappedObject[v5Obj.competencyTheme].certificate.findIndex((_obj: any) => _obj.identifier === certObj.identifier) === -1) {
+                    if (this.certificateMappedObject[v5Obj.competencyTheme].certificate.findIndex((_obj: any) => _obj.courseName === certObj.courseName) === -1) {
                       this.certificateMappedObject[v5Obj.competencyTheme].certificate.push(certObj);
                     }
                   });
@@ -226,6 +239,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
           this.getOtherData();
           this.competency.skeletonLoading = false;
+          
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.matSnackBar.open("Unable to pull Enrollment list details!");
@@ -265,7 +279,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
+    this.tabValue = param;
     this.competencyArray = this.competency[param];
+    this.filterObjData2 = {...this.filterObjData};
   }
 
   handleShowAll(): void {
@@ -295,26 +311,31 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   // Filters related functionalities...
   handleFilter(event: boolean): void {
     this.toggleFilter = event;
-    this.document.body.classList.add('overflow-hidden')
+    if (event) {
+      this.document.body.classList.add('overflow-hidden')
+    } else {
+      this.document.body.classList.remove('overflow-hidden');
+    }
   }
 
-  handleApplyFilter(event: any){
-    this.toggleFilter = false
-    this.filterObjData = event
+  handleApplyFilter(event: any) {
+    this.toggleFilter = false;
+    this.filterObjData = event;
+    this.document.body.classList.remove('overflow-hidden');
     this.filterData(event)
   }
 
-  handleClearFilterObj(event: any){
-    this.filterObjData = event;
+  handleClearFilterObj(event: any) {
+    this.filterObjData2 = event;
     this.filterData(event);
+    this.competencyArray = this.competency[this.tabValue || 'all'];
   }
 
   filterData(filterValue: any) {
     let finalFilterValue: any = [];
-    this.document.body.classList.remove('overflow-hidden');
     if( filterValue['competencyArea'].length || filterValue['competencyTheme'].length || filterValue['competencySubTheme'].length ) {
       let filterAppliedOnLocal = false;
-      this.filteredData = this.competency['all'];
+      this.filteredData = this.competency[this.tabValue || 'all'];
 
       if(filterValue['competencyArea'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false

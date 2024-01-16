@@ -232,7 +232,7 @@ export class CbpFiltersComponent implements OnInit {
 		}
 	}
 
-	applyFilter() {
+	handleApplyFilter() {
 		this.getFilterData.emit(this.filterObj)
 	}
 

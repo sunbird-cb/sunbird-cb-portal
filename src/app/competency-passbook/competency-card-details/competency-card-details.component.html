@@ -61,31 +61,31 @@
                         <div class="flex flex-row">
                             <div class="flex-1">
                                 <div class="text-base font-semibold cursor-pointer" (click)="handleNavigate(eachCert)" >{{ eachCert?.courseName }}</div>
-                                <div class="text-xs font-light">Issued on {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
+                                <div class="text-xs font-light" *ngIf="eachCert?.identifier" >Issued on {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
                             </div>
                             <div class="flex justify-center">
                                 <ng-container *ngIf="eachCert?.loading">
                                     <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'32px'" [height]="'32px'"></ws-widget-skeleton-loader>
                                 </ng-container>
-                                <ng-container *ngIf="!eachCert?.loading && !eachCert.error">
+                                <ng-container *ngIf="!eachCert?.loading && !eachCert.error && eachCert?.identifier">
                                     <mat-icon class="icon cursor-pointer" (click)="handleDownloadCertificatePDF(eachCert?.printURI)" >arrow_downward</mat-icon>
                                 </ng-container>
                             </div>
                         </div>
-                        <div class="flex justify-center p-3">
+                        <div class="flex justify-center">
                             <ng-container *ngIf="eachCert?.loading">
-                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'280px'" [height]="'128px'"></ws-widget-skeleton-loader>
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'280px'" [height]="'160px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!eachCert?.loading">
-                                <ng-container *ngIf="!eachCert.error">
+                                <ng-container *ngIf="!eachCert.error && eachCert?.identifier">
                                     <div class="flex justify-center items-center img-div">
                                         <img [src]="eachCert?.printURI | pipeSafeSanitizer: 'url'" alt="{{ eachCert?.courseName }} certificate" />
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="eachCert?.error">
-                                    <div class="flex justify-center items-center img-div">
-                                        <div class="mat-subheading-1">
-                                            {{ eachCert?.error }}
+                                <ng-container *ngIf="eachCert?.error || !eachCert?.identifier">
+                                    <div class="flex justify-center items-center img-div error-img-div">
+                                        <div class="no-certificate-found mat-subheading-1">
+                                            {{ eachCert?.error || 'No certificate found for this course' }}
                                         </div>
                                     </div>
                                 </ng-container>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="chips-card flex flex-wrap gap-3">
                     <ng-container *ngFor="let subTheme of themeDetails.courseSubThemes[i]; let j = index">
-                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (j > 1 && !eachCert?.viewMore)}">
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (j > 1 && !eachCert?.viewMore), 'chip-ellipsis': !eachCert?.viewMore && themeDetails.courseSubThemes[i]?.length > 1 }" [title]="subTheme" >
                             {{ subTheme }}
                         </div>
                     </ng-container>
