@@ -1,7 +1,7 @@
 <div class="seeAll-home-container m-auto gap-4">
     <ng-container>
         <div class="flex flex-row page-header margin-top-l margin-bottom-l">
-            {{(seeAllPageConfig && seeAllPageConfig.title) ? seeAllPageConfig.title : ''}}
+            {{(seeAllPageConfig && seeAllPageConfig.title) ? seeAllPageConfig.title : ''}}aa
         </div>
         <div class="flex flex-row flex-wrap content-container" infinite-scroll [infiniteScrollDistance]="scrollDistance"
             [infiniteScrollThrottle]="throttle" (scrolled)="onScrollEnd()"
@@ -12,7 +12,7 @@
         </div>
         <div class="flex flex-row flex-wrap content-container"
             *ngIf="tabResults.length > 0">
-            <mat-tab-group animationDuration="0ms" 
+            <mat-tab-group animationDuration="0ms"
                   class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
                   (selectedTabChange)="tabClicked($event, seeAllPageConfig, seeAllPageConfig.key)" [(selectedIndex)]="dynamicTabIndex">
             <mat-tab *ngFor="let tab of tabResults; let last = last;" [label]="tab?.label">
