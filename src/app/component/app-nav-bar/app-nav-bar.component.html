@@ -167,8 +167,9 @@
   <div class="flex flex-middle points-block">
     <img (click)="viewKarmapoints()" src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
     <div class="margin-left-xs">
-      <p class="karma-lbl flex ">Karma Points <img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button
-        matTooltip="Karma Points measure and map your engagement at iGOT. Points are updated within 4 hours."
+      <p class="karma-lbl flex ">
+        {{ 'appnavbar.karmaPoints' | translate }}<img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button
+        matTooltip="{{ 'appnavbar.karmaPointsToolTip' | translate }}"
         [matTooltipPosition]="'below'"  (click)="tooltip.show()"
         [matTooltipHideDelay]="tooltipDelay" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
         </p>

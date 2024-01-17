@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import _ from 'lodash'
 import moment from 'moment'
 import { EventService } from '../../services/events.service'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:enable */
 
 @Component({

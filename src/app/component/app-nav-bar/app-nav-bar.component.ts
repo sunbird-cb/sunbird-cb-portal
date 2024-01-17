@@ -71,6 +71,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -253,7 +258,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     label = label.replace(/\s/g, "")
     const translationKey = type + '.' +  label;
     return this.translate.instant(translationKey);
-  } 
+  }
   redirectToPath(pathConfig:any) {
     if(pathConfig && pathConfig.key) {
       this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
