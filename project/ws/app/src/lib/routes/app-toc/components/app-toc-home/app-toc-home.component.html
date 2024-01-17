@@ -449,7 +449,7 @@ TODO: edit option while preview Mode
     </div> -->
     <ng-container *ngIf="cbPlanEndDate">
       <div class="cb-plan-wrap">
-        <p>CBP plan deadline</p>
+        <p>{{'apptochome.cbpDeadLine' | translate}}</p>
         <p>
           <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.OVERDUE" class="cb-danger">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
           <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.SUCCESS" class="cb-success">{{cbPlanEndDate | date: 'd MMM, y'}}</span>

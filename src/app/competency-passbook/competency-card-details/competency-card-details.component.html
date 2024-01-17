@@ -25,11 +25,11 @@
                 <div class="flex flex-wrap gap-3">
                     <div class="flex items-center text-center" *ngIf="!themeDetails?.subTheme || !themeDetails?.subTheme?.length" >No Sub theme data found!</div>
                     <ng-container *ngFor="let chip of themeDetails?.subTheme; let i = index">
-                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (i > 7 && !viewMoreST)}">
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': ((isMobile) ? i > 2 : i > 9) && !viewMoreST}">
                             {{ chip }}
                         </div>
                     </ng-container>
-                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="themeDetails?.subTheme?.length > 8 && !viewMoreST" (click)="viewMoreST = !viewMoreST">
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="((isMobile) ? themeDetails?.subTheme?.length > 3 : themeDetails?.subTheme?.length > 10 )  && !viewMoreST" (click)="viewMoreST = !viewMoreST">
                         View more
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="viewMoreST" (click)="viewMoreST = !viewMoreST">
