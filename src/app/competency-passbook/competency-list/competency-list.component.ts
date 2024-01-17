@@ -289,7 +289,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
     this.tabValue = param;
-    this.competencyArray = this.competency[param];
+    this.competencyArray = this.competency[param].sort((a: any, b: any) => {
+      return (new Date(b.completedOn) as any) - (new Date(a.completedOn) as any)
+    });
     this.filterObjData2 = {...this.filterObjData};
   }
 
