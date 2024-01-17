@@ -151,8 +151,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: any) => {
           let competenciesV5: any[] = [];
-          response.courses.forEach((eachCourse: any) => {
 
+          response.courses.forEach((eachCourse: any) => {
             // To eliminate In progress or Yet to start courses...
             if (enrollmentMapData[eachCourse.contentId].status !== 2) return;
 
@@ -190,12 +190,17 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
                   // Content consumed logic...
                   if (this.certificateMappedObject[v5Obj.competencyTheme].contentConsumed.indexOf(eachCourse.courseName.trim()) === -1) {
                     this.certificateMappedObject[v5Obj.competencyTheme].contentConsumed.push(eachCourse.courseName.trim());
+
+                    // Completed on logic...
+                    this.certificateMappedObject[v5Obj.competencyTheme].completedOn.push(eachCourse.completedOn);
                   }
+
                 } else {
                   this.certificateMappedObject[v5Obj.competencyTheme] = {
                     'certificate': eachCourse.issuedCertificates,
                     'contentConsumed': [eachCourse.courseName],
-                    'subThemes': []
+                    'subThemes': [],
+                    'completedOn': [eachCourse.completedOn]
                   };
                 }
 
@@ -235,9 +240,12 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
           });
           
           this.competency.all = [...this.competency.behavioural, ...this.competency.functional, ...this.competency.domain];
-          this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
-
           this.getOtherData();
+          this.competency.all = this.competency.all.sort((a: any, b: any) => {
+            return (new Date(b.completedOn) as any) - (new Date(a.completedOn) as any)
+          });
+
+          this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
           this.competency.skeletonLoading = false;
           
         }, (error: HttpErrorResponse) => {
@@ -254,6 +262,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       allObj.issuedCertificates = this.certificateMappedObject[allObj.competencyTheme].certificate;
       allObj.contentConsumed = this.certificateMappedObject[allObj.competencyTheme].contentConsumed;
       allObj.courseSubThemes = this.certificateMappedObject[allObj.competencyTheme].subThemes;
+      allObj['latest'] = (this.certificateMappedObject[allObj.competencyTheme].completedOn.length) ? Math.max(...this.certificateMappedObject[allObj.competencyTheme].completedOn) : null;
 
       this.leftCardDetails.forEach((_lObj: any) => {
         if (_lObj.type === allObj.competencyArea) {
@@ -280,7 +289,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
     this.tabValue = param;
-    this.competencyArray = this.competency[param];
+    this.competencyArray = this.competency[param].sort((a: any, b: any) => {
+      return (new Date(b.completedOn) as any) - (new Date(a.completedOn) as any)
+    });
     this.filterObjData2 = {...this.filterObjData};
   }
 
