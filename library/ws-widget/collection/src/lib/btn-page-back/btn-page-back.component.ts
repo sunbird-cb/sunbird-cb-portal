@@ -51,6 +51,11 @@ export class BtnPageBackComponent extends WidgetBaseComponent
     private translate: TranslateService
   ) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -183,7 +188,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
       const translationKey = type + '.' +  label + subtype
       return this.translate.instant(translationKey);
     }
-    const translationKey = type + '.' +  label
+    const translationKey = type + '.' +  label.toLocaleLowerCase()
     return this.translate.instant(translationKey);
   }
 
