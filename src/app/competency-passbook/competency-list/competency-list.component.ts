@@ -151,8 +151,11 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: any) => {
           let competenciesV5: any[] = [];
-          response.courses.forEach((eachCourse: any) => {
+          let courses: any = response.courses.sort((a: any, b: any) => {
+            return (new Date(b.completedOn) as any) - (new Date(a.completedOn) as any)
+          });
 
+          courses.forEach((eachCourse: any) => {
             // To eliminate In progress or Yet to start courses...
             if (enrollmentMapData[eachCourse.contentId].status !== 2) return;
 

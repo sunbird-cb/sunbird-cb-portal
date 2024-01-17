@@ -46,10 +46,9 @@
     </div>
 
     <div class="flex-1 flex-col" *ngIf="!competencyArray?.length && !competency?.error">
-        <div class="flex flex-col gap-1 error-div justify-center items-center">
-            <mat-icon class="icon no-data">warning</mat-icon>
-            <div class="mat-subheading-1">Unable to find competencies.</div>
-            <!-- <div class="text-center">Unable to find competencies.</div> -->
+        <div class="flex flex-col gap-3 justify-center items-center mt-12 p-6">
+            <img src="assets/icons/competency/no-competencies.svg" alt="no competencies found image" />
+            <div class="font-bold">No competency found</div>
         </div>
     </div>
 </ng-template>
