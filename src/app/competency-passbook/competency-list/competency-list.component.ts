@@ -241,9 +241,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
           
           this.competency.all = [...this.competency.behavioural, ...this.competency.functional, ...this.competency.domain];
           this.getOtherData();
-          this.competency.all = this.competency.all.sort((a: any, b: any) => {
-            return (new Date(b.completedOn) as any) - (new Date(a.completedOn) as any)
-          });
+          this.competency.all = this.competency.all.sort((a: any, b: any) => b.latest - a.latest);
 
           this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
           this.competency.skeletonLoading = false;
@@ -289,9 +287,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   handleTabChange(event: MatTabChangeEvent ): void {
     const param = event.tab.textLabel.toLowerCase();
     this.tabValue = param;
-    this.competencyArray = this.competency[param].sort((a: any, b: any) => {
-      return (new Date(b.completedOn) as any) - (new Date(a.completedOn) as any)
-    });
+    this.competencyArray = this.competency[param].sort((a: any, b: any) => b.latest - a.latest);
     this.filterObjData2 = {...this.filterObjData};
   }
 
