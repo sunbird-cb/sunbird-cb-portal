@@ -60,7 +60,7 @@ export class WidgetUserService {
       Pragma: 'no-cache',
       Expires: '0',
     })
-    if (this.checkStorageData('enrollmentService','enrollmentData')) {
+    if (this.checkStorageData('enrollmentService', 'enrollmentData')) {
       const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
           (data: any) => {
             localStorage.setItem('enrollmentData', JSON.stringify(data.result))
@@ -113,7 +113,7 @@ export class WidgetUserService {
     // return this.getData('enrollmentData')
   }
 
-  checkStorageData(key: any,dataKey: any) {
+  checkStorageData(key: any, dataKey: any) {
     const checkTime = localStorage.getItem('timeCheck')
     if (checkTime) {
       const parsedData = JSON.parse(checkTime)
@@ -162,7 +162,7 @@ export class WidgetUserService {
     }
   }
 
-  fetchCbpPlanList(){
+  fetchCbpPlanList() {
 
     // let data = JSON.parse(localStorage.getItem('cbpData')|| '')
     // if(!data) {
@@ -177,7 +177,7 @@ export class WidgetUserService {
     //   return this.getData('cbpData')
 
     // }
-     if (this.checkStorageData('cbpService','cbpData')) {
+     if (this.checkStorageData('cbpService', 'cbpData')) {
         const result: any = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
           async (data: any) => {
             return await this.mapData(data.result)
@@ -255,7 +255,7 @@ export class WidgetUserService {
           childData['competencySubThemeId'] = competencySubThemeId
         })
       })
-     if(contentNew.length > 1) {
+     if (contentNew.length > 1) {
         const sortedData: any = contentNew.sort((a: any, b: any) => {
           const firstDate: any = new Date(a.endDate)
           const secondDate: any = new Date(b.endDate)

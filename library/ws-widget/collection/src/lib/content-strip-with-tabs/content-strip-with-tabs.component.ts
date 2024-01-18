@@ -959,7 +959,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   async fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
-    
+
     if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
 
       let courses: NsContent.IContent[]
