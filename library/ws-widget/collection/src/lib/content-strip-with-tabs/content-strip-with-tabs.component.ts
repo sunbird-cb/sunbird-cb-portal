@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment'
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
+import { TranslateService } from '@ngx-translate/core'
 
 interface IStripUnitContentData {
   key: string
@@ -93,6 +94,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // private http: HttpClient,
     // private searchServSvc: SearchServService,
     private userSvc: WidgetUserService,
+    private translate: TranslateService,
   ) {
     super()
   }
@@ -1086,6 +1088,21 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
     }
     return returnValue
+  }
+
+  translateLabels(label: string, type: any) {
+    // label = _.camelCase(label.replace(/\s/g, ""))
+    label = label.toLowerCase();
+    const sl = label.split(' ')
+    sl.forEach((w: any, index: any) => {
+      if (index !== 0) {
+        sl[index] = w[0].toUpperCase() + w.slice(1)
+      }
+    })
+    label = sl.join('')
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
   }
 
 }

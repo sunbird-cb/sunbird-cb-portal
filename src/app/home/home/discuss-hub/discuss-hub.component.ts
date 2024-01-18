@@ -5,7 +5,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils';
 import { HomePageService } from 'src/app/services/home-page.service';
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
 import { Router } from '@angular/router'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'ws-discuss-hub',
   templateUrl: './discuss-hub.component.html',
@@ -38,12 +38,7 @@ export class DiscussHubComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
-     
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 

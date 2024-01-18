@@ -37,12 +37,7 @@ export class NetworkHubComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
-     
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 
