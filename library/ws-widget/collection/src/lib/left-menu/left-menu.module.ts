@@ -13,6 +13,7 @@ import {
   MatSidenavModule,
   MatListModule,
 } from '@angular/material'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [LeftMenuComponent],
@@ -28,6 +29,7 @@ import {
     MatChipsModule,
     MatCardModule,
     MatListModule,
+    TranslateModule
   ],
   entryComponents: [LeftMenuComponent],
   exports: [
