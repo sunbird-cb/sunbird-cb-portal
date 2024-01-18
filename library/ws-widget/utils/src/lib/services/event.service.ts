@@ -4,10 +4,13 @@ import { WsEvents } from './event.model'
 import { UtilityService } from './utility.service'
 /* tslint:disable*/
 import _ from 'lodash'
+import { environment } from 'src/environments/environment'
+import moment from 'moment'
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
+  todaysEvents: any = []
   private eventsSubject = new Subject<WsEvents.IWsEvents<any>>()
   public events$ = this.eventsSubject.asObservable()
 
@@ -151,4 +154,97 @@ export class EventService {
       pageIdExt: `${_.camelCase(data.label)}-tab`,
     })
   }
+
+  getPublicUrl(url: string): string {
+    const mainUrl = url.split('/content').pop() || ''
+    return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
+  }
+
+  allEventDateFormat(datetime: any) {
+    const date = new Date(datetime).getDate()
+    const year = new Date(datetime).getFullYear()
+    const month = new Date(datetime).getMonth()
+    const hours = new Date(datetime).getHours()
+    const minutes = new Date(datetime).getMinutes()
+    const seconds = new Date(datetime).getSeconds()
+    const formatedDate = new Date(year, month, date, hours, minutes, seconds, 0)
+    // let format = 'YYYY-MM-DD hh:mm a'
+    // if (!timeAllow) {
+    const format = 'YYYY-MM-DD'
+    // }
+    const readableDateMonth = moment(formatedDate).format(format)
+    const finalDateTimeValue = `${readableDateMonth}`
+    return finalDateTimeValue
+  }
+
+  compareDate(startDate: any) {
+    const now = new Date()
+
+    // tslint:disable-next-line:prefer-template
+    const day =  ('0' + (new Date().getDate())).slice(-2)
+    const year = new Date().getFullYear()
+    // tslint:disable-next-line:prefer-template
+    const month = ('0' + (now.getMonth() + 1)).slice(-2)
+    const todaysdate = `${year}-${month}-${day}`
+    if (startDate === todaysdate)  {
+      return true
+    }
+    return false
+  }
+
+  customDateFormat(date: any, time: any) {
+    const stime = time.split('+')[0]
+    const hour = stime.substr(0, 2)
+    const min = stime.substr(2, 3)
+    return `${date} ${hour}${min}`
+ }
+
+
+ setEventListData(eventObj: any) {
+  if (eventObj !== undefined) {
+    const data = eventObj
+   // console.log('strip comp', data)
+    Object.keys(data).forEach((index: any) => {
+      const obj = data[index]
+      const floor = Math.floor
+      const hours = floor(obj.duration / 60)
+      const minutes = obj.duration % 60
+      const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
+        `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
+        `${hours} hours ${minutes} minutes`
+      const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
+      const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
+      const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
+
+      const stime = obj.startTime.split('+')[0]
+      const hour = stime.substr(0, 2)
+      const min = stime.substr(2, 3)
+      const starttime = `${hour}${min}`
+
+      const etime = obj.endTime.split('+')[0]
+      const ehour = etime.substr(0, 2)
+      const emin = etime.substr(2, 3)
+      const endtime = `${ehour}${emin}`
+
+      const eventDataObj = {
+        event: obj,
+        eventName: obj.name,
+        eventStartTime: starttime,
+        eventEndTime: endtime,
+        eventStartDate: obj.startDate,
+        eventCreatedOn: this.allEventDateFormat(obj.createdOn),
+        eventDuration: duration,
+        eventjoined: creatorDetails.length,
+        eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ?
+          this.getPublicUrl(obj.appIcon) :
+          '/assets/icons/Events_default.png',
+        pastevent: false,
+      }
+      const isToday = this.compareDate(obj.startDate)
+      if (isToday) {
+        this.todaysEvents.push(eventDataObj)
+      }
+    })
+  }
+}
 }

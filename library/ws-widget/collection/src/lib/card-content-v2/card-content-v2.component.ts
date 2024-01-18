@@ -85,7 +85,6 @@ export class CardContentV2Component extends WidgetBaseComponent
           contentName: this.widgetData.content.name,
           contentType: this.widgetData.content.contentType,
           primaryCategory: this.widgetData.content.primaryCategory,
-  
         }
       }
       this.modifySensibleContentRating()
@@ -225,7 +224,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   }
 
   private modifySensibleContentRating() {
-    if (this.widgetData.content) 
+    if (this.widgetData.content)
     if(this.widgetData.content.averageRating &&
       typeof this.widgetData.content.averageRating !== 'number'){
       // tslint:disable-next-line: ter-computed-property-spacing

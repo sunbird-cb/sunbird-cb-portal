@@ -113,7 +113,7 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
                           <input id="birthDate" matInput #dob formControlName="dob" [matDatepicker]="picker"
-                            i18n-placeholder (focus)="picker.open()" placeholder="Choose Date of Birth (dd-mm-yyyy)"
+                            i18n-placeholder (focus)="picker.open()" placeholder="{{'userProfile.DobPlaceholder' | translate }}"
                             [min]="1/1/1900" [max]="today" readonly>
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker (closed)="dob.blur()" i18n-aria-label aria-label="Date picker">
@@ -239,7 +239,7 @@
                                 </mat-select>
                               </mat-form-field>
                               <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w80">
-                                <input id="mobileNumber" #mobile type="text" matInput placeholder="Mobile Number"
+                                <input id="mobileNumber" #mobile type="text" matInput placeholder="{{'userProfile.mobilePlaceholder' | translate }}"
                                   formControlName="mobile" i18n-aria-label aria-label="Mobile Number input"
                                   maxlength="10" (keypress)="numericOnly($event)" (paste)="numericOnly($event)">
                                 <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
@@ -270,8 +270,8 @@
                               <div *ngIf="otpSend" class="flex flex-1 flex-column">
                                 <div class="flex flex-1 flex-row margin-bottom-m">
                                   <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w50">
-                                    <input id="mobileNumber" #otp type="number"
-                                      matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input"
+                                    <input id="mobileNumber" #otp type="number" matInput placeholder="Enter OTP"
+                                      i18n-aria-label aria-label="OTP input"
                                       onKeyPress="if(this.value.length === 8) return false;">
                                     <mat-hint *ngIf="timeLeftforOTP > 0 ">
                                       <span>{{'userProfile.resendOTPafter' | translate }} {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
@@ -304,8 +304,8 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs no-pb">
                           <input id="primaryEmail" name="primaryEmailField" type="email" matInput
-                            placeholder="Primary Email" #primaryEmail formControlName="primaryEmail"
-                            i18n-aria-label aria-label="Primary Email readonly input" maxlength="320">
+                            placeholder="{{'userProfile.primaryEmailPlaceholder' | translate }}" #primaryEmail formControlName="primaryEmail" i18n-aria-label
+                            aria-label="Primary Email readonly input" maxlength="320">
                           <mat-error [hidden]="false" i18n="Primary Email Error|Explains name is required">
                             {{'userProfile.primaryEmailMandatory' | translate }}
                           </mat-error>
@@ -327,7 +327,6 @@
                           </div>
                         </div>
                       </div>
-
                       <div class="input-wrapper margin-top-s" [ngClass]="{ disable: !isAllowed('group')}">
                         <label for="group" class=" margin-remove-bottom form-label required"
                           i18n="Group | Label which explains the user to enter Group" i18n-aria-label
@@ -335,14 +334,17 @@
                           {{'userProfile.group' | translate }}
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
-                          <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group"
+                          <mat-select placeholder="{{'userProfile.groupPlaceholder' | translate }}" id="group" #group i18n-placeholder="group"
                             formControlName="group" [disabled]="!isAllowed('group')">
-                            <ng-container *ngFor="let option of groupsOriginal">
-                              <mat-option *ngIf="option.name !== 'Others'" [value]="option.name">
-                                <!-- {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}} -->
-                                {{unApprovedReq?.group ? unApprovedReq.group: option.name}}
+                            <ng-container *ngIf="!unApprovedReq?.group">
+                              <mat-option [hidden]="option.name === 'Others'" *ngFor="let option of groupsOriginal"
+                                [value]="option.name"> {{option.name}}
                               </mat-option>
                             </ng-container>
+
+                            <mat-option *ngIf="unApprovedReq?.group" [value]="unApprovedReq.group">
+                              {{unApprovedReq.group}}
+                            </mat-option>
                           </mat-select>
                           <mat-error [hidden]="false" i18n="txt txt-reviewGroup Error | Explains Group is required"
                             *ngIf="createUserForm?.controls['group'].errors?.required" i18n-aria-label
@@ -361,12 +363,20 @@
                           </p>
                           <mat-form-field appearance="outline" class="margin-top-s w-full">
                             <mat-select #designation formControlName="designation" i18n-placeholder
-                              placeholder="--Select--"
+                              placeholder="{{'userProfile.designationPlaceholder' | translate }}"
                               (selectionChange)="otherDropDownChange(designation.value, 'designation')"
                               [disabled]="!isAllowed('designation')">
-                              <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
-                                {{unApprovedReq?.designation ? unApprovedReq.designation: designation.name}}
+
+                              <ng-container *ngIf="!unApprovedReq?.designation">
+                                <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
+                                  {{ designation.name}}
+                                </mat-option>
+                              </ng-container>
+
+                              <mat-option *ngIf="unApprovedReq?.designation" [value]="unApprovedReq.designation">
+                                {{unApprovedReq?.designation}}
                               </mat-option>
+
                             </mat-select>
                           </mat-form-field>
                           <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
@@ -400,7 +410,7 @@
                           {{'userProfile.pinCode' | translate }}
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs">
-                          <input id="pinCode" #pincode type="text" matInput placeholder="123456"
+                          <input id="pinCode" #pincode type="text" matInput placeholder="{{'userProfile.pinPlaceholder' | translate }}"
                             formControlName="pincode" i18n-aria-label aria-label="Pin Code inpput field"
                             autocomplete="off" (keypress)="numericOnly($event)" maxlength="6">
                           <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
@@ -497,7 +507,7 @@
                           {{ lang }}
                           <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <input matInput i18n-placeholder="Known Languages" placeholder="Known Languages"
+                        <input matInput i18n-placeholder="Known Languages" placeholder="{{'userProfile.knownLanguagesPlaceholder' | translate }}"
                           formControlName="knownLanguages" i18n-aria-label aria-label="Known Languages"
                           [matAutocomplete]="knownLanguagesAuto" #knownLanguagesInput [matChipInputFor]="chipList"
                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)"
@@ -523,7 +533,7 @@
                       {{'userProfile.telephoneNumber' | translate }}
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="telephoneNumber" #telephone type="text" matInput placeholder="Telephone Number"
+                      <input id="telephoneNumber" #telephone type="text" matInput placeholder="{{'userProfile.telephoneNumberPlaceholder' | translate }}"
                         formControlName="telephone" i18n-aria-label maxlength="12">
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['telephone'].errors?.pattern">
                         {{'userProfile.telephoneNumberValidation' | translate }}
@@ -542,7 +552,7 @@
                       {{'userProfile.secondaryEmail' | translate }}
                     </label>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
-                      <input id="secondaryEmail" type="email" matInput placeholder="Secondary Email"
+                      <input id="secondaryEmail" type="email" matInput placeholder="{{'userProfile.secondaryEmailPlaceholder' | translate }}"
                         formControlName="secondaryEmail" i18n-aria-label aria-label="Secondary Email input filed"
                         maxlength="320" (input)="emailVerification($event.target.value)">
                       <div *ngIf="emailLengthVal" class="email-error" i18n="Email Error|Explains character validation">
@@ -560,7 +570,7 @@
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <textarea id="postalAddress" class="postal-address" matInput [matTextareaAutosize]="true"
                         [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200"
-                        formControlName="residenceAddress" placeholder="Type Your Residence Address Here"
+                        formControlName="residenceAddress" placeholder="{{'userProfile.rAddressPlaceholder' | translate }}"
                         i18n-placeholder #residenceAddress i18n-aria-label
                         aria-label="Postal Address textarea input"></textarea>
                       <!-- <input matInput #residenceAddress formControlName="residenceAddress" i18n-placeholder
@@ -587,7 +597,7 @@
                       </label>
                       <mat-form-field appearance="outline" class="margin-top-xs">
                         <input id="chooseDOJ" matInput #doj formControlName="doj" [matDatepicker]="dojPicker"
-                          i18n-placeholder placeholder="Choose Date of Joining" (focus)="dojPicker.open()" [min]=""
+                          i18n-placeholder placeholder="{{'userProfile.dojPlaceholder' | translate }}" (focus)="dojPicker.open()" [min]=""
                           [max]="today" [disabled]="!isAllowed('doj')">
                         <mat-datepicker-toggle matSuffix [for]="dojPicker"></mat-datepicker-toggle>
                         <mat-datepicker #dojPicker (closed)="doj.blur()"></mat-datepicker>
@@ -608,7 +618,7 @@
                     </label>
 
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <mat-select formControlName="nationality" i18n-placeholder placeholder="--Select--">
+                      <mat-select formControlName="nationality" i18n-placeholder placeholder="{{'userProfile.designationPlaceholder' | translate }}">
                         <mat-option [value]="option.name" *ngFor="let option of masterNationalities">
                           {{ option.name }}
                         </mat-option>
@@ -656,7 +666,7 @@
                   </mat-select>
                 </mat-form-field> -->
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="language" matInput type="text" placeholder="Mother Tongue"
+                      <input id="language" matInput type="text" placeholder="{{'userProfile.motherTonguePlaceholder' | translate }}"
                         i18n-placeholder="Mother Tongue" formControlName="domicileMedium"
                         [matAutocomplete]="motherTongueAuto" i18n-aria-label
                         aria-label="Domicile Medium (Mother Tongue)" #motherTongue maxlength="30" />
@@ -739,12 +749,17 @@
                       <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(orgNameSelect.value, 'orgname')"
                         [disabled]="!isAllowed('name')">
-                        <mat-option [value]="org" *ngFor="let org of allDept">
-                          <!-- {{org}} -->
-                          <!-- {{orgNameApvlReq?.feildName === 'name' ? orgNameApvlReq.value : org}} -->
-                          {{unApprovedReq?.name ? unApprovedReq.name: org}}
+                        <ng-container *ngIf="!unApprovedReq?.name">
+                          <mat-option [value]="org" *ngFor="let org of allDept">
+                            {{org}}
+                          </mat-option>
+                        </ng-container>
+
+                        <mat-option *ngIf="!unApprovedReq?.name" [value]="'Other'">Other</mat-option>
+                        <mat-option *ngIf="unApprovedReq?.name" [value]="unApprovedReq.name">
+                          {{unApprovedReq?.name}}
                         </mat-option>
-                        <mat-option [value]="'Other'">Other</mat-option>
+
                       </mat-select>
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
@@ -774,14 +789,20 @@
                       {{'userProfile.industry' | translate }}
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
+                      <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="{{'userProfile.designationPlaceholder' | translate }}"
                         (selectionChange)="otherDropDownChange(industrySelect.value, 'industry')"
                         [disabled]="!isAllowed('industry')">
-                        <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
-                          <!-- {{indApvlReq?.feildName === 'industry' ? indApvlReq.value : i.name}} -->
-                          {{unApprovedReq?.industry ? unApprovedReq.industry: i.name}}
+                        <ng-container *ngIf="!unApprovedReq?.industry">
+                          <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
+                            {{i.name}}
+                          </mat-option>
+                        </ng-container>
+
+                        <mat-option *ngIf="!unApprovedReq?.industry" [value]="'Other'">Other</mat-option>
+
+                        <mat-option *ngIf="unApprovedReq?.industry" [value]="unApprovedReq.industry">
+                          {{unApprovedReq?.industry}}
                         </mat-option>
-                        <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
@@ -810,11 +831,16 @@
                       {{'userProfile.country' | translate }}
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <mat-select formControlName="location" i18n-placeholder placeholder="--Select--"
+                      <mat-select formControlName="location" i18n-placeholder placeholder="{{'userProfile.designationPlaceholder' | translate }}"
                         [disabled]="!isAllowed('location')">
-                        <mat-option [value]="loc.name" *ngFor="let loc of countries">
-                          <!-- {{countryApvlReq?.feildName === 'location' ? countryApvlReq.value : loc.name}} -->
-                          {{unApprovedReq?.location ? unApprovedReq.location: loc.name}}
+                        <ng-container *ngIf="!unApprovedReq?.location">
+                          <mat-option [value]="loc.name" *ngFor="let loc of countries">
+                            {{loc.name}}
+                          </mat-option>
+                        </ng-container>
+
+                        <mat-option *ngIf="unApprovedReq?.location" [value]="unApprovedReq.location">
+                          {{unApprovedReq?.location}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -832,7 +858,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs full-width">
                       <textarea id="description" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="4" maxlength="500" formControlName="orgDesc"
-                        placeholder="Please enter your organisation description" i18n-placeholder #orgDesc
+                        placeholder="{{'userProfile.orgDescriptionPlaceholder' | translate }}" i18n-placeholder #orgDesc
                         [attr.disabled]="!isAllowed('description')"></textarea>
                       <mat-hint align="end">{{ orgDesc.value.length }} /500 characters</mat-hint>
                       <mat-error i18n>
@@ -851,7 +877,7 @@
                       {{'userProfile.payBand' | translate }}
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <mat-select formControlName="payType" i18n-placeholder placeholder="--Select--">
+                      <mat-select formControlName="payType" i18n-placeholder placeholder="{{'userProfile.designationPlaceholder' | translate }}">
                         <mat-option [value]="pay.name" *ngFor="let pay of gradePayData">
                           {{pay.name}}
                         </mat-option>
@@ -869,7 +895,7 @@
                       {{'userProfile.service' | translate }}
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <mat-select formControlName="service" i18n-placeholder placeholder="--Select--">
+                      <mat-select formControlName="service" i18n-placeholder placeholder="{{'userProfile.designationPlaceholder' | translate }}">
                         <mat-option [value]="service.name" *ngFor="let service of govtOrgMeta?.service">
                           {{service.name}}
                         </mat-option>
@@ -882,7 +908,7 @@
                       {{'userProfile.cadre' | translate }}
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <mat-select formControlName="cadre" i18n-placeholder placeholder="--Select--">
+                      <mat-select formControlName="cadre" i18n-placeholder placeholder="{{'userProfile.designationPlaceholder' | translate }}">
                         <mat-option [value]="cad.name" *ngFor="let cad of govtOrgMeta?.cadre">
                           {{cad.name}}
                         </mat-option>
@@ -898,7 +924,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="allotmentYearService" matInput #allotmentYear type="text"
-                        formControlName="allotmentYear" i18n-placeholder placeholder="1998" maxlength="4"
+                        formControlName="allotmentYear" i18n-placeholder placeholder="{{'userProfile.allotmentYearPlaceholder' | translate }}" maxlength="4"
                         (keypress)="numericOnly($event)" />
                       <mat-error [hidden]="false" *ngIf="createUserForm?.controls['allotmentYear'].errors?.pattern">
                         {{'userProfile.4DigitYear' | translate }}
@@ -912,7 +938,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="doj" matInput #otherDetailsDoj formControlName="otherDetailsDoj"
-                        [matDatepicker]="otherDetailsDojPicker" i18n-placeholder placeholder="Choose Date of Joining"
+                        [matDatepicker]="otherDetailsDojPicker" i18n-placeholder placeholder="{{'userProfile.dojPlaceholder' | translate }}"
                         (focus)="otherDetailsDojPicker.open()" [min]="" [max]="today">
                       <mat-datepicker-toggle matSuffix [for]="otherDetailsDojPicker"></mat-datepicker-toggle>
                       <mat-datepicker #otherDetailsDojPicker (closed)="otherDetailsDoj.blur()"></mat-datepicker>
@@ -931,7 +957,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="civilListNumber" matInput type="text" #civilListNo formControlName="civilListNo"
-                        i18n-placeholder placeholder="Enter Civil List Number" (keypress)="numericOnly($event)"
+                        i18n-placeholder placeholder="{{'userProfile.civilListNumberPlaceholder' | translate }}" (keypress)="numericOnly($event)"
                         onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Civil List Number  Error|Explains name is required">
                         {{'userProfile.civilListNumberMandatory' | translate }}
@@ -945,7 +971,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="empCode" matInput type="text" #employeeCode formControlName="employeeCode"
-                        i18n-placeholder placeholder="Enter Employee Code" (keypress)="numericOnly($event)"
+                        i18n-placeholder placeholder="{{'userProfile.employeeCodePlaceholder' | translate }}" (keypress)="numericOnly($event)"
                         onKeyPress="if(this.value.length === 25) return false;" />
                       <mat-error [hidden]="false" i18n="Employee Code  Error|Explains name is required">
                         {{'userProfile.employeeCodeMandatory' | translate }}
@@ -962,7 +988,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="officePostalAddress" matInput #otherDetailsOfficeAddress
                         formControlName="otherDetailsOfficeAddress" maxlength="200" i18n-placeholder
-                        placeholder="Enter Office Postal Address" />
+                        placeholder="{{'userProfile.officePostalAddressPlaceholder' | translate }}" />
                       <mat-hint align="end">{{ otherDetailsOfficeAddress.value.length }} /200 {{'userProfile.characters' | translate }}</mat-hint>
                       <mat-error i18n>
                         {{'userProfile.officePostalAddressLength' | translate }}
@@ -981,7 +1007,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="pinCode1" matInput #otherDetailsOfficePinCode type="text"
                         formControlName="otherDetailsOfficePinCode" (keypress)="numericOnly($event)" i18n-placeholder
-                        placeholder="Enter Office Pin Code" maxlength="6" />
+                        placeholder="{{'userProfile.officePinCodePlaceholder' | translate }}" maxlength="6" />
                       <!-- <mat-error [hidden]="false" i18n="Pin Code  Error|Explains name is required">
                         Pin Code is mandatory
                       </mat-error> -->
@@ -996,7 +1022,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="eHRMSId" matInput type="text" formControlName="eHRMSId" i18n-placeholder
-                        placeholder="EHRMS ID" [disabled]="true" />
+                        placeholder="{{'userProfile.ehrmdIDPlaceholder' | translate }}" [disabled]="true" />
                     </mat-form-field>
                   </div>
                   <div class="item1" *ngIf="eHRMSName && eHRMSName === 'DoPT eHRMS'">
@@ -1006,18 +1032,18 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="eHRMSName" matInput type="text" formControlName="eHRMSName" i18n-placeholder
-                        placeholder="EHRMS System" [disabled]="true" />
+                        placeholder="{{'userProfile.ehrmdSystemPlaceholder' | translate }}" [disabled]="true" />
                     </mat-form-field>
                   </div>
 
                   <div class="item1">
-                    <label class="margin-remove-bottom form-label">Tags</label>
+                    <label class="margin-remove-bottom form-label">{{'userProfile.tags' | translate }}</label>
                     <mat-chip-list #chipListTags *ngIf="selectedtags && selectedtags.length">
                       <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true">
                         {{ tag }}
                       </mat-chip>
                     </mat-chip-list>
-                    <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">No tags available
+                    <p *ngIf="!selectedtags || !selectedtags.length" class="margin-top-xs mat-body-2">{{'userProfile.noTags' | translate }}
                     </p>
                   </div>
                 </div>
@@ -1040,7 +1066,7 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="schoolName10" matInput #schoolName10 formControlName="schoolName10" i18n-placeholder
-                      placeholder="Enter School Name" maxlength="50" />
+                      placeholder="{{'userProfile.schoolNamePlaceholder' | translate }}" maxlength="50" />
                     <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                       {{'userProfile.schoolNameMandatory' | translate }}
                     </mat-error>
@@ -1053,7 +1079,7 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="yearOfPassing" matInput #yop10 type="text" name="yop10" formControlName="yop10"
-                      i18n-placeholder placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
+                      i18n-placeholder placeholder="{{'userProfile.allotmentYearPlaceholder' | translate }}" maxlength="4" (keypress)="numericOnly($event)" />
                     <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop10'].errors?.pattern">
                       {{'userProfile.4DigitYear' | translate }}
                     </mat-error>
@@ -1071,7 +1097,7 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="schoolName" matInput #schoolName12 formControlName="schoolName12" i18n-placeholder
-                      placeholder="Enter School Name" maxlength="50" />
+                      placeholder="{{'userProfile.schoolNamePlaceholder' | translate }}" maxlength="50" />
                     <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                       {{'userProfile.schoolNameMandatory' | translate }}
                     </mat-error>
@@ -1084,7 +1110,7 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="yearOfPassing12" matInput #yop12 type="text" formControlName="yop12" i18n-placeholder
-                      placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
+                      placeholder="{{'userProfile.allotmentYearPlaceholder' | translate }}" maxlength="4" (keypress)="numericOnly($event)" />
                     <mat-error [hidden]="false" *ngIf="createUserForm?.controls['yop12'].errors?.pattern">
                       {{'userProfile.yearOfPasssing' | translate }}
                     </mat-error>
@@ -1102,7 +1128,7 @@
                       {{'userProfile.degree' | translate }}
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs w-full">
-                      <input id="degree" matInput type="text" placeholder="--Select--" i18n-placeholder="Degree"
+                      <input id="degree" matInput type="text" placeholder="{{'userProfile.designationPlaceholder' | translate }}" i18n-placeholder="Degree"
                         formControlName="degree" [matAutocomplete]="auto" i18n-aria-label aria-label="Graduation Degree"
                         #graduationDegree i18n-aria-label aria-label="Graduation Degree Field input" maxlength="70"
                         (keyup)="onChangesDegrees()" />
@@ -1125,7 +1151,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #graduationOther formControlName="graduationOther" i18n-placeholder
-                        placeholder="Enter Other Graduation Degree" maxlength="150" />
+                        placeholder="{{'userProfile.otherGraduationDegreePlaceholder' | translate }}" maxlength="150" />
                       <mat-error [hidden]="false" i18n="Other Graduation Name  Error|Explains name is required">
                         {{'userProfile.othergraduationNandatory' | translate }}
                       </mat-error>
@@ -1140,7 +1166,7 @@
 
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="instituteName" matInput #instituteName formControlName="instituteName" i18n-placeholder
-                        placeholder="Enter Institute Name" maxlength="50" />
+                        placeholder="{{'userProfile.instituteNamePlaceholder' | translate }}" maxlength="50" />
                       <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                         {{'userProfile.instituteNameMandatory' | translate }}
                       </mat-error>
@@ -1153,7 +1179,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="yOP" matInput #yop type="text" formControlName="yop" i18n-placeholder
-                        placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
+                        placeholder="{{'userProfile.allotmentYearPlaceholder' | translate }}" maxlength="4" (keypress)="numericOnly($event)" />
                       <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">
                         {{'userProfile.4DigitYear' | translate }}
                       </mat-error>
@@ -1183,7 +1209,7 @@
                       {{'userProfile.degree' | translate }}
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs w-full">
-                      <input id="post_degree" matInput type="text" placeholder="--Select--"
+                      <input id="post_degree" matInput type="text" placeholder="{{'userProfile.designationPlaceholder' | translate }}"
                         i18n-placeholder="Post Degree" formControlName="degree" [matAutocomplete]="autoComplete"
                         i18n-aria-label aria-label="Post Graduation Degree" #postDegree i18n-aria-label
                         aria-label="Post Graduation Degree Field input" maxlength="70"
@@ -1208,7 +1234,7 @@
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #postDegree formControlName="graduationOther" i18n-placeholder
-                        placeholder="Enter Other Post Graduation Degree" maxlength="150" />
+                        placeholder="{{'userProfile.otherPostGraduationDegreePlaceholder' | translate }}" maxlength="150" />
                       <mat-error [hidden]="true" i18n="Other Graduation Name  Error|Explains name is required">
                         {{'userProfile.othergraduationNandatory' | translate }}
                       </mat-error>
@@ -1221,7 +1247,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="institute" matInput #instituteName formControlName="instituteName" i18n-placeholder
-                        placeholder="Enter Institute Name" maxlength="50" />
+                        placeholder="{{'userProfile.instituteNamePlaceholder' | translate }}" maxlength="50" />
                       <mat-error [hidden]="false" i18n="School Name Error|Explains name is required">
                         {{'userProfile.instituteNameMandatory' | translate }}
                       </mat-error>
@@ -1234,7 +1260,7 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="yOP1" matInput #yop type="text" formControlName="yop" i18n-placeholder
-                        placeholder="1998" maxlength="4" (keypress)="numericOnly($event)" />
+                        placeholder="{{'userProfile.allotmentYearPlaceholder' | translate }}" maxlength="4" (keypress)="numericOnly($event)" />
                       <mat-error [hidden]="false" *ngIf="degrees.get('yop').errors?.pattern">
                         {{'userProfile.4DigitYear' | translate }}
                       </mat-error>

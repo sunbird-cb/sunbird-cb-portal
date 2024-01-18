@@ -61,7 +61,7 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
       },
       { },
     )
-    if (tab.name == "'Get Started' tour") {
+    if (tab.name == "getStartedTour") {
       this.router.navigate(['/page/home'], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
       this.configSvc.updateTourGuideMethod(false)
     }

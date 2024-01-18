@@ -176,6 +176,8 @@ import { CardContentV2Module } from './card-content-v2/card-content-v2.module'
 import { ContentStripWithTabsComponent } from './content-strip-with-tabs/content-strip-with-tabs.component'
 import { ProfileKarmapointsModule } from './profile-v2/profile-karmapoints/profile-karmapoints.module'
 import { ProfileKarmapointsComponent } from './profile-v2/profile-karmapoints/profile-karmapoints.component'
+import { CardEventHubComponent } from './card-event-hub/card-event-hub.component'
+import { CardEventHubModule } from './card-event-hub/card-event-hub.module'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -265,6 +267,7 @@ export const WIDGET_REGISTERED_MODULES = [
   LeftMenuModule,
   UIORGTableModule,
   BreadcrumbsOrgModule,
+  CardEventHubModule,
 ]
 
 export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] = [
@@ -665,10 +668,14 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetSubType: ROOT_WIDGET_CONFIG.card.home_carrier,
     component: CardCarrierHomeComponent,
   },
-
   {
     widgetType: ROOT_WIDGET_CONFIG.menus._type,
     widgetSubType: ROOT_WIDGET_CONFIG.menus.leftMenu,
     component: LeftMenuComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.card._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.card.event_hub,
+    component: CardEventHubComponent,
   },
 ]
