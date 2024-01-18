@@ -60,44 +60,81 @@ export class CbpPlanComponent implements OnInit {
 
   async getCbPlans() {
     this.cbpLoader = true
-    this.widgetSvc.fetchCbpPlanList().subscribe(async (res: any) => {
-      if(res.length) {
-        this.cbpOriginalData = res
-        this.upcommingList = []
-        this.contentFeedList = []
-        this.overDueList = []
-        res = res.sort((a: any, b: any): any => {
-          if(a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
-            const firstDate: any = new Date(a.endDate)
-            const secondDate: any = new Date(b.endDate)
-            return  firstDate > secondDate  ? -1 : 1
-          }
-        })
-        await res.forEach((ele: any) => {
-          if (ele.planDuration === 'overdue') {
-            this.overDueList.push(ele);
-          } else {
-            this.upcommingList.push(ele);
-          }
-        })
-
-        this.contentFeedListCopy = res
-        this.contentFeedList = this.transformContentsToWidgets(res, this.getFeedStrip());
-        this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips);
-        this.overDueList = this.transformContentsToWidgets(this.overDueList, this.cbpAllConfig.cbpUpcomingStrips);
-        const all = this.overDueList.length + this.upcommingList.length;
-        this.usersCbpCount = {
-          upcoming: this.upcommingList.length,
-          overdue: this.overDueList.length,
-          all: all
+    let response = await this.widgetSvc.fetchCbpPlanList().toPromise()
+    if(response.length) {
+      this.cbpOriginalData = response
+      this.upcommingList = []
+      this.contentFeedList = []
+      this.overDueList = []
+      response = response.sort((a: any, b: any): any => {
+        if(a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+          const firstDate: any = new Date(a.endDate)
+          const secondDate: any = new Date(b.endDate)
+          return  firstDate > secondDate  ? -1 : 1
         }
-      } else {
-        this.upcommingList = []
-        this.overDueList = []
-        this.contentFeedList = []
+      })
+      await response.forEach((ele: any) => {
+        if (ele.planDuration === 'overdue') {
+          this.overDueList.push(ele);
+        } else {
+          this.upcommingList.push(ele);
+        }
+      })
+
+      this.contentFeedListCopy = response
+      this.contentFeedList = this.transformContentsToWidgets(response, this.getFeedStrip());
+      this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips);
+      this.overDueList = this.transformContentsToWidgets(this.overDueList, this.cbpAllConfig.cbpUpcomingStrips);
+      const all = this.overDueList.length + this.upcommingList.length;
+      this.usersCbpCount = {
+        upcoming: this.upcommingList.length,
+        overdue: this.overDueList.length,
+        all: all
       }
-      this.cbpLoader =false
-    })
+    } else {
+      this.upcommingList = []
+      this.overDueList = []
+      this.contentFeedList = []
+    }
+    this.cbpLoader =false
+    // this.widgetSvc.fetchCbpPlanList().subscribe(async (res: any) => {
+    //   if(res.length) {
+    //     this.cbpOriginalData = res
+    //     this.upcommingList = []
+    //     this.contentFeedList = []
+    //     this.overDueList = []
+    //     res = res.sort((a: any, b: any): any => {
+    //       if(a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+    //         const firstDate: any = new Date(a.endDate)
+    //         const secondDate: any = new Date(b.endDate)
+    //         return  firstDate > secondDate  ? -1 : 1
+    //       }
+    //     })
+    //     await res.forEach((ele: any) => {
+    //       if (ele.planDuration === 'overdue') {
+    //         this.overDueList.push(ele);
+    //       } else {
+    //         this.upcommingList.push(ele);
+    //       }
+    //     })
+
+    //     this.contentFeedListCopy = res
+    //     this.contentFeedList = this.transformContentsToWidgets(res, this.getFeedStrip());
+    //     this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips);
+    //     this.overDueList = this.transformContentsToWidgets(this.overDueList, this.cbpAllConfig.cbpUpcomingStrips);
+    //     const all = this.overDueList.length + this.upcommingList.length;
+    //     this.usersCbpCount = {
+    //       upcoming: this.upcommingList.length,
+    //       overdue: this.overDueList.length,
+    //       all: all
+    //     }
+    //   } else {
+    //     this.upcommingList = []
+    //     this.overDueList = []
+    //     this.contentFeedList = []
+    //   }
+    //   this.cbpLoader =false
+    // })
   }
   private transformContentsToWidgets(
     contents: NsContent.IContent[],
