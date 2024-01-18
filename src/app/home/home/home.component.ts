@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   enableLazyLoadingFlag = true;
   isKPPanelenabled = false
   enrollData: any
+  enrollInterval: any
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService,
     private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
 
@@ -164,7 +165,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.handleUpdateMobileNudge();
     this.handleDefaultFontSetting();
-    this.getEnrollmentData()
+
+    this.enrollInterval = setInterval(() => {
+      this.getEnrollmentData()
+    },                                1000)
   }
 
   ngAfterViewInit() {
@@ -184,8 +188,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (this.enrollData) {
       this.enrollData = JSON.parse(this.enrollData)
       if (this.enrollData && this.enrollData.courses && this.enrollData.courses.length) {
+        this.isKPPanelenabled = false
+      } else {
         this.isKPPanelenabled = true
       }
+      clearInterval(this.enrollInterval)
     }
   }
 
@@ -253,7 +260,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   checkSectionVisibility(className:string) {
     var isVisible = false;
-    if(className === 'section_0' || 
+    if(className === 'section_0' ||
     className === 'section_1' ||
     className === 'section_2' ||
     className === 'section_3' ||
@@ -300,7 +307,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   closeKarmaPointsPanel() {
-    this.isKPPanelenabled = true
+    this.isKPPanelenabled = false
   }
 
 }

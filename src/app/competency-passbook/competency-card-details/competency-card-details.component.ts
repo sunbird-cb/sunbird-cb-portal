@@ -23,12 +23,15 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
   viewMoreST: boolean = false;
   updatedTime: any;
   themeDetails: any;
+  isMobile: boolean = false;
 
   constructor(
     private actRouter: ActivatedRoute,
     private router: Router,
     private cpService: CompetencyPassbookService
   ) {
+
+    this.isMobile = (window.innerWidth < 768) ? true : false;
     this.actRouter.queryParams.subscribe((params: any) => {
       this.params = params;
     });

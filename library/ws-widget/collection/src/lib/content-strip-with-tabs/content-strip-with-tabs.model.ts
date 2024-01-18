@@ -64,6 +64,7 @@ export namespace NsContentStripWithTabs {
       path: string
     }
   }
+
   export interface IStripRequestApi {
     path: string
     queryParams?: {

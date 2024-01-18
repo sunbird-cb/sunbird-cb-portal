@@ -273,8 +273,8 @@
                               <div *ngIf="otpSend" class="flex flex-1 flex-column">
                                 <div class="flex flex-1 flex-row margin-bottom-m">
                                   <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w50">
-                                    <input id="mobileNumber" #otp type="number"
-                                      matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input"
+                                    <input id="mobileNumber" #otp type="number" matInput placeholder="Enter OTP"
+                                      i18n-aria-label aria-label="OTP input"
                                       onKeyPress="if(this.value.length === 8) return false;">
                                     <mat-hint *ngIf="timeLeftforOTP > 0 ">
                                       <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
@@ -306,8 +306,8 @@
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-xs no-pb">
                           <input id="primaryEmail" name="primaryEmailField" type="email" matInput
-                            placeholder="Primary Email" #primaryEmail formControlName="primaryEmail"
-                            i18n-aria-label aria-label="Primary Email readonly input" maxlength="320">
+                            placeholder="Primary Email" #primaryEmail formControlName="primaryEmail" i18n-aria-label
+                            aria-label="Primary Email readonly input" maxlength="320">
                           <mat-error [hidden]="false" i18n="Primary Email Error|Explains name is required">
                             Primary Email is mandatory
                           </mat-error>
@@ -329,7 +329,6 @@
                           </div>
                         </div>
                       </div>
-
                       <div class="input-wrapper margin-top-s" [ngClass]="{ disable: !isAllowed('group')}">
                         <label for="group" class=" margin-remove-bottom form-label required"
                           i18n="Group | Label which explains the user to enter Group" i18n-aria-label
@@ -339,12 +338,15 @@
                         <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
                           <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group"
                             formControlName="group" [disabled]="!isAllowed('group')">
-                            <ng-container *ngFor="let option of groupsOriginal">
-                              <mat-option *ngIf="option.name !== 'Others'" [value]="option.name">
-                                <!-- {{grpApvlReq?.feildName === 'group' ? grpApvlReq.value : option.name}} -->
-                                {{unApprovedReq?.group ? unApprovedReq.group: option.name}}
+                            <ng-container *ngIf="!unApprovedReq?.group">
+                              <mat-option [hidden]="option.name === 'Others'" *ngFor="let option of groupsOriginal" 
+                                [value]="option.name"> {{option.name}} 
                               </mat-option>
                             </ng-container>
+
+                            <mat-option *ngIf="unApprovedReq?.group" [value]="unApprovedReq.group">
+                              {{unApprovedReq.group}}
+                            </mat-option>
                           </mat-select>
                           <mat-error [hidden]="false" i18n="txt txt-reviewGroup Error | Explains Group is required"
                             *ngIf="createUserForm?.controls['group'].errors?.required" i18n-aria-label
@@ -366,9 +368,17 @@
                               placeholder="--Select--"
                               (selectionChange)="otherDropDownChange(designation.value, 'designation')"
                               [disabled]="!isAllowed('designation')">
-                              <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
-                                {{unApprovedReq?.designation ? unApprovedReq.designation: designation.name}}
+
+                              <ng-container *ngIf="!unApprovedReq?.designation">
+                                <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
+                                  {{ designation.name}}
+                                </mat-option>
+                              </ng-container>
+
+                              <mat-option *ngIf="unApprovedReq?.designation" [value]="unApprovedReq.designation">
+                                {{unApprovedReq?.designation}}
                               </mat-option>
+
                             </mat-select>
                           </mat-form-field>
                           <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
@@ -741,12 +751,17 @@
                       <mat-select #orgNameSelect formControlName="orgName" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(orgNameSelect.value, 'orgname')"
                         [disabled]="!isAllowed('name')">
-                        <mat-option [value]="org" *ngFor="let org of allDept">
-                          <!-- {{org}} -->
-                          <!-- {{orgNameApvlReq?.feildName === 'name' ? orgNameApvlReq.value : org}} -->
-                          {{unApprovedReq?.name ? unApprovedReq.name: org}}
+                        <ng-container *ngIf="!unApprovedReq?.name">
+                          <mat-option [value]="org" *ngFor="let org of allDept">
+                            {{org}}
+                          </mat-option>
+                        </ng-container>
+                
+                        <mat-option *ngIf="!unApprovedReq?.name" [value]="'Other'">Other</mat-option>
+                        <mat-option *ngIf="unApprovedReq?.name" [value]="unApprovedReq.name">
+                          {{unApprovedReq?.name}}
                         </mat-option>
-                        <mat-option [value]="'Other'">Other</mat-option>
+                        
                       </mat-select>
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
@@ -779,11 +794,17 @@
                       <mat-select #industrySelect formControlName="industry" i18n-placeholder placeholder="--Select--"
                         (selectionChange)="otherDropDownChange(industrySelect.value, 'industry')"
                         [disabled]="!isAllowed('industry')">
-                        <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
-                          <!-- {{indApvlReq?.feildName === 'industry' ? indApvlReq.value : i.name}} -->
-                          {{unApprovedReq?.industry ? unApprovedReq.industry: i.name}}
+                        <ng-container *ngIf="!unApprovedReq?.industry">
+                          <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
+                            {{i.name}}
+                          </mat-option>
+                        </ng-container>             
+
+                        <mat-option *ngIf="!unApprovedReq?.industry" [value]="'Other'">Other</mat-option>
+
+                        <mat-option *ngIf="unApprovedReq?.industry" [value]="unApprovedReq.industry">
+                          {{unApprovedReq?.industry}}
                         </mat-option>
-                        <mat-option [value]="'Other'">Other</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
@@ -815,9 +836,14 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <mat-select formControlName="location" i18n-placeholder placeholder="--Select--"
                         [disabled]="!isAllowed('location')">
-                        <mat-option [value]="loc.name" *ngFor="let loc of countries">
-                          <!-- {{countryApvlReq?.feildName === 'location' ? countryApvlReq.value : loc.name}} -->
-                          {{unApprovedReq?.location ? unApprovedReq.location: loc.name}}
+                        <ng-container *ngIf="!unApprovedReq?.location">
+                          <mat-option [value]="loc.name" *ngFor="let loc of countries">
+                            {{loc.name}}
+                          </mat-option>
+                        </ng-container> 
+
+                        <mat-option *ngIf="unApprovedReq?.location" [value]="unApprovedReq.location">
+                          {{unApprovedReq?.location}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>

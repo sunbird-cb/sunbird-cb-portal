@@ -41,15 +41,14 @@ export class CardContentV2Component extends WidgetBaseComponent
   prefChangeSubscription: Subscription | null = null
   sourceLogos: NsInstanceConfig.ISourceLogo[] | undefined
 
-  isIntranetAllowedSettings = false
+  isIntranetAllowedSettings = false 
   constructor(
     private dialog: MatDialog,
     private events: EventService,
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
-    private certificateService: CertificateService
-
+    private certificateService: CertificateService,
   ) {
     super()
   }
