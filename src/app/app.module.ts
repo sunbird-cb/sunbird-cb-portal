@@ -94,6 +94,7 @@ import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
 import { SocialLinkComponent } from './component/social-link/social-link.component';
 import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
 import { AppLogoComponent } from './component/app-logo/app-logo.component';
+import { ProfileV3Module } from '@ws/app/src/lib/routes/profile-v3/profile-v3.module'
 
 
 @Injectable()
@@ -192,7 +193,8 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    HeaderModule
+    HeaderModule,
+    ProfileV3Module
   ],
   exports: [
     TncComponent,
