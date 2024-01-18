@@ -47,18 +47,18 @@
     <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile">
       <div class="float-left">
         <ws-widget-avatar-photo [name]="getGivenName" [size]="'profile-round-m'" [photoUrl]="profileImage"></ws-widget-avatar-photo>
-        <span *ngIf="verifiedBadge" class="profile-badge">  
+        <span *ngIf="verifiedBadge" class="profile-badge">
             <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
           </span>
       </div>
-      
+
       <div class="inline-block margin-left-s pfname">
         <p class="mat-subheading-2 text-capitalize text-ellipses">{{ getGivenName }}
-          <!-- <span *ngIf="verifiedBadge" class="profile-badge">  
+          <!-- <span *ngIf="verifiedBadge" class="profile-badge">
             <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
           </span> -->
         </p>
-        <p i18n role="link" class="ws-mat-default-text mat-body-2 font-medium font-14-bold">View Profile</p>
+        <p i18n role="link" class="ws-mat-default-text mat-body-2 font-medium font-14-bold">{{'profileDropdown.viewProfile' | translate }}</p>
       </div>
     </a>
   </section>
@@ -82,20 +82,20 @@
   <section class="padding-xs">
     <a mat-menu-item role="link" (click)="redirectToTourPage()" class="app-tour flex items-center">
       <!-- <mat-icon>settings</mat-icon> -->
-      <span i18n>'Get Started' tour</span>
+      <span i18n>{{'profileDropdown.getStarted' | translate }}</span>
     </a>
     <a mat-menu-item role="link" (click)="redirectToMyLearning()" class="app-features flex items-center">
       <!-- <mat-icon>settings</mat-icon> -->
-      <span i18n>My Learning</span>
+      <span i18n>{{'profileDropdown.myLearning' | translate }}</span>
     </a>
     <a mat-menu-item role="link" (click)="handleRedirectToCompetencyPassbook()" class="app-features flex items-center">
-      <span i18n>Competency passbook</span>
+      <span i18n>{{'profileDropdown.competencyPassbook' | translate }}</span>
     </a>
     <a mat-menu-item role="link" routerLink="/app/profile/settings" class="all-features flex items-center">
       <!-- <mat-icon>settings</mat-icon> -->
-      <span i18n>Settings</span>
+      <span i18n>{{'profileDropdown.settings' | translate }}</span>
     </a>
-    
+
 
     <!-- <a mat-menu-item role="link" routerLink="/app/features" class="all-features flex-wrap">
       <mat-icon>apps</mat-icon>
@@ -104,7 +104,7 @@
 
     <a href="javascript:void(0)" mat-menu-item role="link" (click)="logout()" class="log-o flex items-center">
       <!-- <mat-icon>power_settings_new</mat-icon>&nbsp; -->
-      <span i18n>Sign-out</span>
+      <span i18n>{{'profileDropdown.signOut' | translate }}</span>
     </a>
   </section>
 </mat-menu>
