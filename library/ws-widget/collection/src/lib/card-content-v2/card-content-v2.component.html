@@ -719,12 +719,17 @@
                 <span>{{widgetData?.content?.cbPlanEndDate | date: 'd MMM, y'}}</span>
               </div>
             </ng-container>
-            <ng-container *ngIf="widgetData?.content?.endDate">
+            <!-- <ng-container *ngIf="widgetData?.content?.endDate">
               <div class="cbp-mark">
-                <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE" class="cbp-danger">Over due</span>
+                <p *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</p>
+                <p *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</p>
+                <p *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE" class="cbp-danger">Over due</p>
               </div>
+            </ng-container> -->
+            <ng-container *ngIf="cbPlanMapData && cbPlanMapData[widgetData?.content?.identifier]">
+              <ng-container [ngTemplateOutlet]="cbpPlan" [ngTemplateOutletContext]="{data: {
+                cbpData: cbPlanMapData[widgetData?.content?.identifier]
+              }}"></ng-container>
             </ng-container>
             <div class="duration-box right-corner" *ngIf="widgetData?.content?.duration > 0">
               <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
@@ -913,7 +918,6 @@
     </div>
   </mat-card>
 </ng-template>
-
 <ng-template #cardWide>
   <mat-card class="card-wide margin-bottom-m padding-remove position-relative flex">
     <div class="imageholder ">
@@ -1015,12 +1019,10 @@
         <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
         <span class=" ws-mat-white-text duration"> {{ (widgetData?.content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
       </div>
-      <ng-container *ngIf="widgetData?.content?.endDate">
-        <div class="cbp-mark left-0 border-top-radius">
-          <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-          <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-          <span  *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE"    class="cbp-danger">Over due</span>
-        </div>
+      <ng-container *ngIf="cbPlanMapData && cbPlanMapData[widgetData?.content?.identifier]">
+        <ng-container [ngTemplateOutlet]="cbpPlan" [ngTemplateOutletContext]="{data: {
+          cbpData: cbPlanMapData[widgetData?.content?.identifier]
+        }}"></ng-container>
       </ng-container>
     </div>
     <mat-card-content class="mat-text-box">
@@ -1122,6 +1124,11 @@
                   {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
                 </span>
               </div>
+              <ng-container *ngIf="cbPlanMapData && cbPlanMapData[widgetData?.content?.identifier]">
+                    <ng-container [ngTemplateOutlet]="cbpPlan" [ngTemplateOutletContext]="{data: {
+                      cbpData: cbPlanMapData[widgetData?.content?.identifier]
+                    }}"></ng-container>
+              </ng-container>
             </div>
           </ng-container>
           <ng-container *ngIf="!widgetData.content.posterImage">
@@ -1190,7 +1197,7 @@
       <ng-container *ngIf="widgetData.content?.completionPercentage === 100">
         <div class="flex flex-align-end progress-wrapper flex-end mt-1">
           <div class="progress-btn">
-            <button class="resume-btn flex flex-middle flex-between" [ngClass]="{'disable-btn': downloadCertificateLoading || widgetData?.content?.issuedCertificates?.length === 0}" (click)="!downloadCertificateLoading && downloadCertificate(widgetData.content);$event.stopPropagation()" >
+            <button class="resume-btn flex flex-middle flex-between view-btn" [ngClass]="{'disable-btn': downloadCertificateLoading || widgetData?.content?.issuedCertificates?.length === 0}" (click)="!downloadCertificateLoading && downloadCertificate(widgetData.content);$event.stopPropagation()" >
               <span class="margin-right-xs">View Certificate</span> 
               <img class="stats-icon" *ngIf="!downloadCertificateLoading" height="20" width="20" src="/assets/icons/home/eye-white.svg">
               <div class="center flex flex-middle"  *ngIf="downloadCertificateLoading">
@@ -1241,10 +1248,15 @@
 
 <ng-template #cardPortraitSkeleton>
   <mat-card class="card-portrait" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
+    <div class="margin-bottom-xs">
+      <ng-container>
+        <ws-widget-skeleton-loader [width]="'147px'" [height]="'26px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+      </ng-container>
+    </div>
     <div class="flex">
       <div class="margin-right-s">
         <ng-container>
-          <ws-widget-skeleton-loader [width]="'147px'" [height]="'100px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+          <ws-widget-skeleton-loader [width]="'147px'" [height]="'98px'" [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
         </ng-container>
       </div>
       <div class="width-1-1">
@@ -1267,11 +1279,11 @@
     <div class="flex flex-align-end progress-wrapper flex-between">
       <div class="progress-block">
         <div class="completed-time">
-          <ws-widget-skeleton-loader [width]="'211px'" [height]="'16px'"  [bindingClass]="'flex rounded margin-top-m md:w-211'"></ws-widget-skeleton-loader>
+          <ws-widget-skeleton-loader [width]="'211px'" [height]="'16px'"  [bindingClass]="'flex rounded margin-top-xs md:w-211'"></ws-widget-skeleton-loader>
         </div>
       </div>
       <div class="progress-btn">
-        <ws-widget-skeleton-loader [width]="'117px'" [height]="'32px'"  [bindingClass]="'flex rounded margin-top-m'"></ws-widget-skeleton-loader>
+        <ws-widget-skeleton-loader [width]="'117px'" [height]="'32px'"  [bindingClass]="'flex rounded margin-top-xs'"></ws-widget-skeleton-loader>
       </div>
     </div>
   </mat-card> 
@@ -1483,12 +1495,17 @@
                     {{widgetData?.content?.programDuration}} {{widgetData?.content?.programDuration === 1 ? 'day' : 'days'}}
                     </span>
                  </div>
-                 <ng-container *ngIf="widgetData?.content?.endDate">
-                  <div class="cbp-mark left-0 card-portrait-padding border-top-radius">
-                    <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                    <span *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</span>
-                    <span  *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE"    class="cbp-danger">Over due</span>
+                 <!-- <ng-container *ngIf="widgetData?.content?.endDate">
+                  <div class="cbp-mark left-0 border-top-radius">
+                    <p *ngIf="widgetData?.content?.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</p>
+                    <p *ngIf="widgetData?.content?.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{widgetData?.content?.endDate | date: 'd MMM, y'}}</p>
+                    <p  *ngIf="widgetData?.content?.planDuration === acbpConstants?.OVERDUE"    class="cbp-danger">Over due</p>
                   </div>
+                </ng-container> -->
+                <ng-container *ngIf="cbPlanMapData && cbPlanMapData[widgetData?.content?.identifier]">
+                  <ng-container [ngTemplateOutlet]="cbpPlan" [ngTemplateOutletContext]="{data: {
+                    cbpData: cbPlanMapData[widgetData?.content?.identifier]
+                  }}"></ng-container>
                 </ng-container>
               </div>
            </ng-container>
@@ -1560,4 +1577,12 @@
       </div>
     </div>
   </mat-card> 
+</ng-template>
+
+<ng-template #cbpPlan  let-data="data">
+  <div class="cbp-mark left-0 border-top-radius">
+    <p *ngIf="data.cbpData.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{data.cbpData.endDate | date: 'd MMM, y'}}</p>
+    <p *ngIf="data.cbpData.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{data.cbpData.endDate | date: 'd MMM, y'}}</p>
+    <p *ngIf="data.cbpData.planDuration === acbpConstants?.OVERDUE" class="cbp-danger">Over due </p>
+  </div>
 </ng-template>
