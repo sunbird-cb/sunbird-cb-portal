@@ -1,6 +1,7 @@
 .right-side-nav-items {
     display: inline-block;
     margin: 12px 0;
+    padding-left: 1em !important;
 }
 
 ::ng-deep .right-nav-tooltip {
@@ -42,9 +43,17 @@
 .custom-lang {
   font: 400 14px/21px Lato;
   width: 64px;
+  padding: 0 !important
 }
 .custom-lang.mat-form-field-appearance-legacy .mat-form-field-infix .mat-form-field-infix{
   padding: 0 !important;
+}
+
+.langdiv .mat-form-field-infix::after {
+  top: 35% !important;
+}
+.langdiv .mat-focused:not(.mat-form-field-invalid) .mat-form-field-infix::after {
+  color: rgba(0, 0, 0, 0.54) !important;
 }
 
 .tooltip {

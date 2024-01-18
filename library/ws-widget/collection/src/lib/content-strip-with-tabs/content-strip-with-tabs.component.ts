@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment'
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
+import { TranslateService } from '@ngx-translate/core'
 import { ITodayEvents } from '@ws/app/src/lib/routes/events/models/event'
 
 interface IStripUnitContentData {
@@ -94,6 +95,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // private http: HttpClient,
     // private searchServSvc: SearchServService,
     private userSvc: WidgetUserService,
+    private translate: TranslateService,
   ) {
     super()
   }
@@ -297,9 +299,10 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromTrendingContent(strip, calculateParentStatus)
-    this.enrollInterval = setInterval(() => {
-      this.fetchAllCbpPlans(strip, calculateParentStatus)
-    },                                1000)
+    this.fetchAllCbpPlans(strip, calculateParentStatus)
+    // this.enrollInterval = setInterval(() => {
+    //   this.fetchAllCbpPlans(strip, calculateParentStatus)
+    // },                                1000)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -995,38 +998,62 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // add switch case based on config key passed
   }
 
-  fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
-    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length
-    && localStorage.getItem('enrollmentData')) {
+  async fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
+
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
 
       let courses: NsContent.IContent[]
       let tabResults: any[] = []
-      this.userSvc.fetchCbpPlanList().subscribe((res: any) => {
-        if (res) {
-          courses = res
-          if (strip.tabs && strip.tabs.length) {
-            tabResults = this.splitCbpTabsData(courses, strip)
-            this.processStrip(
-              strip,
-              this.transformContentsToWidgets(courses, strip),
-              'done',
-              calculateParentStatus,
-              '',
-              tabResults
-            )
-          } else {
-            this.processStrip(
-              strip,
-              this.transformContentsToWidgets(courses, strip),
-              'done',
-              calculateParentStatus,
-              'viewMoreUrl',
-            )
-          }
-        }
-      },                                        (_err: any) => {
+      const response = await this.userSvc.fetchCbpPlanList().toPromise()
+      if (response) {
+            courses = response
+            if (strip.tabs && strip.tabs.length) {
+              tabResults = this.splitCbpTabsData(courses, strip)
+              await this.processStrip(
+                strip,
+                this.transformContentsToWidgets(courses, strip),
+                'done',
+                calculateParentStatus,
+                '',
+                tabResults
+              )
+            } else {
+              this.processStrip(
+                strip,
+                this.transformContentsToWidgets(courses, strip),
+                'done',
+                calculateParentStatus,
+                'viewMoreUrl',
+              )
+            }
+      }
+      // this.userSvc.fetchCbpPlanList().subscribe( async  (res: any) => {
+      //   if (res) {
+      //     console.log(res,'===============================>')
+      //     courses = res
+      //     if (strip.tabs && strip.tabs.length) {
+      //       tabResults = this.splitCbpTabsData(courses, strip)
+      //       await this.processStrip(
+      //         strip,
+      //         this.transformContentsToWidgets(courses, strip),
+      //         'done',
+      //         calculateParentStatus,
+      //         '',
+      //         tabResults
+      //       )
+      //     } else {
+      //       this.processStrip(
+      //         strip,
+      //         this.transformContentsToWidgets(courses, strip),
+      //         'done',
+      //         calculateParentStatus,
+      //         'viewMoreUrl',
+      //       )
+      //     }
+      //   }
+      // },                                        (_err: any) => {
 
-      })
+      // })
 
       clearInterval(this.enrollInterval)
     }
@@ -1124,6 +1151,21 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
     }
     return returnValue
+  }
+
+  translateLabels(label: string, type: any) {
+    // label = _.camelCase(label.replace(/\s/g, ""))
+    label = label.toLowerCase();
+    const sl = label.split(' ')
+    sl.forEach((w: any, index: any) => {
+      if (index !== 0) {
+        sl[index] = w[0].toUpperCase() + w.slice(1)
+      }
+    })
+    label = sl.join('')
+    label = label.replace(/\s/g, "")
+    const translationKey = type + '.' +  label;
+    return this.translate.instant(translationKey);
   }
 
 }

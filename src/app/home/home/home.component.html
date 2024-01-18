@@ -205,7 +205,7 @@
     <div class="update-mobile-number-flex">
         <span (click)="remindlater()" class="mobile-cross">X</span>
         <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
-        <p class="updatetitle">Update your profile and get it verified</p>
-        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update now</button>
+        <p class="updatetitle">{{ 'home.updateYourProfile' | translate }}</p>
+        <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">{{ 'home.updateNow' | translate }}</button>
     </div>
 </div>

@@ -1588,8 +1588,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   translateLabels(label: string, type: any) {
-    label = label.toLowerCase();
-    label = label.replace(/\s/g, "")
+    label = _.camelCase(label.replace(/\s/g, ""))
     const translationKey = type + '.' +  label;
     return this.translate.instant(translationKey);
   }
