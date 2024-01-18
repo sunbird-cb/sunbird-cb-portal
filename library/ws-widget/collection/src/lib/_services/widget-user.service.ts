@@ -60,7 +60,7 @@ export class WidgetUserService {
       Pragma: 'no-cache',
       Expires: '0',
     })
-    if (this.checkStorageData('enrollmentService')) {
+    if (this.checkStorageData('enrollmentService','enrollmentData')) {
       const result: any =  this.http.get(path, { headers }).pipe(catchError(this.handleError), map(
           (data: any) => {
             localStorage.setItem('enrollmentData', JSON.stringify(data.result))
@@ -113,7 +113,7 @@ export class WidgetUserService {
     // return this.getData('enrollmentData')
   }
 
-  checkStorageData(key: any) {
+  checkStorageData(key: any,dataKey: any) {
     const checkTime = localStorage.getItem('timeCheck')
     if (checkTime) {
       const parsedData = JSON.parse(checkTime)
@@ -124,7 +124,7 @@ export class WidgetUserService {
         if (diffMin >= timeCheck) {
           return true
         }
-        return localStorage.getItem('enrollmentData') ? false : true
+        return localStorage.getItem(dataKey) ? false : true
       }
       return true
     }
@@ -132,7 +132,10 @@ export class WidgetUserService {
   }
 
   getData(key: any): Observable<any> {
-    return Observable.of(JSON.parse(localStorage.getItem(key) || ''))
+    return Observable.of(JSON.parse(localStorage.getItem(key) || '{}'))
+  }
+  getSavedData(key: any): Observable<any> {
+    return JSON.parse(localStorage.getItem(key) || '')
   }
 
   setTime(key: any) {
@@ -159,7 +162,7 @@ export class WidgetUserService {
     }
   }
 
-  fetchCbpPlanList() {
+  fetchCbpPlanList(){
 
     // let data = JSON.parse(localStorage.getItem('cbpData')|| '')
     // if(!data) {
@@ -174,20 +177,20 @@ export class WidgetUserService {
     //   return this.getData('cbpData')
 
     // }
-    const result = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
-      (data: any) => {
-        if (data && data.result) {
-          const courseData = this.mapData(data.result)
-          return courseData
-        }
-        return data
-      }
-    )
-    )
-    return result
+     if (this.checkStorageData('cbpService','cbpData')) {
+        const result: any = this.http.get(API_END_POINTS.FETCH_CPB_PLANS).pipe(catchError(this.handleError), map(
+          async (data: any) => {
+            return await this.mapData(data.result)
+          }
+        )
+      )
+      this.setTime('cbpService')
+      return result
+    }
+    return this.getData('cbpData')
   }
 
-  mapData(data: any) {
+  async mapData(data: any) {
     const contentNew: any = []
     const todayDate = dayjs().format('YYYY-MM-DD')
 
@@ -252,18 +255,23 @@ export class WidgetUserService {
           childData['competencySubThemeId'] = competencySubThemeId
         })
       })
-      const sortedData: any = contentNew.sort((a: any, b: any) => {
+     if(contentNew.length > 1) {
+        const sortedData: any = contentNew.sort((a: any, b: any) => {
           const firstDate: any = new Date(a.endDate)
           const secondDate: any = new Date(b.endDate)
 
-        return  secondDate > firstDate  ? 1 : -1
-      })
-      const uniqueUsersByID = lodash.uniqBy(sortedData, 'identifier')
-      const sortedByEndDate =  lodash.orderBy(uniqueUsersByID, ['endDate'], ['asc'])
-      const sortedByStatus =  lodash.orderBy(sortedByEndDate, ['contentStatus'], ['asc'])
-      localStorage.setItem('cbpData', JSON.stringify(sortedByStatus))
-      return sortedByStatus
+          return  secondDate > firstDate  ? 1 : -1
+        })
+        const uniqueUsersByID = lodash.uniqBy(sortedData, 'identifier')
+        const sortedByEndDate =  lodash.orderBy(uniqueUsersByID, ['endDate'], ['asc'])
+        const sortedByStatus =  lodash.orderBy(sortedByEndDate, ['contentStatus'], ['asc'])
+        localStorage.setItem('cbpData', JSON.stringify(sortedByStatus))
+        return sortedByStatus
+     }
+     localStorage.setItem('cbpData', JSON.stringify(contentNew))
+     return contentNew
     }
+    localStorage.setItem('cbpData', JSON.stringify([]))
     return []
   }
 

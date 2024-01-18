@@ -33,6 +33,8 @@ export class CardContentV2Component extends WidgetBaseComponent
   showIsMode = false
   showContentTag = false
   downloadCertificateLoading: boolean = false
+  cbPlanMapData: any
+  cbPlanInterval: any
 
   btnPlaylistConfig: NsPlaylist.IBtnPlaylist | null = null
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
@@ -102,6 +104,9 @@ export class CardContentV2Component extends WidgetBaseComponent
           this.checkCriteria() && this.checkContentTypeCriteria() && this.checkMimeTypeCriteria()
       }
     }
+    this.cbPlanInterval = setInterval(() => {
+      this.getCbPlanData()
+    },                                1000)
   }
 
   checkContentTypeCriteria() {
@@ -363,6 +368,20 @@ export class CardContentV2Component extends WidgetBaseComponent
       })
     } else {
       this.downloadCertificateLoading = false
+    }
+  }
+  getCbPlanData() {
+    let cbpList: any={}
+    if (localStorage.getItem('cbpData')) {
+      let cbpListArr = JSON.parse(localStorage.getItem('cbpData') || '')
+      if (cbpListArr && cbpListArr.length) {
+        cbpListArr.forEach((data: any) => {
+          cbpList[data.identifier] = data
+        })
+      }
+      this.cbPlanMapData = cbpList 
+      // this.karmaPointLoading = false
+      clearInterval(this.cbPlanInterval)
     }
   }
 }

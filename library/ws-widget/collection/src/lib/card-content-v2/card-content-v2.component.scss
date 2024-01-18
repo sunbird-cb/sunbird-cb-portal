@@ -1380,8 +1380,8 @@ $title-line-count: 2;
   position: absolute;
   top: 0;
   padding: 8px;
-  padding-top: 4px;
-  span {
+  // padding-top: 4px;
+  p {
     opacity: 1;
     background-color: white;
     padding: 4px;
@@ -1394,15 +1394,14 @@ $title-line-count: 2;
     letter-spacing: 0.5px;
     text-align: left;
     line-height: 12px;
+    margin-bottom: 0;
   }
 }
 
 .cbpwidth {
   width: 340px;
 }
-.card-portrait-padding{
-  padding: 12px 8px;
-}
+
 @media only screen and (max-width:768px) {
   .card-portrait {
     width: calc(100vw - 66px);
@@ -1474,7 +1473,7 @@ $title-line-count: 2;
   opacity: 1;
 }
 .border-top-radius {
-  border-top-left-radius: 12px;
+  border-top-left-radius: 8px;
 }
 
 .cbp-mark-portrait {
