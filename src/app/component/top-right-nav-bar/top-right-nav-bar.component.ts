@@ -39,7 +39,7 @@ export class TopRightNavBarComponent implements OnInit {
   @Input() rightNavConfig: any;
   dialogRef: any;
   zohoHtml: any
-  zohoUrl: any = '/assets/static-data/zoho-code.txt'
+  zohoUrl: any = '/assets/static-data/zoho-code.html'
   constructor(public dialog: MatDialog, public homePageService: HomePageService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
@@ -52,13 +52,14 @@ export class TopRightNavBarComponent implements OnInit {
     })
 
     this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
+      // console.log(res, "res====")
       this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res);
     })
   }
 
   getZohoForm() {
     const dialogRef = this.dialog.open(ZohoDialogComponent, {
-      width: '460px',
+      width: '60%',
       data: {
         view: 'zohoform',
         value: this.zohoHtml
