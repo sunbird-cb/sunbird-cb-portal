@@ -5,7 +5,7 @@
       <!-- <mat-placeholder>Search user</mat-placeholder> -->
       <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
       <mat-label class="mat-body-2">{{ 'network.searchUser' | translate }}</mat-label>
-      
+
       <input type="search" #searchInput class="ml-2" [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput
         type="search" [placeholder]="'Search user'" maxlength="50" />
     </mat-form-field>
@@ -79,7 +79,7 @@
 
         <ng-container *ngIf="connectionRequests && connectionRequests.length > 3">
         <button mat-button color="default" type="button" class=" flex-auto-display see_all_btn" (click)="goToConnectionRequests()">
-          <span class="ws-mat-default-text" i18n>Show all </span>
+          <span class="ws-mat-default-text" i18n>{{ 'network.showAll'| translate }} </span>
           <mat-icon  class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">navigate_next </mat-icon>
         </button>
       </ng-container>
@@ -99,7 +99,7 @@
         </h4>
         <!-- </ng-container> -->
       </mat-card-content>
-     
+
 
     </mat-card>
   </div>
@@ -113,7 +113,7 @@
         </mat-card-title>
         <span class="spacer"></span>
         <button mat-button color="default" type="button" class=" flex-auto-display see_all_btn" (click)="goToMyMdo()">
-          <span class="ws-mat-default-text" i18n>Show all </span>
+          <span class="ws-mat-default-text" i18n>{{ 'network.showAll'| translate }} </span>
           <mat-icon  class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">navigate_next </mat-icon>
         </button>
       </mat-card-header>

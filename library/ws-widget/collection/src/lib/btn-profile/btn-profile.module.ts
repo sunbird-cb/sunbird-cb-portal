@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router'
 import { LogoutModule } from '@sunbird-cb/utils'
 import { AvatarPhotoModule } from '../_common/avatar-photo/avatar-photo.module'
 import { WidgetUrlResolverDirective } from './widget-url-resolver.directive'
+import { TranslateModule } from '@ngx-translate/core'
 // import { TreeCatalogModule } from '../tree-catalog/tree-catalog.module'
 
 @NgModule({
@@ -23,6 +24,7 @@ import { WidgetUrlResolverDirective } from './widget-url-resolver.directive'
     MatSlideToggleModule,
     RouterModule,
     WidgetResolverModule,
+    TranslateModule
   ],
   exports: [BtnProfileComponent],
   entryComponents: [BtnProfileComponent],
