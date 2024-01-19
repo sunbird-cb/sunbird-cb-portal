@@ -27,7 +27,7 @@
             <mat-card-header>
                 <mat-card-title class="margin-l-0 f-medium">
                     <h2 *ngIf="data && data.length">{{data.length}}
-                        <span *ngIf="data && data.length > 1 "> {{ 'network.tabConnectionRequests' | translate }}</span>
+                        <span *ngIf="data && data.length > 1 "> {{ 'network.connectionRequests' | translate }}</span>
                         <span *ngIf="data && data.length === 1 "> {{ 'network.tabConnectionRequest' | translate }}</span>
                     </h2>
                     <h4 class="w-full text-center ws-mat-black60-text" *ngIf="data && data.length <= 0">{{ 'msg.noConnectionFound' | translate }}</h4>
