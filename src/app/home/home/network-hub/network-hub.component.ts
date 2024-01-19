@@ -4,7 +4,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material';
 
 import { HomePageService } from 'src/app/services/home-page.service';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ws-network-hub',
@@ -21,7 +21,7 @@ export class NetworkHubComponent implements OnInit {
     suggestionsLoader: false,
     error: false
   }
-  
+
   recentRequests = {
     data: undefined,
     error: false,
@@ -33,7 +33,7 @@ export class NetworkHubComponent implements OnInit {
     private homePageService: HomePageService,
     private matSnackBar: MatSnackBar,
     private translate: TranslateService,
-  ) { 
+  ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
@@ -87,7 +87,7 @@ export class NetworkHubComponent implements OnInit {
           this.network.suggestionsLoader = false;
         }
       }
-    );    
+    );
   }
 
   fetchRecentRequests(): void {
@@ -107,7 +107,7 @@ export class NetworkHubComponent implements OnInit {
       }
     );
   }
-  
+
   handleUpdateRequest(event: any): void {
     this.homePageService.updateConnection(event.payload).subscribe(
       (_res: any) => {
@@ -159,7 +159,7 @@ export class NetworkHubComponent implements OnInit {
     let initials = ''
     const array = `${fname} `.toString().split(' ')
     if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {
-      initials += array[0].charAt(0) 
+      initials += array[0].charAt(0)
       initials += array[1].charAt(0)
     } else {
       for (let i = 0; i < fname.length; i += 1) {
