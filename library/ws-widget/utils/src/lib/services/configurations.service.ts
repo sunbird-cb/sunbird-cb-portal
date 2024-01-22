@@ -56,6 +56,7 @@ export class ConfigurationsService {
   isNewUser = false
   portalUrls: IPortalUrls | undefined
   positions: any
+  republicDay2024: any
 
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())

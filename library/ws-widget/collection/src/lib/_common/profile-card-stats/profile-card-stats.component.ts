@@ -23,6 +23,9 @@ export class ProfileCardStatsComponent implements OnInit {
   userInfo: any
   countdata: any
   enrollInterval: any
+  showrepublicBanner: any = false
+  republicDayData: any
+  interval = 0
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe) { }
@@ -35,6 +38,16 @@ export class ProfileCardStatsComponent implements OnInit {
     // this.getCounts()
     const progress = (247 - ((247 * this.userInfo.profileUpdateCompletion) / 100))
     document.documentElement.style.setProperty('--i', String(progress))
+    let rand = Math.round(Math.random() * 5)
+    this.configSvc.republicDay2024.filter((data: any )=> {
+      if (data.id === rand) {
+        this.republicDayData = data
+        this.showrepublicBanner = true
+        setTimeout(() => {
+          this.showrepublicBanner = false
+        }, 15000);
+      }
+     })
   }
   getCounts() {
     let enrollList: any
