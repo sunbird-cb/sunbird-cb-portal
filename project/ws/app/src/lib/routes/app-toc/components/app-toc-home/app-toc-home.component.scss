@@ -90,6 +90,37 @@
   max-width: 792px;
   width: 100%;
 }
+
+.right-container {
+
+  .right-content {
+    background-color: #FFF;
+    border-radius: 12px;
+  }
+
+  .font-14 {
+    font-size: 14px;
+  }
+
+  .enroll-div {
+    max-width: 384px;
+    width: 100%;
+    border-bottom: 1px solid rgba($color: #000, $alpha: 0.2);
+  
+    .slider-div {
+      background-color: #FEF7ED;
+      border: none;
+      border-radius: 8px;
+      padding: 8px;
+    }
+  
+    .kpi-values {
+      width: 60px;
+      padding: 8px;
+      text-align: center;
+    }
+  }
+}
 // New TOC page css...
 
 %container-padding {

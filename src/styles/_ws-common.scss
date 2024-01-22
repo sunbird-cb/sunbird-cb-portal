@@ -89,3 +89,12 @@
   background: rgba($color: #000000, $alpha: 0.6);
   border-radius: 4px;
 }
+
+.initial-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1B2133;
+  color: #FFF;
+  text-transform: uppercase;
+}

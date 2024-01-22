@@ -12,7 +12,7 @@ export class AppTocAboutComponent implements OnInit {
   constructor() { }
   descEllipsis = true
   summaryEllipsis = true
-  competencySelected: string = 'behavioural';
+  competencySelected = 'behavioural'
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager']
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 
 <div class="toc-banner">
   <div class="flex flex-row gap-6 fixed-width">
-    <div class="banner-details">
+    <div class="banner-details toc-content">
       <div class="flex flex-col gap-4">
         <div class="flex">
           <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
@@ -24,14 +24,10 @@
         <div class="text-xs leading-4 text-white">(Last updated on Nov 23, 2023)</div>
       </div>
     </div>
-
-    <div class="info-div">
-      
-    </div>
   </div>
 </div>
 
-<div class="fixed-width">
+<div class="flex flex-row gap-4 fixed-width">
   <div class="toc-content">
     <div class="py-4">
       <mat-tab-group (selectedTabChange)="handleTabChange($event)">
@@ -42,6 +38,69 @@
           <ws-app-toc-content></ws-app-toc-content>
         </mat-tab>
       </mat-tab-group>
+    </div>
+  </div>
+
+  <div class="right-container">
+    <div class="shadow-md right-content">
+      <div class="enroll-div">
+        <div class="flex flex-col gap-4 p-4">
+          <button class="flex action-button">Enroll</button>
+          <div class="flex flex-row gap-2 slider-div">
+            <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
+            <div class="text-xs">By completing this course earn 10 more Karma Points</div>
+          </div>
+          <div class="flex flex-wrap gap-2 p-2">
+            <div class="flex flex-col kpi-values items-center gap-2 ">
+              <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+              <div class="text-xs">3h 30m</div>
+            </div>
+            <div class="flex flex-col kpi-values items-center gap-3">
+              <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+              <div class="text-xs">4 modules</div>
+            </div>
+            <div class="flex flex-col kpi-values items-center gap-2">
+              <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+              <div class="text-xs">12 videos</div>
+            </div>
+            <div class="flex flex-col kpi-values items-center gap-2">
+              <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+              <div class="text-xs">12 PDF's</div>
+            </div>
+            <div class="flex flex-col kpi-values items-center gap-2">
+              <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+              <div class="text-xs">1 Final assessment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-8 p-4">
+        <div class="flex flex-col gap-3">
+          <div class="text-base font-bold">Authors</div>
+          <div class="flex flex-row gap-3">
+            <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center initial-circle">VS</div>
+            </div>
+            <div class="flex flex-col gap-1">
+              <div class="font-bold font-14">Vinod Shyave</div>
+              <div class="text-xs leading-3">Authors</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-3">
+          <div class="text-base font-bold">Curators</div>
+          <div class="flex flex-row gap-3">
+            <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center initial-circle">VS</div>
+            </div>
+            <div class="flex flex-col gap-1">
+              <div class="font-bold font-14">Vinod Shyave</div>
+              <div class="text-xs leading-3">Authors</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
