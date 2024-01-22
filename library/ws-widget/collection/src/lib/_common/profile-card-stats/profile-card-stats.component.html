@@ -1,5 +1,5 @@
 <div *ngIf="!profileData?.displayOnlyStats">
-  <div class="profile-wrapper" *ngIf="!isLoading">
+  <div class="profile-wrapper" *ngIf="!isLoading && !showrepublicBanner">
     <div class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
     </div>
@@ -28,12 +28,23 @@
     <hr class="divider">
     <div class="profile-user-stats">
         <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
-        
+
         <div class="user-insights block md:hidden" *ngIf="insightsData.sliderData">
 
         <hr class="divider margin-remove-top">
           <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
         </div>
+    </div>
+  </div>
+
+  <div class="republic-wrapper" *ngIf="!isLoading && republicDayData && showrepublicBanner">
+    <div class="republic-details">
+      <div><img [src]="republicDayData.backgroupImage"></div>
+      <div class="greet-text">{{republicDayData.greet}} {{userInfo.firstName}}</div>
+      <div class="center-image">
+        <img [src]="republicDayData.centerImage">
+      </div>
+      <div class="info-text">{{republicDayData.info}}</div>
     </div>
   </div>
   <div class="stats-container block md:hidden"  *ngIf="!isLoading">
@@ -78,7 +89,7 @@
       <div class="user-insights padding-top-l">
         <span class="skeleton-box" style="width:100%;height:84px;border-radius:12px"></span>
       </div>
-      
+
   </div>
 </div>
 <div class="profile-user-stats" *ngIf="profileData?.displayOnlyStats">

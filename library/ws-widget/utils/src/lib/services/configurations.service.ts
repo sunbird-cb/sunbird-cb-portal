@@ -58,6 +58,7 @@ export class ConfigurationsService {
   positions: any
   newJanChanges:any
   newJanMobChanges:any
+  republicDay2024: any
 
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())

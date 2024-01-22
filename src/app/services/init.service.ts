@@ -299,6 +299,7 @@ export class InitService {
     this.configSvc.positions = publicConfig.positions
     this.configSvc.newJanChanges = publicConfig.newJanChanges
     this.configSvc.newJanMobChanges = publicConfig.newJanMobChanges
+    this.configSvc.republicDay2024 = publicConfig.republicDay2024
     return publicConfig
   }
 

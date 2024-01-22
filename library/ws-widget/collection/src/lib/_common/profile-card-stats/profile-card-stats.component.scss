@@ -4,6 +4,40 @@
 
 
 
+.republic-wrapper {
+  border-radius: 12px;
+  position: relative;
+
+}
+.republic-details {
+  padding-top: 20px;
+  position: relative;
+  text-align: center;
+  .image {
+    width: 100%;
+    height: 100%;
+  }
+  .info-text {
+    position: absolute;
+    bottom: 8px;
+    padding: 16px 25px;
+    font-weight: 600;
+  }
+  .greet-text {
+    position: absolute;
+    top: 8px;
+    padding: 16px 25px;
+    font-weight: 600;
+  }
+  .center-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
+}
 .profile-wrapper {
     background-color: #ffff;
     // height: 200px;
@@ -91,7 +125,7 @@
           background: #444;
           transform: rotate(calc(((var(--i) - 0) * 0.01turn)));
         }
-        
+
         .percentage-block {
           border-radius: 8px;
           opacity: 1;
@@ -124,7 +158,7 @@
         letter-spacing: 0.12px;
         line-height: 24px;
         cursor: pointer;
-        
+
         mat-icon {
           cursor: pointer;
           float:right;
@@ -156,7 +190,7 @@
             line-height: 16px;
         }
         .stats-count {
-            
+
         }
     }
     .user-insights {
@@ -181,7 +215,7 @@
 
 
 
-.progress-wrapper { 
+.progress-wrapper {
   position: relative;
   path {
     stroke-linecap: round;
