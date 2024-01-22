@@ -1,0 +1,191 @@
+<div class="flex flex-col gap-10 mt-4">
+    <div class="flex flex-col">
+        <div class="mat-subheading-1">Summary</div>
+        <div [ngClass]="{'desc-ellipsis': summaryEllipsis}">Lorem ipsum dolor sit, amet consectetur adipisicing elit. At id dolorem numquam quisquam ut
+            doloremque recusandae fugit obcaecati iste ipsa? Ea dolor quidem pariatur necessitatibus voluptas, error
+            sapiente cum quos dolores repudiandae maxime fuga tempore officia qui porro et est. Ullam, sit architecto?
+            Exercitationem optio animi vitae molestias doloremque ipsum, enim placeat repellendus praesentium minima
+            possimus? Animi quod qui eum ullam consequatur nostrum in eius, architecto excepturi! Saepe ut, error
+            perspiciatis debitis est, illum dicta ex dignissimos blanditiis velit optio nam quibusdam labore temporibus
+            sed vel at architecto? Dolores et ab aliquid iure nostrum animi dignissimos, dolore vitae ullam quos? 
+            <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
+                (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span>
+        </div>
+        <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="summaryEllipsis" (click)="summaryEllipsis = !summaryEllipsis">view more</div>
+    </div>
+
+    <div class="flex flex-col">
+        <div class="mat-subheading-1">Description</div>
+        <div [ngClass]="{'desc-ellipsis': descEllipsis}" >Lorem ipsum dolor sit, amet consectetur adipisicing elit. At id dolorem numquam quisquam ut
+            doloremque recusandae fugit obcaecati iste ipsa? Ea dolor quidem pariatur necessitatibus voluptas, error sapiente cum
+            quos dolores repudiandae maxime fuga tempore officia qui porro et est. Ullam, sit architecto? Exercitationem
+            optio animi vitae molestias doloremque ipsum, enim placeat repellendus praesentium minima possimus? Animi quod qui eum
+            ullam consequatur nostrum in eius, architecto excepturi! Saepe ut, error perspiciatis debitis est, illum dicta ex
+            dignissimos blanditiis velit optio nam quibusdam labore temporibus sed vel at architecto? Dolores et ab
+            aliquid iure nostrum animi dignissimos, dolore vitae ullam quos? 
+            <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!descEllipsis"
+                (click)="descEllipsis = !descEllipsis">&nbsp;view less</span>
+        </div>
+        <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="descEllipsis" (click)="descEllipsis = !descEllipsis" >view more</div>
+    </div>
+
+    <div class="flex flex-col gap-3">
+        <div class="text-base font-bold">Competencies</div>
+        <div class="flex flex-row gap-4 scroll-container">
+            <div class="competency-passbook-theme behavioral">
+                <div class="detail">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-base font-bold">Behavioural</div>
+                        <div class="flex flex-wrap gap-4 chip-container">
+                            <div class="chip rounded-full text-xs">
+                                Self-Awareness
+                            </div>
+                            <div class="chip rounded-full text-xs">
+                                Software design
+                            </div>
+                            <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
+                                View more
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="competency-passbook-theme domain">
+                <div class="detail">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-base font-bold">Domain</div>
+                        <div class="flex flex-wrap gap-3 chip-container">
+                            <div class="chip rounded-full text-xs">
+                                Self-Awareness
+                            </div>
+                            <div class="chip rounded-full text-xs">
+                                Software design
+                            </div>
+                            <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
+                                View more
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="competency-passbook-theme functional">
+                <div class="detail">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-base font-bold">Functional</div>
+                        <div class="flex flex-wrap gap-3 chip-container">
+                            <div class="chip rounded-full text-xs">
+                                Self-Awareness
+                            </div>
+                            <div class="chip rounded-full text-xs">
+                                Software design
+                            </div>
+                            <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
+                                View more
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-3">
+        <div class="text-base font-bold">Tags</div>
+        <div class="flex flex-wrap gap-2">
+            <ng-container *ngFor="let tag of tags; let i = index">
+                <div class="text-xs">{{ tag }}</div>
+                <div class="flex items-center" *ngIf="tags?.length > (i+1)">
+                    <span class="period"></span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-3">
+        <div class="text-base font-bold">Authors and curators</div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row gap-4" *ngFor="let i of [1, 2]">
+                <div class="flex items-center justify-center">
+                    <div class="flex items-center justify-center initial-circle">VS</div>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <div class="font-bold">Vinod Shyave</div>
+                    <div class="text-xs leading-3">Authors</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col ratings-div gap-10">
+        <div class="flex flex-col gap-6 ratings-container">
+            <div class="flex flex-row gap-4 items-center">
+                <div class="rating-value ws-mat-default-text">4.5</div>
+                <div class="flex flex-col gap-1">
+                    <div class="flex flex-row gap-2 stars-div">
+                        <mat-icon>star</mat-icon>
+                        <mat-icon>star</mat-icon>
+                        <mat-icon>star</mat-icon>
+                        <mat-icon>star</mat-icon>
+                        <mat-icon>star</mat-icon>
+                    </div>
+                    <div class="text-base">141 ratings</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <div class="flex flex-row gap-4 items-center">
+                    <div class="flex-none font-bold">5 star</div>
+                    <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+                </div>
+                <div class="flex flex-row gap-4 items-center">
+                    <div class="flex-none font-bold">4 star</div>
+                    <mat-progress-bar mode="determinate" value="80"></mat-progress-bar>
+                </div>
+                <div class="flex flex-row gap-4 items-center">
+                    <div class="flex-none font-bold">3 star</div>
+                    <mat-progress-bar mode="determinate" value="70"></mat-progress-bar>
+                </div>
+                <div class="flex flex-row gap-4 items-center">
+                    <div class="flex-none font-bold">2 star</div>
+                    <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+                </div>
+                <div class="flex flex-row gap-4 items-center">
+                    <div class="flex-none font-bold">1 star</div>
+                    <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+        <!-- <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary> -->
+
+        <div class="flex flex-col gap-3">
+            <div class="flex flex-row gap-4">
+                <div class="flex-1 mat-subheading-1">Top reviews</div>
+                <div class="ws-mat-default-text">Show all</div>
+            </div>
+            <div class="flex flex-wrap gap-5">
+                <div class="comment-div" *ngFor="let i of [1, 2, 3, 4]">
+                    <div class="p-4 flex flex-col gap-6">
+                        <div class="flex flex-row gap-4">
+                            <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo
+                            </div>
+                            <div class="flex flex-row gap-2 rating-start-value">
+                                <mat-icon>star</mat-icon>
+                                4.4
+                            </div>
+                        </div>
+                        <div class="flex flex-row gap-2 items-center">
+                            <div class="flex initial-circle items-center justify-center">VS</div>
+                            <div>Vinod Shyave</div>
+                            <div class="flex items-center">
+                                <span class="period"></span>
+                            </div>
+                            <div>2 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

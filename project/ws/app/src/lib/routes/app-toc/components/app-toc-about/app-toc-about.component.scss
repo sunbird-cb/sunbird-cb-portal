@@ -1,0 +1,104 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+
+.period {
+    width: 3px;
+    height: 3px;
+    background: rgba($color: #000000, $alpha: 0.6);
+    border-radius: 4px;
+}
+
+.initial-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1B2133;
+    color: #FFF;
+    text-transform: uppercase;
+}
+
+.behavioral {
+    background-color: #F8B861;
+}
+
+.functional {
+    background-color: #E24577;
+}
+
+.domain {
+    background-color: #7B47A4;
+}
+
+.competency-passbook-theme {
+    width: 100%;
+    max-width: 344px;
+    border-radius: 8px;
+}
+
+.detail {
+    width: 100%;
+    max-width: 344px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    position: relative;
+    top: 4px;
+
+    &>div {
+        padding: 4px 16px 16px 16px;
+    }
+
+    .chip-container {
+        .chip {
+            border: 1px solid $text-primary;
+            color: $text-primary;
+            line-height: 12px;
+            padding: 4px 8px;
+        }
+    }
+}
+
+.ratings-div {
+    background-color: rgba(27, 76, 161, 0.08);
+    padding: 24px;
+
+    .ratings-container {
+        max-width: 380px;
+        width: 100%;
+    }
+
+    .comment-div {
+        background-color: #FFF;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.16);
+        max-width: 360px;
+        width: 100%;
+
+        .rating-start-value {
+            mat-icon {
+                color: $colorOrange;
+            }
+        }
+    }
+}
+
+$title-line-count: 3;
+.text-ellipsis {
+    white-space: break-spaces;
+    position: relative;
+    overflow: hidden;
+    text-overflow: clip ;
+    display: -webkit-box;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+}
+
+.desc-ellipsis {
+    @extend .text-ellipsis;
+    min-height: $title-line-count * 24px;
+}
+
+.scroll-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping of content */
+    overflow-y: hidden;
+}

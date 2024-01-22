@@ -40,6 +40,7 @@ import { AppTocBannerComponent } from './components/app-toc-banner/app-toc-banne
 import { AppTocCohortsComponent } from './components/app-toc-cohorts/app-toc-cohorts.component'
 import { AppTocContentCardComponent } from './components/app-toc-content-card/app-toc-content-card.component'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'
+import { AppTocAboutComponent } from './components/app-toc-about/app-toc-about.component'
 
 // services
 import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
@@ -155,6 +156,7 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     AppTocSessionCardComponent,
     EnrollQuestionnaireComponent,
     KarmaPointsPanelComponent,
+    AppTocAboutComponent,
   ],
   imports: [
     CommonModule,

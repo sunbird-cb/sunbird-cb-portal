@@ -26,8 +26,26 @@
     </div>
 
     <div class="info-div">
-
+      
     </div>
+  </div>
+</div>
+
+<div class="fixed-width">
+  <div class="toc-content">
+    <!-- <div class="p-4"> -->
+      <mat-tab-group (selectedTabChange)="handleTabChange($event)">
+        <mat-tab label="About">
+          <ws-app-toc-about></ws-app-toc-about>
+        </mat-tab>
+        <mat-tab label="Content">
+      
+        </mat-tab>
+        <mat-tab label="Discussion">
+      
+        </mat-tab>
+      </mat-tab-group>
+    <!-- </div> -->
   </div>
 </div>
 

@@ -1,29 +1,33 @@
+@import 'ws-vars';
+
+.rating-value {
+  font-size: 54px;
+  line-height: 56px;
+  font-weight: bold;
+}
+
 .rating-icon {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
-.rating-progress{
-    width: 100%;
-    max-width: 298px;
-}
-
-.bold-imp {
-    font-weight: bold !important;
+.rating-progress {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 4px;
 }
 
 .rating-bar.mat-progress-bar {
-    height: 8px;
-    border-radius: 12px;
-  }
+  height: 8px;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.08);
+}
   
-  .rating-bar {
-    & .mat-progress-bar-fill::after {
-      background: red;
-    }
+.rating-bar {
+  & .mat-progress-bar-fill::after {
+    background: red;
   }
+}
   
-  // #rating {
-    ::ng-deep.theme-igot.day-mode .rating-bar .mat-progress-bar-fill::after {
-      background: rgb(246, 153, 83);
-    }
-  // }
+::ng-deep.theme-igot.day-mode .rating-bar .mat-progress-bar-fill::after {
+  background: $colorOrange;
+}
