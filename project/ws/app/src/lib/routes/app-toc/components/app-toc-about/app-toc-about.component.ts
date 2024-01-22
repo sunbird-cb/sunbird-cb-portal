@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { MatTabChangeEvent } from '@angular/material'
+// import { MatTabChangeEvent } from '@angular/material'
 
 @Component({
   selector: 'ws-app-toc-about',
@@ -12,12 +12,13 @@ export class AppTocAboutComponent implements OnInit {
   constructor() { }
   descEllipsis = true
   summaryEllipsis = true
-  tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'AI', 'Law rules'];
+  competencySelected: string = 'behavioural';
+  tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager']
 
   ngOnInit() {
-    let tags = ['Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt'];
-    this.tags = [...this.tags, ...tags];
-    
+    const tags = ['Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
+    this.tags = [...this.tags, ...tags]
+
   }
 
   // handleTabChange(event: MatTabChangeEvent): void {}

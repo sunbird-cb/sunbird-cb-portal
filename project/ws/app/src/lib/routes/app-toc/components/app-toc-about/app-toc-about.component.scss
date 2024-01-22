@@ -1,13 +1,6 @@
 @import 'ws-mixins';
 @import 'ws-vars';
 
-.period {
-    width: 3px;
-    height: 3px;
-    background: rgba($color: #000000, $alpha: 0.6);
-    border-radius: 4px;
-}
-
 .initial-circle {
     width: 36px;
     height: 36px;
@@ -15,6 +8,24 @@
     background: #1B2133;
     color: #FFF;
     text-transform: uppercase;
+}
+
+.themes-button {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: #E6E8EF;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.theme-activated {
+    border: 1px solid $text-primary;
+    background-color: #DEE6F2;
+    color: $text-primary;
+    font-weight: 700;
 }
 
 .behavioral {
@@ -54,6 +65,19 @@
             line-height: 12px;
             padding: 4px 8px;
         }
+    }
+}
+
+.discussion-div {
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 1);
+
+    mat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 40px;
+        color: $colorOrange;
     }
 }
 
