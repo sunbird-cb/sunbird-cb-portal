@@ -1,8 +1,21 @@
 <div class="home-container m-auto flex flex-row gap-6" [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
+    <!-- <ng-container *ngIf="jan26Data && jan26Data.isEnabled" class="mob-logo">
+        <img  [src]="jan26Data.logoUrl" alt="Application Logo" class="app-logo" />
+        <span class="mat-subheading-2 ws-mat-default-text margin-left-xs logo-text"> {{ jan26Data.logoText}}</span>
+    </ng-container> -->
     <ng-container *ngIf="!homeConfig?.insightOnRight?.active">
+      
+
         <div class="bg-info" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
         (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''" *ngIf="homeConfig?.leftSection?.active">
+         <ng-container *ngIf="janData && janData.isEnabled">
+            <div  class="mob-logo items-center justify-center">
+                <img  [src]="janData.newJanMobChanges.logoUrl" alt="Application Logo" class="app-logo" />
+                <span class="mat-subheading-2 ws-mat-default-text margin-left-xs logo-text"> {{ janData.newJanMobChanges.logoText}}</span>
+            </div>
+       
+    </ng-container>
             <ws-in-sight-side-bar></ws-in-sight-side-bar>
         </div>
 

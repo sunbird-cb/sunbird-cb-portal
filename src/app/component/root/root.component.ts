@@ -84,6 +84,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   headerFooterConfigData:any = {};
   mobileTopHeaderVisibilityStatus = true;
   activeMenu:any = '';
+  backGroundTheme:any
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -196,6 +197,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     //let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
     //this.showTour = showTour && showTour.disable ? showTour.disable : false
 
+    this.changeBg26Jan()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
         this.mobileTopHeaderVisibilityStatus = status;
     })
@@ -305,6 +307,16 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.showNavbar = display
     })
     
+  }
+
+  changeBg26Jan() {
+    this.backGroundTheme = this.configSvc.newJanChanges
+    let docData:any = document.getElementById("app-bg")
+    if(this.backGroundTheme && this.backGroundTheme.isEnabled) {
+      docData.classList.add("jan-bg-change") 
+    } else {
+      docData.classList.remove("jan-bg-change")
+    }
   }
 
   raiseAppStartTelemetry() {

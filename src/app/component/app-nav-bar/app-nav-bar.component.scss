@@ -17,6 +17,8 @@
   height: 56px;
 }
 
+
+
 .mobile {
   height: 56px !important;
   border-bottom: 1px solid #ccc;
@@ -47,11 +49,23 @@
 }
 
 
-.app-logo {
+.app-logo-new {
+  height: 56px!important;
+  margin-top: -3px;
   @include breakpoint-xs {
     max-width: 120px;
     margin-top: 4px;
   }
+}
+
+
+.logo-box, .app-logo {
+  transition: 2s ease-in-out;
+}
+
+.logo-text {
+  font: 700 12px/18px 'Montserrat';
+  margin-bottom:0!important;
 }
 
 .title {
