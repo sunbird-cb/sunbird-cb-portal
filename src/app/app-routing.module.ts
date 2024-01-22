@@ -482,7 +482,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'event',
       pageId: 'app/event-hub',
-      module: 'events',
+      module: 'Events',
     },
     resolve: {
       pageData: PageResolve,
@@ -716,11 +716,13 @@ const routes: Routes = [
     data: {
       pageType: 'page',
       pageKey: 'home',
+      pageId: 'page/home',
+      module: 'Home',
     },
     resolve: {
       pageData: PageResolve,
       module: ModuleNameResolve,
-      pageId: PageNameResolve,
+      //pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],
   },

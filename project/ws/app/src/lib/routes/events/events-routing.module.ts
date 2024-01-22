@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: '',
     component: EventsHomeComponent,
+    data: {
+      pageId: '',
+      module: '',
+    },
     children: [
       {
         path: '',
