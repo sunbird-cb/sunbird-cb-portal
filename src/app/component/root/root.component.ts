@@ -222,7 +222,6 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     // }
     this.router.events.subscribe((event: any) => {
-      
       if (event instanceof NavigationEnd) {
         
         if (event.url.includes('/setup/')) {

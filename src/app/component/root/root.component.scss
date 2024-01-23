@@ -6,15 +6,13 @@
 }
 
 ::ng-deep .jan-bg-change {
-background-image: linear-gradient(95deg, #F7D3C5 0%, #FFF 55%, #9EDEAA 100%) !important;
-
+  background-image: linear-gradient(95deg, #F7D3C5 0%, #FFF 55%, #9EDEAA 100%) !important;
   @include breakpoint-xs  {
     background-image: linear-gradient(89deg, #F7D3C5 0%, #FFF 55%, #9EDEAA 100%) !important;
   }
   @include breakpoint-s  {
     background-image: linear-gradient(89deg, #F7D3C5 0%, #FFF 55%, #9EDEAA 100%) !important;
   }
-  
 }
 
 ws-app-nav-bar {
@@ -75,7 +73,6 @@ ws-app-nav-bar {
     padding: 0;
   }
 }
-
 
 .skipnav a {
   width: 12em;

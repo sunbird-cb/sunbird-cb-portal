@@ -31,13 +31,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   mobileTopHeaderVisibilityStatus: any = true;
   sectionList:any = [];
   enableLazyLoadingFlag = true;
-  janData: any
+  jan26Change: any
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService, 
     private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
 
   ngOnInit() {
     if (this.configSvc) {
-      this.janData = this.configSvc.newJanChanges
+      this.jan26Change = this.configSvc.newJanChanges
     }
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
       this.mobileTopHeaderVisibilityStatus = status; 

@@ -5,7 +5,6 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 
-
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
@@ -79,26 +78,18 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log(this.janDataEnable, "this.janDataEnable===")
     if (this.configSvc) {
       this.jan26Data = this.configSvc.newJanChanges
-      console.log(this.jan26Data, "this.jan26Data==")
       this.logoDisplayTime = this.jan26Data.newJanDesktopChanges.logoDisplayTime
       this.displayLogo()
       setInterval(() => { 
         this.janDataEnable = true;
         this.displayLogo()
-        console.log( this.janDataEnable, " this.janDataEnable====")
-       }, this.logoDisplayTime);
-       
-
-      // setTimeout(() => { this.jan26Data.isEnabled = true; }, this.jan26Data.animationDuration);
-        
+       }, this.logoDisplayTime); 
     }
     
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
     this.router.events.subscribe((event: any) => {
-
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event.url)
@@ -119,7 +110,6 @@ export class AppNavBarComponent implements OnInit, OnChanges {
           } else if (event.url.includes('app/seeAll?key=continueLearning')) {
             this.activeRoute = 'my learnings'
           } 
-
       }
     })
 
@@ -161,8 +151,6 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.getKarmaCount()
     },1000)
   }
-
-
 
   displayLogo() {
     const animationDur = this.jan26Data.newJanDesktopChanges.animationDuration
