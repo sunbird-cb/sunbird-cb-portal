@@ -172,7 +172,10 @@
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
                    <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
-                    <!-- <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel> -->
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="!isAcbpCourse && monthlyCapExceed && !isCompletedThisMonth">
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
                 </div>
 
@@ -267,7 +270,10 @@
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
                   </div>
                   <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
-                    <!-- <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel> -->
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="!isAcbpCourse && monthlyCapExceed && !isCompletedThisMonth">
+                    <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
                 </div>
 
