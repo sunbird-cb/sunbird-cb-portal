@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
   selector: 'ws-widget-content-toc',
@@ -8,11 +9,14 @@ import { Component, OnInit } from '@angular/core';
 
 export class ContentTocComponent implements OnInit {
 
+  tabChangeValue: any = '';
   constructor() { }
 
   ngOnInit() {
   }
 
-  // handleTabChange(event: MatTabChangeEvent): void {}
+  handleTabChange(event: MatTabChangeEvent): void {
+    this.tabChangeValue = event.tab;
+  }
 
 }

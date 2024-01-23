@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 // import { MatTabChangeEvent } from '@angular/material'
 
 @Component({
-  selector: 'ws-app-toc-about',
+  selector: 'ws-widget-app-toc-about',
   templateUrl: './app-toc-about.component.html',
   styleUrls: ['./app-toc-about.component.scss'],
 })
