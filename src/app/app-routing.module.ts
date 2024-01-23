@@ -721,7 +721,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      module: ModuleNameResolve,
+      //module: ModuleNameResolve,
       //pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],
