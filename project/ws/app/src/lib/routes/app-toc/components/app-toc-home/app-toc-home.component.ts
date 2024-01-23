@@ -343,14 +343,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   isCourseCompletedOnThisMonth() {
-    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData')|| '{}')
+    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
     const now = moment(this.serverDate).format('YYYY-MM-DD')
     if (this.content) {
       const courseData = enrollList[this.content.identifier]
-      if(courseData && courseData.completionPercentage === 100 && courseData.completedOn) {
+      if (courseData && courseData.completionPercentage === 100 && courseData.completedOn) {
         const completedOn = moment(courseData.completedOn).format('YYYY-MM-DD')
         const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
-        const currentMonth = moment(now,'YYYY-MM-DD').month()
+        const currentMonth = moment(now, 'YYYY-MM-DD').month()
         this.isCompletedThisMonth = completedMonth === currentMonth
       }
     }
