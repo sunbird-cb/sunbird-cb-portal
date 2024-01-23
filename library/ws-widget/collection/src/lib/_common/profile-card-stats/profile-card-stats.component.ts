@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
-import { setTimeout } from 'timers'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
