@@ -38,6 +38,8 @@ export namespace NsInstanceConfig {
     mailIds: IMailIds
     details: IDetails
     validMailIdExtensionsForMailMe: string[]
+    newJanChanges: INewJanChanges
+    newJanMobChanges: INewJanMobChanges
     defaultFeatureConfigs: {
       error: string
     }
@@ -142,6 +144,19 @@ export namespace NsInstanceConfig {
     accent: string
     primary: string
     warn: string
+  }
+  export interface INewJanChanges {
+    isEnabled: boolean
+    animationDuration: number
+    logoUrl: string
+    logoText: string
+    logoDisplayTime: number
+    backgroundTheme: string
+  }
+  export interface INewJanMobChanges {
+    isEnabled: boolean
+    logoUrl: string
+    logoText: string
   }
   export interface ILogos {
     app: string

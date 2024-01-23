@@ -1,14 +1,24 @@
-<div class="home-container m-auto flex flex-row gap-6" [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
+<div class="home-container m-auto flex flex-row gap-6"
+    [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
     <ng-container *ngIf="!homeConfig?.insightOnRight?.active">
         <div class="bg-info" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
-        (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''" *ngIf="homeConfig?.leftSection?.active">
+        (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''"
+            *ngIf="homeConfig?.leftSection?.active">
+            <ng-container *ngIf="jan26Change && jan26Change.isEnabled">
+                <div class="mob-logo items-center justify-center">
+                    <img [src]="jan26Change?.newJanMobChanges?.logoUrl" alt="Application Logo" class="app-logo" />
+                    <span class="mat-subheading-2 ws-mat-default-text margin-left-xs logo-text"> {{
+                        jan26Change?.newJanMobChanges?.logoText}}</span>
+                </div>
+            </ng-container>
             <ws-in-sight-side-bar></ws-in-sight-side-bar>
         </div>
 
         <div class="bg-primary" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
-        (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
+        (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''"
+            *ngIf="homeConfig?.rightSection?.active">
             <div class="flex flex-col gap-4 mt-8">
                 <!-- <div class="home-container mt-8">
                     <div class="flex flex-1">
@@ -19,16 +29,17 @@
                     </div>                    
                 </div> -->
                 <ng-container *ngIf="enableLazyLoadingFlag">
-                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">  
+                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
                         <ng-container *ngFor="let vitem of sectionList;let j=index; trackBy j">
                             <span class="section_{{i}}" *ngIf="i==j">
-                            <ng-container *ngIf="vitem && vitem['isVisible'] && (vitem['section'] == 'section_'+i ) && item?.strips[0]?.active">
-                                <ws-feed-list [widgetData]="item"></ws-feed-list>
-                            </ng-container>
+                                <ng-container
+                                    *ngIf="vitem && vitem['isVisible'] && (vitem['section'] == 'section_'+i ) && item?.strips[0]?.active">
+                                    <ws-feed-list [widgetData]="item"></ws-feed-list>
+                                </ng-container>
                             </span>
-                        </ng-container>                  
+                        </ng-container>
                     </ng-container>
-                    
+
                     <div class="slider" *ngIf="sliderData && sliderData[0]?.active">
                         <ng-container *ngFor="let vitem of sectionList">
                             <ng-container *ngIf="vitem && vitem['isVisible'] && (vitem['section'] == 'slider' )">
@@ -36,7 +47,7 @@
                             </ng-container>
                         </ng-container>
                     </div>
-                    
+
                     <!-- Discussion section starts here -->
                     <div class="discuss" *ngIf="homeConfig?.discussHub?.active">
                         <ng-container *ngFor="let vitem of sectionList">
@@ -59,12 +70,12 @@
                 </ng-container>
 
                 <ng-container *ngIf="!enableLazyLoadingFlag">
-                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">  
+                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
                         <ng-container *ngIf="item?.strips[0]?.active">
                             <ws-feed-list [widgetData]="item"></ws-feed-list>
-                        </ng-container>                
+                        </ng-container>
                     </ng-container>
-                    
+
                     <div class="slider" *ngIf="sliderData && sliderData[0]?.active">
                         <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
                     </div>
@@ -88,7 +99,8 @@
     <ng-container *ngIf="homeConfig?.insightOnRight?.active">
         <div class="bg-primary" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
-        (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''" *ngIf="homeConfig?.rightSection?.active">
+        (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''"
+            *ngIf="homeConfig?.rightSection?.active">
             <div class="flex flex-col gap-3 mt-8">
                 <!-- <div class="home-container mt-8">
                     <div class="flex flex-1 cursor-pointer" [routerLink]="'/page/learn'">
@@ -99,16 +111,17 @@
                     </div>                    
                 </div> -->
                 <ng-container *ngIf="enableLazyLoadingFlag">
-                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">  
+                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
                         <ng-container *ngFor="let vitem of sectionList;let j=index; trackBy j">
                             <span class="section_{{i}}" *ngIf="i==j">
-                                <ng-container *ngIf="vitem && vitem['isVisible'] && (vitem['section'] == 'section_'+i ) && item?.strips[0]?.active">
+                                <ng-container
+                                    *ngIf="vitem && vitem['isVisible'] && (vitem['section'] == 'section_'+i ) && item?.strips[0]?.active">
                                     <ws-feed-list [widgetData]="item"></ws-feed-list>
                                 </ng-container>
                             </span>
-                        </ng-container>           
+                        </ng-container>
                     </ng-container>
-                    
+
                     <div class="slider" *ngIf="sliderData && sliderData[0]?.active">
                         <ng-container *ngFor="let vitem of sectionList">
                             <ng-container *ngIf="vitem && vitem['isVisible'] && (vitem['section'] == 'slider' )">
@@ -139,12 +152,12 @@
                 </ng-container>
 
                 <ng-container *ngIf="!enableLazyLoadingFlag">
-                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">  
+                    <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
                         <ng-container *ngIf="item?.strips[0]?.active">
                             <ws-feed-list [widgetData]="item"></ws-feed-list>
-                        </ng-container>                
+                        </ng-container>
                     </ng-container>
-                    
+
                     <div class="slider" *ngIf="sliderData && sliderData[0]?.active">
                         <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
                     </div>
@@ -154,7 +167,7 @@
                         <ws-discuss-hub [discussConfig]="homeConfig?.discussHub"></ws-discuss-hub>
                     </div>
                     <!-- Discussion section ends here -->
-    
+
                     <!-- Go to Network hub starts here -->
                     <div class="network" *ngIf="homeConfig?.networkHub?.active">
                         <ws-network-hub [networkConfig]="homeConfig?.networkHub"></ws-network-hub>
@@ -166,7 +179,8 @@
 
         <div class="bg-info" [ngClass]="
         homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
-        (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''" *ngIf="homeConfig?.leftSection?.active">
+        (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''"
+            *ngIf="homeConfig?.leftSection?.active">
             <ws-in-sight-side-bar></ws-in-sight-side-bar>
         </div>
     </ng-container>
@@ -184,8 +198,8 @@
         <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
         <p class="updatetitle">Update your mobile number {{activeRoute}}</p>
         <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update</button> -->
-        <!-- <button class="remind-later" (click)="remindlater()" role="button">Remind Later</button> -->
-        <!-- <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
+<!-- <button class="remind-later" (click)="remindlater()" role="button">Remind Later</button> -->
+<!-- <button class="update-profile" (click)="fetchProfile()" role="button">Update</button>
         <span class="inline-info">
             <span class='tool material-icons tooltips' matTooltip="My tooltip">error_outline</span>
             <span class="tooltip-check ws-mat-default-text">Why it is important ?
@@ -199,7 +213,7 @@
     <div (click)="remindlater()" class="desktop-cross">X</div>
     <div class="update-mobile-number-flex">
         <span (click)="remindlater()" class="mobile-cross">X</span>
-        <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg"/>
+        <img class="hand-icon" src="assets/icons/footer-nav/update-mobile-number.svg" />
         <p class="updatetitle">Update your profile and get it verified</p>
         <button class="ui fluid-button update-now" (click)="fetchProfile()" role="button">Update now</button>
     </div>
