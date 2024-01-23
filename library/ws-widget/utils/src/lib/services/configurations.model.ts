@@ -147,7 +147,7 @@ export namespace NsInstanceConfig {
   export interface IRepublicDayChanges {
     isEnabled: boolean
     republicDayDesktopChanges: IRepublicDayDesktopChanges
-    republicDayMobChanges : IRepublicDayMobChanges
+    republicDayMobChanges: IRepublicDayMobChanges
   }
   export interface IRepublicDayDesktopChanges {
     animationDuration: number

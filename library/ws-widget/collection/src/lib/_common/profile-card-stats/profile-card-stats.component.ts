@@ -45,39 +45,39 @@ export class ProfileCardStatsComponent implements OnInit {
     }
     setTimeout(() => {
       this.getTimelyNudge()
-    }, this.profileDelay * 1000)
+    },         this.profileDelay * 1000)
   }
 
   getTimelyNudge() {
-    if(this.configSvc.profileTimelyNudges.enable) {
-      let rand = Math.round(Math.random() * 4)
-      let currentDate = new Date()
-      let timeInterval = this.configSvc.profileTimelyNudges.nudgeDelayInSec
-      let hours = currentDate.getHours()
-      let defaultData = this.configSvc.profileTimelyNudges.data[this.configSvc.profileTimelyNudges.data.length - 1]
+    if (this.configSvc.profileTimelyNudges.enable) {
+      const rand = Math.round(Math.random() * 4)
+      const currentDate = new Date()
+      const timeInterval = this.configSvc.profileTimelyNudges.nudgeDelayInSec
+      const hours = currentDate.getHours()
+      const defaultData = this.configSvc.profileTimelyNudges.data[this.configSvc.profileTimelyNudges.data.length - 1]
       if (defaultData) {
         this.republicDayData['backgroupImage'] = defaultData.backgroupImage
         this.republicDayData['info'] = defaultData['info'][rand]
         this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
         this.republicDayData['textColor'] = defaultData['textColor']
-        this.republicDayData['greet'] = defaultData['greet'].replace("<userName>", this.userInfo.firstName)
+        this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', this.userInfo.firstName)
         this.showrepublicBanner = true
         setTimeout(() => {
           this.showrepublicBanner = false
-        }, (1000 * timeInterval));
+        },         (1000 * timeInterval))
       }
-      this.configSvc.profileTimelyNudges.data.filter((data: any )=> {
+      this.configSvc.profileTimelyNudges.data.filter((data: any) => {
         if (hours >= data.startTime && hours < data.endTime) {
           this.republicDayData['backgroupImage'] = data.backgroupImage
           this.republicDayData['info'] = data['info'][rand]
           this.republicDayData['centerImage'] = data['centerImage'][rand]
-          this.republicDayData['greet'] = data['greet'].replace("<userName>", this.userInfo.firstName)
+          this.republicDayData['greet'] = data['greet'].replace('<userName>', this.userInfo.firstName)
           this.republicDayData['textColor'] = data['textColor']
           this.showrepublicBanner = true
         }
         setTimeout(() => {
           this.showrepublicBanner = false
-        }, (1000 * timeInterval));
+        },         (1000 * timeInterval))
       })
     }
   }
