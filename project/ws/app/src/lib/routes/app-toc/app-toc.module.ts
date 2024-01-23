@@ -125,6 +125,7 @@ import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
+import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
 
 @NgModule({
   declarations: [
@@ -235,6 +236,7 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     AttendanceHelperModule,
     AttendanceCardModule,
     MicroSurveyModule,
+    ContentTocModule,
     NgCircleProgressModule.forRoot({}),
   ],
   providers: [
