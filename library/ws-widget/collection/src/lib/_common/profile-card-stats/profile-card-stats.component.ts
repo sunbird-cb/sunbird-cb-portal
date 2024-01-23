@@ -24,7 +24,7 @@ export class ProfileCardStatsComponent implements OnInit {
   countdata: any
   enrollInterval: any
   showrepublicBanner: any = false
-  republicDayData: any
+  republicDayData: any = {}
   interval = 0
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
@@ -38,16 +38,37 @@ export class ProfileCardStatsComponent implements OnInit {
     // this.getCounts()
     const progress = (247 - ((247 * this.userInfo.profileUpdateCompletion) / 100))
     document.documentElement.style.setProperty('--i', String(progress))
-    const rand = Math.round(Math.random() * 5)
-    this.configSvc.republicDay2024.filter((data: any) => {
-      if (data.id === rand) {
-        this.republicDayData = data
-        this.showrepublicBanner = true
-        setTimeout(() => {
-          this.showrepublicBanner = false
-        },         15000)
-      }
-     })
+    let rand = Math.round(Math.random() * 4)    
+    if(this.configSvc.republicDay2024.enable) {
+      let cdate = new Date();
+      let hours =  cdate.getHours(), minute = cdate.getMinutes();
+      let currentDate:any = new Date().toJSON().slice(0, 10);
+      this.configSvc.republicDay2024.data.filter((data: any )=> {          
+          let currentTimeTemp:any = (hours > 12) ? (hours-12 + ':' + minute +' PM') : (hours + ':' + minute +' AM');   
+          let currentTime:any = currentDate+" "+currentTimeTemp;       
+          let startTime:any = currentDate+" "+data.startTime;          
+          let endTime:any = currentDate+" "+data.endTime;
+          if(data.addDay) {
+            endTime = new Date(endTime);            
+            endTime = endTime.setDate(endTime.getDate() + 1);
+          } else {
+            endTime = new Date(Date.parse(endTime))
+          }
+          startTime = new Date(Date.parse(startTime))         
+          currentTime = new Date(Date.parse(currentTime))
+          if (currentTime > startTime && currentTime < endTime ){
+            this.republicDayData['backgroupImage']  = data.backgroupImage;
+            this.republicDayData['info']  = data['info'][rand];
+            this.republicDayData['centerImage']  = data['centerImage'][rand];
+            this.showrepublicBanner = true
+          }       
+          setTimeout(() => {
+            this.showrepublicBanner = false
+          }, 180000);
+        
+       })
+    }
+   
   }
   getCounts() {
     let enrollList: any
