@@ -30,6 +30,7 @@
 <div class="flex flex-row gap-4 fixed-width">
   <div class="toc-content">
     <div class="py-4">
+      <!-- <ws-widget-content-toc></ws-widget-content-toc> -->
       <mat-tab-group (selectedTabChange)="handleTabChange($event)">
         <mat-tab label="About">
           <ws-app-toc-about></ws-app-toc-about>
@@ -45,7 +46,7 @@
     <div class="shadow-md right-content">
       <div class="enroll-div">
         <div class="flex flex-col gap-4 p-4">
-          <button class="flex action-button">Enroll</button>
+          <button class="flex action-button justify-center ">Enroll</button>
           <div class="flex flex-row gap-2 slider-div">
             <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
             <div class="text-xs">By completing this course earn 10 more Karma Points</div>
