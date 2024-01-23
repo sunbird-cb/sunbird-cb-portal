@@ -79,8 +79,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.configSvc) {
-      this.jan26Data = this.configSvc.newJanChanges
-      this.logoDisplayTime = this.jan26Data.newJanDesktopChanges.logoDisplayTime
+      this.jan26Data = this.configSvc.republicDayChanges
+      this.logoDisplayTime = this.jan26Data.republicDayDesktopChanges.logoDisplayTime
       this.displayLogo()
       setInterval(() => { 
         this.janDataEnable = true;
@@ -153,7 +153,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   displayLogo() {
-    const animationDur = this.jan26Data.newJanDesktopChanges.animationDuration
+    const animationDur = this.jan26Data.republicDayDesktopChanges.animationDuration
     setTimeout(() =>{  
       this.janDataEnable = false;
     }, animationDur);

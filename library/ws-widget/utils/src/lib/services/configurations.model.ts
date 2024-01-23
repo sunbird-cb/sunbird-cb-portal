@@ -38,8 +38,7 @@ export namespace NsInstanceConfig {
     mailIds: IMailIds
     details: IDetails
     validMailIdExtensionsForMailMe: string[]
-    newJanChanges: INewJanChanges
-    newJanMobChanges: INewJanMobChanges
+    republicDayChanges: IRepublicDayChanges
     defaultFeatureConfigs: {
       error: string
     }
@@ -145,16 +144,19 @@ export namespace NsInstanceConfig {
     primary: string
     warn: string
   }
-  export interface INewJanChanges {
+  export interface IRepublicDayChanges {
     isEnabled: boolean
+    republicDayDesktopChanges: IRepublicDayDesktopChanges
+    republicDayMobChanges : IRepublicDayMobChanges
+  }
+  export interface IRepublicDayDesktopChanges {
     animationDuration: number
     logoUrl: string
     logoText: string
     logoDisplayTime: number
     backgroundTheme: string
   }
-  export interface INewJanMobChanges {
-    isEnabled: boolean
+  export interface IRepublicDayMobChanges {
     logoUrl: string
     logoText: string
   }

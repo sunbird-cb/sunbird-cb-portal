@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.configSvc) {
-      this.jan26Change = this.configSvc.newJanChanges
+      this.jan26Change = this.configSvc.republicDayChanges
     }
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
       this.mobileTopHeaderVisibilityStatus = status; 

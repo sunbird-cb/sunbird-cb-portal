@@ -12,9 +12,9 @@
           i18n-aria-title i18n-aria-label>
           <ng-container *ngIf="jan26Data && jan26Data.isEnabled; else normalLogo">
             <div *ngIf="janDataEnable; else janDataDisabled" class="logo-box flex items-center">
-              <img  [src]="jan26Data.newJanDesktopChanges.logoUrl" alt="Application Logo" class="app-logo-new" />
+              <img  [src]="jan26Data.republicDayDesktopChanges.logoUrl" alt="Application Logo" class="app-logo-new" />
        
-              <span class="mat-subheading-2 ws-mat-default-text logo-text margin-left-xs"> {{ jan26Data.newJanDesktopChanges.logoText}}</span>
+              <span class="mat-subheading-2 ws-mat-default-text logo-text margin-left-xs"> {{ jan26Data.republicDayDesktopChanges.logoText}}</span>
             </div>
             <ng-template #janDataDisabled>
               <img [src]="appIcon"  alt="Application Logo" class="app-logo" />

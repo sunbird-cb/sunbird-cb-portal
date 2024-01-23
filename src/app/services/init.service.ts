@@ -297,8 +297,7 @@ export class InitService {
     this.configSvc.activeOrg = publicConfig.org[0]
     this.configSvc.appSetup = publicConfig.appSetup
     this.configSvc.positions = publicConfig.positions
-    this.configSvc.newJanChanges = publicConfig.newJanChanges
-    this.configSvc.newJanMobChanges = publicConfig.newJanMobChanges
+    this.configSvc.republicDayChanges = publicConfig.republicDayChanges
     this.configSvc.republicDay2024 = publicConfig.republicDay2024
     return publicConfig
   }
