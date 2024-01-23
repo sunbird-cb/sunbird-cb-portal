@@ -38,14 +38,14 @@ export class ProfileCardStatsComponent implements OnInit {
     // this.getCounts()
     const progress = (247 - ((247 * this.userInfo.profileUpdateCompletion) / 100))
     document.documentElement.style.setProperty('--i', String(progress))
-    let rand = Math.round(Math.random() * 5)
-    this.configSvc.republicDay2024.filter((data: any )=> {
+    const rand = Math.round(Math.random() * 5)
+    this.configSvc.republicDay2024.filter((data: any) => {
       if (data.id === rand) {
         this.republicDayData = data
         this.showrepublicBanner = true
         setTimeout(() => {
           this.showrepublicBanner = false
-        }, 15000);
+        },         15000)
       }
      })
   }

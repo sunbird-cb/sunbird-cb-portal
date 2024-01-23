@@ -56,8 +56,8 @@ export class ConfigurationsService {
   isNewUser = false
   portalUrls: IPortalUrls | undefined
   positions: any
-  newJanChanges:any
-  newJanMobChanges:any
+  newJanChanges: any
+  newJanMobChanges: any
   republicDay2024: any
 
   // pinnedApps
