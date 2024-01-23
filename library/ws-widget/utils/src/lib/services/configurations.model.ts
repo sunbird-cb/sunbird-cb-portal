@@ -64,7 +64,7 @@ export namespace NsInstanceConfig {
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
     positions: any
-    republicDay2024: any
+    profileTimelyNudges: any
   }
   export interface IPortalUrls {
     igot: string,

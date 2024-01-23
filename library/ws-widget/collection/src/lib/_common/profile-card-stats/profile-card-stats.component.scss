@@ -2,7 +2,9 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
-
+.backgroud-image {
+  width: 100%;
+}
 
 .republic-wrapper {
   border-radius: 12px;
@@ -213,6 +215,23 @@
     cursor: pointer;
 }
 
+.republic-wrapper .collapse-expand-icon {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    right: 50%;
+    top: -2px;
+    cursor: pointer;
+    z-index: 100;
+}
+
 
 
 .progress-wrapper {
@@ -290,3 +309,20 @@
 .aligncenter {
   align-items: center;
 }
+
+
+// .profile-nudge {
+//   -webkit-animation: fadeinout 10s linear forwards;
+//   animation: fadeinout 10s linear forwards;
+// }
+
+// @-webkit-keyframes fadeinout {
+//   0%,100% { opacity: 0; }
+//   50% { opacity: 1; }
+// }
+
+// @keyframes fadeinout {
+//   0%,100% { opacity: 0; }
+//   50% { opacity: 1; }
+// }
+

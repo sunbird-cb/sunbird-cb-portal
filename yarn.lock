@@ -1111,6 +1111,20 @@
     tree-kill "1.2.2"
     webpack-sources "1.4.3"
 
+"@ngx-translate/core@12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-12.0.0.tgz#d177b03ea84d37fb2d7d352246867ba533d93225"
+  integrity sha512-hxuaLEqxlZ3IWBupyAoRXAhMZHCmaCg58XpY5+vevJmDhMEFJUEKdQyWVOKcf3+6PkoIFcuKJCeHa5C3Hb65gA==
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngx-translate/http-loader@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-4.0.0.tgz#8a555248ad4b7d513460fcec9da25b0447962f1d"
+  integrity sha512-x8LumqydWD7eX9yQTAVeoCM9gFUIGVTUjZqbxdAUavAA3qVnk9wCQux7iHLPXpydl8vyQmLoPQR+fFU+DUDOMA==
+  dependencies:
+    tslib "^1.9.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1248,17 +1262,17 @@
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/micro-surveys@^2.0.13":
-  version "2.0.13"
-  resolved "https://registry.npmjs.org/@sunbird-cb/micro-surveys/-/micro-surveys-2.0.13.tgz#d118e4a85723cba6740a1aac517e9f374deaa150"
-  integrity sha512-BkqxlU2mVT7lAHFAeU8oYm+34SZ/dNU5+j4pB84uYeZ8fehGxbrrLOEyl0HC1Zfxd3MVx4Aj8BjyuOr7mVt+xQ==
+"@sunbird-cb/micro-surveys@^2.0.17":
+  version "2.0.17"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/micro-surveys/-/micro-surveys-2.0.17.tgz#0dc72d64a58e6231defe6e4ca9029a7933796662"
+  integrity sha512-NljG2e5GZcq1PJalgDMB0oi5TVkZJe2Wsd//GJqmhFos/yvZWI0XiDzlMLbK2KiyZ/O8/7/PK/4yA8l+CcDL/w==
   dependencies:
     tslib "^1.9.0"
 
-"@sunbird-cb/rain-dashboards@0.4.31":
-  version "0.4.31"
-  resolved "https://registry.npmjs.org/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.4.31.tgz#d433eefdcae6b886808e2e9512d9b944e3ef2312"
-  integrity sha512-OJxS7SJm4YoG5s4FeRxYaN1SxtH1Jzr96QMWfew54erBFQjKqV2uquiOmGtrA8bKgklBZttjKTwojbPhGMME/w==
+"@sunbird-cb/rain-dashboards@0.4.33":
+  version "0.4.33"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.4.33.tgz#e761deb8b4429a6e69ee18095e0a9ae8c3945f57"
+  integrity sha512-bbCJSzPgIUjFeJvhPth7ATJt+mwOZAtyX3hhFoR4fL9XNnO9iSPqk2DC8UI4/83avOALfPdfxFYKtNBTBoW15g==
   dependencies:
     tslib "^1.9.0"
 
@@ -2902,10 +2916,10 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
-cb-tour-guide@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/cb-tour-guide/-/cb-tour-guide-1.0.1.tgz#6e800c5b3d12e482c3f956dbb07182b4a035ef84"
-  integrity sha512-BJXWEfekhx8v4R6vxriWLx9+ocTnyVrXFGwZn1tKAAzCUcZkRiuWsZ6g+BDP7J0Vd7yPW+y4GeeQ4hJPLncAJw==
+cb-tour-guide@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cb-tour-guide/-/cb-tour-guide-1.0.3.tgz#f69a89e53aef2fd16564975f394821ebcf6f0c35"
+  integrity sha512-xMokxysNRLNWNzNnQSTYBSKuI353xZeindxd5fJioYqevZduNMJRubVc0jr26UrSOYyQ7tePO8OfuN1aO8aejA==
   dependencies:
     tslib "^1.9.0"
 
@@ -7719,6 +7733,11 @@ ngx-quill@^7.1.2:
   integrity sha512-A49Q5KvBtzTRc+hmjzpvPkar1hOoaeGKEispeQ91yUaIB95fjzykx6SqWtcBmGFckNllCOIQV9iel9+RCnd+8Q==
   dependencies:
     tslib "^1.9.0"
+
+ngx-skeleton-loader@^1.2.2:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/ngx-skeleton-loader/-/ngx-skeleton-loader-1.2.7.tgz#027b8c2816b75172fe67ad0fb5e0fe186db4dba4"
+  integrity sha512-+raZLntE1m+SgffmoZ3ygXDfuU8CMmzfOBnng2hpaeKPtmYg0/go1PNZzLeRdc/wx3b8D0DxazmaJ8NOlL08Hw==
 
 nice-try@^1.0.4:
   version "1.0.5"
