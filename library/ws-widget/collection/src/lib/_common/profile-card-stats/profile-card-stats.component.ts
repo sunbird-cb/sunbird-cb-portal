@@ -26,6 +26,7 @@ export class ProfileCardStatsComponent implements OnInit {
   showrepublicBanner: any = false
   republicDayData: any = {}
   interval = 0
+  profileDelay = 0
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe) { }
@@ -38,38 +39,48 @@ export class ProfileCardStatsComponent implements OnInit {
     // this.getCounts()
     const progress = (247 - ((247 * this.userInfo.profileUpdateCompletion) / 100))
     document.documentElement.style.setProperty('--i', String(progress))
-    let rand = Math.round(Math.random() * 4)    
-    if(this.configSvc.republicDay2024.enable) {
-      let cdate = new Date();
-      let hours =  cdate.getHours(), minute = cdate.getMinutes();
-      let currentDate:any = new Date().toJSON().slice(0, 10);
-      this.configSvc.republicDay2024.data.filter((data: any )=> {          
-          let currentTimeTemp:any = (hours > 12) ? (hours-12 + ':' + minute +' PM') : (hours + ':' + minute +' AM');   
-          let currentTime:any = currentDate+" "+currentTimeTemp;       
-          let startTime:any = currentDate+" "+data.startTime;          
-          let endTime:any = currentDate+" "+data.endTime;
-          if(data.addDay) {
-            endTime = new Date(endTime);            
-            endTime = endTime.setDate(endTime.getDate() + 1);
-          } else {
-            endTime = new Date(Date.parse(endTime))
-          }
-          startTime = new Date(Date.parse(startTime))         
-          currentTime = new Date(Date.parse(currentTime))
-          if (currentTime > startTime && currentTime < endTime ){
-            this.republicDayData['backgroupImage']  = data.backgroupImage;
-            this.republicDayData['info']  = data['info'][rand];
-            this.republicDayData['centerImage']  = data['centerImage'][rand];
-            this.showrepublicBanner = true
-          }       
-          setTimeout(() => {
-            this.showrepublicBanner = false
-          }, 180000);
-        
-       })
+    if (this.configSvc.profileTimelyNudges.enable) {
+      this.profileDelay = this.configSvc.profileTimelyNudges.profileDelayInSec
     }
-   
+    setTimeout(() => {
+      this.getTimelyNudge()
+    },         this.profileDelay * 1000)
   }
+
+  getTimelyNudge() {
+    if (this.configSvc.profileTimelyNudges.enable) {
+      const rand = Math.round(Math.random() * 4)
+      const currentDate = new Date()
+      const timeInterval = this.configSvc.profileTimelyNudges.nudgeDelayInSec
+      const hours = currentDate.getHours()
+      const defaultData = this.configSvc.profileTimelyNudges.data[this.configSvc.profileTimelyNudges.data.length - 1]
+      if (defaultData) {
+        this.republicDayData['backgroupImage'] = defaultData.backgroupImage
+        this.republicDayData['info'] = defaultData['info'][rand]
+        this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
+        this.republicDayData['textColor'] = defaultData['textColor']
+        this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', this.userInfo.firstName)
+        this.showrepublicBanner = true
+        setTimeout(() => {
+          this.showrepublicBanner = false
+        },         (1000 * timeInterval))
+      }
+      this.configSvc.profileTimelyNudges.data.filter((data: any) => {
+        if (hours >= data.startTime && hours < data.endTime) {
+          this.republicDayData['backgroupImage'] = data.backgroupImage
+          this.republicDayData['info'] = data['info'][rand]
+          this.republicDayData['centerImage'] = data['centerImage'][rand]
+          this.republicDayData['greet'] = data['greet'].replace('<userName>', this.userInfo.firstName)
+          this.republicDayData['textColor'] = data['textColor']
+          this.showrepublicBanner = true
+        }
+        setTimeout(() => {
+          this.showrepublicBanner = false
+        },         (1000 * timeInterval))
+      })
+    }
+  }
+
   getCounts() {
     let enrollList: any
     if (localStorage.getItem('enrollmentData')) {

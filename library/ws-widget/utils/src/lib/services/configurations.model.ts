@@ -64,7 +64,7 @@ export namespace NsInstanceConfig {
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
     positions: any
-    republicDay2024: any
+    profileTimelyNudges: any
   }
   export interface IPortalUrls {
     igot: string,
@@ -147,7 +147,7 @@ export namespace NsInstanceConfig {
   export interface IRepublicDayChanges {
     isEnabled: boolean
     republicDayDesktopChanges: IRepublicDayDesktopChanges
-    republicDayMobChanges : IRepublicDayMobChanges
+    republicDayMobChanges: IRepublicDayMobChanges
   }
   export interface IRepublicDayDesktopChanges {
     animationDuration: number

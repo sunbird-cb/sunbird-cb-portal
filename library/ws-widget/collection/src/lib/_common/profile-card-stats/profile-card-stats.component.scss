@@ -2,12 +2,14 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
-
+.backgroud-image {
+  width: 100%;
+}
 
 .republic-wrapper {
   border-radius: 12px;
   position: relative;
-
+  z-index: 100;
 }
 .republic-details {
   padding-top: 20px;
@@ -34,6 +36,42 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .center-image-mobile {
+    position: absolute;
+    top: 55%;
+    left: 22%;
+    transform: translate(-50%, -50%);
+  }
+  .image{
+    width: 130px;
+    height: 130px;
+  }
+
+  .mobile-info {
+    position: absolute;
+    top: 34%;
+    left: 40%;
+  }
+  .mobile-info-text {
+    font-family: Montserrat;
+    word-wrap: break-word;
+    font-size: 16px;
+    padding-left: 10px;
+    text-align: left!important;
+    width: 90%;
+    line-height: 1.5rem;
+  }
+  .mobile-greet {
+    font-weight: 600;
+    font-family: Montserrat;
+    word-wrap: break-word;
+    font-size: 16px;
+    padding: 0 0 10px 10px;
+    text-align: left!important;
+    width: 90%;
+    line-height: 1.5rem;
   }
 
 
@@ -213,6 +251,23 @@
     cursor: pointer;
 }
 
+.republic-wrapper .collapse-expand-icon {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    right: 50%;
+    top: -2px;
+    cursor: pointer;
+    z-index: 100;
+}
+
 
 
 .progress-wrapper {
@@ -290,3 +345,20 @@
 .aligncenter {
   align-items: center;
 }
+
+
+// .profile-nudge {
+//   -webkit-animation: fadeinout 10s linear forwards;
+//   animation: fadeinout 10s linear forwards;
+// }
+
+// @-webkit-keyframes fadeinout {
+//   0%,100% { opacity: 0; }
+//   50% { opacity: 1; }
+// }
+
+// @keyframes fadeinout {
+//   0%,100% { opacity: 0; }
+//   50% { opacity: 1; }
+// }
+

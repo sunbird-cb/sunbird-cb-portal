@@ -57,7 +57,7 @@ export class ConfigurationsService {
   portalUrls: IPortalUrls | undefined
   positions: any
   republicDayChanges: any
-  republicDay2024: any
+  profileTimelyNudges: any
 
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())
