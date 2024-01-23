@@ -309,7 +309,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   changeBg26Jan() {
-    this.backGroundTheme = this.configSvc.newJanChanges
+    this.backGroundTheme = this.configSvc.republicDayChanges
     let docData:any = document.getElementById("app-bg")
     if(this.backGroundTheme && this.backGroundTheme.isEnabled) {
       docData.classList.add("jan-bg-change") 
