@@ -80,7 +80,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.getAuthDataIdentifer()
 
-
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
     }
@@ -313,12 +312,12 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
   }
 
-  openFeedbackDialog(content: any): void {
+  openFeedbackDialog(contentP: any): void {
     const contentTmp = {
       identifier: this.collectionId,
-      primaryCategory: this.collectionType
+      primaryCategory: this.collectionType,
     }
-    content = content? content:contentTmp
+    const content = contentP ? contentP : contentTmp
     const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
       // height: '400px',
       width: '770px',
