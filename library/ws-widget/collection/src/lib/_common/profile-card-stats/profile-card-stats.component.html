@@ -4,14 +4,26 @@
       <div class="collapse-expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
       </div>
-      <div class="republic-details">
+      <div class="republic-details hidden md:block">
         <div><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
         <div class="flex flex-col aligncenter">
-          <div class="greet-text">{{republicDayData.greet}}</div>
+          <div class="greet-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
           <div class="center-image">
             <img [src]="republicDayData.centerImage">
           </div>
-          <div class="info-text">{{republicDayData.info}}</div>
+          <div class="info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
+        </div>
+      </div>
+      <div class="republic-details block md:hidden">
+        <div><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
+        <div class="flex flex-col aligncenter">
+          <div class="center-image-mobile">
+            <img [src]="republicDayData.centerImage" class="image">
+          </div>
+          <div class="mobile-info">
+            <div class="mobile-greet" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
+            <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -56,7 +68,7 @@
     </ng-container>
   </div>
 
-  <div class="stats-container block md:hidden"  *ngIf="!isLoading">
+  <div class="stats-container block md:hidden"  *ngIf="!isLoading && !showrepublicBanner">
     <div class="flex flex-middle flex-between" (click)="myActivity()">
       <div class="flex flex-middle">
         <img class="stats-icon margin-right-s" width="20" height="20" src="/assets/icons/home/dashboard.svg">

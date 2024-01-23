@@ -59,6 +59,7 @@ export class ProfileCardStatsComponent implements OnInit {
         this.republicDayData['backgroupImage'] = defaultData.backgroupImage
         this.republicDayData['info'] = defaultData['info'][rand]
         this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
+        this.republicDayData['textColor'] = defaultData['textColor']
         this.republicDayData['greet'] = defaultData['greet'].replace("<userName>", this.userInfo.firstName)
         this.showrepublicBanner = true
         setTimeout(() => {
@@ -71,6 +72,7 @@ export class ProfileCardStatsComponent implements OnInit {
           this.republicDayData['info'] = data['info'][rand]
           this.republicDayData['centerImage'] = data['centerImage'][rand]
           this.republicDayData['greet'] = data['greet'].replace("<userName>", this.userInfo.firstName)
+          this.republicDayData['textColor'] = data['textColor']
           this.showrepublicBanner = true
         }
         setTimeout(() => {

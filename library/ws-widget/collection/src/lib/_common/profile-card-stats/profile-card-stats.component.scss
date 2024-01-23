@@ -9,7 +9,7 @@
 .republic-wrapper {
   border-radius: 12px;
   position: relative;
-
+  z-index: 100;
 }
 .republic-details {
   padding-top: 20px;
@@ -36,6 +36,42 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .center-image-mobile {
+    position: absolute;
+    top: 55%;
+    left: 22%;
+    transform: translate(-50%, -50%);
+  }
+  .image{
+    width: 130px;
+    height: 130px;
+  }
+
+  .mobile-info {
+    position: absolute;
+    top: 34%;
+    left: 40%;
+  }
+  .mobile-info-text {
+    font-family: Montserrat;
+    word-wrap: break-word;
+    font-size: 16px;
+    padding-left: 10px;
+    text-align: left!important;
+    width: 90%;
+    line-height: 1.5rem;
+  }
+  .mobile-greet {
+    font-weight: 600;
+    font-family: Montserrat;
+    word-wrap: break-word;
+    font-size: 16px;
+    padding: 0 0 10px 10px;
+    text-align: left!important;
+    width: 90%;
+    line-height: 1.5rem;
   }
 
 
