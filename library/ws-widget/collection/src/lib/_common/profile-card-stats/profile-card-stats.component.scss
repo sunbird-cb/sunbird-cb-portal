@@ -103,7 +103,7 @@
     padding: 24px 16px 8px 16px;
     position: relative;
     top: -20px;
-    z-index: 10;
+    z-index: 9;
     cursor: pointer;
 }
 
@@ -425,6 +425,6 @@
 }
 
 .backgroud-image {
-  transform: scaleY(1.15);
+  transform: scaleY(1.20);
   transform-origin: top;
 }

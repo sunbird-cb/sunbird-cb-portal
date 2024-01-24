@@ -31,7 +31,7 @@
   <div class="profile-wrapper" *ngIf="!isLoading">
     <div *ngIf="!showrepublicBanner" class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
-    </div>    
+    </div>
     <div class="position-absolute" [ngClass]="showrepublicBanner ? 'fade-in default-public-banner' : 'fade-out hide-default-public-banner' ">
       <ng-container *ngIf="!isLoading">
         <div class="republic-details  hidden md:block">
@@ -55,7 +55,7 @@
               <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
             </div>
           </div>
-        </div>  
+        </div>
       </ng-container>
     </div>
     <ng-container>
@@ -95,8 +95,8 @@
       </div>
     </ng-container>
   </div>
- 
-  
+
+
 
   <div class="stats-container block md:hidden"  *ngIf="!isLoading && !showrepublicBanner">
     <div class="flex flex-middle flex-between" (click)="myActivity()">
@@ -110,7 +110,7 @@
 </div>
 
 <div class="profile-wrapper" *ngIf="isLoading">
-  <div class="profile-user-details flex flex-middle">
+  <div class="profile-user-details flex flex-middle padding-16">
       <div class="progress-bar">
         <span class="skeleton-box" style="width:64px;height:64px;border-radius: 50%"></span>
         </div>
