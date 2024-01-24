@@ -3,6 +3,7 @@
         <ws-widget-app-toc-about></ws-widget-app-toc-about>
     </mat-tab>
     <mat-tab label="Content">
-        <ws-widget-app-toc-content></ws-widget-app-toc-content>
+        <ws-widget-app-toc-content [content]="content" [initialrouteData]="initialrouteData" [forPreview]="false"
+        [resumeData]="resumeData" [batchData]="batchData"></ws-widget-app-toc-content>
     </mat-tab>
 </mat-tab-group>
