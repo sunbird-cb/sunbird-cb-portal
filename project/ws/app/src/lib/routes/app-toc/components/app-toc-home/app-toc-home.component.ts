@@ -165,6 +165,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   courseID: any
   isClaimed = false
   monthlyCapExceed = false
+  isCompletedThisMonth = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -345,6 +346,20 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       }
     })
+  }
+
+  isCourseCompletedOnThisMonth() {
+    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+    const now = moment(this.serverDate).format('YYYY-MM-DD')
+    if (this.content) {
+      const courseData = enrollList[this.content.identifier]
+      if (courseData && courseData.completionPercentage === 100 && courseData.completedOn) {
+        const completedOn = moment(courseData.completedOn).format('YYYY-MM-DD')
+        const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
+        const currentMonth = moment(now, 'YYYY-MM-DD').month()
+        this.isCompletedThisMonth = completedMonth === currentMonth
+      }
+    }
   }
 
   filteredAcbpList(res: any) {
@@ -822,6 +837,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.enrollBtnLoading = false
           }
         }
+        this.isCourseCompletedOnThisMonth()
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
