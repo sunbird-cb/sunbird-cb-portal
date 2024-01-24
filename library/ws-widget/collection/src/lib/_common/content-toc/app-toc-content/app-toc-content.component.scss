@@ -1,3 +1,6 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
 .content-accordion {
     .content-panel {
         box-shadow: none;
@@ -21,6 +24,51 @@
         color: rgba($color: #000, $alpha: 0.4);
     }
 }
+
+.main-container {
+    width: 100%;
+    // padding-right: 2 * $size-l;
+    box-sizing: border-box;
+
+    .toc-section {
+      display: flex;
+      justify-content: space-between;
+      // border-bottom: 1px solid $border-color;
+      padding-bottom: $size-s;
+
+      // .heading {
+      //   // letter-spacing: 0px;
+      //   // color: #222222;
+      // }
+
+      // .expandButton {
+      //   // color: #222222;
+      // }
+    }
+
+    .content-card {
+      // padding: $size-s 0;
+      // border-bottom: 1px solid $border-color;
+      // background: #F5F6FA 0% 0% no-repeat padding-box;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #F5F6FA;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .noChildren {
+      color: #222222 !important;
+    }
+
+    @include breakpoint-lt-m {
+      width: 100%;
+      padding-right: 0;
+      margin-bottom: $size-xl;
+    }
+
+  }
+
 
 ::ng-deep .mat-expansion-indicator {
     display: none !important;

@@ -13,13 +13,12 @@ import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 
 export class AppTocAboutComponent implements OnInit {
 
-  @Input() bindingData: any
+  @Input() content: NsContent.IContent | null = null
   descEllipsis = true
   summaryEllipsis = true
   competencySelected = 'behavioural'
   ratingSummary: any
   authReplies: any
-  content: any
   ratingSummaryProcessed: any
   ratingReviews: any[] = []
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager']
@@ -30,7 +29,6 @@ export class AppTocAboutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.content = this.bindingData
     const tags = ['Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
     this.tags = [...this.tags, ...tags]
     if (this.content && this.content.identifier) {

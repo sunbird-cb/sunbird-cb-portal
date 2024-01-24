@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { MatTabChangeEvent } from '@angular/material'
+import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'ws-widget-content-toc',
@@ -9,8 +11,14 @@ import { MatTabChangeEvent } from '@angular/material'
 
 export class ContentTocComponent implements OnInit {
 
-  @Input() bindingData: any
   tabChangeValue: any = ''
+  @Input() content: NsContent.IContent | null = null
+  @Input() initialRouteData: any
+  routeSubscription: Subscription | null = null
+  @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+
+  @Input() resumeData: NsContent.IContinueLearningData | null = null
+  @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   constructor() { }
 
   ngOnInit() {}

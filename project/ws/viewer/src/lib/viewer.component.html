@@ -3,7 +3,7 @@
     (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
   </viewer-viewer-top-bar>
   <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
-    (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" >
+    (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
   </viewer-viewer-top-bar>
   <mat-sidenav-container autosize class="viewer-sidenav-container">
     <mat-sidenav [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
@@ -20,6 +20,9 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="sidenavContent" #scrollableContent>
+      <viewer-viewer-secondary-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview"
+        [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+      </viewer-viewer-secondary-top-bar>
       <section *ngIf="status === 'error'">
         <div *ngIf="errorWidgetData?.widgetData?.errorType" [wsResolverWidget]="errorWidgetData"></div>
         <div *ngIf="error.errorType === errorType.mimeTypeMismatch">
@@ -73,7 +76,8 @@
           <a class="padding-right-s padding-top-xs cheight" *ngIf="!show" role="button" (click)="show=true">
             <mat-icon class="cursor-pointer ws-mat-primary-text">visibility</mat-icon>
           </a>
-          <span *ngIf="show" i18n class="flex flex-1 flex-center padding-xs ws-mat-primary-text mat-subheading-1 margin-0">
+          <span *ngIf="show" i18n
+            class="flex flex-1 flex-center padding-xs ws-mat-primary-text mat-subheading-1 margin-0">
             If you are a government official, register or sign in so you can track your learning progress and get
             certified. </span>
         </div>

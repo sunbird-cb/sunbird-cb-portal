@@ -1,66 +1,62 @@
-<mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary mat-elevation-z3 cheight">
-  <ws-widget-btn-page-back-nav *ngIf="!isPreview && !needToHide" [widgetData]="{
-      url: isTypeOfCollection
+<mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">
+  <div class="flex flex-1">
+    <ws-widget-btn-page-back-nav *ngIf="!isPreview && !needToHide" [widgetData]="{
+        url: isTypeOfCollection
+          ? collectionType === 'Playlist'
+            ? '/app/playlist/me/' + collectionId
+            : (forPreview ? '/pulic' : '/app') + '/toc/' + collectionId + '/overview'
+          : (forPreview ? '/public' : '/app') + '/toc/' + resourceId + '/overview',
+        titles: [],
+        queryParams : isTypeOfCollection
         ? collectionType === 'Playlist'
-          ? '/app/playlist/me/' + collectionId
-          : (forPreview ? '/pulic' : '/app') + '/toc/' + collectionId + '/overview'
-        : (forPreview ? '/public' : '/app') + '/toc/' + resourceId + '/overview',
-      titles: [],
-      queryParams : isTypeOfCollection
-      ? collectionType === 'Playlist'
-        ? {}
-        : {}
-      : {primaryCategory: resourcePrimaryCategory}
-    }"></ws-widget-btn-page-back-nav>
-  <ws-widget-btn-page-back-nav *ngIf="needToHide" [widgetData]="{
-      url: '/app/competencies/home',
-      titles: []
-    }"></ws-widget-btn-page-back-nav>
-  <!-- <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary mat-elevation-z3">
-  <ws-widget-btn-page-back *ngIf="!forChannel" [widgetData]="{
-      url: isTypeOfCollection
-        ? collectionType === 'Playlist'
-          ? '/app/playlist/me/' + collectionId
-          : (forPreview ? '/author' : '/app') + '/toc/' + collectionId + '/overview'
-        : (forPreview ? '/author' : '/app') + '/toc/' + resourceId + '/overview'
-    }"></ws-widget-btn-page-back>
-  <mat-icon style="cursor: pointer;" (click)="back()" *ngIf="forChannel">arrow_back</mat-icon> -->
-  <a *ngIf="logo && forPreview" mat-button routerLink="/static-home">
-    <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-  </a>
-  <a *ngIf="logo && !forPreview" mat-button routerLink="/page/home">
-    <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-  </a>
-  <a mat-icon-button class="width-auto" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
-    [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
-    accesskey="<">
-    <mat-icon>skip_previous</mat-icon><span *ngIf="logo">PREV</span>
-  </a>
-  <h1 *ngIf="logo" class="width-expand text-center text-truncate">
-    {{ resourceName }}
-  </h1>
-  <!-- [disabled]="!nextResourceUrl" -->
-  <!-- {{nextResourceUrl}} -->
-  <a mat-icon-button class="width-auto mr-10" [routerLink]="nextResourceUrl"
-    [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
-    queryParamsHandling="" accesskey=">">
-    <!-- <span *ngIf="optionalLink"></span>  -->
-    <span *ngIf="logo">{{ optionalLink ? 'SKIP' : 'NEXT' }} </span> 
-    
-    <!-- {{ optionalLink }} -->
-    <mat-icon>skip_next</mat-icon>
-  </a>
-  <!-- <button mat-icon-button class="width-auto mr-10" routerLink="/page/home" *ngIf="isTypeOfCollection && !nextResourceUrl" -->
-  <button mat-icon-button class="width-auto mr-10" (click)="finishDialog()"
-    *ngIf="isTypeOfCollection && !nextResourceUrl" accesskey=">">
-    <span *ngIf="logo" class="finish">FINISH</span>
-  </button>
-  <!-- <a mat-icon-button> -->
-  <!-- <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
-    [widgetData]="{ fsContainer: frameReference }"></ws-widget-btn-fullscreen> -->
-  <!-- </a> -->
-  <a href="javascript:void(0)" mat-icon-button *ngIf="isTypeOfCollection" role="link" class="width-auto"
-    [ngClass]="{'xsmall': !logo}" (click)="toggleSideBar()" accesskey="M">
-    <mat-icon>menu</mat-icon>
-  </a>
+          ? {}
+          : {}
+        : {primaryCategory: resourcePrimaryCategory}
+      }"></ws-widget-btn-page-back-nav>
+    <ws-widget-btn-page-back-nav *ngIf="needToHide" [widgetData]="{
+        url: '/app/competencies/home',
+        titles: []
+      }"></ws-widget-btn-page-back-nav>
+    <a *ngIf="logo && forPreview" mat-button routerLink="/static-home">
+      <img [src]="appIcon" alt="Application Logo" class="app-logo" />
+    </a>
+    <a *ngIf="logo && !forPreview" mat-button routerLink="/page/home">
+      <img [src]="appIcon" alt="Application Logo" class="app-logo" />
+    </a>
+  </div>
+  <div class="flex">
+    <div class="flex flex-1 flex-col  margin-right-l progress-container">
+      <div class="flex flex-row justify-between w-full ws-mat-white-text">
+        <div class="flex items-center mb-2">
+          <span class="mat-body-2 mr-2">Items ({{currentDataFromEnrollList?.progress}}/{{currentDataFromEnrollList?.leafNodesCount}})</span>
+          <mat-icon class="cursor-pointer ws-mat-white-text infoIcon" [matTooltip]="'Progress is updated after few minute'">info_outline</mat-icon>
+        </div>
+
+       <span class="mat-body-2  ws-mat-white-text"> {{currentDataFromEnrollList?.completionPercentage}}%</span>
+      </div>
+
+       <ws-widget-content-progress  
+         [contentId]="123" [progress]="currentDataFromEnrollList?.completionPercentage" [progressType]="'percentage'" [customClassName]="'viewer-progress'">
+       </ws-widget-content-progress>
+    </div>
+    <button color="secondary" class="rate-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">
+      <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2">star</mat-icon>
+      <ng-container *ngIf="!userRating">
+        <span class="mr-1">Rate now</span>
+        <!-- <span class="lowercase">
+
+          <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
+            {{content?.primaryCategory}}
+          </ng-container>
+          <ng-container *ngIf="content?.primaryCategory === primaryCategory.COURSE ||
+            content.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
+            course
+          </ng-container>
+        </span> -->
+      </ng-container>
+      <ng-container *ngIf="userRating">
+        <span> Edit rating </span>
+      </ng-container>
+    </button>
+  </div>
 </mat-toolbar>
