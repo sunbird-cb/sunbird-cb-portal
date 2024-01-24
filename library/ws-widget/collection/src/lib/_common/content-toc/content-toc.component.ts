@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { MatTabChangeEvent } from '@angular/material'
 
 @Component({
@@ -9,11 +9,11 @@ import { MatTabChangeEvent } from '@angular/material'
 
 export class ContentTocComponent implements OnInit {
 
+  @Input() bindingData: any
   tabChangeValue: any = ''
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   handleTabChange(event: MatTabChangeEvent): void {
     this.tabChangeValue = event.tab

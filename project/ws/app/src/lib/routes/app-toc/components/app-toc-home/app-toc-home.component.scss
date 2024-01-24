@@ -9,7 +9,7 @@
   width: 100%;
 
   .banner-details {
-    padding: 36px 16px;
+    padding: 36px 0px;
 
     .tag-div {
       border: 1px solid $colorOrange;
@@ -20,6 +20,14 @@
         width: 12px;
         height: 12px;
       }
+    }
+
+    .due-tag {
+      padding: 4px;
+      background-color: $colorOrange;
+      border: 1px solid $colorOrange;
+      color: #FFF;
+      border-radius: 4px;
     }
   
     .rating-chip {
@@ -51,6 +59,13 @@
   .info-div {
     max-width: 384px;
     width: 100%;
+  }
+
+  .most-enrolled-chip {
+    background-color: #FFEA9E;
+    border: 1px solid #FFEA9E;
+    padding: 4px;
+    border-radius: 2px;
   }
 }
 
@@ -92,10 +107,46 @@
 }
 
 .right-container {
+  .image-div {
+    height: 220px;
+    background-color: #ccc;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    
+    img {
+      max-width: 384px;
+      width: 100%;
+      height: 220px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      position: relative;
+      top: -42px;
+    }
+
+    .share-container {
+      position: relative;
+      z-index: 2;
+      top: 20px;
+      margin-right: 20px;
+    }
+
+    .share-tag {
+      font-weight: bold;
+      background-color: #000;
+      border: 1px solid #FFF;
+      border-radius: 20px;
+      padding: 8px 16px;
+      color: #FFF;
+      cursor: pointer;
+    }
+  }
 
   .right-content {
     background-color: #FFF;
     border-radius: 12px;
+    position: fixed;
+    z-index: 10;
+    top: 132px;
   }
 
   .font-14 {

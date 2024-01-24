@@ -3,47 +3,64 @@
   <div class="flex flex-row gap-6 fixed-width">
     <div class="banner-details toc-content">
       <div class="flex flex-col gap-4">
-        <div class="flex">
+        <div class="flex gap-4">
           <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
             <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-            <div class="text-xs font-bold text-white leading-3">Curated program</div>
+            <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
+          </div>
+          <div class="flex items-center">
+            <div class="flex items-center due-tag text-xs leading-3">
+              Due by -&nbsp;<span class="font-bold">27 Jul, 1989</span>
+            </div>
           </div>
         </div>
-        <div class="banner-text text-4xl font-bold">AI for Digital Transformation: Machine Learning and Deep Learning</div>
+        <div class="banner-text text-4xl font-bold">{{ handleCapitalize(content?.name) }}</div>
         <div class="text-base text-white">by Wahhabi Institute of Technology and Policy</div>
-        <div class="flex">
+        <div class="flex gap-4">
           <div class="flex flex-row rating-chip py-2 px-3 items-center">
             <div class="flex flex-row gap-1 items-center">
               <mat-icon>grade</mat-icon>
-              <div class="text-white text-sm leading-4">4.5</div>
+              <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
             </div>
             <div class="separator"></div>
-            <div class="text-white text-sm leading-4">141</div>
+            <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
+          </div>
+          <div class="flex items-center">
+            <div class="most-enrolled-chip text-xs leading-3">Most Enrolled</div>
           </div>
         </div>
-        <div class="text-xs leading-4 text-white">(Last updated on Nov 23, 2023)</div>
+        <div class="text-xs leading-4 text-white">(Last updated on {{ content?.sYS_INTERNAL_LAST_UPDATED_ON | date: 'MMM d, y' }})</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="flex flex-row gap-4 fixed-width">
+<div class="flex flex-row gap-6 fixed-width">
   <div class="toc-content">
     <div class="py-4">
-      <ws-widget-content-toc></ws-widget-content-toc>
+      <ws-widget-content-toc [bindingData]="content" ></ws-widget-content-toc>
     </div>
   </div>
 
   <div class="right-container">
     <div class="shadow-md right-content">
+      <div class="image-div">
+        <div class="flex justify-end share-container">
+          <div class="flex flex-row gap-2 share-tag">
+            <mat-icon>share</mat-icon>
+            <div>Share</div>
+          </div>
+        </div>
+        <img src="{{ content?.posterImage | pipePublicURL }}" alt="{{ content?.sourceName || 'course image'}}" />
+      </div>
       <div class="enroll-div">
-        <div class="flex flex-col gap-4 p-4">
-          <button class="flex action-button justify-center ">Enroll</button>
+        <div class="flex flex-col gap-4 p-5">
+          <button class="flex action-button justify-center">Enroll</button>
           <div class="flex flex-row gap-2 slider-div">
             <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
             <div class="text-xs">By completing this course earn 10 more Karma Points</div>
           </div>
-          <div class="flex flex-wrap gap-2 p-2">
+          <div class="flex flex-wrap gap-2">
             <div class="flex flex-col kpi-values items-center gap-2 ">
               <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
               <div class="text-xs">3h 30m</div>
@@ -68,28 +85,32 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-8 p-4">
-        <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-8 p-5">
+        <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorDetails)?.length">
           <div class="text-base font-bold">Authors</div>
-          <div class="flex flex-row gap-3">
+          <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
             <div class="flex items-center justify-center">
-              <div class="flex items-center justify-center initial-circle">VS</div>
+              <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
+                [name]="author?.name">
+              </ws-widget-avatar-photo>
             </div>
-            <div class="flex flex-col gap-1">
-              <div class="font-bold font-14">Vinod Shyave</div>
-              <div class="text-xs leading-3">Authors</div>
+            <div class="flex flex-col gap-1 justify-center">
+              <div class="font-bold">{{ author?.name }}</div>
+              <div class="text-xs leading-3">Author</div>
             </div>
           </div>
         </div>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
           <div class="text-base font-bold">Curators</div>
-          <div class="flex flex-row gap-3">
+          <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
             <div class="flex items-center justify-center">
-              <div class="flex items-center justify-center initial-circle">VS</div>
+              <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
+                [name]="creator?.name">
+              </ws-widget-avatar-photo>
             </div>
             <div class="flex flex-col gap-1">
-              <div class="font-bold font-14">Vinod Shyave</div>
-              <div class="text-xs leading-3">Authors</div>
+              <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
+              <div class="text-xs leading-3">Curator</div>
             </div>
           </div>
         </div>
@@ -522,7 +543,7 @@
               <span *ngIf="tocStructure?.video > 1" i18n> Videos</span>
             </p>
             <p *ngIf="tocStructure?.offlineSession > 0" class="mat-body-2 cs-icons">
-              <img src="/assets/icons/content/grey/module.svg" alt="Ofline sessions" class="margin-right-xs"> {{
+              <img src="/assets/icons/content/grey/module.svg" alt="Offline sessions" class="margin-right-xs"> {{
               tocStructure?.offlineSession }}
               <span *ngIf="tocStructure?.offlineSession === 1" i18n> Session</span>
               <span *ngIf="tocStructure?.offlineSession > 1" i18n> Sessions</span>

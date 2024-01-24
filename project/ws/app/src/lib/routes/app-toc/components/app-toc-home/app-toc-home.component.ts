@@ -1,13 +1,6 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
-import {
-  NsContent,
-  WidgetContentService,
-  WidgetUserService,
-  viewerRouteGenerator,
-  NsPlaylist,
-  NsGoal,
-} from '@sunbird-cb/collection'
+import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
@@ -20,6 +13,7 @@ import { FormControl, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import * as dayjs from 'dayjs'
+
 // tslint:disable-next-line
 import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
@@ -39,6 +33,7 @@ export enum ErrorType {
   serviceUnavailable = 'serviceUnavailable',
   somethingWrong = 'somethingWrong',
 }
+
 const flattenItems = (items: any[], key: string | number) => {
   return items.reduce((flattenedItems, item) => {
     flattenedItems.push(item)
@@ -57,6 +52,7 @@ const flattenItems = (items: any[], key: string | number) => {
   // tslint:disable-next-line: use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
+
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
@@ -165,6 +161,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isClaimed = false
   monthlyCapExceed = false
   isCompletedThisMonth = false
+
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -217,6 +214,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch (_ex) {
       this.isInIframe = false
     }
+
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
         this.courseID = data.content.data.identifier
@@ -247,15 +245,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       })
     }
+
     this.currentFragment = 'overview'
     this.route.fragment.subscribe((fragment: string) => {
       this.currentFragment = fragment || 'overview'
     })
+
     this.batchSubscription = this.tocSvc.batchReplaySubject.subscribe(
       () => {
         this.fetchBatchDetails()
         if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)) {
-          // this.fetchBatchDetails()
           this.fetchUserWFForBlended()
         }
       },
@@ -264,6 +263,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         console.log('error on batchSubscription')
       },
     )
+
     this.batchDataSubscription = this.tocSvc.setBatchDataSubject.subscribe(
       () => {
         if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)) {
@@ -275,6 +275,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         console.log('error on batchDataSubscription')
       },
     )
+
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
@@ -283,6 +284,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
+
     this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -291,12 +293,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.contextPath = contextPath
       }
     })
+
     if (this.configSvc.restrictedFeatures) {
       this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
       this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
         'showIntranetMessageDesktop',
       )
     }
+
     this.checkRegistrationStatus()
     this.routerParamSubscription = this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationEnd) {
@@ -309,10 +313,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
       if ((contentName).toLowerCase() === this.dakshtaName.toLowerCase()) {
         this.showBtn = true
-
       } else {
         this.showBtn = false
-
       }
       this.btnPlaylistConfig = {
         contentId: this.content.identifier,
@@ -328,7 +330,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
-
   }
 
   getKarmapointsLimit() {
@@ -343,14 +344,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   isCourseCompletedOnThisMonth() {
-    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData')|| '{}')
+    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
     const now = moment(this.serverDate).format('YYYY-MM-DD')
     if (this.content) {
       const courseData = enrollList[this.content.identifier]
-      if(courseData && courseData.completionPercentage === 100 && courseData.completedOn) {
+      if (courseData && courseData.completionPercentage === 100 && courseData.completedOn) {
         const completedOn = moment(courseData.completedOn).format('YYYY-MM-DD')
         const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
-        const currentMonth = moment(now,'YYYY-MM-DD').month()
+        const currentMonth = moment(now, 'YYYY-MM-DD').month()
         this.isCompletedThisMonth = completedMonth === currentMonth
       }
     }
@@ -481,24 +482,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     }
   }
-  ngOnDestroy() {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
-    if (this.batchSubscription) {
-      this.batchSubscription.unsubscribe()
-    }
-    if (this.batchDataSubscription) {
-      this.batchDataSubscription.unsubscribe()
-    }
-    this.tocSvc.analyticsFetchStatus = 'none'
-    if (this.routerParamSubscription) {
-      this.routerParamSubscription.unsubscribe()
-    }
-    if (this.selectedBatchSubscription) {
-      this.selectedBatchSubscription.unsubscribe()
-    }
-  }
 
   ngAfterViewChecked(): void {
     try {
@@ -535,6 +518,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     return false
   }
+
   get getStartDate() {
     if (this.content) {
       const batch = _.first(_.filter(this.content['batches'], { batchId: this.currentCourseBatchId }) || [])
@@ -547,6 +531,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       return 'NA'
     } return 'NA'
   }
+
   get isBatchInProgress() {
     // if (this.content && this.content['batches']) {
     // const batches = this.content['batches'] as NsContent.IBatch
@@ -568,6 +553,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       return false
     } return false
   }
+
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
@@ -590,6 +576,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         break
       }
     }
+
     this.getUserRating(false)
     this.getUserEnrollmentList()
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
@@ -599,6 +586,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           : this.content.body
         : '',
     )
+
     this.contentParents = {}
     this.tocStructure = {
       assessment: 0,
@@ -620,6 +608,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       interactivecontent: 0,
       offlineSession: 0,
     }
+
     if (this.content) {
       this.hasTocStructure = false
       this.tocStructure.learningModule = this.content.primaryCategory === this.primaryCategory.MODULE ? -1 : 0
@@ -654,6 +643,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       })
     }
+
     // from ngOnChanges
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       this.disableEnrollBtn = true
@@ -694,6 +684,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         })
       }
     })
+
+    console.log('content - ', this.content)
+
   }
 
   getUserRating(fireUpdate: boolean) {
@@ -730,15 +723,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       // const collectionId = this.isResource ? '' : this.content.identifier
       return this.getContinueLearningData(this.content.identifier)
     }
+
     this.userEnrollmentList = []
-    let userId
+    let userId: any
+
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
-    // this.route.data.subscribe(data => {
-    //   userId = data.profileData.data.userId
-    //   }
-    // )
+
     this.userSvc.fetchUserBatchList(userId).subscribe(
       (result: any) => {
         const courses: NsContent.ICourse[] = result && result.courses
@@ -754,14 +746,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               return course
             })
           }
+
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
             this.currentCourseBatchId = enrolledCourse.batchId
             this.downloadCert(enrolledCourse.issuedCertificates)
-            // const collectionId = this.isResource ? '' : this.content.identifier
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
-            // this.certificateDownloadTrigger(this.content.completionStatus, enrolledCourse.batchId)
             if (this.contentReadData && this.contentReadData.cumulativeTracking) {
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
               this.tocSvc.resumeData.subscribe((res: any) => {
@@ -784,7 +775,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                   this.isResource ? undefined : this.content.identifier,
                   this.isResource ? undefined : this.content.contentType,
                   this.forPreview,
-                  // this.content.primaryCategory
                   'Learning Resource',
                   this.getBatchId(),
                   this.content.name,
@@ -820,10 +810,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             if (this.content.primaryCategory === this.primaryCategory.COURSE
               || this.content.primaryCategory !== this.primaryCategory.PROGRAM) {
               // Disabling auto enrollment to batch
-              // this.autoBatchAssign()
               if (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
                 this.fetchBatchDetails()
-                // this.fetchUserWFForBlended()
               }
             }  else {
               this.fetchBatchDetails()
@@ -846,14 +834,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       serviceName: 'blendedprogram',
       limit: 100,
       offset: 0,
-  }
+    }
+
     this.contentSvc.fetchBlendedUserWF(req).then(
       (data: any) => {
         if (data && data.result && data.result.data.length) {
           const latestWF = _.maxBy(data.result.data[0].wfInfo, (el: any) => {
             return new Date(el.lastUpdatedOn).getTime()
           })
-          // latestWF.currentStatus = this.WFBlendedProgramStatus.REJECTED
            /* tslint:disable-next-line */
           this.batchData!.workFlow = {
               wfInitiated : true,
@@ -863,18 +851,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           }
           this.tocSvc.setWFData(this.batchData)
         }
-        // this.batchData = data
-        // this.batchData.enrolled = false
-        // this.tocSvc.setBatchData(this.batchData)
-        // if (this.getBatchId()) {
-        //   this.router.navigate(
-        //     [],
-        //     {
-        //       relativeTo: this.route,
-        //       // queryParams: { batchId: this.getBatchId() },
-        //       queryParamsHandling: 'merge',
-        //     })
-        // }
 
         this.loggerSvc.info('fetchBlendedUserWF data == ', data)
       },
@@ -890,6 +866,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     return this.batchData.content.find(b => b.batchId === latest.batchId)
   }
+
   public getBatchId(): string {
     let batchId = ''
     if (this.batchData && this.batchData.content) {
@@ -900,45 +877,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return batchId
   }
 
-  // certificateDownloadTrigger(courseState: number, batchId: string) {
-  //   // if (courseState === this.courseCompleteState && this.content && this.configSvc.userProfile) {
-  //   let body = {
-  //     request: {
-  //       courseId: this.content.identifier,
-  //       batchId: batchId,
-  //       userIds: [
-  //         this.configSvc.userProfile.userId
-  //       ]
-  //     }
-  //   }
-  //   // this.contentSvc.issueCert(body).subscribe(resp => {
-  //   //   if (resp.responseCode === 'OK') {
-  //   this.checkIfCertIsReady(this.configSvc.userProfile.userId)
-
-  //   //   }
-  //   // })
-  //   // }
-  // }
-
   downloadCert(certidArr: any) {
     if (certidArr.length > 0) {
       const certId = certidArr[0].identifier
 
       this.contentSvc.downloadCert(certId).subscribe(response => {
         this.certData = response.result.printUri
-        // var win = window.open();
-        // win.document.write('<iframe src="' + url  +
-        // '" frameborder="0" style="border:0; top:0px;
-        // left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
-        // // const doc = new jsPDF();
-
-        // var str = doc.output(response.result.printUri);
-
-        // var iframe = "<iframe width='100%' height='100%' src='" + str + "'></iframe>"
-        // var x = window.open();
-        // x.document.open();
-        // x.document.write(iframe);
-        // x.document.close();
       })
     }
   }
@@ -1017,72 +961,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
   }
 
-  // createCertTemplate(batchId: string, courseId: string) {
-  //   let body = {
-  //     "request": {
-  //       "batch": {
-  //         "batchId": batchId,
-  //         "courseId": courseId,
-  //         "template": {
-  //           "template": "https://igot.blob.core.windows.net/content/content/
-  // do_113415159382810624195/artifact/do_113415159382810624195_1637592756199_certificate-shilpa-jain-with-text-2.svg",
-  //           "identifier": "do_113415159382810624195",
-  //           "previewUrl": "https://igot.blob.core.windows.net/content/
-  // content/do_113415159382810624195/artifact/do_113415159382810624195
-  // _1637592756199_certificate-shilpa-jain-with-text-2.svg",            "criteria": {
-  //             "enrollment": {
-  //               "status": 2
-  //             }
-  //           },
-  //           "name": "Completion Certificate",
-  //           "issuer": {
-  //             "name": "in",
-  //             "url": "https://diksha.gov.in/gj/"
-  //           },
-  //           "signatoryList": [
-  //             {
-  //               "image": "https://diksha.gov.in/gj/header-logo.png",
-  //               "name": "Govt Of India",
-  //               "id": "in",
-  //               "designation": "Home Minister"
-  //             }
-  //           ]
-  //         }
-  //       }
-  //     }
-
-  //   }
-  //   this.contentSvc.addCertTemplate(body).subscribe(resp => {
-  //     console.log(resp)
-  //   })
-  // }
-
-  // checkIfCertIsReady(userId: string | undefined) {
-  //   this.userSvc.fetchUserBatchList(userId).subscribe(
-  //     (courses: NsContent.ICourse[]) => {
-  //       let enrolledCourse: NsContent.ICourse | undefined
-  //       if (this.content && this.content.identifier && !this.forPreview) {
-  //         if (courses && courses.length) {
-  //           enrolledCourse = courses.find(course => {
-  //             const identifier = this.content && this.content.identifier || ''
-  //             if (course.courseId !== identifier) {
-  //               return undefined
-  //             }
-  //             return course
-  //           })
-  //         }
-  //         // If current course is present in the list of user enrolled course
-  //         if (enrolledCourse && enrolledCourse.batchId) {
-  //           this.downloadCert(enrolledCourse.issuedCertificates)
-  //         }
-  //       }
-  //     },
-  //     (error: any) => {
-  //       this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
-  //     },
-  //   )
-  // }
-
   public fetchBatchDetails() {
     if (this.content && this.content.identifier) {
       const req = {
@@ -1123,9 +1001,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
-    // this.route.data.subscribe(data => {
-    //   userId = data.profileData.data.userId
-    // })
+
     const req: NsContent.IContinueLearningDataReq = {
       request: {
         batchId,
@@ -1135,6 +1011,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         fields: ['progressdetails'],
       },
     }
+
     if (this.content && this.content.primaryCategory !== NsContent.EPrimaryCategory.RESOURCE) {
       this.contentSvc.fetchContentHistoryV2(req).subscribe(
         data => {
@@ -1164,22 +1041,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 })
               }
             }
-
-            // commenting this as the completion percentage value for course is fetched from enrolled courses API response
-            // const percentage = _.toInteger((_.sum(progress) / progress.length))
-            // if (this.content) {
-            //   _.set(this.content, 'completionPercentage', percentage)
-            // }
-
-            // _.set(this.content, 'progress', _.map(this.resumeData, _d => {
-            //   return {
-            //     progressStatus: _.get(_d, ''),
-            //     showMarkAsComplete: _.get(_d, ''),
-            //     markAsCompleteReason: _.get(_d, ''),
-            //     progressSupported: _.get(_d, ''),
-            //     progress: _.get(_d, '') || 0
-            //   }
-            // }))
             this.tocSvc.updateResumaData(this.resumeData)
           } else {
             this.resumeData = null
@@ -1221,11 +1082,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const competenciesArray = JSON.parse(competencies)
     const competencyStringArray: any[] = []
     competenciesArray.map((c: any) => {
-      // if (i < (competenciesArray.length -1)) {
-      //   competencyString.push(`${c.name}, `)
-      // } else {
-      //   competencyString.push(c.name)
-      // }
       competencyStringArray.push(c.name)
     })
     return competencyStringArray
@@ -1289,10 +1145,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return this.isResource && this.content && !this.content.artifactUrl.length
   }
 
-  // get showStart() {
-  //   return this.content && this.content.resourceType !== 'Certification'
-  // }
-
   get showActionButtons() {
     return (
       this.actionBtnStatus !== 'wait' &&
@@ -1315,9 +1167,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       !(this.content && this.content.contentType === 'Resource' && !this.content.artifactUrl)
     )
   }
+
   private getResumeDataFromList(type?: string) {
     if (!type) {
-      // const lastItem = this.resumeData && this.resumeData.pop()
       // tslint:disable-next-line:max-line-length
       const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
       return {
@@ -1344,36 +1196,25 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.content.totalRating = (this.content.totalRating as any)[this.configSvc.rootOrg || '']
     }
   }
+
   private getLearningUrls() {
     if (this.content) {
-      if (!this.forPreview) {
-        // this.progressSvc.getProgressFor(this.content.identifier).subscribe(data => {
-        //   this.contentProgress = data
-        // })
-      }
-      // this.progressSvc.fetchProgressHashContentsId({
-      //   "contentIds": [
-      //     "lex_29959473947367270000",
-      //     "lex_5501638797018560000"
-      //   ]
-      // }
-      // ).subscribe(data => {
-      //   console.log("DATA: ", data)
-      // })
       this.isPracticeVisible = Boolean(
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.PRACTICE),
       )
+
       this.isAssessVisible = Boolean(
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.ASSESS),
       )
-      const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
 
+      const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
       let primaryCategory
       if (this.content.secureSettings !== undefined) {
         primaryCategory = 'Learning Resource'
       } else {
         primaryCategory = firstPlayableContent.primaryCategory || this.content.primaryCategory
       }
+
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
         firstPlayableContent.mimeType,
@@ -1391,6 +1232,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     }
   }
+
   private assignPathAndUpdateBanner(url: string) {
     const path = url.split('/').pop()
     if (path && this.validPaths.has(path)) {
@@ -1398,6 +1240,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.updateBannerUrl()
     }
   }
+
   private updateBannerUrl() {
     if (this.banners) {
       this.bannerUrl = this.domSanitizer.bypassSecurityTrustStyle(
@@ -1405,6 +1248,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       )
     }
   }
+
   playIntroVideo() {
     if (this.content) {
       this.dialog.open(AppTocDialogIntroVideoComponent, {
@@ -1414,12 +1258,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       })
     }
   }
+
   get sanitizedIntroductoryVideoIcon() {
     if (this.content && this.content.introductoryVideoIcon) {
       return this.domSanitizer.bypassSecurityTrustStyle(`url(${this.content.introductoryVideoIcon})`)
     }
     return null
   }
+
   private fetchExternalContentAccess() {
     if (this.content && this.content.registrationUrl) {
       if (!this.forPreview) {
@@ -1441,6 +1287,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     }
   }
+
   getRatingIcon(ratingIndex: number): 'star' | 'star_border' | 'star_half' {
     if (this.content && this.content.averageRating) {
       const avgRating = this.content.averageRating
@@ -1503,6 +1350,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       return qParams
     }
+
     if (this.resumeDataLink && type === 'RESUME') {
       let qParams: { [key: string]: string } = {
         ...this.resumeDataLink.queryParams,
@@ -1545,11 +1393,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   openFeedbackDialog(content: any): void {
     const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
-      // height: '400px',
       width: '770px',
       data: { content, userId: this.userId, userRating: this.userRating },
     })
-    // dialogRef.componentInstance.xyz = this.configSvc
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.getUserRating(true)
@@ -1575,11 +1421,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     return ''
   }
+
   withdrawOrEnroll(data: string) {
     if (data === NsContent.WFBlendedProgramStatus.INITIATE) {
       this.fetchUserWFForBlended()
     }
   }
+
   getServerDateTime() {
     this.tocSvc.getServerDate().subscribe((response: any) => {
       if (response && response.systemDate) {
@@ -1596,6 +1444,35 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
-  // New design functionality...
+  handleCapitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
 
+  public handleParseJsonData(s: string) {
+    try {
+      const parsedString = JSON.parse(s)
+      return parsedString
+    } catch {
+      return []
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe()
+    }
+    if (this.batchSubscription) {
+      this.batchSubscription.unsubscribe()
+    }
+    if (this.batchDataSubscription) {
+      this.batchDataSubscription.unsubscribe()
+    }
+    this.tocSvc.analyticsFetchStatus = 'none'
+    if (this.routerParamSubscription) {
+      this.routerParamSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
+    }
+  }
 }
