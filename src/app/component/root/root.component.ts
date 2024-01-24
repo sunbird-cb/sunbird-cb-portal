@@ -315,7 +315,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   changeBg26Jan() {
-    this.backGroundTheme = this.configSvc.republicDayChanges
+    this.backGroundTheme = this.configSvc.overrideThemeChanges
     let docData:any = document.getElementById("app-bg")
     if(this.backGroundTheme && this.backGroundTheme.isEnabled) {
       docData.classList.add("jan-bg-change")
@@ -325,7 +325,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   removeBg26Jan() {
-    this.backGroundTheme = this.configSvc.republicDayChanges
+    this.backGroundTheme = this.configSvc.overrideThemeChanges
     let docData:any = document.getElementById("app-bg")
     docData.classList.remove("jan-bg-change")
   }

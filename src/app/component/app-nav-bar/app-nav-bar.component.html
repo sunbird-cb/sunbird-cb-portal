@@ -1,30 +1,30 @@
 <ng-container *ngIf="fullMenuDispaly">
-  
+
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile">
-    
-     
-    
+
+
+
     <div class="fix-ww" id="root-tool-bar">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim  items-center hidden md:flex" role="link" title="Home"
           i18n-aria-title i18n-aria-label>
           <ng-container *ngIf="jan26Data && jan26Data.isEnabled; else normalLogo">
             <div *ngIf="janDataEnable; else janDataDisabled" class="logo-box flex items-center">
-              <img  [src]="jan26Data.republicDayDesktopChanges.logoUrl" alt="Application Logo" class="app-logo-new" />
-       
-              <span class="mat-subheading-2 ws-mat-default-text logo-text margin-left-xs"> {{ jan26Data.republicDayDesktopChanges.logoText}}</span>
+              <img  [src]="jan26Data.desktop.logoUrl" alt="Application Logo" class="app-logo-new" />
+
+              <span class="mat-subheading-2 ws-mat-default-text logo-text margin-left-xs"> {{ jan26Data.desktop.logoText}}</span>
             </div>
             <ng-template #janDataDisabled>
               <img [src]="appIcon"  alt="Application Logo" class="app-logo" />
             </ng-template>
-            
+
           </ng-container>
           <ng-template #normalLogo>
             <img [src]="appIcon"  alt="Application Logo" class="app-logo" />
           </ng-template>
-          
+
         </a>
         <div  class="md:hidden sm:flex" >
           <ng-container [ngTemplateOutlet]="karmaBadge">
@@ -78,7 +78,7 @@
         </ng-container>
 
       </ng-container>
-      
+
       <!-- <div class="flex justify-between items-center w-full" *ngIf="mode === 'bottom' && !isLoggedIn">
 
       </div> -->
@@ -90,7 +90,7 @@
     </ng-container>
   </div> -->
   </mat-toolbar>
-  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode === 'bottom'" 
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode === 'bottom'"
   [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
   class="mat-elevation-z3 custom mobile-footer-fixed-nav"
   >

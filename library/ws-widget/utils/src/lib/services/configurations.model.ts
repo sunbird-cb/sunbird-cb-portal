@@ -38,7 +38,7 @@ export namespace NsInstanceConfig {
     mailIds: IMailIds
     details: IDetails
     validMailIdExtensionsForMailMe: string[]
-    republicDayChanges: IRepublicDayChanges
+    overrideThemeChanges: IOverrideThemeChanges
     defaultFeatureConfigs: {
       error: string
     }
@@ -144,19 +144,19 @@ export namespace NsInstanceConfig {
     primary: string
     warn: string
   }
-  export interface IRepublicDayChanges {
+  export interface IOverrideThemeChanges {
     isEnabled: boolean
-    republicDayDesktopChanges: IRepublicDayDesktopChanges
-    republicDayMobChanges: IRepublicDayMobChanges
+    desktop: IDesktop
+    mWeb: IMWeb
   }
-  export interface IRepublicDayDesktopChanges {
+  export interface IDesktop {
     animationDuration: number
     logoUrl: string
     logoText: string
     logoDisplayTime: number
     backgroundTheme: string
   }
-  export interface IRepublicDayMobChanges {
+  export interface IMWeb {
     logoUrl: string
     logoText: string
   }

@@ -60,7 +60,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
     private router: Router
-    
+
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -79,15 +79,15 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.configSvc) {
-      this.jan26Data = this.configSvc.republicDayChanges
-      this.logoDisplayTime = this.jan26Data.republicDayDesktopChanges.logoDisplayTime
+      this.jan26Data = this.configSvc.overrideThemeChanges
+      this.logoDisplayTime = this.jan26Data.desktop.logoDisplayTime
       this.displayLogo()
-      setInterval(() => { 
+      setInterval(() => {
         this.janDataEnable = true;
         this.displayLogo()
-       }, this.logoDisplayTime); 
+       }, this.logoDisplayTime);
     }
-    
+
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -98,7 +98,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             let route = localStorage.getItem("activeRoute");
             this.activeRoute = route ? route.toLowerCase().toString() : '';
           }
-          
+
           if (event.url.includes('/page/home')) {
             this.activeRoute = 'home'
           } else if (event.url.includes('/page/explore')) {
@@ -109,7 +109,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             this.activeRoute = 'Career'
           } else if (event.url.includes('app/seeAll?key=continueLearning')) {
             this.activeRoute = 'my learnings'
-          } 
+          }
       }
     })
 
@@ -120,7 +120,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
       )
-     
+
       this.appIconSecondary = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.appSecondary,
       )
@@ -153,8 +153,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   displayLogo() {
-    const animationDur = this.jan26Data.republicDayDesktopChanges.animationDuration
-    setTimeout(() =>{  
+    const animationDur = this.jan26Data.desktop.animationDuration
+    setTimeout(() =>{
       this.janDataEnable = false;
     }, animationDur);
   }
@@ -293,5 +293,5 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       clearInterval(this.enrollInterval)
     }
   }
- 
+
 }

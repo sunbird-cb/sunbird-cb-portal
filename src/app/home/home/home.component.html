@@ -2,31 +2,31 @@
     [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
     <ng-container *ngIf="!homeConfig?.insightOnRight?.active">
         <div class="bg-info" [ngClass]="
-        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' :
         (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''"
             *ngIf="homeConfig?.leftSection?.active">
             <ng-container *ngIf="jan26Change && jan26Change.isEnabled">
                 <div class="mob-logo items-center justify-center">
-                    <img [src]="jan26Change?.republicDayMobChanges?.logoUrl" alt="Application Logo" class="app-logo" />
+                    <img [src]="jan26Change?.mWeb?.logoUrl" alt="Application Logo" class="app-logo" />
                     <span class="mat-subheading-2 ws-mat-default-text margin-left-xs logo-text"> {{
-                        jan26Change?.republicDayMobChanges?.logoText}}</span>
+                        jan26Change?.mWeb?.logoText}}</span>
                 </div>
             </ng-container>
             <ws-in-sight-side-bar></ws-in-sight-side-bar>
         </div>
 
         <div class="bg-primary" [ngClass]="
-        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' :
         (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''"
             *ngIf="homeConfig?.rightSection?.active">
             <div class="flex flex-col gap-4 mt-8">
                 <!-- <div class="home-container mt-8">
                     <div class="flex flex-1">
                         <p class="mat-subheading-1 inline-block flex gap-2 items-center feed-title cursor-pointer" [routerLink]="'/page/learn'">
-                            Go to learn hub 
+                            Go to learn hub
                             <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon" [color]="'accent'">navigate_next</mat-icon>
                         </p>
-                    </div>                    
+                    </div>
                 </div> -->
                 <ng-container *ngIf="enableLazyLoadingFlag">
                     <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
@@ -98,17 +98,17 @@
 
     <ng-container *ngIf="homeConfig?.insightOnRight?.active">
         <div class="bg-primary" [ngClass]="
-        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' : 
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' :
         (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''"
             *ngIf="homeConfig?.rightSection?.active">
             <div class="flex flex-col gap-3 mt-8">
                 <!-- <div class="home-container mt-8">
                     <div class="flex flex-1 cursor-pointer" [routerLink]="'/page/learn'">
                         <p class="mat-subheading-1 inline-block flex gap-2 items-center feed-title">
-                            Go to learn hub 
+                            Go to learn hub
                             <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon" [color]="'accent'">navigate_next</mat-icon>
                         </p>
-                    </div>                    
+                    </div>
                 </div> -->
                 <ng-container *ngIf="enableLazyLoadingFlag">
                     <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
@@ -178,7 +178,7 @@
         </div>
 
         <div class="bg-info" [ngClass]="
-        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' : 
+        homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' :
         (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''"
             *ngIf="homeConfig?.leftSection?.active">
             <ws-in-sight-side-bar></ws-in-sight-side-bar>
