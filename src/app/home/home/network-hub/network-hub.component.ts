@@ -4,7 +4,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material';
 
 import { HomePageService } from 'src/app/services/home-page.service';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ws-network-hub',

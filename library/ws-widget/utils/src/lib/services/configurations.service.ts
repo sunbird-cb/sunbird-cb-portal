@@ -5,7 +5,6 @@ import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs'
 import { NsPage } from '../resolvers/page.model'
 import { NsAppsConfig, NsInstanceConfig, NsUser } from './configurations.model'
 import { IPortalUrls, IUserPreference } from './user-preference.model'
-import { TranslateService } from '@ngx-translate/core'
 
 // const instanceConfigPath: string | null = window.location.host
 // const locationHost: string | null = window.location.host
@@ -18,9 +17,8 @@ import { TranslateService } from '@ngx-translate/core'
   providedIn: 'root',
 })
 export class ConfigurationsService {
-  selectedLang: string = ''
   // update as the single source of truth
-  constructor(private translate: TranslateService) {
+  constructor() {
     // @Inject('env') env: any
     // if (!env.production && Boolean(env.sitePath)) {
     //   locationHost = env.sitePath
@@ -73,10 +71,6 @@ export class ConfigurationsService {
   updateTourGuide = new BehaviorSubject(true)
   updateTourGuideObservable = this.updateTourGuide.asObservable()
 
-  // website lang change
-  languageSelected = new BehaviorSubject(true);
-  languageSelectedObservable = this.languageSelected.asObservable();
-
   // platform rating
   updatePlatformRating = new BehaviorSubject({ bottom: '120px' })
   updatePlatformRatingObservable$ = this.updatePlatformRating.asObservable()
@@ -123,18 +117,5 @@ export class ConfigurationsService {
 
   updatePlatformRatingMethod(state: any) {
     this.updatePlatformRating.next(state)
-  }
-
-  updatelanguageSelected(state: any) {
-    this.languageSelected.next(state)
-    if (localStorage.getItem('websiteLanguage')) {
-      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
-      this.translate.use(lang)
-      this.selectedLang = lang
-    }
-  }
-  getSelectedLanguage() {
-    return this.selectedLang
   }
 }

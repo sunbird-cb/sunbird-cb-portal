@@ -145,13 +145,11 @@ export class InitService {
     // setLang
     this.translate.addLangs(['en', 'hi', 'ta'])
     if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
+      // this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
       lang = lang.replace(/\"/g, "")
       console.log(lang)
       this.translate.use(lang)
-      if (lang == 'en') {
-      }
     } else {
       this.translate.setDefaultLang('en')
       localStorage.setItem('websiteLanguage', 'en')

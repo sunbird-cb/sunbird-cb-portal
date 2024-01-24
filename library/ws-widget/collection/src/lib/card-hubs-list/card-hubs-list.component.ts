@@ -2,13 +2,12 @@ import { trigger, transition, style, animate } from '@angular/animations'
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router, NavigationEnd } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
 // tslint:disable
 import _ from 'lodash'
-import { TranslateService } from '@ngx-translate/core'
 // tslint:enable
 // import { AccessControlService } from '@ws/author/src/public-api'
 
@@ -63,7 +62,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private valueSvc: ValueService,
-    private translate: TranslateService
+    private langtranslations: MultilingualTranslationsService,
     // private accessService: AccessControlService
   ) {
     super()
@@ -240,13 +239,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
     return value
   }
 
-  translateLabels(label: string, type: any, subtype: any) {
-    label = label.replace(/\s/g, "")
-    if(subtype) {
-      const translationKey = type + '.' +  label + subtype
-      return this.translate.instant(translationKey);
-    }
-    const translationKey = type + '.' +  label
-    return this.translate.instant(translationKey);
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }
