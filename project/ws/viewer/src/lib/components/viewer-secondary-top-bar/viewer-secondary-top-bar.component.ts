@@ -4,19 +4,19 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 // import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, LoggerService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
-import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
-  selector: 'viewer-viewer-top-bar',
-  templateUrl: './viewer-top-bar.component.html',
-  styleUrls: ['./viewer-top-bar.component.scss'],
+  selector: 'viewer-viewer-secondary-top-bar',
+  templateUrl: './viewer-secondary-top-bar.component.html',
+  styleUrls: ['./viewer-secondary-top-bar.component.scss']
 })
-export class ViewerTopBarComponent implements OnInit, OnDestroy {
+export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
+
   @Input() frameReference: any
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
@@ -49,9 +49,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   userid: any
   channelId: any
   optionalLink = false
-  userRating: any
-  userId: any
-  currentDataFromEnrollList: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -64,8 +61,6 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private router: Router,
     private widgetServ: WidgetContentService,
     private viewerSvc: ViewerUtilService,
-    private ratingSvc: RatingService,
-    private loggerSvc: LoggerService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -141,7 +136,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
           fragment: '',
         }
-        if (data.nextResource.optionalReading &&  data.nextResource.primaryCategory === 'Learning Resource') {
+        if (data.nextResource.optionalReading && data.nextResource.primaryCategory === 'Learning Resource') {
           this.updateProgress(2, data.nextResource.identifier)
         }
       } else {
@@ -155,11 +150,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     })
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId') as string
-      this.collectionType = params.get('collectionType') as string
       this.isPreview = params.get('preview') === 'true' ? true : false
-      const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
-      this.currentDataFromEnrollList =  enrollList[this.collectionId]
-      this.getUserRating(false)
     })
 
     this.viewerDataServiceResourceSubscription = this.viewerDataSvc.changedSubject.subscribe(
@@ -246,7 +237,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           userId = this.configSvc.userProfile.userId || ''
           this.userid = this.configSvc.userProfile.userId || ''
         }
-        const req  = {
+        const req = {
           request: {
             userId,
             batchId: this.batchId,
@@ -256,78 +247,38 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
           },
         }
         this.widgetServ.fetchContentHistoryV2(req).subscribe(
-          (data:  any) => {
+          (data: any) => {
 
-          this.contentProgressHash = data.result.contentList
+            this.contentProgressHash = data.result.contentList
 
-          if (this.leafNodesCount === this.contentProgressHash.length) {
-            const ipStatusCount = this.contentProgressHash.filter((item: any) => item.status === 1)
+            if (this.leafNodesCount === this.contentProgressHash.length) {
+              const ipStatusCount = this.contentProgressHash.filter((item: any) => item.status === 1)
 
-            if (ipStatusCount.length === 0) {
-              const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
-                autoFocus: false,
-                data: {
-                  courseName: this.activatedRoute.snapshot.queryParams.courseName,
-                  userId: this.userid,
-                  identifier: this.identifier,
-                  primaryCategory: this.collectionType,
-                },
-              })
-              dialogRef.afterClosed().subscribe(result => {
-                if (result === true) {
-                  this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
-                }
-              })
+              if (ipStatusCount.length === 0) {
+                const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+                  autoFocus: false,
+                  data: {
+                    courseName: this.activatedRoute.snapshot.queryParams.courseName,
+                    userId: this.userid,
+                    identifier: this.identifier,
+                    primaryCategory: this.collectionType,
+                  },
+                })
+                dialogRef.afterClosed().subscribe(result => {
+                  if (result === true) {
+                    this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                  }
+                })
+              } else {
+                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+              }
             } else {
               this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
             }
-          } else {
-            this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
-          }
-        })
+          })
       }
     } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
-  }
-
-  getUserRating(fireUpdate: boolean) {
-    if (this.configSvc.userProfile) {
-      this.userId = this.configSvc.userProfile.userId || ''
-    }
-    if (this.collectionId && this.collectionType) {
-      this.ratingSvc.getRating(this.collectionId, this.collectionType, this.userId).subscribe(
-        (res: any) => {
-          if (res && res.result && res.result.response) {
-            this.userRating = res.result.response
-            if (fireUpdate) {
-              // this.tocSvc.changeUpdateReviews(true)
-            }
-          }
-        },
-        (err: any) => {
-          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
-        }
-      )
-    }
-  }
-
-  openFeedbackDialog(contentP: any): void {
-    const contentTmp = {
-      identifier: this.collectionId,
-      primaryCategory: this.collectionType,
-    }
-    const content = contentP ? contentP : contentTmp
-    const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
-      // height: '400px',
-      width: '770px',
-      data: { content, userId: this.userId, userRating: this.userRating },
-    })
-    // dialogRef.componentInstance.xyz = this.configSvc
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        this.getUserRating(false)
-      }
-    })
   }
 }

@@ -1,0 +1,93 @@
+<div class="py-6">
+    <div class="main-container flex flex-col gap-4">
+        <ng-container *ngIf="content?.children?.length; else noChildren">
+            <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let card of content?.children; trackBy: contentTrackBy">
+                <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchId]="batchId"
+                  [rootContentType]="contextPath" [content]="card"></ws-widget-app-toc-content-card-v2>
+                  <mat-accordion class="content-accordion">
+                    <mat-expansion-panel class="content-panel">
+                        <mat-expansion-panel-header class="content-header">
+                            <mat-panel-description>
+                                <div class="flex flex-col gap-2">
+                                    <div class="text-base font-bold">Overview of Administrative law</div>
+                                    <div class="flex flex-row gap-3 items-center content-key-values">
+                                        <mat-icon>video_library</mat-icon>
+                                        <div class="text-xs">11h 30m</div>
+                                        <div class="flex items-center">
+                                            <span class="period"></span>
+                                        </div>
+                                        <div class="text-xs">3 modules</div>
+                                        <div class="flex items-center">
+                                            <span class="period"></span>
+                                        </div>
+                                        <div class="text-xs">14 items</div>
+                                    </div>
+                                </div>
+                            </mat-panel-description>
+                            <div class="flex flex-row">
+                                <mat-icon class="mat-panel-indicator">arrow_drop_down</mat-icon>
+                                <mat-icon class="mat-panel-indicator hidden">arrow_drop_up</mat-icon>
+                            </div>
+                        </mat-expansion-panel-header>
+                        
+                        <mat-accordion class="content-accordion">
+                            <mat-expansion-panel class="content-panel">
+                                <mat-expansion-panel-header class="content-header">
+                                    <mat-panel-description>
+                                        <div class="flex flex-col gap-2">
+                                            <div class="text-base font-bold">1. Basics of Cleaning MIS Data</div>
+                                            <div class="flex flex-row gap-3 items-center content-key-values">
+                                                <mat-icon>overview_key</mat-icon>
+                                                <div class="text-xs">1h 32m</div>
+                                                <div class="flex items-center">
+                                                    <span class="period"></span>
+                                                </div>
+                                                <div class="text-xs">3 items</div>
+                                            </div>
+                                        </div>
+                                    </mat-panel-description>
+                                    <div class="flex flex-row">
+                                        <mat-icon class="mat-panel-indicator">add</mat-icon>
+                                        <mat-icon class="mat-panel-indicator hidden">remove</mat-icon>
+                                    </div>
+                                </mat-expansion-panel-header>
+                                <div class="flex flex-col gap-4 px-4">
+                                    <div class="flex flex-col gap-2">
+                                        <div class="font-bold">Basics of cleaning MIS data</div>
+                                        <div class="flex flex-row gap-3 items-center">
+                                            <img src="/assets/icons/content/grey/video.svg" alt="video icon" />
+                                            <!-- <mat-icon>play_circle</mat-icon> -->
+                                            <div class="text-sm">1h</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <div class="font-bold">Basics of cleaning MIS data</div>
+                                        <div class="flex flex-row gap-3 items-center">
+                                            <img src="/assets/icons/content/grey/pdf.svg" alt="pdf icon" />
+                                            <div class="text-sm">3m</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <div class="font-bold">Basics of cleaning MIS data</div>
+                                        <div class="flex flex-row gap-3 items-center">
+                                            <img src="/assets/icons/content/grey/assessment.svg" alt="assessment icon" />
+                                            <div class="text-sm">20 questions</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+        </ng-container>
+        <ng-template #noChildren>
+            <div *ngIf="!isPlayable"
+                class="ws-mat-primary-default-text ws-mat-primary-lite-background px-6 py-8 font-normal text-base noChildren"
+                i18n>
+                The preview for this type of content is unavailable. Please click on Start button above to view.
+            </div>
+            <!-- <ng-container *ngIf="isPlayable" [wsResolverWidget]="contentPlayWidgetConfig"></ng-container> -->
+        </ng-template>
+    </div>
+</div>

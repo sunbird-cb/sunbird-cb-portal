@@ -1,6 +1,128 @@
 @import 'ws-mixins';
 @import 'ws-vars';
 
+
+// New TOC page css...
+.toc-banner {
+  background: rgb(58, 131, 207);
+  background: linear-gradient(135deg, rgba(58, 131, 207, 1) 0%, rgba(27, 76, 161, 1) 100%);
+  width: 100%;
+
+  .banner-details {
+    padding: 36px 16px;
+
+    .tag-div {
+      border: 1px solid $colorOrange;
+      background-color: rgba($color: #000000, $alpha: 0.5);
+
+      mat-icon {
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+      }
+    }
+  
+    .rating-chip {
+      border: 1px solid rgba($color: #000000, $alpha: 0.6);
+      border-radius: 20px;
+      background-color: rgba($color: #000000, $alpha: 0.6);
+
+      mat-icon {
+        width: 16px;
+        height: 16px;
+        color: $colorOrange;
+        font-size: 16px;
+      }
+
+      .separator {
+        width: 1px;
+        height: 20px;
+        border-right: 1px solid rgba($color: #FFF, $alpha: 0.16);
+        margin: 0 8px;
+      }
+    }
+
+    .banner-text {
+      color: rgba(255, 255, 255, 0.95);
+      line-height: 3rem;
+    }
+  }
+
+  .info-div {
+    max-width: 384px;
+    width: 100%;
+  }
+}
+
+.fixed-width {
+  max-width: $new-max-width;
+  display: block;
+  margin: 0 auto;
+  padding: 0 !important;
+
+  @include breakpoint-s {
+    padding: 0 8px !important;
+  }
+
+  @include breakpoint-xs {
+    padding: 0 8px !important;
+  }
+
+  @include breakpoint-m {
+    padding: 0 8px !important;
+  }
+}
+
+.mat-subheading-1 {
+  margin-bottom: 4px !important;
+}
+
+.initial-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1B2133;
+  color: #FFF;
+  text-transform: uppercase;
+}
+
+.toc-content {
+  max-width: 792px;
+  width: 100%;
+}
+
+.right-container {
+
+  .right-content {
+    background-color: #FFF;
+    border-radius: 12px;
+  }
+
+  .font-14 {
+    font-size: 14px;
+  }
+
+  .enroll-div {
+    max-width: 384px;
+    width: 100%;
+    border-bottom: 1px solid rgba($color: #000, $alpha: 0.2);
+  
+    .slider-div {
+      background-color: #FEF7ED;
+      border: none;
+      border-radius: 8px;
+      padding: 8px;
+    }
+  
+    .kpi-values {
+      width: 60px;
+      padding: 8px;
+      text-align: center;
+    }
+  }
+}
+// New TOC page css...
+
 %container-padding {
   padding: $size-xl 2 * $size-xl;
 
@@ -16,23 +138,6 @@
   //   border-radius: 4px;
   // color: #fff!important;
   width: 100%;
-}
-.fixed-width {
-  max-width: $max-width;
-  display: block;
-  margin: 0 auto;
-  padding: 0 !important;
-
-  @include breakpoint-s {
-    padding: 0 8px !important;
-  }
-
-  @include breakpoint-xs {
-    padding: 0 8px !important;
-  }
-  @include breakpoint-m {
-    padding: 0 8px !important;
-  }
 }
 
 .fluid-width {
