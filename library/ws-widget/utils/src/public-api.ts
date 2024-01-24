@@ -98,6 +98,7 @@ export * from './lib/services/user-preference.model'
 export * from './lib/services/user-preference.service'
 export * from './lib/services/utility.service'
 export * from './lib/services/value.service'
+export * from './lib/services/multilingual-translations.service'
 
 export * from './lib/services/widget-content.service'
 export * from './lib/services/subapplication-respond.service'

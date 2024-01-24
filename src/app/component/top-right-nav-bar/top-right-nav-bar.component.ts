@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { TranslateService } from '@ngx-translate/core';
 import { HomePageService } from '../../services/home-page.service';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api';
 const rightNavConfig = [
   {
     "id":1,
@@ -51,7 +51,7 @@ export class TopRightNavBarComponent implements OnInit {
     },
   ]
   constructor(public dialog: MatDialog, public homePageService: HomePageService, 
-    private configSvc: ConfigurationsService, private translate: TranslateService) { 
+    private langtranslations: MultilingualTranslationsService, private translate: TranslateService) { 
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
@@ -92,10 +92,6 @@ export class TopRightNavBarComponent implements OnInit {
   selectLanguage(event: any) {
     this.selectedLanguage = event.target.value
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
-    this.configSvc.updatelanguageSelected(true)
-
-    // this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-    //   console.log('onLangChange', event);
-    // });
+    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage)
   }
 }

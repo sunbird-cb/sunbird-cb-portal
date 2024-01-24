@@ -61,6 +61,7 @@ import {
   PipeFilterV3Module,
   PipeRelativeTimeModule,
   PipePublicURLModule,
+  MultilingualTranslationsService,
 } from '@sunbird-cb/utils'
 import {
   BtnCallModule,
@@ -260,8 +261,9 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     AccessControlService,
     ProfileResolverService,
     ActionService,
+    MultilingualTranslationsService,
   ],
-  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent],
+  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent, TranslateModule],
   entryComponents: [
     AppTocDialogIntroVideoComponent,
     AppTocOverviewComponent,

@@ -9,7 +9,7 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, LoggerService, MultilingualTranslationsService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -165,6 +165,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   courseID: any
   isClaimed = false
   monthlyCapExceed = false
+  isCompletedThisMonth = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -195,6 +196,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private ratingSvc: RatingService,
     private telemertyService: TelemetryService,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     private events: EventService,
   ) {
     this.historyData = history.state
@@ -206,7 +208,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.translate.use(lang)
     }
   }
-
   ngOnInit() {
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -334,7 +335,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
-
   }
 
   getKarmapointsLimit() {
@@ -346,6 +346,20 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       }
     })
+  }
+
+  isCourseCompletedOnThisMonth() {
+    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+    const now = moment(this.serverDate).format('YYYY-MM-DD')
+    if (this.content) {
+      const courseData = enrollList[this.content.identifier]
+      if (courseData && courseData.completionPercentage === 100 && courseData.completedOn) {
+        const completedOn = moment(courseData.completedOn).format('YYYY-MM-DD')
+        const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
+        const currentMonth = moment(now, 'YYYY-MM-DD').month()
+        this.isCompletedThisMonth = completedMonth === currentMonth
+      }
+    }
   }
 
   filteredAcbpList(res: any) {
@@ -823,6 +837,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.enrollBtnLoading = false
           }
         }
+        this.isCourseCompletedOnThisMonth()
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
@@ -1588,8 +1603,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   translateLabels(label: string, type: any) {
-    label = _.camelCase(label.replace(/\s/g, ""))
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }
