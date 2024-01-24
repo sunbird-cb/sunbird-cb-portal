@@ -52,7 +52,7 @@
 
     .banner-text {
       color: rgba(255, 255, 255, 0.95);
-      line-height: 3rem;
+      // line-height: 3rem;
     }
   }
 
@@ -73,14 +73,14 @@
   max-width: $new-max-width;
   display: block;
   margin: 0 auto;
-  padding: 0 !important;
+  padding: 0;
 
   @include breakpoint-s {
-    padding: 0 8px !important;
+    padding: 0 16px;
   }
 
   @include breakpoint-xs {
-    padding: 0 8px !important;
+    padding: 0 16px;
   }
 
   @include breakpoint-m {
@@ -149,10 +149,6 @@
     top: 132px;
   }
 
-  .font-14 {
-    font-size: 14px;
-  }
-
   .enroll-div {
     max-width: 384px;
     width: 100%;
@@ -170,6 +166,12 @@
       padding: 8px;
       text-align: center;
     }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .right-container {
+    display: none;
   }
 }
 // New TOC page css...
