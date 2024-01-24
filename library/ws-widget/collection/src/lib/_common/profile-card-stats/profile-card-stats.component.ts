@@ -59,9 +59,9 @@ export class ProfileCardStatsComponent implements OnInit {
         this.republicDayData['info'] = defaultData['info'][rand]
         this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
         this.republicDayData['textColor'] = defaultData['textColor']
-        let userName = this.userInfo.firstName;
-        if(userName.length > 18) {
-          userName = this.userInfo.firstName.splice(0,18)+'...'
+        let userName = this.userInfo.firstName
+        if (userName.length > 18) {
+          userName = `${this.userInfo.firstName.splice(0, 18)}...`
         }
         this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
         this.showrepublicBanner = true
@@ -74,9 +74,9 @@ export class ProfileCardStatsComponent implements OnInit {
           this.republicDayData['backgroupImage'] = data.backgroupImage
           this.republicDayData['info'] = data['info'][rand]
           this.republicDayData['centerImage'] = data['centerImage'][rand]
-          let userName = this.userInfo.firstName;
-          if(userName.length > 18) {
-            userName = this.userInfo.firstName.splice(0,18)+'...'
+          let userName = this.userInfo.firstName
+          if (userName.length > 18) {
+            userName = `${this.userInfo.firstName.splice(0, 18)}...`
           }
           this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
           this.republicDayData['textColor'] = data['textColor']
