@@ -12,7 +12,7 @@
   z-index: 100;
 }
 .republic-details {
-  padding-top: 20px;
+  // padding-top: 20px;
   position: relative;
   text-align: center;
   .image {
@@ -80,11 +80,11 @@
     background-color: #ffff;
     // height: 200px;
     border-radius: 12px;
-    padding: 16px;
+    // padding: 16px;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.08);
     margin-top: 32px;
-    z-index: 11;
+    z-index: 10;
     box-sizing: border-box;
 
     @include breakpoint-xs {
@@ -210,7 +210,9 @@
     border: 1px solid rgba(0,0,0, 0.08);
 }
 
+
 .profile-user-stats {
+  padding: 16px;
     .user-data-list {
         padding: 8px;
         flex-wrap: wrap;
@@ -362,3 +364,67 @@
 //   50% { opacity: 1; }
 // }
 
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
+}
+
+.fade-out {
+	opacity: 1;
+	animation-name: fadeOutOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-duration: 2s;
+}
+
+@keyframes fadeOutOpacity {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.default-profile {
+  z-index: 11;
+  opacity: 1;
+}
+
+.default-public-banner {
+  z-index: 11;
+  height:285px;
+  opacity: 1;
+}
+
+.hide-default-public-banner {
+  opacity: 0;
+  z-index: 10;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.padding-16 {
+  padding:12px
+}
+
+.backgroud-image {
+  transform: scaleY(1.15);
+  transform-origin: top;
+}
