@@ -56,7 +56,7 @@ export class ConfigurationsService {
   isNewUser = false
   portalUrls: IPortalUrls | undefined
   positions: any
-  republicDayChanges: any
+  overrideThemeChanges: any
   profileTimelyNudges: any
 
   // pinnedApps

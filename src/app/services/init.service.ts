@@ -314,7 +314,7 @@ export class InitService {
     const publicConfig: NsInstanceConfig.IConfig = await this.http
       .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/theme-override-config.json`)
       .toPromise()
-      this.configSvc.republicDayChanges = publicConfig.republicDayChanges
+      this.configSvc.overrideThemeChanges = publicConfig.overrideThemeChanges
     return publicConfig
   }
 
