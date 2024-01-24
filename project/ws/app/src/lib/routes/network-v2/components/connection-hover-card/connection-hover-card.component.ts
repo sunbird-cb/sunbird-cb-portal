@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core'
 // import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { ActivatedRoute, Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 import { NsUser } from '@sunbird-cb/utils'
 // import { ConnectionHoverService } from './connection-hover.servive'
 // import { NSProfileDataV2 } from '../../../profile-v2/models/profile-v2.model'
@@ -22,6 +23,7 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
+    private translate: TranslateService
     // private connectionHoverService: ConnectionHoverService,
   ) {
     if (this.activeRoute.parent) {
@@ -30,6 +32,12 @@ export class ConnectionHoverCardComponent implements OnInit, AfterViewInit {
     // this.connectionHoverService.fetchProfile(this.userId).subscribe((fp: NSProfileDataV2.IProfile) => {
     //   this.hoverUser = fp
     // })
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
