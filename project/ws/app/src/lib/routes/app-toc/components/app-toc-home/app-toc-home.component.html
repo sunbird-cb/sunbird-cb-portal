@@ -74,28 +74,31 @@
             <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
             <div class="text-xs">By completing this course earn 10 more Karma Points</div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <div class="flex flex-col kpi-values items-center gap-2 ">
-              <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-              <div class="text-xs">3h 30m</div>
+          <ng-container *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
+            <div class="flex flex-wrap gap-2">
+              <div class="flex flex-col kpi-values items-center gap-2 ">
+                <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
+                <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' : 'Course' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-3">
+                <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+                <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ? 'Modules' : 'Module' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+                <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+                <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+                <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
+                'Final assessments' : 'Final assessment' }} </div>
+              </div>
             </div>
-            <div class="flex flex-col kpi-values items-center gap-3">
-              <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
-              <div class="text-xs">4 modules</div>
-            </div>
-            <div class="flex flex-col kpi-values items-center gap-2">
-              <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
-              <div class="text-xs">12 videos</div>
-            </div>
-            <div class="flex flex-col kpi-values items-center gap-2">
-              <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-              <div class="text-xs">12 PDF's</div>
-            </div>
-            <div class="flex flex-col kpi-values items-center gap-2">
-              <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-              <div class="text-xs">1 Final assessment</div>
-            </div>
-          </div>
+          </ng-container>
         </div>
       </div>
 
@@ -122,7 +125,7 @@
                 [name]="creator?.name">
               </ws-widget-avatar-photo>
             </div>
-            <div class="flex flex-col gap-1">
+            <div class="flex flex-col gap-1 justify-center">
               <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
               <div class="text-xs leading-3">Curator</div>
             </div>

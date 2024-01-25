@@ -117,3 +117,19 @@ $title-line-count: 3;
     white-space: nowrap; /* Prevent wrapping of content */
     overflow-y: hidden;
 }
+
+::ng-deep .ratings-modal-box {
+    max-width: 880px !important;
+    width: 100% !important;
+
+    .mat-dialog-container {
+        padding: 0px;
+        border-radius: 12px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    ::ng-deep .ratings-modal-box {
+        max-width: 90vw !important;
+    }
+}

@@ -2,21 +2,21 @@
     <div class="flex flex-col">
         <div class="mat-subheading-1">Summary</div>
         <div [ngClass]="{'desc-ellipsis': summaryEllipsis}">
-            {{ bindingData?.description }}
-            <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
-                (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span>
+            {{ content?.description }}
+            <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
+                (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span> -->
         </div>
-        <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="summaryEllipsis" (click)="summaryEllipsis = !summaryEllipsis">view more</div>
+        <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="summaryEllipsis" (click)="summaryEllipsis = !summaryEllipsis">view more</div> -->
     </div>
 
     <div class="flex flex-col">
         <div class="mat-subheading-1">Description</div>
         <div [ngClass]="{'desc-ellipsis': descEllipsis}">
-            <span [innerHTML]="bindingData?.instructions"></span>
-            <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!descEllipsis"
-                (click)="descEllipsis = !descEllipsis">&nbsp;view less</span>
+            <span [innerHTML]="content?.instructions"></span>
+            <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!descEllipsis"
+                (click)="descEllipsis = !descEllipsis">&nbsp;view less</span> -->
         </div>
-        <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="descEllipsis" (click)="descEllipsis = !descEllipsis" >view more</div>
+        <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="descEllipsis" (click)="descEllipsis = !descEllipsis" >view more</div> -->
     </div>
 
     <div class="flex flex-col gap-3">
@@ -115,7 +115,7 @@
     <div class="flex flex-col gap-3">
         <div class="text-base font-bold">Authors and curators</div>
         <div class="flex flex-col gap-4">
-            <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(bindingData?.creatorDetails)">
+            <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
                 <div class="flex items-center justify-center">
                     <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'"
                         [photoUrl]="author.photo || ''" [name]="author.name">
@@ -127,13 +127,13 @@
                 </div>
             </div>
 
-            <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(bindingData?.creatorContacts)">
+            <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
                 <div class="flex items-center justify-center">
                     <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="creator.photo || ''"
                         [name]="creator.name">
                     </ws-widget-avatar-photo>
                 </div>
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1 justify-center">
                     <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
                     <div class="text-xs leading-3">Curator</div>
                 </div>
@@ -147,14 +147,13 @@
         <div class="flex flex-col gap-3">
             <div class="flex flex-row gap-4">
                 <div class="flex-1 mat-subheading-1">Top reviews</div>
-                <div class="ws-mat-default-text">Show all</div>
+                <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
             </div>
             <div class="flex flex-wrap gap-5">
                 <div class="comment-div" *ngFor="let i of [1, 2, 3, 4]">
                     <div class="p-4 flex flex-col gap-6">
                         <div class="flex flex-row gap-4">
-                            <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo
-                            </div>
+                            <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo</div>
                             <div class="flex flex-row gap-2 rating-start-value">
                                 <mat-icon>star</mat-icon>
                                 4.4

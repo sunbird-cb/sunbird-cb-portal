@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import lodash from 'lodash'
 import { NsContent } from '@sunbird-cb/collection/src/public-api'
 
+import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
 import { RatingService } from '../../../_services/rating.service'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 
@@ -21,16 +23,17 @@ export class AppTocAboutComponent implements OnInit {
   authReplies: any
   ratingSummaryProcessed: any
   ratingReviews: any[] = []
-  tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager']
+
+  // tslint:disable-next-line:max-line-length
+  tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
 
   constructor(
     private ratingService: RatingService,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    const tags = ['Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
-    this.tags = [...this.tags, ...tags]
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
     }
@@ -105,14 +108,8 @@ export class AppTocAboutComponent implements OnInit {
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
-    // tslint:disable-next-line:max-line-length
-    // ratingSummaryPr.latest50Reviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
-    // // ratingSummaryPr.latest50Reviews = this.ratingSummary.latest50Reviews
-    // this.ratingReviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
-    // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
+
     if (this.ratingSummary && this.ratingSummary.latest50Reviews) {
-      // ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
-      // this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
       const latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
       const modifiedReviews = _.map(latest50Reviews, rating => {
         rating['userId'] =  rating.user_id
@@ -127,25 +124,16 @@ export class AppTocAboutComponent implements OnInit {
       ratingSummaryPr.latest50Reviews = modifiedReviews
       this.ratingReviews = modifiedReviews
     }
-    // rating changes 07 march 23
-    // const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
-    //   // console.log('item', item)
-    //   return val + (item.key * item.value)
-    //   // tslint:disable-next-line: align
-    // }, 0)
-    // tslint:disable-next-line:max-line-length
-    // ratingSummaryPr.avgRating = this.ratingSummary && this.ratingSummary.total_number_of_ratings ? parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1)) : 0
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
-      // ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
       ratingSummaryPr.avgRating =
       parseFloat((this.ratingSummary.sum_of_total_ratings / this.ratingSummary.total_number_of_ratings).toFixed(1))
     }
+
     if (this.content) {
       this.content.averageRating = ratingSummaryPr.avgRating
       this.content.totalRating = ratingSummaryPr.total_number_of_ratings
     }
-    // ratingSummaryPr.avgRating = 5
     return ratingSummaryPr
   }
 
@@ -179,6 +167,18 @@ export class AppTocAboutComponent implements OnInit {
 
   handleCapitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
+  handleOpenReviewModal(): void {
+    const dialogRef = this.dialog.open(ReviewsContentComponent, {
+      width: '400px',
+      data: { ratings: this.ratingSummaryProcessed },
+      panelClass: 'ratings-modal-box',
+      disableClose: true,
+    })
+
+    dialogRef.afterClosed().subscribe(_result => {
+    })
   }
 
   // handleTabChange(event: MatTabChangeEvent): void {}
