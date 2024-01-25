@@ -9,7 +9,7 @@ import { RatingSummaryModule } from '../rating-summary/rating-summary.module'
 
 import { ContentTocComponent } from './content-toc.component'
 import { AppTocAboutComponent } from './app-toc-about/app-toc-about.component'
-import { AppTocContentComponent } from './app-toc-content/app-toc-content.component';
+import { AppTocContentComponent } from './app-toc-content/app-toc-content.component'
 import { AppTocContentCardV2Component } from './app-toc-content-card-v2/app-toc-content-card-v2.component'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { NgCircleProgressModule } from 'ng-circle-progress'
