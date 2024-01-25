@@ -459,23 +459,28 @@
   }
 }
 
-// @media only screen
-//   and (min-device-width: 768px)
-//   and (max-device-width: 1024px) {
-//   .backgroud-image {
-//     transform: scale(1.92, 1.29);
-//     transform-origin: left;
-//   }
-//   // .position-absolute {
-//   //   width: 100%;
-//   // }
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 819px) {
+  .backgroud-image {
+    transform: scale(1.92, 1.29);
+    transform-origin: left;
+  }
 
-//   // .republic-details .center-image {
-//   //   top: 82%;
-//   // }
-//   // .republic-details .info-text {
-//   //   bottom: -101px
-//   // }
-// }
+  .aligncenter {
+    margin-left: 50%;
+  }
+
+  .republic-details .greet-text {
+    width: 100%;
+  }
+  .republic-details .info-text {
+    width: 100%;
+    bottom: 0;
+  }
+  .republic-details .center-image {
+    left: 75%;
+  }
+}
 
 
