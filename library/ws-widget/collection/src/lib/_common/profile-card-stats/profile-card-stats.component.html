@@ -1,33 +1,4 @@
 <div *ngIf="!profileData?.displayOnlyStats">
-  <!-- <ng-container *ngIf="!isLoading && republicDayData && showrepublicBanner">
-    <div class="republic-wrapper profile-nudge">
-      <div class="collapse-expand-icon invisible md:visible">
-        <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
-      </div>
-      <div class="republic-details hidden md:block">
-        <div><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
-        <div class="flex flex-col aligncenter">
-          <div class="greet-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
-          <div class="center-image">
-            <img [src]="republicDayData.centerImage">
-          </div>
-          <div class="info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
-        </div>
-      </div>
-      <div class="republic-details block md:hidden">
-        <div><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
-        <div class="flex flex-col aligncenter">
-          <div class="center-image-mobile">
-            <img [src]="republicDayData.centerImage" class="image">
-          </div>
-          <div class="mobile-info">
-            <div class="mobile-greet" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
-            <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-container> -->
   <div class="profile-wrapper" *ngIf="!isLoading">
     <div *ngIf="!showrepublicBanner" class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
@@ -45,7 +16,7 @@
           </div>
         </div>
         <div class="republic-details  block md:hidden">
-          <div *ngIf="republicDayData.backgroupImage"><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
+          <div *ngIf="republicDayData.backgroupImage"><img [src]="republicDayData.backgroupImage" class="mobile-backgroud-image"></div>
           <div class="flex flex-col aligncenter">
             <div class="center-image-mobile">
               <img *ngIf="republicDayData.centerImage" [src]="republicDayData.centerImage" class="image">
@@ -59,7 +30,8 @@
       </ng-container>
     </div>
     <ng-container>
-      <div class="profile-user-details" [ngClass]="!showrepublicBanner ? 'default-profile' : '' ">
+      <div class="profile-details-wrapper" [ngClass]="!showrepublicBanner ? 'default-profile' : 'profile-details-wrapper-with-nudge' ">
+        <div class="profile-user-details">
         <div class="flex flex-middle padding-16">
             <div class="progress-wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" *ngIf="userInfo.profileUpdateCompletion < 100" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
@@ -91,6 +63,7 @@
             <hr class="divider margin-remove-top">
               <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
             </div>
+        </div>
         </div>
       </div>
     </ng-container>
