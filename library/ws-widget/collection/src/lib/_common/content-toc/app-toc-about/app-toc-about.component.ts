@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import lodash from 'lodash'
-import { NsContent } from '@sunbird-cb/collection/src/public-api'
 
 import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
-import { RatingService } from '../../../_services/rating.service'
+import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
@@ -23,6 +22,15 @@ export class AppTocAboutComponent implements OnInit {
   authReplies: any
   ratingSummaryProcessed: any
   ratingReviews: any[] = []
+  reviews: any[] = []
+
+  displayLoader = false
+  disableLoadMore = false
+  lookupLimit = 3
+  lookupLoading: Boolean = true
+  lastLookUp: any
+  ratingLookup: any
+  reviewPage = 1
 
   // tslint:disable-next-line:max-line-length
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
@@ -57,12 +65,101 @@ export class AppTocAboutComponent implements OnInit {
           }
 
           this.ratingSummaryProcessed = this.processRatingSummary()
+          this.fetchRatingLookup()
         },
         (err: any) => {
           this.loggerService.error('USER RATING FETCH ERROR >', err)
         }
       )
     }
+  }
+
+  fetchRatingLookup() {
+    this.displayLoader = true
+    if (this.content && this.content.identifier && this.content.primaryCategory) {
+      const req = {
+        activityId: this.content.identifier,
+        activityType: this.content.primaryCategory,
+        // this field can be enabled if specific ratings have to be looked up
+        // rating: 0,
+        limit: this.lookupLimit,
+        ...((this.lastLookUp && this.lastLookUp.updatedOnUUID) ? { updateOn: (this.lastLookUp && this.lastLookUp.updatedOnUUID) } : null),
+      }
+
+      this.ratingService.getRatingLookup(req).subscribe(
+        (res: any) => {
+          this.displayLoader = false
+          // // console.log('Rating summary res ', res)
+          if (res && res.result && res.result.response) {
+            if (this.reviewPage > 1) {
+              res.result.response.map((item: any) => {
+                if (!this.ratingLookup.find((o: any) => o.updatedOnUUID === item.updatedOnUUID)) {
+                  this.ratingLookup.push(item)
+                }
+              })
+            } else {
+              this.ratingLookup = res.result.response
+            }
+          }
+
+          this.processRatingLookup(res.result.response)
+        },
+        (err: any) => {
+          this.displayLoader = false
+          this.loggerService.error('USER RATING FETCH ERROR >', err)
+        }
+      )
+    }
+  }
+
+  processRatingLookup(response: any) {
+    if (response) {
+      if (response && response.length < this.lookupLimit) {
+        this.disableLoadMore = true
+      } else {
+        this.disableLoadMore = false
+        this.lookupLoading = false
+      }
+      this.lastLookUp = response[response.length - 1]
+      this.ratingReviews = this.ratingLookup
+      this.authReplies = []
+      this.authReplies = _.keyBy(this.ratingReviews, 'userId')
+      const userIds = _.map(this.ratingReviews, 'userId')
+      if (this.content && userIds) {
+        this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
+      }
+      this.ratingReviews = this.ratingReviews.slice()
+    }
+  }
+
+  getAuthorReply(identifier: string, primaryCategory: NsContent.EPrimaryCategory, userIds: any[]) {
+    const request = {
+      request: {
+          activityId: identifier,
+          activityType: primaryCategory,
+          userId: userIds,
+      },
+    }
+
+    return this.ratingService.getRatingReply(request).subscribe(
+      (res: any) => {
+        if (res && res.result && res.result.content) {
+          const ratingAuthReplay = res.result.content
+          _.forEach(ratingAuthReplay, value => {
+              if (this.authReplies[value.userId]) {
+                this.authReplies[value.userId]['comment'] = value.comment
+                this.authReplies[value.userId]['userId'] = value.userId
+              }
+          })
+        }
+
+        this.reviews = Object.values(this.authReplies)
+        return this.authReplies
+      },
+      (err: any) => {
+        this.loggerService.error('USER RATING FETCH ERROR >', err)
+      }
+    )
   }
 
   countStarsPercentage(value: any, key: any, total: any) {
@@ -137,34 +234,6 @@ export class AppTocAboutComponent implements OnInit {
     return ratingSummaryPr
   }
 
-  getAuthorReply(identifier: string, primaryCategory: NsContent.EPrimaryCategory, userIds: any[]) {
-    const request = {
-      request: {
-          activityId: identifier,
-          activityType: primaryCategory,
-          userId: userIds,
-      },
-    }
-
-    return this.ratingService.getRatingReply(request).subscribe(
-      (res: any) => {
-        if (res && res.result && res.result.content) {
-          const ratingAuthReplay = res.result.content
-          _.forEach(ratingAuthReplay, value => {
-              if (this.authReplies[value.userId]) {
-                this.authReplies[value.userId]['comment'] = value.comment
-                this.authReplies[value.userId]['userId'] = value.userId
-              }
-          })
-        }
-        return this.authReplies
-      },
-      (err: any) => {
-        this.loggerService.error('USER RATING FETCH ERROR >', err)
-      }
-    )
-  }
-
   handleCapitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
@@ -172,7 +241,7 @@ export class AppTocAboutComponent implements OnInit {
   handleOpenReviewModal(): void {
     const dialogRef = this.dialog.open(ReviewsContentComponent, {
       width: '400px',
-      data: { ratings: this.ratingSummaryProcessed },
+      data: { ratings: this.ratingSummaryProcessed, reviews: this.authReplies },
       panelClass: 'ratings-modal-box',
       disableClose: true,
     })

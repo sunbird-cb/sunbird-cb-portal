@@ -15,6 +15,8 @@ import { AppTocContentCardV2Component } from './app-toc-content-card-v2/app-toc-
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { NgCircleProgressModule } from 'ng-circle-progress'
 
+import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
+
 @NgModule({
   declarations: [
     ContentTocComponent,
@@ -36,6 +38,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress'
     MatMenuModule,
     PipeDurationTransformModule,
     NgCircleProgressModule.forRoot({}),
+    PipeRelativeTimeModule,
   ],
   exports: [
     ContentTocComponent,

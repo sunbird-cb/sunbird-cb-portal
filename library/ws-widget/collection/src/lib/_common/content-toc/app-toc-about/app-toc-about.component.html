@@ -142,7 +142,7 @@
     </div>
 
     <div class="flex flex-col ratings-div gap-10">
-        <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
+        <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed" ></ws-widget-rating-summary>
 
         <div class="flex flex-col gap-3">
             <div class="flex flex-row gap-4">
@@ -150,22 +150,23 @@
                 <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
             </div>
             <div class="flex flex-wrap gap-5">
-                <div class="comment-div" *ngFor="let i of [1, 2, 3, 4]">
+                <div class="comment-div" *ngFor="let eachReview of reviews; let i = index">
                     <div class="p-4 flex flex-col gap-6">
                         <div class="flex flex-row gap-4">
-                            <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo</div>
+                            <div class="flex">{{ handleCapitalize(eachReview?.review) }}</div>
                             <div class="flex flex-row gap-2 rating-start-value">
                                 <mat-icon>star</mat-icon>
-                                4.4
+                                <div>{{ eachReview?.rating }}</div>
                             </div>
                         </div>
                         <div class="flex flex-row gap-2 items-center">
-                            <div class="flex initial-circle items-center justify-center">VS</div>
-                            <div>Vinod Shyave</div>
+                            <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''"
+                                [name]="eachReview?.firstName"></ws-widget-avatar-photo>
+                            <div>{{ handleCapitalize(eachReview?.firstName) }}</div>
                             <div class="flex items-center">
                                 <span class="period"></span>
                             </div>
-                            <div>2 hours ago</div>
+                            <div>{{ eachReview?.updatedon | pipeRelativeTime }}</div>
                         </div>
                     </div>
                 </div>

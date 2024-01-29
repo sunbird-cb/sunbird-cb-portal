@@ -410,7 +410,7 @@
                                             <mat-form-field class="" appearance="outline">
                                                 <mat-select #sortBySelect formControlName="sortByControl"
                                                     i18n-placeholder placeholder="Sort by">
-                                                    <mat-option [value]="'topReviews'" slected>Top reviews
+                                                    <mat-option [value]="'topReviews'" selected>Top reviews
                                                     </mat-option>
                                                     <mat-option [value]="'latestReviews'">Latest reviews</mat-option>
                                                 </mat-select>
@@ -455,6 +455,7 @@
                         (scrolled)="loadMore()">
                             <ng-container *ngFor="let c of ratingReviews|
                             pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false; let i= index; let last = last">
+                                authReplies[c.userId] = {{ authReplies[c.userId] | json }}
                                 <ws-widget-card-rating-comment [review]="authReplies[c.userId]" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
                             </ng-container>
                         </div>
