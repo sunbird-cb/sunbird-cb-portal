@@ -50,7 +50,7 @@ export class TopRightNavBarComponent implements OnInit {
       key: 'ta',
     },
   ]
-  constructor(public dialog: MatDialog, public homePageService: HomePageService, 
+  constructor(public dialog: MatDialog, public homePageService: HomePageService,
     private langtranslations: MultilingualTranslationsService, private translate: TranslateService) { 
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -84,9 +84,7 @@ export class TopRightNavBarComponent implements OnInit {
   } 
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabel(label, type, '')
   }
   
   selectLanguage(event: any) {

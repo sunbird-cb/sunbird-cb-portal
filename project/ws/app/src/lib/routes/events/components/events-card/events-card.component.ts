@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-events-card',
@@ -10,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core'
 export class EventsCardComponent implements OnInit {
   @Input() eventData: any
 
-  constructor(private router: Router, private translate: TranslateService) {
+  constructor(private router: Router, private translate: TranslateService, private langtranslations: MultilingualTranslationsService) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
@@ -27,10 +28,7 @@ export class EventsCardComponent implements OnInit {
 
 
   translateLabels(label: string, type: any) {
-    console.log(label)
-    label = label.replace(/\s/g, "").toLocaleLowerCase()
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
 }

@@ -5,6 +5,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { TranslateService } from '@ngx-translate/core';
 
 const DEFAULT_WEEKLY_DURATION = 300;
 const DEFAULT_DISCUSS_DURATION = 600;
@@ -67,7 +68,15 @@ export class InsightSideBarComponent implements OnInit {
     private configSvc:ConfigurationsService,
     private activatedRoute: ActivatedRoute,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router) { }
+    private translate: TranslateService,
+    private router: Router) { 
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+        lang = lang.replace(/\"/g, "")
+        this.translate.use(lang)
+      }
+    }
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
-import { LoggerService } from '@sunbird-cb/utils'
+import { LoggerService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -20,6 +20,7 @@ export class CourseCompletionDialogComponent implements OnInit {
     private loggerSvc: LoggerService,
     private translate: TranslateService,
     public dialogRef: MatDialogRef<CourseCompletionDialogComponent>,
+    private langtranslations: MultilingualTranslationsService,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -61,8 +62,6 @@ export class CourseCompletionDialogComponent implements OnInit {
   }
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

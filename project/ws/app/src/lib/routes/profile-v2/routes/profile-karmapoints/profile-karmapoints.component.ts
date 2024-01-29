@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import moment from 'moment'
 
 @Component({
@@ -27,6 +27,7 @@ export class ProfileKarmapointsComponent implements OnInit {
     public router: Router,
     private contentSvc: WidgetContentService,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.currentUser = this.configSvc && this.configSvc.userProfile
     if (localStorage.getItem('websiteLanguage')) {
@@ -99,13 +100,7 @@ export class ProfileKarmapointsComponent implements OnInit {
   }
 
   translateLabels(label: string, type: any, subtype: any) {
-    label = label.replace(/\s/g, "")
-    if(subtype) {
-      const translationKey = type + '.' +  label + subtype
-      return this.translate.instant(translationKey);
-    }
-    const translationKey = type + '.' +  label.toLocaleLowerCase()
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabel(label, type, subtype)
   }
 
 }

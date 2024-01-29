@@ -20,7 +20,7 @@
         <div>
           <h4 class="w-full text-center ws-mat-black60-text"
             *ngIf="searchResultUserArray.length === 0 && !this.searchSpinner" i18n>
-            {{ translateHub( 'msg.noSearchResultFound ' ) }}
+            {{ 'network.noSearchResultFound' | translate }}
           </h4>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 col-gap-4">
             <ng-container *ngFor="let user of searchResultUserArray">

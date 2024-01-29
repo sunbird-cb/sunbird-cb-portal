@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import _ from 'lodash'
-import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-footer-section',
   templateUrl: './footer-section.component.html',
@@ -16,7 +15,7 @@ export class FooterSectionComponent implements OnInit {
   constructor(private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
-    private translate: TranslateService) {}
+    private langtranslations: MultilingualTranslationsService) {}
 
   footerSectionConfig = [
     {
@@ -129,8 +128,6 @@ export class FooterSectionComponent implements OnInit {
   }
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

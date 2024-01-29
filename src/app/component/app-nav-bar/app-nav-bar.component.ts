@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 @Component({
@@ -55,8 +55,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private tourService: CustomTourService,
     private router: Router,
     private translate: TranslateService,
-    private events: EventService
-
+    private events: EventService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -255,9 +255,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
   redirectToPath(pathConfig:any) {
     if(pathConfig && pathConfig.key) {

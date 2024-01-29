@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
-import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
+import { EventService, MultilingualTranslationsService, WsEvents } from '@sunbird-cb/utils/src/public-api'
 /* tslint:disable*/
 import _ from 'lodash'
 import { TranslateService } from '@ngx-translate/core'
@@ -17,6 +17,7 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
   constructor(
     private events: EventService,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -44,9 +45,7 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
   }
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
 

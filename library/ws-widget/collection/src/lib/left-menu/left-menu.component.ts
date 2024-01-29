@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ILeftMenu, IMenu } from './left-menu.model'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { TranslateService } from '@ngx-translate/core'
 // tslint:disable-next-line: import-spacing
 // import  defaultImg  from './base64.json'
@@ -19,7 +20,8 @@ export class LeftMenuComponent extends WidgetBaseComponent
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService) {
     super()
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -98,8 +100,6 @@ export class LeftMenuComponent extends WidgetBaseComponent
   }
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

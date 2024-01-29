@@ -27,9 +27,6 @@ export class ProfileHobbiesComponent extends WidgetBaseComponent implements OnIn
       let lang = localStorage.getItem('websiteLanguage')!
 
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 

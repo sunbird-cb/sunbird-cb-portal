@@ -17,8 +17,17 @@ export class MultilingualTranslationsService {
             this.translate.setDefaultLang('en')
             let lang = localStorage.getItem('websiteLanguage')!
             this.translate.use(lang)
-            console.log('-------------websiteLanguage--------------', localStorage.getItem('websiteLanguage'))
         }
+    }
+
+    translateLabelWithoutspace(label: string, type: any, subtype: any) {
+        label = label.replace(/\s/g, "")
+        if(subtype) {
+            const translationKey = type + '.' +  label + subtype
+            return this.translate.instant(translationKey);
+        }
+        const translationKey = type + '.' +  label
+        return this.translate.instant(translationKey);
     }
 
     translateLabel(label: string, type: any, subtype: any) {
@@ -42,13 +51,7 @@ export class MultilingualTranslationsService {
 
     updatelanguageSelected(state: any, lang: any) {
         this.languageSelected.next(state)
-        console.log('-------------websiteLanguage--------------', localStorage.getItem('websiteLanguage'))
-        // if (localStorage.getItem('websiteLanguage')) {
-        //   let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-        //   lang = lang.replace(/\"/g, "")
-          this.translate.use(lang)
-          this.selectedLang = lang
-          console.log('-------------this.selectedLang--------------', this.selectedLang)
-        // }
+        this.translate.use(lang)
+        this.selectedLang = lang
     }
 }

@@ -4,7 +4,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { NsUser, ConfigurationsService } from '@sunbird-cb/utils'
 import { CardNetWorkService } from '@sunbird-cb/collection'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { DOCUMENT } from '@angular/common'
 @Component({
   selector: 'ws-app-network-home',
@@ -40,12 +40,7 @@ export class NetworkHomeComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
-     
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
 
     
@@ -142,11 +137,6 @@ export class NetworkHomeComponent implements OnInit {
 
   goToConnectionRequests() {
     this.router.navigate(['/app/network-v2/connection-requests'])
-  }
-
-  translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
   }
 
   connectionUpdate(event: any) {
