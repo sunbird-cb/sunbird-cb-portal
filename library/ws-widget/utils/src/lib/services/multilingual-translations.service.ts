@@ -60,6 +60,7 @@ export class MultilingualTranslationsService {
         this.translate.use(lang)
         this.selectedLang = lang
 
+       if (userid) {
         let reqUpdates = {
             request: {
               userId: userid,
@@ -70,7 +71,7 @@ export class MultilingualTranslationsService {
               }
             }
         }
-
         this.editProfileDetailsAPI(reqUpdates).subscribe()
+       }
     }
 }

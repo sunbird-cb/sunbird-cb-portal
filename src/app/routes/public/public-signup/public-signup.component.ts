@@ -750,6 +750,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   selectLanguage(event: any) {
     this.selectedLanguage = event.target.value
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
-    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, this.configSvc.unMappedUser.id)
+    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 }

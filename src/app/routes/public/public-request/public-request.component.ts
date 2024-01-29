@@ -127,7 +127,9 @@ export class PublicRequestComponent implements OnInit {
 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      this.selectedLanguage = lang
       this.translate.use(lang)
     }
    }
@@ -520,6 +522,6 @@ export class PublicRequestComponent implements OnInit {
   selectLanguage(event: any) {
     this.selectedLanguage = event.target.value
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
-    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, this.configSvc.unMappedUser.id)
+    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 }
