@@ -270,5 +270,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       clearInterval(this.enrollInterval)
     }
   }
+
+
+  
  
 }
