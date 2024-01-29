@@ -6,11 +6,23 @@ import { EventService } from '@sunbird-cb/utils/src/public-api'
 import _ from 'lodash'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import { MatDialog } from '@angular/material'
+import { animate, style, transition, trigger } from '@angular/animations'
 
 @Component({
   selector: 'ws-widget-app-toc-content-card-v2',
   templateUrl: './app-toc-content-card-v2.component.html',
-  styleUrls: ['./app-toc-content-card-v2.component.scss']
+  styleUrls: ['./app-toc-content-card-v2.component.scss'],
+  animations: [
+    trigger('panelInOut', [
+        transition('void => *', [
+            style({transform: 'translateY(-10%)',opacity: '0'}),
+            animate(250)
+        ]),
+        transition('* => void', [
+            animate(200, style({transform: 'translateY(-10%)',opacity: '0'}))
+        ])
+    ])
+]
 })
 export class AppTocContentCardV2Component implements OnInit {
   @Input() content: NsContent.IContent | null = null
@@ -66,6 +78,13 @@ export class AppTocContentCardV2Component implements OnInit {
   get isCollection(): boolean {
     if (this.content) {
       return this.content.mimeType === NsContent.EMimeTypes.COLLECTION
+    }
+    return false
+  }
+
+  get isModule(): boolean {
+    if (this.content) {
+      return this.content.primaryCategory === NsContent.EPrimaryCategory.MODULE
     }
     return false
   }

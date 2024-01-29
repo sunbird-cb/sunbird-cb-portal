@@ -151,6 +151,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     BrowserModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    BrowserModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
     AppRoutingModule,

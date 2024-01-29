@@ -1,86 +1,96 @@
 <ng-container *ngIf="content">
     <ng-container *ngIf="isCollection">
-      <div class="flex flex-col position-relative">
-        <div class="card-collection w-auto sm:w-100 padding-right-xl">
-          <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
+        <div class="flex flex-col position-relative">
+            <div class="card-collection w-auto sm:w-100 padding-right-xl">
+                <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
             (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
-          <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
-            <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}" (click)="viewChildren = !viewChildren">
-              <div class="flex flex-col sm:flex-row flex-wrap">
-                <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
-                  {{ content?.name }} 
-                </p>
-                <ng-container *ngIf="content.issuedCertificatesSVG">
-                  <a class="certificate-txt" (click)="openCertificateDialog(content.issuedCertificatesSVG)">
-                    <span class="view-certificate-wrapper">
-                      <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24">
-                      <span>View certificate</span>
-                    </span>
-                  </a>
-                </ng-container>
-                <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
-                  <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
-                  <span>Resource</span>
-                </div>
-                <div class="type-container module mt-2 sm:mt-0" *ngIf="content?.category === 'Collection'">
-                  <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
-                  <span>Module</span>
-                </div>
-                <div class="type-container course mt-2 sm:mt-0" *ngIf="content?.category === 'Course'">
-                  <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
-                  <span>Course</span>
-                </div>
-              </div>
-              <div>
-                <!-- <span class="mat-body-strong content-type">{{ content?.displayContentType }}</span> -->
-                <!-- <span class="ml-5"> -->
-                <!-- <ng-container *ngIf="content?.displayContentType">&nbsp;&nbsp;|&nbsp;&nbsp;</ng-container> -->
-                <!-- <mat-icon class="time-icon">schedule</mat-icon> -->
-                <span class="text-lowercase ws-mat-black60-text">{{ content?.duration | pipeDurationTransform: 'hms'
-                  }}</span>
-                <!-- </span> -->
-              </div>
-            </div>
-            <button *ngIf="content?.artifactUrl && isAllowed && !isEnabled" type="button" mat-icon-button
-              [matMenuTriggerFor]="buttonMenu">
-              <mat-icon>more_vertical</mat-icon>
-            </button>
-            <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage && content.primaryCategory !== 'Course'">
-              <ng-container *ngIf="content?.completionStatus == 2">
-                <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
-                  [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
-                  [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
-                  [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
-                  [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
-                  [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
-                  [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
-                </circle-progress>
-                <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
+                    <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}"
+                        (click)="viewChildren = !viewChildren">
+                        <div class="flex flex-col sm:flex-row flex-wrap">
+                            <p class="margin-remove text-truncate mat-subheading-1 flex-auto font-bold">
+                                {{ content?.name }}
+                            </p>
+                            <ng-container *ngIf="content.issuedCertificatesSVG">
+                                <a class="certificate-txt"
+                                    (click)="openCertificateDialog(content.issuedCertificatesSVG)">
+                                    <span class="view-certificate-wrapper">
+                                        <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24">
+                                        <span>View certificate</span>
+                                    </span>
+                                </a>
+                            </ng-container>
+                            <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
+                                <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
+                                <span>Resource</span>
+                            </div>
+                            <div class="type-container module mt-2 sm:mt-0" *ngIf="content?.category === 'Collection'">
+                                <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
+                                <span>Module</span>
+                            </div>
+                            <div class="type-container course mt-2 sm:mt-0" *ngIf="content?.category === 'Course'">
+                                <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
+                                <span>Course</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-row gap-3 items-center content-key-values">
+                            <mat-icon *ngIf="!isModule" class="time-icon" >video_library</mat-icon>
+                            <img *ngIf="isModule" alt="Module" src="/assets/icons/content/grey/module.svg">
+                            <div class="text-xs">11h 30m</div>
+                            <div class="flex items-center">
+                                <span class="period"></span>
+                            </div>
+                            <div class="text-xs">3 modules</div>
+                            <div class="flex items-center">
+                                <span class="period"></span>
+                            </div>
+                            <div class="text-xs">14 items</div>
+                        </div>
+                    </div>
+                    <button *ngIf="content?.artifactUrl && isAllowed && !isEnabled" type="button" mat-icon-button
+                        [matMenuTriggerFor]="buttonMenu">
+                        <mat-icon>more_vertical</mat-icon>
+                    </button>
+                    <ng-container
+                        *ngIf="!forPreview && content?.identifier && content?.completionPercentage && content.primaryCategory !== 'Course'">
+                        <ng-container *ngIf="content?.completionStatus == 2">
+                            <circle-progress class="flex items-center progress" [percent]="100" [radius]="12"
+                                [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
+                                [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'"
+                                [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false"
+                                [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
+                                [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
+                                [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
+                                [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
+                                [outerStrokeLinecap]="'butt'">
+                            </circle-progress>
+                            <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
                   [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100"
                   [progressType]="'percentage'">
                 </ws-widget-content-progress> -->
-              </ng-container>
-              <ng-container *ngIf="content?.completionStatus < 2">
-                <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage"
-                  [radius]="12" [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
-                  [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true"
-                  [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
-                  [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
-                  [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
-                  [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
-                  [outerStrokeLinecap]="'butt'">
-                </circle-progress>
-                <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+                        </ng-container>
+                        <ng-container *ngIf="content?.completionStatus < 2">
+                            <circle-progress class="flex items-center progress"
+                                [percent]="content?.completionPercentage" [radius]="12" [outerStrokeWidth]="3"
+                                [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
+                                [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300"
+                                [showTitle]="false" [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true"
+                                [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
+                                [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9"
+                                [startFromZero]="false" [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24"
+                                [showBackground]="false" [outerStrokeLinecap]="'butt'">
+                            </circle-progress>
+                            <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
                   [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage"
                   [progressType]="'percentage'">
                 </ws-widget-content-progress> -->
-              </ng-container>
-            </ng-container>
-  
-            <!-- <div *ngIf="hasContentStructure" class="child-meta-container">
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- <div *ngIf="hasContentStructure" class="child-meta-container">
               <div class="child-structure"> -->
-            <!-- <mat-icon class="structure-icon">import_contacts</mat-icon> -->
-            <!-- <span class="oval-white" *ngIf="contentStructure?.course > 0">
+                    <!-- <mat-icon class="structure-icon">import_contacts</mat-icon> -->
+                    <!-- <span class="oval-white" *ngIf="contentStructure?.course > 0">
                   <ng-container>{{ contentStructure?.course }}</ng-container>
                   <ng-container *ngIf="contentStructure?.course === 1" i18n> Course</ng-container>
                   <ng-container *ngIf="contentStructure?.course > 1" i18n> Courses</ng-container>
@@ -145,18 +155,20 @@
                 </span>
               </div>
             </div> -->
-            <div class="see-all-container">
-              <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
-                class="margin-left-m see-all-btn tab custom-chevron customicon" mat-button>
-                <!-- <ng-container *ngIf="!viewChildren" i18n>See All</ng-container>
+                    <div class="see-all-container">
+                        <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
+                            class="margin-left-m see-all-btn tab custom-chevron customicon" mat-button>
+                            <!-- <ng-container *ngIf="!viewChildren" i18n>See All</ng-container>
                 <ng-container *ngIf="viewChildren" i18n>See Less</ng-container> -->
-                <mat-icon *ngIf="!viewChildren">keyboard_arrow_down</mat-icon>
-                <mat-icon *ngIf="viewChildren">keyboard_arrow_up</mat-icon>
-              </a>
+                            <mat-icon *ngIf="!viewChildren && !isModule">keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="viewChildren && !isModule">keyboard_arrow_up</mat-icon>
+                            <mat-icon *ngIf="!viewChildren && isModule">add</mat-icon>
+                            <mat-icon *ngIf="viewChildren && isModule">remove</mat-icon>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <!-- <div class="w-100" *ngIf="content?.identifier && content?.completionPercentage">
+            <!-- <div class="w-100" *ngIf="content?.identifier && content?.completionPercentage">
           <ng-container *ngIf="content?.completionStatus == 2">
             <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
               [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100"
@@ -170,127 +182,127 @@
             </ws-widget-content-progress>
           </ng-container>
         </div> -->
-      </div>
-  
-      <div class="children-container margin-left-l margin-top-s margin-bottom-s" [hidden]="!viewChildren">
-        <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll" [rootId]="rootId"
-          [batchId]="batchId" [rootContentType]="rootContentType"
-          *ngFor="let child of content?.children; trackBy: contentTrackBy">
-        </ws-widget-app-toc-content-card-v2>
-      </div>
+        </div>
+
+        <div class="children-container margin-left-l margin-top-s margin-bottom-s" *ngIf="viewChildren" [@panelInOut]>
+            <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
+                [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType"
+                *ngFor="let child of content?.children; trackBy: contentTrackBy">
+            </ws-widget-app-toc-content-card-v2>
+        </div>
     </ng-container>
     <div *ngIf="isResource" class="resource-container">
-  
-      <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
-        <!-- deactivated as per NIC CEO requirement to access course wthout login -->
-        <a [class.disabled]="(forPreview || !isEnabled) ? true : null" [routerLink]="(isAllowed && !forPreview && !isEnabled) ? resourceLink.url : null"
-          [queryParams]="(isAllowed && !forPreview && !isEnabled)  ? resourceLink.queryParams : null">
-          <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled}" (click)="viewChildren = !viewChildren; raiseTelemetry()">
-            <div class="flex flex-col sm:flex-row flex-wrap">
-              <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
-                <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
-                {{ content?.name }}
-              </p>
-            
-                <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
-              <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
-            
-              
-            </div>
-            <div class="resicons ws-mat-black60-text">
-              <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs" *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||
+
+        <div class="flex flex-col sm:flex-row flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
+            <!-- deactivated as per NIC CEO requirement to access course wthout login -->
+            <a [class.disabled]="(forPreview || !isEnabled) ? true : null"
+                [routerLink]="(isAllowed && !forPreview && !isEnabled) ? resourceLink.url : null"
+                [queryParams]="(isAllowed && !forPreview && !isEnabled)  ? resourceLink.queryParams : null">
+                <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled}"
+                    (click)="viewChildren = !viewChildren; raiseTelemetry()">
+                    <div class="flex flex-col sm:flex-row flex-wrap">
+                        <p class="margin-remove text-truncate mat-body-2 flex-auto font-bold">
+                            <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
+                            {{ content?.name }}
+                        </p>
+
+                        <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
+                        <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
+
+
+                    </div>
+                    <div class="resicons ws-mat-black60-text">
+                        <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs"
+                            *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||
                   content?.mimeType ==='application/x-mpegURL'">
-              <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs"
-                *ngIf="content?.mimeType === 'audio/mpeg'">
-              <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs"
-                *ngIf="content?.mimeType === 'application/pdf'">
-              <!-- <img src="/assets/icons/content/grey/resource.svg" alt="Survey" class="float-left margin-right-xs"
+                        <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs"
+                            *ngIf="content?.mimeType === 'audio/mpeg'">
+                        <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs"
+                            *ngIf="content?.mimeType === 'application/pdf'">
+                        <!-- <img src="/assets/icons/content/grey/resource.svg" alt="Survey" class="float-left margin-right-xs"
                 *ngIf="content?.mimeType === 'application/survey'"> -->
-              <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent" class="float-left margin-right-xs"
-                *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
-              <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="float-left margin-right-xs"
-                *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz' || content?.mimeType === 'application/vnd.sunbird.questionset'">
-              <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
-                *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
-              <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
-                *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
-              <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs" alt="offline sessions"
-                *ngIf="content.mimeType === 'application/offline' || content?.mimeType === 'application/survey'">
-              <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
-            </div>
-          </div>
-        </a>
-        <div class="flex flex-wrap items-center justify-start sm:justify-end">
-                   <button *ngIf="!forPreview && content?.artifactUrl && !isXSmall && isAllowed && isEnabled" type="button" mat-icon-button
-            class="" [matMenuTriggerFor]="buttonMenu">
-            <mat-icon>more_vertical</mat-icon>
-          </button>
-          <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage ; else elseBlock">
-          
-            <ng-container *ngIf="content?.completionStatus == 2">
-              <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
-                [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
-                [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
-                [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
-                [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="Completed"
-                [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
-                [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
-              </circle-progress>
-              <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+                        <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent"
+                            class="float-left margin-right-xs"
+                            *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
+                        <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment"
+                            class="float-left margin-right-xs"
+                            *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz' || content?.mimeType === 'application/vnd.sunbird.questionset'">
+                        <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
+                            *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
+                        <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
+                            *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
+                        <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
+                            alt="offline sessions"
+                            *ngIf="content.mimeType === 'application/offline' || content?.mimeType === 'application/survey'">
+                        <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms'
+                            }}</span>
+                    </div>
+                </div>
+            </a>
+            <div class="flex flex-wrap items-center justify-start sm:justify-end">
+                <button *ngIf="!forPreview && content?.artifactUrl && !isXSmall && isAllowed && isEnabled" type="button"
+                    mat-icon-button class="" [matMenuTriggerFor]="buttonMenu">
+                    <mat-icon>more_vertical</mat-icon>
+                </button>
+                <ng-container
+                    *ngIf="!forPreview && content?.identifier && content?.completionPercentage ; else elseBlock">
+
+                    <ng-container *ngIf="content?.completionStatus == 2">
+                        <circle-progress class="flex items-center progress" [percent]="100" [radius]="12"
+                            [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
+                            [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'"
+                            [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false"
+                            [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0"
+                            [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="Completed"
+                            [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
+                            [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
+                            [outerStrokeLinecap]="'butt'">
+                        </circle-progress>
+                        <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
                   [contentId]="content?.identifier" class="progress-bar-thin" [progress]="100"
                   [progressType]="'percentage'">
                 </ws-widget-content-progress> -->
-            </ng-container>
-            <ng-container *ngIf="content?.completionStatus < 2">
-              <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage" [radius]="12"
-                [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor2()"
-                [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
-                [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
-                [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="In progress"
-                [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
-                [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
-              </circle-progress>
-              <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+                    </ng-container>
+                    <ng-container *ngIf="content?.completionStatus < 2">
+                        <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage"
+                            [radius]="12" [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
+                            [outerStrokeColor]="progressColor2()" [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'"
+                            [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false"
+                            [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0"
+                            [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="In progress"
+                            [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
+                            [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
+                            [outerStrokeLinecap]="'butt'">
+                        </circle-progress>
+                        <!-- <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
                 [contentId]="content?.identifier" class="progress-bar-thin" [progress]="content?.completionPercentage"
                 [progressType]="'percentage'">
               </ws-widget-content-progress> -->
-            </ng-container>
-            
-          </ng-container>
-          <ng-template #elseBlock>
-          <circle-progress  class="flex items-center progress"
-            [percent]="0"
-            [radius]="12"
-            [outerStrokeWidth]="3"
-            [innerStrokeWidth]="3"
-            [outerStrokeColor]="'#808080'"
-            [innerStrokeColor]="'#808080'"
-            [animation]="true"
-            [space]="-3"
-            [showUnits]="false"
-            [animationDuration]="300"
-            [showTitle]="false"
-            [backgroundPadding]="0"
-            [backgroundPadding]="-9"
-            [outerStrokeLinecap]="'butt'"
-            matTooltip="Not started"
-            [showSubtitle]="false" 
-            [showInnerStroke]="true" 
-            [clockwise]="true" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"></circle-progress>
-          <!-- <p>no data</p> -->
-          </ng-template>
+                    </ng-container>
+
+                </ng-container>
+                <ng-template #elseBlock>
+                    <circle-progress class="flex items-center progress" [percent]="0" [radius]="12"
+                        [outerStrokeWidth]="3" [innerStrokeWidth]="3" [outerStrokeColor]="'#808080'"
+                        [innerStrokeColor]="'#808080'" [animation]="true" [space]="-3" [showUnits]="false"
+                        [animationDuration]="300" [showTitle]="false" [backgroundPadding]="0" [backgroundPadding]="-9"
+                        [outerStrokeLinecap]="'butt'" matTooltip="Not started" [showSubtitle]="false"
+                        [showInnerStroke]="true" [clockwise]="true" [imageHeight]="24" [imageWidth]="24"
+                        [showBackground]="false"></circle-progress>
+                    <!-- <p>no data</p> -->
+                </ng-template>
+            </div>
         </div>
-      </div>
     </div>
-  </ng-container>
-  
-  <mat-menu #buttonMenu="matMenu">
+</ng-container>
+
+<mat-menu #buttonMenu="matMenu">
     <a mat-menu-item [routerLink]="'../' + content?.identifier + '/overview'" [queryParams]="contextPath"
-      class="flex flex-middle">
-      <mat-icon>toc</mat-icon>
-      <h3 class="margin-remove" i18n>
-        View Details
-      </h3>
+        class="flex flex-middle">
+        <mat-icon>toc</mat-icon>
+        <h3 class="margin-remove" i18n>
+            View Details
+        </h3>
     </a>
     <!-- TODO: Hiding this from here for now, as the functionalities are not working -->
     <!-- <div mat-menu-item>
@@ -305,5 +317,4 @@
       <ws-widget-btn-goals></ws-widget-btn-goals>
       <ws-widget-btn-playlist></ws-widget-btn-playlist>
     </div> -->
-  </mat-menu>
-  
+</mat-menu>
