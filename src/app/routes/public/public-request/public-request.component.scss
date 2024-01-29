@@ -832,3 +832,20 @@
   padding: 16px;
   border-radius: 8px;
 }
+
+.langdiv {
+  .mat-form-field-infix::after {
+    top: 35% !important;
+  }
+  .mat-focused:not(.mat-form-field-invalid) .mat-form-field-infix::after {
+    color: rgba(0, 0, 0, 0.54) !important;
+  }
+  .custom-lang {
+    font: 400 14px/21px Lato;
+    width: 64px;
+    padding: 0 !important
+  }
+  .custom-lang.mat-form-field-appearance-legacy .mat-form-field-infix .mat-form-field-infix{
+    padding: 0 !important;
+  }
+}

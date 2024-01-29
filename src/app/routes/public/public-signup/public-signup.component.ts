@@ -13,7 +13,8 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -136,6 +137,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   searching = false
   groupsOriginal: any = []
 
+  selectedLanguage: any
+  multiLang: any = []
+
   constructor(
     private signupSvc: SignupService,
     private loggerSvc: LoggerService,
@@ -147,17 +151,15 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private router: Router,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
-
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      this.selectedLanguage = lang
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
 
     let userData : any = {}
@@ -207,6 +209,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
       this.portalID = `${this.telemetryConfig.pdata.id}`
+      this.multiLang = instanceConfig.webistelanguages
     }
 
     if (isPlatformBrowser(this._platformId)) {
@@ -742,5 +745,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const pattren = /^([0-9])$/
     const result = pattren.test(event.key)
     return result
+  }
+
+  selectLanguage(event: any) {
+    this.selectedLanguage = event.target.value
+    localStorage.setItem('websiteLanguage', this.selectedLanguage)
+    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 }

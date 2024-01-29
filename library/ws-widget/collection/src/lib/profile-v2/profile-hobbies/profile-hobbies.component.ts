@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
 import { IProHobbies } from './profile-hobbies.model'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-widget-profile-v2-hobbies',
@@ -27,9 +27,6 @@ export class ProfileHobbiesComponent extends WidgetBaseComponent implements OnIn
       let lang = localStorage.getItem('websiteLanguage')!
 
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 

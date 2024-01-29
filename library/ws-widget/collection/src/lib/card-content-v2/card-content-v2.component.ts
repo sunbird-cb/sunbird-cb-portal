@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
@@ -9,7 +9,6 @@ import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content-v2.model'
 /* tslint:disable*/
 import _ from 'lodash'
-import { TranslateService } from '@ngx-translate/core'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
 // import { Router } from '@angular/router'
@@ -49,7 +48,7 @@ export class CardContentV2Component extends WidgetBaseComponent
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
-    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     private certificateService: CertificateService
 
   ) {
@@ -373,9 +372,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   }
 
   translateLabels(label: string, type: any, subtype: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' + subtype +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
   }
 
   getCbPlanData() {

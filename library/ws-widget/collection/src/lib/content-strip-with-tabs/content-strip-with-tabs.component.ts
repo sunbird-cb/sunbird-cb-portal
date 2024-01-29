@@ -11,6 +11,7 @@ import {
   ConfigurationsService,
   UtilityService,
   WsEvents,
+  MultilingualTranslationsService,
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
@@ -20,7 +21,6 @@ import { environment } from 'src/environments/environment'
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
-import { TranslateService } from '@ngx-translate/core'
 import { ITodayEvents } from '@ws/app/src/lib/routes/events/models/event'
 
 interface IStripUnitContentData {
@@ -95,7 +95,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // private http: HttpClient,
     // private searchServSvc: SearchServService,
     private userSvc: WidgetUserService,
-    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     super()
   }
@@ -1154,18 +1154,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   translateLabels(label: string, type: any) {
-    // label = _.camelCase(label.replace(/\s/g, ""))
-    label = label.toLowerCase();
-    const sl = label.split(' ')
-    sl.forEach((w: any, index: any) => {
-      if (index !== 0) {
-        sl[index] = w[0].toUpperCase() + w.slice(1)
-      }
-    })
-    label = sl.join('')
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
 }

@@ -3,7 +3,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 // import { environment } from './../../../environments/environment'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService, NsInstanceConfig } from '@sunbird-cb/utils'
 import { BtnPageBackService } from './btn-page-back.service'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
@@ -48,7 +48,8 @@ export class BtnPageBackComponent extends WidgetBaseComponent
     public router: Router,
     private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     super()
     if (localStorage.getItem('websiteLanguage')) {
@@ -183,13 +184,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   }
 
   translateLabels(label: string, type: any, subtype: any) {
-    label = label.replace(/\s/g, "")
-    if(subtype) {
-      const translationKey = type + '.' +  label + subtype
-      return this.translate.instant(translationKey);
-    }
-    const translationKey = type + '.' +  label.toLocaleLowerCase()
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
   }
 
 }

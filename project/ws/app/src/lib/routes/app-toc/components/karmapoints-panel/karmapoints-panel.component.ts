@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 @Component({
   selector: 'ws-app-karmapoints-panel',
   templateUrl: './karmapoints-panel.component.html',
@@ -16,6 +16,7 @@ export class KarmaPointsPanelComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -44,13 +45,7 @@ export class KarmaPointsPanelComponent implements OnInit {
   }
 
   translateLabels(label: string, type: any, subtype: any) {
-    label = label.replace(/\s/g, "")
-    if(subtype) {
-      const translationKey = type + '.' +  label + subtype
-      return this.translate.instant(translationKey);
-    }
-    const translationKey = type + '.' +  label
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
   }
 
 }

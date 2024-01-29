@@ -63,6 +63,7 @@ export namespace NsInstanceConfig {
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
     positions: any
+    webistelanguages: any[]
   }
   export interface IPortalUrls {
     igot: string,

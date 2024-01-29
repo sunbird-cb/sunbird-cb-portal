@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable-next-line: import-name
@@ -38,7 +38,7 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
   constructor(private configSvc: ConfigurationsService,
-    private activateRoute: ActivatedRoute,
+    private activateRoute: ActivatedRoute, private langtranslations: MultilingualTranslationsService,
     private translate: TranslateService,) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -138,9 +138,7 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
   translateAnswer(label: string, type: any) {
     let htmlAnswer = "<p class='mat-body-2'><ng-container>"

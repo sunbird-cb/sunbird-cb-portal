@@ -14,8 +14,8 @@
 
 <ul class="right-side-nav-items">
     <ng-container *ngFor="let rnc of rightNavConfig">
-        <li matTooltipClass="right-nav-tooltip" matTooltip="Download App" *ngIf="rnc.section === 'download' && rnc.active && item.type === 'downloadButton'" class="download-app-chip" (click)="openDialog()">
-            <span class="mat-body-2">Download App</span>       
+        <li matTooltipClass="right-nav-tooltip" matTooltip="{{ 'toprightnavbar.downloadApp' | translate }}" *ngIf="rnc.section === 'download' && rnc.active && item.type === 'downloadButton'" class="download-app-chip" (click)="openDialog()">
+            <span class="mat-body-2">{{ 'toprightnavbar.downloadApp' | translate }}</span>       
         </li>
         <li matTooltipClass="right-nav-tooltip" matTooltip="{{ translateLabels('font', 'toprightnavbar')}}" *ngIf="item.type === 'fontButton' && rnc.section === 'font-setting' && rnc.active">
             <ws-font-setting></ws-font-setting>

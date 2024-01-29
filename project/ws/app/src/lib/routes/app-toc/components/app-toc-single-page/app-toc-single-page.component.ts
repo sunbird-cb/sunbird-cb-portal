@@ -2,7 +2,7 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit, OnChanges } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription, Subject } from 'rxjs'
 import { share, debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
@@ -102,6 +102,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     private eventSvc: EventService,
     private ratingSvc: RatingService,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -812,8 +813,6 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   translateLabels(label: string, type: any) {
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
-    return this.translate.instant(translationKey);
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

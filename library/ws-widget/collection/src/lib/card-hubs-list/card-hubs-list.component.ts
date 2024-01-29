@@ -62,7 +62,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private valueSvc: ValueService,
-    private langtranslations: MultilingualTranslationsService,
+    private langtranslations: MultilingualTranslationsService
     // private accessService: AccessControlService
   ) {
     super()

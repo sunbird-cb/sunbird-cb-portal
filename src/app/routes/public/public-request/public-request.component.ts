@@ -12,7 +12,8 @@ import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 import { v4 as uuid } from 'uuid'
 import { Location } from '@angular/common'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -68,6 +69,8 @@ export class PublicRequestComponent implements OnInit {
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
   userform: any
+  selectedLanguage: any
+  multiLang: any = []
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -76,6 +79,8 @@ export class PublicRequestComponent implements OnInit {
               private dialog: MatDialog,
               private requestSvc: RequestService,
               private _location: Location,
+              private configSvc: ConfigurationsService,
+              private langtranslations: MultilingualTranslationsService,
               private translate: TranslateService) {
     const navigation = this.router.getCurrentNavigation()
     if (navigation) {
@@ -122,16 +127,18 @@ export class PublicRequestComponent implements OnInit {
 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, "")
+      this.selectedLanguage = lang
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
    }
 
   ngOnInit() {
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.multiLang = instanceConfig.webistelanguages
+    }
 
     this.onPhoneChange()
     this.onEmailChange()
@@ -510,5 +517,11 @@ export class PublicRequestComponent implements OnInit {
     const pattren = /^([0-9])$/
     const result = pattren.test(event.key)
     return result
+  }
+
+  selectLanguage(event: any) {
+    this.selectedLanguage = event.target.value
+    localStorage.setItem('websiteLanguage', this.selectedLanguage)
+    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 }
