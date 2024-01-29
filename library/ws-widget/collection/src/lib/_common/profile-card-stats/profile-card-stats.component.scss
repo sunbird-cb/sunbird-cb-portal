@@ -455,20 +455,22 @@
     top: 82%;
   }
   .republic-details .info-text {
-    bottom: -101px
+    bottom: -120px
   }
+
 }
 
 @media only screen
   and (min-device-width: 768px)
   and (max-device-width: 819px) {
   .backgroud-image {
-    transform: scale(1.92, 1.29);
+    transform: scale(1.92, 1.14);
     transform-origin: left;
+    margin-top: 19px;
   }
 
   .aligncenter {
-    margin-left: 50%;
+    margin-left: 83%;
   }
 
   .republic-details .greet-text {
@@ -479,7 +481,7 @@
     bottom: 0;
   }
   .republic-details .center-image {
-    left: 75%;
+    left: 90%;
   }
 }
 
