@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component';
 import { TranslateService } from '@ngx-translate/core';
 import { HomePageService } from '../../services/home-page.service';
-import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api';
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api';
 const rightNavConfig = [
   {
     "id":1,
@@ -36,21 +36,10 @@ export class TopRightNavBarComponent implements OnInit {
   @Input() rightNavConfig:any;
   dialogRef:any;
   selectedLanguage: any
-  multiLang = [
-    {
-      value: 'English',
-      key: 'en',
-    },
-    {
-      value: 'Hindi',
-      key: 'hi',
-    },
-    {
-      value: 'Tamil',
-      key: 'ta',
-    },
-  ]
-  constructor(public dialog: MatDialog, public homePageService: HomePageService,
+  multiLang: any = []
+
+  constructor(public dialog: MatDialog, public homePageService: HomePageService, 
+    private configSvc: ConfigurationsService,
     private langtranslations: MultilingualTranslationsService, private translate: TranslateService) { 
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -62,6 +51,10 @@ export class TopRightNavBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.multiLang = instanceConfig.webistelanguages
+    }
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
     // console.log('rightNavConfig',this.rightNavConfig)
     this.homePageService.closeDialogPop.subscribe((data:any)=>{
