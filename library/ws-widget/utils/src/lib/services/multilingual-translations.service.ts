@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject } from "rxjs";
@@ -11,8 +12,9 @@ export class MultilingualTranslationsService {
     // website lang change
     languageSelected = new BehaviorSubject(true);
     languageSelectedObservable = this.languageSelected.asObservable();
+    editProfileDetails = '/apis/proxies/v8/user/v1/extPatch'
   
-    constructor(private translate: TranslateService) {
+    constructor(private translate: TranslateService, private http: HttpClient) {
         if (localStorage.getItem('websiteLanguage')) {
             this.translate.setDefaultLang('en')
             let lang = localStorage.getItem('websiteLanguage')!
@@ -49,9 +51,26 @@ export class MultilingualTranslationsService {
         }
     }
 
-    updatelanguageSelected(state: any, lang: any) {
+    editProfileDetailsAPI(data: any) {
+        return this.http.post<any>(this.editProfileDetails, data)
+    }
+
+    updatelanguageSelected(state: any, lang: any, userid: any) {
         this.languageSelected.next(state)
         this.translate.use(lang)
         this.selectedLang = lang
+
+        let reqUpdates = {
+            request: {
+              userId: userid,
+              profileDetails: {
+                additionalProperties: {
+                    webPortalLang: this.selectedLang
+                }
+              }
+            }
+        }
+
+        this.editProfileDetailsAPI(reqUpdates).subscribe()
     }
 }
