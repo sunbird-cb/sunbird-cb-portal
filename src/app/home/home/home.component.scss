@@ -1,3 +1,8 @@
+@import 'ws-mixins';
+@import "ws-vars";
+@import "ws-common";
+
+
 .home-container {
     max-width: 1200px;
 }
@@ -6,6 +11,16 @@
 }
 .network-inner {
     overflow: hidden;
+}
+.app-logo {
+  @include breakpoint-xs {
+    max-width: 72px;
+    margin-top: 0px;
+  }
+  @include breakpoint-s {
+    max-width: 72px;
+    margin-top: 0px;
+  }
 }
 
 .fix-ww {
@@ -511,6 +526,22 @@
         margin-top: -10px;
         overflow: hidden;
       }
+}
+
+.mob-logo {
+  display: none;
+  @include breakpoint-xs {
+    display: flex;
+  }
+  @include breakpoint-s {
+    display: flex;
+  }
+
+}
+
+.logo-text {
+  margin-bottom: 0!important;
+  font-family: 'Montserrat';
 }
 
 

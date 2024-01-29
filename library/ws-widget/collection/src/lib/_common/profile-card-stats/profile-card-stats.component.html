@@ -1,42 +1,77 @@
 <div *ngIf="!profileData?.displayOnlyStats">
   <div class="profile-wrapper" *ngIf="!isLoading">
-    <div class="expand-icon invisible md:visible">
+    <div *ngIf="!showrepublicBanner" class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
     </div>
-    <div class="profile-user-details flex flex-middle">
-        <div class="progress-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="userInfo.profileUpdateCompletion < 100" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
-              <path class="grey" d="M55,90
-                       A55,55 0 1,1 140,90"
-                    style="fill:none;"/>
-              <path class="progress-clr" d="M55,90
-                       A55,55 0 1,1 140,90"
-                    style="fill:none;"
-                    />
-          </svg>
-          <div class="user-img" [ngClass]="{'user-img-completion': userInfo.profileUpdateCompletion === 100}">
-            <ws-widget-avatar-photo [datalen]="1" [name]="userInfo.firstName" [datalen]="" [randomColor]="true" [photoUrl]="userInfo?.profileImageUrl" size="round-m">
-            </ws-widget-avatar-photo>
-            <span class="percentage-block ">{{userInfo.profileUpdateCompletion}}%</span>
+    <div class="position-absolute" [ngClass]="showrepublicBanner ? 'fade-in default-public-banner' : 'fade-out hide-default-public-banner' ">
+      <ng-container *ngIf="!isLoading">
+        <div class="republic-details  hidden md:block">
+          <div *ngIf="republicDayData.backgroupImage"><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
+          <div class="flex flex-col aligncenter">
+            <div class="greet-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
+            <div class="center-image">
+              <img *ngIf="republicDayData.centerImage" [src]="republicDayData.centerImage">
+            </div>
+            <div class="info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
           </div>
         </div>
-        <div class="user-name flex margin-left-m">
-            <p class="margin-remove text-ellipses"  (click)="userInfo.profileUpdateCompletion < 100 && gotoUserProfile()">{{userInfo.firstName}} {{userInfo.lastName}}</p>
-            <mat-icon *ngIf="userInfo.profileUpdateCompletion < 100" class="ws-mat-default-text mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
+        <div class="republic-details  block md:hidden">
+          <div *ngIf="republicDayData.backgroupImage"><img [src]="republicDayData.backgroupImage" class="mobile-backgroud-image"></div>
+          <div class="flex flex-col aligncenter">
+            <div class="center-image-mobile">
+              <img *ngIf="republicDayData.centerImage" [src]="republicDayData.centerImage" class="image">
+            </div>
+            <div class="mobile-info">
+              <div class="mobile-greet" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
+              <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
+            </div>
+          </div>
         </div>
+      </ng-container>
     </div>
-    <hr class="divider">
-    <div class="profile-user-stats">
-        <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
-        
-        <div class="user-insights block md:hidden" *ngIf="insightsData.sliderData">
+    <ng-container>
+      <div class="profile-details-wrapper" [ngClass]="!showrepublicBanner ? 'default-profile' : 'profile-details-wrapper-with-nudge' ">
+        <div class="profile-user-details">
+        <div class="flex flex-middle padding-16">
+            <div class="progress-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" *ngIf="userInfo.profileUpdateCompletion < 100" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
+                  <path class="grey" d="M55,90
+                          A55,55 0 1,1 140,90"
+                        style="fill:none;"/>
+                  <path class="progress-clr" d="M55,90
+                          A55,55 0 1,1 140,90"
+                        style="fill:none;"
+                        />
+              </svg>
+              <div class="user-img" [ngClass]="{'user-img-completion': userInfo.profileUpdateCompletion === 100}">
+                <ws-widget-avatar-photo [datalen]="1" [name]="userInfo.firstName" [datalen]="" [randomColor]="true" [photoUrl]="userInfo?.profileImageUrl" size="round-m">
+                </ws-widget-avatar-photo>
+                <span class="percentage-block ">{{userInfo.profileUpdateCompletion}}%</span>
+              </div>
+            </div>
+            <div class="user-name flex margin-left-m">
+                <p class="margin-remove text-ellipses"  (click)="userInfo.profileUpdateCompletion < 100 && gotoUserProfile()">{{userInfo.firstName}} {{userInfo.lastName}}</p>
+                <mat-icon *ngIf="userInfo.profileUpdateCompletion < 100" class="ws-mat-default-text mr-3" (click)="gotoUserProfile()">chevron_right</mat-icon>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="profile-user-stats">
+            <ng-container [ngTemplateOutlet]="statsDetails"></ng-container>
 
-        <hr class="divider margin-remove-top">
-          <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
+            <div class="user-insights block md:hidden" *ngIf="insightsData.sliderData">
+
+            <hr class="divider margin-remove-top">
+              <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
+            </div>
         </div>
-    </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
-  <div class="stats-container block md:hidden"  *ngIf="!isLoading">
+
+
+
+  <div class="stats-container block md:hidden"  *ngIf="!isLoading && !showrepublicBanner">
     <div class="flex flex-middle flex-between" (click)="myActivity()">
       <div class="flex flex-middle">
         <img class="stats-icon margin-right-s" width="20" height="20" src="/assets/icons/home/dashboard.svg">
@@ -48,7 +83,7 @@
 </div>
 
 <div class="profile-wrapper" *ngIf="isLoading">
-  <div class="profile-user-details flex flex-middle">
+  <div class="profile-user-details flex flex-middle padding-16">
       <div class="progress-bar">
         <span class="skeleton-box" style="width:64px;height:64px;border-radius: 50%"></span>
         </div>
@@ -78,7 +113,7 @@
       <div class="user-insights padding-top-l">
         <span class="skeleton-box" style="width:100%;height:84px;border-radius:12px"></span>
       </div>
-      
+
   </div>
 </div>
 <div class="profile-user-stats" *ngIf="profileData?.displayOnlyStats">

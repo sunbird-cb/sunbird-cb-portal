@@ -4,12 +4,14 @@ import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
+
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
   styleUrls: ['./app-nav-bar.component.scss'],
 })
 export class AppNavBarComponent implements OnInit, OnChanges {
+
   @Input() mode: 'top' | 'bottom' = 'top'
   @Input() headerFooterConfigData:any;
   // @Input()
@@ -47,6 +49,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   enrollInterval: any
   karmaPointLoading: boolean = true
   tooltipDelay: any = 1000
+  jan26Data: any
+  logoDisplayTime: any
+  janDataEnable:boolean = true
+  // defaultLogo: false
+  animationDuration: number | undefined
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -72,9 +79,18 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    if (this.configSvc) {
+      this.jan26Data = this.configSvc.overrideThemeChanges
+      this.logoDisplayTime = this.jan26Data.desktop.logoDisplayTime
+      this.displayLogo()
+      setInterval(() => {
+        this.janDataEnable = true;
+        this.displayLogo()
+       }, this.logoDisplayTime);
+    }
+
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
     this.router.events.subscribe((event: any) => {
-
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event.url)
@@ -95,7 +111,6 @@ export class AppNavBarComponent implements OnInit, OnChanges {
           } else if (event.url.includes('app/seeAll?key=continueLearning')) {
             this.activeRoute = 'my learnings'
           }
-
       }
     })
 
@@ -106,6 +121,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
       )
+
       this.appIconSecondary = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.appSecondary,
       )
@@ -134,7 +150,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.startTour()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
-    },                                1000)
+    },1000)
+  }
+
+  displayLogo() {
+    const animationDur = this.jan26Data.desktop.animationDuration
+    setTimeout(() =>{
+      this.janDataEnable = false;
+    }, animationDur);
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
