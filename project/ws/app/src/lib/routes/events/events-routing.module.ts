@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: '',
     component: EventsHomeComponent,
+    data: {
+      pageId: '',
+      module: '',
+    },
     children: [
       {
         path: '',
@@ -21,7 +25,7 @@ const routes: Routes = [
         component: EventsComponent,
         data: {
           pageId: 'home',
-          module: 'events',
+          module: 'Events',
         },
         resolve: {
           topics: EventRecentResolve,
@@ -32,7 +36,7 @@ const routes: Routes = [
         component: EventDetailComponent,
         data: {
           pageId: 'home/:eventId',
-          module: 'events',
+          module: 'Events',
         },
         // resolve: {
         //   topic: EventDetailResolve,
