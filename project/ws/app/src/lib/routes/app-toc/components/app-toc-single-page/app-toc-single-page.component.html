@@ -383,7 +383,7 @@
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 class="mat-toolbar contacts-head">Ratings and reviews</h2>
                     </div>
-                    <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
+                    <!-- <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary> -->
 
                     <div class="search">
                         <form [formGroup]="searchForm">
@@ -444,6 +444,7 @@
                             </div>
                         </ng-container>
                     </div> -->
+                    
                     <div class="rating-comments" *ngIf="ratingReviews">
                         <div infiniteScroll
                         [infiniteScrollDistance]="1"

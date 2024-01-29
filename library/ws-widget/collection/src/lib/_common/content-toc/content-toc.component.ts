@@ -13,7 +13,7 @@ export class ContentTocComponent implements OnInit {
 
   tabChangeValue: any = ''
   @Input() content: NsContent.IContent | null = null
-  @Input() initialrouteData: any
+  @Input() initialRouteData: any
   routeSubscription: Subscription | null = null
   @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
 
@@ -21,8 +21,7 @@ export class ContentTocComponent implements OnInit {
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   handleTabChange(event: MatTabChangeEvent): void {
     this.tabChangeValue = event.tab

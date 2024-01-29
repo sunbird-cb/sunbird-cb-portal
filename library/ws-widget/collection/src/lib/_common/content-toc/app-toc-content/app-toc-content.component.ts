@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs'
 })
 export class AppTocContentComponent implements OnInit {
   @Input() content: NsContent.IContent | null = null
-  @Input() initialrouteData: any
+  @Input() initialRouteData: any
   routeSubscription: Subscription | null = null
   @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
 

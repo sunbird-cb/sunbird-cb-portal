@@ -3,94 +3,131 @@
   <div class="flex flex-row gap-6 fixed-width">
     <div class="banner-details toc-content">
       <div class="flex flex-col gap-4">
-        <div class="flex">
-          <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
-            <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-            <div class="text-xs font-bold text-white leading-3">Curated program</div>
+        <div class="lg:hidden">
+          <div class="flex flex-row items-center justify-between text-white">
+            <div class="flex flex-row">
+              <mat-icon>arrow_back_ios</mat-icon>
+              <div>Back</div>
+            </div>
+            <div class="flex justify-end">
+              <mat-icon>share</mat-icon>
+            </div>
           </div>
         </div>
-        <div class="banner-text text-4xl font-bold">AI for Digital Transformation: Machine Learning and Deep Learning</div>
-        <div class="text-base text-white">by Wahhabi Institute of Technology and Policy</div>
-        <div class="flex">
+        <div class="flex gap-4">
+          <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
+            <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
+            <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
+          </div>
+          <div class="flex items-center">
+            <div class="flex items-center due-tag text-xs leading-3">
+              Due by -&nbsp;<span class="font-bold">27 Jul, 1989</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="banner-text text-base sm:text-4xl leading-6 sm:leading-10 font-bold">{{ handleCapitalize(content?.name) }}</div>
+          <div class="text-sm sm:text-base text-white">by Wahhabi Institute of Technology and Policy</div>
+        </div>
+        <div class="flex gap-4">
           <div class="flex flex-row rating-chip py-2 px-3 items-center">
             <div class="flex flex-row gap-1 items-center">
               <mat-icon>grade</mat-icon>
-              <div class="text-white text-sm leading-4">4.5</div>
+              <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
             </div>
             <div class="separator"></div>
-            <div class="text-white text-sm leading-4">141</div>
+            <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
+          </div>
+          <div class="flex items-center">
+            <div class="most-enrolled-chip text-xs leading-3">Most Enrolled</div>
           </div>
         </div>
-        <div class="text-xs leading-4 text-white">(Last updated on Nov 23, 2023)</div>
+        <div class="text-xs leading-4 text-white">(Last updated on {{ content?.sYS_INTERNAL_LAST_UPDATED_ON | date: 'MMM d, y' }})</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="flex flex-row gap-4 fixed-width">
+<div class="flex flex-row gap-6 fixed-width">
   <div class="toc-content">
-    <div class="py-4">
-      <ws-widget-content-toc [content]="content" [initialrouteData]="initialrouteData" [forPreview]="false"
+    <div class="pb-4 lg:py-4">
+      <ws-widget-content-toc [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
       [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
     </div>
   </div>
 
   <div class="right-container">
     <div class="shadow-md right-content">
+      <div class="image-div">
+        <div class="flex justify-end share-container">
+          <div class="flex flex-row gap-2 share-tag">
+            <mat-icon>share</mat-icon>
+            <div>Share</div>
+          </div>
+        </div>
+        <img src="{{ content?.posterImage | pipePublicURL }}" alt="{{ content?.sourceName || 'course image'}}" />
+      </div>
       <div class="enroll-div">
-        <div class="flex flex-col gap-4 p-4">
-          <button class="flex action-button justify-center ">Enroll</button>
+        <div class="flex flex-col gap-4 p-5">
+          <button class="flex action-button justify-center">Enroll</button>
           <div class="flex flex-row gap-2 slider-div">
             <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
             <div class="text-xs">By completing this course earn 10 more Karma Points</div>
           </div>
-          <div class="flex flex-wrap gap-2 p-2">
-            <div class="flex flex-col kpi-values items-center gap-2 ">
-              <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-              <div class="text-xs">3h 30m</div>
+          <ng-container *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
+            <div class="flex flex-wrap gap-2">
+              <div class="flex flex-col kpi-values items-center gap-2 ">
+                <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
+                <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' : 'Course' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-3">
+                <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+                <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ? 'Modules' : 'Module' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+                <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+                <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+                <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
+                'Final assessments' : 'Final assessment' }} </div>
+              </div>
             </div>
-            <div class="flex flex-col kpi-values items-center gap-3">
-              <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
-              <div class="text-xs">4 modules</div>
-            </div>
-            <div class="flex flex-col kpi-values items-center gap-2">
-              <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
-              <div class="text-xs">12 videos</div>
-            </div>
-            <div class="flex flex-col kpi-values items-center gap-2">
-              <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-              <div class="text-xs">12 PDF's</div>
-            </div>
-            <div class="flex flex-col kpi-values items-center gap-2">
-              <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-              <div class="text-xs">1 Final assessment</div>
-            </div>
-          </div>
+          </ng-container>
         </div>
       </div>
 
-      <div class="flex flex-col gap-8 p-4">
-        <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-8 p-5">
+        <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorDetails)?.length">
           <div class="text-base font-bold">Authors</div>
-          <div class="flex flex-row gap-3">
+          <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
             <div class="flex items-center justify-center">
-              <div class="flex items-center justify-center initial-circle">VS</div>
+              <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
+                [name]="author?.name">
+              </ws-widget-avatar-photo>
             </div>
-            <div class="flex flex-col gap-1">
-              <div class="font-bold font-14">Vinod Shyave</div>
-              <div class="text-xs leading-3">Authors</div>
+            <div class="flex flex-col gap-1 justify-center">
+              <div class="font-bold">{{ author?.name }}</div>
+              <div class="text-xs leading-3">Author</div>
             </div>
           </div>
         </div>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
           <div class="text-base font-bold">Curators</div>
-          <div class="flex flex-row gap-3">
+          <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
             <div class="flex items-center justify-center">
-              <div class="flex items-center justify-center initial-circle">VS</div>
+              <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
+                [name]="creator?.name">
+              </ws-widget-avatar-photo>
             </div>
-            <div class="flex flex-col gap-1">
-              <div class="font-bold font-14">Vinod Shyave</div>
-              <div class="text-xs leading-3">Authors</div>
+            <div class="flex flex-col gap-1 justify-center">
+              <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
+              <div class="text-xs leading-3">Curator</div>
             </div>
           </div>
         </div>
@@ -99,21 +136,19 @@
   </div>
 </div>
 
-<ng-container>
+<ng-container *ngIf="show" >
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
       <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)"
         [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
       </ws-app-toc-banner>
       <div role="none" class="toc-body margin-top-xl">
-        <!-- isBatchInProgress : commented as we seperated the CBP -->
         <ws-app-app-toc-single-page [content]="content" [initialrouteData]="initialrouteData" [forPreview]="false"
         [resumeData]="resumeData" [batchData]="batchData">
         </ws-app-app-toc-single-page>
       </div>
     </div>
 
-    <!-- Rigtht sidebar -->
     <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl">
       <div class="header-actions margin-top-s margin-bottom-m">
         <ng-container *ngIf="
@@ -225,9 +260,6 @@
               <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
                 <span class="mat-subheading-1" i18n> Batch will start {{getStartDate}}!!.</span>
               </ng-container>
-              <!-- <ng-container *ngIf="!this.content['batches'] || this.content['batches']?.length <= 0">
-                <span class="mat-subheading-1" i18n> No Active Batches!.</span>
-              </ng-container> -->
               <ng-container *ngIf="
               isBatchInProgress &&
               (actionBtnStatus === 'grant' &&
@@ -239,9 +271,6 @@
                   [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
                   [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
-                  <!-- <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                    {{resumeData? "Resume" : "Start"}}
-                  </ng-container> -->
                   <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                       {{resumeData && (content.completionPercentage < 100 && content.completionPercentage > 0)? "Resume" : "Start"}}
@@ -373,13 +402,8 @@
       </div>
 
       <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
-        <!--======== certificate section ========== -->
-
-        <!-- <div (click)="openCertificateDialog()" *ngIf='content?.completionStatus == 2' class="margin-bottom-xs"> -->
+        
         <div  *ngIf="content?.completionStatus == 2 || certData"  class="margin-bottom-xs">
-          <!-- <ng-container *ngIf="!certData">
-            The certificate is not issued by the trusted certificate authority. Once issued you will be able to download it
-          </ng-container> -->
           <ng-container *ngIf="!certData">
             <span class="certificate-text block">Kindly be patient. The certificate generation normally takes up to 24 hours, however, it might take longer sometimes.</span>
             <span class="certificate-text block">If the issue persists, please mail us at <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
@@ -388,7 +412,6 @@
             <a class="certificate_box" (click)="openCertificateDialog()">
                 <img [src]="certData| pipeSafeSanitizer: 'url'" class="certificate_banner" />
                 <div class="certificate_overlay"></div>
-                <!-- <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p> -->
                 <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">
                   <span>Congratulations!</span>
                   <span class="block">Your certificate of completion is ready for you to download.</span>
@@ -411,19 +434,10 @@
         <mat-icon class="align-bottom">info</mat-icon>&nbsp;
         <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
       </p>
-      <!-- <ng-container *ngIf="content?.completionStatus == 2">
-        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">Your progress</p>
-        <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
-          [contentId]="content?.identifier" [progress]="100" [progressType]="'percentage'">
-        </ws-widget-content-progress>
-      </ng-container> -->
 
       <div *ngIf="showBtn">
         <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">Apply for physical training</a>
     </div>
-    <!-- <div>
-      <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">Apply for physical training</a>
-  </div> -->
 
       <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
        <div class="flex flex-row justify-between w-full">
@@ -468,19 +482,6 @@
         <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray" [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
       </div>
 
-      <!-- action buttons -->
-      <!-- <div class="margin-top-m margin-bottom-s actbutton ws-mat-black60-text text-left" *ngIf="btnPlaylistConfig">
-        <ws-widget-btn-playlist [forPreview]="forPreview" id="playlistforprev" *ngIf="btnPlaylistConfig" [widgetData]="btnPlaylistConfig">
-        </ws-widget-btn-playlist>
-    </div>
-    <div class="margin-bottom-s actbutton ws-mat-black60-text text-left" *ngIf="isGoalsEnabled && btnGoalsConfig">
-        <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig" [widgetData]="btnGoalsConfig">
-        </ws-widget-btn-goals>
-    </div>
-    <div class="margin-bottom-m actbutton ws-mat-black60-text text-left">
-        <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [showText]="true" [widgetData]="content">
-        </ws-widget-btn-content-share>
-    </div> -->
     <ng-container *ngIf="cbPlanEndDate">
       <div class="cb-plan-wrap">
         <p>CBP plan deadline</p>
@@ -523,23 +524,11 @@
               <span *ngIf="tocStructure?.video > 1" i18n> Videos</span>
             </p>
             <p *ngIf="tocStructure?.offlineSession > 0" class="mat-body-2 cs-icons">
-              <img src="/assets/icons/content/grey/module.svg" alt="Ofline sessions" class="margin-right-xs"> {{
+              <img src="/assets/icons/content/grey/module.svg" alt="Offline sessions" class="margin-right-xs"> {{
               tocStructure?.offlineSession }}
               <span *ngIf="tocStructure?.offlineSession === 1" i18n> Session</span>
               <span *ngIf="tocStructure?.offlineSession > 1" i18n> Sessions</span>
             </p>
-            <!-- <p *ngIf="tocStructure?.interactiveVideo > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/video.svg" alt="Video" class="margin-right-xs"> {{ tocStructure?.interactiveVideo }}
-                <span *ngIf="tocStructure?.interactiveVideo === 1" i18n>
-                    Interactive Video</span>
-                <span *ngIf="tocStructure?.interactiveVideo > 1" i18n>
-                    Interactive Videos</span>
-                </p> -->
-            <!-- <p *ngIf="tocStructure?.youtube > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/video.svg" alt="video" class="margin-right-xs"> {{ tocStructure?.youtube }}
-                <span *ngIf="tocStructure?.youtube === 1" i18n> Youtube Video</span>
-                <span *ngIf="tocStructure?.youtube > 1" i18n> Youtube Videos</span>
-            </p> -->
             <p *ngIf="tocStructure?.pdf > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="margin-right-xs"> {{ tocStructure?.pdf }}
               <span *ngIf="tocStructure?.pdf === 1" i18n> PDF</span>
@@ -551,11 +540,6 @@
               <span *ngIf="tocStructure?.podcast === 1" i18n> Audio</span>
               <span *ngIf="tocStructure?.podcast > 1" i18n> Audios</span>
             </p>
-            <!-- <p *ngIf="tocStructure?.webModule > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/module.svg" alt="Web Module" class="margin-right-xs"> {{ tocStructure?.webModule }}
-                <span *ngIf="tocStructure?.webModule === 1" i18n> Web Module</span>
-                <span *ngIf="tocStructure?.webModule > 1" i18n> Web Modules</span>
-            </p> -->
             <p *ngIf="tocStructure?.webPage > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/content_copy.svg" alt="Web Page" class="margin-right-xs"> {{
               tocStructure?.webPage }}
@@ -574,11 +558,6 @@
               <span *ngIf="tocStructure?.interactivecontent === 1" i18n> Interactive Content</span>
               <span *ngIf="tocStructure?.interactivecontent > 1" i18n> Interactive Contents</span>
             </p>
-            <!-- <p *ngIf="tocStructure?.quiz > 0" class="mat-body-2 cs-icons">
-                <img src="/assets/icons/content/grey/assessment.svg" alt="Quiz" class="margin-right-xs"> {{ tocStructure?.quiz }}
-                <span *ngIf="tocStructure?.quiz === 1" i18n> Quiz</span>
-                <span *ngIf="tocStructure?.quiz > 1" i18n> Quizzes</span>
-            </p> -->
             <p *ngIf="tocStructure?.assessment > 0" class="mat-body-2 cs-icons">
               <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment" class="margin-right-xs"> {{
               tocStructure?.assessment }}
@@ -684,13 +663,6 @@
               {{ content?.complexityLevel }}
             </h3>
           </div>
-          <!-- <div class="info-item" *ngIf="tocConfig?.atAGlance?.competencies?.enabled && content?.competencies && content?.competencies.length">
-              <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.competencies?.displayName}}
-              </h3>
-              <h3 class="item-value width-expand">
-                  {{ getCompetencies(content.competencies).join(', ') }}
-              </h3>
-          </div> -->
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.source?.enabled">
             <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.source?.displayName}}
             </h3>
@@ -705,18 +677,6 @@
               {{content?.license}}
             </h3>
           </div>
-          <!-- <div class="info-item"
-              *ngIf="tocConfig?.atAGlance?.viewCount?.enabled && content?.viewCount && configSvc?.rootOrg">
-              <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.viewCount?.displayName}}
-              </h3>
-              <h3 class="item-value width-expand">
-                  {{ content?.viewCount[configSvc.rootOrg] | pipeCountTransform }}
-                  <ng-container *ngIf="content?.uniqueLearners">
-                      ({{ content?.uniqueLearners | pipeCountTransform }}
-                      <ng-container i18n>Unique)</ng-container>
-                  </ng-container>
-              </h3>
-          </div> -->
           <div class="info-item" *ngIf="tocConfig?.atAGlance?.sourceShortName?.enabled && content?.sourceShortName">
             <h3 class="item-heading ws-mat-default-text">
               {{tocConfig?.atAGlance?.sourceShortName?.displayName}}
@@ -772,14 +732,6 @@
               </span>
             </h3>
           </div>
-          <!-- <div class="info-item"
-                *ngIf="tocConfig?.atAGlance?.keywords?.enabled && content?.keywords?.length">
-                <h3 class="item-heading ws-mat-default-text">{{tocConfig?.atAGlance?.keywords?.displayName}}
-                </h3>
-                <h3 class="item-value width-expand">
-                    {{ content?.keywords?.join(', ') }}
-                </h3>
-            </div> -->
           <ng-container *ngFor="let item of content?.collections">
             <div class="info-item"
               *ngIf="tocConfig?.atAGlance?.curatedInKB?.enabled && item.contentType === 'Knowledge Board' && item.status === 'Live'">
@@ -812,7 +764,7 @@
   </div>
 </ng-container>
 
-<ng-template #tocError>
+<!-- <ng-template #tocError>
   <div [wsResolverWidget]="errorWidgetData"></div>
 </ng-template>
 
@@ -823,10 +775,6 @@
 </mat-menu>
 
 <ng-template #actions>
-  <!-- <a i18n-aria-label aria-label="Edit" mat-icon-button *ngIf="editButton"
-      [routerLink]="['/author/editor/' + content?.identifier]" color="primary">
-      <mat-icon>edit</mat-icon>
-    </a> -->
   <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton"
     [routerLink]="['/author/editor/' + content?.identifier]">
     <mat-icon>publish</mat-icon>
@@ -837,9 +785,6 @@
             : ['identifier', 'contentType', 'resourceType', 'mimeType', 'downloadUrl', 'isExternal',
                     'artifactUrl']
       "></ws-widget-btn-content-download>
-  <!-- <ws-widget-btn-content-like id="prevforlike" [forPreview]="forPreview"
-      [widgetData]="content | pipePartialContent: ['identifier']" [color]="default">
-    </ws-widget-btn-content-like> -->
   <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
   </ws-widget-btn-content-share>
   <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name"
@@ -857,7 +802,6 @@
 </ng-template>
 <ng-template #authView i18n>View</ng-template>
 
-<!--Scroll to top-->
 <button mat-fab color="accent" [ngClass]="{'show-scroll': showScroll}" (click)="scrollToTop()" class="scroll-to-top">
   <mat-icon color="primary">keyboard_arrow_up</mat-icon>
-</button>
+</button> -->

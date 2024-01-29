@@ -1,32 +1,22 @@
 <div class="flex flex-col gap-10 mt-4">
     <div class="flex flex-col">
         <div class="mat-subheading-1">Summary</div>
-        <div [ngClass]="{'desc-ellipsis': summaryEllipsis}">Lorem ipsum dolor sit, amet consectetur adipisicing elit. At id dolorem numquam quisquam ut
-            doloremque recusandae fugit obcaecati iste ipsa? Ea dolor quidem pariatur necessitatibus voluptas, error
-            sapiente cum quos dolores repudiandae maxime fuga tempore officia qui porro et est. Ullam, sit architecto?
-            Exercitationem optio animi vitae molestias doloremque ipsum, enim placeat repellendus praesentium minima
-            possimus? Animi quod qui eum ullam consequatur nostrum in eius, architecto excepturi! Saepe ut, error
-            perspiciatis debitis est, illum dicta ex dignissimos blanditiis velit optio nam quibusdam labore temporibus
-            sed vel at architecto? Dolores et ab aliquid iure nostrum animi dignissimos, dolore vitae ullam quos? 
-            <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
-                (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span>
+        <div [ngClass]="{'desc-ellipsis': summaryEllipsis}">
+            {{ content?.description }}
+            <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
+                (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span> -->
         </div>
-        <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="summaryEllipsis" (click)="summaryEllipsis = !summaryEllipsis">view more</div>
+        <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="summaryEllipsis" (click)="summaryEllipsis = !summaryEllipsis">view more</div> -->
     </div>
 
     <div class="flex flex-col">
         <div class="mat-subheading-1">Description</div>
-        <div [ngClass]="{'desc-ellipsis': descEllipsis}" >Lorem ipsum dolor sit, amet consectetur adipisicing elit. At id dolorem numquam quisquam ut
-            doloremque recusandae fugit obcaecati iste ipsa? Ea dolor quidem pariatur necessitatibus voluptas, error sapiente cum
-            quos dolores repudiandae maxime fuga tempore officia qui porro et est. Ullam, sit architecto? Exercitationem
-            optio animi vitae molestias doloremque ipsum, enim placeat repellendus praesentium minima possimus? Animi quod qui eum
-            ullam consequatur nostrum in eius, architecto excepturi! Saepe ut, error perspiciatis debitis est, illum dicta ex
-            dignissimos blanditiis velit optio nam quibusdam labore temporibus sed vel at architecto? Dolores et ab
-            aliquid iure nostrum animi dignissimos, dolore vitae ullam quos? 
-            <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!descEllipsis"
-                (click)="descEllipsis = !descEllipsis">&nbsp;view less</span>
+        <div [ngClass]="{'desc-ellipsis': descEllipsis}">
+            <span [innerHTML]="content?.instructions"></span>
+            <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!descEllipsis"
+                (click)="descEllipsis = !descEllipsis">&nbsp;view less</span> -->
         </div>
-        <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="descEllipsis" (click)="descEllipsis = !descEllipsis" >view more</div>
+        <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="descEllipsis" (click)="descEllipsis = !descEllipsis" >view more</div> -->
     </div>
 
     <div class="flex flex-col gap-3">
@@ -110,11 +100,11 @@
         </div>
     </div>
 
-    <div class="flex flex-row p-6 gap-6 items-center discussion-div">
+    <div class="flex flex-col sm:flex-row p-6 gap-6 items-center discussion-div">
         <div class="flex-1">
-            <div class="flex flex-row gap-5 items-center">
+            <div class="flex flex-col sm:flex-row gap-5 items-center">
                 <mat-icon>forum</mat-icon>
-                Do you have any questions, suggestions or, ideas in your mind? Post it.
+                <div class="text-center sm:text-left">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
             </div>
         </div>
         <div class="flex-none">
@@ -125,70 +115,45 @@
     <div class="flex flex-col gap-3">
         <div class="text-base font-bold">Authors and curators</div>
         <div class="flex flex-col gap-4">
-            <div class="flex flex-row gap-4" *ngFor="let i of [1, 2]">
+            <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
                 <div class="flex items-center justify-center">
-                    <div class="flex items-center justify-center initial-circle">VS</div>
+                    <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'"
+                        [photoUrl]="author.photo || ''" [name]="author.name">
+                    </ws-widget-avatar-photo>
                 </div>
-                <div class="flex flex-col gap-1">
-                    <div class="font-bold">Vinod Shyave</div>
-                    <div class="text-xs leading-3">Authors</div>
+                <div class="flex flex-col gap-1 justify-center">
+                    <div class="font-bold">{{ author?.name }}</div>
+                    <div class="text-xs leading-3">Author</div>
+                </div>
+            </div>
+
+            <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
+                <div class="flex items-center justify-center">
+                    <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="creator.photo || ''"
+                        [name]="creator.name">
+                    </ws-widget-avatar-photo>
+                </div>
+                <div class="flex flex-col gap-1 justify-center">
+                    <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
+                    <div class="text-xs leading-3">Curator</div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="flex flex-col ratings-div gap-10">
-        <div class="flex flex-col gap-6 ratings-container">
-            <div class="flex flex-row gap-4 items-center">
-                <div class="rating-value ws-mat-default-text">4.5</div>
-                <div class="flex flex-col gap-1">
-                    <div class="flex flex-row gap-2 stars-div">
-                        <mat-icon>star</mat-icon>
-                        <mat-icon>star</mat-icon>
-                        <mat-icon>star</mat-icon>
-                        <mat-icon>star</mat-icon>
-                        <mat-icon>star</mat-icon>
-                    </div>
-                    <div class="text-base">141 ratings</div>
-                </div>
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <div class="flex flex-row gap-4 items-center">
-                    <div class="flex-none font-bold">5 star</div>
-                    <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
-                </div>
-                <div class="flex flex-row gap-4 items-center">
-                    <div class="flex-none font-bold">4 star</div>
-                    <mat-progress-bar mode="determinate" value="80"></mat-progress-bar>
-                </div>
-                <div class="flex flex-row gap-4 items-center">
-                    <div class="flex-none font-bold">3 star</div>
-                    <mat-progress-bar mode="determinate" value="70"></mat-progress-bar>
-                </div>
-                <div class="flex flex-row gap-4 items-center">
-                    <div class="flex-none font-bold">2 star</div>
-                    <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
-                </div>
-                <div class="flex flex-row gap-4 items-center">
-                    <div class="flex-none font-bold">1 star</div>
-                    <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
-                </div>
-            </div>
-        </div>
-        <!-- <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary> -->
+        <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
 
         <div class="flex flex-col gap-3">
             <div class="flex flex-row gap-4">
                 <div class="flex-1 mat-subheading-1">Top reviews</div>
-                <div class="ws-mat-default-text">Show all</div>
+                <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
             </div>
             <div class="flex flex-wrap gap-5">
                 <div class="comment-div" *ngFor="let i of [1, 2, 3, 4]">
                     <div class="p-4 flex flex-col gap-6">
                         <div class="flex flex-row gap-4">
-                            <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo
-                            </div>
+                            <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo</div>
                             <div class="flex flex-row gap-2 rating-start-value">
                                 <mat-icon>star</mat-icon>
                                 4.4

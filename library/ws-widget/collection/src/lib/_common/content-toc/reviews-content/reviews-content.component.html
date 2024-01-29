@@ -1,0 +1,74 @@
+<div class="rating-modal-container">
+    <div class="flex flex-row ratings-container">
+        <div class="flex-1">
+            <ws-widget-rating-summary [ratingSummary]="data?.ratings"></ws-widget-rating-summary>
+        </div>
+        <div class="flex">
+            <mat-icon class="cursor-pointer" (click)="handleCloseModal()" >close</mat-icon>
+        </div>
+    </div>
+    <div class="flex flex-col p-6">
+        <div class="flex flex-col gap-4">
+            <div class="font-base font-bold">Reviews</div>
+            <div class="flex flex-row gap-3">
+                <div class="flex-1">
+                    <div class="flex flex-row search-div">
+                        <mat-icon (click)="handleFocus()" class="cursor-pointer">search</mat-icon>
+                        <input #searchInput type="text" class="search-input flex" placeholder="Search" />
+                        <ng-container *ngIf="clearIcon">
+                            <mat-icon (click)="handleClear()" class="cursor-pointer">close</mat-icon>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <mat-icon class="cursor-pointer">filter_list</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col reviews">
+            <div class="flex flex-row gap-3 p-4">
+                <div class="flex-1">
+                    <div class="flex flex-col gap-6">
+                        <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo</div>
+                        <div class="flex flex-row gap-2 items-center">
+                            <!-- <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author.photo || ''" [name]="author.name"></ws-widget-avatar-photo> -->
+                            <div class="flex initial-circle items-center justify-center">VS</div>
+                            <div>Vinod Shyave</div>
+                            <div class="flex items-center">
+                                <span class="period"></span>
+                            </div>
+                            <div>2 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row gap-1 rating-start-value">
+                    <mat-icon>star</mat-icon>
+                    <div>4.4</div>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="flex flex-row gap-3 p-4">
+                <div class="flex-1">
+                    <div class="flex flex-col gap-6">
+                        <div class="flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat explicabo</div>
+                        <div class="flex flex-row gap-2 items-center">
+                            <!-- <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author.photo || ''" [name]="author.name"></ws-widget-avatar-photo> -->
+                            <div class="flex initial-circle items-center justify-center">VS</div>
+                            <div>Vinod Shyave</div>
+                            <div class="flex items-center">
+                                <span class="period"></span>
+                            </div>
+                            <div>2 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row gap-1 rating-start-value">
+                    <mat-icon>star</mat-icon>
+                    <div>4.4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
