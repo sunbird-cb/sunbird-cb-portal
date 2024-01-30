@@ -34,10 +34,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isKPPanelenabled = false
   enrollData: any
   enrollInterval: any
+  jan26Change: any
   constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService,
     private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
 
   ngOnInit() {
+    if (this.configSvc) {
+      this.jan26Change = this.configSvc.overrideThemeChanges
+    }
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
       this.mobileTopHeaderVisibilityStatus = status;
     })
