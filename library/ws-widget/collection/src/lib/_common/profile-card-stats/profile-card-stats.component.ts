@@ -23,6 +23,10 @@ export class ProfileCardStatsComponent implements OnInit {
   userInfo: any
   countdata: any
   enrollInterval: any
+  showrepublicBanner: any = false
+  republicDayData: any = {}
+  interval = 0
+  profileDelay = 0
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe) { }
@@ -35,7 +39,56 @@ export class ProfileCardStatsComponent implements OnInit {
     // this.getCounts()
     const progress = (247 - ((247 * this.userInfo.profileUpdateCompletion) / 100))
     document.documentElement.style.setProperty('--i', String(progress))
+    if (this.configSvc.profileTimelyNudges.enable) {
+      this.profileDelay = this.configSvc.profileTimelyNudges.profileDelayInSec
+    }
+    setTimeout(() => {
+      this.getTimelyNudge()
+    },         this.profileDelay * 1000)
   }
+
+  getTimelyNudge() {
+    if (this.configSvc.profileTimelyNudges.enable) {
+      const rand = Math.round(Math.random() * 4)
+      const currentDate = new Date()
+      const timeInterval = this.configSvc.profileTimelyNudges.nudgeDelayInSec
+      const hours = currentDate.getHours()
+      const defaultData = this.configSvc.profileTimelyNudges.data[this.configSvc.profileTimelyNudges.data.length - 1]
+      if (defaultData) {
+        this.republicDayData['backgroupImage'] = defaultData.backgroupImage
+        this.republicDayData['info'] = defaultData['info'][rand]
+        this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
+        this.republicDayData['textColor'] = defaultData['textColor']
+        let userName = this.userInfo.firstName
+        if (userName.length > 18) {
+          userName = `${this.userInfo.firstName.slice(0, 18)}...`
+        }
+        this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
+        this.showrepublicBanner = true
+        setTimeout(() => {
+          this.showrepublicBanner = false
+        },         (1000 * timeInterval))
+      }
+      this.configSvc.profileTimelyNudges.data.filter((data: any) => {
+        if (hours >= data.startTime && hours < data.endTime) {
+          this.republicDayData['backgroupImage'] = data.backgroupImage
+          this.republicDayData['info'] = data['info'][rand]
+          this.republicDayData['centerImage'] = data['centerImage'][rand]
+          let userName = this.userInfo.firstName
+          if (userName.length > 18) {
+            userName = `${this.userInfo.firstName.slice(0, 18)}...`
+          }
+          this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
+          this.republicDayData['textColor'] = data['textColor']
+          this.showrepublicBanner = true
+        }
+        setTimeout(() => {
+          this.showrepublicBanner = false
+        },         (1000 * timeInterval))
+      })
+    }
+  }
+
   getCounts() {
     let enrollList: any
     if (localStorage.getItem('enrollmentData')) {
