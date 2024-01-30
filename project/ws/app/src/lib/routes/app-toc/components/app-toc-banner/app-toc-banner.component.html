@@ -39,6 +39,7 @@
           <div class="sm:ml-5 flex flex-col flex-auto">
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="contentReadData?.name">
               {{ contentReadData?.name }}
+              <span class="float-right cursor-pointer" (click)="onClickOfShare()" *ngIf="canShare"><mat-icon class="ws-mat-accent-text">share</mat-icon></span>
             </h1>
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="contentReadData?.name">
               {{ contentReadData?.name }}

@@ -31,6 +31,7 @@ import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
+import { ContentSharingDialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-sharing-dialog/content-sharing-dialog.component'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -108,6 +109,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   seconds: any
   serverDateSubscription: any
   serverDate: any
+  canShare: boolean = false
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -222,6 +224,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         contentType: this.content.contentType,
         primaryCategory: this.content.primaryCategory,
       }
+    }
+
+    if (this.content && (
+      this.content.primaryCategory === this.primaryCategory.COURSE ||
+      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
+      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
+      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
+      ) {
+        this.canShare = true
     }
   }
 
@@ -1192,5 +1203,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return this.tocConfig[msg]
     }
     return ''
+  }
+
+  onClickOfShare() {
+    const dialogRef = this.dialog.open(ContentSharingDialogComponent, {
+      width: '770px',
+      data: {  },
+    })
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        console.log(result)
+      }
+    })
+
   }
 }

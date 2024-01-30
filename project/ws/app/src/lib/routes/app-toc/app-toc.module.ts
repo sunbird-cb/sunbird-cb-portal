@@ -1,3 +1,4 @@
+import { ContentSharingDialogModule } from './../../../../../../../library/ws-widget/collection/src/lib/_common/content-sharing-dialog/content-sharing-dialog.module';
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
@@ -204,6 +205,7 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     BtnContentFeedbackModule,
     BtnContentFeedbackV2Module,
     ContentRatingV2DialogModule,
+    ContentSharingDialogModule,
     RatingSummaryModule,
     CertificateDialogModule,
     ConfirmDialogModule,

@@ -1,0 +1,34 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+
+.rating-button {
+margin-right: 10px;
+line-height: 20px;
+height: 24px;
+width: 24px;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+    padding: 5px 0;
+}
+
+button:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.copy-link-btn {
+    margin-right: 25px;
+    border: none;
+    color: #0074b6!important;
+}
+.copy-link-btn:hover {
+    background-color: none!important;
+}
+.send-btn {
+    border-radius: 20px;
+}
+.send-btn .mat-icon {
+    margin-bottom: 2.5px;
+}
