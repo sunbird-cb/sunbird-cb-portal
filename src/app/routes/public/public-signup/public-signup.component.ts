@@ -137,7 +137,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   searching = false
   groupsOriginal: any = []
 
-  selectedLanguage: any
+  selectedLanguage = 'en'
   multiLang: any = []
 
   constructor(
@@ -748,7 +748,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   selectLanguage(event: any) {
-    this.selectedLanguage = event.target.value
+    this.selectedLanguage = event
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }

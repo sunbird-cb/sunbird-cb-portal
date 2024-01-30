@@ -14,12 +14,13 @@
   <div class=" right_container flex flex-col items-center justify-center py-8">
     <div class="langdiv">
       <mat-form-field class="custom-lang">
-          <select matNativeControl class="custom-lang" [(ngModel)]="selectedLanguage" (change)="selectLanguage($event)">
-              <option *ngFor="let lang of multiLang" [value]="lang.key">
-                  {{lang.value}}
-              </option>
-          </select>
-      </mat-form-field>
+        <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
+        <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
+            <mat-option *ngFor="let lang of multiLang" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">
+                {{lang.value}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     </div>
     <div class="right_inner_container profile-box">
       <div class="flex">

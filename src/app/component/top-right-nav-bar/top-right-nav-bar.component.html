@@ -22,11 +22,12 @@
         </li>
         <li *ngIf="item.type === 'langSelect' && rnc.section === 'language' && rnc.active" class="langdiv">
             <mat-form-field class="custom-lang">
-                <select matNativeControl class="custom-lang" [(ngModel)]="selectedLanguage" (change)="selectLanguage($event)">
-                    <option *ngFor="let lang of multiLang" [value]="lang.key">
+                <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
+                <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
+                    <mat-option *ngFor="let lang of multiLang" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">
                         {{lang.value}}
-                    </option>
-                </select>
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </li>
         <li matTooltipClass="right-nav-tooltip" matTooltip="{{ translateLabels('needHelp', 'toprightnavbar')}}" class="help-icon" id="help-icon" *ngIf="item.type === 'helpButton' && rnc.section === 'help' && rnc.active">
