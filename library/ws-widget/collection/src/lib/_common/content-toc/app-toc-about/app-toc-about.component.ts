@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import lodash from 'lodash'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'

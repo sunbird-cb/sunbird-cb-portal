@@ -90,6 +90,16 @@
   border-radius: 4px;
 }
 
+.filter-dot {
+  background-color: #d13924;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  position: relative;
+  top: -6px;
+  right: -28px;
+}
+
 .initial-circle {
   width: 36px;
   height: 36px;
@@ -97,4 +107,8 @@
   background: #1B2133;
   color: #FFF;
   text-transform: uppercase;
+}
+
+.highlightFilter {
+  background: rgba(0, 0, 0, 0.04) !important;
 }
