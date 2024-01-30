@@ -32,7 +32,7 @@
     <ng-container>
       <div class="profile-details-wrapper" [ngClass]="!showrepublicBanner ? 'default-profile' : 'profile-details-wrapper-with-nudge' ">
         <div class="profile-user-details">
-        <div class="flex flex-middle padding-16">
+        <div class="flex flex-middle padding-12">
             <div class="progress-wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" *ngIf="userInfo.profileUpdateCompletion < 100" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="64" height="64">
                   <path class="grey" d="M55,90
@@ -83,7 +83,7 @@
 </div>
 
 <div class="profile-wrapper" *ngIf="isLoading">
-  <div class="profile-user-details flex flex-middle padding-16">
+  <div class="profile-user-details flex flex-middle padding-12">
       <div class="progress-bar">
         <span class="skeleton-box" style="width:64px;height:64px;border-radius: 50%"></span>
         </div>
