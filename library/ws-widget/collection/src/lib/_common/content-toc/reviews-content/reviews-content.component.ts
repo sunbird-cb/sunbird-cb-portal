@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Inject, ElementRef } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ViewChild, Inject, ElementRef, Output, EventEmitter } from '@angular/core'
 import { fromEvent } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
@@ -14,16 +14,12 @@ import _ from 'lodash'
 export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>
-  authReplies: any
+  @Output() initiateLoadMore = new EventEmitter()
   clearIcon = false
   disableLoadMore = false
-  lookupLimit = 3
-  lookupLoading: Boolean = true
-  lastLookUp: any
-  ratingReviews: any[] = []
-  ratingLookup: any
   reviews: any[] = []
-  showFilterIndicator = 'all'
+  showFilterIndicator = 'Top'
+  displayLoader = false;
 
   constructor(
     public dialogRef: MatDialogRef<ReviewsContentComponent>,
@@ -82,52 +78,8 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
     this.showFilterIndicator = str
   }
 
-  // processRatingLookup(response: any) {
-  //   if (response) {
-  //     if (response && response.length < this.lookupLimit) {
-  //       this.disableLoadMore = true
-  //     } else {
-  //       this.disableLoadMore = false
-  //       this.lookupLoading = false
-  //     }
-  //     this.lastLookUp = response[response.length - 1]
-  //     this.ratingReviews = this.ratingLookup
-  //     this.authReplies = []
-  //     this.authReplies = _.keyBy(this.ratingReviews, 'userId')
-  //     const userIds = _.map(this.ratingReviews, 'userId')
-  //     if (this.content && userIds) {
-  //       this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
-  //     }
-  //     this.ratingReviews = this.ratingReviews.slice()
-  //   }
-  // }
-
-  // getAuthorReply(identifier: string, primaryCategory: NsContent.EPrimaryCategory, userIds: any[]) {
-  //   const request = {
-  //     request: {
-  //         activityId: identifier,
-  //         activityType: primaryCategory,
-  //         userId: userIds,
-  //     },
-  //   }
-
-  //   return this.ratingService.getRatingReply(request).subscribe(
-  //     (res: any) => {
-  //       if (res && res.result && res.result.content) {
-  //         const ratingAuthReplay = res.result.content
-  //         _.forEach(ratingAuthReplay, value => {
-  //             if (this.authReplies[value.userId]) {
-  //               this.authReplies[value.userId]['comment'] = value.comment
-  //               this.authReplies[value.userId]['userId'] = value.userId
-  //             }
-  //         })
-  //       }
-  //       return this.authReplies
-  //     },
-  //     (err: any) => {
-  //       this.loggerService.error('USER RATING FETCH ERROR >', err)
-  //     }
-  //   )
-  // }
-
+  handleLoadMore(): void {
+    this.displayLoader = true
+    this.initiateLoadMore.emit(true)
+  }
 }

@@ -147,28 +147,37 @@
         <div class="flex flex-col gap-3">
             <div class="flex flex-row gap-4">
                 <div class="flex-1 mat-subheading-1">Top reviews</div>
-                <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
+                <ng-container *ngIf="reviews && reviews?.length">
+                    <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
+                </ng-container>
             </div>
-            <div class="flex flex-wrap gap-5">
-                <div class="comment-div" *ngFor="let eachReview of reviews; let i = index">
-                    <div class="p-4 flex flex-col gap-6">
-                        <div class="flex flex-row gap-4">
-                            <div class="flex-1">{{ handleCapitalize(eachReview?.review) }}</div>
-                            <div class="flex flex-row gap-2 rating-start-value">
-                                <mat-icon>star</mat-icon>
-                                <div>{{ eachReview?.rating }}</div>
+            <ng-container *ngIf="reviews && reviews?.length">
+                <div class="flex flex-wrap gap-5">
+                    <div class="comment-div" *ngFor="let eachReview of reviews; let i = index">
+                        <div class="p-4 flex flex-col gap-6">
+                            <div class="flex flex-row gap-4">
+                                <div class="flex-1">{{ handleCapitalize(eachReview?.review) }}</div>
+                                <div class="flex flex-row gap-2 rating-start-value">
+                                    <mat-icon>star</mat-icon>
+                                    <div>{{ eachReview?.rating }}</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex flex-row gap-2 items-center">
-                            <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''"
-                                [name]="eachReview?.firstName"></ws-widget-avatar-photo>
-                            <div>{{ handleCapitalize(eachReview?.firstName) }}</div>
-                            <div class="flex items-center">
-                                <span class="period"></span>
+                            <div class="flex flex-row gap-2 items-center">
+                                <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''"
+                                    [name]="eachReview?.firstName"></ws-widget-avatar-photo>
+                                <div>{{ handleCapitalize(eachReview?.firstName) }}</div>
+                                <div class="flex items-center">
+                                    <span class="period"></span>
+                                </div>
+                                <div>{{ eachReview?.updatedon | pipeRelativeTime }}</div>
                             </div>
-                            <div>{{ eachReview?.updatedon | pipeRelativeTime }}</div>
                         </div>
                     </div>
+                </div>
+            </ng-container>
+            <div *ngIf="!reviews || !reviews?.length">
+                <div class="flex flex-col text-center items-center justify-center bg-white p-4 rounded-md">
+                    <div class="font-base font-bold">No reviews found!</div>
                 </div>
             </div>
         </div>

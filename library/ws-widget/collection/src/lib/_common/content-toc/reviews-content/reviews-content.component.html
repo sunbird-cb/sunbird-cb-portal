@@ -9,7 +9,7 @@
     </div>
     <div class="flex flex-col p-6">
         <div class="flex flex-col gap-4">
-            <div class="font-base font-bold">{{ (showFilterIndicator !== 'all') ? showFilterIndicator : '' }} Reviews</div>
+            <div class="font-base font-bold">{{ showFilterIndicator }} Reviews</div>
             <div class="flex flex-row gap-3">
                 <div class="flex-1">
                     <div class="flex flex-row search-div">
@@ -21,12 +21,8 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-center w-8">
-                    <span class="filter-dot" *ngIf="showFilterIndicator !== 'all'"></span>
                     <mat-icon class="cursor-pointer" [matMenuTriggerFor]="filter">filter_list</mat-icon>
                     <mat-menu #filter="matMenu" xPosition="before">
-                        <button mat-menu-item class="px-3" (click)="handleReviewsFilter('all')">
-                            <span>All reviews</span>
-                        </button>
                         <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'Latest'}"
                             (click)="handleReviewsFilter('Latest')">
                             <span>Latest reviews</span>
@@ -39,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col reviews">
+        <div class="flex flex-col reviews" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150" [infiniteScrollContainer]="'.reviews'" [fromRoot]="true" [scrollWindow]="false" (scrolled)="handleLoadMore()">
             <ng-container *ngFor="let eachReview of reviews; let i = index">
                 <div class="flex flex-row gap-3 p-4">
                     <div class="flex-1">
@@ -62,6 +58,9 @@
                 </div>
                 <div class="separator" *ngIf="reviews.length > (i + 1)" ></div>
             </ng-container>
+            <div *ngIf="displayLoader" class="flex items-center justify-center mt-6">
+                <mat-spinner [diameter]="30"></mat-spinner>
+            </div>
         </div>
     </div>
     

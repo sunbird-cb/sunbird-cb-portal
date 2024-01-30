@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material';
 // tslint:disable-next-line
 import _ from 'lodash'
 
@@ -24,6 +25,7 @@ export class AppTocAboutComponent implements OnInit {
   ratingSummaryProcessed: any
   ratingReviews: any[] = []
   reviews: any[] = []
+  dialogRef: any;
 
   displayLoader = false
   disableLoadMore = false
@@ -32,6 +34,8 @@ export class AppTocAboutComponent implements OnInit {
   lastLookUp: any
   ratingLookup: any
   reviewPage = 1
+  ratingViewCount = 3
+  reviewDefaultLimit = 2
 
   // tslint:disable-next-line:max-line-length
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
@@ -39,7 +43,8 @@ export class AppTocAboutComponent implements OnInit {
   constructor(
     private ratingService: RatingService,
     private loggerService: LoggerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private matSnackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -69,7 +74,8 @@ export class AppTocAboutComponent implements OnInit {
           this.fetchRatingLookup()
         },
         (err: any) => {
-          this.loggerService.error('USER RATING FETCH ERROR >', err)
+          this.loggerService.error('USER RATING FETCH ERROR >', err);
+          this.matSnackBar.open("Unable to fetch rating summary, due to some error!");
         }
       )
     }
@@ -81,16 +87,16 @@ export class AppTocAboutComponent implements OnInit {
       const req = {
         activityId: this.content.identifier,
         activityType: this.content.primaryCategory,
-        // this field can be enabled if specific ratings have to be looked up
-        // rating: 0,
         limit: this.lookupLimit,
         ...((this.lastLookUp && this.lastLookUp.updatedOnUUID) ? { updateOn: (this.lastLookUp && this.lastLookUp.updatedOnUUID) } : null),
       }
 
       this.ratingService.getRatingLookup(req).subscribe(
         (res: any) => {
-          this.displayLoader = false
-          // // console.log('Rating summary res ', res)
+          if (this.dialogRef) {   // Do disable the loader in the modal.
+            this.dialogRef.componentInstance.displayLoader = false;
+          }
+
           if (res && res.result && res.result.response) {
             if (this.reviewPage > 1) {
               res.result.response.map((item: any) => {
@@ -106,8 +112,12 @@ export class AppTocAboutComponent implements OnInit {
           this.processRatingLookup(res.result.response)
         },
         (err: any) => {
-          this.displayLoader = false
-          this.loggerService.error('USER RATING FETCH ERROR >', err)
+          if (this.dialogRef) {   // Do disable the loader in the modal.
+            this.dialogRef.componentInstance.displayLoader = false;
+          }
+
+          this.loggerService.error('USER RATING FETCH ERROR >', err);
+          this.matSnackBar.open("Unable to load reviews, due to some error!");
         }
       )
     }
@@ -119,7 +129,6 @@ export class AppTocAboutComponent implements OnInit {
         this.disableLoadMore = true
       } else {
         this.disableLoadMore = false
-        this.lookupLoading = false
       }
       this.lastLookUp = response[response.length - 1]
       this.ratingReviews = this.ratingLookup
@@ -158,7 +167,8 @@ export class AppTocAboutComponent implements OnInit {
         return this.authReplies
       },
       (err: any) => {
-        this.loggerService.error('USER RATING FETCH ERROR >', err)
+        this.loggerService.error('USER RATING FETCH ERROR >', err);
+        this.matSnackBar.open("Unable to fetch author replies, due to some error!");
       }
     )
   }
@@ -240,17 +250,28 @@ export class AppTocAboutComponent implements OnInit {
   }
 
   handleOpenReviewModal(): void {
-    const dialogRef = this.dialog.open(ReviewsContentComponent, {
+    this.dialogRef = this.dialog.open(ReviewsContentComponent, {
       width: '400px',
       data: { ratings: this.ratingSummaryProcessed, reviews: this.authReplies },
       panelClass: 'ratings-modal-box',
       disableClose: true,
     })
 
-    dialogRef.afterClosed().subscribe(_result => {
+    this.dialogRef.afterClosed().subscribe((_result: any) => {
     })
+
+    this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: any) => {
+      this.loadMore();
+    });
   }
 
-  // handleTabChange(event: MatTabChangeEvent): void {}
+  loadMore() {
+    if (!this.disableLoadMore) {
+      this.lookupLoading = true
+      this.reviewPage = this.reviewPage + 1
+      this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
+      this.fetchRatingLookup()
+    }
+  }
 
 }

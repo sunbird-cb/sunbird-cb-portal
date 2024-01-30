@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule } from '@angular/material'
+import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module'
 import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
@@ -14,7 +15,6 @@ import { ReviewsContentComponent } from './reviews-content/reviews-content.compo
 import { AppTocContentCardV2Component } from './app-toc-content-card-v2/app-toc-content-card-v2.component'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { NgCircleProgressModule } from 'ng-circle-progress'
-
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 
 @NgModule({
@@ -39,6 +39,9 @@ import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
     PipeDurationTransformModule,
     NgCircleProgressModule.forRoot({}),
     PipeRelativeTimeModule,
+    InfiniteScrollModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
   ],
   exports: [
     ContentTocComponent,
