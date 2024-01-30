@@ -75,7 +75,7 @@
                 <mat-tab-group animationDuration="0ms" [selectedIndex]="getSelectedIndex(stripsResultDataMap[key], key)"
                 class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
                   (selectedTabChange)="tabClicked($event, stripsResultDataMap[key], key)">
-                  <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
+                  <mat-tab label="{{tab?.label}}" *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                     <ng-template mat-tab-label>
                       <span>{{tab?.label}} &nbsp;</span> 
                       <span *ngIf="tab?.showTabDataCount && tab?.widgets?.length">({{tab?.widgets?.length}})</span>

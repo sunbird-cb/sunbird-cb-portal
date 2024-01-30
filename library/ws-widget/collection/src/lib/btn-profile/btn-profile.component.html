@@ -44,7 +44,7 @@
   </section> -->
 
   <section class="padding-s border-bottom">
-    <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile">
+    <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile" (click)="raiseTelemetry('profile')">
       <div class="float-left">
         <ws-widget-avatar-photo [name]="getGivenName" [size]="'profile-round-m'" [photoUrl]="profileImage"></ws-widget-avatar-photo>
         <span *ngIf="verifiedBadge" class="profile-badge">  
