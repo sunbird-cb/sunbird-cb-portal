@@ -1,7 +1,7 @@
 import { AUTO_STYLE, animate, state, transition, trigger,style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { HomePageService } from 'src/app/services/home-page.service';
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
@@ -67,7 +67,8 @@ export class InsightSideBarComponent implements OnInit {
     private configSvc:ConfigurationsService,
     private activatedRoute: ActivatedRoute,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router) { }
+    private router: Router,
+    private events: EventService) { }
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
@@ -236,6 +237,20 @@ export class InsightSideBarComponent implements OnInit {
     this.discussUtilitySvc.setDiscussionConfig(config)
     localStorage.setItem('home', JSON.stringify(config))
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
+  }
+
+  raiseTelemetry(nudgename: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.PORTAL_NUDGE,
+        id: `${nudgename}-nudge`
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME
+      }
+    )
   }
 }
 
