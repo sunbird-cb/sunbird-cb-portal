@@ -1,0 +1,17 @@
+<div class="competency-passbook-theme" [ngClass]="{'behavioural': (competencyArea?.toLowerCase() === 'behavioural' || competencyArea?.toLowerCase() === 'behavioral'), 'functional': competencyArea?.toLowerCase() === 'functional', 'domain': competencyArea?.toLowerCase() === 'domain'}">
+    <div class="detail">
+        <div class="flex flex-col gap-2">
+            <div class="text-base font-bold">{{ bindingData?.key }}</div>
+            <div class="flex flex-wrap gap-4 chip-container">
+                <ng-container *ngFor="let subTheme of bindingData?.value">
+                    <div class="chip rounded-full text-xs">
+                        {{ subTheme }}
+                    </div>
+                </ng-container>
+                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
+                    View more
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -72,8 +72,8 @@ export class AppTocAboutComponent implements OnInit {
           this.competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
           this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
         }
-      });
-      this.competencySelected = Object.keys(this.competenciesObject)[0];
+      })
+      this.competencySelected = Object.keys(this.competenciesObject)[0]
     }
   }
 

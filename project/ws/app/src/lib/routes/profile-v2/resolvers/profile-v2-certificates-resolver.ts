@@ -15,10 +15,10 @@ export class Profilev2CerficatesResolve
     _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot,
   ): Observable<any> {
-    let userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
+    const userId = this.configSvc.userProfile && this.configSvc.userProfile.userId || ''
 
     return this.userSvc.fetchProfileUserBatchList(userId).pipe(
-      map(data =>  ({ data: data, error: null })),
+      map(data =>  ({ data, error: null })),
       catchError(error => of({ error, data: null })),
     )
   }

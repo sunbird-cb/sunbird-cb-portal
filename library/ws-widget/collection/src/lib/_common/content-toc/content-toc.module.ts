@@ -13,7 +13,8 @@ import { AppTocAboutComponent } from './app-toc-about/app-toc-about.component'
 import { AppTocContentComponent } from './app-toc-content/app-toc-content.component'
 import { ReviewsContentComponent } from './reviews-content/reviews-content.component'
 import { AppTocContentCardV2Component } from './app-toc-content-card-v2/app-toc-content-card-v2.component'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
+import { CardCompetencyModule } from '../../card-competency/card-competency.module'
+import { PipeDurationTransformModule, HorizontalScrollerV2Module } from '@sunbird-cb/utils/src/public-api'
 import { NgCircleProgressModule } from 'ng-circle-progress'
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 
@@ -42,6 +43,8 @@ import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
     InfiniteScrollModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    CardCompetencyModule,
+    HorizontalScrollerV2Module,
   ],
   exports: [
     ContentTocComponent,
