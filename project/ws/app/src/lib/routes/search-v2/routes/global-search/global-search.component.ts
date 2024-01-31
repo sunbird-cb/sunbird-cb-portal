@@ -18,7 +18,7 @@ export class GlobalSearchComponent implements OnInit {
   constructor(private activated: ActivatedRoute, private translate: TranslateService) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
   }
@@ -73,8 +73,8 @@ export class GlobalSearchComponent implements OnInit {
   }
 
   translateTo(menuName: string): string {
-    const translationKey = 'globalsearch.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'globalsearch.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 
 }

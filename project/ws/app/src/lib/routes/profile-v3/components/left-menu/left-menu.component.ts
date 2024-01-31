@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { StepService } from '../../services/step.service'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-l-menu',
@@ -25,14 +25,9 @@ export class SetupLeftMenuComponent implements OnInit, OnDestroy {
 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
-
   }
 
   ngOnInit(): void {
@@ -67,8 +62,8 @@ export class SetupLeftMenuComponent implements OnInit, OnDestroy {
   }
 
   translateTo(menuName: string): string {
-    const translationKey = 'profilehome.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'profilehome.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 
 }

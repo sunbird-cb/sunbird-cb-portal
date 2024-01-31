@@ -101,7 +101,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatDividerModule,
     UserAutocompleteModule,
     InfiniteScrollModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [],
   providers: [],

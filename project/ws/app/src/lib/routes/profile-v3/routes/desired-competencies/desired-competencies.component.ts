@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { CompLocalService } from '../../services/comp.service'
 import { FormControl } from '@angular/forms'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-desired-competencies',
@@ -46,12 +46,8 @@ export class DesiredCompetenciesComponent implements OnInit, OnDestroy {
     this.loadCompetencies()
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs'
 import { AddTopicDialogComponent } from '../../components/add-topic/add-topic.component'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { TopicService } from '../../services/topics.service'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-topic',
@@ -41,12 +41,8 @@ export class TopicComponent implements OnInit, OnDestroy {
 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          console.log('onLangChange', event);
-      });
   }
   }
   ngOnDestroy(): void {

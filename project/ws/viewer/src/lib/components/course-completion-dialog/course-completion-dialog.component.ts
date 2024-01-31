@@ -21,10 +21,10 @@ export class CourseCompletionDialogComponent implements OnInit {
     private translate: TranslateService,
     public dialogRef: MatDialogRef<CourseCompletionDialogComponent>,
     private langtranslations: MultilingualTranslationsService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
+    @Inject(MAT_DIALOG_DATA) public data: any) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
-        let lang = localStorage.getItem('websiteLanguage')!
+        const lang = localStorage.getItem('websiteLanguage')!
         this.translate.use(lang)
       }
     }

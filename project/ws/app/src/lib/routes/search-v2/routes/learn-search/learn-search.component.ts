@@ -78,7 +78,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
    }
