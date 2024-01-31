@@ -47,7 +47,6 @@ export class NetworkComponent implements OnInit, OnDestroy {
   ) {
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     // console.log('+++++++')
-    console.log("ss", this.tabsData);
 
     this.bannerSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {

@@ -46,12 +46,11 @@ export class NetworkConnectionRequestsComponent implements OnInit {
       this.filter('timestamp', 'desc')
     }
   }
-  
-  translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
-  }
 
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
+  }
 
   updateQuery(key: string) {
     if (key) {

@@ -39,11 +39,10 @@ export class NetworkHomeComponent implements OnInit {
 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
 
-    
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     if (this.activeRoute.parent) {

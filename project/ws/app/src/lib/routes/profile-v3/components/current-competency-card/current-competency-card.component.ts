@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core'
 import { CompLocalService } from '../../services/comp.service'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-app-current-competency-card',
   templateUrl: './current-competency-card.component.html',
@@ -15,15 +15,11 @@ export class CurrentCompetencyCardComponent implements OnInit {
   selectedLevelId: any
   compobj: any
   // @Output() selectedCompetency = new EventEmitter<any>()
-  constructor(private compLocalService: CompLocalService,private translate: TranslateService) {
+  constructor(private compLocalService: CompLocalService, private translate: TranslateService) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 

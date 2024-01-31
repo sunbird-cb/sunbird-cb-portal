@@ -114,7 +114,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
     this.currentUser = this.configSvc && this.configSvc.userProfile
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
-    console.log("tabsData ", this.tabsData)
     this.selectedTabIndex = this.route.snapshot.queryParams && this.route.snapshot.queryParams.tab || 0
     this.tabs = this.route.data.subscribe(data => {
       if (data.certificates) {

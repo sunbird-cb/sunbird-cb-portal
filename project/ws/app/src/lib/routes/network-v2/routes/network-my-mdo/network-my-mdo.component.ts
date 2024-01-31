@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core' 
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-network-my-mdo',
@@ -31,13 +31,8 @@ export class NetworkMyMdoComponent implements OnInit {
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-     
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
     // console.log('this.route.snapshot.data.myMdoList.data :', this.route.snapshot.data.myMdoList.data)
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
@@ -64,8 +59,8 @@ export class NetworkMyMdoComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   updateQuery(key: string) {

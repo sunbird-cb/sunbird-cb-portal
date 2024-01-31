@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core' 
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-network-recommended',
@@ -27,17 +27,12 @@ export class NetworkRecommendedComponent implements OnInit {
     private route: ActivatedRoute,
     private eventSvc: EventService,
     private translate: TranslateService,
-    
+
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-     
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
 
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
@@ -66,10 +61,10 @@ export class NetworkRecommendedComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
-  
+
   getFullUserData() {
     const fulldata = this.data
     this.data = []

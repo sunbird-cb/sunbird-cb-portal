@@ -57,8 +57,8 @@ export class NetworkMyConnectionComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   getFullUserData() {
