@@ -14,7 +14,7 @@ export class PresenterCardComponent implements OnInit {
   constructor(private translate: TranslateService) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
    }

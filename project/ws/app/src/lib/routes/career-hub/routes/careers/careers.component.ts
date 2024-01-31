@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { DiscussService } from '../../../discuss/services/discuss.service'
 import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core' 
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-careers',
@@ -34,13 +34,9 @@ export class CareersComponent implements OnInit {
     this.setPagination()
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-     
+      const lang = localStorage.getItem('websiteLanguage')!
+
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 
@@ -52,8 +48,8 @@ export class CareersComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   filter(key: string | 'timestamp' | 'viewcount') {

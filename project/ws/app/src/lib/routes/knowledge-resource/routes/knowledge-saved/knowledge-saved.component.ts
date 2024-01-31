@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 // tslint:disable
 import _ from 'lodash'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 // tslint:enable
 
 @Component({
@@ -25,12 +25,8 @@ export class KnowledgeSavedComponent implements OnInit {
       this.filterSaved(null)
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
-        let lang = localStorage.getItem('websiteLanguage')!
-
+        const lang = localStorage.getItem('websiteLanguage')!
         this.translate.use(lang)
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          console.log('onLangChange', event);
-        });
       }
   }
 
