@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatIconModule,
     InfoDialogModule,
     SkeletonLoaderModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     WeeklyClapsComponent,

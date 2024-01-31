@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule, DefaultThumbnailModule,
     // tslint:disable-next-line:max-line-length
     MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, ProfileCertificateDialogModule, PipePublicURLModule, PipeCertificateImageURLModule,
-    TranslateModule
+    TranslateModule,
   ],
   entryComponents: [ProfileCretificationsV2Component],
 })

@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core'
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    TranslateModule
+    TranslateModule,
   ],
   entryComponents: [LogoutComponent],
 })

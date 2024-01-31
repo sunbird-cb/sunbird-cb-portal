@@ -29,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatChipsModule,
     MatCardModule,
     MatListModule,
-    TranslateModule
+    TranslateModule,
   ],
   entryComponents: [LeftMenuComponent],
   exports: [

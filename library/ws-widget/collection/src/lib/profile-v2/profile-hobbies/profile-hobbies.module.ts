@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core'
   declarations: [ProfileHobbiesComponent],
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule,
     MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule,
-    TranslateModule
+    TranslateModule,
   ],
   entryComponents: [ProfileHobbiesComponent],
 })

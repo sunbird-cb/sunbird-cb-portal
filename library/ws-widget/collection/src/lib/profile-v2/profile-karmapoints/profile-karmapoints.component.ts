@@ -21,7 +21,7 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
     super()
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
   }
@@ -81,10 +81,8 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   }
 
   translateName(menuName: string): string {
-    console.log(menuName)
-    console.log("er ", _.camelCase(menuName.replace(/\s/g, "")))
-    const translationKey = 'profileKarmapoints.' + _.camelCase(menuName.replace(/\s/g, ""))
-    return this.translate.instant(translationKey);
+    const translationKey = 'profileKarmapoints.' + _.camelCase(menuName.replace(/\s/g, ''))
+    return this.translate.instant(translationKey)
   }
 
 }

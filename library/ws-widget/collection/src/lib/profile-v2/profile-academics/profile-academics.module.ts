@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core'
   declarations: [ProfileAcademicsComponent],
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule,
     MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, PipeOrderByModule,
-    TranslateModule
+    TranslateModule,
   ],
   entryComponents: [ProfileAcademicsComponent],
 })

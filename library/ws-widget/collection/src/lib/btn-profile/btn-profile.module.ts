@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatSlideToggleModule,
     RouterModule,
     WidgetResolverModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [BtnProfileComponent],
   entryComponents: [BtnProfileComponent],
