@@ -23,6 +23,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
   forPreview = window.location.href.includes('/public/')
     || window.location.href.includes('&preview=true')
+  enableLang: any
   isPlayerPage = window.location.href.includes('/viewer/')
   instanceVal = ''
   btnAppsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
@@ -245,6 +246,12 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     || window.location.href.includes('/certs')
     return this.forPreview
   }
+  get isenableLang(): boolean {
+    if(window.location.href.includes('/public/faq') || window.location.href.includes('/public/contact')){
+      return true
+    }
+    return false
+  }
   get isThisSetUpPage(): boolean {
     if (window.location.pathname.includes('/app/setup')) {
       this.isSetUpPage = true
@@ -298,6 +305,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       {
         module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
     })
+  }
+
+  public getItem(item: any) {
+    return {...item, forPreview: !this.isforPreview, enableLang: this.enableLang}
   }
 
 }

@@ -45,12 +45,12 @@
         >
         <mat-icon>help_outline</mat-icon>
       </button> -->
-          <ng-container *ngIf="!isforPreview">
-            <div  class="hidden md:block md:flex" >
+          <ng-container >
+            <div  class="hidden md:block md:flex" *ngIf="!isforPreview">
               <ng-container [ngTemplateOutlet]="karmaBadge">
               </ng-container>
             </div>
-            <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+            <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: getItem(item) }"
               *ngFor="let item of primaryNavbarConfig?.mediumScreen?.right">
             </ng-container>
           </ng-container>
