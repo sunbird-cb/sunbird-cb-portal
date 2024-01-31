@@ -305,8 +305,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.content.name,
       )
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
-      /* tslint:disable-next-line */
-      console.log(this.resumeDataLink,'=====> banner resum data link <========')
     }
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       // this.disableEnrollBtn = true
@@ -997,9 +995,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.content.primaryCategory,
         this.getBatchId(),
       )
-
-      /* tslint:disable-next-line */
-      console.log(this.firstResourceLink,'=====> banner first data link <========')
     }
   }
   private assignPathAndUpdateBanner(url: string) {

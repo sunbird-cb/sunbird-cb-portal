@@ -105,7 +105,6 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     // private dialogRef: MatDialogRef<any>,
   ) {
     this.getHeaderFooterConfiguration().subscribe((sectionData)=>{
-      console.log('headerFooterConfigData',sectionData)
       this.headerFooterConfigData =  sectionData.data;
       this.showFooter = true;
     })
@@ -414,7 +413,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   getHeaderFooterConfiguration() {
     let baseUrl = this.configSvc.sitePath;
-    console.log('baseUrl', baseUrl+'/page/home.json');
+    // console.log('baseUrl', baseUrl+'/page/home.json');
     return this.http.get(baseUrl+'/page/home.json').pipe(
       map(data => ({ data, error: null })),
       catchError(err => of({ data: null, error: err })),

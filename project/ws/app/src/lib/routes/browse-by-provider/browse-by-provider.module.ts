@@ -42,7 +42,7 @@ import { ProviderCardComponent } from './components/provider-card/provider-card.
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 import { HttpClient } from '@angular/common/http'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import { HttpLoaderFactory } from '../knowledge-resource/knowledge-resource.module'
+import { HttpLoaderFactory } from 'src/app/app.module'
 
 @NgModule({
   declarations: [

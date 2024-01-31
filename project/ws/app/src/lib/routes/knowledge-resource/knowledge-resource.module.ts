@@ -51,7 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Ng2SearchPipeModule,
     PipeSafeSanitizerModule,
     MatExpansionModule,
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
