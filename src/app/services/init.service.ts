@@ -143,12 +143,11 @@ export class InitService {
     //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
     // )
     // setLang
-    this.translate.addLangs(['en', 'hi', 'ta'])
+    // this.translate.addLangs(['en', 'hi', 'ta'])
     if (localStorage.getItem('websiteLanguage')) {
       // this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
       lang = lang.replace(/\"/g, "")
-      console.log(lang)
       this.translate.use(lang)
     } else {
       this.translate.setDefaultLang('en')
@@ -417,6 +416,7 @@ export class InitService {
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
             userRoles: _.get(profileV2, 'userRoles') || [],
+            webPortalLang: _.get(profileV2, 'additionalProperties.webPortalLang') || ''
           }
 
           if (!this.configSvc.nodebbUserProfile) {
@@ -542,6 +542,7 @@ export class InitService {
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
             userRoles: _.get(profileV2, 'userRoles') || [],
+            webPortalLang: _.get(profileV2, 'additionalProperties.webPortalLang') || ''
           }
 
           if (!this.configSvc.nodebbUserProfile) {
