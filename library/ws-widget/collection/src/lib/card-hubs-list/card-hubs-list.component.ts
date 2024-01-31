@@ -2,11 +2,11 @@ import { trigger, transition, style, animate } from '@angular/animations'
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router, NavigationEnd } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, MultilingualTranslationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService,MultilingualTranslationsService, NsInstanceConfig, ValueService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
-// tslint:disable
+// tslint:disable 
 import _ from 'lodash'
 // tslint:enable
 // import { AccessControlService } from '@ws/author/src/public-api'
@@ -62,7 +62,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private valueSvc: ValueService,
-    private langtranslations: MultilingualTranslationsService
+    private langtranslations: MultilingualTranslationsService,
+    private events: EventService
     // private accessService: AccessControlService
   ) {
     super()
@@ -179,6 +180,13 @@ export class CardHubsListComponent extends WidgetBaseComponent
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
+  trackTelemetry(name: any) {
+    if (name.search('Portal')) {
+        const portalName = name.toLowerCase().split(' ').join('-')
+        this.raiseTelemetry(portalName)
+    } else { this.raiseTelemetry(name.toLowerCase()) }
+  }
+
   getUserFullName(user: any) {
     if (user && user.personalDetails.firstname && user.personalDetails.surname) {
       return `${user.personalDetails.firstname.trim()} ${user.personalDetails.surname.trim()}`
@@ -242,4 +250,18 @@ export class CardHubsListComponent extends WidgetBaseComponent
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
+  raiseTelemetry(name: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.HUB_MENU,
+        id: name,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME,
+      }
+    )
+  }
+
 }

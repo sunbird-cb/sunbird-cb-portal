@@ -7,7 +7,7 @@
 </div>
 
 <div id="grid-container" class="nps-footer" *ngIf="isNPSOpen">
-  <span class="closeicon cursor-pointer" (click)="closeNPS()"><mat-icon>close_small</mat-icon></span>
+  <span class="closeicon cursor-pointer" (click)="closeNPS(); raiseInteractTelemetry('close')"><mat-icon>close_small</mat-icon></span>
   <div class="center-box padding-bottom-l padding-top-s" *ngIf="!onSuccessRating">
     <span *ngIf="!ratingGiven" class="ratingtitle">{{ 'platformrating.howLikelyRecommend' | translate }}</span>
     <div class="margin-bottom-m margin-top-m rating-div flex items-center">
@@ -25,7 +25,7 @@
     <div class="reviewdiv" *ngIf="ratingGiven">
       <textarea #textArea class="reviewbox display-block" name="review" id="review" cols="30" rows="2" placeholder="{{phtext}}" maxlength="500"></textarea>
       <button mat-stroked-button type="submit" class="display-block text-white ws-mat-primary-background margin-top-m"
-      (click)="submitRating(textArea.value)"><span class="text-white" i18n>{{ 'platformrating.submit' | translate }}</span>
+      (click)="submitRating(textArea.value); raiseInteractTelemetry('submit')"><span class="text-white" i18n>{{ 'platformrating.submit' | translate }}</span>
       </button>
     </div>
   </div>

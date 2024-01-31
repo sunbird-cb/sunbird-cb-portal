@@ -17,7 +17,6 @@ import { map } from 'rxjs/operators'
 import moment from 'moment'
 
 import {
-  WidgetUserService,
   NsContent,
   WidgetContentService,
 } from '@sunbird-cb/collection'
@@ -86,6 +85,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     error: false,
     loadSkeleton: false,
   }
+  certificatesData: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -105,7 +105,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private configSvc: ConfigurationsService,
     public router: Router,
     private valueSvc: ValueService,
-    private userSvc: WidgetUserService,
     private contentSvc: WidgetContentService,
     private homeSvc: HomePageService,
     private matSnackBar: MatSnackBar
@@ -117,8 +116,11 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     console.log("tabsData ", this.tabsData)
     this.selectedTabIndex = this.route.snapshot.queryParams && this.route.snapshot.queryParams.tab || 0
-
     this.tabs = this.route.data.subscribe(data => {
+      if (data.certificates) {
+        this.certificatesData = data.certificates.data
+        this.fetchCertificates(this.certificatesData)
+      }
       if (data.profile.data.profileDetails.verifiedKarmayogi === true) {
         this.verifiedBadge = true
       }
@@ -160,7 +162,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getInsightsData()
     })
     // this.fetchDiscussionsData()
-    this.fetchUserBatchList()
     this.fetchRecentRequests()
     this.contentSvc.getKarmaPoitns(3, moment(new Date()).valueOf()).subscribe((res: any) => {
       if (res && res.kpList) {
@@ -341,30 +342,19 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  fetchUserBatchList() {
-    const user = this.portalProfile.userId || this.portalProfile.id || ''
-    this.userSvc.fetchProfileUserBatchList(user).subscribe((result: any) => {
-      const courses: NsContent.ICourse[] = result && result.courses
-      courses.forEach((items: any) => {
-        // if (items.completionPercentage === 100) {
-        //   this.enrolledCourse.push(items)
-        //   // return items;
-        // }
-          // this.enrolledCourse.push(items)
-          // return items;
-
-          if (items.issuedCertificates && items.issuedCertificates.length > 0) {
-            this.enrolledCourse.push(items)
-            return items
-          }
-           if (items.issuedCertificates && items.issuedCertificates.length === 0 && items.completionPercentage === 100) {
-            this.enrolledCourse.push(items)
-            return items
-          }
-
-      })
-      this.downloadAllCertificate(this.enrolledCourse)
+  fetchCertificates(data: any) {
+    const courses: NsContent.ICourse[] = data && data.courses
+    courses.forEach((items: any) => {
+      if (items.issuedCertificates && items.issuedCertificates.length > 0) {
+        this.enrolledCourse.push(items)
+        return items
+      }
+      if (items.issuedCertificates && items.issuedCertificates.length === 0 && items.completionPercentage === 100) {
+        this.enrolledCourse.push(items)
+        return items
+      }
     })
+    this.downloadAllCertificate(this.enrolledCourse)
   }
 
   downloadAllCertificate(data: any) {

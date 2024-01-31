@@ -173,6 +173,8 @@ export class InitService {
     })
     // this.logger.removeConsoleAccess()
     await this.fetchDefaultConfig()
+    await this.profileNudgeConfig()
+    await this.themeOverrideConfig()
     // const authenticated = await this.authSvc.initAuth()
     // if (!authenticated) {
     //   this.settingsSvc.initializePrefChanges(environment.production)
@@ -314,6 +316,22 @@ export class InitService {
     this.configSvc.activeOrg = publicConfig.org[0]
     this.configSvc.appSetup = publicConfig.appSetup
     this.configSvc.positions = publicConfig.positions
+    return publicConfig
+  }
+
+  private async profileNudgeConfig(): Promise<NsInstanceConfig.IConfig> {
+    const publicConfig: NsInstanceConfig.IConfig = await this.http
+      .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/profile-nudge.json`)
+      .toPromise()
+    this.configSvc.profileTimelyNudges = publicConfig.profileTimelyNudges
+    return publicConfig
+  }
+
+  private async themeOverrideConfig(): Promise<NsInstanceConfig.IConfig> {
+    const publicConfig: NsInstanceConfig.IConfig = await this.http
+      .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/theme-override-config.json`)
+      .toPromise()
+      this.configSvc.overrideThemeChanges = publicConfig.overrideThemeChanges
     return publicConfig
   }
 

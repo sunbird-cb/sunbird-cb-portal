@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { NsPage, NsAppsConfig, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsPage, NsAppsConfig, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection/src/lib/collection.config'
@@ -27,6 +27,7 @@ export class HomeOtherPortalComponent implements OnInit {
   constructor(
     private configSvc: ConfigurationsService,
     private accessService: AccessControlService,
+    private events: EventService
   ) { 
     if (this.configSvc.appsConfig) {
       const appsConfig = this.configSvc.appsConfig
@@ -81,6 +82,21 @@ export class HomeOtherPortalComponent implements OnInit {
       }
       this.showSkeleton = false;
     })
+  }
+
+  raiseTelemetry(wdata: any) {
+    const name = wdata.widgetData.actionBtn.name.toLowerCase().split(' ')
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.PORTAL_NUDGE,
+        id: `${name[0]}-portal-nudge`
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME
+      }
+    )
   }
 
 }

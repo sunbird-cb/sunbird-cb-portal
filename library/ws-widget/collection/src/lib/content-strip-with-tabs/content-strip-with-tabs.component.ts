@@ -84,6 +84,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   changeEventSubscription: Subscription | null = null
   defaultMaxWidgets = 12
   enrollInterval: any
+  todaysEvents: any = []
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,

@@ -347,4 +347,18 @@ export class GridLayoutComponent extends WidgetBaseComponent
     }
     this.events.dispatchPlatformRatingEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
+
+  raiseInteractTelemetry(type?: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: this.ratingGiven ? this.ratingGiven.value :  0,
+        id: `platform-rating-${type}`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrySubType.PlatformRating,
+      }
+    )
+  }
 }
