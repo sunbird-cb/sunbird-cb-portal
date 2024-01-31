@@ -9,6 +9,7 @@ const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   AUTOCOMPLETE: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/${query}`,
   AUTOCOMPLETE_BY_DEPARTMENT: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/department/${query}`,
+  SEARCH_USERS: '/apis/proxies/v8/user/v1/search',
 }
 
 @Injectable({
@@ -60,4 +61,19 @@ export class UserAutocompleteService {
       { departments }
     )
   }
+
+  searchUser(value: string, rootOrgId: string) {
+    const reqBody = {
+      request: {
+        query: value,
+        filters: {
+          rootOrgId,
+        },
+      },
+    }
+
+    return this.http.post<any>(`${API_END_POINTS.SEARCH_USERS}`, reqBody)
+  }
+
+
 }

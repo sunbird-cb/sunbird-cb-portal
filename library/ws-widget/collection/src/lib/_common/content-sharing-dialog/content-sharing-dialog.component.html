@@ -11,7 +11,7 @@
         </section>
         <form [formGroup]="shareForm">
             <div class="mat-body-2">
-                <div class="mb-5">
+                <!-- <div class="mb-5">
                     <mat-form-field appearance="outline" class="w-full">
                         <textarea id="review" matInput formControlName="review" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10"
                         [matAutosizeMinRows]="3" placeholder="To: Add an email" i18n-placeholder #review i18n-aria-label
@@ -19,13 +19,58 @@
                         <mat-hint align="start">Note: Emails will be sent only to registered karmayogis.</mat-hint>
                         <mat-hint align="end">{{ review.value.length }} /30 characters</mat-hint>
                     </mat-form-field>
+                </div> -->
+
+                <div class="md-5">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
+                            <mat-chip
+                                *ngFor="let fruit of fruits"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="remove(fruit)">
+                                {{fruit}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input
+                                tabindex="-1"
+                                placeholder="To: Add an email"
+                                #fruitInput
+                                formControlName="review"
+                                [formControl]="userCtrl"
+                                [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit.name">
+                                <div class="flex">
+                                    <div class="iconDiv">
+                                        <span class="iconText">{{fruit.iconText.substring(0,2)}}</span>
+                                    </div>
+                                    <div>
+                                        <div>{{fruit.name}}</div>
+                                        <div class="emailText">{{fruit.maskedEmail}}</div>
+                                    </div>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="fruits.length > 3"> You have exceeded 30 emails.</mat-error>
+                        <mat-hint align="start">Note: Emails will be sent only to registered karmayogis.</mat-hint>
+                        <mat-hint align="end">{{ fruits.length }} /30 characters</mat-hint>
+                    </mat-form-field>
                 </div>
-                <div class="flex">
+                <div class="flex mt-5">
                     <div class="flex flex-1 flex-end">
-                        <button mat-stroked-button class="flex-auto-display copy-link-btn">
+                        <button mat-stroked-button class="flex-auto-display copy-link-btn" tabindex="-1">
                             Copy link &nbsp;&nbsp;<mat-icon >link</mat-icon>
                         </button>
-                        <button mat-stroked-button type="submit" class="text-white ws-mat-primary-background flex-auto-display send-btn">
+                        <button mat-stroked-button type="submit"
+                            class="text-white ws-mat-primary-background flex-auto-display send-btn"
+                            [disabled]="fruits.length === 0 || fruits.length > 3"
+                            >
                             Send<mat-icon >play_arrow</mat-icon>
                         </button>
                     </div>

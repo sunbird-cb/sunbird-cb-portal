@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import { ContentSharingDialogComponent } from './content-sharing-dialog.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { EditorQuillModule } from '../../discussion-forum/editor-quill/editor-quill.module'
-import { MatButtonModule, MatIconModule, MatTooltipModule, MatDialogModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatCheckboxModule } from '@angular/material'
+import { MatButtonModule, MatIconModule, MatTooltipModule, MatDialogModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatCheckboxModule, MatChipsModule, MatAutocompleteModule } from '@angular/material'
 
 @NgModule({
   declarations: [ContentSharingDialogComponent],
@@ -21,6 +21,8 @@ import { MatButtonModule, MatIconModule, MatTooltipModule, MatDialogModule, MatP
       MatInputModule,
       MatSnackBarModule,
       MatCheckboxModule,
+      MatChipsModule,
+      MatAutocompleteModule
   ],
   exports: [
     ContentSharingDialogComponent,

@@ -339,8 +339,8 @@
                           <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group"
                             formControlName="group" [disabled]="!isAllowed('group')">
                             <ng-container *ngIf="!unApprovedReq?.group">
-                              <mat-option [hidden]="option.name === 'Others'" *ngFor="let option of groupsOriginal" 
-                                [value]="option.name"> {{option.name}} 
+                              <mat-option [hidden]="option.name === 'Others'" *ngFor="let option of groupsOriginal"
+                                [value]="option.name"> {{option.name}}
                               </mat-option>
                             </ng-container>
 
@@ -501,7 +501,7 @@
                       i18n="Other Languages Known label|Label which explains the user to enter Other Languages Known"
                       i18n-aria-label aria-label="Other Languages Known label">
                       Other Languages Known
-                    </p>
+                    </p>{{selectedKnowLangs | json}}
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <mat-chip-list #chipList title="chip input for selecting languages">
                         <mat-chip *ngFor="let lang of selectedKnowLangs" [selectable]="true" [removable]="true"
@@ -756,12 +756,12 @@
                             {{org}}
                           </mat-option>
                         </ng-container>
-                
+
                         <mat-option *ngIf="!unApprovedReq?.name" [value]="'Other'">Other</mat-option>
                         <mat-option *ngIf="unApprovedReq?.name" [value]="unApprovedReq.name">
                           {{unApprovedReq?.name}}
                         </mat-option>
-                        
+
                       </mat-select>
                     </mat-form-field>
                     <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
@@ -798,7 +798,7 @@
                           <mat-option [value]="i.name" *ngFor="let i of industriesMeta">
                             {{i.name}}
                           </mat-option>
-                        </ng-container>             
+                        </ng-container>
 
                         <mat-option *ngIf="!unApprovedReq?.industry" [value]="'Other'">Other</mat-option>
 
@@ -840,7 +840,7 @@
                           <mat-option [value]="loc.name" *ngFor="let loc of countries">
                             {{loc.name}}
                           </mat-option>
-                        </ng-container> 
+                        </ng-container>
 
                         <mat-option *ngIf="unApprovedReq?.location" [value]="unApprovedReq.location">
                           {{unApprovedReq?.location}}
