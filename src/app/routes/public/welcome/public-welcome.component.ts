@@ -188,7 +188,7 @@ export class PublicWelcomeComponent implements OnInit, OnDestroy {
         if (this.registrationForm) {
             const instanceConfig = this.configSvc.instanceConfig
             if (this.activatedRoute.snapshot.data.group.data) {
-              this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+              this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele: any) => ele !== 'Others')
             } else {
               this.groupsOriginal = []
             }

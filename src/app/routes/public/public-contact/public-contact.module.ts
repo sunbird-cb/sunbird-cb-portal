@@ -32,7 +32,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatInputModule,
     FormsModule,
     Ng2SearchPipeModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [PublicContactComponent],
 })

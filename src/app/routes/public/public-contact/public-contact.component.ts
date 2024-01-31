@@ -38,11 +38,11 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
   constructor(private configSvc: ConfigurationsService,
-    private activateRoute: ActivatedRoute, private langtranslations: MultilingualTranslationsService,
-    private translate: TranslateService,) {
+              private activateRoute: ActivatedRoute, private langtranslations: MultilingualTranslationsService,
+              private translate: TranslateService) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
-        let lang = localStorage.getItem('websiteLanguage')!
+        const lang = localStorage.getItem('websiteLanguage')!
         this.translate.use(lang)
       }
      }
@@ -141,13 +141,12 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
     return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
   translateAnswer(label: string, type: any) {
-    let htmlAnswer = "<p class='mat-body-2'><ng-container>"
-    label = label.replace(/\s/g, "")
-    const translationKey = type + '.' +  label;
+    let htmlAnswer = '<p class=\'mat-body-2\'><ng-container>'
+    label = label.replace(/\s/g, '')
+    const translationKey = type + '.' +  label
     htmlAnswer = htmlAnswer + this.translate.instant(translationKey)
-    htmlAnswer = htmlAnswer + "</ng-container></p>"
+    htmlAnswer = htmlAnswer + '</ng-container></p>'
     return htmlAnswer
   }
-
 
 }

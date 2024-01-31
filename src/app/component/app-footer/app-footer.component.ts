@@ -13,10 +13,10 @@ import { environment } from 'src/environments/environment'
   selector: 'ws-app-footer',
   templateUrl: './app-footer.component.html',
   styleUrls: ['./app-footer.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppFooterComponent implements OnInit {
-  @Input() headerFooterConfigData:any;
+  @Input() headerFooterConfigData: any
   isXSmall = false
   termsOfUser = true
   environment!: any
@@ -26,7 +26,7 @@ export class AppFooterComponent implements OnInit {
   private baseUrl = this.configSvc.baseUrl
   constructor(
     private configSvc: ConfigurationsService,
-    private valueSvc: ValueService,    
+    private valueSvc: ValueService,
     private router: Router,
     private http: HttpClient,
     private translate: TranslateService,
@@ -34,7 +34,7 @@ export class AppFooterComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
+      lang = lang.replace(/\"/g, '')
       this.translate.use(lang)
     }
 
@@ -64,7 +64,7 @@ export class AppFooterComponent implements OnInit {
     } else {
       const newInstance = await this.readAgain()
       this.hubsList = (newInstance.hubs || []).filter(i => i.active)
-    }   
+    }
   }
   async readAgain() {
     const publicConfig: NsInstanceConfig.IConfig = await this.http
@@ -80,7 +80,7 @@ export class AppFooterComponent implements OnInit {
       }
     }
   }
-  
+
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
@@ -102,16 +102,16 @@ export class AppFooterComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
-    const translationKey = 'common.' + hubName;
-    return this.translate.instant(translationKey);
+    const translationKey = 'common.' + hubName
+    return this.translate.instant(translationKey)
   }
 
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
   }
 
-  onClick(event:any) {
-    console.log(event.target.parentElement);
-    event.target.parentElement.classList.toggle('open');
+  onClick(event: any) {
+    console.log(event.target.parentElement)
+    event.target.parentElement.classList.toggle('open')
   }
 }

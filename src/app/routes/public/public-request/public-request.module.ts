@@ -66,7 +66,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatAutocompleteModule,
     PipeOrderByModule,
     PipeDurationTransformModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [PublicRequestComponent],
   providers: [RequestService],

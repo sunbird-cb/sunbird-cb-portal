@@ -128,7 +128,7 @@ export class PublicRequestComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
+      lang = lang.replace(/\"/g, '')
       this.selectedLanguage = lang
       this.translate.use(lang)
     }
@@ -145,8 +145,8 @@ export class PublicRequestComponent implements OnInit {
   }
 
   modifyDomain(domainName: string) {
-    if (domainName.includes("@")) {
-      return domainName.replace("@", '')
+    if (domainName.includes('@')) {
+      return domainName.replace('@', '')
     }
     return domainName
   }
@@ -236,7 +236,7 @@ export class PublicRequestComponent implements OnInit {
     // console.log(otp)
     const mob = this.requestForm.get('mobile')
     if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
+      if (otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
@@ -510,7 +510,7 @@ export class PublicRequestComponent implements OnInit {
 
   public goBackUrl() {
     const formData = this.requestForm.value
-    this.signupSvc.updateSignUpData({firstname: formData.firstname, mobile: formData.mobile, email: formData.email, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified })
+    this.signupSvc.updateSignUpData({ firstname: formData.firstname, mobile: formData.mobile, email: formData.email, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified })
     this._location.back()
   }
   numericOnly(event: any): boolean {

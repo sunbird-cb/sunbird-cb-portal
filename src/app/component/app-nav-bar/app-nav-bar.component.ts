@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core'
 export class AppNavBarComponent implements OnInit, OnChanges {
 
   @Input() mode: 'top' | 'bottom' = 'top'
-  @Input() headerFooterConfigData:any;
+  @Input() headerFooterConfigData: any
   // @Input()
   // @HostBinding('id')
   // public id!: string
@@ -44,15 +44,15 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
   isLoggedIn = false
-  fontContainerFlag = false;
-  activeRoute = '';
+  fontContainerFlag = false
+  activeRoute = ''
   countdata: any
   enrollInterval: any
-  karmaPointLoading: boolean = true
+  karmaPointLoading = true
   tooltipDelay: any = 1000
   jan26Data: any
   logoDisplayTime: any
-  janDataEnable:boolean = true
+  janDataEnable = true
   // defaultLogo: false
   animationDuration: number | undefined
 
@@ -80,7 +80,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     })
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
   }
@@ -91,9 +91,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.logoDisplayTime = this.jan26Data.desktop.logoDisplayTime
       this.displayLogo()
       setInterval(() => {
-        this.janDataEnable = true;
+        this.janDataEnable = true
         this.displayLogo()
-       }, this.logoDisplayTime);
+       },         this.logoDisplayTime)
     }
 
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
@@ -102,9 +102,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
           // Hide loading indicator
           // console.log('event', event.url)
           // console.log("activeRoute",localStorage.getItem("activeRoute"));
-          if(localStorage.getItem("activeRoute")) {
-            let route = localStorage.getItem("activeRoute");
-            this.activeRoute = route ? route.toLowerCase().toString() : '';
+          if (localStorage.getItem('activeRoute')) {
+            const route = localStorage.getItem('activeRoute')
+            this.activeRoute = route ? route.toLowerCase().toString() : ''
           }
 
           if (event.url.includes('/page/home')) {
@@ -157,14 +157,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.startTour()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
-    },1000)
+    },                                1000)
   }
 
   displayLogo() {
     const animationDur = this.jan26Data.desktop.animationDuration
-    setTimeout(() =>{
-      this.janDataEnable = false;
-    }, animationDur);
+    setTimeout(() => {
+      this.janDataEnable = false
+    },         animationDur)
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -269,7 +269,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     return this.forPreview
   }
   get isenableLang(): boolean {
-    if(window.location.href.includes('/public/faq') || window.location.href.includes('/public/contact')){
+    if (window.location.href.includes('/public/faq') || window.location.href.includes('/public/contact')) {
       return true
     }
     return false
@@ -286,18 +286,18 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
-  redirectToPath(pathConfig:any) {
-    if(pathConfig && pathConfig.key) {
-      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
+  redirectToPath(pathConfig: any) {
+    if (pathConfig && pathConfig.key) {
+      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } })
     } else {
-      this.router.navigate([pathConfig.path]);
+      this.router.navigate([pathConfig.path])
     }
-    this.configSvc.openExploreMenuForMWeb.next(false);
+    this.configSvc.openExploreMenuForMWeb.next(false)
   }
 
   openExploreMenu() {
-    this.activeRoute = 'explore';
-    this.configSvc.openExploreMenuForMWeb.next(true);
+    this.activeRoute = 'explore'
+    this.configSvc.openExploreMenuForMWeb.next(true)
   }
 
   getKarmaCount() {
@@ -313,7 +313,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
   viewKarmapoints() {
     this.raiseTelemetry()
-    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
+    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints' })
   }
 
   raiseTelemetry() {
@@ -330,7 +330,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   public getItem(item: any) {
-    return {...item, forPreview: !this.isforPreview, enableLang: this.enableLang}
+    return { ...item, forPreview: !this.isforPreview, enableLang: this.enableLang }
   }
 
 }
