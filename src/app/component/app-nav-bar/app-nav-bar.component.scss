@@ -1,5 +1,5 @@
 @import 'ws-mixins';
-
+@import 'ws-vars';
 
 .tourGuideBtn {
   padding: 10px 16px;
@@ -7,7 +7,6 @@
   flex-direction: row;
   cursor: pointer;
 }
-
 .fix-ww {
   margin-left: auto;
   margin-right: auto;
@@ -16,12 +15,10 @@
   flex: 1;
   height: 56px;
 }
-
 .mobile {
   height: 56px !important;
   border-bottom: 1px solid #ccc;
   box-shadow: none !important;
-
 }
 
 .tourGuideBtn:hover {
@@ -46,21 +43,27 @@
   }
 }
 
-
-.app-logo {
+.app-logo-new {
+  height: 56px!important;
+  margin-top: -3px;
   @include breakpoint-xs {
     max-width: 120px;
     margin-top: 4px;
   }
   cursor: pointer !important;
 }
-
+.logo-box, .app-logo {
+  transition: 2s ease-in-out;
+}
+.logo-text {
+  font: 700 12px/18px 'Montserrat';
+  margin-bottom:0!important;
+}
 .title {
   font-size: 12px !important;
   line-height: 26px !important;
   font-weight: 300 !important;
 }
-
 .search-card-view {
   position: absolute;
   width: 280px;
@@ -89,8 +92,6 @@
     left: 450px;
   }
 }
-
-@import 'ws-vars';
 
 .menu-section {
   padding: 8px;
@@ -147,15 +148,16 @@
   display: flex;
   margin-left: 0;
   text-align: center;
-  flex: 10;
-  max-width: 486px;
+  // flex: 10;
+  // max-width: 486px;
+  flex: 4;
+  max-width: 286px;
   margin-right: 1rem;
 }
 
 .mobile-download-app-desc {
   margin-left: 8px;
 }
-
 
 @media only screen and (max-width: 768px) {
   .my-search {

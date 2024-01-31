@@ -38,6 +38,7 @@ export namespace NsInstanceConfig {
     mailIds: IMailIds
     details: IDetails
     validMailIdExtensionsForMailMe: string[]
+    overrideThemeChanges: IOverrideThemeChanges
     defaultFeatureConfigs: {
       error: string
     }
@@ -64,6 +65,7 @@ export namespace NsInstanceConfig {
     portalUrls: IPortalUrls | undefined
     positions: any
     webistelanguages: any[]
+    profileTimelyNudges: any
   }
   export interface IPortalUrls {
     igot: string,
@@ -142,6 +144,22 @@ export namespace NsInstanceConfig {
     accent: string
     primary: string
     warn: string
+  }
+  export interface IOverrideThemeChanges {
+    isEnabled: boolean
+    desktop: IDesktop
+    mWeb: IMWeb
+  }
+  export interface IDesktop {
+    animationDuration: number
+    logoUrl: string
+    logoText: string
+    logoDisplayTime: number
+    backgroundTheme: string
+  }
+  export interface IMWeb {
+    logoUrl: string
+    logoText: string
   }
   export interface ILogos {
     app: string
@@ -277,6 +295,7 @@ export namespace NsUser {
     profileUpdateCompletion?: number
     profileImageUrl?: string
     professionalDetails?: any
+    webPortalLang?: any
   }
 
   export interface INodebbUserProfile {

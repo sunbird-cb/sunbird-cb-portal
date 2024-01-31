@@ -69,7 +69,7 @@ export class PublicRequestComponent implements OnInit {
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
   userform: any
-  selectedLanguage: any
+  selectedLanguage = 'en'
   multiLang: any = []
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -520,7 +520,7 @@ export class PublicRequestComponent implements OnInit {
   }
 
   selectLanguage(event: any) {
-    this.selectedLanguage = event.target.value
+    this.selectedLanguage = event
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }

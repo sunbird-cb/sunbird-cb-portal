@@ -84,6 +84,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   headerFooterConfigData:any = {};
   mobileTopHeaderVisibilityStatus = true;
   activeMenu:any = '';
+  backGroundTheme:any
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -105,7 +106,6 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     // private dialogRef: MatDialogRef<any>,
   ) {
     this.getHeaderFooterConfiguration().subscribe((sectionData)=>{
-      console.log('headerFooterConfigData',sectionData)
       this.headerFooterConfigData =  sectionData.data;
       this.showFooter = true;
     })
@@ -196,6 +196,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     //let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
     //this.showTour = showTour && showTour.disable ? showTour.disable : false
 
+
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
         this.mobileTopHeaderVisibilityStatus = status;
     })
@@ -220,13 +221,18 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     // }
     this.router.events.subscribe((event: any) => {
-      
       if (event instanceof NavigationEnd) {
-        
+
         if (event.url.includes('/setup/')) {
           this.isSetupPage = true
         }
       }
+      if (window.location.pathname.includes('/page/home')) {
+        this.changeBg26Jan()
+      } else {
+        this.removeBg26Jan()
+      }
+
       if (event instanceof NavigationStart) {
         this.showNavbar = true
         if (event.url.includes('preview') || event.url.includes('embed')) {
@@ -247,7 +253,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.currentUrl = event.url
         if (this.currentUrl.includes('/public/home')) {
           this.customHeight = true
-          
+
         } else {
           this.customHeight = false
         }
@@ -295,16 +301,32 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         // if (this.appStartRaised) {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
-        // }     
-        this.activeMenu = localStorage.getItem('activeMenu');   
+        // }
+        this.activeMenu = localStorage.getItem('activeMenu');
         this.openIntro()
-        
+
       }
     })
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
-    
+
+  }
+
+  changeBg26Jan() {
+    this.backGroundTheme = this.configSvc.overrideThemeChanges
+    let docData:any = document.getElementById("app-bg")
+    if(this.backGroundTheme && this.backGroundTheme.isEnabled) {
+      docData.classList.add("jan-bg-change")
+    } else {
+      docData.classList.remove("jan-bg-change")
+    }
+  }
+
+  removeBg26Jan() {
+    this.backGroundTheme = this.configSvc.overrideThemeChanges
+    let docData:any = document.getElementById("app-bg")
+    docData.classList.remove("jan-bg-change")
   }
 
   raiseAppStartTelemetry() {
@@ -414,7 +436,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   getHeaderFooterConfiguration() {
     let baseUrl = this.configSvc.sitePath;
-    console.log('baseUrl', baseUrl+'/page/home.json');
+    // console.log('baseUrl', baseUrl+'/page/home.json');
     return this.http.get(baseUrl+'/page/home.json').pipe(
       map(data => ({ data, error: null })),
       catchError(err => of({ data: null, error: err })),

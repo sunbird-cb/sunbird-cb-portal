@@ -90,6 +90,13 @@
           <!-- </a> -->
           </ng-container>
         </ng-container>
+        <ng-container *ngIf="!widgetData?.data?.length">
+          <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card">
+            <div class="flex flex-1 mobile-margin margin-f">
+              <span class="mat-subtitle flex-1 mobile-margin">No information available</span>
+            </div>
+          </mat-card>
+        </ng-container>
     </mat-card-content>
   </mat-card>
 </div>

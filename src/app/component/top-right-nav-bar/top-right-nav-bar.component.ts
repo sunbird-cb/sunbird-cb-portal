@@ -35,7 +35,7 @@ export class TopRightNavBarComponent implements OnInit {
   @Input() item:any;
   @Input() rightNavConfig:any;
   dialogRef:any;
-  selectedLanguage: any
+  selectedLanguage = 'en'
   multiLang: any = []
 
   constructor(public dialog: MatDialog, public homePageService: HomePageService, 
@@ -56,7 +56,6 @@ export class TopRightNavBarComponent implements OnInit {
       this.multiLang = instanceConfig.webistelanguages
     }
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig;
-    // console.log('rightNavConfig',this.rightNavConfig)
     this.homePageService.closeDialogPop.subscribe((data:any)=>{
       if(data) {
         this.dialogRef.close();
@@ -81,7 +80,7 @@ export class TopRightNavBarComponent implements OnInit {
   }
   
   selectLanguage(event: any) {
-    this.selectedLanguage = event.target.value
+    this.selectedLanguage = event
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, this.configSvc.unMappedUser.id)
   }

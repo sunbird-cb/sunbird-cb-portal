@@ -5,7 +5,7 @@ import { GbSearchService } from '../../services/gb-search.service'
 import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-search-filters',
@@ -32,11 +32,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         let lang = localStorage.getItem('websiteLanguage')!
-
         this.translate.use(lang)
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          console.log('onLangChange', event);
-        });
       }
      }
 
@@ -280,9 +276,6 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
 
   translateTo(menuName: string): string {
     const translationKey = 'searchfilters.' + menuName.replace(/\s/g, "")
-    console.log("translationKey ", translationKey)
     return this.translate.instant(translationKey);
   }
-
-
 }

@@ -56,6 +56,8 @@ export class ConfigurationsService {
   isNewUser = false
   portalUrls: IPortalUrls | undefined
   positions: any
+  overrideThemeChanges: any
+  profileTimelyNudges: any
 
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())

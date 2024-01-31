@@ -3,7 +3,7 @@
 <mat-card class="mat-card pad-4 other-portal-box" *ngIf="portalLinks && portalLinks.length;">
     <p class="mat-subheading-1">Other Portals You Have Access To</p>
     <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of portalLinks">
-        <a class="flex flex-row items-center content-center" target="_blank" href="{{wdata.widgetData.actionBtn.url}}">
+        <a class="flex flex-row items-center content-center" (click)="raiseTelemetry(wdata)" target="_blank" href="{{wdata.widgetData.actionBtn.url}}">
             <div class="icon-box margin-right-s flex items-center justify-center">
                 <img src="{{wdata.widgetData.actionBtn.icon}}">
             </div>

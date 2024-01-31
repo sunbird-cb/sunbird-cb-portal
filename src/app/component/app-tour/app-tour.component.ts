@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core'
 import { ProgressIndicatorLocation, GuidedTour, Orientation, GuidedTourService } from 'cb-tour-guide';
 import { UtilityService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils';
 import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-tour',
   templateUrl: './app-tour.component.html',
@@ -166,12 +166,7 @@ export class AppTourComponent {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         let lang = localStorage.getItem('websiteLanguage')!
-
         this.translate.use(lang)
-        console.log('current lang ------', this.translate.getBrowserLang())
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          console.log('onLangChange', event);
-        });
       }
     this.isMobile = this.utilitySvc.isMobile;
     this.raiseGetStartedStartTelemetry()
