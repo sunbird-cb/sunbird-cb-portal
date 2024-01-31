@@ -19,7 +19,7 @@
     font-weight: 700;
 }
 
-.behavioral {
+.behavioural {
     background-color: #F8B861;
 }
 
@@ -112,11 +112,11 @@ $title-line-count: 3;
     min-height: $title-line-count * 24px;
 }
 
-.scroll-container {
-    overflow-x: auto; /* Enable horizontal scrolling */
-    white-space: nowrap; /* Prevent wrapping of content */
-    overflow-y: hidden;
-}
+// .scroll-container {
+//     overflow-x: auto; /* Enable horizontal scrolling */
+//     white-space: nowrap; /* Prevent wrapping of content */
+//     overflow-y: hidden;
+// }
 
 ::ng-deep .ratings-modal-box {
     max-width: 880px !important;

@@ -19,7 +19,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
   disableLoadMore = false
   reviews: any[] = []
   showFilterIndicator = 'Top'
-  displayLoader = false;
+  displayLoader = false
 
   constructor(
     public dialogRef: MatDialogRef<ReviewsContentComponent>,

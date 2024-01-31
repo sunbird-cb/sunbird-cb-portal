@@ -23,68 +23,36 @@
         <div class="text-base font-bold">Competencies</div>
 
         <div class="flex flex-row gap-4 mb-3">
-            <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === 'behavioural'}" (click)="competencySelected = 'behavioural'" >Behavioural</div>
-            <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === 'domain'}" (click)="competencySelected = 'domain'">Domain</div>
+            <ng-container *ngFor="let item of this.competenciesObject | keyvalue" >
+                <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === item.key}" (click)="competencySelected = item.key">{{ item.key }}</div>
+            </ng-container>
         </div>
-
-        <div class="flex flex-row gap-4 scroll-container">
-            <div class="competency-passbook-theme behavioral">
-                <div class="detail">
-                    <div class="flex flex-col gap-2">
-                        <div class="text-base font-bold">Behavioural</div>
-                        <div class="flex flex-wrap gap-4 chip-container">
-                            <div class="chip rounded-full text-xs">
-                                Self-Awareness
-                            </div>
-                            <div class="chip rounded-full text-xs">
-                                Software design
-                            </div>
-                            <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
-                                View more
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="competency-passbook-theme domain">
-                <div class="detail">
-                    <div class="flex flex-col gap-2">
-                        <div class="text-base font-bold">Domain</div>
-                        <div class="flex flex-wrap gap-3 chip-container">
-                            <div class="chip rounded-full text-xs">
-                                Self-Awareness
-                            </div>
-                            <div class="chip rounded-full text-xs">
-                                Software design
-                            </div>
-                            <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
-                                View more
+    
+        <ng-container *ngFor="let item of this.competenciesObject | keyvalue">
+            <div class="flex flex-wrap gap-4" *ngIf="item.key === competencySelected" >
+                <ng-container *ngFor="let competency of item.value | keyvalue">
+                    <div class="flex-1">
+                        <div class="competency-passbook-theme" [ngClass]="{'behavioural': (item.key.toLowerCase() === 'behavioural' || item.key.toLowerCase() === 'behavioral'), 'functional': item.key.toLowerCase() === 'functional', 'domain': item.key.toLowerCase() === 'domain'}">
+                            <div class="detail">
+                                <div class="flex flex-col gap-2">
+                                    <div class="text-base font-bold">{{ competency.key }}</div>
+                                    <div class="flex flex-wrap gap-4 chip-container">
+                                        <ng-container *ngFor="let subTheme of competency.value">
+                                            <div class="chip rounded-full text-xs">
+                                                {{ subTheme }}
+                                            </div>
+                                        </ng-container>
+                                        <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
+                                            View more
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
             </div>
-
-            <div class="competency-passbook-theme functional">
-                <div class="detail">
-                    <div class="flex flex-col gap-2">
-                        <div class="text-base font-bold">Functional</div>
-                        <div class="flex flex-wrap gap-3 chip-container">
-                            <div class="chip rounded-full text-xs">
-                                Self-Awareness
-                            </div>
-                            <div class="chip rounded-full text-xs">
-                                Software design
-                            </div>
-                            <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs">
-                                View more
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </ng-container>
     </div>
 
     <div class="flex flex-col gap-3">
@@ -108,7 +76,7 @@
             </div>
         </div>
         <div class="flex-none">
-            <button class="action-button">Start discussion</button>
+            <button [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" class="action-button">Start discussion</button>
         </div>
     </div>
 
@@ -163,8 +131,7 @@
                                 </div>
                             </div>
                             <div class="flex flex-row gap-2 items-center">
-                                <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''"
-                                    [name]="eachReview?.firstName"></ws-widget-avatar-photo>
+                                <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''" [name]="eachReview?.firstName"></ws-widget-avatar-photo>
                                 <div>{{ handleCapitalize(eachReview?.firstName) }}</div>
                                 <div class="flex items-center">
                                     <span class="period"></span>

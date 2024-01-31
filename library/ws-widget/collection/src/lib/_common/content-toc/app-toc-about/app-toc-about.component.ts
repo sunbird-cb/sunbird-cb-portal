@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
 
@@ -19,14 +19,13 @@ export class AppTocAboutComponent implements OnInit {
   @Input() content: NsContent.IContent | null = null
   descEllipsis = true
   summaryEllipsis = true
-  competencySelected = 'behavioural'
+  competencySelected = ''
   ratingSummary: any
   authReplies: any
   ratingSummaryProcessed: any
   ratingReviews: any[] = []
   reviews: any[] = []
-  dialogRef: any;
-
+  dialogRef: any
   displayLoader = false
   disableLoadMore = false
   lookupLimit = 3
@@ -36,6 +35,7 @@ export class AppTocAboutComponent implements OnInit {
   reviewPage = 1
   ratingViewCount = 3
   reviewDefaultLimit = 2
+  competenciesObject: any = {}
 
   // tslint:disable-next-line:max-line-length
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
@@ -50,6 +50,30 @@ export class AppTocAboutComponent implements OnInit {
   ngOnInit() {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
+      this.loadCompetencies()
+    }
+  }
+
+  loadCompetencies(): void {
+    if (this.content && this.content.competencies_v5 && this.content.competencies_v5.length) {
+      this.content.competencies_v5.forEach((_obj: any) => {
+        if (this.competenciesObject[_obj.competencyArea]) {
+          if (this.competenciesObject[_obj.competencyArea][_obj.competencyTheme]) {
+            const competencyTheme = this.competenciesObject[_obj.competencyArea][_obj.competencyTheme]
+            if (competencyTheme.indexOf(_obj.competencySubTheme) === -1) {
+              competencyTheme.push(_obj.competencySubTheme)
+            }
+          } else {
+            this.competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
+            this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
+          }
+        } else {
+          this.competenciesObject[_obj.competencyArea] = {}
+          this.competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
+          this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
+        }
+      });
+      this.competencySelected = Object.keys(this.competenciesObject)[0];
     }
   }
 
@@ -74,8 +98,8 @@ export class AppTocAboutComponent implements OnInit {
           this.fetchRatingLookup()
         },
         (err: any) => {
-          this.loggerService.error('USER RATING FETCH ERROR >', err);
-          this.matSnackBar.open("Unable to fetch rating summary, due to some error!");
+          this.loggerService.error('USER RATING FETCH ERROR >', err)
+          this.matSnackBar.open('Unable to fetch rating summary, due to some error!')
         }
       )
     }
@@ -94,7 +118,7 @@ export class AppTocAboutComponent implements OnInit {
       this.ratingService.getRatingLookup(req).subscribe(
         (res: any) => {
           if (this.dialogRef) {   // Do disable the loader in the modal.
-            this.dialogRef.componentInstance.displayLoader = false;
+            this.dialogRef.componentInstance.displayLoader = false
           }
 
           if (res && res.result && res.result.response) {
@@ -113,11 +137,11 @@ export class AppTocAboutComponent implements OnInit {
         },
         (err: any) => {
           if (this.dialogRef) {   // Do disable the loader in the modal.
-            this.dialogRef.componentInstance.displayLoader = false;
+            this.dialogRef.componentInstance.displayLoader = false
           }
 
-          this.loggerService.error('USER RATING FETCH ERROR >', err);
-          this.matSnackBar.open("Unable to load reviews, due to some error!");
+          this.loggerService.error('USER RATING FETCH ERROR >', err)
+          this.matSnackBar.open('Unable to load reviews, due to some error!')
         }
       )
     }
@@ -167,8 +191,8 @@ export class AppTocAboutComponent implements OnInit {
         return this.authReplies
       },
       (err: any) => {
-        this.loggerService.error('USER RATING FETCH ERROR >', err);
-        this.matSnackBar.open("Unable to fetch author replies, due to some error!");
+        this.loggerService.error('USER RATING FETCH ERROR >', err)
+        this.matSnackBar.open('Unable to fetch author replies, due to some error!')
       }
     )
   }
@@ -261,8 +285,8 @@ export class AppTocAboutComponent implements OnInit {
     })
 
     this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: any) => {
-      this.loadMore();
-    });
+      this.loadMore()
+    })
   }
 
   loadMore() {
