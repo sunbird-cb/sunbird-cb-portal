@@ -30,7 +30,7 @@ import { HttpLoaderFactory } from 'src/app/app.module'
           useFactory: HttpLoaderFactory,
           deps: [HttpClient],
         },
-      }),  
+      }),
   ],
   exports: [
     ContentRatingV2DialogComponent,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 // const socialLink = [
 //   {
 //     url: 'https://www.linkedin.com/company/karmayogi-bharat/',
@@ -35,14 +35,14 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'ws-social-link',
   templateUrl: './social-link.component.html',
-  styleUrls: ['./social-link.component.scss']
+  styleUrls: ['./social-link.component.scss'],
 })
 export class SocialLinkComponent implements OnInit {
-  @Input() socialLinks:any = []
+  @Input() socialLinks: any = []
   constructor() { }
 
   ngOnInit() {
-    console.log('headerFooterConfigData', this.socialLinks)
+    // console.log('headerFooterConfigData', this.socialLinks)
    // this.socialLinks = socialLink;
   }
 

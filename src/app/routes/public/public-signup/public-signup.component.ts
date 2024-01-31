@@ -157,19 +157,19 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
+      lang = lang.replace(/\"/g, '')
       this.selectedLanguage = lang
       this.translate.use(lang)
     }
 
-    let userData : any = {}
-    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe(res=> {
+    let userData: any = {}
+    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe(res => {
       userData = res
     })
     this.isMobileVerified = userData && userData.isMobileVerified || false
     this.isEmailVerified = userData && userData.isEmailVerified || false
     this.registrationForm = new FormGroup({
-      firstname: new FormControl( userData && userData.firstname || '', [Validators.required, Validators.pattern(this.namePatern)]),
+      firstname: new FormControl(userData && userData.firstname || '', [Validators.required, Validators.pattern(this.namePatern)]),
       // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
       // position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
@@ -195,7 +195,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
     if (this.activatedRoute.snapshot.data.group.data) {
-      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele: any) => ele !== 'Others')
       this.masterGroup = this.groupsOriginal
     } else {
       this.groupsOriginal = []
@@ -203,7 +203,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
     this.OrgsSearchChange()
     // this.onPositionsChange()
-    //this.onGroupChange()
+    // this.onGroupChange()
     this.onPhoneChange()
     this.onEmailChange()
     if (instanceConfig) {
@@ -403,7 +403,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number',)
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
 
@@ -431,7 +431,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const mob = this.registrationForm.get('mobile')
 
     if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
+      if (otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
@@ -529,12 +529,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   verifyOtpEmail(otp: any) {
-    console.log(otp)
     const email = this.registrationForm.get('email')
     if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
+      if (otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
-      } else if ( email && email.value && email.valid) {
+      } else if (email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpEmailSend = true

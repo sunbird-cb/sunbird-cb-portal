@@ -57,7 +57,7 @@ export class EventsComponent implements OnInit {
 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
     this.eventWidgetData = (this.route.parent && this.route.parent.snapshot.data.pageData.data.eventStrips) || []
@@ -135,8 +135,8 @@ export class EventsComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   setEventListData(eventObj: any) {

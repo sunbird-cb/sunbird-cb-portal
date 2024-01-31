@@ -10,7 +10,7 @@ import { RolesAndActivityService } from '../../services/rolesandActivities.servi
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 import { Router } from '@angular/router'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
@@ -50,12 +50,8 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         this.updateRoles()
         if (localStorage.getItem('websiteLanguage')) {
             this.translate.setDefaultLang('en')
-            let lang = localStorage.getItem('websiteLanguage')!
-
+            const lang = localStorage.getItem('websiteLanguage')!
             this.translate.use(lang)
-            this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-                console.log('onLangChange', event);
-            });
         }
     }
     updateRoles() {

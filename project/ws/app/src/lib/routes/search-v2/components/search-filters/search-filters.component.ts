@@ -31,7 +31,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     private router: Router) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
-        let lang = localStorage.getItem('websiteLanguage')!
+        const lang = localStorage.getItem('websiteLanguage')!
         this.translate.use(lang)
       }
      }
@@ -270,12 +270,11 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     }
   }
   getText(val: string) {
-    console.log(" ", _.startCase(val || ''))
     return this.translateTo(_.startCase(val || ''))
   }
 
   translateTo(menuName: string): string {
-    const translationKey = 'searchfilters.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'searchfilters.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 }

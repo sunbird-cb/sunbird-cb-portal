@@ -6,7 +6,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { WidgetResolverService } from '@sunbird-cb/resolver/src/public-api'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-public-home',
@@ -39,13 +39,8 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
     this.loadData()
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-     
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
     // },         1000)
   }
@@ -76,8 +71,8 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   ngOnDestroy() {

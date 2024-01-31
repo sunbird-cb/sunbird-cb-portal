@@ -91,7 +91,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                 userId = this.configSvc.userProfile.userId || ''
             }
             const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
-                this.activatedRoute.snapshot.queryParams.batchId, identifier)
+                                                                       this.activatedRoute.snapshot.queryParams.batchId, identifier)
             const req: NsContent.IContinueLearningDataReq = {
                 request: {
                     userId,

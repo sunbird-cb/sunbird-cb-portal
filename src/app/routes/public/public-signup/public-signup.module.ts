@@ -72,7 +72,7 @@ import { TranslateModule } from '@ngx-translate/core'
     RecaptchaV3Module,
     PipeOrderByModule,
     PipeDurationTransformModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [PublicSignupComponent],
   providers: [

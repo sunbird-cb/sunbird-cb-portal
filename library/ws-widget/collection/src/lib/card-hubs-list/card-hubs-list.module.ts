@@ -22,7 +22,7 @@ import { ClickOutsideDirective } from './clickoutside.directive'
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
-    }),],
+    })],
   entryComponents: [CardHubsListComponent],
 })
 export class CardHubsListModule {

@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { TranslateModule } from '@ngx-translate/core'
 
-
 @NgModule({
   declarations: [ProfileCareerComponent],
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule,

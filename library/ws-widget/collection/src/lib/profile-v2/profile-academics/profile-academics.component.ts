@@ -18,23 +18,23 @@ export class ProfileAcademicsComponent extends WidgetBaseComponent implements On
   }
 
   constructor(private translate: TranslateService
-    ){
+    ) {
     super()
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
 
       this.translate.use(lang)
     }
   }
 
   translateTabName(menuName: string): string {
-    const translationKey = 'profileV2Academics.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'profileV2Academics.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 
   getDefaultTranslate(menuName: string): string {
-    const translationKey = 'profileV2Academics.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'profileV2Academics.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 }

@@ -6,7 +6,7 @@ import _ from 'lodash'
 // tslint:enable
 
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-knowledge-left-menu',
@@ -23,12 +23,8 @@ export class LeftMenuComponent implements OnInit {
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 
@@ -51,8 +47,8 @@ export class LeftMenuComponent implements OnInit {
   }
 
   translateLetMenuName(menuName: string): string {
-    const translationKey = 'knowledgeleftmenu.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'knowledgeleftmenu.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 
 }

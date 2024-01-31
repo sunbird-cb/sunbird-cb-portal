@@ -68,7 +68,7 @@ export class RequestDialogComponent implements OnInit {
 
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
   }
@@ -146,7 +146,6 @@ export class RequestDialogComponent implements OnInit {
       duration,
     })
   }
-
 
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabelWithoutspace(label, type, '')

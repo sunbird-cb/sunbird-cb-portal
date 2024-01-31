@@ -4,7 +4,7 @@ import { ValueService } from '@sunbird-cb/utils'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 import { ActivatedRoute } from '@angular/router'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -35,18 +35,11 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private translate: TranslateService,
     ) {
-
       this.allResources = _.get(this.activateRoute.snapshot, 'data.allResources.data.responseData') || []
-
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
-        let lang = localStorage.getItem('websiteLanguage')!
-
+        const lang = localStorage.getItem('websiteLanguage')!
         this.translate.use(lang)
-        console.log('current lang ------', this.translate.getBrowserLang())
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          console.log('onLangChange', event);
-        });
       }
      }
 

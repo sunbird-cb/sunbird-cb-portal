@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core'
     ReactiveFormsModule,
     BtnFullscreenModule,
     MatInputModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [PlayerPdfComponent],
   entryComponents: [PlayerPdfComponent],

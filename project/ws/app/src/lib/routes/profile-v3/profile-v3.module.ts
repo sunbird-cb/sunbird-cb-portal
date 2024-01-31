@@ -74,7 +74,7 @@ import { TranslateModule } from '@ngx-translate/core'
     BrowseByCompetencyModule,
     MatChipsModule,
     PipeListFilterModule,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [
     TopicService,

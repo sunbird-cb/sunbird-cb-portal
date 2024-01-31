@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core'
 // tslint:disable-next-line
 import _ from 'lodash';
 
@@ -19,13 +19,9 @@ export class WelcomeOnboardComponent implements OnInit {
         }
         if (localStorage.getItem('websiteLanguage')) {
             this.translate.setDefaultLang('en')
-            let lang = localStorage.getItem('websiteLanguage')!
-
+            const lang = localStorage.getItem('websiteLanguage')!
             this.translate.use(lang)
-            this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-              console.log('onLangChange', event);
-            });
-          }
+        }
     }
 
     ngOnInit() {

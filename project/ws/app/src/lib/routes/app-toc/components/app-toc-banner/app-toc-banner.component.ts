@@ -131,7 +131,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
+      lang = lang.replace(/\"/g, '')
       this.translate.use(lang)
     }
     this.helpEmail = environment.helpEmail

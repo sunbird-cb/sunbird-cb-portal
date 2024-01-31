@@ -52,7 +52,7 @@ export class AllProvidersComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, "")
+      lang = lang.replace(/\"/g, '')
       this.translate.use(lang)
     }
    }

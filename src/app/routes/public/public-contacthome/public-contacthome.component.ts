@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { environment } from 'src/environments/environment'
 // import { DOCUMENT } from '@angular/common'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-public-contacthome',
@@ -20,19 +20,11 @@ export class PublicContacthomeComponent implements OnInit {
 
   constructor(
     private configSvc: ConfigurationsService,
-    private translate: TranslateService, )
-    // @Inject(DOCUMENT) private document: Document, 
-    // private elementRef:ElementRef) 
-    {
+    private translate: TranslateService) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
-        let lang = localStorage.getItem('websiteLanguage')!
-       
+        const lang = localStorage.getItem('websiteLanguage')!
         this.translate.use(lang)
-        console.log('current lang ------', this.translate.getBrowserLang())
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          console.log('onLangChange', event);
-        });
       }
     }
 
@@ -47,8 +39,8 @@ export class PublicContacthomeComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName;
-    return this.translate.instant(translationKey);
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   preventData(event: any) {

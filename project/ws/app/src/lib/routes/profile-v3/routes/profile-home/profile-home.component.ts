@@ -11,7 +11,7 @@ import { StepService } from '../../services/step.service'
 import { CompLocalService } from '../../services/comp.service'
 import { ProfileV3Service } from '../../services/profile_v3.service'
 import { InitService } from 'src/app/services/init.service'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-app-profile-home',
   templateUrl: './profile-home.component.html',
@@ -56,12 +56,8 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     }
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
 
   }
@@ -247,7 +243,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   }
 
   translateTo(menuName: string): string {
-    const translationKey = 'profilehome.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'profilehome.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 }

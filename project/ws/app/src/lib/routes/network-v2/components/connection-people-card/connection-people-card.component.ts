@@ -35,7 +35,7 @@ export class ConnectionPeopleCardComponent implements OnInit {
     }
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
   }

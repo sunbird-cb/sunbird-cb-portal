@@ -32,7 +32,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { RequestDialogComponent } from '../request-dialog/request-dialog.component'
 import { USER_PROFILE_MSG_CONFIG } from './user-profile-constant'
 
@@ -162,12 +162,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
-      let lang = localStorage.getItem('websiteLanguage')!
-
+      const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
@@ -1956,8 +1952,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     )
   }
   translateTo(menuName: string): string {
-    const translationKey = 'userProfile.' + menuName.replace(/\s/g, "")
-    return this.translate.instant(translationKey);
+    const translationKey = 'userProfile.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
   dialogReqHelp(type: string) {
     const mob = this.createUserForm.controls['mobile'].value
