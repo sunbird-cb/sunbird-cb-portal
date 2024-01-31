@@ -28,7 +28,7 @@
                 <p class="mat-subheading-1 margin-remove inline-block" *ngIf="stripsResultDataMap[key]?.stripTitle">
                   {{ stripsResultDataMap[key]?.stripTitle }}
                 </p>
-      
+
                 <button *ngIf="stripsResultDataMap[key]?.stripInfo?.icon" type="button" mat-icon-button
                   (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="info"
                   class="margin-left-xs">
@@ -51,7 +51,7 @@
                   </a>
                 </div>
                 <!-- viewAll end-->
-              </div>              
+              </div>
               <button mat-icon-button (click)="setHiddenForStrip(key)" *ngIf="stripsResultDataMap[key]?.canHideStrip">
                 <mat-icon>close</mat-icon>
               </button>
@@ -77,14 +77,14 @@
                   (selectedTabChange)="tabClicked($event, stripsResultDataMap[key], key)">
                   <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                     <ng-template mat-tab-label>
-                      <span>{{tab?.label}} &nbsp;</span> 
+                      <span>{{tab?.label}} &nbsp;</span>
                       <span *ngIf="tab?.showTabDataCount && tab?.widgets?.length">({{tab?.widgets?.length}})</span>
                     </ng-template>
                     <div>
                       <!-- <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
                       </ng-container> -->
                       <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader ||
-                      !tab.fetchTabStatus" 
+                      !tab.fetchTabStatus"
                       class="text-center my-2">
                             <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                                     [loadStatus]="'fetching'" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
@@ -93,12 +93,12 @@
                               </ng-container>
                             </ws-utils-horizontal-scroller-v2>
                       </div>
-                      <div *ngIf="((tab?.fetchTabStatus && tab?.fetchTabStatus === 'done') && 
+                      <div *ngIf="((tab?.fetchTabStatus && tab?.fetchTabStatus === 'done') &&
                       (!tab?.widgets || !tab?.widgets?.length))">
                       <ng-container *ngIf="tab?.value === 'inprogress'; else msgTemp">
                         <div class="w-full flex flex-col items-center justify-center">
                           <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.svg">
-                          <div class="mat-subheading-1 text-center info-content">Get ready for your next learning adventure - 
+                          <div class="mat-subheading-1 text-center info-content">Get ready for your next learning adventure -
                             <a class="click-here" [routerLink]="'/page/learn'">Click here</a> to enroll in your next course now!</div>
                         </div>
                       </ng-container>
@@ -111,7 +111,7 @@
                       </div>
                       <ng-container *ngIf="(tab?.fetchTabStatus === 'done' || tab?.widgets?.length)">
                         <ng-container  *ngIf="!tab?.tabLoading">
-                       
+
                           <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab?.widgets?.length"
                             *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                             [loadStatus]="'done'" [defaultMaxWidgets]="tab?.maxWidgets ||

@@ -161,7 +161,7 @@ span.optional-span {
 
 .children-container {
   .mat-subheading-1 {
-    font: 400 16px/24px Lato !important;
+    font: 500 16px/24px Lato !important;
   }
 
   .resource-container {
@@ -193,6 +193,14 @@ span.optional-span {
   // font-size: 20px;
   vertical-align: middle;
 }
+
+.separator-dot {
+    display: inline-block;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, .4);
+  }
 
 .time-value {
   letter-spacing: 0px;
