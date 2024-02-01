@@ -69,6 +69,10 @@ span.optional-span {
   border-radius: 8px;
   // margin-bottom: 8px;
 
+  .resource {
+    padding: 16px;
+  }
+
   .card-thumbnail {
     height: 100%;
     // width: 220px;
@@ -159,6 +163,11 @@ span.optional-span {
   }
 }
 
+.child-wrapper {
+  background-color: #eff3f9;
+  border-radius: 0 0 8px 8px;
+}
+
 .children-container {
   .mat-subheading-1 {
     font: 500 16px/24px Lato !important;
@@ -167,6 +176,10 @@ span.optional-span {
   .resource-container {
     margin-bottom: 20px;
     margin-right: 8px;
+
+    .resource {
+      padding: 0;
+    }
 
     // background-color: #fff;
     .card-thumbnail {
@@ -188,9 +201,9 @@ span.optional-span {
 
 .time-icon {
   // color: #34D6A4;
-  // height: 21px;
-  // width: 21px;
-  // font-size: 20px;
+  height: 16px;
+  width: 16px;
+  font-size: 16px;
   vertical-align: middle;
 }
 
@@ -211,8 +224,8 @@ span.optional-span {
 .see-all-container {
   // text-align: right;
   position: absolute;
-  right: 2px;
-  top: 5px;
+  right: 16px;
+  top: 24px;
 
   // .see-all-btn {
   //   padding-right: 0;
@@ -305,10 +318,21 @@ span.optional-span {
   }
 }
 
-.certificate-txt {
-  padding: 0 20px;
-  color: #0273b6;
-  font-weight: 700;
+.certificate-btn {
+  height: 24px;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 11px;
+  color: #fff;
+  border-radius: 20px;
+  font: 400 12px/16px Lato;
+
+  .mat-icon {
+    fill: #fff;
+    color: #fff;
+  }
 }
 
 
