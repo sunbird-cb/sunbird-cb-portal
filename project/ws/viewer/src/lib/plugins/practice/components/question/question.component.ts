@@ -23,6 +23,10 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() total = 0
   @Input() viewState = 'initial'
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+  @Input() ePrimaryCategory:any;
+  @Input() totalQCount:any;
+  @Input() showAnswer:any;
+  @Input() current_Question:any;
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
@@ -116,6 +120,13 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     const elementById: HTMLElement | null = document.getElementById(id)
     if (elementById && color) {
       elementById.style.borderColor = color
+    }
+  }
+
+  checkAns(quesIdx: number) {
+    if (quesIdx > 0 && quesIdx <= this.totalQCount && this.current_Question.editorState && this.current_Question.editorState.options) {
+      this.showAnswer = true
+      this.practiceSvc.shCorrectAnswer(true)
     }
   }
 

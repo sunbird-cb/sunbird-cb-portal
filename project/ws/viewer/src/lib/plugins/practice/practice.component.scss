@@ -3,9 +3,9 @@
 
 $nav-height: 40px;
 
-.overflow-y-scroll {
-  height: auto !important;
-}
+// .overflow-y-scroll {
+//   height: auto !important;
+// }
 
 .quiz-container {
   height: 100%;
@@ -63,7 +63,8 @@ $nav-height: 40px;
 
 
 .quiz_inner_container {
-  height: auto;
+  height: 100%;
+  background-color: #fff;
 }
 
 .circle {
@@ -81,22 +82,22 @@ $nav-height: 40px;
   cursor: pointer;
   // width: 40px;
   // height: 26px;
-  width: 48px;
-  height: 36px;
-  border-radius: 24px;
+  width: 44px;
+  height: 32px;
+  // border-radius: 24px;
   text-align: center;
-  line-height: 33px;
 }
 
 .attempted-question {
-  border: solid #1D8923 2px;
-  color: #1D8923;
+  // border: solid rgb(27, 76, 161) 2px;
+  color: rgb(27, 76, 161);
+  margin-top: 7px;
 }
 
-.marked-question {
-  border: solid orange 2px;
-  color: orange;
-}
+// .marked-question {
+//   border: solid orange 2px;
+//   color: orange;
+// }
 
 .assessment_card {
   padding: 24px 16px;
@@ -112,7 +113,7 @@ $nav-height: 40px;
   overflow: auto !important;
   overflow-y: visible !important;
   scrollbar-width: thin;
-
+  background: #fff !important;
 }
 
 .overflow-y-scroll::-webkit-scrollbar {
@@ -124,7 +125,7 @@ $nav-height: 40px;
 }
 
 .dark-border {
-  border: solid #666666 2px;
+  border: solid rgba(0, 0, 0, 0.4) 2px;
 }
 
 .card-section {
@@ -203,7 +204,7 @@ $nav-height: 40px;
 
 .complete {
   background-color: RGBA(29, 137, 35, 0.1) !important;
-  border: 1px solid #1d8923 !important;
+  border: 1px solid rgb(27, 76, 161) !important;
   border-radius: $size-xs;
 }
 
@@ -221,7 +222,7 @@ $nav-height: 40px;
 
 .selected {
   background-color: RGBA(0, 116, 182, 0.05) !important;
-  border: 1px solid #0074b6 !important;
+  border: 1px solid rgb(27, 76, 161) !important;
   border-radius: $size-xs;
 }
 
@@ -265,11 +266,20 @@ $nav-height: 40px;
   }
 }
 
+.assessment-header {
+  margin-bottom: 34px;
+}
 
 .quest_btn {
-  @include breakpoint-lt-xs {
-    width: 100%;
-  }
+  // @include breakpoint-lt-xs {
+  //   width: 100%;
+  // }
+  width:123px;
+  border-radius: 63px;
+}
+
+.quest_btn_prev {
+  color: rgb(27, 76, 161) !important
 }
 .mat-cell {
   border: 1px solid orange;
@@ -280,3 +290,277 @@ $nav-height: 40px;
   border: 1px solid orange;
   padding: $size-s;
 }
+
+
+::ng-deep .mat-progress-bar {
+  height: 9px;
+}
+
+.border-radius-63 {
+  border-radius: 63px;
+}
+
+.seperator {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin: 16px 0;
+}
+
+.ques_stats_container {
+  margin: 24px 16px;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.ques-count {
+  color: rgb(27, 76, 161);
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat';
+  letter-spacing: 0.12px;
+  line-height: 24px;
+}
+
+.border-outline {
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  width: 100%;
+}
+
+.border-outline-skeleton {
+  // border: 1px solid rgba(0, 0, 0, 0.16);
+  width: 100%;
+  padding:32px;
+}
+
+.question-number {
+  color:rgba(0, 0, 0, 0.6);
+}
+
+.question-list {
+  width: 100%;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-inner-container {
+  height: 24px !important;
+  width: 40px !important;
+}
+
+.center-text {
+  display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.light-blue {
+  background-color: #eff3f9 !important;
+    border: 1px solid #1b4ca1;
+    width: 102px;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.light-blue-small {
+  background-color: #eff3f9 !important;
+  border: 2px solid #1b4ca1;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color:#1b4ca1
+}
+
+.orange-small {
+  background-color: rgba(239, 149, 30, 0.08) !important;
+    border: 1px solid rgb(239, 149, 30);
+    align-items: center;
+    justify-content: center;
+}
+
+.chip-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1b4ca1;
+}
+
+.stats-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: 'Lato';
+}
+
+.answer-stats-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: 'Lato';
+}
+
+::ng-deep .mat-standard-chip {
+  min-height: 24px !important;
+}
+
+::ng-deep .timer .mat-standard-chip {
+  min-height: 32px !important;
+}
+
+.seperate-text {
+  width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid rgb(216,216,216); 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+}
+
+.seperate-text  span { 
+  background:#fff; 
+  padding:0 10px; 
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Lato';
+  letter-spacing: 0.25px;
+}
+
+.left-container {
+  width: 77%;
+}
+
+.right-container {
+  width: 22%;
+  position: fixed;
+  right: 0;
+  height: 100%;
+  box-shadow: 0px 0px 5px 0px rgb(0,0,0,0.16);
+}
+
+.subheading-back {
+  font-family: "Montserrat";
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.12px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.87);
+  // padding-left: 16px;
+}
+
+.quest_num_box ::ng-deep .mat-chip-list-wrapper {
+  margin: 10px 0 !important;
+}
+
+.time-title{
+  font: 700 14px/16px 'Montserrat';
+  letter-spacing: 0.25px;
+  line-height: 20px;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.mb-24 {
+  margin-bottom: 24px;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .align-end {
+    align-items: end;
+  }
+
+  .fixed-question-control {
+    position: fixed;
+    bottom: 100px;
+    width: 86%;
+    margin: 0 16px;
+    // background-color: #fff;
+  }
+
+  .expand-icon {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 47%;
+    right: 50%;
+    margin-top: -16px;
+    cursor: pointer;
+  }
+
+  
+
+  .exapnd-collapse {
+    height: 32px;
+    width: 100%;
+    padding: 0;
+    background: #EBEDEE;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .assessment-header {
+    margin-bottom: 0;
+  }
+
+  .ques_stats_container {
+    margin: 24px 16px 0 24px;
+  }
+
+  .first {
+    width: 100%;
+    height: 40px;
+  }
+
+}
+
+.calculate-overlay {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+  color: #fff;;
+}
+
+.overlay {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  top: 40%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  color: #fff;
+  text-align: center;
+}
+
+.margin-center {
+  margin-left: 0.25rem;
+  margin-top: 0.15rem;
+}
+
+::ng-deep .calculate-overlay .mat-spinner circle {
+  stroke: orange !important;
+  stroke-width: 8px !important;
+}
+

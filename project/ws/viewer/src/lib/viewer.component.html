@@ -1,10 +1,13 @@
 <section *ngIf="isNotEmbed">
-  <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
-    (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
-  </viewer-viewer-top-bar>
-  <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
-    (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
-  </viewer-viewer-top-bar>
+  <ng-container>
+    <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+    </viewer-viewer-top-bar>
+    <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+    </viewer-viewer-top-bar>
+  </ng-container>
+
   <mat-sidenav-container autosize class="viewer-sidenav-container">
     <mat-sidenav [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">
@@ -20,9 +23,11 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="sidenavContent" #scrollableContent>
-      <viewer-viewer-secondary-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview"
-        [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
-      </viewer-viewer-secondary-top-bar>
+      <ng-container *ngIf="viewerHeaderSideBarToggleFlag">
+        <viewer-viewer-secondary-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview"
+          [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+        </viewer-viewer-secondary-top-bar>
+      </ng-container>
       <section *ngIf="status === 'error'">
         <div *ngIf="errorWidgetData?.widgetData?.errorType" [wsResolverWidget]="errorWidgetData"></div>
         <div *ngIf="error.errorType === errorType.mimeTypeMismatch">
