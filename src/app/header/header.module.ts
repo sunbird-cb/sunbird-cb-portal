@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
 import {
   MatIconModule,
   MatToolbarModule,
@@ -10,28 +10,28 @@ import {
   MatInputModule,
   MatTooltipModule,
 } from '@angular/material'
-import { MatDialogModule} from '@angular/material';
-import { HeaderComponent } from './header/header.component';
-import { AppNavBarComponent } from '../component/app-nav-bar/app-nav-bar.component';
-import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material'
+import { HeaderComponent } from './header/header.component'
+import { AppNavBarComponent } from '../component/app-nav-bar/app-nav-bar.component'
+import { RouterModule } from '@angular/router'
 
 import {
-  GridLayoutModule
-} from '@sunbird-cb/collection';
+  GridLayoutModule,
+} from '@sunbird-cb/collection'
 import {
   BtnFeatureModule, ErrorResolverModule, TourModule,
   StickyHeaderModule,
 } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { SearchModule } from '@ws/app/src/public-api'
-import { SharedModule } from '../shared/shared.module';
-import { FontSettingComponent } from './../component/font-setting/font-setting.component';
-import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-right-nav-bar.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../app.module';
-import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
+import { SharedModule } from '../shared/shared.module'
+import { FontSettingComponent } from './../component/font-setting/font-setting.component'
+import { TopRightNavBarComponent } from './../component/top-right-nav-bar/top-right-nav-bar.component'
+import { FormsModule } from '@angular/forms'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from '../app.module'
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 @NgModule({
   declarations: [HeaderComponent, AppNavBarComponent, FontSettingComponent, TopRightNavBarComponent],
   imports: [
@@ -52,7 +52,7 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     SharedModule,
     FormsModule,
     MatSelectModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
     TranslateModule.forRoot({
@@ -62,7 +62,7 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
         deps: [HttpClient],
       },
     }),
-    SkeletonLoaderModule
+    SkeletonLoaderModule,
   ],
   exports: [
     HeaderComponent,
@@ -71,6 +71,6 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     TopRightNavBarComponent,
     SharedModule,
   ],
-  providers: []
+  providers: [],
 })
 export class HeaderModule { }

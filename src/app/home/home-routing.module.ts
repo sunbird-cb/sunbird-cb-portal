@@ -10,7 +10,7 @@ const routes: Routes = [
       pageId: '',
       module: '',
     },
-  }
+  },
 ]
 @NgModule({
   imports: [

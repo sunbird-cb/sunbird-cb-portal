@@ -12,10 +12,10 @@ export class AppEnrollmentResolverService
     Observable<IResolveResponse<any>> | IResolveResponse<any>
     > {
     constructor(
-       
+
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
-    
+
     ) {
      }
 
@@ -29,10 +29,10 @@ export class AppEnrollmentResolverService
         }
         return  this.userSvc.fetchUserBatchList(userId).pipe(
             map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
-                tap((resolveData: any) => {
+            tap((resolveData: any) => {
                     return of({ error: null, data: resolveData })
                 }),
-                catchError((error: any) => of({ error, data: null })),
+            catchError((error: any) => of({ error, data: null })),
             )
     }
 }

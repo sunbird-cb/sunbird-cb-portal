@@ -12,8 +12,8 @@ export class AppHierarchyResolverService
     Observable<IResolveResponse<any>> | IResolveResponse<any>
     > {
     constructor(
-        private contentSvc:WidgetContentService
-    
+        private contentSvc: WidgetContentService
+
     ) {
      }
 
@@ -22,9 +22,9 @@ export class AppHierarchyResolverService
         _state: RouterStateSnapshot,
     ): Observable<IResolveResponse<any>> {
         const collectionId = _route.queryParams && _route.queryParams.collectionId || ''
-        const collectionType= _route.queryParams && _route.queryParams._collectionType || ''
+        const collectionType = _route.queryParams && _route.queryParams._collectionType || ''
         // tslint:disable-next-line
-        console.log("========> Before api call <===========", collectionId, collectionType)
+        // console.log("========> Before api call <===========", collectionId, collectionType)
         return this.contentSvc.fetchContent(collectionId, 'detail', [], collectionType).pipe(
         map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
             tap((resolveData: any) => {
