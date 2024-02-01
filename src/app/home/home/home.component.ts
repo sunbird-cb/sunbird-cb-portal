@@ -295,9 +295,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
           if (document.getElementsByClassName(this.sectionList[i]['section'])
           && document.getElementsByClassName(this.sectionList[i]['section'])[0]
           && !this.sectionList[i]['isVisible']) {
-            let tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
-          let eleTop = tect.top
-          let eleBottom = tect.bottom
+            const tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
+          const eleTop = tect.top
+          const eleBottom = tect.bottom
           isVisible = (eleTop >= 0) && (eleBottom <= window.innerHeight)
           this.sectionList[i]['isVisible'] = isVisible
           break

@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
   }
 
   downloadApp(): void {
-    let userAgent = navigator.userAgent
+    const userAgent = navigator.userAgent
 
     // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {

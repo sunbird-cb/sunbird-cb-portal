@@ -240,7 +240,7 @@ export class CbpPlanComponent implements OnInit {
                 return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'week'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
               }  if (time.includes('ad')) {
                 return dayjs(data.endDate).isSameOrBefore(dayjs(dayjs().add(count, 'day'))) && dayjs(data.endDate).isSameOrAfter(dayjs())
-              }  else if (time.includes('sm')) {
+              }   if (time.includes('sm')) {
                 return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
               }
               return true
