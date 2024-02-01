@@ -12,26 +12,12 @@ $text-primary: #1B4CA1;
     text-overflow: ellipsis;
 }
 
-.highlightFilter {
-    background: rgba(0, 0, 0, 0.04) !important;
-}
-
 .hide {
     display: none;
 }
 
 .arrow-img {
     margin-top: 2px;
-}
-
-.filter-dot {
-    background-color: #d13924;
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    position: relative;
-    top: -6px;
-    right: -28px;
 }
 
 .passbook-container {
@@ -284,9 +270,11 @@ hr {
         min-width: 384px;
     }
 }
+
 .text-color-white {
     color: rgba(255, 255, 255, 0.95);
 }
+
 .secondary-title{
     font-size: 14px;
     color: rgba(255, 255, 255, 0.7);

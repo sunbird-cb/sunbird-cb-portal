@@ -45,3 +45,18 @@
         color: $colorOrange;
     }
 }
+
+::ng-deep .mat-menu-panel {
+    min-width: 12em !important;
+    padding: 8px 0px !important;
+    border-radius: 12px;
+    margin-top: 4px;
+
+    .mat-menu-content {
+        padding-top: 0px !important;
+
+        button {
+            padding: 0 16px !important;
+        }
+    }
+}

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule } from '@angular/material'
+import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module'
 import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
@@ -12,8 +13,11 @@ import { AppTocAboutComponent } from './app-toc-about/app-toc-about.component'
 import { AppTocContentComponent } from './app-toc-content/app-toc-content.component'
 import { ReviewsContentComponent } from './reviews-content/reviews-content.component'
 import { AppTocContentCardV2Component } from './app-toc-content-card-v2/app-toc-content-card-v2.component'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
+import { CardCompetencyModule } from '../../card-competency/card-competency.module'
+import { PipeDurationTransformModule, HorizontalScrollerV2Module } from '@sunbird-cb/utils/src/public-api'
 import { NgCircleProgressModule } from 'ng-circle-progress'
+import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { WidgetResolverModule } from '@sunbird-cb/resolver/src/public-api'
 import { ContentProgressModule } from '../content-progress/content-progress.module'
 
 @NgModule({
@@ -38,6 +42,13 @@ import { ContentProgressModule } from '../content-progress/content-progress.modu
     PipeDurationTransformModule,
     ContentProgressModule,
     NgCircleProgressModule.forRoot({}),
+    PipeRelativeTimeModule,
+    InfiniteScrollModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    CardCompetencyModule,
+    HorizontalScrollerV2Module,
+    WidgetResolverModule,
   ],
   exports: [
     ContentTocComponent,
