@@ -686,8 +686,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     })
 
-    console.log('content - ', this.content)
-
   }
 
   getUserRating(fireUpdate: boolean) {
@@ -1457,6 +1455,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch {
       return []
     }
+  }
+
+  handleNavigateToReviews(): void {
+    const elementToView = document.getElementById('reviewContainer') as any
+    if (elementToView) { elementToView.scrollIntoView() }
   }
 
   ngOnDestroy() {

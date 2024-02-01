@@ -99,7 +99,7 @@
 
         <div class="flex flex-col gap-3">
             <div class="flex flex-row gap-4">
-                <div class="flex-1 mat-subheading-1">Top reviews</div>
+                <div class="flex-1 mat-subheading-1" id="reviewContainer">Top reviews</div>
                 <ng-container *ngIf="reviews && reviews?.length">
                     <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
                 </ng-container>

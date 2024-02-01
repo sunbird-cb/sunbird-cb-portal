@@ -30,7 +30,7 @@
           <div class="text-sm sm:text-base text-white">by Wahhabi Institute of Technology and Policy</div>
         </div>
         <div class="flex gap-4">
-          <div class="flex flex-row rating-chip py-2 px-3 items-center">
+          <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" >
             <div class="flex flex-row gap-1 items-center">
               <mat-icon>grade</mat-icon>
               <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
