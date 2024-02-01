@@ -8,6 +8,41 @@ import { ReviewsContentComponent } from '../reviews-content/reviews-content.comp
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
+
+interface IStripUnitContentData {
+  key: string
+  canHideStrip: boolean
+  mode?: string
+  showStrip: boolean
+  widgets?: NsWidgetResolver.IRenderConfigWithAnyData[]
+  stripTitle: string
+  stripTitleLink?: {
+    link: string,
+    icon: string
+  },
+  sliderConfig?: {
+    showNavs: boolean,
+    showDots: boolean,
+    maxWidgets?: number
+  },
+  tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
+  stripName?: string
+  stripLogo?: string
+  description?: string
+  stripInfo?: NsContentStripWithTabs.IStripInfo
+  noDataWidget?: NsWidgetResolver.IRenderConfigWithAnyData
+  errorWidget?: NsWidgetResolver.IRenderConfigWithAnyData
+  showOnNoData: boolean
+  showOnLoader: boolean
+  showOnError: boolean
+  loaderWidgets?: any
+  stripBackground?: string
+  secondaryHeading?: any
+  viewMoreUrl: any
+}
+
 @Component({
   selector: 'ws-widget-app-toc-about',
   templateUrl: './app-toc-about.component.html',
@@ -17,8 +52,9 @@ import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 export class AppTocAboutComponent implements OnInit {
 
   @Input() content: NsContent.IContent | null = null
-  descEllipsis = true
-  summaryEllipsis = true
+  stripsResultDataMap!: { [key: string]: IStripUnitContentData }
+  descEllipsis = false
+  summaryEllipsis = false
   competencySelected = ''
   ratingSummary: any
   authReplies: any
@@ -36,6 +72,45 @@ export class AppTocAboutComponent implements OnInit {
   ratingViewCount = 3
   reviewDefaultLimit = 2
   competenciesObject: any = {}
+
+  strip: NsContentStripWithTabs.IContentStripUnit = {
+    active: true,
+    key: 'blendedPrograms',
+    logo: 'school',
+    title: 'Blended Program',
+    stripTitleLink: {
+      link: '',
+      icon: '',
+    },
+    sliderConfig: {
+      showNavs : false,
+      showDots: false,
+    },
+    loader: true,
+    loaderConfig: {
+      cardSubType: 'card-standard-skeleton',
+    },
+    stripBackground: '',
+    titleDescription: 'Blended Program',
+    stripConfig: {
+      cardSubType: 'standard',
+    },
+    viewMoreUrl: {
+      path: '/app/seeAll',
+      viewMoreText: 'Show all',
+      queryParams: {
+        key: 'blendedPrograms',
+      },
+      loaderConfig: {
+        cardSubType: 'card-portrait-click-skeleton',
+      },
+      stripConfig: {
+        cardSubType: 'card-portrait-click',
+      },
+    },
+    tabs: [],
+    filters: [],
+  }
 
   // tslint:disable-next-line:max-line-length
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
@@ -73,8 +148,51 @@ export class AppTocAboutComponent implements OnInit {
           this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
         }
       })
-      this.competencySelected = Object.keys(this.competenciesObject)[0]
+
+      this.handleShowCompetencies(this.competenciesObject)
     }
+  }
+
+  handleShowCompetencies(item: any, selectedFlag?: string): void {
+    this.competencySelected = (selectedFlag) ? item.key : Object.keys(item)[0]
+    const valueObj = (selectedFlag) ? item.value : Object.values(item)[0]
+    const competencyArray = []
+    for (const key in valueObj) {
+      if (valueObj.hasOwnProperty(key)) {
+        const _tempObj: any = {}
+        _tempObj['key'] = key
+        _tempObj['value'] = valueObj[key]
+        competencyArray.push(_tempObj)
+      }
+    }
+
+    this.strip['loaderWidgets'] = this.transformCompetenciesToWidget(this.competencySelected, competencyArray, this.strip)
+  }
+
+
+  private transformCompetenciesToWidget(
+    competencyArea: string,
+    competencyArrObject: any,
+    strip: NsContentStripWithTabs.IContentStripUnit) 
+  {
+    return (competencyArrObject || []).map((content: any, idx: number) => (
+      content ? {
+        widgetType: 'card',
+        widgetSubType: 'competencyCard',
+        widgetHostClass: 'mr-4',
+        widgetData: {
+          content,
+          competencyArea,
+          cardCustomeClass: strip.customeClass ? strip.customeClass : '',
+          context: { pageSection: strip.key, position: idx },
+        },
+      } : {
+        widgetType: 'card',
+        widgetSubType: 'competencyCard',
+        widgetHostClass: 'mr-4',
+        widgetData: {},
+      }
+    ))
   }
 
   public handleParseJsonData(s: string) {
@@ -117,7 +235,7 @@ export class AppTocAboutComponent implements OnInit {
 
       this.ratingService.getRatingLookup(req).subscribe(
         (res: any) => {
-          if (this.dialogRef) {   // Do disable the loader in the modal.
+          if (this.dialogRef) {   // To disable the loader in the modal.
             this.dialogRef.componentInstance.displayLoader = false
           }
 
@@ -136,7 +254,7 @@ export class AppTocAboutComponent implements OnInit {
           this.processRatingLookup(res.result.response)
         },
         (err: any) => {
-          if (this.dialogRef) {   // Do disable the loader in the modal.
+          if (this.dialogRef) {   // To disable the loader in the modal.
             this.dialogRef.componentInstance.displayLoader = false
           }
 

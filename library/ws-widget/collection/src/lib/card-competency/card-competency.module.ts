@@ -11,6 +11,9 @@ import { CardCompetencyComponent } from './card-competency.component'
   exports: [
     CardCompetencyComponent,
   ],
+  entryComponents: [
+    CardCompetencyComponent,
+  ],
 })
 
 export class CardCompetencyModule { }

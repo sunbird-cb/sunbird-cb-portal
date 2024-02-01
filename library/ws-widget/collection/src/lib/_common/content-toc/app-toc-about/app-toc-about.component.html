@@ -24,22 +24,17 @@
 
         <div class="flex flex-row gap-3 sm:gap-4 mb-3">
             <ng-container *ngFor="let item of this.competenciesObject | keyvalue" >
-                <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === item.key}" (click)="competencySelected = item.key">{{ item.key }}</div>
+                <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === item.key}" (click)="handleShowCompetencies(item, 'selected')">{{ item.key }}</div>
             </ng-container>
         </div>
     
         <ng-container *ngFor="let item of this.competenciesObject | keyvalue">
-            <div class="flex flex-wrap gap-4" *ngIf="item?.key === competencySelected">
-                <ng-container *ngFor="let competency of item?.value | keyvalue">
-                    <!-- <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [loadStatus]="'fetching'"
-                        [stripConfig]="stripsResultDataMap[key]?.stripConfig">
-                        <ng-container *ngFor="let widget of stripsResultDataMap[key]?.loaderWidgets; trackBy: tracker">
-                            <ng-container [wsResolverWidget]="widget"></ng-container>
-                        </ng-container>
-                    </ws-utils-horizontal-scroller-v2> -->
-
-                    <ws-widget-card-competency [bindingData]="competency" [competencyArea]="item?.key" ></ws-widget-card-competency>
-                </ng-container>
+            <div *ngIf="item?.key === competencySelected">
+                <ws-utils-horizontal-scroller-v2 [sliderConfig]="strip.sliderConfig" [loadStatus]="'done'" [stripConfig]="strip.stripConfig">
+                    <ng-container *ngFor="let widget of strip?.loaderWidgets; trackBy: tracker">
+                        <ng-container [wsResolverWidget]="widget"></ng-container>
+                    </ng-container>
+                </ws-utils-horizontal-scroller-v2>
             </div>
         </ng-container>
 

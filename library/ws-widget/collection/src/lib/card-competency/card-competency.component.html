@@ -1,9 +1,9 @@
-<div class="competency-passbook-theme" [ngClass]="{'behavioural': (competencyArea?.toLowerCase() === 'behavioural' || competencyArea?.toLowerCase() === 'behavioral'), 'functional': competencyArea?.toLowerCase() === 'functional', 'domain': competencyArea?.toLowerCase() === 'domain'}">
+<div class="competency-passbook-theme" [ngClass]="{'behavioural': (widgetData?.competencyArea?.toLowerCase() === 'behavioural' || widgetData?.competencyArea?.toLowerCase() === 'behavioral'), 'functional': widgetData?.competencyArea?.toLowerCase() === 'functional', 'domain': widgetData?.competencyArea?.toLowerCase() === 'domain'}">
     <div class="detail">
         <div class="flex flex-col gap-2">
-            <div class="text-base font-bold">{{ bindingData?.key }}</div>
+            <div class="text-base font-bold">{{ widgetData?.content?.key }}</div>
             <div class="flex flex-wrap gap-4 chip-container">
-                <ng-container *ngFor="let subTheme of bindingData?.value">
+                <ng-container *ngFor="let subTheme of widgetData?.content?.value">
                     <div class="chip rounded-full text-xs">
                         {{ subTheme }}
                     </div>

@@ -17,6 +17,7 @@ import { CardCompetencyModule } from '../../card-competency/card-competency.modu
 import { PipeDurationTransformModule, HorizontalScrollerV2Module } from '@sunbird-cb/utils/src/public-api'
 import { NgCircleProgressModule } from 'ng-circle-progress'
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { WidgetResolverModule } from '@sunbird-cb/resolver/src/public-api'
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
     MatSnackBarModule,
     CardCompetencyModule,
     HorizontalScrollerV2Module,
+    WidgetResolverModule,
   ],
   exports: [
     ContentTocComponent,
