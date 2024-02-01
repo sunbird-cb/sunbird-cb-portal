@@ -1,12 +1,102 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.backgroud-image {
+  width: 100%;
+}
+
+.republic-wrapper {
+  border-radius: 12px;
+  position: relative;
+}
+.republic-details {
+  // padding-top: 20px;
+  position: relative;
+  text-align: center;
+  .image {
+    width: 100%;
+    height: 100%;
+  }
+  .info-text {
+    position: absolute;
+    bottom: -15px;
+    padding: 0 25px;
+    font-weight: 600;
+  }
+  .greet-text {
+    position: absolute;
+    top: 16px;
+    padding: 25px;
+    font-weight: 600;
+  }
+  .center-image {
+    position: absolute;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .center-image-mobile {
+    position: absolute;
+    top: 52%;
+    left: 22%;
+    transform: translate(-50%, -50%);
+  }
+  .image{
+    width: 130px;
+    height: 130px;
+  }
+
+  .mobile-info {
+    position: absolute;
+    top: 30%;
+    left: 40%;
+  }
+  .mobile-info-text {
+    font-family: Montserrat;
+    word-wrap: break-word;
+    font-size: 16px;
+    padding-left: 10px;
+    text-align: left!important;
+    width: 90%;
+    line-height: 1.5rem;
+  }
+  .mobile-greet {
+    font-weight: 600;
+    font-family: Montserrat;
+    word-wrap: break-word;
+    font-size: 16px;
+    padding: 0 0 10px 10px;
+    text-align: left!important;
+    width: 90%;
+    line-height: 1.5rem;
+  }
+
+
+}
+.profile-details-wrapper {
+  z-index: 11;
+  position: relative;
+}
 .profile-wrapper {
     background-color: #ffff;
     // height: 200px;
     border-radius: 12px;
-    padding: 16px;
+    // padding: 16px;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.08);
     margin-top: 32px;
-    z-index: 11;
+    z-index: 10;
+    box-sizing: border-box;
+
+    @include breakpoint-xs {
+      margin-top: 0px;
+    }
+    @include breakpoint-s {
+      margin-top: 0px;
+    }
+
 }
 .stats-container {
     border-radius: 12px;
@@ -16,7 +106,7 @@
     padding: 24px 16px 8px 16px;
     position: relative;
     top: -20px;
-    z-index: 10;
+    //z-index: 9!important;
     cursor: pointer;
 }
 
@@ -49,7 +139,7 @@
           left: 50%;
           transform: translate(-50%, -50%);
           font-size: 1.5rem;
-          z-index: 1;
+          //z-index: 1;
           font-weight: 500;
           margin: 0;
         }
@@ -76,7 +166,7 @@
           background: #444;
           transform: rotate(calc(((var(--i) - 0) * 0.01turn)));
         }
-        
+
         .percentage-block {
           border-radius: 8px;
           opacity: 1;
@@ -85,7 +175,7 @@
           position: absolute;
           top: 83%;
           left: 20%;
-          z-index: 9;
+          //z-index: 9;
           padding: 2px 8px;
           height: fit-content;
           opacity: 1;
@@ -109,7 +199,7 @@
         letter-spacing: 0.12px;
         line-height: 24px;
         cursor: pointer;
-        
+
         mat-icon {
           cursor: pointer;
           float:right;
@@ -123,7 +213,9 @@
     border: 1px solid rgba(0,0,0, 0.08);
 }
 
+
 .profile-user-stats {
+  padding: 16px;
     .user-data-list {
         padding: 8px;
         flex-wrap: wrap;
@@ -141,7 +233,7 @@
             line-height: 16px;
         }
         .stats-count {
-            
+
         }
     }
     .user-insights {
@@ -164,9 +256,25 @@
     cursor: pointer;
 }
 
+.republic-wrapper .collapse-expand-icon {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    right: 50%;
+    top: -2px;
+    cursor: pointer;
+}
 
 
-.progress-wrapper { 
+
+.progress-wrapper {
   position: relative;
   path {
     stroke-linecap: round;
@@ -193,7 +301,7 @@
         position: absolute;
         top: 76%;
         left: 13%;
-        z-index: 9;
+        //z-index: 9;
         padding: 2px 8px;
         height: fit-content;
         opacity: 1;
@@ -237,3 +345,144 @@
   text-align: center;
   line-height: 20px;
 }
+
+.aligncenter {
+  align-items: center;
+}
+
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
+}
+
+.fade-out {
+	opacity: 1;
+	animation-name: fadeOutOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-duration: 2s;
+}
+
+@keyframes fadeOutOpacity {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.default-profile {
+  //z-index: 11;
+  position: relative;
+  opacity: 1;
+}
+
+.default-public-banner {
+  z-index: 10;
+  height:285px;
+  opacity: 1;
+}
+
+
+.hide-default-public-banner {
+  opacity: 0;
+  z-index: 10;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.padding-12 {
+  padding:12px
+}
+
+.backgroud-image {
+  transform: scaleY(1.21);
+  transform-origin: top;
+}
+.mobile-backgroud-image {
+  transform: scaleY(1.06);
+  transform-origin: top;
+  width: 100%;
+}
+.profile-details-wrapper-with-nudge {
+  position: relative;
+  z-index: 9;
+}
+
+
+@media screen and (max-width: 768px) {
+  .mobile-backgroud-image {
+    transform: scaleY(1.1);
+  }
+}
+@media screen and (min-width: 360px) and (max-width: 576px) {
+  .mobile-backgroud-image {
+    transform: scaleY(1.15);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .mobile-backgroud-image {
+    transform: scaleY(1.15);
+  }
+}
+
+@media only screen
+  and (min-device-width: 820px)
+  and (max-device-width: 1180px) {
+  .backgroud-image {
+    transform: scaleY(1.77);
+  }
+
+  .republic-details .center-image {
+    top: 82%;
+  }
+  .republic-details .info-text {
+    bottom: -120px
+  }
+
+}
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 819px) {
+  .backgroud-image {
+    transform: scale(1.92, 1.14);
+    transform-origin: left;
+    margin-top: 19px;
+  }
+
+  .aligncenter {
+    margin-left: 83%;
+  }
+
+  .republic-details .greet-text {
+    width: 100%;
+  }
+  .republic-details .info-text {
+    width: 100%;
+    bottom: 0;
+  }
+  .republic-details .center-image {
+    left: 90%;
+  }
+}
+
+

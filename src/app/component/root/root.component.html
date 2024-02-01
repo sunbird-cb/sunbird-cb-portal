@@ -25,7 +25,8 @@ navBarRequired && (isXSmall$ | async) === false
       !isCustomHeight
   }">
   <div [ngClass]="mobileTopHeaderVisibilityStatus ? 'container-margin' : ''">
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
+    
   </div>
 </div>
 <!-- <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar">
