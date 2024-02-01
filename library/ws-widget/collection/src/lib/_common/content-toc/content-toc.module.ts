@@ -14,6 +14,7 @@ import { ReviewsContentComponent } from './reviews-content/reviews-content.compo
 import { AppTocContentCardV2Component } from './app-toc-content-card-v2/app-toc-content-card-v2.component'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { NgCircleProgressModule } from 'ng-circle-progress'
+import { ContentProgressModule } from '../content-progress/content-progress.module'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress'
     RatingSummaryModule,
     MatMenuModule,
     PipeDurationTransformModule,
+    ContentProgressModule,
     NgCircleProgressModule.forRoot({}),
   ],
   exports: [

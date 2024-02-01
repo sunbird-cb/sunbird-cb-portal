@@ -31,6 +31,7 @@ export class AppTocContentCardV2Component implements OnInit {
   @Input() rootContentType!: string
   @Input() forPreview = false
   @Input() batchId!: string
+  @Input() index!:number
   hasContentStructure = false
   enumContentTypes = NsContent.EDisplayContentTypes
   contentStructure: NsAppToc.ITocStructure = {
