@@ -34,13 +34,15 @@ import { LoaderService } from '@ws/author/src/public-api'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { OtpService } from './services/otp.services'
-import { RequestDialogComponent } from './components/request-dialog/request-dialog.component'
+import { RequestDialogComponent } from './components/request-dialog/request-dialog.component';
+import { EhrmsComponent } from './components/user-profile/e-hrms/ehrms/ehrms.component'
 
 @NgModule({
   declarations: [
     UserProfileComponent,
     TabDirective,
     RequestDialogComponent,
+    EhrmsComponent,
   ],
   imports: [
     BtnPageBackModule,

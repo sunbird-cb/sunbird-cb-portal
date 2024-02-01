@@ -1,0 +1,33 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.bg-grey {
+    background: #EDEDED 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    height: 100%;
+  }
+  .w-full {
+    width: 100%;
+  }
+.profile-top-col {
+  padding: 1rem 3rem;
+  margin: 0px 10px !important;
+  min-height: 500px;
+
+      &:first-child {
+        margin: 0px 10px 0px 0px !important;
+      }
+}
+.input-wrapper {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .profile-box .mat-form-field {
+    width: 100%;
+}
+.ehrms-form {
+    width: 100%;
+}
