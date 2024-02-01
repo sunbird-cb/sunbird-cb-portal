@@ -18,6 +18,7 @@ import { PipeDurationTransformModule, HorizontalScrollerV2Module } from '@sunbir
 import { NgCircleProgressModule } from 'ng-circle-progress'
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { WidgetResolverModule } from '@sunbird-cb/resolver/src/public-api'
+import { ContentProgressModule } from '../content-progress/content-progress.module'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver/src/public-api'
     RatingSummaryModule,
     MatMenuModule,
     PipeDurationTransformModule,
+    ContentProgressModule,
     NgCircleProgressModule.forRoot({}),
     PipeRelativeTimeModule,
     InfiniteScrollModule,
