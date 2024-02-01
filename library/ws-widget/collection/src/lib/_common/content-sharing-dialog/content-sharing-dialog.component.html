@@ -1,4 +1,6 @@
 <div>
+    <div class="triangle-left"></div>
+    <div class="karmasahayogi-icon"><img alt="chatbot-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
     <ng-container>
         <section class="w-full flex align-center justify-between ">
             <div class="mb-2">
@@ -25,17 +27,17 @@
                     <mat-form-field appearance="outline" class="w-full">
                         <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
                             <mat-chip
-                                *ngFor="let fruit of fruits"
+                                *ngFor="let user of users"
                                 [selectable]="selectable"
                                 [removable]="removable"
-                                (removed)="remove(fruit)">
-                                {{fruit}}
+                                (removed)="remove(user)">
+                                {{user}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
                             <input
                                 tabindex="-1"
-                                placeholder="To: Add an email"
-                                #fruitInput
+                                placeholder="{{users.length === 0 ? placehoderText : ''}}"
+                                #userInput
                                 formControlName="review"
                                 [formControl]="userCtrl"
                                 [matAutocomplete]="auto"
@@ -45,21 +47,21 @@
                                 (matChipInputTokenEnd)="add($event)">
                         </mat-chip-list>
                         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit.name">
+                            <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name">
                                 <div class="flex">
                                     <div class="iconDiv">
-                                        <span class="iconText">{{fruit.iconText.substring(0,2)}}</span>
+                                        <span class="iconText">{{user.iconText.substring(0,2)}}</span>
                                     </div>
                                     <div>
-                                        <div>{{fruit.name}}</div>
-                                        <div class="emailText">{{fruit.maskedEmail}}</div>
+                                        <div>{{user.name}}</div>
+                                        <div class="emailText">{{user.maskedEmail}}</div>
                                     </div>
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-error *ngIf="fruits.length > 3"> You have exceeded 30 emails.</mat-error>
+                        <mat-error *ngIf="users.length > 3"> You have exceeded 30 emails.</mat-error>
                         <mat-hint align="start">Note: Emails will be sent only to registered karmayogis.</mat-hint>
-                        <mat-hint align="end">{{ fruits.length }} /30 characters</mat-hint>
+                        <mat-hint align="end">{{ users.length }} /30 characters</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
@@ -69,7 +71,7 @@
                         </button>
                         <button mat-stroked-button type="submit"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
-                            [disabled]="fruits.length === 0 || fruits.length > 3"
+                            [disabled]="users.length === 0 || users.length > 3" (click)="submitSharing()"
                             >
                             Send<mat-icon >play_arrow</mat-icon>
                         </button>

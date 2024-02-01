@@ -28,6 +28,7 @@ import {
   MatSnackBarModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatAutocompleteModule,
 } from '@angular/material'
 import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
@@ -237,6 +238,8 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     AttendanceHelperModule,
     AttendanceCardModule,
     MicroSurveyModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({}),
   ],
   providers: [
