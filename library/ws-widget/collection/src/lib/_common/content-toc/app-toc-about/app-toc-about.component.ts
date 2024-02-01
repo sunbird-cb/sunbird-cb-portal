@@ -169,12 +169,10 @@ export class AppTocAboutComponent implements OnInit {
     this.strip['loaderWidgets'] = this.transformCompetenciesToWidget(this.competencySelected, competencyArray, this.strip)
   }
 
-
   private transformCompetenciesToWidget(
     competencyArea: string,
     competencyArrObject: any,
-    strip: NsContentStripWithTabs.IContentStripUnit) 
-  {
+    strip: NsContentStripWithTabs.IContentStripUnit) {
     return (competencyArrObject || []).map((content: any, idx: number) => (
       content ? {
         widgetType: 'card',
