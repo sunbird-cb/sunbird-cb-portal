@@ -29,6 +29,9 @@ const rightNavConfig = [
     "active": true
   }
 ]
+
+
+
 @Component({
   selector: 'ws-top-right-nav-bar',
   templateUrl: './top-right-nav-bar.component.html',
@@ -55,9 +58,11 @@ export class TopRightNavBarComponent implements OnInit {
       // console.log(res, "res====")
       this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res);      
     })
+
   }
 
   getZohoForm() {
+   
     const dialogRef = this.dialog.open(ZohoDialogComponent, {
       width: '60%',
       data: {
