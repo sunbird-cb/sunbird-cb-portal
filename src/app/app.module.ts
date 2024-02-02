@@ -24,7 +24,7 @@ import {
   MatTabsModule,
   MatSelectModule,
   MatTableModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -91,13 +91,12 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
-import { HeaderModule } from './header/header.module';
-import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
-import { SocialLinkComponent } from './component/social-link/social-link.component';
-import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
-import { AppLogoComponent } from './component/app-logo/app-logo.component';
+import { HeaderModule } from './header/header.module'
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
+import { SocialLinkComponent } from './component/social-link/social-link.component'
+import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component'
+import { AppLogoComponent } from './component/app-logo/app-logo.component'
 import { NoDataComponent } from './component/no-data/no-data.component'
-
 
 @Injectable()
 export class HammerConfig extends GestureConfig {
@@ -148,7 +147,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogBoxComponent,
     SocialLinkComponent,
     FooterSectionComponent,
-    AppLogoComponent
+    AppLogoComponent,
   ],
   imports: [
     FormsModule,
@@ -212,14 +211,15 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   exports: [
     TncComponent,
-    HeaderModule
+    HeaderModule,
+    TranslateModule,
   ],
   bootstrap: [RootComponent],
   entryComponents: [
     DialogConfirmComponent,
     LoginComponent,
     AppIntroComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
   ],
   providers: [
     {
@@ -255,6 +255,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: APP_BASE_HREF,
       useFactory: getBaseHref,
       deps: [PlatformLocation],
+    },
+    {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient],
     },
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },

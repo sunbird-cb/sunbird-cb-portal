@@ -7,10 +7,10 @@ import _ from 'lodash'
 
 const API_END_POINTS = {
   GET_PROVIDERS: 'apis/proxies/v8/searchBy/provider',
-  GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search'
+  GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search',
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppCbpPlansService {
 
