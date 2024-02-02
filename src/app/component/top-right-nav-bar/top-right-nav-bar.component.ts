@@ -55,19 +55,17 @@ export class TopRightNavBarComponent implements OnInit {
     })
 
     this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
-      // console.log(this.sanitizer.bypassSecurityTrustHtml(res), "this.sanitizer.bypassSecurityTrustHtml(res)=====")
       this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res);
-      console.log(this.zohoHtml, "type of this.zohoHtml===")
     })
 
-    setTimeout(() => {
-      this.callXMLRequest(this.zohoHtml)
-    }, 2000);
+    // setTimeout(() => {
+    //   this.callXMLRequest(this.zohoHtml)
+    // }, 2000);
 
   }
 
   getZohoForm() {
-   
+
     const dialogRef = this.dialog.open(ZohoDialogComponent, {
       width: '60%',
       data: {
@@ -77,6 +75,9 @@ export class TopRightNavBarComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(() => {
     });
+    setTimeout(() => {
+      this.callXMLRequest();
+    }, 0);
   }
 
 
@@ -91,56 +92,36 @@ export class TopRightNavBarComponent implements OnInit {
 
 
 
-  callXMLRequest(value:any) {
-    console.log("function called!!!")
+  callXMLRequest() {
     var webFormxhr: any = {};
-    let htmlData = value
-    var docs = new DOMParser().parseFromString(htmlData, "text/html")
-    // console.log(docs, "document----")
-    
-    console.log(docs, "htmlData=========")
     webFormxhr = new XMLHttpRequest();
     webFormxhr.open('GET', 'https://desk.zoho.in/support/GenerateCaptcha?action=getNewCaptcha&_=' + new Date().getTime(), true);
     webFormxhr.onreadystatechange = () => {
       if (webFormxhr.readyState === 4 && webFormxhr.status === 200) {
         try {
           var response = (webFormxhr.responseText != null) ? JSON.parse(webFormxhr.responseText) : '';
-          console.log('response', webFormxhr, response);
-          console.log('response.captchaUrl', response.captchaUrl);
-          console.log("response end=========")
-          
-          let zsCaptchaUrl: any = docs.getElementById('zsCaptchaUrl');
-          
-          zsCaptchaUrl.src = response.captchaUrl;
-          console.log(zsCaptchaUrl, "zsCaptchaUrl=========")
-          let xJdfEaS: any = docs.getElementsByName('xJdfEaS')[0];
-          console.log(xJdfEaS, "xJdfEaS=========")
+          let zsCaptchaUrl: any = document.getElementById('zsCaptchaUrl');
+          if (zsCaptchaUrl) {
+            zsCaptchaUrl.src = response.captchaUrl;
+            zsCaptchaUrl.style.display = 'block';
+          }
+          let xJdfEaS: any = document.getElementsByName('xJdfEaS')[0];
           xJdfEaS.value = response.captchaDigest;
-          let zsCaptchaLoading: any = docs.getElementById('zsCaptchaLoading');
-          console.log(zsCaptchaLoading, "zsCaptchaLoading=========")
+          let zsCaptchaLoading: any = document.getElementById('zsCaptchaLoading');
           zsCaptchaLoading.style.display = 'none';
-          let zsCaptcha: any = docs.getElementById('zsCaptcha')
+          let zsCaptcha: any = document.getElementById('zsCaptcha')
           zsCaptcha.style.display = 'block';
-          console.log("response end=========")
+          let refreshCaptcha: any = document.getElementById('refreshCaptcha');
+          if (refreshCaptcha) {
+            refreshCaptcha.addEventListener('click', () => {
+              this.callXMLRequest();
+            })
+          }
         } catch (e) {
-
         }
-
-      //   document.getElementById('zsCaptchaUrl').src = response.captchaUrl;
-      //   document.getElementsByName('xJdfEaS')[0].value = response.captchaDigest;
-        
-      //   jQuery('#zsCaptchaLoading').hide();
-
-      //   jQuery('#zsCaptcha').show();
-      //   console.log("response end=========")                    
-      // } catch (e) { 
-
-      
       }
-
     }
 
     webFormxhr.send();
   }
-
 }
