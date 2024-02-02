@@ -3,22 +3,29 @@
   <div class="assessment-stats-count">
     <div class="flex flex-row justify-end">
       <div class="start-assessment-cta flex flex-row butto_box end">
-        <ng-container
+        <!-- <ng-container
         *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
         <div class="quest_btn">
           <a mat-button (click)="action('retake')">
             Try Again
           </a>
         </div>
+        </ng-container>  -->
+        <ng-container>
+        <div class="quest_btn">
+          <a mat-button (click)="action('retake')">
+            Try Again
+          </a>
+        </div>
         </ng-container> 
-        <ng-container
+        <!-- <ng-container
         *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
         <div class="text-white  quest_btn_finish">
           <a mat-button (click)="action('retake')" class="width-1-1 text-white">
             Finish
           </a>
         </div>
-        </ng-container>       
+        </ng-container>        -->
       </div>    
     </div>   
   </div>  
@@ -91,22 +98,67 @@
           <span class="mat-heading" i18n>Please contact system admin</span>
         </div>
       </ng-container>
-      <ng-container *ngIf="quizResponse && !quizResponse?.isInProgress">  
+      <ng-container>  
         <div *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
           <div class="flex flex-col justify-center align-center success-message-result">
               <div><img src="assets/icons/final-assessment/practice-assessment-badge.svg"></div>
               <div class="mat-subheading-2">Well done, Keep learning!</div>
           </div>
+        </div>
+        <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory" class="flex flex-col justify-center align-center success-message-result">
+          <ng-container *ngIf="isPassed && percentage === 100">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
+              
+              <path  class="progress-clr" d="M55,90
+                      A55,55 0 1,1 140,90"
+                    style="fill:none;stroke-width:8px"
+                    />
+            </svg>
+            <div style="position:relative; top: -60px; left: 0px;">
+                <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
+                <div class="level-text">{{levelText || 'Passed'}}</div>
+            </div>
+            <div class="mat-subheading-2 message">You have aced the assessment, with flying colours.</div>
+          </ng-container>
+          <ng-container *ngIf="isPassed && percentage < 100">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
+              
+              <path  class="progress-clr" d="M55,90
+                      A55,55 0 1,1 140,90"
+                    style="fill:none;stroke-width:8px"
+                    />
+            </svg>
+            <div style="position:relative; top: -60px; left: 0px;">
+                <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
+                <div class="level-text">{{levelText || 'Passed'}}</div>
+            </div>
+            <div class="mat-subheading-2 message">Congratulations on successfully passing the assessment. Good job!</div>
+          </ng-container>
+          <ng-container *ngIf="!isPassed">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
+              
+              <path  class="progress-red-clr" d="M55,90
+                      A55,55 0 1,1 140,90"
+                    style="fill:none;stroke-width:8px"
+                    />
+            </svg>
+            <div style="position:relative; top: -60px; left: 0px;">
+                <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
+                <div class="level-text">{{levelText || 'Failed'}}</div>
+            </div>
+            <div class="mat-subheading-2 message">You have the opportunity to try again and do better next time. Keep going!</div>
+          </ng-container>
         </div>     
         <mat-card class="result_box_time_container">
         <div class="flex flex-row justify-between response_box">        
           <div class="stats-label">
-            <div><img src="assets/icons/final-assessment/timer.svg"></div>
-            <div class="ml-2"> Time spent: {{( timeLimit | pipeDurationTransform: 'hms')}}</div>
+            <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
+            <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
+            <div class="ml-2"> Time Questions: </div>
           </div>
           <div class="stats-label">
-            <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
-            <div class="ml-2">Total {{quizResponse?.total}} questions</div>
+            <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
+            <div class="ml-2">{{quizResponse?.total}} questions</div>
           </div>
         </div>
       </mat-card> 

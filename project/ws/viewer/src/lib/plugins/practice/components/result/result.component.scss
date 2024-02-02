@@ -403,34 +403,6 @@
     width: 123px;
 }
 
-@media only screen and (max-width: 768px) {
-    .box-height {
-        min-height: 100%;
-        margin: 0;
-    }
-    .summary-detail ul li {
-        color: rgba(0, 0, 0, 0.87);
-        letter-spacing: 0.12px;
-        line-height: 24px;
-        font-weight: 700;
-        font-family: 'Lato';
-        list-style: none;
-        margin-top: 24px;
-        font-size: 14px;
-    }
-
-    .start-assessment-cta {
-        position: fixed;
-        bottom: 15%;
-        width: 75%;
-        // left: 25%;
-    }
-
-    .start-assessment-cta button {
-        width: 100%;
-    }
-}
-
 ::ng-deep .mat-card-title {
     margin-bottom: 0px !important;
     padding-bottom: 16px;
@@ -469,9 +441,93 @@
 
 .success-message-result {
     margin-top: -40px;
-    margin-bottom: 40px;
+    // margin-bottom: 40px;
 }
 
 .top-margin-63 {
     margin-top: 63px;
+}
+
+.progress-clr {
+    stroke: rgb(29, 137, 35);
+    stroke-dasharray: 248;
+    // stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
+    stroke-dashoffset: var(--i);
+}
+
+.progress-red-clr {    
+    stroke: #d13924;
+    stroke-dasharray: 248;
+    // stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
+    stroke-dashoffset: var(--i);
+}
+
+.percentage {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    font-family: 'Montserrat';
+    letter-spacing: 0.12px;
+    line-height: 28px;
+    text-align: center;
+}
+
+.level-text {
+    text-align: center;
+}
+
+.message {
+    width:412px;
+    text-align: center;
+    margin-top: -40px;
+}
+
+@media only screen and (max-width: 768px) {
+    .box-height {
+        min-height: 100%;
+        margin: 0;
+    }
+    .summary-detail ul li {
+        color: rgba(0, 0, 0, 0.87);
+        letter-spacing: 0.12px;
+        line-height: 24px;
+        font-weight: 700;
+        font-family: 'Lato';
+        list-style: none;
+        margin-top: 24px;
+        font-size: 14px;
+    }
+
+    .start-assessment-cta {
+        position: fixed;
+        bottom: 6%;
+        width: 92%;
+        justify-content: center;
+        // left: 25%;
+    }
+
+    .quest_btn[_ngcontent-uam-c41] {
+        width: 100%;
+        border-radius: 63px;
+        border: 1px solid #1b4ca1;
+        color: #1b4ca1 !important;
+        text-align: center;
+        margin: 0 32px;
+    }
+
+    .start-assessment-cta button {
+        width: 100%;
+    }
+
+    .result_box_time_container {
+        padding:0
+    }
+
+    .result_box {
+        padding: 0
+    }
+
+    .section-title {
+        padding:16px;
+    }
 }

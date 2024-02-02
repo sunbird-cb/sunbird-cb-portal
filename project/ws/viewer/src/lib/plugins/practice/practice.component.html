@@ -131,10 +131,25 @@
     <div class="right-container">
       <div class="question-list">
         <div class="ques_stats_container">
-          <div class="flex flex-row justify-between">
-            <p class="mat-subheading-1">
-              Questions
-            </p>
+          <div class="flex flex-row justify-between ques_stats_container_box">
+            <div class="flex flex-row">
+                <div>
+                  <p class="mat-subheading-1">
+                    Questions
+                  </p>
+                </div>
+                <div class="question-info">
+                  <img src="assets/icons/final-assessment/question_info.svg"/>
+                </div>
+                <div class="info-hover">
+                  <div class="info-tooltip-container">
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>Answered</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>Not Answered</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>Flagged</span></div>
+                  </div>
+                </div>
+            </div>
+           
             <div class="timer">
               <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
                   <ng-container [ngTemplateOutlet]="timer"></ng-container>
@@ -179,17 +194,9 @@
           </div> -->
         </div>
         <!-- <div class="seperator"></div> -->
-        <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1">
-          <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
-          <div class="flex flex-nowrap margin-right-s margin-left-s quest_num_box"
-            *ngIf="fetchingQuestionsStatus === 'done'">
-            <div class="col" *ngFor="let question of secQuestions; let i = index">
-              <div (click)="scroll(i + 1)" [ngClass]="{
-                'marked-question': isQuestionMarked(question?.questionId),
-                'attempted-question':
-                  !isQuestionMarked(question?.questionId) &&
-                  isQuestionAttempted(question?.questionId),
-                'white-border':
+
+        <!-- 
+           'white-border':
                   !isQuestionMarked(question?.questionId) &&
                   !isQuestionAttempted(question?.questionId) &&
                   currentTheme === 'black-theme',
@@ -197,18 +204,29 @@
                   !isQuestionMarked(question?.questionId) &&
                   !isQuestionAttempted(question?.questionId) &&
                   currentTheme !== 'black-theme'
-              }" class="margin-xs">
+        -->
+        <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1">
+          <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
+          <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box"
+            *ngIf="fetchingQuestionsStatus === 'done'">
+            <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
+              <div (click)="scroll(i + 1)" [ngClass]="{
+                'marked-question': isQuestionMarked(question?.questionId),
+                'attempted-question':
+                  !isQuestionMarked(question?.questionId) &&
+                  isQuestionAttempted(question?.questionId)               
+              }" class="margin-side-8">
                 <div *ngIf="!isQuestionMarked(question?.questionId) &&
-                  isQuestionAttempted(question?.questionId)"  class="light-blue-small">
+                  isQuestionAttempted(question?.questionId)"  class="light-blue-small" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'">
                   <img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/>
                 </div>
                 <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId))">
-                  <mat-chip-list><mat-chip class="orange-small">{{ i + 1 }}</mat-chip></mat-chip-list>
+                  <mat-chip-list><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
                 </div>
                 <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
-                  class="ovel question-number"><span class="mat-body-2">
+                  class="ovel question-number" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'"><span [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'mat-body-2-bold': 'mat-body-2'">
                     {{ i + 1 }}
                   </span>
                 </div>
@@ -317,12 +335,22 @@
   <div class="flex flex-column"
     *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
       <div>
-        <div class="flex flex-row justify-around align-end">
+        <div class="flex flex-row justify-around align-end mobile-question-header">
           <div>
-            <img src="assets/icons/final-assessment/decline_icon.svg"/>
+            <img src="assets/icons/final-assessment/mobile-cross.svg"/>
           </div>
           <div (click)="back()" class="no-border flex cursor-pointer back_button">
             <span class="subheading-back">{{resourceName}}</span>
+            <div class="question-info">
+              <img src="assets/icons/final-assessment/question_info.svg"/>
+            </div>
+            <div class="info-hover">
+              <div class="info-tooltip-container">
+                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>Answered</span></div>
+                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>Not Answered</span></div>
+                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>Flagged</span></div>
+              </div>
+            </div>
           </div>
           <div class="timer">
             <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
@@ -381,7 +409,7 @@
               </div>
             </div> -->
            
-            <div *ngIf="!isSubmitted && viewState === 'attempt' && !expandFalse" class="flex flex-1">
+            <!-- <div *ngIf="!isSubmitted && viewState === 'attempt' && !expandFalse" class="flex flex-1">
               <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
               <div class="flex flex-nowrap margin-right-s margin-left-s quest_num_box"
                 *ngIf="fetchingQuestionsStatus === 'done'">
@@ -412,6 +440,36 @@
                       isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
                       class="ovel question-number"><span class="mat-body-2">
                         {{ i + 1 }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div *ngIf="!isSubmitted && viewState === 'attempt' && !expandFalse"  class="flex flex-1">
+              <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
+              <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box"
+                *ngIf="fetchingQuestionsStatus === 'done'">
+                <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
+                  <div (click)="scroll(i + 1)" [ngClass]="{
+                    'marked-question': isQuestionMarked(question?.questionId),
+                    'attempted-question':
+                      !isQuestionMarked(question?.questionId) &&
+                      isQuestionAttempted(question?.questionId)               
+                  }" class="margin-side-8">
+                    <div *ngIf="!isQuestionMarked(question?.questionId) &&
+                      isQuestionAttempted(question?.questionId)"  class="light-blue-small" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'">
+                      <img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/>
+                    </div>
+                    <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
+                      isQuestionAttempted(question?.questionId))">
+                      <mat-chip-list><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
+                    </div>
+                    <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
+                      isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
+                      class="ovel question-number" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'"><span [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'mat-body-2-bold': 'mat-body-2'">
+                        {{ i + 1 }}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -463,7 +521,7 @@
       </div>
      
   </div>
-  <div class="fixed-question-control">
+  <div class="fixed-question-control" *ngIf="!isSubmitted">
     <div>
       <div class="flex flex-row justify-around">
         <ng-container

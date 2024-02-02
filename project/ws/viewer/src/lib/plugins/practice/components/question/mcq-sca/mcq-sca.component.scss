@@ -59,3 +59,13 @@
         background-color: rgb(245,245,245) !important;
     }
 
+    @media only screen and (max-width: 768px) {
+        .more-than-five-option{
+            display: inline-flex;
+            flex-direction: column;
+            width: 100%;
+            height: 85%;
+            overflow: scroll;
+        }
+    }
+

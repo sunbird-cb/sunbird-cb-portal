@@ -94,7 +94,10 @@
     </div>
     <div class="summary-detail">
      <ul>
-      <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">Unlimited retakes are allowed</span></li>
+      <li>
+        <img src="assets/icons/final-assessment/star_empty.svg">
+        <span class="summary-list-label">Unlimited retakes are allowed</span>
+      </li>
       <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">If the given time is runs out answer will be autosubmitted</span></li>
       <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">Skipped questions can be attempted again before submitting</span></li>
       <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">No negative marking</span></li>
@@ -102,15 +105,16 @@
     </div>
   </div>
 
-  <div class="start-assessment-cta block md:hidden">
-    <button *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" [class.spinner]="loading" [disabled]="loading" (click)="overviewed('start')" class="bg-blue-800 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide">
-      <span class="padding-xs" i18n>Start assessment</span>
-    </button>
-    <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">You have exceeded the
-        maximum allowed attempt</mat-hint>
-  </div>
-
+  
 </div>
+<div class="start-assessment-cta block md:hidden">
+  <button *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" [class.spinner]="loading" [disabled]="loading" (click)="overviewed('start')" class="bg-blue-800 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide">
+    <span class="padding-xs" i18n>Start assessment</span>
+  </button>
+  <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">You have exceeded the
+      maximum allowed attempt</mat-hint>
+</div>
+
 <ng-template #detail let-icon="icon" let-text="text">
   <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
     <mat-icon>{{icon}}</mat-icon>

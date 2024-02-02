@@ -9,7 +9,7 @@
   </ng-container>
 
   <mat-sidenav-container autosize class="viewer-sidenav-container">
-    <mat-sidenav [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
+    <mat-sidenav *ngIf="!isMobile" [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">
       <mat-tab-group>
         <mat-tab *ngIf="isTypeOfCollection" i18n-label label="Contents">

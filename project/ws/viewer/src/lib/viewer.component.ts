@@ -50,6 +50,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private resourceChangeSubscription: Subscription | null = null
   leafNodesCount: any
   viewerHeaderSideBarToggleFlag = true;
+  isMobile = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -66,7 +67,14 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
+
+    if(window.innerWidth <= 1200) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
   }
+  
 
   getContentData(e: any) {
     e.activatedRoute.data.subscribe((data: { content: { data: NsContent.IContent } }) => {
@@ -89,8 +97,14 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data:any)=>{
       if(data) {
-        this.sideNavBarOpened = true;
-        this.viewerHeaderSideBarToggleFlag = data;
+        if(this.isMobile) {
+          this.sideNavBarOpened = false;
+          this.viewerHeaderSideBarToggleFlag = data;
+        } else {
+          this.sideNavBarOpened = true;
+          this.viewerHeaderSideBarToggleFlag = data;
+        }
+        
       } else {
         this.sideNavBarOpened = false;
         this.viewerHeaderSideBarToggleFlag = data;

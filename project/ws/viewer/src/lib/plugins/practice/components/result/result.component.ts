@@ -21,7 +21,12 @@ export class ResultComponent implements OnChanges {
   questionTYP = NsContent.EPrimaryCategory
   selectedQuestionData: any
   activeQuestionSet:any = '';
+  color = 'warn';
+  mode = 'determinate';
+  value = 45;
+  showText = 'Rating';
   constructor() {
+    
   }
 
   ngOnChanges() {

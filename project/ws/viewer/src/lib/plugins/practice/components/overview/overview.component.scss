@@ -213,13 +213,18 @@
 }
 
 .summary-list-label {
-    margin-left: 24px;
+    margin-left: 16px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
     .box-height {
         min-height: 100%;
-        margin: 0;
+        margin-top: 68px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .assessment-container {
+        margin: 0 16px 0 24px;
     }
     .summary-detail ul li {
         color: rgba(0, 0, 0, 0.87);
@@ -234,8 +239,145 @@
 
     .start-assessment-cta {
         position: fixed;
-        bottom: 15%;
-        width: 75%;
+        bottom: 6%;
+        width: 92%;
+        margin: 0 16px;
+        // left: 25%;
+    }
+
+    .start-assessment-cta button {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 540px) and (max-width: 540px) {
+    .box-height {
+        min-height: 100%;
+        margin-top: 68px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .assessment-container {
+        margin: 0 16px 0 24px;
+    }
+    .summary-detail ul li {
+        color: rgba(0, 0, 0, 0.87);
+        letter-spacing: 0.12px;
+        line-height: 24px;
+        font-weight: 700;
+        font-family: 'Lato';
+        list-style: none;
+        margin-top: 24px;
+        font-size: 14px;
+    }
+
+    .start-assessment-cta {
+        position: fixed;
+        bottom: 4%;
+        width: 96%;
+        margin: 0 16px;
+        // left: 25%;
+    }
+
+    .start-assessment-cta button {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 280px) and (max-width: 280px) {
+    .box-height {
+        min-height: 100%;
+        margin-top: 68px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .assessment-container {
+        margin: 0 16px 0 24px;
+    }
+    .summary-detail ul li {
+        color: rgba(0, 0, 0, 0.87);
+        letter-spacing: 0.12px;
+        line-height: 24px;
+        font-weight: 700;
+        font-family: 'Lato';
+        list-style: none;
+        margin-top: 24px;
+        font-size: 14px;
+    }
+
+    .start-assessment-cta {
+        position: fixed;
+        bottom: 16%;
+        width: 67%;
+        margin: 0 16px;
+        // left: 25%;
+    }
+
+    .start-assessment-cta button {
+        width: 100%;
+    }
+}
+
+@media only screen and (width: 768px) and (resolution: 163dpi) {
+    .box-height {
+        min-height: 100%;
+        margin-top: 68px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .assessment-container {
+        margin: 0 16px 0 24px;
+    }
+    .summary-detail ul li {
+        color: rgba(0, 0, 0, 0.87);
+        letter-spacing: 0.12px;
+        line-height: 24px;
+        font-weight: 700;
+        font-family: 'Lato';
+        list-style: none;
+        margin-top: 24px;
+        font-size: 14px;
+    }
+
+    .start-assessment-cta {
+        position: fixed;
+        bottom: 16%;
+        width: 84%;
+        margin: 0 16px;
+        // left: 25%;
+    }
+
+    .start-assessment-cta button {
+        width: 100%;
+    }
+}
+
+@media only screen and (width:1024px) and (resolution: 163dpi) {
+    .box-height {
+        min-height: 100%;
+        margin-top: 68px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .assessment-container {
+        margin: 0 16px 0 24px;
+    }
+    .summary-detail ul li {
+        color: rgba(0, 0, 0, 0.87);
+        letter-spacing: 0.12px;
+        line-height: 24px;
+        font-weight: 700;
+        font-family: 'Lato';
+        list-style: none;
+        margin-top: 24px;
+        font-size: 14px;
+    }
+
+    .start-assessment-cta {
+        position: fixed;
+        bottom: 16%;
+        width: 84%;
+        margin: 0 16px;
         // left: 25%;
     }
 
