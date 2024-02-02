@@ -53,7 +53,7 @@ export class TopRightNavBarComponent implements OnInit {
 
     this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
       // console.log(res, "res====")
-      this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res);
+      this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res);      
     })
   }
 
@@ -67,6 +67,10 @@ export class TopRightNavBarComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(() => {
     });
+
+    setTimeout(()=>{
+      this.callXMLRequest();
+    },0);
   }
 
 
@@ -77,6 +81,45 @@ export class TopRightNavBarComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(() => {
     });
+  }
+
+  callXMLRequest() {
+    var webFormxhr:any = {};
+    webFormxhr = new XMLHttpRequest();
+    webFormxhr.open('GET', 'https://desk.zoho.in/support/GenerateCaptcha?action=getNewCaptcha&_=' + new Date().getTime(), true);
+            webFormxhr.onreadystatechange =  () => {
+                if (webFormxhr.readyState  === 4 && webFormxhr.status === 200) {
+                    try {
+                        var response = (webFormxhr.responseText != null) ? JSON.parse(webFormxhr.responseText) : '';
+                        // console.log('response', webFormxhr, response);
+                        // console.log('response.captchaUrl', response.captchaUrl);
+                        // console.log("response end=========")
+                        let  zsCaptchaUrl:any = document.getElementById('zsCaptchaUrl');
+                        if(zsCaptchaUrl) {
+                          zsCaptchaUrl.src = response.captchaUrl;
+                          zsCaptchaUrl.style.display = 'block';
+                        }                        
+                        let xJdfEaS:any = document.getElementsByName('xJdfEaS')[0];
+                        xJdfEaS.value = response.captchaDigest;
+                        let zsCaptchaLoading:any = document.getElementById('zsCaptchaLoading');
+                        zsCaptchaLoading.style.display = 'none';
+                        let zsCaptcha:any = document.getElementById('zsCaptcha')
+                        zsCaptcha.style.display = 'block';
+                        // console.log("response end=========")  
+                        let refreshCaptcha:any = document.getElementById('refreshCaptcha');
+                        if(refreshCaptcha) {
+                          refreshCaptcha.addEventListener('click', ()=>{
+                            this.callXMLRequest();
+                          })
+                        } 
+                      } catch (e) {
+ 
+                      }
+                }
+                
+            };
+ 
+            webFormxhr.send();
   }
 
 }
