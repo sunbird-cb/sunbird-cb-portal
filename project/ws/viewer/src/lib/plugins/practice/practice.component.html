@@ -336,10 +336,10 @@
     *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
       <div>
         <div class="flex flex-row justify-around align-end mobile-question-header">
-          <div>
+          <div (click)="back()">
             <img src="assets/icons/final-assessment/mobile-cross.svg"/>
           </div>
-          <div (click)="back()" class="no-border flex cursor-pointer back_button">
+          <div class="no-border flex cursor-pointer back_button">
             <span class="subheading-back">{{resourceName}}</span>
             <div class="question-info">
               <img src="assets/icons/final-assessment/question_info.svg"/>
@@ -385,15 +385,7 @@
           </div>
             
           </div>   
-          <div class="exapnd-collapse">
-            <div class="expand-icon" (click)="expandFalse = !expandFalse;">
-              <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">
-                <span *ngIf="expandFalse">expand_more</span>
-                <span *ngIf="!expandFalse">expand_less</span>
-              </mat-icon>
-            </div>
-          </div> 
-          <div>
+          <div [ngClass]="!expandFalse ? 'my-2':''">
             
             <!-- <div class="flex flex-row justify-between" *ngIf="!expandFalse">                  
               <div class="flex flex-row center-text">
@@ -477,6 +469,15 @@
             </div>
             
           </div>
+          <div class="exapnd-collapse">
+            <div class="expand-icon" (click)="expandFalse = !expandFalse;">
+              <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">
+                <span *ngIf="expandFalse">expand_more</span>
+                <span *ngIf="!expandFalse">expand_less</span>
+              </mat-icon>
+            </div>
+          </div> 
+          
         </div>
   
         <div>

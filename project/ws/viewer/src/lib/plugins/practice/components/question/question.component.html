@@ -11,13 +11,19 @@
       </div>
       <div class="flex flex-row align-center justify-around">
         <ng-container *ngIf="ePrimaryCategory.PRACTICE_RESOURCE === primaryCategory && ((questionNumber) <= totalQCount)">
-          <div *ngIf="!showAnswer"  class="rounded-flag cursor-pointer">
+          <div *ngIf="!showAnswer && !isMobile"  class="rounded-flag cursor-pointer">
             <div class="flex" (click)="checkAns(questionNumber)">
               <span>Show Answer</span><img class="ml-2" src="assets/icons/final-assessment/view.svg"/>
             </div>
           </div>
+          <div *ngIf="!showAnswer && isMobile"  class="cursor-pointer">
+            <div class="flex" (click)="checkAns(questionNumber)">
+              <img class="" src="assets/icons/final-assessment/view.svg"/>
+            </div>
+          </div>
+
         </ng-container>        
-        <div class=" flex flex-row align-center justify-around rounded-flag ml-10">
+        <div class=" flex flex-row align-center justify-around rounded-flag ml-10" *ngIf="!isMobile">
           <div>
             <span>Flag</span>
           </div>
@@ -28,6 +34,15 @@
             </button>
           </div>             
         </div>
+        <div class=" flex flex-row align-center justify-around ml-5" *ngIf="isMobile">          
+          <div>
+            <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">
+            <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
+            <mat-icon *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+            </button>
+          </div>             
+        </div>
+
       </div>
     </div>
     <div class="respo flex flex-column padding-top-m">

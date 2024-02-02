@@ -54,7 +54,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   correctOption: boolean[] = []
   unTouchedBlank: boolean[] = []
   matchHintDisplay: NSPractice.IOption[] = []
-
+  isMobile = false;
   constructor(
     // private domSanitizer: DomSanitizer,
     // private elementRef: ElementRef,
@@ -62,6 +62,11 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    if(window.innerWidth <= 1200) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
     this.init()
   }
 
