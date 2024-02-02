@@ -787,6 +787,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.enrollBtnLoading = false
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
+              this.content['completionPercentage'] = enrolledCourse.completionPercentage
               this.enrollBtnLoading = false
             }
             this.batchData = {

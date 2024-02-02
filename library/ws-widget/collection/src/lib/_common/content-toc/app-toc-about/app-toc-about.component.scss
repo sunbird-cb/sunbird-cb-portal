@@ -19,46 +19,6 @@
     font-weight: 700;
 }
 
-.behavioral {
-    background-color: #F8B861;
-}
-
-.functional {
-    background-color: #E24577;
-}
-
-.domain {
-    background-color: #7B47A4;
-}
-
-.competency-passbook-theme {
-    width: 100%;
-    max-width: 344px;
-    border-radius: 8px;
-}
-
-.detail {
-    width: 100%;
-    max-width: 344px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 8px;
-    position: relative;
-    top: 4px;
-
-    &>div {
-        padding: 4px 16px 16px 16px;
-    }
-
-    .chip-container {
-        .chip {
-            border: 1px solid $text-primary;
-            color: $text-primary;
-            line-height: 12px;
-            padding: 4px 8px;
-        }
-    }
-}
-
 .discussion-div {
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -110,12 +70,6 @@ $title-line-count: 3;
 .desc-ellipsis {
     @extend .text-ellipsis;
     min-height: $title-line-count * 24px;
-}
-
-.scroll-container {
-    overflow-x: auto; /* Enable horizontal scrolling */
-    white-space: nowrap; /* Prevent wrapping of content */
-    overflow-y: hidden;
 }
 
 ::ng-deep .ratings-modal-box {

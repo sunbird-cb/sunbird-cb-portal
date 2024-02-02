@@ -36,7 +36,7 @@
       </div>
 
        <ws-widget-content-progress  
-         [contentId]="123" [progress]="currentDataFromEnrollList?.completionPercentage" [progressType]="'percentage'" [customClassName]="'viewer-progress'">
+         [contentId]="currentDataFromEnrollList?.identifier" [progress]="currentDataFromEnrollList?.completionPercentage" [progressType]="'percentage'" [customClassName]="'viewer-progress'">
        </ws-widget-content-progress>
     </div>
     <button color="secondary" class="rate-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">

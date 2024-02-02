@@ -1,0 +1,42 @@
+@import 'ws-vars';
+
+.behavioural {
+    background-color: #F8B861;
+}
+
+.functional {
+    background-color: #E24577;
+}
+
+.domain {
+    background-color: #7B47A4;
+}
+
+.competency-passbook-theme {
+    width: 100%;
+    max-width: 344px;
+    border-radius: 8px;
+    min-width: 320px;
+}
+
+.detail {
+    width: 100%;
+    max-width: 344px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    position: relative;
+    top: 4px;
+
+    &>div {
+        padding: 4px 16px 16px 16px;
+    }
+
+    .chip-container {
+        .chip {
+            border: 1px solid $text-primary;
+            color: $text-primary;
+            line-height: 12px;
+            padding: 4px 8px;
+        }
+    }
+}

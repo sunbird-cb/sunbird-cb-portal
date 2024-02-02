@@ -178,6 +178,8 @@ import { ProfileKarmapointsModule } from './profile-v2/profile-karmapoints/profi
 import { ProfileKarmapointsComponent } from './profile-v2/profile-karmapoints/profile-karmapoints.component'
 import { CardEventHubComponent } from './card-event-hub/card-event-hub.component'
 import { CardEventHubModule } from './card-event-hub/card-event-hub.module'
+import { CardCompetencyComponent } from './card-competency/card-competency.component'
+import { CardCompetencyModule } from './card-competency/card-competency.module'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -268,6 +270,7 @@ export const WIDGET_REGISTERED_MODULES = [
   UIORGTableModule,
   BreadcrumbsOrgModule,
   CardEventHubModule,
+  CardCompetencyModule,
 ]
 
 export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] = [
@@ -677,5 +680,10 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.card._type,
     widgetSubType: ROOT_WIDGET_CONFIG.card.event_hub,
     component: CardEventHubComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.card._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.card.card_competency,
+    component: CardCompetencyComponent,
   },
 ]

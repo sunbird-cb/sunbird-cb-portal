@@ -639,6 +639,7 @@ export class AppTocService {
       course.children.map((courseChild: any) => {
           if ((courseChild && courseChild.children) || courseChild.primaryCategory === 'Course Unit') {
             this.mapCompletionChildPercentageProgram(courseChild)
+            course['moduleCount'] = course['moduleCount'] ? course['moduleCount'] + 1 : 1
           } else {
             courseChild['completionPercentage'] = 100
             courseChild['completionStatus'] = 2
