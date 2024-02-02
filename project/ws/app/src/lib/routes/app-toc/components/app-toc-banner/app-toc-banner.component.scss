@@ -520,10 +520,17 @@ button:disabled {
     padding-bottom: 5px;
 }
 ::ng-deep .mat-chip-input {
-    padding-bottom: 10px;
+    padding-bottom: 9px;
 }
 ::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip {
     color: #0074b6 !important;
+}
+
+.loader {
+    position: absolute;
+    top: 42%;
+    left: 45%;
+    z-index: 1000;
 }
 
 @media (max-width:768px) {

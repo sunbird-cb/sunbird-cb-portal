@@ -14,7 +14,7 @@ import {
 import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
 import { AccessControlService } from '@ws/author'
-import { Observable, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
@@ -33,8 +33,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { map, startWith } from 'rxjs/operators'
-//import { ContentSharingDialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-sharing-dialog/content-sharing-dialog.component'
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -112,8 +111,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   seconds: any
   serverDateSubscription: any
   serverDate: any
-  canShare: boolean = false
-  enableShare:boolean = false
+  canShare = false
+  enableShare = false
+  rootOrgId: any
 
   // share content
   shareForm: FormGroup | undefined
@@ -122,14 +122,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   addOnBlur = true
   separatorKeysCodes: number[] = [ENTER, COMMA]
   userCtrl = new FormControl()
-  filteredUsers: Observable<string[]> | undefined
-  users:any[] = []
-  allUsers:any[] = []
+  filteredUsers: any []| undefined
+  users: any[] = []
+  allUsers: any[] = []
   apiResponse: any
-  placehoderText = "To: Add an email"
+  placehoderText = 'To: Add an email'
   courseDetails: any
   userProfile: any
   maxEmailsLimit = 30
+  showLoader = false
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -154,13 +155,20 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.shareForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
     })
-    this.filteredUsers = this.userCtrl.valueChanges.pipe(
-      startWith(null),
-      map((user: string | null) => user && user.length >= 1 ? this._filter(user) : this.allUsers.slice()));
+    this.userCtrl.valueChanges.pipe(
+      debounceTime(200),
+      distinctUntilChanged()
+    ).subscribe((res: any) => {
+      this.filteredUsers = []
+      this.allUsers = []
+      if (res) {
+        this.getUsersToShare(res)
+      }
+    })
   }
 
-  @ViewChild('userInput', {static: false}) userInput: ElementRef<HTMLInputElement> | undefined
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete | undefined
+  @ViewChild('userInput', { static: false }) userInput: ElementRef<HTMLInputElement> | undefined
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete | undefined
 
   ngOnInit() {
     this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
@@ -264,29 +272,41 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
       ) {
         this.canShare = true
+        if (this.configSvc.userProfile) {
+          this.rootOrgId = this.configSvc.userProfile.rootOrgId
+          // this.getUsersToShare('')
+        }
     }
+  }
 
-    let rootOrgId = ''
-    if (this.configSvc.userProfile) {
-      rootOrgId = this.configSvc.userProfile.rootOrgId || ''
-    }
-    this.userAutoComplete.searchUser('', rootOrgId).subscribe(data => {
-      this.apiResponse = data.result.response.content
-      let name = ''
-      this.apiResponse.forEach((data: any) => {
-        data.firstName.split(" ").forEach((d: any) => {
-          name = name + d.substr(0,1).toUpperCase()
+  getUsersToShare(queryStr: string) {
+    this.showLoader = true
+    this.userAutoComplete.searchUser(queryStr, this.rootOrgId).subscribe(data => {
+      if (data.result && data.result.response) {
+        this.apiResponse = data.result.response.content
+        let name = ''
+        this.apiResponse.forEach((apiData: any) => {
+          apiData.firstName.split(' ').forEach((d: any) => {
+            name = name + d.substr(0, 1).toUpperCase()
+          })
+          this.allUsers.push(
+            {
+              maskedEmail: apiData.maskedEmail,
+              id: apiData.identifier,
+              name: apiData.firstName,
+              iconText: name,
+              email: (
+                apiData.profileDetails && apiData.profileDetails.personalDetails) ?
+                apiData.profileDetails.personalDetails.primaryEmail : '',
+            }
+          )
         })
-        this.allUsers.push(
-          {
-            maskedEmail: data.maskedEmail,
-            id: data.identifier,
-            name: data.firstName,
-            iconText: name,
-            email: (data.profileDetails && data.profileDetails.personalDetails) ? data.profileDetails.personalDetails.primaryEmail : ''
-          }
-        )
-      })
+        this.showLoader = false
+      }
+      if (this.allUsers.length === 0) {
+        this.filteredUsers = []
+      }
+      this.filteredUsers = this.filterSharedUsers(queryStr)
     })
   }
 
@@ -1262,42 +1282,35 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   onClickOfShare() {
     this.enableShare = true
     this.raiseTelemetry('shareContent')
-    // const dialogRef = this.dialog.open(ContentSharingDialogComponent, {
-    //   width: '770px',
-    //   data: {
-    //     userProfile: this.configSvc.userProfile,
-    //     course: this.content
-    //   },
-    // })
-    // dialogRef.afterClosed().subscribe((result: any) => {
-    //   if (result) {
-    //     console.log(result)
-    //   }
-    // })
-
   }
 
   add(event: MatChipInputEvent): void {
-    if (this.matAutocomplete && !this.matAutocomplete.isOpen) {
+    // this.getUsersToShare(event.value)
+    if (event.value && this.matAutocomplete && !this.matAutocomplete.isOpen) {
       const input = event.input
       const value = event.value
       if (this.users.length === this.maxEmailsLimit) {
         this.openSnackbar('Maximum email limit reached')
         return
       }
-      if ((value || '').trim()) {
-        this.users.push(value.trim())
+      const ePattern = new RegExp(`^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`)
+      if (ePattern.test(value)) {
+        if ((value || '').trim()) {
+          this.users.push(value.trim())
+        }
+        if (input) {
+          input.value = ''
+        }
+        this.userCtrl.setValue(null)
+      } else {
+        this.openSnackbar('Invalid email')
+        return
       }
-
-      if (input) {
-        input.value = ''
-      }
-      this.userCtrl.setValue(null)
     }
   }
 
-  remove(fruit: string): void {
-    const index = this.users.indexOf(fruit);
+  remove(user: string): void {
+    const index = this.users.indexOf(user)
 
     if (index >= 0) {
       this.users.splice(index, 1)
@@ -1309,21 +1322,19 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.openSnackbar('Maximum email limit reached')
       return
     }
-    this.users.push(event.option.value);
+    this.users.push(event.option.value)
     if (this.userInput) {
       this.userInput.nativeElement.value = ''
     }
     this.userCtrl.setValue(null)
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase()
-    return this.allUsers.filter(user => user.name.toLowerCase().indexOf(filterValue) === 0)
-  }
-
-  private _filterIsAutoCompletedUser(value: string): string[] {
-    const filterValue = value.toLowerCase()
-    return this.allUsers.filter(user => user.name.toLowerCase() === filterValue)
+  filterSharedUsers(value: string): string[] {
+    if (value) {
+      const filterValue = value.toLowerCase()
+      return this.allUsers.filter(user => user.name.toLowerCase().indexOf(filterValue) === 0)
+    }
+    return []
   }
 
   submitSharing() {
@@ -1339,29 +1350,28 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         courseName = this.content.name,
         coursePosterImageUrl = this.content.posterImage
     }
-    let obj = {
+    const obj = {
       request: {
-        courseId: courseId,
-        courseName: courseName,
-        coursePosterImageUrl: coursePosterImageUrl,
-        courseProvider: courseProvider,
-        recipients: ''
-      }
+        courseId,
+        courseName,
+        coursePosterImageUrl,
+        courseProvider,
+        recipients: '',
+      },
     }
-    let recipients: any = []
-
+    const recipients: any = []
     this.users.forEach((selectedUser: any) => {
-      let selectedUserObj: any = this.allUsers.filter((user) => {return user.name === selectedUser})
+      const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
       if (selectedUserObj.length) {
-        recipients.push({userId: selectedUserObj[0].id, email: selectedUserObj[0].email})
+        recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
       } else {
-        recipients.push({email: selectedUser})
+        recipients.push({ email: selectedUser })
       }
     })
     if (recipients.length) {
       obj.request.recipients = recipients
       this.tocSvc.shareContent(obj).subscribe(result => {
-        if(result.responseCode === 'OK') {
+        if (result.responseCode === 'OK') {
           this.openSnackbar('Emails successfylly shared with registered Karmayogis')
         }
         this.users = []
@@ -1377,6 +1387,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   onClose() {
     this.enableShare = false
     this.users = []
+    this.filteredUsers = []
+    this.userCtrl.setValue(null)
     this.raiseTelemetry('shareClose')
   }
 

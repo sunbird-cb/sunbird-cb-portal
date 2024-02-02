@@ -402,6 +402,9 @@
 </ng-template>
 
 <div class="share-container" *ngIf="enableShare">
+  <div *ngIf="showLoader" class="text-center my-2 loader">
+    <mat-spinner class="inline-block"></mat-spinner>
+  </div>
   <div class="share-modal">
     <div class="karmasahayogi-icon"><img alt="karmasahayogi-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
     <div  class="content-div">
@@ -439,14 +442,14 @@
                                 (matChipInputTokenEnd)="add($event)">
                         </mat-chip-list>
                         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                            <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name">
+                            <mat-option *ngFor="let user of filteredUsers" [value]="user.name">
                                 <div class="flex">
                                     <div class="iconDiv">
                                         <span class="iconText">{{user.iconText.substring(0,2)}}</span>
                                     </div>
                                     <div>
                                         <div>{{user.name}}</div>
-                                        <div class="emailText">{{user.maskedEmail}}</div>
+                                        <div class="emailText">{{user.email}}</div>
                                     </div>
                                 </div>
                             </mat-option>
