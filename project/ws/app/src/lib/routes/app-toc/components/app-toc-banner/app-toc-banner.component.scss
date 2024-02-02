@@ -519,3 +519,31 @@ button:disabled {
 ::ng-deep .close-icon  {
     padding-bottom: 5px;
 }
+::ng-deep .mat-chip-input {
+    padding-bottom: 10px;
+}
+::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip {
+    color: #0074b6 !important;
+}
+
+@media (max-width:768px) {
+    .content-div {
+        width: 100%;
+    }
+    .contnet {
+        width: unset;
+        margin-bottom: 18%;
+    }
+    .left-over-emails {
+        display: none;
+    }
+    .karmasahayogi-icon {
+        left: 8%;
+        bottom: 20%;
+    }
+    .share-modal {
+        align-items: self-end;
+    }
+}
+
+

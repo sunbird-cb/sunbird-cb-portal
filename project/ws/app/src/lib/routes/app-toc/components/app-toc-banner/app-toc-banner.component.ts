@@ -115,6 +115,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   canShare: boolean = false
   enableShare:boolean = false
 
+  // share content
   shareForm: FormGroup | undefined
   selectable = true
   removable = true
@@ -1317,15 +1318,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase()
-    console.log("filterValue ", filterValue)
-    return this.allUsers.filter(fruit => fruit.name.toLowerCase().indexOf(filterValue) === 0)
+    return this.allUsers.filter(user => user.name.toLowerCase().indexOf(filterValue) === 0)
   }
 
-  test(event: any) {
-    console.log(event)
+  private _filterIsAutoCompletedUser(value: string): string[] {
+    const filterValue = value.toLowerCase()
+    return this.allUsers.filter(user => user.name.toLowerCase() === filterValue)
   }
-
-
 
   submitSharing() {
     let courseId = ''
@@ -1380,7 +1379,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.users = []
     this.raiseTelemetry('shareClose')
   }
-
 
   copyToClipboard() {
     const textArea = document.createElement('textarea')

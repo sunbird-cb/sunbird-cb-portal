@@ -1,8 +1,13 @@
 <!-- <div [ngStyle]="{'background-color': ((content?.draftImage || '').length === 7? content?.draftImage : '#F8AD1E')}"> -->
-<div class="flex flex-end block sm:hidden cursor-pointer" *ngIf="canShare" (click)="onClickOfShare()">
-  <mat-icon class="ws-mat-accent-text">share</mat-icon>
-</div>
-<div class="header-synopsis fixed-width margin-top-m" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
+  <ng-container>
+    <div  class="md:hidden">
+      <div class="flex flex-end block cursor-pointer" *ngIf="canShare" (click)="onClickOfShare()">
+        <mat-icon class="ws-mat-accent-text">share</mat-icon>
+      </div>
+    </div>
+  </ng-container>
+
+<div class="header-synopsis fixed-width margin-top-xl" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
   *ngIf="content">
   <div class="flex flex-row">
     <div class="flex-auto">
@@ -42,8 +47,8 @@
           <div class="sm:ml-5 flex flex-col flex-auto">
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="contentReadData?.name">
               {{ contentReadData?.name }}
-              <span class="float-right cursor-pointer" (click)="onClickOfShare()" *ngIf="canShare">
-                <mat-icon class="ws-mat-accent-text">share</mat-icon></span>
+              <div class="float-right cursor-pointer flex" (click)="onClickOfShare()" *ngIf="canShare">
+                <mat-icon class="ws-mat-accent-text padding-top-xs">share</mat-icon></div>
             </h1>
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="contentReadData?.name">
               {{ contentReadData?.name }}
@@ -398,7 +403,7 @@
 
 <div class="share-container" *ngIf="enableShare">
   <div class="share-modal">
-    <div class="karmasahayogi-icon hidden md:block"><img alt="chatbot-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
+    <div class="karmasahayogi-icon"><img alt="karmasahayogi-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
     <div  class="content-div">
       <div class="triangle-left hidden md:block"></div>
       <div class="contnet">
@@ -448,7 +453,7 @@
                         </mat-autocomplete>
                         <mat-error *ngIf="users.length > 3"> You have exceeded 30 emails.</mat-error>
                         <mat-hint align="start">Note: Emails will be sent only to registered karmayogis.</mat-hint>
-                        <mat-hint align="end">{{ users.length }} /30 characters</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /30 characters</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
