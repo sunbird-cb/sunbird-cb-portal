@@ -1,0 +1,27 @@
+@import '_ws-vars.scss';
+
+.button {
+    border-radius: 64px;
+    font-weight: bold;
+    letter-spacing: 0.25px;
+    padding: 12px 36px;
+    cursor: pointer;
+    border: 1px solid $text-primary;
+    width: 100%;
+    text-align: center;
+}
+
+.enroll-container {
+    .cancel-button {
+        @extend .button;
+        background-color: #FFF;
+        color: $text-primary;
+    }
+
+    .confirm-button {
+        @extend .button;
+        color: #FFF;
+        background-color: $text-primary;
+    }
+}
+

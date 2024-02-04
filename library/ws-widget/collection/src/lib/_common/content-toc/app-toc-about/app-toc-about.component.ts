@@ -87,9 +87,6 @@ export class AppTocAboutComponent implements OnInit {
       showDots: false,
     },
     loader: true,
-    loaderConfig: {
-      cardSubType: 'card-standard-skeleton',
-    },
     stripBackground: '',
     titleDescription: 'Blended Program',
     stripConfig: {

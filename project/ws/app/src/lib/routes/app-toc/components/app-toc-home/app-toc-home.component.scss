@@ -147,6 +147,7 @@
     position: fixed;
     z-index: 10;
     top: 132px;
+    max-width: 384px;
   }
 
   .enroll-div {
@@ -169,9 +170,109 @@
   }
 }
 
+.batch-info {
+  padding: 16px;
+  border-radius: 4px;
+  background-color: rgba(27, 76, 161, 0.08);
+  border: 1px solid rgba(27, 76, 161, 0.08);
+  text-align: center;
+
+  .batch-label {
+    font-size: 0.75rem;
+    color: rgba($color: #000, $alpha: 0.6);
+    line-height: 1rem;
+  }
+}
+
+.button {
+  border-radius: 64px;
+  letter-spacing: 0.25px;
+  padding: 12px 36px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+
+.batch-div {
+  border-radius: 8px;
+  background-color: rgba($color: $colorOrange, $alpha: 0.2);
+  padding: 16px;
+
+  .batch-details {
+    padding: 16px;
+    border: 1px solid $colorOrange;
+    border-radius: 8px;
+    background-color: #FFF;
+    cursor: pointer;
+  }
+
+  .batch-enrolled {
+    font-weight: bold;
+    color: $colorGreen;
+    font-size: 0.75rem;
+  }
+
+  .withdraw-batch {
+    @extend .button;
+    color: $text-primary;
+    border: 1px solid $text-primary;
+    background-color: #FFF;
+    width: 100%;
+  }
+
+  .enroll-button {
+    @extend .button;
+    color: #FFF;
+    background-color: $colorOrange;
+    border: 1px solid $colorOrange;
+  }
+}
+
+.expired {
+  font-size: 12px;
+  color: $colorRed;
+  font-weight: bold;
+}
+
+.batch-menu {
+  width: 312px;
+  border-radius: 8px;
+  margin-top: 8px !important;
+  max-width: 312px !important;
+
+  .mat-menu-content {
+    padding: 8px 16px !important;
+
+    .mat-menu-item {
+      padding: 0px;
+
+      &:hover {
+        background: none !important;
+        color: $text-primary;
+        font-weight: bold !important;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .right-container {
     display: none;
+  }
+}
+
+.confirmation-modal {
+  max-width: 420px !important;
+  width: 100% !important;
+
+  .mat-dialog-container {
+    border-radius: 12px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .confirmation-modal {
+    max-width: 90vw !important;
   }
 }
 // New TOC page css...

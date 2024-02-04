@@ -67,38 +67,104 @@
         </div>
         <img src="{{ content?.posterImage | pipePublicURL }}" alt="{{ content?.sourceName || 'course image'}}" />
       </div>
-      <div class="enroll-div">
-        <div class="flex flex-col gap-4 p-5">
-          <button class="flex action-button justify-center">Enroll</button>
-          <div class="flex flex-row gap-2 slider-div">
-            <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
-            <div class="text-xs">By completing this course earn 10 more Karma Points</div>
+      <div class="flex flex-col gap-4 p-5">
+        <!-- Batch related UI -->
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-row gap-3 justify-around">
+            <div class="batch-info">
+              <div class="font-base font-bold">50</div>
+              <div class="batch-label">Batch size</div>
+            </div>
+            <div class="batch-info">
+              <div class="font-base font-bold">20</div>
+              <div class="batch-label">Total applied</div>
+            </div>
+            <div class="batch-info">
+              <div class="font-base font-bold">15</div>
+              <div class="batch-label">Total enrolled</div>
+            </div>
           </div>
-          <ng-container *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
-            <div class="flex flex-wrap gap-2">
-              <div class="flex flex-col kpi-values items-center gap-2 ">
-                <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
-                <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' : 'Course' }}</div>
+          <div class="flex flex-col batch-div">
+            <div class="flex flex-col gap-1">
+              <div class="flex flex-row gap-4 batch-details" [matMenuTriggerFor]="batch">
+                <div class="flex-1">
+                  <div class="flex flex-col gap-1">
+                    <div class="font-bold">Batch - 1</div>
+                    <div class="text-xs leading-4">1 Jan, 2024 to 28 Feb, 2024</div>
+                  </div>
+                </div>
+                <div class="flex justify-center items-center">
+                  <mat-icon>keyboard_arrow_down</mat-icon>
+                </div>
               </div>
-              <div class="flex flex-col kpi-values items-center gap-3">
-                <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
-                <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ? 'Modules' : 'Module' }}</div>
+              <div class="batch-enrolled">Your request is done</div>
+              <div class="expired">No active batch is available</div>
+            </div>
+            <mat-menu #batch="matMenu" yPosition="below" class="batch-menu">
+              <button class="flex gap-2 items-center" mat-menu-item>
+                <span>Batch - 1 (1 Jan, 2024 to 2 Jan, 2024)</span>
+              </button>
+              <button class="flex gap-2 items-center" mat-menu-item>
+                <span>Batch - 2 (3 Jan, 2024 to 4 Jan, 2024)</span>
+              </button>
+              <button class="flex gap-2 items-center" mat-menu-item disabled>
+                <span>Batch - 3 (5 Jan, 2024 to 6 Jan, 2024)</span>
+                <span class="expired">Expired</span>
+              </button>
+            </mat-menu>
+            
+            <div class="flex flex-row justify-center items-center mt-4">
+              <button class="withdraw-batch">Withdraw your request</button>
+            </div>
+
+            <div class="flex flex-row gap-4 mt-4">
+              <div class="flex-1">
+                <div class="flex flex-col gap-1">
+                  <div class="text-xs leading-4">Last enroll date</div>
+                  <div class="font-bold">10/06/2023</div>
+                </div>
               </div>
-              <div class="flex flex-col kpi-values items-center gap-2">
-                <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
-                <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video' }}</div>
-              </div>
-              <div class="flex flex-col kpi-values items-center gap-2">
-                <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-                <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
-              </div>
-              <div class="flex flex-col kpi-values items-center gap-2">
-                <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-                <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
-                'Final assessments' : 'Final assessment' }} </div>
+              <div class="flex flex-row justify-center items-center">
+                <button class="enroll-button" (click)="handleEnrollBatch()" >Request to Enroll</button>
               </div>
             </div>
-          </ng-container>
+          </div>
+        </div>
+        <!-- Batch related UI -->
+  
+        <div class="enroll-div">
+          <div class="flex flex-col gap-4">
+            <button class="flex action-button justify-center">Enroll</button>
+            <div class="flex flex-row gap-2 slider-div">
+              <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
+              <div class="text-xs">By completing this course earn 10 more Karma Points</div>
+            </div>
+            <ng-container *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
+              <div class="flex flex-wrap gap-2">
+                <div class="flex flex-col kpi-values items-center gap-2 ">
+                  <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
+                  <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' : 'Course' }}</div>
+                </div>
+                <div class="flex flex-col kpi-values items-center gap-3">
+                  <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+                  <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ? 'Modules' : 'Module' }}</div>
+                </div>
+                <div class="flex flex-col kpi-values items-center gap-2">
+                  <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+                  <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video' }}</div>
+                </div>
+                <div class="flex flex-col kpi-values items-center gap-2">
+                  <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+                  <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
+                </div>
+                <div class="flex flex-col kpi-values items-center gap-2">
+                  <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+                  <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
+                  'Final assessments' : 'Final assessment' }} </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
         </div>
       </div>
 

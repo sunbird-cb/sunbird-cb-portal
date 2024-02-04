@@ -1,0 +1,25 @@
+<div class="enroll-container">
+    <!-- Enroll content -->
+    <ng-container *ngIf="!data.enroll">
+        <div class="flex flex-col gap-4 text-center">
+            <div class="ws-mat-default-text font-bold">You’re one step away from enrolling!</div>
+            <div class="text-sm">This batch starting on 12/06/2023 - 23/06/2023, kindly go through the content and be prepared.</div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button class="flex justify-center cancel-button" (click)="handleCloseModal()" >Cancel</button>
+                <button class="flex justify-center confirm-button" (click)="handleCloseModal()">Confirm</button>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- Withdraw content -->
+    <ng-container *ngIf="data.enroll">
+        <div class="flex flex-col gap-4 text-center">
+            <div class="ws-mat-default-text font-bold">Are you sure you want to withdraw <br> your request?</div>
+            <div class="text-sm">You will miss the learning opportunity if you withdraw your enrolment.</div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button class="flex justify-center cancel-button" (click)="handleCloseModal()">Cancel</button>
+                <button class="flex justify-center confirm-button" (click)="handleCloseModal()">Withdraw</button>
+            </div>
+        </div>
+    </ng-container>
+</div>

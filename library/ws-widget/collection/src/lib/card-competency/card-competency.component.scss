@@ -15,9 +15,12 @@
 .competency-passbook-theme {
     width: 100%;
     max-width: 344px;
-    border-radius: 8px;
     min-width: 320px;
     height: 80px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 8px;
 }
 
 .detail {
