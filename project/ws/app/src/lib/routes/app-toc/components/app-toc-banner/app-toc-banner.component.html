@@ -454,9 +454,8 @@
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-error *ngIf="users.length > 3"> You have exceeded 30 emails.</mat-error>
                         <mat-hint align="start">Note: Emails will be sent only to registered karmayogis.</mat-hint>
-                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /30 characters</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} characters</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
