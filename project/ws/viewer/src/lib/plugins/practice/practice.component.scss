@@ -347,10 +347,10 @@ $nav-height: 40px;
   width: 100%;
 }
 
-::ng-deep .mat-checkbox .mat-checkbox-inner-container {
-  height: 24px !important;
-  width: 40px !important;
-}
+// ::ng-deep .mat-checkbox .mat-checkbox-inner-container {
+//   height: 24px !important;
+//   width: 40px !important;
+// }
 
 .center-text {
   display: flex;
@@ -478,6 +478,10 @@ $nav-height: 40px;
   margin-bottom: 24px;
 }
 
+.prev {
+  border: 1px solid rgb(27, 76, 161) !important;
+  color: rgb(27, 76, 161) !important;
+}
 
 @media only screen and (max-width: 600px) {
   .align-end {
@@ -533,10 +537,21 @@ $nav-height: 40px;
   }
 
   .first {
-    width: 100%;
+    width: 100% !important;
     height: 40px;
+    margin-bottom: 6%;
   }
 
+  .quest_btn {
+    // @include breakpoint-lt-xs {
+    //   width: 100%;
+    // }
+    width:167px;
+    border-radius: 63px;
+    margin-bottom: 6%;
+  }
+
+  
 }
 
 .calculate-overlay {
@@ -670,4 +685,34 @@ $nav-height: 40px;
   margin: 5px 0;
 }
 
+.final-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 22%;
+  box-shadow: 5px 0px 5px 0px #ccc;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.final-submit-cta {
+  height: 40px;
+  width: 185px;
+  color: #1b4ca1;
+  border-radius: 63px;
+  border: 1px solid #1b4ca1;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.final-submit-cta .cta-label {
+  padding-left: 8px;
+}
 

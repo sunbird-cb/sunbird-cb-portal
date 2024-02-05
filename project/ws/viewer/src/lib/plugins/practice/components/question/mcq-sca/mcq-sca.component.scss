@@ -34,11 +34,15 @@
 
 
 .correct-answer {
-    border-color: #008000 !important;
+    border-color: rgb(29, 137, 35) !important;
+    background-color:rgb(219,236,220) !important;
 }
 
+
+
 .incorrect-answer {
-    border-color: #f44336 !important;
+    border-color: rgb(209, 57, 36) !important;
+    background-color:rgb(248,223,220) !important;
 }
 
 .padding-s {

@@ -74,7 +74,7 @@
               <ng-container *ngIf="!isXsmall">Submit</ng-container>
             </a>
             &nbsp;&nbsp;
-            <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn" mat-button
+            <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn prev" mat-button
               (click)="getNextQuestion(currentQuestionIndex - 1)">
               <ng-container *ngIf="!isXsmall">Previous</ng-container>
             </a>
@@ -233,6 +233,11 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="final-submit" (click)="proceedToSubmit()">
+           <div class="final-submit-cta">
+              <img src="assets/icons/final-assessment/correct_arrow.svg"> <span class="cta-label">Finish assessment</span>
+           </div>
         </div>
       </div>
     </div>
@@ -532,6 +537,11 @@
             Next Section
           </button>
         </ng-container>
+        <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border quest_btn prev" mat-button
+        (click)="getNextQuestion(currentQuestionIndex - 1)">
+        <ng-container>Previous</ng-container>
+      </a>
+      &nbsp;&nbsp;
         <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
           class="text-white ws-mat-primary-background quest_btn" [ngClass]="currentQuestionIndex === 0 ? 'first' : ''" mat-button
           (click)="getNextQuestion(currentQuestionIndex + 1)">
@@ -542,11 +552,8 @@
           class="text-white ws-mat-primary-background quest_btn" mat-button (click)="proceedToSubmit()">
           <ng-container>Submit</ng-container>
         </a>
-        &nbsp;&nbsp;
-        <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border quest_btn" mat-button
-          (click)="getNextQuestion(currentQuestionIndex - 1)">
-          <ng-container>Previous</ng-container>
-        </a>
+        
+       
       </div>
     </div>
   </div>

@@ -9,8 +9,8 @@ import {
   ViewChild, ViewChildren,
 } from '@angular/core'
 import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
-import { Subscription } from 'rxjs'
-import { filter } from 'rxjs/operators'
+import { Subscription, interval } from 'rxjs'
+import { filter, map } from 'rxjs/operators'
 import { NSPractice } from './practice.model'
 import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
@@ -578,30 +578,30 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.getNextQuestion(this.currentQuestionIndex)
   }
   updateTimer() {
-    // this.startTime = Date.now()
-    // this.timeLeft = this.getTimeLimit
-    // // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
-    // if (this.getTimeLimit > 0
-    // ) {
-    //   this.timerSubscription = interval(1000)
-    //     .pipe(
-    //       map(
-    //         () =>
-    //           this.startTime + this.getTimeLimit - Date.now(),
-    //       ),
-    //     )
-    //     .subscribe(_timeRemaining => {
-    //       this.timeLeft -= 1
-    //       if (this.timeLeft < 0) {
-    //         this.isIdeal = true
-    //         this.timeLeft = 0
-    //         if (this.timerSubscription) {
-    //           this.timerSubscription.unsubscribe()
-    //         }
-    //         this.submitQuiz()
-    //       }
-    //     })
-    // }
+    this.startTime = Date.now()
+    this.timeLeft = this.getTimeLimit
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.getTimeLimit > 0
+    ) {
+      this.timerSubscription = interval(1000)
+        .pipe(
+          map(
+            () =>
+              this.startTime + this.getTimeLimit - Date.now(),
+          ),
+        )
+        .subscribe(_timeRemaining => {
+          this.timeLeft -= 1
+          if (this.timeLeft < 0) {
+            this.isIdeal = true
+            this.timeLeft = 0
+            if (this.timerSubscription) {
+              this.timerSubscription.unsubscribe()
+            }
+            this.submitQuiz()
+          }
+        })
+    }
   }
   get allSecAttempted(): { full: boolean, next: NSPractice.IPaperSection | null } {
     const sections = this.quizSvc.secAttempted.getValue()
