@@ -27,7 +27,7 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
 import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
-import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component' 
+import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
 dayjs.extend(isSameOrBefore)
 
 export enum ErrorType {

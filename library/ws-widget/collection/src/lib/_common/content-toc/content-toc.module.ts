@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { FormsModule } from '@angular/forms' 
+import { FormsModule } from '@angular/forms'
 import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule, MatProgressSpinnerModule, MatSnackBarModule, MatRadioModule } from '@angular/material'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { NgCircleProgressModule } from 'ng-circle-progress'
