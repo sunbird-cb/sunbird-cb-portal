@@ -231,7 +231,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentReadData = res.result.content
           this.skeletonLoader = false
-        }, (error: HttpErrorResponse) => {
+        },                                                                      (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.skeletonLoader = false
             this.matSnackBar.open('Unable to fetch content data, due to some error!')
@@ -573,7 +573,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
-    
+
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
       case NsAppToc.EWsTocErrorCode.API_FAILURE: {

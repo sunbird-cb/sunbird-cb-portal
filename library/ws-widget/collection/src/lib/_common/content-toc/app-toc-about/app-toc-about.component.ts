@@ -112,7 +112,7 @@ export class AppTocAboutComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
-  
+
   constructor(
     private ratingService: RatingService,
     private loggerService: LoggerService,
