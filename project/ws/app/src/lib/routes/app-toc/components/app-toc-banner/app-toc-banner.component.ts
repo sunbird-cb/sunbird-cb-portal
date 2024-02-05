@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core'
-import { MatDialog, MatSnackBar } from '@angular/material'
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
 import {
@@ -7,10 +7,11 @@ import {
   NsContent,
   NsGoal,
   NsPlaylist,
+  UserAutocompleteService,
   viewerRouteGenerator,
   WidgetContentService,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
+import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
 import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
@@ -19,7 +20,7 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
-import { FormControl, Validators } from '@angular/forms'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 import dayjs from 'dayjs'
 import * as  lodash from 'lodash'
 import { TitleTagService } from '../../services/title-tag.service'
@@ -31,6 +32,8 @@ import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -108,6 +111,26 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   seconds: any
   serverDateSubscription: any
   serverDate: any
+  canShare = false
+  enableShare = false
+  rootOrgId: any
+
+  // share content
+  shareForm: FormGroup | undefined
+  selectable = true
+  removable = true
+  addOnBlur = true
+  separatorKeysCodes: number[] = [ENTER, COMMA]
+  userCtrl = new FormControl()
+  filteredUsers: any []| undefined
+  users: any[] = []
+  allUsers: any[] = []
+  apiResponse: any
+  placehoderText = 'To: Add an email'
+  courseDetails: any
+  userProfile: any
+  maxEmailsLimit = 30
+  showLoader = false
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -124,10 +147,28 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private tagSvc: TitleTagService,
     private actionSVC: ActionService,
     private logger: LoggerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userAutoComplete: UserAutocompleteService,
+    private events: EventService,
   ) {
     this.helpEmail = environment.helpEmail
+    this.shareForm = new FormGroup({
+      review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
+    })
+    this.userCtrl.valueChanges.pipe(
+      debounceTime(200),
+      distinctUntilChanged()
+    ).subscribe((res: any) => {
+      this.filteredUsers = []
+      this.allUsers = []
+      if (res) {
+        this.getUsersToShare(res)
+      }
+    })
   }
+
+  @ViewChild('userInput', { static: false }) userInput: ElementRef<HTMLInputElement> | undefined
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete | undefined
 
   ngOnInit() {
     this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
@@ -223,6 +264,50 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         primaryCategory: this.content.primaryCategory,
       }
     }
+
+    if (this.content && (
+      this.content.primaryCategory === this.primaryCategory.COURSE ||
+      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
+      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
+      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
+      ) {
+        this.canShare = true
+        if (this.configSvc.userProfile) {
+          this.rootOrgId = this.configSvc.userProfile.rootOrgId
+          // this.getUsersToShare('')
+        }
+    }
+  }
+
+  getUsersToShare(queryStr: string) {
+    this.showLoader = true
+    this.userAutoComplete.searchUser(queryStr, this.rootOrgId).subscribe(data => {
+      if (data.result && data.result.response) {
+        this.apiResponse = data.result.response.content
+        let name = ''
+        this.apiResponse.forEach((apiData: any) => {
+          apiData.firstName.split(' ').forEach((d: any) => {
+            name = name + d.substr(0, 1).toUpperCase()
+          })
+          this.allUsers.push(
+            {
+              maskedEmail: apiData.maskedEmail,
+              id: apiData.identifier,
+              name: apiData.firstName,
+              iconText: name,
+              email: (
+                apiData.profileDetails && apiData.profileDetails.personalDetails) ?
+                apiData.profileDetails.personalDetails.primaryEmail : '',
+            }
+          )
+        })
+        this.showLoader = false
+      }
+      if (this.allUsers.length === 0) {
+        this.filteredUsers = []
+      }
+      this.filteredUsers = this.filterSharedUsers(queryStr)
+    })
   }
 
   get showIntranetMsg() {
@@ -1192,5 +1277,148 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return this.tocConfig[msg]
     }
     return ''
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetry('shareContent')
+  }
+
+  add(event: MatChipInputEvent): void {
+    // this.getUsersToShare(event.value)
+    if (event.value && this.matAutocomplete && !this.matAutocomplete.isOpen) {
+      const input = event.input
+      const value = event.value
+      if (this.users.length === this.maxEmailsLimit) {
+        this.openSnackbar('Maximum email limit reached')
+        return
+      }
+      const ePattern = new RegExp(`^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`)
+      if (ePattern.test(value)) {
+        if ((value || '').trim()) {
+          this.users.push(value.trim())
+        }
+        if (input) {
+          input.value = ''
+        }
+        this.userCtrl.setValue(null)
+      } else {
+        this.openSnackbar('Invalid email')
+        return
+      }
+    }
+  }
+
+  remove(user: string): void {
+    const index = this.users.indexOf(user)
+
+    if (index >= 0) {
+      this.users.splice(index, 1)
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    if (this.users.length === this.maxEmailsLimit) {
+      this.openSnackbar('Maximum email limit reached')
+      return
+    }
+    this.users.push(event.option.value)
+    if (this.userInput) {
+      this.userInput.nativeElement.value = ''
+    }
+    this.userCtrl.setValue(null)
+  }
+
+  filterSharedUsers(value: string): string[] {
+    if (value) {
+      const filterValue = value.toLowerCase()
+      return this.allUsers.filter(user => user.name.toLowerCase().indexOf(filterValue) === 0)
+    }
+    return []
+  }
+
+  submitSharing() {
+    let courseId = ''
+    let courseName = ''
+    let coursePosterImageUrl = ''
+    let courseProvider = ''
+    if (this.configSvc.userProfile) {
+      courseProvider = this.configSvc.userProfile.rootOrgName || ''
+    }
+    if (this.content) {
+        courseId = this.content.identifier,
+        courseName = this.content.name,
+        coursePosterImageUrl = this.content.posterImage
+    }
+    const obj = {
+      request: {
+        courseId,
+        courseName,
+        coursePosterImageUrl,
+        courseProvider,
+        recipients: '',
+      },
+    }
+    const recipients: any = []
+    this.users.forEach((selectedUser: any) => {
+      const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
+      if (selectedUserObj.length) {
+        recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
+      } else {
+        recipients.push({ email: selectedUser })
+      }
+    })
+    if (recipients.length) {
+      obj.request.recipients = recipients
+      this.tocSvc.shareContent(obj).subscribe(result => {
+        if (result.responseCode === 'OK') {
+          this.openSnackbar('Emails successfylly shared with registered Karmayogis')
+        }
+        this.users = []
+        this.enableShare = false
+      }, error => {
+        // tslint:disable
+        console.log(error)
+        this.openSnackbar('Something went wrong. Please try after sometime')
+      })
+    }
+  }
+
+  onClose() {
+    this.enableShare = false
+    this.users = []
+    this.filteredUsers = []
+    this.userCtrl.setValue(null)
+    this.raiseTelemetry('shareClose')
+  }
+
+  copyToClipboard() {
+    const textArea = document.createElement('textarea')
+    textArea.value = window.location.href
+    document.body.appendChild(textArea)
+    textArea.focus()
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    this.openSnackbar('Link copied')
+    this.raiseTelemetry('copyToClipboard')
+  }
+
+  raiseTelemetry(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
   }
 }
