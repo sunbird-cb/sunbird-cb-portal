@@ -46,7 +46,7 @@ export class UpcomingTimelineComponent implements OnInit {
       "competencyArea": [], 
       "competencyTheme": [], 
       "competencySubTheme": [], 
-      "providers": [] 
+      "providers": [],
     }
     this.filterValueEmit.emit(event === 'upcoming'? upcomingData: overDue)
   }

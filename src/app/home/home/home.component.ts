@@ -1,13 +1,14 @@
-import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { ActivatedRoute } from '@angular/router';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service';
+import { ActivatedRoute } from '@angular/router'
+import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service'
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import _ from 'lodash';
-import { BtnSettingsService } from '@sunbird-cb/collection';
-import { MobileAppsService } from '../../services/mobile-apps.service';
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+// tslint: disable
+import _ from 'lodash'
+import { BtnSettingsService } from '@sunbird-cb/collection'
+import { MobileAppsService } from '../../services/mobile-apps.service'
 import { Router } from '@angular/router'
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
@@ -15,7 +16,7 @@ const API_END_POINTS = {
 @Component({
   selector: 'ws-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   widgetData = {};
@@ -35,8 +36,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   enrollData: any
   enrollInterval: any
   jan26Change: any
-  constructor(private activatedRoute:ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService,
-    private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router) { }
+
+  constructor( private activatedRoute:ActivatedRoute,
+    private configSvc: ConfigurationsService,
+    public btnSettingsSvc: BtnSettingsService,
+    private http: HttpClient, public mobileAppsService: MobileAppsService,
+    private router: Router ) { }
 
   ngOnInit() {
     if (this.configSvc) {
@@ -69,26 +74,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.enableLazyLoadingFlag = this.activatedRoute.snapshot.data.pageData.data.enableLazyLoading;
 
     this.discussStripData = {
-      "strips": [
+      strips: [
         {
-          "key": "discuss",
-          "logo": "forum",
-          "title": "discuss",
-          "stripBackground": "assets/instances/eagle/background/discuss.svg",
-          "titleDescription": "Trending Discussions",
-          "stripConfig": {
-            "cardSubType": "cardHomeDiscuss"
+          key: 'discuss',
+          logo: 'forum',
+          title: 'discuss',
+          stripBackground: 'assets/instances/eagle/background/discuss.svg',
+          titleDescription:'"Trending Discussions',
+          stripConfig: {
+            cardSubType: 'cardHomeDiscuss',
           },
-          "viewMoreUrl": {
-            "path": "/app/discuss/home",
-            "viewMoreText": "Discuss",
-            "queryParams": {}
+          viewMoreUrl: {
+            path: '/app/discuss/home',
+            viewMoreText: 'Discuss',
+            queryParams: {},
           },
-          "filters": [],
-          "request": {
-            "api": {
-              "path": "/apis/proxies/v8/discussion/recent",
-              "queryParams": {}
+          filters: [],
+          request: {
+            api: {
+              path: '/apis/proxies/v8/discussion/recent',
+              queryParams: {},
             }
           }
         }
@@ -96,26 +101,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
 
     this.networkStripData = {
-      "strips": [
+      strips: [
         {
-          "key": "network",
-          "logo": "group",
-          "title": "network",
-          "stripBackground": "assets/instances/eagle/background/network.svg",
-          "titleDescription": "Connect with people you may know",
-          "stripConfig": {
-            "cardSubType": "cardHomeNetwork"
+          key: 'network',
+          logo: 'group',
+          title: 'network',
+          stripBackground: 'assets/instances/eagle/background/network.svg',
+          titleDescription: 'Connect with people you may know',
+          stripConfig: {
+            cardSubType: 'cardHomeNetwork',
           },
-          "viewMoreUrl": {
-            "path": "/app/network-v2",
-            "viewMoreText": "Network",
-            "queryParams": {}
+          viewMoreUrl: {
+            path: '/app/network-v2',
+            viewMoreText: 'Network',
+            queryParams: {},
           },
-          "filters": [],
-          "request": {
-            "api": {
-              "path": "/apis/protected/v8/connections/v2/connections/recommended/userDepartment",
-              "queryParams": ""
+          filters: [],
+          request: {
+            api: {
+              path: '/apis/protected/v8/connections/v2/connections/recommended/userDepartment',
+              queryParams: '',
             }
           }
         }
@@ -123,35 +128,35 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
 
     this.carrierStripData = {
-      "widgets":
+      widgets:
         [
           {
-            "dimensions": {},
-            "className": "",
-            "widget": {
-              "widgetType": "carrierStrip",
-              "widgetSubType": "CarrierStripMultiple",
-              "widgetData": {
-                "strips": [
+            dimensions: {},
+            className: '',
+            widget: {
+              widgetType: 'carrierStrip',
+              widgetSubType: 'CarrierStripMultiple',
+              widgetData: {
+                strips: [
                   {
-                    "key": "Career",
-                    "logo": "work",
-                    "title": "Careers",
-                    "stripBackground": "assets/instances/eagle/background/careers.svg",
-                    "titleDescription": "Latest openings",
-                    "stripConfig": {
-                      "cardSubType": "cardHomeCarrier"
+                    key: 'Career',
+                    logo: 'work',
+                    title: 'Careers',
+                    stripBackground: 'assets/instances/eagle/background/careers.svg',
+                    titleDescription: 'Latest openings',
+                    stripConfig: {
+                      cardSubType: 'cardHomeCarrier',
                     },
-                    "viewMoreUrl": {
-                      "path": "/app/careers/home",
-                      "viewMoreText": "Career",
-                      "queryParams": {}
+                    viewMoreUrl: {
+                      path: '/app/careers/home',
+                      viewMoreText: 'Career',
+                      queryParams: {}
                     },
-                    "filters": [],
-                    "request": {
-                      "api": {
-                        "path": "/apis/protected/v8/discussionHub/categories/1",
-                        "queryParams": {}
+                    filters: [],
+                    request: {
+                      api: {
+                        path: '/apis/protected/v8/discussionHub/categories/1',
+                        queryParams: {},
                       }
                     }
                   }
@@ -228,8 +233,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   handleDefaultFontSetting() {
-    let fontClass = localStorage.getItem('setting');
-    this.btnSettingsSvc.changeFont(fontClass);
+    let fontClass = localStorage.getItem('setting')
+    this.btnSettingsSvc.changeFont(fontClass)
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -240,7 +245,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
        this.sectionList[i]['section'] !== 'section_2' &&
        this.sectionList[i]['section'] !== 'section_3' &&
        this.sectionList[i]['section'] !== 'section_4') {
-       this.checkSectionVisibility(this.sectionList[i]['section']);
+       this.checkSectionVisibility(this.sectionList[i]['section'])
       }
     }
 
@@ -286,16 +291,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
           var eleTop = tect.top
           var eleBottom = tect.bottom
           isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
-          this.sectionList[i]['isVisible'] = isVisible;
+          this.sectionList[i]['isVisible'] = isVisible
           break;
         }
-
         }
-
       }}
     }
   }
-
 
   //  loadMore(): void {
   //   this.page++;
@@ -313,5 +315,4 @@ export class HomeComponent implements OnInit, AfterViewInit {
   closeKarmaPointsPanel() {
     this.isKPPanelenabled = false
   }
-
 }

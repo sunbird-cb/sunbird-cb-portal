@@ -1,9 +1,9 @@
 
-import { Component, OnInit, Input } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ConfigurationsService } from '@sunbird-cb/utils';
-import { HomePageService } from 'src/app/services/home-page.service';
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
+import { Component, OnInit, Input } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { HomePageService } from 'src/app/services/home-page.service'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { Router } from '@angular/router'
 @Component({
   selector: 'ws-discuss-hub',
@@ -13,8 +13,8 @@ import { Router } from '@angular/router'
 
 export class DiscussHubComponent implements OnInit {
 
-  @Input("discussConfig") discussConfig: any;
-  userData: any;
+  @Input('discussConfig') discussConfig: any
+  userData: any
   discussion = {
     data: undefined,
     error: false,
@@ -37,41 +37,41 @@ export class DiscussHubComponent implements OnInit {
   ngOnInit() {
     this.userData = this.configService && this.configService.userProfile 
     if (this.discussConfig.trendingDiscussions.active) {
-      this.fetchTrendingDiscussions();
+      this.fetchTrendingDiscussions()
     }
 
     if (this.discussConfig.updatePosts.active) {
-      this.fetchUpdatesOnPosts();
+      this.fetchUpdatesOnPosts()
     }
   }
 
   fetchTrendingDiscussions(): void {
-    this.discussion.loadSkeleton = true;
+    this.discussion.loadSkeleton = true
     this.homePageService.getTrendingDiscussions().subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = false;
+        this.discussion.loadSkeleton = false
         if (res.topics && res.topics.length) {
           this.discussion.data = res.topics.sort((x: any, y: any) => {
-            return y.timestamp - x.timestamp;
+            return y.timestamp - x.timestamp
           });
         }
       },
       (error: HttpErrorResponse) => {
         if (!error.ok) {
-          this.discussion.loadSkeleton = false;
-          this.discussion.error = true;
+          this.discussion.loadSkeleton = false
+          this.discussion.error = true
         }
       }
     );
   }
 
   fetchUpdatesOnPosts(): void {
-    this.updatesPosts.loadSkeleton = true;
+    this.updatesPosts.loadSkeleton = true
     this.homePageService.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        this.updatesPosts.loadSkeleton = false;
+        this.updatesPosts.loadSkeleton = false
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
-          return y.timestamp - x.timestamp;
+          return y.timestamp - x.timestamp
         });
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.filter((x: any) => {
           if(x.upvotes > 0 || x.downvotes > 0){
@@ -81,8 +81,8 @@ export class DiscussHubComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(!error.ok) {
-          this.updatesPosts.loadSkeleton = false;
-          this.updatesPosts.error = true;
+          this.updatesPosts.loadSkeleton = false
+          this.updatesPosts.error = true
         }
     });
   }
@@ -129,5 +129,4 @@ export class DiscussHubComponent implements OnInit {
     localStorage.setItem('home', JSON.stringify(config))
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
-
 }

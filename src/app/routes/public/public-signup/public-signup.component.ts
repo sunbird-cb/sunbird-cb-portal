@@ -387,7 +387,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number',)
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
 
@@ -415,7 +415,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const mob = this.registrationForm.get('mobile')
 
     if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
+      if (otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
@@ -513,12 +513,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   verifyOtpEmail(otp: any) {
-    console.log(otp)
+    // console.log(otp)
     const email = this.registrationForm.get('email')
-    if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
+    if ( otp && otp.value ) {
+      if ( otp && otp.value.length < 4 ) {
         this.snackBar.open('Please enter a valid OTP.')
-      } else if ( email && email.value && email.valid) {
+      } else if ( email && email.value && email.valid ) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpEmailSend = true
