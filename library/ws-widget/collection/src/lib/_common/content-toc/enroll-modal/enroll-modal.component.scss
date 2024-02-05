@@ -1,27 +1,40 @@
 @import '_ws-vars.scss';
 
-.button {
-    border-radius: 64px;
-    font-weight: bold;
-    letter-spacing: 0.25px;
-    padding: 12px 36px;
-    cursor: pointer;
-    border: 1px solid $text-primary;
-    width: 100%;
-    text-align: center;
-}
+.modal-container {
+    padding: 24px;
 
-.enroll-container {
-    .cancel-button {
-        @extend .button;
-        background-color: #FFF;
-        color: $text-primary;
+    .radio-outer-div {
+        padding: 8px 16px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 0, 0, 0.16);
+        opacity: 1;
     }
 
-    .confirm-button {
-        @extend .button;
-        color: #FFF;
-        background-color: $text-primary;
+    .radio-selected {
+        border: 1px solid rgba(27, 76, 161, 1);
+        background-color: rgba(0, 116, 182, 0.05);
     }
 }
 
+.cancel-button {
+    background-color: #FFF;
+    color: $text-primary;
+}
+
+.confirm-button {
+    color: #FFF;
+    background-color: $text-primary;
+}
+
+.text-box {
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    padding: 12px;
+    font-size: 14px;
+    color: rgba($color: #000000, $alpha: 0.4);
+}
+
+.mat-actions {
+    padding: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.16);
+}

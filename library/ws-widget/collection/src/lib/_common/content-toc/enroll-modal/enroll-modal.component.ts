@@ -8,7 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 })
 
 export class EnrollModalComponent implements OnInit {
-
+  minimumCriteria: string = '';
+  abc: string = '';
   constructor(
     public dialogRef: MatDialogRef<EnrollModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

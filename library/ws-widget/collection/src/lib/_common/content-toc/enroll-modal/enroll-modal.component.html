@@ -1,25 +1,39 @@
-<div class="enroll-container">
-    <!-- Enroll content -->
-    <ng-container *ngIf="!data.enroll">
-        <div class="flex flex-col gap-4 text-center">
-            <div class="ws-mat-default-text font-bold">You’re one step away from enrolling!</div>
-            <div class="text-sm">This batch starting on 12/06/2023 - 23/06/2023, kindly go through the content and be prepared.</div>
-            <div class="flex flex-col sm:flex-row gap-4">
-                <button class="flex justify-center cancel-button" (click)="handleCloseModal()" >Cancel</button>
-                <button class="flex justify-center confirm-button" (click)="handleCloseModal()">Confirm</button>
-            </div>
+<div class="modal-container">
+    <div class="flex flex-col gap-4">
+        <div class="text-xl font-bold">Enter the details to enroll</div>
+        <div class="flex flex-col gap-2">
+            <div class="font-bold">Do you have minimum 4 years of Group ‘A’ service as on 01/08/2023?</div>
+            <mat-radio-group class="flex flex-row gap-4" [(ngModel)]="minimumCriteria">
+                <div class="radio-outer-div" [ngClass]="{'radio-selected': minimumCriteria === 'yes'}" >
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                </div>
+                <div class="radio-outer-div" [ngClass]="{'radio-selected': minimumCriteria === 'no'}" >
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </div>
+            </mat-radio-group>
         </div>
-    </ng-container>
 
-    <!-- Withdraw content -->
-    <ng-container *ngIf="data.enroll">
-        <div class="flex flex-col gap-4 text-center">
-            <div class="ws-mat-default-text font-bold">Are you sure you want to withdraw <br> your request?</div>
-            <div class="text-sm">You will miss the learning opportunity if you withdraw your enrolment.</div>
-            <div class="flex flex-col sm:flex-row gap-4">
-                <button class="flex justify-center cancel-button" (click)="handleCloseModal()">Cancel</button>
-                <button class="flex justify-center confirm-button" (click)="handleCloseModal()">Withdraw</button>
-            </div>
+        <div class="flex flex-col gap-2">
+            <div class="font-bold">Label</div>
+            <mat-radio-group class="flex flex-row gap-4" [(ngModel)]="abc">
+                <div class="radio-outer-div" [ngClass]="{'radio-selected': abc === 'yes'}">
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                </div>
+                <div class="radio-outer-div" [ngClass]="{'radio-selected': abc === 'no'}">
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </div>
+            </mat-radio-group>
         </div>
-    </ng-container>
+
+        <div class="flex flex-col gap-2">
+            <div class="font-bold">Label</div>
+            <input type="text" class="text-box" placeholder="Type here" />
+        </div>
+
+        <div>This batch starting on 12/06/2023 - 23/06/2023, kindly go through the content and be prepared.</div>
+    </div>
+</div>
+<div mat-dialog-actions class="flex flex-row gap-4 justify-center mat-actions">
+    <button class="modal-button cancel-button" (click)="handleCloseModal()">Cancel</button>
+    <button class="modal-button confirm-button" (click)="handleCloseModal()">Confirm</button>
 </div>

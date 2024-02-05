@@ -261,17 +261,28 @@
   }
 }
 
-.confirmation-modal {
-  max-width: 420px !important;
+.enroll-modal {
+  max-width: 600px !important;
   width: 100% !important;
 
   .mat-dialog-container {
+    padding: 0px;
     border-radius: 12px;
   }
 }
 
+.confirmation-modal {
+  max-width: 420px !important;
+  width: 100% !important;
+  
+  .mat-dialog-container {
+    border-radius: 12px;
+    padding: 0px;
+  }
+}
+
 @media screen and (max-width: 1000px) {
-  .confirmation-modal {
+  .confirmation-modal, .enroll-modal {
     max-width: 90vw !important;
   }
 }

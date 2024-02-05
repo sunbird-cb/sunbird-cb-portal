@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material'
+import { FormsModule } from '@angular/forms' 
+import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule, MatProgressSpinnerModule, MatSnackBarModule, MatRadioModule } from '@angular/material'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { NgCircleProgressModule } from 'ng-circle-progress'
 
@@ -35,21 +36,23 @@ import { EnrollModalComponent } from './enroll-modal/enroll-modal.component'
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     MatIconModule,
     MatTabsModule,
-    SkeletonLoaderModule,
+    MatRadioModule,
     MatProgressBarModule,
     MatExpansionModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    SkeletonLoaderModule,
     AvatarPhotoModule,
     RatingSummaryModule,
-    MatMenuModule,
     PipeDurationTransformModule,
     ContentProgressModule,
     NgCircleProgressModule.forRoot({}),
     PipeRelativeTimeModule,
     InfiniteScrollModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule,
     CardCompetencyModule,
     HorizontalScrollerV2Module,
     WidgetResolverModule,
