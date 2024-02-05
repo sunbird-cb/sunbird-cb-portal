@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import {
   IUserProfileDetails,
@@ -30,6 +30,7 @@ const API_ENDPOINTS = {
   updateProfilePic: '/apis/proxies/v8/storage/profilePhotoUpload/profileImage',
   GET_GROUPS: '/api/user/v1/groups',
   getApprovalReqs: '/apis/protected/v8/workflowhandler/applicationsSearch',
+  ehrmsDataRequest: '/apis/proxies/v8/ehrms/details',
 }
 
 @Injectable()
@@ -97,5 +98,20 @@ export class UserProfileService {
   }
   getApprovalReqs(data: any): Observable<any> {
     return this.http.post<any>(API_ENDPOINTS.getApprovalReqs, data)
+  }
+
+  fetchEhrmsDetails( cookie :any) {
+    // fetchEhrmsDetails() {
+      let headers = new HttpHeaders({
+        'Cookie': cookie,
+        
+      })
+    return this.http
+      .get(API_ENDPOINTS.ehrmsDataRequest, {headers})
+      .pipe(
+        map(
+          (data: any) => data.result.courses
+        )
+      )
   }
 }

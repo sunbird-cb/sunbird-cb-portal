@@ -31,3 +31,16 @@
 .ehrms-form {
     width: 100%;
 }
+.ehrms-profile-link {
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  height: 90px;
+  width: 90px;
+  
+}
+.ehrms-profile-img {
+  height: 90px;
+  object-fit: cover;
+  object-position: center;
+}

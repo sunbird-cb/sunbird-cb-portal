@@ -1,18 +1,48 @@
-<div class="profile-container container-balanced">
+<div class="profile-container container-balanced margin-top-xl mb-5">
   <div class="flex flex-1 profile-box">
-    <form class="ehrms-form">
+    <form class="ehrms-form" [formGroup]="getEhrmsForm">
       <div class="flex flex-row flex-1">
         <!-- top left div -->
         <div class="flex-1 flex flex-col profile-top-col w-full bg-grey" style="border: 2px solid rebeccapurple;">
+          <div>
+            <a href="" class="ehrms-profile-link">
+              <img src="https://portal.karmayogibm.nic.in/assets/public/profileImage/1703054523284_image_cropper_1703054512051.jpg" 
+              alt="e-hrms profile picture" class="ehrms-profile-img">
+            </a>
+            </div>
+          <div class="flex-1 flex flex-row">
+            <div class="input-wrapper margin-top-s ">
+              <label for="firstName" class=" margin-remove-bottom form-label  "
+                i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+                aria-label="First Name label">
+                Salutation
+              </label>
+              <mat-form-field appearance="outline" class="margin-top-xs">
+                <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                  aria-label="First Name input" formControlName="ehrmsSalutation" readonly maxlength="150" />
+              </mat-form-field>
+            </div>
+            <div class="input-wrapper margin-top-s ">
+              <label for="firstName" class=" margin-remove-bottom form-label  "
+                i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+                aria-label="First Name label">
+                First Name
+              </label>
+              <mat-form-field appearance="outline" class="margin-top-xs">
+                <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                  aria-label="First Name input" formControlName="ehrmsFirstname" readonly maxlength="150" />
+              </mat-form-field>
+            </div>
+          </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Middle Name
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsMiddlename" readonly maxlength="150" />
             </mat-form-field>
           </div>
 
@@ -20,33 +50,64 @@
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Last Name
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsLastname" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Date of Birth
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsDob" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Gender
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsGender" readonly maxlength="150" />
+            </mat-form-field>
+          </div>
+          <div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Category
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsCategory" readonly maxlength="150" />
+            </mat-form-field>
+          </div><div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Differently Abled
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsDisabled" readonly maxlength="150" />
+            </mat-form-field>
+          </div><div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Marital Status
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsMarital" readonly maxlength="150" />
             </mat-form-field>
           </div>
         </div>
@@ -57,11 +118,11 @@
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Employee Code
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsEmployeecode" readonly maxlength="150"/>
             </mat-form-field>
           </div>
 
@@ -69,35 +130,69 @@
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Service
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsService" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Designation
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsDesignation" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Ministry/Department/Office
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsMdo" readonly maxlength="150" />
             </mat-form-field>
           </div>
+          <div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Current Place of Posting
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsPosting" readonly maxlength="150" />
+            </mat-form-field>
+          </div>
+          <div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Email Id (gov/nic)
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsEmailid" readonly maxlength="150" />
+            </mat-form-field>
+          </div>
+          <div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Mobile No.
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsMobile" readonly maxlength="150" />
+            </mat-form-field>
+          </div>
+          
         </div>
 
 
@@ -105,15 +200,16 @@
       <div class="flex flex-row flex-1 margin-top-m">
          <!-- bottom left div -->
          <div class="flex-1 flex flex-col profile-top-col w-full bg-grey" style="border: 2px solid rebeccapurple;">
+          <h2>Present Address</h2>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Address 1
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsPresentadd1" readonly maxlength="150" />
             </mat-form-field>
           </div>
 
@@ -121,48 +217,60 @@
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Address 2
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsPresentadd2" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              State
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsPresentstate" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              District
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsPresentdistrict" readonly maxlength="150" />
+            </mat-form-field>
+          </div>
+          <div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Pincode
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsPresentpincode" readonly maxlength="150" />
             </mat-form-field>
           </div>
         </div>
 
          <!-- bottom right div -->
         <div class="flex-1 flex flex-col profile-top-col w-full bg-grey" style="border: 2px solid red;">
+          <h2>Permanent Address</h2>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Address 1
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsAddress1" readonly maxlength="150" />
             </mat-form-field>
           </div>
 
@@ -170,33 +278,44 @@
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              Address 2
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsAddress2" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              State
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsState" readonly maxlength="150" />
             </mat-form-field>
           </div>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
-              Full Name
+              District
             </label>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
-                aria-label="First Name input" maxlength="150" />
+                aria-label="First Name input" formControlName="ehrmsDistrict" readonly maxlength="150" />
+            </mat-form-field>
+          </div>
+          <div class="input-wrapper margin-top-s">
+            <label for="firstName" class=" margin-remove-bottom form-label  "
+              i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
+              aria-label="First Name label">
+              Pincode
+            </label>
+            <mat-form-field appearance="outline" class="margin-top-xs">
+              <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
+                aria-label="First Name input" formControlName="ehrmsPincode" readonly maxlength="150" />
             </mat-form-field>
           </div>
         </div>

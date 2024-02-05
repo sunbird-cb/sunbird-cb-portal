@@ -143,6 +143,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isverifiedKBKeyExist!: boolean
   isverifiedKeyInAppv!: boolean
   isReqVKBuser = false
+  isSaveButtoDisable = false
+  isEhrmsId: any
+  ehrmsInfo : any
 
   constructor(
     private snackBar: MatSnackBar,
@@ -758,6 +761,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
+          // debugger
+          if(data && data.profileDetails && data.profileDetails.additionalProperties && data.profileDetails.additionalProperties.externalSystem === 'DoPT eHRMS'){
+            this.isEhrmsId = data.profileDetails.additionalProperties.externalSystemId
+          }
+          
 
           const userData = {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
@@ -1935,6 +1943,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
   public tabClicked(tabEvent: MatTabChangeEvent) {
+    // debugger
+    if(tabEvent.tab.textLabel === 'e-HRMS details' || tabEvent.index === 2) {
+       this.isSaveButtoDisable = true
+       this.ehrmsInfo = 'ehrmsTabclick'
+    } else {
+      this.isSaveButtoDisable = false
+    }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
@@ -1943,6 +1958,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
+    
   }
 
   dialogReqHelp(type: string) {
