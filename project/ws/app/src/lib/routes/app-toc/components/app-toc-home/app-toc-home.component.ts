@@ -1,34 +1,38 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
+import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
+import { FormControl, Validators } from '@angular/forms'
+import { HttpErrorResponse } from '@angular/common/http'
+import { MatDialog, MatSnackBar } from '@angular/material'
+import { Subscription, Observable } from 'rxjs'
+import { share } from 'rxjs/operators'
+
 import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
-import { Subscription, Observable } from 'rxjs'
-import { share } from 'rxjs/operators'
+import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
+import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
+import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
+import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
+
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { AccessControlService } from '@ws/author/src/public-api'
-import { FormControl, Validators } from '@angular/forms'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import { ActionService } from '../../services/action.service'
+import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+
 import * as dayjs from 'dayjs'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(isSameOrBefore)
+import moment from 'moment'
 
 // tslint:disable-next-line
 import _ from 'lodash'
-import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
-import { ActionService } from '../../services/action.service'
-import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
-import moment from 'moment'
-import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { environment } from 'src/environments/environment'
-import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
-import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
-import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
-dayjs.extend(isSameOrBefore)
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -57,6 +61,7 @@ const flattenItems = (items: any[], key: string | number) => {
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   show = false
+  skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
   content: NsContent.IContent | null = null
@@ -193,8 +198,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private actionSVC: ActionService,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
-    private telemertyService: TelemetryService,
+    private telemetryService: TelemetryService,
     private events: EventService,
+    private matSnackBar: MatSnackBar,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -211,7 +217,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.serverDate = serverDate
     })
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
-    this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
+    this.channelId = this.telemetryService.telemetryConfig ? this.telemetryService.telemetryConfig.channel : ''
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
@@ -221,8 +227,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
         this.courseID = data.content.data.identifier
+        this.skeletonLoader = true
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentReadData = res.result.content
+          this.skeletonLoader = false
+        }, (error: HttpErrorResponse) => {
+          if (!error.ok) {
+            this.skeletonLoader = false
+            this.matSnackBar.open('Unable to fetch content data, due to some error!')
+          }
         })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
@@ -560,6 +573,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
+    
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
       case NsAppToc.EWsTocErrorCode.API_FAILURE: {

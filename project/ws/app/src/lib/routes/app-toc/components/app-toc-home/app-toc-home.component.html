@@ -6,7 +6,7 @@
         <div class="lg:hidden">
           <div class="flex flex-row items-center justify-between text-white">
             <div class="flex flex-row">
-              <mat-icon>arrow_back_ios</mat-icon>
+              <mat-icon>chevron_left</mat-icon>
               <div>Back</div>
             </div>
             <div class="flex justify-end">
@@ -14,35 +14,66 @@
             </div>
           </div>
         </div>
-        <div class="flex gap-4">
-          <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
-            <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-            <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
-          </div>
-          <div class="flex items-center">
-            <div class="flex items-center due-tag text-xs leading-3">
-              Due by -&nbsp;<span class="font-bold">27 Jul, 1989</span>
+        <div class="flex items-center gap-4">
+
+          <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'132px'" [height]="'32px'"
+              [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [width]="'140px'" [height]="'24px'" [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+          </ng-container>
+
+          <ng-container *ngIf="!skeletonLoader">
+            <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
+              <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
+              <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
             </div>
-          </div>
+            <div class="flex items-center">
+              <div class="flex items-center due-tag text-xs leading-3">
+                Due by -&nbsp;<span class="font-bold">27 Jul, 1989</span>
+              </div>
+            </div>
+          </ng-container>
         </div>
         <div class="flex flex-col gap-2">
-          <div class="banner-text text-base sm:text-4xl leading-6 sm:leading-10 font-bold">{{ handleCapitalize(content?.name) }}</div>
-          <div class="text-sm sm:text-base text-white">by Wahhabi Institute of Technology and Policy</div>
+          <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'90%'" [height]="'32px'"
+              [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [width]="'70%'" [height]="'32px'"
+              [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+          </ng-container>
+          <ng-container *ngIf="!skeletonLoader">
+            <div class="banner-text text-base sm:text-4xl leading-6 sm:leading-10 font-bold">{{ handleCapitalize(content?.name) }}</div>
+            <div class="text-sm sm:text-base text-white">by Wahhabi Institute of Technology and Policy</div>
+          </ng-container>
         </div>
-        <div class="flex gap-4">
-          <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" >
-            <div class="flex flex-row gap-1 items-center">
-              <mat-icon>grade</mat-icon>
-              <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
+        <div class="flex gap-4 items-center ">
+          <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'120px'" [height]="'40px'"
+              [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [width]="'88px'" [height]="'24px'"
+              [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+          </ng-container>
+          <ng-container *ngIf="!skeletonLoader">
+            <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" >
+              <div class="flex flex-row gap-1 items-center">
+                <mat-icon>grade</mat-icon>
+                <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
+              </div>
+              <div class="separator"></div>
+              <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
             </div>
-            <div class="separator"></div>
-            <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
-          </div>
-          <div class="flex items-center">
-            <div class="most-enrolled-chip text-xs leading-3">Most Enrolled</div>
-          </div>
+            <div class="flex items-center">
+              <div class="most-enrolled-chip text-xs leading-3">Most Enrolled</div>
+            </div>
+          </ng-container>
         </div>
-        <div class="text-xs leading-4 text-white">(Last updated on {{ content?.sYS_INTERNAL_LAST_UPDATED_ON | date: 'MMM d, y' }})</div>
+        <ng-container *ngIf="skeletonLoader">
+          <ws-widget-skeleton-loader [width]="'180px'" [height]="'20px'"
+            [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+        </ng-container>
+        <ng-container *ngIf="!skeletonLoader">
+          <div class="text-xs leading-4 text-white">(Last updated on {{ content?.sYS_INTERNAL_LAST_UPDATED_ON | date: 'MMM d, y' }})</div>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -52,22 +83,28 @@
   <div class="toc-content">
     <div class="pb-4 lg:py-4">
       <ws-widget-content-toc [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
-      [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
+      [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader" ></ws-widget-content-toc>
     </div>
   </div>
 
   <div class="right-container">
     <div class="shadow-md right-content">
-      <div class="image-div">
-        <div class="flex justify-end share-container">
-          <div class="flex flex-row gap-2 share-tag">
-            <mat-icon>share</mat-icon>
-            <div>Share</div>
+      <ng-container *ngIf="skeletonLoader">
+        <ws-widget-skeleton-loader [width]="'384px'" [height]="'224px'"
+          [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+      </ng-container>
+      <ng-container *ngIf="!skeletonLoader">
+        <div class="image-div">
+          <div class="flex justify-end share-container">
+            <div class="flex flex-row gap-2 share-tag">
+              <mat-icon>share</mat-icon>
+              <div>Share</div>
+            </div>
           </div>
+          <img src="{{ content?.posterImage | pipePublicURL }}" alt="{{ content?.sourceName || 'course image'}}" />
         </div>
-        <img src="{{ content?.posterImage | pipePublicURL }}" alt="{{ content?.sourceName || 'course image'}}" />
-      </div>
-      <div class="flex flex-col gap-4 p-5">
+      </ng-container>
+      <div class="flex flex-col gap-4 p-5 border-bottom">
         <!-- Batch related UI -->
         <div class="flex flex-col gap-4" *ngIf="show">
           <div class="flex flex-row gap-3 justify-around">
@@ -132,71 +169,126 @@
         </div>
         <!-- Batch related UI -->
   
-        <div class="enroll-div">
-          <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4">
+          <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'336px'" [height]="'40px'"
+              [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [width]="'336px'" [height]="'68px'"
+              [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+          </ng-container>
+
+          <ng-container *ngIf="!skeletonLoader">
             <button class="flex action-button justify-center">Enroll</button>
             <div class="flex flex-row gap-2 slider-div">
               <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
               <div class="text-xs">By completing this course earn 10 more Karma Points</div>
             </div>
-            <ng-container *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
-              <div class="flex flex-wrap gap-2">
-                <div class="flex flex-col kpi-values items-center gap-2 ">
-                  <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
-                  <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' : 'Course' }}</div>
-                </div>
-                <div class="flex flex-col kpi-values items-center gap-3">
-                  <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
-                  <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ? 'Modules' : 'Module' }}</div>
-                </div>
-                <div class="flex flex-col kpi-values items-center gap-2">
-                  <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
-                  <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video' }}</div>
-                </div>
-                <div class="flex flex-col kpi-values items-center gap-2">
-                  <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-                  <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
-                </div>
-                <div class="flex flex-col kpi-values items-center gap-2">
-                  <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-                  <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
-                  'Final assessments' : 'Final assessment' }} </div>
-                </div>
+          </ng-container>
+
+          <ng-container *ngIf="skeletonLoader">
+            <div class="flex flex-wrap gap-6">
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
               </div>
-            </ng-container>
-          </div>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'40px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="!skeletonLoader && tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
+            <div class="flex flex-wrap gap-2">
+              <div class="flex flex-col kpi-values items-center gap-2 ">
+                <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
+                <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' : 'Course' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-3">
+                <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+                <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ? 'Modules' : 'Module' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+                <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video' }}</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+                <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
+              </div>
+              <div class="flex flex-col kpi-values items-center gap-2">
+                <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+                <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
+                'Final assessments' : 'Final assessment' }} </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
       </div>
 
       <div class="flex flex-col gap-8 p-5">
-        <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorDetails)?.length">
-          <div class="text-base font-bold">Authors</div>
-          <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
-            <div class="flex items-center justify-center">
-              <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
-                [name]="author?.name">
-              </ws-widget-avatar-photo>
-            </div>
-            <div class="flex flex-col gap-1 justify-center">
-              <div class="font-bold">{{ author?.name }}</div>
-              <div class="text-xs leading-3">Author</div>
-            </div>
-          </div>
-        </div>
-        <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
-          <div class="text-base font-bold">Curators</div>
-          <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
-            <div class="flex items-center justify-center">
-              <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
-                [name]="creator?.name">
-              </ws-widget-avatar-photo>
-            </div>
-            <div class="flex flex-col gap-1 justify-center">
-              <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
-              <div class="text-xs leading-3">Curator</div>
+        <ng-container *ngIf="skeletonLoader">
+          <div class="flex flex-col gap-4" *ngFor="let i of [1, 2]">
+            <ws-widget-skeleton-loader [width]="'72px'" [height]="'20px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+  
+            <div class="flex flex-row items-center gap-3">
+              <ws-widget-skeleton-loader [width]="'36px'" [height]="'36px'" [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
+              <div class="flex flex-col gap-2">
+                <ws-widget-skeleton-loader [width]="'124px'" [height]="'20px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'124px'" [height]="'12px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+
+        <ng-container *ngIf="!skeletonLoader">
+          <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorDetails)?.length">
+            <div class="text-base font-bold">Authors</div>
+            <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
+              <div class="flex items-center justify-center">
+                <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
+                  [name]="author?.name">
+                </ws-widget-avatar-photo>
+              </div>
+              <div class="flex flex-col gap-1 justify-center">
+                <div class="font-bold">{{ author?.name }}</div>
+                <div class="text-xs leading-3">Author</div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
+            <div class="text-base font-bold">Curators</div>
+            <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
+              <div class="flex items-center justify-center">
+                <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
+                  [name]="creator?.name">
+                </ws-widget-avatar-photo>
+              </div>
+              <div class="flex flex-col gap-1 justify-center">
+                <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
+                <div class="text-xs leading-3">Curator</div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

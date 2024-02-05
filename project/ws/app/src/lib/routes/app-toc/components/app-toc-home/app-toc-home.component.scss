@@ -150,23 +150,21 @@
     max-width: 384px;
   }
 
-  .enroll-div {
-    max-width: 384px;
-    width: 100%;
+  .border-bottom {
     border-bottom: 1px solid rgba($color: #000, $alpha: 0.2);
-  
-    .slider-div {
-      background-color: #FEF7ED;
-      border: none;
-      border-radius: 8px;
-      padding: 8px;
-    }
-  
-    .kpi-values {
-      width: 60px;
-      padding: 8px;
-      text-align: center;
-    }
+  }
+
+  .slider-div {
+    background-color: #FEF7ED;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .kpi-values {
+    width: 60px;
+    padding: 8px;
+    text-align: center;
   }
 }
 
@@ -285,6 +283,10 @@
   .confirmation-modal, .enroll-modal {
     max-width: 90vw !important;
   }
+}
+
+.kpi-loader-div {
+  width: 18%;
 }
 // New TOC page css...
 
