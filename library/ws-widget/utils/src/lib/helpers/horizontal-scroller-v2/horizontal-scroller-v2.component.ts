@@ -21,6 +21,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
   @Input() sliderConfig = {
     showNavs: true,
     showDots: true,
+    cerificateCardMargin: false,
   }
   @Output()
   loadNext = new EventEmitter()
