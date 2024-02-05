@@ -1,23 +1,23 @@
 <div class="profile-container container-balanced margin-top-xl mb-5">
   <div class="flex flex-1 profile-box">
     <form class="ehrms-form" [formGroup]="getEhrmsForm">
-      <div class="flex flex-row flex-1">
+      <div class="flex flex-row flex-1 ehrms-form-inner">
         <!-- top left div -->
-        <div class="flex-1 flex flex-col profile-top-col w-full bg-grey" style="border: 2px solid rebeccapurple;">
+        <div class="flex-1 flex flex-col profile-top-col w-full bg-grey">
           <div>
             <a href="" class="ehrms-profile-link">
               <img src="https://portal.karmayogibm.nic.in/assets/public/profileImage/1703054523284_image_cropper_1703054512051.jpg" 
               alt="e-hrms profile picture" class="ehrms-profile-img">
             </a>
             </div>
-          <div class="flex-1 flex flex-row">
-            <div class="input-wrapper margin-top-s ">
+          <div class="flex-1 flex flex-row name-div">
+            <div class="input-wrapper margin-top-s salutation-div">
               <label for="firstName" class=" margin-remove-bottom form-label  "
                 i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
                 aria-label="First Name label">
                 Salutation
               </label>
-              <mat-form-field appearance="outline" class="margin-top-xs">
+              <mat-form-field appearance="outline" class="margin-top-xs salutation-form-field">
                 <input id="firstName" matInput i18n-placeholder placeholder="Enter Full Name" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsSalutation" readonly maxlength="150" />
               </mat-form-field>
@@ -113,7 +113,7 @@
         </div>
 
          <!-- top right div -->
-        <div class="flex-1 flex flex-col profile-top-col w-full bg-grey" style="border: 2px solid red;">
+        <div class="flex-1 flex flex-col profile-top-col w-full bg-grey">
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
@@ -197,9 +197,9 @@
 
 
       </div>
-      <div class="flex flex-row flex-1 margin-top-m">
+      <div class="flex flex-row flex-1 margin-top-m ehrms-form-inner">
          <!-- bottom left div -->
-         <div class="flex-1 flex flex-col profile-top-col w-full bg-grey" style="border: 2px solid rebeccapurple;">
+         <div class="flex-1 flex flex-col profile-top-col w-full bg-grey">
           <h2>Present Address</h2>
           <div class="input-wrapper margin-top-s">
             <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -260,10 +260,10 @@
         </div>
 
          <!-- bottom right div -->
-        <div class="flex-1 flex flex-col profile-top-col w-full bg-grey" style="border: 2px solid red;">
+        <div class="flex-1 flex flex-col profile-top-col w-full bg-grey">
           <h2>Permanent Address</h2>
           <div class="input-wrapper margin-top-s">
-            <label for="firstName" class=" margin-remove-bottom form-label  "
+            <label for="firstName" class=" margin-remove-bottom form-label"
               i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
               aria-label="First Name label">
               Address 1

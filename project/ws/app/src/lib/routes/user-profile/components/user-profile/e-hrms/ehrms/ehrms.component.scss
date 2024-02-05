@@ -10,14 +10,36 @@
   .w-full {
     width: 100%;
   }
+
+//   .profile-box .mat-form-field.salutation-form-field {
+//   width:80%;
+// }
 .profile-top-col {
   padding: 1rem 3rem;
   margin: 0px 10px !important;
   min-height: 500px;
+  @include breakpoint-xs {
+    box-sizing: border-box;
+    margin-left:0!important;
+    padding: 1rem 1rem;
+  }
+  @include breakpoint-s {
+    box-sizing: border-box;
+    margin-left:0!important;
+    padding: 1rem 1rem;
+  }
 
       &:first-child {
         margin: 0px 10px 0px 0px !important;
       }
+}
+.name-div {
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+  @include breakpoint-s {
+    flex-direction: column;
+  }
 }
 .input-wrapper {
     flex: 1;
@@ -35,12 +57,28 @@
   border-radius: 50%;
   overflow: hidden;
   display: flex;
-  height: 90px;
-  width: 90px;
+  height: 95px;
+  width: 95px;
+
+  @include breakpoint-xs {
+    margin:0px auto;
+  }
+  @include breakpoint-s {
+    margin:0px auto;
+  }
   
 }
 .ehrms-profile-img {
   height: 90px;
   object-fit: cover;
   object-position: center;
+}
+
+.ehrms-form-inner {
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+  @include breakpoint-s {
+    flex-direction: column;
+  }
 }
