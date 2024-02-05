@@ -147,14 +147,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
   ) {
-    let userData : any = {}
-    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe(res=> {
+    let userData: any = {}
+    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe((res: any)=> {
       userData = res
     })
     this.isMobileVerified = userData && userData.isMobileVerified || false
     this.isEmailVerified = userData && userData.isEmailVerified || false
     this.registrationForm = new FormGroup({
-      firstname: new FormControl( userData && userData.firstname || '', [Validators.required, Validators.pattern(this.namePatern)]),
+      firstname: new FormControl(userData && userData.firstname || '', [Validators.required, Validators.pattern(this.namePatern)]),
       // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
       // position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
@@ -163,7 +163,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:max-line-length
       email: new FormControl(userData && userData.email || '', [Validators.required, Validators.pattern(this.emailPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-      mobile: new FormControl(userData && userData.mobile || '', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
+      mobile: new FormControl(userData && userData.mobile || '', [Validators.required, 
+        Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       confirmBox: new FormControl(false, [Validators.required]),
       confirmTermsBox: new FormControl(false, [Validators.required]),
       type: new FormControl('ministry', [Validators.required]),
@@ -188,7 +189,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
     this.OrgsSearchChange()
     // this.onPositionsChange()
-    //this.onGroupChange()
+    // this.onGroupChange()
     this.onPhoneChange()
     this.onEmailChange()
     if (instanceConfig) {
@@ -515,10 +516,10 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   verifyOtpEmail(otp: any) {
     // console.log(otp)
     const email = this.registrationForm.get('email')
-    if ( otp && otp.value ) {
-      if ( otp && otp.value.length < 4 ) {
+    if (otp && otp.value) {
+      if (otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
-      } else if ( email && email.value && email.valid ) {
+      } else if (email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpEmailSend = true

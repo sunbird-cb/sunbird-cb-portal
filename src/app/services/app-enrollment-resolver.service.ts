@@ -11,13 +11,7 @@ export class AppEnrollmentResolverService
     Resolve<
     Observable<IResolveResponse<any>> | IResolveResponse<any>
     > {
-    constructor(
-       
-    private configSvc: ConfigurationsService,
-    private userSvc: WidgetUserService,
-    
-    ) {
-     }
+    constructor(private configSvc: ConfigurationsService, private userSvc: WidgetUserService) {}
 
     resolve(
         _route: ActivatedRouteSnapshot,

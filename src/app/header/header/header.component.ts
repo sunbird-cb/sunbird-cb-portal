@@ -1,24 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 import { delay } from 'rxjs/operators'
-import { HeaderService } from './header.service';
-import { MobileAppsService } from '../../services/mobile-apps.service';
+import { HeaderService } from './header.service'
+import { MobileAppsService } from '../../services/mobile-apps.service'
 import {
   ValueService,
 } from '@sunbird-cb/utils'
 @Component({
   selector: 'ws-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   isXSmall$ = this.valueSvc.isXSmall$
-  isNavBarRequired = true;
+  isNavBarRequired = true
   showNavbar = true
-  widgetData = {};
-  mobileTopHeaderVisibilityStatus = true;
-  @Input() mode:any;
-  @Input() headerFooterConfigData:any;
-  constructor(private valueSvc: ValueService,public headerService: HeaderService, public mobileAppsService: MobileAppsService) { }
+  widgetData = {}
+  mobileTopHeaderVisibilityStatus = true
+  @Input() mode: any
+  @Input() headerFooterConfigData: any
+  constructor( private valueSvc: ValueService,
+    public headerService: HeaderService, 
+    public mobileAppsService: MobileAppsService) { }
 
   ngOnInit() {
     this.headerService.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
@@ -26,15 +28,15 @@ export class HeaderComponent implements OnInit {
     })
 
     this.widgetData = { 
-      "widgets": [        
+      widgets: [        
         [
           {
-            "dimensions": {},
-            "className": "ws-mat-primary-lite-background-important new-box-hubs",
-            "widget": {
-              "widgetType": "card",
-              "widgetSubType": "cardHomeHubs",
-              "widgetData": {}
+            dimensions: {},
+            className: 'ws-mat-primary-lite-background-important new-box-hubs',
+            widget: {
+              widgetType: 'card',
+              widgetSubType: 'cardHomeHubs',
+              widgetData: {}
             }
           }
         ] 
@@ -42,21 +44,21 @@ export class HeaderComponent implements OnInit {
     };
   } 
 
-  downloadApp() : void{
-    var userAgent = navigator.userAgent;
+  downloadApp(): void {
+    var userAgent = navigator.userAgent
 
     // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {
-      window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank');
+      window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank')
     }
 
     if (/android/i.test(userAgent)) {
-        window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank');
+        window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank')
     }
 
     // iOS detection from: http://stackoverflow.com/a/9039885/177710
     if (/iPad|iPhone|iPod/.test(userAgent)) {
-        window.open('https://apps.apple.com/in/app/igot-karmayogi/id6443949491', '_blank');
+        window.open('https://apps.apple.com/in/app/igot-karmayogi/id6443949491', '_blank')
     }
   }
 
@@ -68,9 +70,7 @@ export class HeaderComponent implements OnInit {
   }
 
   hideMobileTopHeader() {
-    this.mobileTopHeaderVisibilityStatus = false;
-    this.mobileAppsService.mobileTopHeaderVisibilityStatus.next(this.mobileTopHeaderVisibilityStatus);
-
+    this.mobileTopHeaderVisibilityStatus = false
+    this.mobileAppsService.mobileTopHeaderVisibilityStatus.next(this.mobileTopHeaderVisibilityStatus)
   }
-
 }

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { DiscussionsComponent } from './discussions.component'
 
 describe('DiscussionsComponent', () => {
-  let component: DiscussionsComponent;
+  let component: DiscussionsComponent
   let fixture: ComponentFixture<DiscussionsComponent>
 
   beforeEach(async(() => {
@@ -14,7 +14,7 @@ describe('DiscussionsComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DiscussionsComponent)
-    component = fixture.componentInstance;
+    component = fixture.componentInstance
     fixture.detectChanges()
   })
 

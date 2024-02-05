@@ -99,7 +99,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy() {
     window.removeEventListener('message', this.receiveMessage)
     window.removeEventListener('onmessage', this.receiveMessage)
-    console.log('this.ticks: ', this.ticks)
+    // console.log('this.ticks: ', this.ticks)
     this.raiseRealTimeProgress()
     // this.store.clearAll()
   }
@@ -115,7 +115,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       this.fireRealTimeProgress(this.htmlContent)
       // this.store.clearAll()
     }
-    this.sub.unsubscribe();
+    this.sub.unsubscribe()
   }
 
   private fireRealTimeProgress(htmlContent: any) {
@@ -133,13 +133,13 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         ...this.realTimeProgressRequest,
         status: (completionData && completionData.status) || 0,
         completionPercentage: (completionData && completionData.completionPercentage) || 0,
-        progressDetails: { spentTime: (completionData && completionData.spentTime) || 0 }
+        progressDetails: { spentTime: (completionData && completionData.spentTime) || 0 },
       }
       this.scormAdapterService.addDataV3(req, htmlContent.identifier).subscribe((_res: any) => {
         this.loggerSvc.log('Progress updated successfully')
         // this.store.clearAll()
         return
-      }, (err) => {
+      }, (err: any) => {
         this.loggerSvc.error('Error calling progress update for scorm content', err)
         // this.store.clearAll()
         return
@@ -157,12 +157,11 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       return {
         completionPercentage: data && data['completionPercentage'],
         status: data && data['completionStatus'],
-        spentTime: data && data['spentTime']
+        spentTime: data && data['spentTime'],
       }
-    } else {
-
+    } 
       // if (data) {
-        spentTime = this.ticks + (data && data["spentTime"] || 0)
+        spentTime = this.ticks + (data && data['spentTime'] || 0)
         if (htmlContent && spentTime) {
           // ~~ will remove decimal after division
           percentage = ~~((spentTime / htmlContent.duration) * 100)
@@ -173,21 +172,21 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         return {
           completionPercentage: 100,
           status: 2,
-          spentTime: spentTime
+          spentTime: spentTime,
         }
       } else {
         return {
           completionPercentage: percentage,
           status: 1,
-          spentTime: spentTime
+          spentTime: spentTime,
         }
-      }
+      // }
     }
   }
 
   getThreshold() {
     this.tocConfig = this.widgetContentSvc.tocConfigData
-    if(this.tocConfig) {
+    if (this.tocConfig) {
       this.progressThreshold = this.tocConfig.ScormProgressThreshold
     }
     return this.progressThreshold
@@ -201,14 +200,14 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       ? this.configSvc.instanceConfig.intranetIframeUrls
       : []
     // For successive scorm resources, when switched to next content -  start
-    if(!this.oldData) {
+    if (!this.oldData) {
       this.oldData = this.htmlContent
     } else {
-      if(this.htmlContent && (this.oldData.identifier !== this.htmlContent.identifier)) {
+      if (this.htmlContent && (this.oldData.identifier !== this.htmlContent.identifier)) {
         if (!this.store.getItem('Initialized')) {
           this.fireRealTimeProgress(this.oldData)
         }
-        this.sub.unsubscribe();
+        this.sub.unsubscribe()
         this.ticks = 0
         this.timer = timer(1000, 1000)
         // subscribing to a observable returns a subscription object

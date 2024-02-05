@@ -17,11 +17,9 @@ export class PublicContacthomeComponent implements OnInit {
 
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
 
-  constructor(
-    private configSvc: ConfigurationsService )
+  constructor(private configSvc: ConfigurationsService) {}
     // @Inject(DOCUMENT) private document: Document, 
     // private elementRef:ElementRef) 
-    {}
 
   ngOnInit() {
     this.environment = environment

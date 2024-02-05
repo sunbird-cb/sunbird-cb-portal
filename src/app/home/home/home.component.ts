@@ -19,19 +19,19 @@ const API_END_POINTS = {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  widgetData = {};
-  sliderData = {};
-  contentStripData:any = {};
-  discussStripData = {};
-  networkStripData = {};
-  carrierStripData = {};
+  widgetData = {}
+  sliderData = {}
+  contentStripData:any = {}
+  discussStripData = {}
+  networkStripData = {}
+  carrierStripData = {}
   clientList: {} | undefined
-  homeConfig: any = {};
-  isNudgeOpen = true;
-  currentPosition: any;
-  mobileTopHeaderVisibilityStatus: any = true;
-  sectionList:any = [];
-  enableLazyLoadingFlag = true;
+  homeConfig: any = {}
+  isNudgeOpen = true
+  currentPosition: any
+  mobileTopHeaderVisibilityStatus: any = true
+  sectionList:any = []
+  enableLazyLoadingFlag = true
   isKPPanelenabled = false
   enrollData: any
   enrollInterval: any
@@ -48,30 +48,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.jan26Change = this.configSvc.overrideThemeChanges
     }
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
-      this.mobileTopHeaderVisibilityStatus = status;
+      this.mobileTopHeaderVisibilityStatus = status
     })
     if(this.activatedRoute.snapshot.data.pageData) {
-      this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig;
+      this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig
     }
     if(this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
       this.contentStripData = (this.contentStripData.homeStrips || []).sort((a:any, b:any) => a.order - b.order)
-      for(var i=0; i<this.contentStripData.length;i++) {
+      for( var i=0; i<this.contentStripData.length; i++ ) {
         if(this.contentStripData[i] &&
           this.contentStripData[i]['strips'] &&
           this.contentStripData[i]['strips'][0] &&
           this.contentStripData[i]['strips'][0]['active']) {
-            let obj:any = {};
-            obj['section'] = 'section_'+i;
-            obj['isVisible'] = false;
-            this.sectionList.push(obj);
+            let obj:any = {}
+            obj['section'] = 'section_'+i
+            obj['isVisible'] = false
+            this.sectionList.push(obj)
         }
       }
     }
 
-    this.clientList = this.activatedRoute.snapshot.data.pageData.data.clientList;
-    this.widgetData = this.activatedRoute.snapshot.data.pageData.data.hubsData;
-    this.enableLazyLoadingFlag = this.activatedRoute.snapshot.data.pageData.data.enableLazyLoading;
+    this.clientList = this.activatedRoute.snapshot.data.pageData.data.clientList
+    this.widgetData = this.activatedRoute.snapshot.data.pageData.data.hubsData
+    this.enableLazyLoadingFlag = this.activatedRoute.snapshot.data.pageData.data.enableLazyLoading
 
     this.discussStripData = {
       strips: [
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
         }
       ]
-    };
+    }
 
     this.networkStripData = {
       strips: [
@@ -167,13 +167,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
         ],
     };
 
-    this.sliderData = this.activatedRoute.snapshot.data.pageData.data.sliderData;
-       this.sectionList.push({'section':'slider', 'isVisible': false});
-    this.sectionList.push({'section':'discuss', 'isVisible': false});
-    this.sectionList.push({'section':'network', 'isVisible': false});
+    this.sliderData = this.activatedRoute.snapshot.data.pageData.data.sliderData
+       this.sectionList.push({'section':'slider', 'isVisible': false})
+    this.sectionList.push({'section':'discuss', 'isVisible': false})
+    this.sectionList.push({'section':'network', 'isVisible': false})
 
-    this.handleUpdateMobileNudge();
-    this.handleDefaultFontSetting();
+    this.handleUpdateMobileNudge()
+    this.handleDefaultFontSetting()
 
     this.enrollInterval = setInterval(() => {
       this.getEnrollmentData()
@@ -282,7 +282,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
        className !== 'section_2' &&
        className !== 'section_3' &&
        className !== 'section_4') {
-      for(var i=0; i<this.sectionList.length;i++) {
+      for( var i=0; i<this.sectionList.length; i++ ) {
         if(this.sectionList[i]['section'] === className) {
           if(document.getElementsByClassName(this.sectionList[i]['section'])
           && document.getElementsByClassName(this.sectionList[i]['section'])[0]
@@ -292,7 +292,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           var eleBottom = tect.bottom
           isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
           this.sectionList[i]['isVisible'] = isVisible
-          break;
+          break
         }
         }
       }}
@@ -309,7 +309,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   fetchProfile() {
-    this.router.navigate(['/app/user-profile/details']);
+    this.router.navigate(['/app/user-profile/details'])
   }
 
   closeKarmaPointsPanel() {

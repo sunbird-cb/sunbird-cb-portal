@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DownloadAppComponent } from '../component/download-app/download-app.component';
-
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { DownloadAppComponent } from '../component/download-app/download-app.component'
 
 @NgModule({
   declarations: [DownloadAppComponent],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
-    DownloadAppComponent
+    DownloadAppComponent,
   ]
 })
 export class SharedModule { }

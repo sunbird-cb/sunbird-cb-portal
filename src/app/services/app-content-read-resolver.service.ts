@@ -11,11 +11,7 @@ export class AppContentResolverService
     Resolve<
     Observable<IResolveResponse<any>> | IResolveResponse<any>
     > {
-    constructor(
-        private contentSvc:WidgetContentService
-    
-    ) {
-     }
+    constructor(private contentSvc: WidgetContentService) {}
 
     resolve(
         _route: ActivatedRouteSnapshot,
