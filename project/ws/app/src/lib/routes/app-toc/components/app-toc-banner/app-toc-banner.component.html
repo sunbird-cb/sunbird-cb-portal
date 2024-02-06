@@ -50,7 +50,7 @@
               <div *ngIf="content?.primaryCategory" class="apIcon float-left mb-4">
                 <img src="/assets/icons/content/course.svg" [id]="'source_' + content.identifier"
                   class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
-                  <span>{{content?.primaryCategory}}</span>
+                  <span class="category-text">{{content?.primaryCategory}}</span>
               </div>
               <div *ngIf="content?.appIcon" class="apIcon float-left mb-4">
                 <img [src]="content?.creatorLogo | pipePublicURL" [id]="'source_' + content.identifier"
