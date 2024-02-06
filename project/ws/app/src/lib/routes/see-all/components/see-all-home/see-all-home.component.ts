@@ -520,7 +520,6 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   translateLabels(label: string, type: any) {
-    console.log('label ', label)
     return this.langtranslations.translateLabel(label.toLowerCase(), type, '')
   }
 
