@@ -1,3 +1,8 @@
+@import 'ws-mixins';
+@import "ws-vars";
+@import "ws-common";
+
+
 .home-container {
     max-width: 1200px;
 }
@@ -6,6 +11,16 @@
 }
 .network-inner {
     overflow: hidden;
+}
+.app-logo {
+  @include breakpoint-xs {
+    max-width: 72px;
+    margin-top: 0px;
+  }
+  @include breakpoint-s {
+    max-width: 72px;
+    margin-top: 0px;
+  }
 }
 
 .fix-ww {
@@ -45,7 +60,7 @@
     background-color: #FEFAF6;
     color: black;
     text-align: center;
-    z-index: 1000;
+    z-index: 999;
     height: 108px !important;
     font-size: 16px !important;
   }
@@ -407,7 +422,7 @@
         background-color: #fcf9f9;
         color: black;
         text-align: center;
-        z-index: 1000;
+        z-index: 999;
         height: 30px !important;
         font-size: 14px !important;
         border: 1px solid rgb(239, 149, 30);
@@ -513,4 +528,41 @@
       }
 }
 
+.mob-logo {
+  display: none;
+  @include breakpoint-xs {
+    display: flex;
+  }
+  @include breakpoint-s {
+    display: flex;
+  }
 
+}
+
+.logo-text {
+  margin-bottom: 0!important;
+  font-family: 'Montserrat';
+}
+
+
+.karmapoints-panel {
+  background: #C9CCD1;
+  padding: 13px 0;
+  text-align: center;
+  position: relative;
+
+  img {
+    vertical-align: bottom !important;
+    width: 24px;
+    margin-right: 2px;
+  }
+
+  .mat-icon {
+    position: absolute;
+    right: 16%;
+    top: 16px;
+    color: #505254;
+    font-size: 20px;
+    height: 20px;
+  }
+}

@@ -9,7 +9,7 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -30,6 +30,9 @@ import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { environment } from 'src/environments/environment'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
+dayjs.extend(isSameOrBefore)
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -61,6 +64,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   contentReadData: NsContent.IContent | null = null
   errorCode: NsAppToc.EWsTocErrorCode | null = null
   resumeData: any = null
+  nsCardContentData: any = NsCardContent
   batchData: NsContent.IBatchListResponse | null = null
   currentCourseBatchId: string | null = null
   userEnrollmentList!: NsContent.ICourse[]
@@ -69,6 +73,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isCohortsRestricted = false
   sticky = false
   isInIframe = false
+  cbPlanEndDate: any
+  cbPlanDuration: any
   forPreview = window.location.href.includes('/author/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
@@ -151,7 +157,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   selectedBatchSubscription: any
   serverDateSubscription: any
   serverDate: any
+  kparray: any = []
   enrollBtnLoading = false
+  isAcbpCourse = false
+  isAcbpClaim = false
+  courseID: any
+  isClaimed = false
+  monthlyCapExceed = false
+  isCompletedThisMonth = false
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -181,9 +194,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private telemertyService: TelemetryService,
+    private events: EventService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
+    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
   }
 
   ngOnInit() {
@@ -204,6 +219,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
+        this.courseID = data.content.data.identifier
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentReadData = res.result.content
         })
@@ -212,10 +228,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
         this.tocSvc.showDescription = data.pageData.data.showDescription || false
         this.tocConfig = data.pageData.data
+        this.kparray = this.tocConfig.karmaPoints
         this.initData(data)
       })
       this.route.data.subscribe(data => {
         this.tocConfig = data.pageData.data
+        this.kparray = this.tocConfig.karmaPoints
         if (this.content && this.isPostAssessment) {
           this.tocSvc.fetchPostAssessmentStatus(this.content.identifier).subscribe(res => {
             const assessmentData = res.result
@@ -310,6 +328,123 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
+
+  }
+
+  getKarmapointsLimit() {
+    this.contentSvc.userKarmaPoints().subscribe((res: any) => {
+      if (res && res.kpList) {
+        const info = res.kpList.addinfo
+        if (info) {
+          this.monthlyCapExceed = JSON.parse(info).claimedNonACBPCourseKarmaQuota >= 4
+        }
+      }
+    })
+  }
+
+  isCourseCompletedOnThisMonth() {
+    const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+    const now = moment(this.serverDate).format('YYYY-MM-DD')
+    if (this.content) {
+      const courseData = enrollList[this.content.identifier]
+      if (courseData && courseData.completionPercentage === 100 && courseData.completedOn) {
+        const completedOn = moment(courseData.completedOn).format('YYYY-MM-DD')
+        const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
+        const currentMonth = moment(now, 'YYYY-MM-DD').month()
+        this.isCompletedThisMonth = completedMonth === currentMonth
+      }
+    }
+  }
+
+  filteredAcbpList(res: any) {
+    return res.filter((v: any) => v.identifier === this.courseID)
+  }
+
+  findACPB() {
+    const localCbp = localStorage.getItem('cbpData')
+    if (localCbp) {
+      const storeageCbp = JSON.parse(localCbp)
+      const cbp = this.filteredAcbpList(storeageCbp)
+      if (cbp.length) {
+        const acbp = 'cbPlan'
+        this.cbPlanEndDate = cbp[0].endDate
+        const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
+        const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
+        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
+          ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
+        if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
+          this.isAcbpCourse = true
+          const eDate = dayjs(this.cbPlanEndDate.split('T')[0]).format('YYYY-MM-DD')
+          if (dayjs(sDate).isSameOrBefore(eDate)) {
+            const requestObj = {
+              request: {
+                filters: {
+                  contextType: 'Course',
+                  contextId: this.courseID,
+                },
+              },
+            }
+            this.contentSvc.getCourseKarmaPoints(requestObj).subscribe((res: any) => {
+              if (res && res.kpList) {
+                const row = res.kpList
+                if (row.addinfo) {
+                  if (JSON.parse(row.addinfo).ACBP) {
+                    this.isAcbpClaim = false
+                    this.isClaimed = true
+                  } else {
+                    this.isAcbpClaim = true
+                  }
+                } else {
+                  this.isAcbpClaim = true
+                }
+              } else {
+                this.isAcbpClaim = true
+              }
+            })
+          } else {
+            this.isAcbpCourse = false
+          }
+        }
+      }
+    }
+  }
+
+  raiseTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'karmapoints-claim',
+        id: this.courseID,
+      },
+      {
+        id: this.courseID,
+        type: 'course',
+      },
+      {
+        pageIdExt: 'btn-acbp-claim',
+        module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
+    })
+  }
+
+  onClickOfClaim(event: any) {
+    // tslint:disable:no-console
+    console.log(event)
+    const request = {
+      userId: this.configSvc.unMappedUser.identifier,
+      courseId: this.courseID,
+    }
+    this.raiseTelemetry()
+    this.contentSvc.claimKarmapoints(request).subscribe((res: any) => {
+      // tslint:disable:no-console
+      console.log(res)
+      this.isClaimed = true
+      this.openSnackbar('Karma points are successfully claimed.')
+      this.getUserEnrollmentList()
+    },                                                  (error: any) => {
+      // tslint:disable:no-console
+      console.log(error)
+      this.openSnackbar('something went wrong.')
+    })
   }
 
   ngAfterViewInit() {
@@ -696,6 +831,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.enrollBtnLoading = false
           }
         }
+        this.isCourseCompletedOnThisMonth()
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
@@ -1417,6 +1553,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.getUserRating(true)
+        this.getUserEnrollmentList()
       }
     })
   }
@@ -1446,12 +1583,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   getServerDateTime() {
     this.tocSvc.getServerDate().subscribe((response: any) => {
       if (response && response.systemDate) {
-        // this.tocSvc.changeServerDate(response.systemDate)
-        this.tocSvc.changeServerDate(new Date().getTime())
-        this.serverDate = new Date().getTime()
+        this.tocSvc.changeServerDate(response.systemDate)
+        this.tocSvc.changeServerDate(response.systemDate)
+        this.serverDate = response.systemDate
       } else {
         this.tocSvc.changeServerDate(new Date().getTime())
       }
+      this.findACPB()
+      this.getKarmapointsLimit()
     },                                    (_err: any) => {
       this.tocSvc.changeServerDate(new Date().getTime())
     })

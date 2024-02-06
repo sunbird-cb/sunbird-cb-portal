@@ -5,6 +5,8 @@ import { ProfileComponent } from './routes/profile/profile.component'
 import { Profilev2Resolve } from './resolvers/profile-v2-resolve'
 import { ProfileViewComponent } from './routes/profile-view/profile-view.component'
 import { Profilev2BadgesResolve } from './resolvers/badges-resolve'
+import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profile-karmapoints.component'
+import { Profilev2CerficatesResolve } from './resolvers/profile-v2-certificates-resolver'
 // import { ConfigurationsService } from './resolvers/config-resolver.service'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
 
@@ -22,6 +24,19 @@ const routes: Routes = [
         component: ProfileViewComponent,
         data: {
           pageId: 'me',
+          module: 'Profile',
+        },
+        resolve: {
+          profile: Profilev2Resolve,
+          badges: Profilev2BadgesResolve,
+          certificates: Profilev2CerficatesResolve,
+        },
+      },
+      {
+        path: 'karma-points',
+        component: ProfileKarmapointsComponent,
+        data: {
+          pageId: 'karma-points',
           module: 'Profile',
         },
         resolve: {
@@ -54,6 +69,7 @@ const routes: Routes = [
   providers: [
     Profilev2Resolve,
     Profilev2BadgesResolve,
+    Profilev2CerficatesResolve,
     // ConfigurationsService,
     // ProfileResolverService,
   ],

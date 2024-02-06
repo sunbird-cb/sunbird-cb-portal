@@ -7,7 +7,6 @@ import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
 import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content-v2.model'
-
 /* tslint:disable*/
 import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
@@ -24,6 +23,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   @Input() widgetData!: NsCardContent.ICard
   @HostBinding('id')
   primaryCategory = NsContent.EPrimaryCategory
+  acbpConstants = NsCardContent.ACBPConst
   public id = `ws-card_${Math.random()}`
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   defaultThumbnail = ''
@@ -33,21 +33,22 @@ export class CardContentV2Component extends WidgetBaseComponent
   showIsMode = false
   showContentTag = false
   downloadCertificateLoading: boolean = false
+  cbPlanMapData: any
+  cbPlanInterval: any
 
   btnPlaylistConfig: NsPlaylist.IBtnPlaylist | null = null
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
   prefChangeSubscription: Subscription | null = null
   sourceLogos: NsInstanceConfig.ISourceLogo[] | undefined
 
-  isIntranetAllowedSettings = false
+  isIntranetAllowedSettings = false 
   constructor(
     private dialog: MatDialog,
     private events: EventService,
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
-    private certificateService: CertificateService
-
+    private certificateService: CertificateService,
   ) {
     super()
   }
@@ -70,7 +71,7 @@ export class CardContentV2Component extends WidgetBaseComponent
       if (this.widgetData.context && this.widgetData.context.pageSection === 'curatedCollections') {
         this.widgetData.content.linkUrl = '/app/curatedCollections/'+ this.widgetData.content.identifier
       }
-      if(this.widgetData.content) {
+      if(this.widgetData && this.widgetData.content) {
         this.btnPlaylistConfig = {
           contentId: this.widgetData.content.identifier,
           contentName: this.widgetData.content.name,
@@ -89,7 +90,7 @@ export class CardContentV2Component extends WidgetBaseComponent
       this.modifySensibleContentRating()
     }
 
-    if(this.widgetData.content) {
+  if(this.widgetData && this.widgetData.content) {
 
       // required for knowledge board
       // TODO: make it more generic
@@ -102,6 +103,9 @@ export class CardContentV2Component extends WidgetBaseComponent
           this.checkCriteria() && this.checkContentTypeCriteria() && this.checkMimeTypeCriteria()
       }
     }
+    this.cbPlanInterval = setInterval(() => {
+      this.getCbPlanData()
+    },                                1000)
   }
 
   checkContentTypeCriteria() {
@@ -363,6 +367,20 @@ export class CardContentV2Component extends WidgetBaseComponent
       })
     } else {
       this.downloadCertificateLoading = false
+    }
+  }
+  getCbPlanData() {
+    let cbpList: any={}
+    if (localStorage.getItem('cbpData')) {
+      let cbpListArr = JSON.parse(localStorage.getItem('cbpData') || '')
+      if (cbpListArr && cbpListArr.length) {
+        cbpListArr.forEach((data: any) => {
+          cbpList[data.identifier] = data
+        })
+      }
+      this.cbPlanMapData = cbpList 
+      // this.karmaPointLoading = false
+      clearInterval(this.cbPlanInterval)
     }
   }
 }

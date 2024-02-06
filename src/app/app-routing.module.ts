@@ -482,7 +482,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'event',
       pageId: 'app/event-hub',
-      module: 'events',
+      module: 'Events',
     },
     resolve: {
       pageData: PageResolve,
@@ -716,6 +716,36 @@ const routes: Routes = [
     data: {
       pageType: 'page',
       pageKey: 'home',
+      pageId: 'page/home',
+      module: 'Home',
+    },
+    resolve: {
+      pageData: PageResolve,
+      //module: ModuleNameResolve,
+      //pageId: PageNameResolve,
+    },
+    canActivate: [GeneralGuard],
+  },
+  {
+    path: 'page/cbp',
+    loadChildren: () => import('./cbp/cbp.module').then(m => m.CbpModule),
+    data: {
+      pageType: 'page',
+      pageKey: 'cbp',
+    },
+    resolve: {
+      pageData: PageResolve,
+      module: ModuleNameResolve,
+      pageId: PageNameResolve,
+    },
+    canActivate: [GeneralGuard],
+  },
+  {
+    path: 'page/competency-passbook',
+    loadChildren: () => import('./competency-passbook/competency-passbook.module').then(m => m.CompetencyPassbookModule),
+    data: {
+      pageType: 'page',
+      pageKey: 'competency-passbook',
     },
     resolve: {
       pageData: PageResolve,

@@ -202,6 +202,8 @@ export namespace WsEvents {
     PROFILE = 'profile',
     NETWORK = 'network',
     SUPPORT = 'support',
+    KARMAPOINTS = 'karmapoints',
+    PLATFORM_RATING = 'platformrating',
   }
   export enum EnumInteractTypes {
     CLICK = 'click',
@@ -216,5 +218,7 @@ export namespace WsEvents {
     EVENTS_TAB = 'events-tab',
     SIDE_MENU = 'side-menu',
     HOME_PAGE_STRIP_TABS = 'home-page-strip-tabs',
+    HUB_MENU = 'hub-menu',
+    PORTAL_NUDGE = 'portal_nudge',
   }
 }

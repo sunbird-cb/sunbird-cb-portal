@@ -123,7 +123,7 @@ mat-grid-list {
 
 .secondary-nav {
   justify-content: center;
-  margin: 4px 0;
+  margin: 4px 0px !important;
 }
 
 .margin-0 {
@@ -204,6 +204,10 @@ mat-grid-list {
     padding: 0px !important;
   }
 
+  .gyaan-icon {
+    width: 8rem;
+  }
+
   .simple-hubs-link {
     min-width: 60px;
     display: flex;
@@ -235,6 +239,10 @@ mat-grid-list {
     // &::-webkit-scrollbar {
     //   padding: 0px !important;
     // }
+  }
+
+  .gyaan-icon {
+    width: 8rem;
   }
 
   .simple-hubs-link {
@@ -298,4 +306,10 @@ mat-grid-list {
   .mat-icon-disable {
     filter: none !important;
   }
+}
+
+.disable-div{
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
 }

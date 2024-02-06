@@ -23,6 +23,7 @@ export namespace NsContentStripWithTabs {
       showNavs: boolean,
       showDots: boolean,
       maxWidgets?: number
+      cerificateCardMargin?: boolean
     },
     tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
     titleDescription?: string
@@ -40,6 +41,7 @@ export namespace NsContentStripWithTabs {
       search?: NSSearch.ISearchRequest
       searchV6?: NSSearch.ISearchV6Request
       enrollmentList?: any
+      cbpList?: any
       searchRegionRecommendation?: NSSearch.ISearchOrgRegionRecommendationRequest
       api?: IStripRequestApi
       networkApi?: INetworkRequestApi
@@ -62,7 +64,9 @@ export namespace NsContentStripWithTabs {
       viewMoreText: string
       path: string
     }
+    data?: []
   }
+
   export interface IStripRequestApi {
     path: string
     queryParams?: {
@@ -123,5 +127,6 @@ export namespace NsContentStripWithTabs {
     maxWidgets?: number,
     fetchTabStatus?: string
     nodataMsg?: string
+    tabLoading?: boolean
   }
 }

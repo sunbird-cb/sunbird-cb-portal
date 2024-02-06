@@ -52,6 +52,7 @@ const endpoint = {
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   CREATE_USER_API: `${PROXY_CREATE_V8}/discussion/user/v1/create`,
+  FIRST_LOGIN_API: '/apis/proxies/v8/login/entry',
 }
 
 @Injectable({
@@ -159,6 +160,8 @@ export class InitService {
     })
     // this.logger.removeConsoleAccess()
     await this.fetchDefaultConfig()
+    await this.profileNudgeConfig()
+    await this.themeOverrideConfig()
     // const authenticated = await this.authSvc.initAuth()
     // if (!authenticated) {
     //   this.settingsSvc.initializePrefChanges(environment.production)
@@ -217,6 +220,9 @@ export class InitService {
     //   .catch(() => {
     //     // throw new DataResponseError('COOKIE_SET_FAILURE')
     //   })
+    if (!window.location.href.includes('/public/')) {
+      this.logFirstLogin()
+    }
     return true
   }
   async initFeatured() {
@@ -300,6 +306,22 @@ export class InitService {
     return publicConfig
   }
 
+  private async profileNudgeConfig(): Promise<NsInstanceConfig.IConfig> {
+    const publicConfig: NsInstanceConfig.IConfig = await this.http
+      .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/profile-nudge.json`)
+      .toPromise()
+    this.configSvc.profileTimelyNudges = publicConfig.profileTimelyNudges
+    return publicConfig
+  }
+
+  private async themeOverrideConfig(): Promise<NsInstanceConfig.IConfig> {
+    const publicConfig: NsInstanceConfig.IConfig = await this.http
+      .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/theme-override-config.json`)
+      .toPromise()
+      this.configSvc.overrideThemeChanges = publicConfig.overrideThemeChanges
+    return publicConfig
+  }
+
   get locale(): string {
     return this.baseHref && this.baseHref.replace(/\//g, '')
       ? this.baseHref.replace(/\//g, '')
@@ -323,6 +345,16 @@ export class InitService {
       localStorage.removeItem('telemetrySessionId')
     }
     localStorage.setItem('telemetrySessionId', uuid())
+  }
+
+  private logFirstLogin() {
+    if (!localStorage.getItem('firsLogin')) {
+      this.http.get<any>(endpoint.FIRST_LOGIN_API).pipe(map((res: any) => {
+        if (res && res.result) {
+          localStorage.setItem('firsLogin', 'true')
+        }
+      })).toPromise()
+    }
   }
   private async fetchStartUpDetails(): Promise<any> {
     // const userRoles: string[] = []

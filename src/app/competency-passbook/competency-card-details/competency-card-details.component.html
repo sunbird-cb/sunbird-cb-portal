@@ -1,0 +1,113 @@
+<div class="flex flex-col gap-8 mobile-container">
+    <!-- Breadcrumbs -->
+    <div class="flex flex-row gap-1 items-center">
+        <div class="ws-mat-default-text font-semibold cursor-pointer" [routerLink]="['/page/competency-passbook/list']">Passbook list</div>
+        <mat-icon>navigate_next</mat-icon>
+        <div class="">Passbook details</div>
+    </div>
+
+    <div class="flex flex-col gap-5">
+        <div class="flex flex-row items-center">
+            <div class="flex-1">
+                <div class="flex flex-col gap-2 justify-center">
+                    <div class="text-2xl font-semibold header text-primary">{{ themeDetails?.competencyTheme }}</div>
+                    <div class="text-sm" *ngIf="updatedTime">Last updated on {{ updatedTime | date: 'MMM yyyy' }} </div>
+                </div>
+            </div>
+            <div class="flex justify-center items-center">
+                <img src="assets/icons/competency/{{ (themeDetails?.competencyArea.toLowerCase() === 'behavioral' ? 'behavioural' :  themeDetails?.competencyArea.toLowerCase()) }}-light.svg" class="stamp-img" alt="{{ themeDetails?.competencyArea.toLowerCase() }} image" />
+            </div>
+        </div>
+
+        <div class="chips-container">
+            <div class="flex flex-col gap-3">
+                <div class="text-base font-semibold">Competency sub-theme ({{ themeDetails?.subTheme?.length }})</div>
+                <div class="flex flex-wrap gap-3">
+                    <div class="flex items-center text-center" *ngIf="!themeDetails?.subTheme || !themeDetails?.subTheme?.length" >No Sub theme data found!</div>
+                    <ng-container *ngFor="let chip of themeDetails?.subTheme; let i = index">
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': ((isMobile) ? i > 2 : i > 9) && !viewMoreST}">
+                            {{ chip }}
+                        </div>
+                    </ng-container>
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="((isMobile) ? themeDetails?.subTheme?.length > 3 : themeDetails?.subTheme?.length > 10 )  && !viewMoreST" (click)="viewMoreST = !viewMoreST">
+                        View more
+                    </div>
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="viewMoreST" (click)="viewMoreST = !viewMoreST">
+                        View less
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-5">
+        <div class="text-base font-semibold">Associated Certificates 
+            <span *ngIf="certificateData?.length">({{ certificateData?.length }})</span>
+        </div>
+
+        <div class="flex flex-wrap gap-6">
+            <ng-container *ngIf="!certificateData || !certificateData?.length">
+                <div class="p-12 no-data-div rounded-md">
+                    <div class="flex flex-col justify-center items-center gap-2">
+                        <div class="text-lg font-semibold">No Certificates found!</div>
+                        <div class="text-base text-center">No certificates found associated with this competency theme</div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="flex flex-col certificate-container" *ngFor="let eachCert of certificateData; let i = index">
+                <div class="certificate-card">
+                    <div class="flex flex-col certificate-info p-4 gap-3">
+                        <div class="flex flex-row">
+                            <div class="flex-1">
+                                <div class="text-base font-semibold cursor-pointer" (click)="handleNavigate(eachCert)" >{{ eachCert?.courseName }}</div>
+                                <div class="text-xs font-light" *ngIf="eachCert?.identifier" >Issued on {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
+                            </div>
+                            <div class="flex justify-center">
+                                <ng-container *ngIf="eachCert?.loading">
+                                    <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'32px'" [height]="'32px'"></ws-widget-skeleton-loader>
+                                </ng-container>
+                                <ng-container *ngIf="!eachCert?.loading && !eachCert.error && eachCert?.identifier">
+                                    <mat-icon class="icon cursor-pointer" (click)="handleDownloadCertificatePDF(eachCert?.printURI)" >arrow_downward</mat-icon>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="flex justify-center">
+                            <ng-container *ngIf="eachCert?.loading">
+                                <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'280px'" [height]="'160px'"></ws-widget-skeleton-loader>
+                            </ng-container>
+                            <ng-container *ngIf="!eachCert?.loading">
+                                <ng-container *ngIf="!eachCert.error && eachCert?.identifier">
+                                    <div class="flex justify-center items-center img-div">
+                                        <img [src]="eachCert?.printURI | pipeSafeSanitizer: 'url'" alt="{{ eachCert?.courseName }} certificate" />
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="eachCert?.error || !eachCert?.identifier">
+                                    <div class="flex justify-center items-center img-div error-img-div">
+                                        <div class="no-certificate-found mat-subheading-1">
+                                            {{ eachCert?.error || 'No certificate found for this course' }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="chips-card flex flex-wrap gap-3">
+                    <ng-container *ngFor="let subTheme of themeDetails.courseSubThemes[i]; let j = index">
+                        <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': (j > 1 && !eachCert?.viewMore), 'chip-ellipsis': !eachCert?.viewMore && themeDetails.courseSubThemes[i]?.length > 1 }" [title]="subTheme" >
+                            {{ subTheme }}
+                        </div>
+                    </ng-container>
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="themeDetails.courseSubThemes[i]?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
+                        View more
+                    </div>
+                    <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="eachCert?.viewMore"
+                        (click)="handleViewMore(eachCert, 'less')">
+                        View less
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

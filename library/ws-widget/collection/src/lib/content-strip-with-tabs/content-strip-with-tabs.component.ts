@@ -19,6 +19,8 @@ import { environment } from 'src/environments/environment'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
+import { NsCardContent } from '../card-content-v2/card-content-v2.model'
+import { ITodayEvents } from '@ws/app/src/lib/routes/events/models/event'
 
 interface IStripUnitContentData {
   key: string
@@ -35,6 +37,7 @@ interface IStripUnitContentData {
     showNavs: boolean,
     showDots: boolean,
     maxWidgets?: number
+    cerificateCardMargin?: boolean
   },
   tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
   stripName?: string
@@ -80,6 +83,8 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   environment!: any
   changeEventSubscription: Subscription | null = null
   defaultMaxWidgets = 12
+  enrollInterval: any
+  todaysEvents: any = []
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -206,31 +211,31 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     return data.widgets ? data.widgets.length : 0
   }
   getLength(data: IStripUnitContentData) {
-   if (!data.tabs || !data.tabs.length) {
-     return data.widgets ? data.widgets.length : 0
-   }  {
-    // if tabs are there check if each tab has widgets and get the tab with max widgets
-    const tabWithMaxWidgets = data.tabs.reduce(
-      (prev, current) => {
-        if (!prev.widgets && !current.widgets) {
+    if (!data.tabs || !data.tabs.length) {
+      return data.widgets ? data.widgets.length : 0
+    } {
+      // if tabs are there check if each tab has widgets and get the tab with max widgets
+      const tabWithMaxWidgets = data.tabs.reduce(
+        (prev, current) => {
+          if (!prev.widgets && !current.widgets) {
+            return current
+          }
+          if (prev.widgets && current.widgets) {
+            return (prev.widgets.length > current.widgets.length) ? prev : current
+          }
+          if (current.widgets && !prev.widgets) {
+            return current
+          }
+          if (!current.widgets && prev.widgets) {
+            return prev
+          }
           return current
-        }
-        if (prev.widgets && current.widgets) {
-          return (prev.widgets.length > current.widgets.length) ? prev : current
-        }
-        if (current.widgets && !prev.widgets) {
-          return current
-        }
-        if (!current.widgets && prev.widgets) {
-          return prev
-        }
-        return current
-        // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
-        // tslint:disable-next-line: align
-      }, data.tabs[0])
-    // if tabs has atleast 1 widgets then strip will show or else not
-    return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
-   }
+          // return (prev.widgets && current.widgets && (prev.widgets.length > current.widgets.length) ) ? prev : current
+          // tslint:disable-next-line: align
+        }, data.tabs[0])
+      // if tabs has atleast 1 widgets then strip will show or else not
+      return tabWithMaxWidgets.widgets ? tabWithMaxWidgets.widgets.length : 0
+    }
   }
 
   private getFiltersFromArray(v6filters: any) {
@@ -276,11 +281,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     ) {
       filters['organisation'] = userData && userData.rootOrgId
 
-    if (filters && filters.hasOwnProperty('designation')) {
-      filters['designation'] = userData.professionalDetails.length > 0 ?
-       userData.professionalDetails[0].designation : ''
+      if (filters && filters.hasOwnProperty('designation')) {
+        filters['designation'] = userData.professionalDetails.length > 0 ?
+          userData.professionalDetails[0].designation : ''
+      }
     }
-  }
     return filters
   }
 
@@ -294,6 +299,10 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     this.fetchFromEnrollmentList(strip, calculateParentStatus)
     this.fetchFromSearchV6(strip, calculateParentStatus)
     this.fetchFromTrendingContent(strip, calculateParentStatus)
+    this.fetchAllCbpPlans(strip, calculateParentStatus)
+    // this.enrollInterval = setInterval(() => {
+    //   this.fetchAllCbpPlans(strip, calculateParentStatus)
+    // },                                1000)
   }
 
   fetchFromEnrollmentList(strip: NsContentStripWithTabs.IContentStripUnit, calculateParentStatus = true) {
@@ -466,13 +475,24 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           // console.log('calling  after - response, ', response)
           if (response && response.results) {
             // console.log('calling  after-- ')
-            this.processStrip(
-              strip,
-              this.transformContentsToWidgets(response.results.result.content, strip),
-              'done',
-              calculateParentStatus,
-              response.viewMoreUrl,
-            )
+            if (response.results.result.content) {
+              this.processStrip(
+                strip,
+                this.transformContentsToWidgets(response.results.result.content, strip),
+                'done',
+                calculateParentStatus,
+                response.viewMoreUrl,
+              )
+            } else if (response.results.result.Event) {
+              this.processStrip(
+                strip,
+                this.transformEventsToWidgets(response.results.result.Event, strip),
+                'done',
+                calculateParentStatus,
+                response.viewMoreUrl,
+              )
+            }
+
           } else {
             this.processStrip(strip, [], 'error', calculateParentStatus, null)
           }
@@ -566,7 +586,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         try {
           const response = await this.trendingSearchRequest(strip, strip.request, calculateParentStatus)
           if (response && response.results && response.results.response) {
-              const content = response.results.response[strip.request.trendingSearch.responseKey] || []
+            const content = response.results.response[strip.request.trendingSearch.responseKey] || []
             this.processStrip(
               strip,
               this.transformContentsToWidgets(content, strip),
@@ -664,7 +684,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     strip: NsContentStripWithTabs.IContentStripUnit,
   ) {
     return (contents || []).map((content, idx) => (
-      content ?  {
+      content ? {
         widgetType: 'card',
         widgetSubType: 'cardContent',
         widgetHostClass: 'mb-2',
@@ -687,6 +707,32 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     ))
   }
 
+  private transformEventsToWidgets(
+    contents: ITodayEvents[],
+    strip: NsContentStripWithTabs.IContentStripUnit,
+  ) {
+    this.eventSvc.setEventListData(contents)
+    return (this.eventSvc.todaysEvents || []).map((content: any, idx: any) => (content ? {
+      widgetType: 'card',
+      widgetSubType: 'eventHubCard',
+      widgetHostClass: 'mb-2',
+      widgetData: {
+        content,
+        cardSubType: strip.stripConfig && strip.stripConfig.cardSubType,
+        cardCustomeClass: strip.customeClass ? strip.customeClass : '',
+        context: { pageSection: strip.key, position: idx },
+        intranetMode: strip.stripConfig && strip.stripConfig.intranetMode,
+        deletedMode: strip.stripConfig && strip.stripConfig.deletedMode,
+        contentTags: strip.stripConfig && strip.stripConfig.contentTags,
+      },
+    } : {
+      widgetType: 'card',
+      widgetSubType: 'eventHubCard',
+      widgetHostClass: 'mb-2',
+      widgetData: {},
+    }
+    ))
+  }
   private transformSkeletonToWidgets(
     strip: any
   ) {
@@ -799,6 +845,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
           Object.keys(strip.request.searchRegionRecommendation).length) ||
         (strip.request.searchV6 && Object.keys(strip.request.searchV6).length) ||
         (strip.request.enrollmentList && Object.keys(strip.request.enrollmentList).length) ||
+        (strip.request.cbpList && Object.keys(strip.request.cbpList).length) ||
         (strip.request.trendingSearch && Object.keys(strip.request.trendingSearch).length)
       )
     ) {
@@ -808,6 +855,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   }
 
   public tabClicked(tabEvent: MatTabChangeEvent, stripMap: IStripUnitContentData, stripKey: string) {
+    if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+      stripMap.tabs[tabEvent.index].fetchTabStatus = 'inprogress'
+      stripMap.tabs[tabEvent.index]['tabLoading'] = true
+      stripMap.showOnLoader = true
+    }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
@@ -816,7 +868,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
       data,
     )
-    const currentTabFromMap = stripMap.tabs && stripMap.tabs[tabEvent.index]
+    const currentTabFromMap: any = stripMap.tabs && stripMap.tabs[tabEvent.index]
     const currentStrip = this.widgetData.strips.find(s => s.key === stripKey)
     if (this.stripsResultDataMap[stripKey] && currentTabFromMap) {
       this.stripsResultDataMap[stripKey].viewMoreUrl.queryParams = {
@@ -833,8 +885,18 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
         } else if (currentTabFromMap.request.trendingSearch) {
           this.getTabDataByNewReqTrending(currentStrip, tabEvent.index, currentTabFromMap, true)
         }
+        if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+          stripMap.tabs[tabEvent.index]['tabLoading'] = false
+        }
       } else {
         this.getTabDataByfilter(currentStrip, currentTabFromMap, true)
+        setTimeout(() => {
+          if (stripMap && stripMap.tabs && stripMap.tabs[tabEvent.index]) {
+              stripMap.tabs[tabEvent.index]['tabLoading'] = false
+              stripMap.tabs[tabEvent.index].fetchTabStatus = 'done'
+              stripMap.showOnLoader = false
+          }
+        },         200)
       }
     }
   }
@@ -935,4 +997,160 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // TODO: Write logic for individual filter if passed in config
     // add switch case based on config key passed
   }
+
+  async fetchAllCbpPlans(strip: any, calculateParentStatus = true) {
+
+    if (strip.request && strip.request.cbpList && Object.keys(strip.request.cbpList).length) {
+
+      let courses: NsContent.IContent[]
+      let tabResults: any[] = []
+      const response = await this.userSvc.fetchCbpPlanList().toPromise()
+      if (response) {
+            courses = response
+            if (strip.tabs && strip.tabs.length) {
+              tabResults = this.splitCbpTabsData(courses, strip)
+              await this.processStrip(
+                strip,
+                this.transformContentsToWidgets(courses, strip),
+                'done',
+                calculateParentStatus,
+                '',
+                tabResults
+              )
+            } else {
+              this.processStrip(
+                strip,
+                this.transformContentsToWidgets(courses, strip),
+                'done',
+                calculateParentStatus,
+                'viewMoreUrl',
+              )
+            }
+      }
+      // this.userSvc.fetchCbpPlanList().subscribe( async  (res: any) => {
+      //   if (res) {
+      //     console.log(res,'===============================>')
+      //     courses = res
+      //     if (strip.tabs && strip.tabs.length) {
+      //       tabResults = this.splitCbpTabsData(courses, strip)
+      //       await this.processStrip(
+      //         strip,
+      //         this.transformContentsToWidgets(courses, strip),
+      //         'done',
+      //         calculateParentStatus,
+      //         '',
+      //         tabResults
+      //       )
+      //     } else {
+      //       this.processStrip(
+      //         strip,
+      //         this.transformContentsToWidgets(courses, strip),
+      //         'done',
+      //         calculateParentStatus,
+      //         'viewMoreUrl',
+      //       )
+      //     }
+      //   }
+      // },                                        (_err: any) => {
+
+      // })
+
+      clearInterval(this.enrollInterval)
+    }
+  }
+  splitCbpTabsData(contentNew: NsContent.IContent[], strip: NsContentStripWithTabs.IContentStripUnit) {
+    const tabResults: any[] = []
+    const splitData = this.getTabsList(
+      contentNew,
+      strip,
+    )
+    if (strip.tabs && strip.tabs.length) {
+      for (let i = 0; i < strip.tabs.length; i += 1) {
+        if (strip.tabs[i]) {
+          tabResults.push(
+            {
+              ...strip.tabs[i],
+              fetchTabStatus: 'done',
+              ...(splitData.find(itmInner => {
+                if (strip.tabs && strip.tabs[i] && itmInner.value === strip.tabs[i].value) {
+                  return itmInner
+                }
+                return undefined
+              })),
+            }
+          )
+        }
+      }
+    }
+    return tabResults
+  }
+
+  getTabsList(array: NsContent.IContent[],
+              strip: NsContentStripWithTabs.IContentStripUnit) {
+    let all: any[] = []
+    let upcoming: any[] = []
+    let overdue: any[] = []
+    array.forEach((e: any) => {
+      all.push(e)
+      if (e.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        overdue.push(e)
+      } else if (e.planDuration === NsCardContent.ACBPConst.UPCOMING) {
+        upcoming.push(e)
+      }
+    })
+    const allCompleted = all.filter((allData: any) => allData.contentStatus === 2)
+    let allInCompleted = all.filter((allData: any) => allData.contentStatus < 2)
+
+    let allCompletedOverDue = allCompleted.filter((allData: any) => allData.planDuration === NsCardContent.ACBPConst.OVERDUE)
+    const allCompletedAll = allCompleted.filter((allData: any) =>  allData.planDuration !== NsCardContent.ACBPConst.OVERDUE)
+
+    allCompletedOverDue = allCompletedOverDue.sort((a: any, b: any): any => {
+      if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        return  firstDate > secondDate  ? -1 : 1
+      }
+    })
+
+    allInCompleted = allInCompleted.sort((a: any, b: any): any => {
+      if (a.planDuration === NsCardContent.ACBPConst.OVERDUE && b.planDuration === NsCardContent.ACBPConst.OVERDUE) {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        return  firstDate > secondDate  ? -1 : 1
+      }
+    })
+
+    all = [...allInCompleted, ...allCompletedAll, ...allCompletedOverDue]
+
+    overdue = overdue.filter((data: any): any => {
+      return data.contentStatus < 2
+    })
+
+    overdue = overdue.sort((a: any, b: any): any => {
+        const firstDate: any = new Date(a.endDate)
+        const secondDate: any = new Date(b.endDate)
+        return  firstDate > secondDate  ? -1 : 1
+    })
+
+    upcoming = upcoming.filter((data: any): any => {
+      return data.contentStatus < 2
+    })
+    // this.getSelectedIndex(1)
+    return [
+    { value: 'all', widgets: this.transformContentsToWidgets(all, strip) },
+    { value: 'upcoming', widgets: this.transformContentsToWidgets(upcoming, strip) },
+    { value: 'overdue', widgets: this.transformContentsToWidgets(overdue, strip) }]
+  }
+
+  getSelectedIndex(stripsResultDataMap: any, key: any): number {
+    let returnValue = 0
+    if (key === 'cbpPlan') {
+      if (stripsResultDataMap.tabs.length) {
+        const data = stripsResultDataMap.tabs.filter((ele: any) => ele.value === 'upcoming')
+        returnValue = data[0].widgets && data[0].widgets.length > 0 ? 1 : 0
+      }
+    }
+    return returnValue
+  }
+
 }

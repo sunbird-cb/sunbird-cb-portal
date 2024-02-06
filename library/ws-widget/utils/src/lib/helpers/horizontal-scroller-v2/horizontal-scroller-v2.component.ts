@@ -21,6 +21,7 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
   @Input() sliderConfig = {
     showNavs: true,
     showDots: true,
+    cerificateCardMargin: false,
   }
   @Output()
   loadNext = new EventEmitter()
@@ -169,7 +170,8 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
           const totalCardsLength = cardWidth * this.widgetsLength
             if (totalCardsLength > scrollerWidth) {
               arrLength = (scrollerWidth / cardWidth)
-              this.defaultMaxWidgets = this.widgetsLength === this.defaultMaxWidgets ? this.defaultMaxWidgets : this.widgetsLength
+              this.defaultMaxWidgets = this.defaultMaxWidgets ?  this.widgetsLength < this.defaultMaxWidgets ?
+               this.widgetsLength : this.defaultMaxWidgets : this.defaultMaxWidgets
               arrLength = this.defaultMaxWidgets / arrLength
               for (let i = 0; i < arrLength; i += 1) {
                 this.bottomDotsArray.push(i)

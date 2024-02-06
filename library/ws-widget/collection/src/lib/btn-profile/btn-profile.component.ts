@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig, EventService, WsEvents } from '@sunbird-cb/utils'
 import { IBtnAppsConfig } from '../btn-apps/btn-apps.model'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
@@ -52,7 +52,8 @@ export class BtnProfileComponent extends WidgetBaseComponent
     private dialog: MatDialog,
     private accessService: AccessControlService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private events: EventService
   ) {
     super()
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
@@ -193,5 +194,22 @@ export class BtnProfileComponent extends WidgetBaseComponent
   redirectToMyLearning() {
     // /app/seeAll?key=continueLearning
     this.router.navigate(['/app/seeAll'], { queryParams: { key: 'continueLearning' } })
+  }
+
+  handleRedirectToCompetencyPassbook() {
+    this.router.navigate(['/page/competency-passbook/list'])
+  }
+
+  raiseTelemetry(nudgename: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${nudgename}-nudge`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME,
+      }
+    )
   }
 }

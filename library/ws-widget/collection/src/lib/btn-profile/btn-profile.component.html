@@ -44,7 +44,7 @@
   </section> -->
 
   <section class="padding-s border-bottom">
-    <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile">
+    <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile" (click)="raiseTelemetry('profile')">
       <div class="float-left">
         <ws-widget-avatar-photo [name]="getGivenName" [size]="'profile-round-m'" [photoUrl]="profileImage"></ws-widget-avatar-photo>
         <span *ngIf="verifiedBadge" class="profile-badge">  
@@ -87,6 +87,9 @@
     <a mat-menu-item role="link" (click)="redirectToMyLearning()" class="app-features flex items-center">
       <!-- <mat-icon>settings</mat-icon> -->
       <span i18n>My Learning</span>
+    </a>
+    <a mat-menu-item role="link" (click)="handleRedirectToCompetencyPassbook()" class="app-features flex items-center">
+      <span i18n>Learning History</span>
     </a>
     <a mat-menu-item role="link" routerLink="/app/profile/settings" class="all-features flex items-center">
       <!-- <mat-icon>settings</mat-icon> -->

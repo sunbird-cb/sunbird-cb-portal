@@ -1,7 +1,6 @@
 <div class="flex flex-4 flex-column" id="activityTab">
   <mat-card class="flex-custom" [attr.id]="tabsData && tabsData[0] && tabsData[0].key">
     <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile.personalDetails">
-
       <div class="flex flex-1 flex-row-reverse absolute right-0 profile-edit-icon">
         <div *ngIf="
             portalProfile.id === currentUser?.userId ||
@@ -13,15 +12,15 @@
         </div>
       </div>
       <div mat-card-avatar class="example-header-image">
-        <ng-container *ngIf="portalProfile.personalDetails?.firstname" ; else elseFirstName>
+        <ng-container *ngIf="portalProfile?.personalDetails?.firstname" ; else elseFirstName>
           <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null"
-            [name]="portalProfile.personalDetails.firstname" size="xxl-s">
+            [name]="portalProfile?.personalDetails?.firstname" size="xxl-s">
           </ws-widget-avatar-photo>
         </ng-container>
         <ng-template #elseFirstName>
-          <ng-container *ngIf="portalProfile.personalDetails.firstName">
+          <ng-container *ngIf="portalProfile?.personalDetails?.firstName">
             <ws-widget-avatar-photo [photoUrl]="portalProfile?.profileImageUrl || null" [name]="
-                portalProfile.personalDetails.firstName" size="xxl-s">
+                portalProfile?.personalDetails?.firstName" size="xxl-s">
             </ws-widget-avatar-photo>
           </ng-container>
         </ng-template>
@@ -29,9 +28,9 @@
       <div class="block md:hidden">
         <div class="mb-8">
           <div class="flex flex-4 justify-center">
-            <ng-container *ngIf="portalProfile.personalDetails.firstname" ; else elseFirstNameIcon>
+            <ng-container *ngIf="portalProfile?.personalDetails?.firstname; else elseFirstNameIcon">
               <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstname 
+              portalProfile?.personalDetails?.firstname
             ">
                 <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
                     src="fusion-assets/images/profile-badge.png" height="18">
@@ -39,9 +38,9 @@
               </mat-card-title>
             </ng-container>
             <ng-template #elseFirstNameIcon>
-              <ng-container *ngIf="portalProfile.personalDetails.firstName">
+              <ng-container *ngIf="portalProfile?.personalDetails?.firstName">
                 <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-                  portalProfile.personalDetails.firstName 
+                  portalProfile?.personalDetails?.firstName
                 ">
                   <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
                       src="fusion-assets/images/profile-badge.png" height="18">
@@ -75,17 +74,14 @@
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
         </mat-card-subtitle>
-        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
+        <!-- <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.officialPostalAddress }}
-        </mat-card-subtitle>
+        </mat-card-subtitle> -->
 
-        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
-          {{ portalProfile?.additionalProperties?.externalSystem }}
-        </mat-card-subtitle>
-
-        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
-          {{ portalProfile?.additionalProperties?.externalSystemId }}
-        </mat-card-subtitle>
+        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label
+        *ngIf="portalProfile?.additionalProperties?.externalSystem === 'DoPT eHRMS'">
+        eHRMS Id - {{ portalProfile?.additionalProperties?.externalSystemId }}
+      </mat-card-subtitle>
         <!-- <mat-card-subtitle>{{discussProfileData.email}}</mat-card-subtitle> -->
         <ng-container>
           <div class="flex flex-1 custom margin-0 margin-top-m bottom-fix mob" role="link" tabindex="0">
@@ -114,9 +110,9 @@
       <div class="flex-1 hidden md:block">
         <div class="flex flex-1">
           <div class="flex flex-4">
-            <ng-container *ngIf="portalProfile.personalDetails.firstname" ; else elseFirstNameIcon>
+            <ng-container *ngIf="portalProfile?.personalDetails?.firstname; else elseFirstNameIcon">
               <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-              portalProfile.personalDetails.firstname 
+              portalProfile?.personalDetails?.firstname
             ">
                 <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
                     src="fusion-assets/images/profile-badge.png" height="18">
@@ -124,9 +120,9 @@
               </mat-card-title>
             </ng-container>
             <ng-template #elseFirstNameIcon>
-              <ng-container *ngIf="portalProfile.personalDetails.firstName">
+              <ng-container *ngIf="portalProfile?.personalDetails?.firstName">
                 <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2" [innerHTML]="
-                  portalProfile.personalDetails.firstName 
+                  portalProfile?.personalDetails?.firstName
                 ">
                   <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
                       src="fusion-assets/images/profile-badge.png" height="18">
@@ -160,9 +156,9 @@
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
         </mat-card-subtitle>
-        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
+        <!-- <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.officialPostalAddress }}
-        </mat-card-subtitle>
+        </mat-card-subtitle> -->
 
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label
           *ngIf="portalProfile?.additionalProperties?.externalSystem === 'DoPT eHRMS'">
@@ -172,6 +168,14 @@
         <ng-container>
           <div class="flex flex-1 custom margin-0 margin-top-m bottom-fix mob" role="link" tabindex="0">
             <div class="flex flex-1">
+              <span class="flex margin-right-l mobile">
+                <span class="ws-mat-default-text">
+                  <img class="karmapoints-icon" alt="karma points" src="/assets/icons/karma-point-logo.jpg">
+                </span>
+                <span class="ws-mat-default-text">
+                  {{ countdata }}</span>
+                <span class="pad-4"> Karma points</span>
+              </span>
               <span class="flex margin-right-l mobile">
                 <span class="ws-mat-default-text">{{
                   connectionRequests?.length

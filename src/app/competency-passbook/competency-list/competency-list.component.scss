@@ -1,0 +1,293 @@
+$text-primary: #1B4CA1;
+
+/************ Common CSS ***************/
+.text-primary {
+    color: $text-primary;
+}
+
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 112px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.highlightFilter {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.hide {
+    display: none;
+}
+
+.arrow-img {
+    margin-top: 2px;
+}
+
+.filter-dot {
+    background-color: #d13924;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    position: relative;
+    top: -6px;
+    right: -28px;
+}
+
+.passbook-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.mobile-right-container {
+    display: none;
+}
+
+$title-line-count: 2;
+.text-ellipsis {
+    white-space: initial;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+}
+
+.competency-name {
+    @extend .text-ellipsis;
+    @extend .mat-subheading-1;
+    min-height: $title-line-count * 24px;
+}
+
+// .competency-name {
+//     height: 44px;
+//     font-size: 14px;
+//     line-height: 21px;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     word-wrap: break-word;
+//     overflow: hidden;
+
+//     @extend .mat-subheading-1;
+// }
+
+@media screen and (max-width: 768px) {
+    .mobile-right-container {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
+    .passbook-container {
+        padding: 16px;
+    }
+}
+
+.left-container,
+.right-container {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+hr {
+    width: 100%;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
+}
+
+.error-div {
+    background-color: #FFF;
+    padding: 28px;
+    border-radius: 12px;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
+
+    .mat-subheading-1 {
+        margin-bottom: 0px;
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+        font-size: 28px;
+    }
+
+    .no-data {
+        color: red;
+    }
+}
+
+/************ Common CSS ***************/
+
+
+/************ Left Container CSS ***************/
+.left-container {
+    max-width: 384px;
+
+    .cp-container {
+        padding: 16px;
+        border-radius: 12px;
+        background-color: #1B4CA1;
+        color: #fff;
+
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 32px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+    }
+}
+
+.mobile-competency-card {
+    display: none;
+    border-top: 1px solid rgba($color: #FFFFFF, $alpha: 0.16);
+    padding: 16px;
+
+    .kpi-card {
+        color: #fff;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .left-container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .left-container {
+        .cp-container {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+    }
+
+    .competency-passbook-category {
+        display: none;
+    }
+
+    .mobile-competency-card {
+        display: block;
+    }
+}
+
+::ng-deep .mat-menu-panel {
+    min-width: 12em !important;
+    padding: 8px 0px !important;
+    border-radius: 12px;
+    margin-top: 4px;
+
+    .mat-menu-content {
+        padding-top: 0px !important;
+
+        button {
+            padding: 0 16px !important;
+        }
+    }
+}
+/************ Left Container CSS ***************/
+
+
+
+/************ Right Container CSS ***************/
+.mobile-right-container {
+    display: none;
+    margin-top: 24px;
+}
+
+.competency-passbook-theme {
+    width: 100%;
+    max-width: 384px;
+    height: 16px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: rgb(248, 184, 97);
+}
+
+.behavioral {
+    background-color: #F8B861;
+}
+
+.functional {
+    background-color: #E24577;
+}
+
+.domain {
+    background-color: #7B47A4;
+}
+
+.detail {
+    width: 100%;
+    max-width: 384px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 12px;
+    position: relative;
+    top: -8px;
+
+    .chip-container {
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+        .chip {
+            border: 1px solid $text-primary;
+            color: $text-primary;
+            line-height: 14px;
+        }
+    }
+}
+
+.competency-passbook-category {
+    width: 100%;
+    max-width: 352px;
+    background-color: rgb(23, 64, 135);
+    border-radius: 12px;
+    color: #fff;
+
+    .separator {
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.08);
+        margin: 16px 0;
+    }
+}
+
+::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}
+/************ Right Container CSS ***************/
+
+@media screen and (max-width: 768px) {
+    .left-container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .passbook-container {
+        flex-direction: column;
+    }
+
+    .right-container {
+        padding: 16px;
+        flex-direction: column;
+    }
+
+    .mobile-right-container {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .competency-passbook-theme, .detail {
+        min-width: 384px;
+    }
+}
+.text-color-white {
+    color: rgba(255, 255, 255, 0.95);
+}
+.secondary-title{
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}

@@ -95,6 +95,7 @@ import { SocialLinkComponent } from './component/social-link/social-link.compone
 import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
 import { AppLogoComponent } from './component/app-logo/app-logo.component';
 import { ProfileV3Module } from '@ws/app/src/lib/routes/profile-v3/profile-v3.module'
+import { NoDataComponent } from './component/no-data/no-data.component'
 
 
 @Injectable()
@@ -122,6 +123,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     LoginComponent,
     // AppNavBarComponent,
     AppPublicNavBarComponent,
+    NoDataComponent,
     TncComponent,
     AppIntroComponent,
     TncRendererComponent,
@@ -140,7 +142,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogBoxComponent,
     SocialLinkComponent,
     FooterSectionComponent,
-    AppLogoComponent,
+    AppLogoComponent
   ],
   imports: [
     FormsModule,

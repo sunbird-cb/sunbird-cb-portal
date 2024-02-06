@@ -21,6 +21,7 @@ import {
   MatProgressSpinnerModule,
   MatProgressBarModule,
   MatTabsModule,
+  MatTooltipModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -43,12 +44,14 @@ import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update
 import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
 import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module'
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module'
+import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profile-karmapoints.component'
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     ProfileViewComponent,
+    ProfileKarmapointsComponent,
     LeftMenuComponent,
     RightMenuComponent,
   ],
@@ -95,6 +98,7 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
     DiscussionsModule,
     RecentRequestsModule,
     PendingRequestModule,
+    MatTooltipModule,
     // ShareModule
   ],
   entryComponents: [

@@ -47,6 +47,12 @@ export class PipeContentRoutePipe implements PipeTransform {
         queryParams: this.getQueryParams(),
       }
     }
+    if (content.planType === 'cbPlan') {
+      return {
+        url: `${location}/toc/${content.identifier}/overview`,
+        queryParams: { planType: 'cbPlan', endDate: content.endDate },
+      }
+    }
     return {
       url: `${location}/toc/${content.identifier}/overview`,
       queryParams: this.getQueryParams(),

@@ -2,14 +2,16 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
+
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
   styleUrls: ['./app-nav-bar.component.scss'],
 })
 export class AppNavBarComponent implements OnInit, OnChanges {
+
   @Input() mode: 'top' | 'bottom' = 'top'
   @Input() headerFooterConfigData:any;
   // @Input()
@@ -47,13 +49,19 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   enrollInterval: any
   karmaPointLoading: boolean = true
   tooltipDelay: any = 1000
+  jan26Data: any
+  logoDisplayTime: any
+  janDataEnable:boolean = true
+  // defaultLogo: false
+  animationDuration: number | undefined
 
   constructor(
     private domSanitizer: DomSanitizer,
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
-    private router: Router
-    
+    private router: Router,
+    private events: EventService
+
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -71,9 +79,18 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    if (this.configSvc) {
+      this.jan26Data = this.configSvc.overrideThemeChanges
+      this.logoDisplayTime = this.jan26Data.desktop.logoDisplayTime
+      this.displayLogo()
+      setInterval(() => {
+        this.janDataEnable = true;
+        this.displayLogo()
+       }, this.logoDisplayTime);
+    }
+
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
     this.router.events.subscribe((event: any) => {
-
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event.url)
@@ -82,7 +99,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             let route = localStorage.getItem("activeRoute");
             this.activeRoute = route ? route.toLowerCase().toString() : '';
           }
-          
+
           if (event.url.includes('/page/home')) {
             this.activeRoute = 'home'
           } else if (event.url.includes('/page/explore')) {
@@ -93,8 +110,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             this.activeRoute = 'Career'
           } else if (event.url.includes('app/seeAll?key=continueLearning')) {
             this.activeRoute = 'my learnings'
-          } 
-
+          }
       }
     })
 
@@ -105,6 +121,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
       )
+
       this.appIconSecondary = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.appSecondary,
       )
@@ -133,7 +150,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.startTour()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
-    },                                1000)
+    },1000)
+  }
+
+  displayLogo() {
+    const animationDur = this.jan26Data.desktop.animationDuration
+    setTimeout(() =>{
+      this.janDataEnable = false;
+    }, animationDur);
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -271,7 +295,22 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     }
   }
 
+  viewKarmapoints() {
+    this.raiseTelemetry()
+    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
+  }
 
-  
- 
+  raiseTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'nav-karmapoints',
+        id: 'nav-karmapoints',
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
+    })
+  }
+
 }

@@ -1,0 +1,28 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+
+.karmapoints-panel {
+    text-align: left;
+    img {
+      vertical-align: middle !important;
+      width: 20px;
+      margin: 0 2px;
+    }
+    .mat-icon {
+      font-size: 14px;
+      height: 14px;
+      vertical-align: text-bottom;
+    }
+  }
+.karmapoints-panel-claim {
+  text-align: center;
+  color: white!important;
+  border-radius: 4px;
+  padding: 7px 0;
+  font-weight: bold;
+  background-color: #EF951E;
+  cursor: pointer;
+  border: none;
+}
+
+

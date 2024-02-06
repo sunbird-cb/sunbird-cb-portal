@@ -286,7 +286,7 @@
                             <!-- <ws-widget-user-image class="user-image" [imageType]="'user-photo'" [userName]="author.name || ''"
                                 [email]="author.email" [imageUrl]="author.photo || ''"></ws-widget-user-image> -->
                             <ws-widget-avatar-photo class="float-left margin-right-s" [randomColor]="true"
-                            [datalen]="1" 
+                            [datalen]="1"
                                 [size]="'round-m'" [photoUrl]="author.photo || ''" [name]="author.name" >
                             </ws-widget-avatar-photo>
                             <div class="">
@@ -303,7 +303,7 @@
                                     !cohortResults[cohortTypesEnum.AUTHORS].contents.length
                                     " class="text-center" i18n>
                                     None
-                                </h3> 
+                                </h3>
                                 <ng-container *ngFor="let cohort of cohortResults[cohortTypesEnum.AUTHORS].contents"
                                     [ngTemplateOutlet]="unitCohortNew1" [ngTemplateOutletContext]="{ user: cohort }">
                                 </ng-container>
@@ -321,7 +321,7 @@
                                 <ng-container *ngFor="let facilitator of checkForFacilitators">
                                     <div class="unit-cohort sm:pr-8 md:pr-10">
                                         <ws-widget-avatar-photo class="float-left margin-right-s " [randomColor]="true"
-                                        [datalen]="1" 
+                                        [datalen]="1"
                                         [size]="'round-m'" [photoUrl]="facilitator.photo || ''" [name]="facilitator.name">
                                         </ws-widget-avatar-photo>
                                         <div class="margin-left-xl">
@@ -336,7 +336,30 @@
                 </div>
             </section>
             <section id="competencies"
-                *ngIf="(content?.competencies_v3 && competencies.length) || (content?.competencies && competencies.length)">
+                *ngIf="content?.competencies_v5 && competencies.length">
+                <div class="fluid-width contacts-container mb-10">
+                    <div class="fixed-width flex flex-col flex-wrap">
+                        <h2 class="mat-toolbar contacts-head">Competencies</h2>
+                    </div>
+                    <div>
+                        <table class="compt-table width-1-1 text-left">
+                            <tr>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">Sub theme</th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">Theme</th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">Area</th>
+                            </tr>
+                            <tr *ngFor="let comp of competencies">
+                                <td class="padding-xs mat-body-1">{{comp.competencySubTheme}}</td>
+                                <td class="padding-xs mat-body-1">{{comp.competencyTheme}}</td>
+                                <td class="padding-xs mat-body-1">{{comp.competencyArea}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <!-- <section id="competencies"
+                *ngIf="((!content?.test_competencies_v4 && content?.competencies_v3) &&
+                    (competencies.length) || (content?.competencies && competencies.length))">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
                         <h2 class="mat-toolbar contacts-head">Competencies</h2>
@@ -354,7 +377,7 @@
                         </table>
                     </div>
                 </div>
-            </section>
+            </section> -->
             <section id="rating" *ngIf="!forPreview">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
@@ -401,19 +424,19 @@
                     </div>
 
                     <!-- <div class="rating-comments">
-                        <ng-container *ngFor="let c of ratingReviews| 
+                        <ng-container *ngFor="let c of ratingReviews|
                         pipeFilterV3:{ 'user_id': searchKey.value, 'review': searchKey.value } : false |
                         slice:0:ratingViewCount; let i= index; let last = last">
                             <ws-widget-card-rating-comment [review]="c"></ws-widget-card-rating-comment>
-    
-                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all"
                             *ngIf="ratingReviews?.length > 3 && ratingViewCount <=3 && i>=2 && last">
-                                <a mat-button class="padding-top-xs padding-bottom-xs w-full " 
+                                <a mat-button class="padding-top-xs padding-bottom-xs w-full "
                                 (click)="showALLReviews(ratingReviews?.length)">
                                     <span i18n>SEE ALL {{ratingReviews?.length}} REVIEWS</span>
                                 </a>
                             </div>
-                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all" 
+                            <div class="flex items-center justify-center mb-2 mt-8 ws-mat-accent-text view-all"
                             *ngIf="ratingReviews?.length > 3 && ratingViewCount > 3 && i>=2 && last">
                                 <a mat-button class="padding-top-xs padding-bottom-xs w-full " (click)="showALLReviews(3)">
                                     <span i18n>SEE LESS REVIEWS</span>
@@ -429,7 +452,7 @@
                         [fromRoot]="true"
                         [scrollWindow]="false"
                         (scrolled)="loadMore()">
-                            <ng-container *ngFor="let c of ratingReviews| 
+                            <ng-container *ngFor="let c of ratingReviews|
                             pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false; let i= index; let last = last">
                                 <ws-widget-card-rating-comment [review]="authReplies[c.userId]" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
                             </ng-container>
@@ -437,9 +460,9 @@
                         <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
                             <mat-spinner [diameter]="30"></mat-spinner>
                         </div>
-                        <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false)?.length <=0 
+                        <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false)?.length <=0
                         && (displayLoader  === false)" class="w-full text-left ws-mat-black60-text ">
-                            No reviews found! 
+                            No reviews found!
                          </h4>
                     </div>
                 </div>
@@ -456,7 +479,7 @@
             </section>
         </ng-template>
     </mat-tab>
-    
+
     <mat-tab label="Sessions" *ngIf="content?.children?.length && (content?.primaryCategory === primaryCategory.BLENDED_PROGRAM)">
         <ng-template matTabContent>
             <section id="content">
