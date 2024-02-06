@@ -171,8 +171,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   monthlyCapExceed = false
   isCompletedThisMonth = false
   @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
-  scrollLimit: number = 0;
-  rcElemBottomPos: number = 0
+  scrollLimit = 0
+  rcElemBottomPos = 0
   scrolled = false
 
   @HostListener('window:scroll', ['$event'])
@@ -184,7 +184,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.sticky = false
     }
 
-    
     if (this.scrollLimit) {
       if ((window.scrollY + this.rcElemBottomPos) >= this.scrollLimit) {
         this.rcElement.nativeElement.style.position = 'sticky'
@@ -230,9 +229,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
       // Present in app-toc-about.component
-      const ratingsDiv = document.getElementById('ratingsDiv') as any;
+      const ratingsDiv = document.getElementById('ratingsDiv') as any
       this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
-    });
+    })
   }
 
   ngOnInit() {
@@ -493,7 +492,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    this.rcElemBottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight;
+    this.rcElemBottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
   }
 
   handleBreadcrumbs() {

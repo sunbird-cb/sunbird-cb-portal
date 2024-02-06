@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { Subject } from 'rxjs'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 export class LoadCheckService {
-  private loadedSubject$ = new Subject<boolean>();
-  childComponentLoaded$ = this.loadedSubject$.asObservable();
+  private loadedSubject$ = new Subject<boolean>()
+  childComponentLoaded$ = this.loadedSubject$.asObservable()
 
   componentLoaded(isLoaded: boolean) {
-    this.loadedSubject$.next(isLoaded);
+    this.loadedSubject$.next(isLoaded)
   }
 }
