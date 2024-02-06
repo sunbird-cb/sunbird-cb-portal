@@ -82,6 +82,10 @@ export class TopRightNavBarComponent implements OnInit {
   selectLanguage(event: any) {
     this.selectedLanguage = event
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
-    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, this.configSvc.unMappedUser.id)
+    this.langtranslations.updatelanguageSelected(
+      true,
+      this.selectedLanguage,
+      this.configSvc.unMappedUser ? this.configSvc.unMappedUser.id : ''
+    )
   }
 }

@@ -39,12 +39,16 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   }
   constructor(private configSvc: ConfigurationsService,
               private activateRoute: ActivatedRoute, private langtranslations: MultilingualTranslationsService,
-              private translate: TranslateService) {
-      if (localStorage.getItem('websiteLanguage')) {
-        this.translate.setDefaultLang('en')
-        const lang = localStorage.getItem('websiteLanguage')!
-        this.translate.use(lang)
-      }
+              private translate: TranslateService, private multiLingualService: MultilingualTranslationsService) {
+                this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
+                  // tslint:disable
+                  console.log("daata -----------" , data)
+                  if (localStorage.getItem('websiteLanguage')) {
+                    this.translate.setDefaultLang('en')
+                    const lang = localStorage.getItem('websiteLanguage')!
+                    this.translate.use(lang)
+                  }
+                })
      }
 
   ngOnInit() {
