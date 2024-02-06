@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class EhrmsComponent implements OnInit {
   @Input() ehrmsData: any
+  ehrmsApiResponse:any
   getEhrmsForm: FormGroup
   constructor(
     private userProfileSvc: UserProfileService
@@ -47,15 +48,12 @@ export class EhrmsComponent implements OnInit {
   ngOnInit() {
     console.log('ehrmsData', this.ehrmsData)
     this.getEhrmsData()
-    this.patchEhrmsDetails()
     
   }
   getEhrmsData () {
-    // this.userProfileSvc.fetchEhrmsDetails().subscribe(data => {
-    this.userProfileSvc.fetchEhrmsDetails('connect.sid=s%3A7_84xcLeHOYC_JUCUM2LXecpNNm1VwAc.4aJ5W7noXPxlPk%2Bk97TugCqNa9l%2BOhIB9jWHku5c4vQ').subscribe(data => {
-    // this.userProfileSvc.fetchEhrmsDetails('e8f78f02-729c-4f84-86e4-9d6136b3e38c').subscribe(data => {
-      const res = data.result.response
-      console.log(res)
+    this.userProfileSvc.fetchEhrmsDetails().subscribe(data => {
+    this.ehrmsApiResponse = data.result.message[0]
+    this.patchEhrmsDetails()
     },
     (_err: any) => {
       })
@@ -63,35 +61,32 @@ export class EhrmsComponent implements OnInit {
 
   patchEhrmsDetails () {
     this.getEhrmsForm.patchValue({
-      // firstname: data.personalDetails.firstname,
-      // middlename: data.personalDetails.middlename,
-      // surname: data.personalDetails.surname,
-      ehrmsSalutation: new FormControl('', []),
-      ehrmsFirstname:new FormControl('', []),
-      ehrmsMiddlename: 'Datatata',
-      ehrmsLastname: new FormControl('', []),
-      ehrmsDob: new FormControl('', []),
-      ehrmsGender: new FormControl('', []),
-      ehrmsCategory: new FormControl('', []),
-      ehrmsDisabled: new FormControl('', []),
-      ehrmsMarital: new FormControl('', []),
-      ehrmsEmployeecode: new FormControl('', []),
-      ehrmsService: new FormControl('', []),
-      ehrmsDesignation: new FormControl('', []),
-      ehrmsMdo: new FormControl('', []),
-      ehrmsPosting: new FormControl('', []),
-      ehrmsEmailid: new FormControl('', []),
-      ehrmsMobile: new FormControl('', []),
-      ehrmsPresentadd1: new FormControl('', []),
-      ehrmsPresentadd2: new FormControl('', []),
-      ehrmsPresentstate: new FormControl('', []),
-      ehrmsPresentdistrict: new FormControl('', []),
-      ehrmsPresentpincode: new FormControl('', []),
-      ehrmsAddress1: new FormControl('', []),
-      ehrmsAddress2: new FormControl('', []),
-      ehrmsState: new FormControl('', []),
-      ehrmsDistrict: new FormControl('', []),
-      ehrmsPincode: new FormControl('', []),
+      ehrmsSalutation : this.ehrmsApiResponse,
+      ehrmsFirstname : this.ehrmsApiResponse,
+      ehrmsMiddlename: this.ehrmsApiResponse,
+      ehrmsLastname : this.ehrmsApiResponse,
+      ehrmsDob : this.ehrmsApiResponse.emp_dob.emp_dob,
+      ehrmsGender : this.ehrmsApiResponse.gender,
+      ehrmsCategory : this.ehrmsApiResponse.category,
+      ehrmsDisabled : this.ehrmsApiResponse.differently_abled,
+      ehrmsMarital : this.ehrmsApiResponse.marital_status,
+      ehrmsEmployeecode : this.ehrmsApiResponse,
+      ehrmsService : this.ehrmsApiResponse,
+      ehrmsDesignation : this.ehrmsApiResponse.designation,
+      ehrmsMdo : this.ehrmsApiResponse.mdo,
+      ehrmsPosting : this.ehrmsApiResponse.place_of_posting,
+      ehrmsEmailid : this.ehrmsApiResponse.emp_email,
+      ehrmsMobile : this.ehrmsApiResponse.emp_mobile,
+      ehrmsPresentadd1 : this.ehrmsApiResponse,
+      ehrmsPresentadd2 : this.ehrmsApiResponse,
+      ehrmsPresentstate : this.ehrmsApiResponse,
+      ehrmsPresentdistrict : this.ehrmsApiResponse,
+      ehrmsPresentpincode : this.ehrmsApiResponse,
+      ehrmsAddress1 : this.ehrmsApiResponse,
+      ehrmsAddress2 : this.ehrmsApiResponse,
+      ehrmsState : this.ehrmsApiResponse,
+      ehrmsDistrict : this.ehrmsApiResponse,
+      ehrmsPincode : this.ehrmsApiResponse,
     })
   }
 

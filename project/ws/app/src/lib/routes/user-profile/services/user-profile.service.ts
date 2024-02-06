@@ -100,17 +100,12 @@ export class UserProfileService {
     return this.http.post<any>(API_ENDPOINTS.getApprovalReqs, data)
   }
 
-  fetchEhrmsDetails( cookie :any) {
-    // fetchEhrmsDetails() {
-      let headers = new HttpHeaders({
-        'Cookie': cookie,
-        
-      })
+  fetchEhrmsDetails() {
     return this.http
-      .get(API_ENDPOINTS.ehrmsDataRequest, {headers})
+      .get(API_ENDPOINTS.ehrmsDataRequest)
       .pipe(
         map(
-          (data: any) => data.result.courses
+          (result: any) => result
         )
       )
   }
