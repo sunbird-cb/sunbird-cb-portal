@@ -23,9 +23,11 @@ export class AppEnrollmentResolverService
         }
         return  this.userSvc.fetchUserBatchList(userId).pipe(
             map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
+            // tslint: disable-next-line: align
                 tap((resolveData: any) => {
                     return of({ error: null, data: resolveData })
                 }),
+                // tslint: disable-next-line: align
                 catchError((error: any) => of({ error, data: null })),
             )
     }

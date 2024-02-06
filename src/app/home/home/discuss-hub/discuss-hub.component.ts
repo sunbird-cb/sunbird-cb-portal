@@ -8,18 +8,18 @@ import { Router } from '@angular/router'
 @Component({
   selector: 'ws-discuss-hub',
   templateUrl: './discuss-hub.component.html',
-  styleUrls: ['./discuss-hub.component.scss']
+  styleUrls: ['./discuss-hub.component.scss'],
 })
 
 export class DiscussHubComponent implements OnInit {
-
+  // tslint:disable-next-line:no-input-rename
   @Input('discussConfig') discussConfig: any
   userData: any
   discussion = {
     data: undefined,
     error: false,
     loadSkeleton: false,
-  };
+  }
 
   updatesPosts = {
     data: undefined,
@@ -36,13 +36,8 @@ export class DiscussHubComponent implements OnInit {
 
   ngOnInit() {
     this.userData = this.configService && this.configService.userProfile 
-    if (this.discussConfig.trendingDiscussions.active) {
-      this.fetchTrendingDiscussions()
-    }
-
-    if (this.discussConfig.updatePosts.active) {
-      this.fetchUpdatesOnPosts()
-    }
+    if (this.discussConfig.trendingDiscussions.active) { this.fetchTrendingDiscussions() }
+    if (this.discussConfig.updatePosts.active) { this.fetchUpdatesOnPosts() }
   }
 
   fetchTrendingDiscussions(): void {
@@ -53,7 +48,7 @@ export class DiscussHubComponent implements OnInit {
         if (res.topics && res.topics.length) {
           this.discussion.data = res.topics.sort((x: any, y: any) => {
             return y.timestamp - x.timestamp
-          });
+          })
         }
       },
       (error: HttpErrorResponse) => {
@@ -62,7 +57,7 @@ export class DiscussHubComponent implements OnInit {
           this.discussion.error = true
         }
       }
-    );
+    )
   }
 
   fetchUpdatesOnPosts(): void {
@@ -72,19 +67,19 @@ export class DiscussHubComponent implements OnInit {
         this.updatesPosts.loadSkeleton = false
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
           return y.timestamp - x.timestamp
-        });
+        })
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.filter((x: any) => {
-          if(x.upvotes > 0 || x.downvotes > 0){
+          if (x.upvotes > 0 || x.downvotes > 0) {
             return x
           }
-        });
+        })
       },
       (error: HttpErrorResponse) => {
-        if(!error.ok) {
+        if (!error.ok) {
           this.updatesPosts.loadSkeleton = false
           this.updatesPosts.error = true
         }
-    });
+    })
   }
 
   navigate() {

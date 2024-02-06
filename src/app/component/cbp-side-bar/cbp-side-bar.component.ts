@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 
 @Component({
   selector: 'ws-cbp-side-bar',
   templateUrl: './cbp-side-bar.component.html',
-  styleUrls: ['./cbp-side-bar.component.scss']
+  styleUrls: ['./cbp-side-bar.component.scss'],
 })
 export class CbpSideBarComponent implements OnInit {
 
@@ -11,7 +11,7 @@ export class CbpSideBarComponent implements OnInit {
   @Input() upcommingList: any
   @Input() overDueList: any
   @Input() cbpLoader: any
-  @Input() cbpOriginalData: any 
+  @Input() cbpOriginalData: any
   @Output()
   filterValueEmit = new EventEmitter()
 
@@ -19,7 +19,7 @@ export class CbpSideBarComponent implements OnInit {
 
   ngOnInit() {
   }
-  filterValueEmitMethod(event: any){
+  filterValueEmitMethod(event: any) {
     this.filterValueEmit.emit(event)
   }
 }

@@ -11,14 +11,14 @@ export class AppHierarchyResolverService
     Resolve<
     Observable<IResolveResponse<any>> | IResolveResponse<any>
     > {
-    constructor(private contentSvc:WidgetContentService) {}
+    constructor(private contentSvc: WidgetContentService) {}
 
     resolve(
         _route: ActivatedRouteSnapshot,
         _state: RouterStateSnapshot,
     ): Observable<IResolveResponse<any>> {
         const collectionId = _route.queryParams && _route.queryParams.collectionId || ''
-        const collectionType= _route.queryParams && _route.queryParams._collectionType || ''
+        const collectionType = _route.queryParams && _route.queryParams._collectionType || ''
         // tslint:disable-next-line
         // console.log("========> Before api call <===========", collectionId, collectionType)
         return this.contentSvc.fetchContent(collectionId, 'detail', [], collectionType).pipe(

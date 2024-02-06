@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service'
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 // tslint: disable
 import _ from 'lodash'
+// tslint: enable
 import { BtnSettingsService } from '@sunbird-cb/collection'
 import { MobileAppsService } from '../../services/mobile-apps.service'
-import { Router } from '@angular/router'
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
 }
@@ -21,7 +21,7 @@ const API_END_POINTS = {
 export class HomeComponent implements OnInit, AfterViewInit {
   widgetData = {}
   sliderData = {}
-  contentStripData:any = {}
+  contentStripData: any = {}
   discussStripData = {}
   networkStripData = {}
   carrierStripData = {}
@@ -30,39 +30,45 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isNudgeOpen = true
   currentPosition: any
   mobileTopHeaderVisibilityStatus: any = true
-  sectionList:any = []
+  sectionList: any = []
   enableLazyLoadingFlag = true
   isKPPanelenabled = false
   enrollData: any
   enrollInterval: any
   jan26Change: any
 
-  constructor( private activatedRoute:ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
     public btnSettingsSvc: BtnSettingsService,
-    private http: HttpClient, public mobileAppsService: MobileAppsService,
-    private router: Router ) { }
+    private http: HttpClient, 
+    public mobileAppsService: MobileAppsService,
+    private router: Router) { }
 
   ngOnInit() {
     if (this.configSvc) {
       this.jan26Change = this.configSvc.overrideThemeChanges
     }
-    this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
+    this.mobileAppsService.mobileTopHeaderVisibilityStatus.subscribe((status: any) => {
       this.mobileTopHeaderVisibilityStatus = status
     })
-    if(this.activatedRoute.snapshot.data.pageData) {
+    if (this.activatedRoute.snapshot.data.pageData) {
       this.homeConfig = this.activatedRoute.snapshot.data.pageData.data.homeConfig
     }
-    if(this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
+    if (this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
-      this.contentStripData = (this.contentStripData.homeStrips || []).sort((a:any, b:any) => a.order - b.order)
-      for( var i=0; i<this.contentStripData.length; i++ ) {
-        if(this.contentStripData[i] &&
+      // tslint:disable-next-line: prefer-template
+      this.contentStripData = (this.contentStripData.homeStrips || []).sort((a: any, b: any) => a.order - b.order)
+     
+      // tslint:disable-next-line
+      for(let i=0; i < this.contentStripData.length; i++ ) {
+        if (this.contentStripData[i] &&
           this.contentStripData[i]['strips'] &&
           this.contentStripData[i]['strips'][0] &&
           this.contentStripData[i]['strips'][0]['active']) {
-            let obj:any = {}
-            obj['section'] = 'section_'+i
+            const obj: any = {}
+            // tslint:disable-next-line: prefer-template
+            obj['section'] = 'section_' + i
             obj['isVisible'] = false
             this.sectionList.push(obj)
         }
@@ -80,7 +86,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           logo: 'forum',
           title: 'discuss',
           stripBackground: 'assets/instances/eagle/background/discuss.svg',
-          titleDescription:'"Trending Discussions',
+          titleDescription: '"Trending Discussions',
           stripConfig: {
             cardSubType: 'cardHomeDiscuss',
           },
@@ -94,10 +100,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
             api: {
               path: '/apis/proxies/v8/discussion/recent',
               queryParams: {},
-            }
-          }
-        }
-      ]
+            },
+          },
+        },
+      ],
     }
 
     this.networkStripData = {
@@ -121,11 +127,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
             api: {
               path: '/apis/protected/v8/connections/v2/connections/recommended/userDepartment',
               queryParams: '',
-            }
-          }
-        }
-      ]
-    };
+            },
+          },
+        },
+      ],
+    }
 
     this.carrierStripData = {
       widgets:
@@ -157,20 +163,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
                       api: {
                         path: '/apis/protected/v8/discussionHub/categories/1',
                         queryParams: {},
-                      }
-                    }
-                  }
-                ]
-              }
+                      },
+                    },
+                  },
+                ],
+              },
             }
           }
         ],
-    };
+    }
 
     this.sliderData = this.activatedRoute.snapshot.data.pageData.data.sliderData
-       this.sectionList.push({'section':'slider', 'isVisible': false})
-    this.sectionList.push({'section':'discuss', 'isVisible': false})
-    this.sectionList.push({'section':'network', 'isVisible': false})
+    this.sectionList.push({ section: 'slider', isVisible: false })
+    this.sectionList.push({ section: 'discuss', isVisible: false })
+    this.sectionList.push({ section: 'network', isVisible: false })
 
     this.handleUpdateMobileNudge()
     this.handleDefaultFontSetting()
@@ -181,18 +187,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    for(let i=0; i<this.sectionList.length;i++) {
-      if(this.sectionList[i]['section'] == 'section_0'
-      || this.sectionList[i]['section'] == 'section_1'
-      || this.sectionList[i]['section'] == 'section_2'
-      || this.sectionList[i]['section'] == 'section_3'
-      || this.sectionList[i]['section'] == 'section_4') {
-        this.sectionList[i]['isVisible'] = true;
+    // tslint:disable-next-line
+    for(let i = 0; i < this.sectionList.length; i++) {
+      // tslint:disable-next-line
+      if (this.sectionList[i]['section'] === 'section_0'
+      || this.sectionList[i]['section'] === 'section_1'
+      || this.sectionList[i]['section'] === 'section_2'
+      || this.sectionList[i]['section'] === 'section_3'
+      || this.sectionList[i]['section'] === 'section_4') {
+        this.sectionList[i]['isVisible'] = true
       }
     }
   }
 
-  getEnrollmentData(){
+  getEnrollmentData() {
     this.enrollData = localStorage.getItem('enrollmentData')
     if (this.enrollData) {
       this.enrollData = JSON.parse(this.enrollData)
@@ -212,10 +220,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // if (x.profileDetails.mandatoryFieldsExists) {
         //   this.isNudgeOpen = false
         // }
-        let profilePopUp = sessionStorage.getItem('hideUpdateProfilePopUp')
-        if(profilePopUp !== null){
+        const profilePopUp = sessionStorage.getItem('hideUpdateProfilePopUp')
+        if (profilePopUp !== null){
           this.isNudgeOpen = false
-        }else if (x && x.profileDetails && x.profileDetails.mandatoryFieldsExists) {
+        } else if (x && x.profileDetails && x.profileDetails.mandatoryFieldsExists) {
           this.isNudgeOpen = false
         }
         // if (x && x.profileDetails && x.profileDetails.personalDetails && x.profileDetails.personalDetails.phoneVerified) {
@@ -233,13 +241,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   handleDefaultFontSetting() {
-    let fontClass = localStorage.getItem('setting')
+    const fontClass = localStorage.getItem('setting')
     this.btnSettingsSvc.changeFont(fontClass)
   }
 
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
-    for(let i=0; i<this.sectionList.length;i++) {
+    // tslint:disable-next-line
+    for(let i = 0; i < this.sectionList.length; i++) {
+      // tslint:disable-next-line
       if(this.sectionList[i]['section'] !== 'section_0' &&
        this.sectionList[i]['section'] !== 'section_1' &&
        this.sectionList[i]['section'] !== 'section_2' &&
@@ -267,33 +277,35 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // // }
   }
 
-  checkSectionVisibility(className:string) {
-    var isVisible = false;
+  checkSectionVisibility(className: string) {
+    let isVisible = false
+    // tslint:disable-next-line
     if(className === 'section_0' ||
     className === 'section_1' ||
     className === 'section_2' ||
     className === 'section_3' ||
     className === 'section_4') {
-      isVisible = true;
-
+      isVisible = true
     } else {
       if(className !== 'section_0' &&
        className !== 'section_1' &&
        className !== 'section_2' &&
        className !== 'section_3' &&
        className !== 'section_4') {
-      for( var i=0; i<this.sectionList.length; i++ ) {
-        if(this.sectionList[i]['section'] === className) {
-          if(document.getElementsByClassName(this.sectionList[i]['section'])
+      // tslint:disable-next-line
+      for(let i = 0; i < this.sectionList.length; i++) {
+        if (this.sectionList[i]['section'] === className) {
+          if (document.getElementsByClassName(this.sectionList[i]['section'])
           && document.getElementsByClassName(this.sectionList[i]['section'])[0]
           && !this.sectionList[i]['isVisible']) {
-            var tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
-          var eleTop = tect.top
-          var eleBottom = tect.bottom
-          isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
-          this.sectionList[i]['isVisible'] = isVisible
-          break
-        }
+            const tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
+            const eleTop = tect.top
+            const eleBottom = tect.bottom
+            isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
+            this.sectionList[i]['isVisible'] = isVisible
+            break
+            // tslint:disable-next-line: prefer-template
+          }
         }
       }}
     }

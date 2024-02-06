@@ -11,6 +11,7 @@ import { HomePageService } from 'src/app/services/home-page.service'
 })
 
 export class NetworkHubComponent implements OnInit {
+  // tslint:disable-next-line:no-input-rename
   @Input('networkConfig') networkConfig: any
   userInfo: any
   network = {
@@ -18,7 +19,7 @@ export class NetworkHubComponent implements OnInit {
     suggestionsLoader: false,
     error: false,
   }
-  
+
   recentRequests = {
     data: undefined,
     error: false,
@@ -32,7 +33,7 @@ export class NetworkHubComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userInfo =  this.configService && this.configService.userProfile;
+    this.userInfo =  this.configService && this.configService.userProfile
     if (this.networkConfig.recentRequests.active) {
       this.fetchRecentRequests()
     }
@@ -51,28 +52,29 @@ export class NetworkHubComponent implements OnInit {
         {
           field: 'employmentDetails.departmentName',
           values: [this.userInfo.departmentName],
-        }
-      ]
+        },
+      ],
     }
 
     this.network.suggestionsLoader = true
     this.homePageService.getNetworkRecommendations(payload).subscribe(
       (res: any) => {
-        this.network.suggestionsLoader = false;
+        this.network.suggestionsLoader = false
         this.network.networkRecommended = res.result.data[0].results
         if (this.network.networkRecommended.length) {
           this.network.networkRecommended = this.network.networkRecommended.map((obj: any) => {
             obj.fullName = this.createInitials(obj.personalDetails.firstname)
             obj.connecting = false
             return obj
-          });
+          })
         }
+        // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.network.suggestionsLoader = false
         }
       }
-    )    
+    )
   }
 
   fetchRecentRequests(): void {
@@ -84,7 +86,7 @@ export class NetworkHubComponent implements OnInit {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
           elem.connecting = false
           return elem
-        });
+        })
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.recentRequests.loadSkeleton = false
@@ -140,11 +142,11 @@ export class NetworkHubComponent implements OnInit {
     )
   }
 
-  createInitials(fname:string): string {
+  createInitials(fname: string): string {
     let initials = ''
     const array = `${fname} `.toString().split(' ')
     if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {
-      initials += array[0].charAt(0) 
+      initials += array[0].charAt(0)
       initials += array[1].charAt(0)
     } else {
       for (let i = 0; i < fname.length; i += 1) {

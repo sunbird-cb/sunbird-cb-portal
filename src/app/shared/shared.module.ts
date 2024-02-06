@@ -9,6 +9,6 @@ import { DownloadAppComponent } from '../component/download-app/download-app.com
   ],
   exports: [
     DownloadAppComponent,
-  ]
+  ],
 })
 export class SharedModule { }

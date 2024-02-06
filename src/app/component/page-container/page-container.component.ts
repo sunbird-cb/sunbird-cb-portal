@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./page-container.component.scss'],
 })
 export class PageContainerComponent implements OnInit {
-  widgetData = {};
+  widgetData = {}
   constructor() { }
 
   ngOnInit() {
@@ -19,9 +19,9 @@ export class PageContainerComponent implements OnInit {
             widget: {
               widgetType: 'card',
               widgetSubType: 'cardHomeNotify',
-              widgetData: {}
-            }
-          }
+              widgetData: {},
+            },
+          },
         ],
         [
           {
@@ -30,15 +30,15 @@ export class PageContainerComponent implements OnInit {
             widget: {
               widgetType: 'card',
               widgetSubType: 'cardHomeHubs',
-              widgetData: {}
-            }
-          }
-        ],             
+              widgetData: {},
+            },
+          },
+        ],
         [
           {
             dimensions: {
               small: 12,
-              medium: 2
+              medium: 2,
             },
             className: '',
             widget: {
@@ -51,7 +51,7 @@ export class PageContainerComponent implements OnInit {
                   render: true,
                   badges: {
                     enabled: false,
-                    uri: ''
+                    uri: '',
                   },
                   enabled: true,
                   routerLink: '/app/home',
@@ -62,7 +62,7 @@ export class PageContainerComponent implements OnInit {
                   render: true,
                   badges: {
                     enabled: false,
-                    uri: ''
+                    uri: '',
                   },
                   enabled: true,
                   routerLink: '/app/home/roles-access',
@@ -76,7 +76,7 @@ export class PageContainerComponent implements OnInit {
                     uri: '',
                   },
                   enabled: true,
-                  routerLink: '/app/home/approvals'
+                  routerLink: '/app/home/approvals',
                 },
                 {
                   name: 'Competencies',
@@ -99,9 +99,9 @@ export class PageContainerComponent implements OnInit {
                   },
                   enabled: true,
                   routerLink: '/app/notifications',
-                }
-              ]
-            }
+                },
+              ],
+            },
           },
           {
             dimensions: {
@@ -114,11 +114,11 @@ export class PageContainerComponent implements OnInit {
               widgetSubType: 'contentStripMultipleNew',
               widgetData: {
                 strips: [],
-              }
-            }
-          }
-        ]
-      ]
+              },
+            },
+          },
+        ],
+      ],
     }
   }
 }

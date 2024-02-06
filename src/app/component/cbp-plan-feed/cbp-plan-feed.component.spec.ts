@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CbpPlanFeedComponent } from './cbp-plan-feed.component';
+import { CbpPlanFeedComponent } from './cbp-plan-feed.component'
 
 describe('CbpPlanFeedComponent', () => {
-  let component: CbpPlanFeedComponent;
-  let fixture: ComponentFixture<CbpPlanFeedComponent>;
+  let component: CbpPlanFeedComponent
+  let fixture: ComponentFixture<CbpPlanFeedComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CbpPlanFeedComponent ]
+      declarations: [CbpPlanFeedComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CbpPlanFeedComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CbpPlanFeedComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

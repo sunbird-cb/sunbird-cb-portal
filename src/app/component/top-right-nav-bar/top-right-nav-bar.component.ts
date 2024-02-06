@@ -22,7 +22,7 @@ const rightNavConfig = [
     id: 4,
     section: 'profile',
     active: true,
-  }
+  },
 ]
 @Component({
   selector: 'ws-top-right-nav-bar',
@@ -30,29 +30,27 @@ const rightNavConfig = [
   styleUrls: ['./top-right-nav-bar.component.scss'],
 })
 export class TopRightNavBarComponent implements OnInit {
-  @Input() item:any
-  @Input() rightNavConfig:any
-  dialogRef:any;
-  constructor(public dialog: MatDialog,  public homePageService: HomePageService) { }
+  @Input() item: any
+  @Input() rightNavConfig: any
+  dialogRef: any
+  constructor(public dialog: MatDialog, public homePageService: HomePageService) { }
 
   ngOnInit() {
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig
     // console.log('rightNavConfig',this.rightNavConfig)
-    this.homePageService.closeDialogPop.subscribe((data:any)=>{
-      if(data) {
+    this.homePageService.closeDialogPop.subscribe((data: any) => {
+      if (data) {
         this.dialogRef.close()
       }
     })
   }
-
-  ngOnChanges() {}
-
+  // ngOnChanges() {}
   openDialog(): void { 
     this.dialogRef = this.dialog.open(DialogBoxComponent, { 
       width: '1000px', 
     })
   
-    this.dialogRef.afterClosed().subscribe(() => { 
-    })
+    // tslint: disable-nextline
+    this.dialogRef.afterClosed().subscribe(() => {})
   }
 }

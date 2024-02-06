@@ -148,7 +148,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private _platformId: any,
   ) {
     let userData: any = {}
-    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe((res: any)=> {
+    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe((res: any) => {
       userData = res
     })
     this.isMobileVerified = userData && userData.isMobileVerified || false
@@ -163,7 +163,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:max-line-length
       email: new FormControl(userData && userData.email || '', [Validators.required, Validators.pattern(this.emailPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-      mobile: new FormControl(userData && userData.mobile || '', [Validators.required, 
+      mobile: new FormControl(userData && userData.mobile || '', [Validators.required,
         Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       confirmBox: new FormControl(false, [Validators.required]),
       confirmTermsBox: new FormControl(false, [Validators.required]),
@@ -181,7 +181,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
     if (this.activatedRoute.snapshot.data.group.data) {
-      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele: any) => ele !== 'Others')
       this.masterGroup = this.groupsOriginal
     } else {
       this.groupsOriginal = []

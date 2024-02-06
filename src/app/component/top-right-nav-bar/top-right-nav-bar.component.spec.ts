@@ -16,7 +16,7 @@ describe('TopRightNavBarComponent', () => {
     fixture = TestBed.createComponent(TopRightNavBarComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-  });
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy()

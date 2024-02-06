@@ -8,7 +8,8 @@ import { MatIconModule } from '@angular/material/icon'
 
 import { HeaderModule } from '../header/header.module'
 import {
-  GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule, AvatarPhotoModule
+  GridLayoutModule, SlidersModule, DiscussStripMultipleModule,
+  NetworkStripMultipleModule, ContentStripWithTabsModule, AvatarPhotoModule,
 } from '@sunbird-cb/collection'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
@@ -33,18 +34,18 @@ import { HomePageService } from '../services/home-page.service'
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module'
 
 @NgModule({
-  declarations: [ 
-    HomeComponent, FeedListComponent, InsightSideBarComponent, 
+  declarations: [
+    HomeComponent, FeedListComponent, InsightSideBarComponent,
     PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent,
-    HomeOtherPortalComponent, HomeContainerComponent, DiscussHubComponent, 
-    NetworkHubComponent ],
+    HomeOtherPortalComponent, HomeContainerComponent, DiscussHubComponent,
+    NetworkHubComponent],
   imports: [
     CommonModule,
     RouterModule,
     HomeRoutingModule,
     GridLayoutModule,
     SlidersModule,
-    DiscussStripMultipleModule, 
+    DiscussStripMultipleModule,
     NetworkStripMultipleModule,
     ContentStripWithTabsModule,
     MatCardModule,
@@ -68,6 +69,6 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
   ],
   providers: [
     HomePageService,
-  ]
+  ],
 })
 export class HomeModule { }

@@ -18,8 +18,9 @@ export class HeaderComponent implements OnInit {
   mobileTopHeaderVisibilityStatus = true
   @Input() mode: any
   @Input() headerFooterConfigData: any
-  constructor( private valueSvc: ValueService,
-    public headerService: HeaderService, 
+  constructor(
+    private valueSvc: ValueService,
+    public headerService: HeaderService,
     public mobileAppsService: MobileAppsService) { }
 
   ngOnInit() {
@@ -36,17 +37,16 @@ export class HeaderComponent implements OnInit {
             widget: {
               widgetType: 'card',
               widgetSubType: 'cardHomeHubs',
-              widgetData: {}
-            }
-          }
-        ] 
-      ]
-    };
+              widgetData: {},
+            },
+          },
+        ],
+      ],
+    }
   } 
 
   downloadApp(): void {
-    var userAgent = navigator.userAgent
-
+    const userAgent = navigator.userAgent
     // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {
       window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank')
@@ -65,6 +65,7 @@ export class HeaderComponent implements OnInit {
   get navBarRequired(): boolean {
     return this.isNavBarRequired 
   }
+
   get isShowNavbar(): boolean {
     return this.showNavbar
   }

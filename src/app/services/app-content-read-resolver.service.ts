@@ -20,9 +20,13 @@ export class AppContentResolverService
         const collectionId = _route.queryParams && _route.queryParams.collectionId || ''
         return this.contentSvc.fetchProgramContent(collectionId).pipe(
         map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
+            // tslint:disable-next-line: align
             tap((resolveData: any) => {
+                // tslint: disable-next-line: align
                 return of({ error: null, data: resolveData })
+                // tslint: disable-next-line: align
             }),
+            // tslint: disable-next-line: align
             catchError((error: any) => of({ error, data: null })),
         )
     }
