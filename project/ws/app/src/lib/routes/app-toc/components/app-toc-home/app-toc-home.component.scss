@@ -11,17 +11,6 @@
   .banner-details {
     padding: 36px 0px;
 
-    .tag-div {
-      border: 1px solid $colorOrange;
-      background-color: rgba($color: #000000, $alpha: 0.5);
-
-      mat-icon {
-        font-size: 12px;
-        width: 12px;
-        height: 12px;
-      }
-    }
-
     .due-tag {
       padding: 4px;
       background-color: $colorOrange;
@@ -66,6 +55,17 @@
     border: 1px solid #FFEA9E;
     padding: 4px;
     border-radius: 2px;
+  }
+}
+
+.tag-div {
+  border: 1px solid $colorOrange;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+
+  mat-icon {
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -141,6 +141,29 @@
     }
   }
 
+  .tag-div {
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+    }
+  }
+
+  .share-tag {
+    mat-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+    }
+  }
+
+  .text-container {
+    position: relative;
+    z-index: 2;
+    height: 220px;
+    padding: 16px;
+  }
+
   .right-content {
     background-color: #FFF;
     border-radius: 12px;
@@ -148,6 +171,7 @@
     z-index: 10;
     top: 132px;
     max-width: 384px;
+    margin-bottom: 1rem;
   }
 
   .border-bottom {
@@ -276,6 +300,27 @@
   .mat-dialog-container {
     border-radius: 12px;
     padding: 0px;
+  }
+}
+
+.image-backdrop {
+  background-color: #000 !important;
+  position: relative;
+
+  &::after {
+    -webkit-backdrop-filter: blur(5px);
+      /* Use for Safari 9+, Edge 17+ (not a mistake) and iOS Safari 9.2+ */
+    backdrop-filter: blur(5px);
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.65);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
 }
 

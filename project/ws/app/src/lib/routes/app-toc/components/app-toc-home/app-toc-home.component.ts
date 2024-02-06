@@ -22,6 +22,7 @@ import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { ActionService } from '../../services/action.service'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { LoadCheckService } from '../../services/load-check.service'
 
 import * as dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -169,6 +170,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isClaimed = false
   monthlyCapExceed = false
   isCompletedThisMonth = false
+  @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
+  scrollLimit: number = 0;
+  rcElemBottomPos: number = 0
+  scrolled = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -178,6 +183,22 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } else {
       this.sticky = false
     }
+
+    
+    if (this.scrollLimit) {
+      if ((window.scrollY + this.rcElemBottomPos) >= this.scrollLimit) {
+        this.rcElement.nativeElement.style.position = 'sticky'
+      } else {
+        this.rcElement.nativeElement.style.position = 'fixed'
+      }
+    }
+
+    if (window.scrollY > (this.rcElement.nativeElement.offsetTop + 104)) {
+      this.scrolled = true
+    } else {
+      this.scrolled = false
+    }
+
   }
 
   constructor(
@@ -201,10 +222,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private telemetryService: TelemetryService,
     private events: EventService,
     private matSnackBar: MatSnackBar,
+    private loadCheckService: LoadCheckService
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
+
+    this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
+      // Present in app-toc-about.component
+      const ratingsDiv = document.getElementById('ratingsDiv') as any;
+      this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+    });
   }
 
   ngOnInit() {
@@ -465,7 +493,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    // this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    this.rcElemBottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight;
   }
 
   handleBreadcrumbs() {
@@ -1069,16 +1097,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
 
   }
-
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   if ((window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) > this.showScrollHeight) {
-  //     this.showScroll = true
-  //   } else if (this.showScroll && (window.pageYOffset || document.documentElement.scrollTop
-  //     || document.body.scrollTop) < this.hideScrollHeight) {
-  //     this.showScroll = false
-  //   }
-  // }
 
   scrollToTop() {
     (function smoothscroll() {

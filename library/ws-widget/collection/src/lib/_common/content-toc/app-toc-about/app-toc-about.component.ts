@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
@@ -7,6 +7,7 @@ import _ from 'lodash'
 import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
+import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
 
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
@@ -49,7 +50,7 @@ interface IStripUnitContentData {
   styleUrls: ['./app-toc-about.component.scss'],
 })
 
-export class AppTocAboutComponent implements OnInit {
+export class AppTocAboutComponent implements OnInit, OnChanges {
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
@@ -117,13 +118,22 @@ export class AppTocAboutComponent implements OnInit {
     private ratingService: RatingService,
     private loggerService: LoggerService,
     private dialog: MatDialog,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private loadCheckService: LoadCheckService
   ) { }
 
   ngOnInit() {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
       this.loadCompetencies()
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.skeletonLoader.currentValue) {
+      setTimeout(() => {
+        this.loadCheckService.componentLoaded(true);
+      }, 500);
     }
   }
 
