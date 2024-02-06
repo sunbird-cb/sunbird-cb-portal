@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:disable*/
 import _ from 'lodash'
 
@@ -24,11 +24,7 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
-
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
    }
 

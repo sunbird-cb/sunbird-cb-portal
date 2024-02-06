@@ -71,6 +71,7 @@ import { HttpClient } from '@angular/common/http'
     HeaderModule,
     MatCardModule,
     SharedModule,
+    TranslateModule
   ],
   providers: [
     HomePageService,
