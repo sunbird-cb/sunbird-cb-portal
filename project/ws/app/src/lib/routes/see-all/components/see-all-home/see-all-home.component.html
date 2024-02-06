@@ -1,7 +1,7 @@
 <div class="seeAll-home-container m-auto gap-4">
     <ng-container>
         <div class="flex flex-row page-header margin-top-l margin-bottom-l">
-            {{(seeAllPageConfig && seeAllPageConfig.title) ? seeAllPageConfig.title : ''}}aa
+            {{(seeAllPageConfig && seeAllPageConfig.title) ? seeAllPageConfig.title : ''}}
         </div>
         <div class="flex flex-row flex-wrap content-container" infinite-scroll [infiniteScrollDistance]="scrollDistance"
             [infiniteScrollThrottle]="throttle" (scrolled)="onScrollEnd()"
