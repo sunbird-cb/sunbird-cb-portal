@@ -27,6 +27,7 @@ import {
   MatSnackBarModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatAutocompleteModule,
 } from '@angular/material'
 import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
@@ -237,6 +238,8 @@ import { SharedModule } from 'src/app/shared/shared.module'
     AttendanceHelperModule,
     AttendanceCardModule,
     MicroSurveyModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({}),
     SharedModule,
   ],
