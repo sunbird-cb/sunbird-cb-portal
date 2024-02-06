@@ -9,11 +9,20 @@ import { ProfileCertificateDialogModule } from '../profile-certificate-dialog/pr
 import { PipePublicURLModule, DefaultThumbnailModule, PipeCertificateImageURLModule } from '@sunbird-cb/utils/src/public-api'
 @NgModule({
   declarations: [ProfileCretificationsV2Component],
-  imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule, DefaultThumbnailModule,
-    // tslint:disable-next-line:max-line-length
-    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, ProfileCertificateDialogModule, PipePublicURLModule, PipeCertificateImageURLModule],
+  imports: [
+    BrowserModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    DefaultThumbnailModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    ProfileCertificateDialogModule,
+    PipePublicURLModule,
+    PipeCertificateImageURLModule,
+  ],
   entryComponents: [ProfileCretificationsV2Component],
 })
-export class ProfileCretificationsV2Module {
-
-}
+export class ProfileCretificationsV2Module {}

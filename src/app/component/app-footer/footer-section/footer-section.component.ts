@@ -1,63 +1,69 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ConfigurationsService } from '@sunbird-cb/utils';
+import { Component, Input, OnInit } from '@angular/core'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+// tslint: disable-next-line
+// @ts-ignore
 import _ from 'lodash'
+// tslint: enable
 @Component({
   selector: 'ws-footer-section',
   templateUrl: './footer-section.component.html',
-  styleUrls: ['./footer-section.component.scss']
+  styleUrls: ['./footer-section.component.scss'],
 })
 export class FooterSectionComponent implements OnInit {
-  @Input() environment:any;
-  @Input() hubsList:any;
-  @Input() headerFooterConfigData:any;
-  constructor(private configSvc: ConfigurationsService,private discussUtilitySvc: DiscussUtilsService, private router: Router) { }
+  @Input() environment: any
+  @Input() hubsList: any
+  @Input() headerFooterConfigData: any
+  constructor(
+    private configSvc: ConfigurationsService,
+    private discussUtilitySvc: DiscussUtilsService,
+    private router: Router) { }
   footerSectionConfig = [
     {
-      "id":1,
-      "order":1,
-      "sectionHeading": "Hubs",
-      "active": true,
-      "slug": "hub"
+      id: 1 ,
+      order: 1,
+      sectionHeading: 'Hubs',
+      active: true,
+      slug: 'hub',
     },
     {
-      "id":2,
-      "order":2,
-      "sectionHeading": "Related Links",
-      "active": true,
-      "slug": "link"
+      id: 2,
+      order: 2,
+      sectionHeading: 'Related Links',
+      active: true,
+      slug: 'link',
     },
     {
-      "id":3,
-      "order":3,
-      "sectionHeading": "Support",
-      "active": true,
-      "slug": "support"
+      id: 3,
+      order: 3,
+      sectionHeading: 'Support',
+      active: true,
+      slug: 'support',
     },
     {
-      "id":4,
-      "order":4,
-      "sectionHeading": "About us",
-      "active": true,
-      "slug": "about"
-    }
-  ];
+      id: 4,
+      order: 4,
+      sectionHeading: 'About us',
+      active: true,
+      slug: 'about',
+    },
+  ]
 
   ngOnInit() {
-    console.log('this.headerFooterConfigData',this.headerFooterConfigData)
-    this.footerSectionConfig = this.headerFooterConfigData.footerSectionConfig;
-    if(this.footerSectionConfig) {
-      this.footerSectionConfig = (this.footerSectionConfig).sort((a,b)=>a.order - b.order);
-    }    
+    // console.log('this.headerFooterConfigData',this.headerFooterConfigData)
+    this.footerSectionConfig = this.headerFooterConfigData.footerSectionConfig
+    if (this.footerSectionConfig) {
+      this.footerSectionConfig = (this.footerSectionConfig).sort((a, b) => a.order - b.order)
+    }
     this.environment.portals = this.environment.portals.filter(
       (obj: any) => ((obj.name !== 'Frac Dictionary') &&
        (obj.isPublic || this.isAllowed(obj.id))))
-    if(!this.environment.portals.length) {
-      if(this.footerSectionConfig) {
-        this.footerSectionConfig = this.footerSectionConfig.filter((obj:any)=> obj.sectionHeading !== 'Related Links')
-      }
-    }
+        if (!this.environment.portals.length) {
+          if (this.footerSectionConfig) {
+            this.footerSectionConfig = this.footerSectionConfig.filter((obj: any) => obj.sectionHeading !== 'Related Links')
+          }
+        }
   }
 
   navigate() {
@@ -118,9 +124,9 @@ export class FooterSectionComponent implements OnInit {
     return returnValue
   }
 
-  onClick(event:any) {
-    console.log(event.target.parentElement);
-    event.target.parentElement.classList.toggle('open');
+  onClick(event: any) {
+    // console.log(event.target.parentElement);
+    event.target.parentElement.classList.toggle('open')
   }
 
 }

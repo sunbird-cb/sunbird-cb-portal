@@ -721,8 +721,8 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      //module: ModuleNameResolve,
-      //pageId: PageNameResolve,
+      // module: ModuleNameResolve,
+      // pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],
   },
@@ -955,7 +955,7 @@ const routes: Routes = [
     resolve: {
       hierarchyData: AppHierarchyResolverService,
       enrollmentData: AppEnrollmentResolverService,
-      contentRead: AppContentResolverService
+      contentRead: AppContentResolverService,
     },
     loadChildren: () => import('./routes/route-viewer.module').then(u => u.RouteViewerModule),
     canActivate: [GeneralGuard],

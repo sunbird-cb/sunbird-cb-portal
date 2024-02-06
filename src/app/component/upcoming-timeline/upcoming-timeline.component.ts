@@ -39,13 +39,13 @@ export class UpcomingTimelineComponent implements OnInit {
     const overDue: any = {
       primaryCategory: [],
       status: ['0', '1'],
-      timeDuration: ['3sm'], 
+      timeDuration: ['3sm'],
       competencyArea: [],
       competencyTheme: [],
       competencySubTheme: [],
       providers: [],
     }
-    this.filterValueEmit.emit(event === 'upcoming'? upcomingData: overDue)
+    this.filterValueEmit.emit(event === 'upcoming' ? upcomingData : overDue)
   }
   scroll(el: any) {
     const element = el

@@ -27,9 +27,9 @@ export class HeaderComponent implements OnInit {
     this.headerService.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
-
-    this.widgetData = { 
-      widgets: [        
+    // tslint:disable-next-line: whitespace
+    this.widgetData = { // tslint:disable-next-line: whitespace
+      widgets: [
         [
           {
             dimensions: {},
@@ -42,18 +42,18 @@ export class HeaderComponent implements OnInit {
           },
         ],
       ],
-    }
-  } 
+    } // tslint:disable-next-line: whitespace
+  } // tslint:disable-next-line: whitespace
 
   downloadApp(): void {
     const userAgent = navigator.userAgent
     // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {
-      window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank')
+      window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US', '_blank')
     }
 
     if (/android/i.test(userAgent)) {
-        window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US','_blank')
+        window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US', '_blank')
     }
 
     // iOS detection from: http://stackoverflow.com/a/9039885/177710
@@ -63,7 +63,8 @@ export class HeaderComponent implements OnInit {
   }
 
   get navBarRequired(): boolean {
-    return this.isNavBarRequired 
+    // tslint:disable-next-line: whitespace
+    return this.isNavBarRequired
   }
 
   get isShowNavbar(): boolean {

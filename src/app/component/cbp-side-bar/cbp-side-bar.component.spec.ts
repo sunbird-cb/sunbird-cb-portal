@@ -9,7 +9,7 @@ describe('CbpSideBarComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CbpSideBarComponent],
     })
-    .compileComponents();
+    .compileComponents()
   }))
 
   beforeEach(() => {

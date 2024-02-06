@@ -285,7 +285,7 @@ export class VideoComponent implements OnInit, OnDestroy {
       }
       const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
         this.activatedRoute.snapshot.queryParams.collectionId,
-        this.activatedRoute.snapshot.queryParams.batchId, 
+        this.activatedRoute.snapshot.queryParams.batchId,
         videoId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {

@@ -18,9 +18,9 @@ export class FilterComponent implements OnInit {
   @Input() from: any
   @Input() designationList: any
   @Input() filterObj: any
-  @Input() showAdditionalFilters = true;
+  @Input() showAdditionalFilters = true
   filterEmpty = false
-  timeDuration: any 
+  timeDuration: any
   contentStatus: any
   primaryCategoryList: any
   providersList: any[] = []
@@ -39,7 +39,7 @@ export class FilterComponent implements OnInit {
     competencyTheme: [],
     competencySubTheme: [],
     providers: [],
-  };
+  }
   searchThemeControl = new FormControl()
   @ViewChildren('checkboxes') checkboxes!: QueryList<ElementRef>
   constructor(private appCbpPlansService: AppCbpPlansService) {}
@@ -52,27 +52,27 @@ export class FilterComponent implements OnInit {
   }
   setDefaultValues() {
     this.primaryCategoryList = [
-      { id: 'Course', name: 'Course', checked: false }, 
+      { id: 'Course', name: 'Course', checked: false },
       // { "id": 'Program', name: 'Program',checked: false },
       { id: 'Curated Program', name: 'Curated program', checked: false },
-      { id: 'Blended Program', name: 'Blended program', checked: false }, 
+      { id: 'Blended Program', name: 'Blended program', checked: false },
       { id: 'Standalone Assessment', name: 'Standalone assessment', checked: false },
       { id: 'Moderated Courses', name: 'Moderated courses', checked: false },
     ]
     this.timeDuration = [
-      { id: '7ad', name: 'Upcoming 7 Days', checked: false }, 
-      { id: '30ad', name: 'Upcoming 30 Days', checked: false }, 
-      { id: '90ad', name: 'Upcoming 3 Months', checked: false }, 
-      { id: '182ad', name: 'Upcoming 6 Months', checked: false }, 
+      { id: '7ad', name: 'Upcoming 7 Days', checked: false },
+      { id: '30ad', name: 'Upcoming 30 Days', checked: false },
+      { id: '90ad', name: 'Upcoming 3 Months', checked: false },
+      { id: '182ad', name: 'Upcoming 6 Months', checked: false },
       { id: '1sw', name: 'Last week', checked: false },
-      { id: '1sm', name: 'Last month', checked: false }, 
-      { id: '3sm', name: 'Last 3 months', checked: false }, 
-      { id: '6sm', name: 'Last 6 months', checked: false }, 
+      { id: '1sm', name: 'Last month', checked: false },
+      { id: '3sm', name: 'Last 3 months', checked: false },
+      { id: '6sm', name: 'Last 6 months', checked: false },
       { id: '12sm', name: 'Last year', checked: false },
     ]
     this.contentStatus = [
       { id: '1', name: 'In progress', checked: false },
-      { id: '0', name: 'Not started', checked: false }, 
+      { id: '0', name: 'Not started', checked: false },
       { id: '2', name: 'Completed', checked: false },
     ]
   }
@@ -101,7 +101,7 @@ export class FilterComponent implements OnInit {
       }
       this.competencyTypeList.push(data)
     })
-    this.competencyTypeList =  _.orderBy(this.competencyTypeList, ['id'],['asc'])
+    this.competencyTypeList =  _.orderBy(this.competencyTypeList, ['id'], ['asc'])
     this.bindFilter()
   }
   getProviders() {
@@ -134,17 +134,17 @@ export class FilterComponent implements OnInit {
           citem.children.map((themechild: any) => {
             themechild['parent'] = ctype.id
           })
-          if(this.filterObj['competencyArea'] && pushValue) {
+          if (this.filterObj['competencyArea'] && pushValue) {
             this.filterObj['competencyArea'].push(citem.name)
-          }          
+          }
           this.competencyThemeList = this.competencyThemeList.concat(citem.children)
           this.competencyThemeOriginalList = this.competencyThemeList
         }
       })
-    } else {     
+    } else {
       // tslint:disable-next-line
       this.competencyThemeList = this.competencyThemeList.filter((sitem) => {
-        if(sitem.parent === ctype.id) {
+        if (sitem.parent === ctype.id) {
           const index = this.filterObj['competencyTheme'].indexOf(sitem.name)
           // tslint:disable-next-line
           if (index > -1) { // only splice array when item is found
@@ -175,7 +175,7 @@ export class FilterComponent implements OnInit {
           })
           this.competencySubThemeList = this.competencySubThemeList.concat(csitem.children)
           this.competencySubThemeOriginalList = this.competencySubThemeList
-          if(pushValue) {
+          if (pushValue) {
             this.filterObj['competencyTheme'].push(cstype.name)
           }
         }
@@ -224,8 +224,8 @@ export class FilterComponent implements OnInit {
     this.competencyThemeList = []
     this.competencySubThemeList = []
     this.clearFilterObj.emit(data)
-		this.filterObj = data
-		this.checkFilterEmpty()
+    this.filterObj = data
+    this.checkFilterEmpty()
   }
 
   clearFilterWhileSearch() {
@@ -235,7 +235,7 @@ export class FilterComponent implements OnInit {
       })
     }
   }
-  getFilterType(event: any, ctype: any,filterType: any) {
+  getFilterType(event: any, ctype: any, filterType: any) {
       if (event.checked && !this.filterObj[filterType].includes(ctype.id || ctype)) {
         const data = ctype.id ? ctype.id : ctype
         this.filterObj[filterType].push(data)
@@ -245,7 +245,7 @@ export class FilterComponent implements OnInit {
           this.filterObj[filterType].splice(index, 1) // 2nd parameter means remove one item only
         }
       }
-      if (ctype.id === 'all' && filterType === 'status'){
+      if (ctype.id === 'all' && filterType === 'status') {
         if (event.checked) {
           this.filterObj[filterType] = []
           this.filterObj[filterType] = ['all']
@@ -274,12 +274,11 @@ export class FilterComponent implements OnInit {
           content.checked = this.filterObj['status'].includes(content.id)
         })
       }
-      
       if (this.filterObj['competencyArea'].length) {
         this.competencyTypeList.forEach((content: any) => {
           content.checked = this.filterObj['competencyArea'].includes(content.id)
-          if(this.filterObj['competencyArea'].includes(content.id)) {
-            this.getCompetencyTheme({checked: true}, content, false)
+          if (this.filterObj['competencyArea'].includes(content.id)) {
+            this.getCompetencyTheme({ checked: true }, content, false)
           }
         })
       }
@@ -343,7 +342,7 @@ export class FilterComponent implements OnInit {
     ) {
       this.filterEmpty = false
       return false
-    } 
+    }
     // else {
     this.filterEmpty = true
     return true

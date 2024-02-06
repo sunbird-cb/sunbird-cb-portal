@@ -11,7 +11,7 @@ dayjs.extend(isSameOrAfter)
   styleUrls: ['./cbp-plan-stats.component.scss'],
 })
 export class CbpPlanStatsComponent implements OnInit {
-  filterList: any = [{ id: 3, value: 'Last 3 months' },{ id: 6, value: 'Last 6 months' },{ id: 12, value: 'Last year' }]
+  filterList: any = [{ id: 3, value: 'Last 3 months' }, { id: 6, value: 'Last 6 months' }, { id: 12, value: 'Last year' }]
   filterLoaded = false
 
   @Input() cbpCount: any
@@ -28,7 +28,7 @@ export class CbpPlanStatsComponent implements OnInit {
   onfilterChange(filterData: any) {
     this.filterLoaded = true
     this.cbpLoader = true
-   let filteredValue = this.cbpOriginalData.filter((data: any) => {
+    const filteredValue = this.cbpOriginalData.filter((data: any) => {
       // tslint:disable-next-line:max-line-length
       return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(filterData.id, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
     })
@@ -44,10 +44,10 @@ export class CbpPlanStatsComponent implements OnInit {
     this.cbpCount = {
       upcoming: upcommingList.length,
       overdue: overDueList.length,
-      all: upcommingList.length + overDueList.length
+      all: upcommingList.length + overDueList.length,
     }
     // this.timePeriodFilter.emit(data)
-    
+    // tslint:disable-next-line: whitespace
     this.cbpLoader = false
   }
 

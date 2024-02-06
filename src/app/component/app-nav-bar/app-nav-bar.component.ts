@@ -11,9 +11,8 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router'
   styleUrls: ['./app-nav-bar.component.scss'],
 })
 export class AppNavBarComponent implements OnInit, OnChanges {
-
   @Input() mode: 'top' | 'bottom' = 'top'
-  @Input() headerFooterConfigData:any;
+  @Input() headerFooterConfigData: any
   // @Input()
   // @HostBinding('id')
   // public id!: string
@@ -43,15 +42,15 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
   isLoggedIn = false
-  fontContainerFlag = false;
-  activeRoute = '';
+  fontContainerFlag = false
+  activeRoute = ''
   countdata: any
   enrollInterval: any
-  karmaPointLoading: boolean = true
+  karmaPointLoading = true
   tooltipDelay: any = 1000
   jan26Data: any
   logoDisplayTime: any
-  janDataEnable:boolean = true
+  janDataEnable = true
   // defaultLogo: false
   animationDuration: number | undefined
 
@@ -84,9 +83,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.logoDisplayTime = this.jan26Data.desktop.logoDisplayTime
       this.displayLogo()
       setInterval(() => {
-        this.janDataEnable = true;
+        this.janDataEnable = true
         this.displayLogo()
-       }, this.logoDisplayTime);
+        // tslint:disable-next-line
+       }, this.logoDisplayTime)
     }
 
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
@@ -94,10 +94,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event.url)
-          // console.log("activeRoute",localStorage.getItem("activeRoute"));
-          if(localStorage.getItem("activeRoute")) {
-            let route = localStorage.getItem("activeRoute");
-            this.activeRoute = route ? route.toLowerCase().toString() : '';
+          // console.log("activeRoute",localStorage.getItem("activeRoute"))
+          if (localStorage.getItem('activeRoute')) {
+            const route = localStorage.getItem('activeRoute')
+            this.activeRoute = route ? route.toLowerCase().toString() : ''
           }
 
           if (event.url.includes('/page/home')) {
@@ -150,14 +150,16 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.startTour()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
-    },1000)
+    // tslint:disable-next-line
+    }, 1000)
   }
 
   displayLogo() {
     const animationDur = this.jan26Data.desktop.animationDuration
-    setTimeout(() =>{
-      this.janDataEnable = false;
-    }, animationDur);
+    setTimeout(() => {
+      this.janDataEnable = false
+      // tslint:disable-next-line
+    }, animationDur)
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -180,6 +182,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       } else {
         this.isPublicHomePage = false
       }
+    // tslint:disable-next-line: max-line-length
     } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
       this.showAppNavBar = false
     } else {
@@ -270,18 +273,18 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     return this.isSetUpPage
   }
 
-  redirectToPath(pathConfig:any) {
-    if(pathConfig && pathConfig.key) {
-      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
+  redirectToPath(pathConfig: any) {
+    if (pathConfig && pathConfig.key) {
+      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } })
     } else {
-      this.router.navigate([pathConfig.path]);
+      this.router.navigate([pathConfig.path])
     }
-    this.configSvc.openExploreMenuForMWeb.next(false);
+    this.configSvc.openExploreMenuForMWeb.next(false)
   }
 
   openExploreMenu() {
-    this.activeRoute = 'explore';
-    this.configSvc.openExploreMenuForMWeb.next(true);
+    this.activeRoute = 'explore'
+    this.configSvc.openExploreMenuForMWeb.next(true)
   }
 
   getKarmaCount() {
@@ -297,7 +300,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
   viewKarmapoints() {
     this.raiseTelemetry()
-    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
+    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints' })
   }
 
   raiseTelemetry() {
@@ -310,7 +313,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       {},
       {
         module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
-    })
+        // tslint: disable-next-line: whitespace
+      }
+      // tslint: disable-next-line: whitespace
+      )
   }
 
 }

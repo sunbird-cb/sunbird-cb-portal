@@ -41,7 +41,6 @@ export class NetworkHubComponent implements OnInit {
     if (this.networkConfig.networkSuggestions.active) {
       this.fetchNetworkRecommendations()
     }
-
   }
 
   fetchNetworkRecommendations(): void {
@@ -87,6 +86,7 @@ export class NetworkHubComponent implements OnInit {
           elem.connecting = false
           return elem
         })
+      // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.recentRequests.loadSkeleton = false
@@ -94,7 +94,7 @@ export class NetworkHubComponent implements OnInit {
       }
     )
   }
-  
+// tslint:disable-next-line: whitespace
   handleUpdateRequest(event: any): void {
     this.homePageService.updateConnection(event.payload).subscribe(
       (_res: any) => {
@@ -105,13 +105,14 @@ export class NetworkHubComponent implements OnInit {
         }
         event.reqObject.connecting = false
         this.fetchRecentRequests()
+      // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.matSnackBar.open('Unable to update connection, due to some error!')
         }
         event.reqObject.connecting = false
       }
-    );
+    )
   }
 
   handleConnect(obj: any): void {

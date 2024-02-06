@@ -12,7 +12,7 @@ export class FontSettingComponent implements OnInit {
   ngOnInit() {
     // console.log(localStorage.getItem('setting'))
     const fontClass = localStorage.getItem('setting')
-    switch(fontClass) {
+    switch (fontClass) {
       case 'x-small-typography':
       this.fontValue = 10
       break
@@ -42,12 +42,12 @@ export class FontSettingComponent implements OnInit {
       case 12:
         fontClass = 'small-typography'
         localStorage.setItem('setting', fontClass)
-        this.btnSettingsSvc.changeFont(fontClass) 
+        this.btnSettingsSvc.changeFont(fontClass)
         break
       case 14:
         fontClass = 'normal-typography'
         localStorage.setItem('setting', fontClass)
-        this.btnSettingsSvc.changeFont(fontClass) 
+        this.btnSettingsSvc.changeFont(fontClass)
         break
       case 16:
         fontClass = 'large-typography'
@@ -57,10 +57,9 @@ export class FontSettingComponent implements OnInit {
       case 18:
         fontClass = 'x-large-typography'
         localStorage.setItem('setting', fontClass)
-        this.btnSettingsSvc.changeFont(fontClass) 
+        this.btnSettingsSvc.changeFont(fontClass)
         break
     }
-    
   }
 
 }

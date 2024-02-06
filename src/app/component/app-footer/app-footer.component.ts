@@ -11,10 +11,11 @@ import { environment } from 'src/environments/environment'
   selector: 'ws-app-footer',
   templateUrl: './app-footer.component.html',
   styleUrls: ['./app-footer.component.scss'],
+  // tslint:disable-next-line
   encapsulation: ViewEncapsulation.None
 })
 export class AppFooterComponent implements OnInit {
-  @Input() headerFooterConfigData:any;
+  @Input() headerFooterConfigData: any
   isXSmall = false
   termsOfUser = true
   environment!: any
@@ -24,7 +25,7 @@ export class AppFooterComponent implements OnInit {
   private baseUrl = this.configSvc.baseUrl
   constructor(
     private configSvc: ConfigurationsService,
-    private valueSvc: ValueService,    
+    private valueSvc: ValueService,
     private router: Router,
     private http: HttpClient,
   ) {
@@ -54,8 +55,7 @@ export class AppFooterComponent implements OnInit {
     } else {
       const newInstance = await this.readAgain()
       this.hubsList = (newInstance.hubs || []).filter(i => i.active)
-    }   
-
+    }
   }
   async readAgain() {
     const publicConfig: NsInstanceConfig.IConfig = await this.http
@@ -71,7 +71,6 @@ export class AppFooterComponent implements OnInit {
       }
     }
   }
-  
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
@@ -95,8 +94,8 @@ export class AppFooterComponent implements OnInit {
     return this.currentRoute.includes('all/assessment/')
   }
 
-  onClick(event:any) {
-    console.log(event.target.parentElement);
-    event.target.parentElement.classList.toggle('open');
+  onClick(event: any) {
+    // console.log(event.target.parentElement)
+    event.target.parentElement.classList.toggle('open')
   }
 }

@@ -24,7 +24,7 @@ import {
   MatTabsModule,
   MatSelectModule,
   MatTableModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -81,7 +81,7 @@ import { WelcomeUserResolverService } from './services/welcome-user-resolver.ser
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
 import { PublicRequestModule } from './routes/public/public-request/public-request.module'
 import { AppTourComponent } from './component/app-tour/app-tour.component'
-import {GuidedTourModule, GuidedTourService} from 'cb-tour-guide'
+import { GuidedTourModule, GuidedTourService } from 'cb-tour-guide'
 import { AppTourVideoComponent } from './component/app-tour-video/app-tour-video.component'
 import { AppChatbotModule } from './component/app-chatbot/app-chatbot.module'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
@@ -89,13 +89,12 @@ import { AppEnrollmentResolverService } from './services/app-enrollment-resolver
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
-import { HeaderModule } from './header/header.module';
-import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
-import { SocialLinkComponent } from './component/social-link/social-link.component';
-import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
-import { AppLogoComponent } from './component/app-logo/app-logo.component';
+import { HeaderModule } from './header/header.module'
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
+import { SocialLinkComponent } from './component/social-link/social-link.component'
+import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component'
+import { AppLogoComponent } from './component/app-logo/app-logo.component'
 import { NoDataComponent } from './component/no-data/no-data.component'
-
 
 @Injectable()
 export class HammerConfig extends GestureConfig {
@@ -141,7 +140,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogBoxComponent,
     SocialLinkComponent,
     FooterSectionComponent,
-    AppLogoComponent
+    AppLogoComponent,
   ],
   imports: [
     FormsModule,
@@ -194,18 +193,18 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    HeaderModule
+    HeaderModule,
   ],
   exports: [
     TncComponent,
-    HeaderModule
+    HeaderModule,
   ],
   bootstrap: [RootComponent],
   entryComponents: [
     DialogConfirmComponent,
     LoginComponent,
     AppIntroComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
   ],
   providers: [
     {
@@ -244,7 +243,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
-    GuidedTourService
+    GuidedTourService,
   ],
 })
 export class AppModule { }

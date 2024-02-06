@@ -139,6 +139,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         this.loggerSvc.log('Progress updated successfully')
         // this.store.clearAll()
         return
+      // tslint:disable-next-line: align
       }, (err: any) => {
         this.loggerSvc.error('Error calling progress update for scorm content', err)
         // this.store.clearAll()
@@ -151,20 +152,22 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
 
   calculateCompletionStatus(htmlContent: any) {
     const data = this.store.getAll()
-    let spentTime = 0
+    let spentTimen = 0
     let percentage = 0
     if ((data && data['completionStatus'] === 2)) {
       return {
         completionPercentage: data && data['completionPercentage'],
         status: data && data['completionStatus'],
         spentTime: data && data['spentTime'],
+      // tslint:disable-next-line: whitespace
       }
-    } 
+    }
       // if (data) {
-        spentTime = this.ticks + (data && data['spentTime'] || 0)
-        if (htmlContent && spentTime) {
+        spentTimen = this.ticks + (data && data['spentTime'] || 0)
+        if (htmlContent && spentTimen) {
           // ~~ will remove decimal after division
-          percentage = ~~((spentTime / htmlContent.duration) * 100)
+          // tslint:disable-next-line
+          percentage = ~~((spentTimen / htmlContent.duration) * 100)
         }
       // }
 
@@ -172,13 +175,14 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         return {
           completionPercentage: 100,
           status: 2,
-          spentTime: spentTime,
+          spentTime: spentTimen,
         }
+    // tslint:disable-next-line
       } else {
         return {
           completionPercentage: percentage,
           status: 1,
-          spentTime: spentTime,
+          spentTime: spentTimen,
         }
       // }
     }

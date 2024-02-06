@@ -21,7 +21,7 @@ export class PublicContacthomeComponent implements OnInit {
     // tslint:disable-next-line: whitespace
     // @Inject(DOCUMENT) private document: Document,
     // tslint:disable-next-line: whitespace
-    // private elementRef:ElementRef) 
+    // private elementRef:ElementRef)
 
   ngOnInit() {
     this.environment = environment

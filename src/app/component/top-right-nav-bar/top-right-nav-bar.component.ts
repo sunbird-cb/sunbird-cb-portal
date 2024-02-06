@@ -45,11 +45,10 @@ export class TopRightNavBarComponent implements OnInit {
     })
   }
   // ngOnChanges() {}
-  openDialog(): void { 
-    this.dialogRef = this.dialog.open(DialogBoxComponent, { 
-      width: '1000px', 
+  openDialog(): void {
+    this.dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '1000px',
     })
-  
     // tslint: disable-nextline
     this.dialogRef.afterClosed().subscribe(() => {})
   }

@@ -43,9 +43,10 @@ import { SwUpdate } from '@angular/service-worker'
 import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
-import { concat, interval, timer, of } from 'rxjs'
-// tslint: disable-next-line
 import { catchError, map } from 'rxjs/operators'
+// tslint:disable-next-line
+// @ts-ignore
+import { concat, interval, timer, of } from 'rxjs'
 // import { AppIntroComponent } from '../app-intro/app-intro.component'
 
 @Component({
@@ -119,7 +120,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
     if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails &&
       this.configSvc.unMappedUser.profileDetails.get_started_tour) {
-      this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped || 
+      this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped ||
       this.configSvc.unMappedUser.profileDetails.get_started_tour.visited
     }
     this.mobileAppsSvc.init()
@@ -201,13 +202,13 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ngOnInit() {
     // let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
     // this.showTour = showTour && showTour.disable ? showTour.disable : false
-    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status: any)=> {
+    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status: any) => {
       this.mobileTopHeaderVisibilityStatus = status
     })
     this.configSvc.updateTourGuideMethod(this.showTour)
     this.route.queryParams
       .subscribe(params => {
-        // tslint: disable
+        // tslint:disable-next-line
         console.log(params) // { orderby: "price" }
       }
     )
@@ -439,7 +440,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   getHeaderFooterConfiguration() {
-    const baseUrl = this.configSvc.sitePath;
+    const baseUrl = this.configSvc.sitePath
     // console.log('baseUrl', baseUrl+'/page/home.json')
     // tslint:disable-next-line: prefer-template
     return this.http.get(baseUrl + '/page/home.json').pipe(

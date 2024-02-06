@@ -5,7 +5,8 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/config
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-// tslint: disable
+// tslint:disable-next-line
+// @ts-ignore
 import _ from 'lodash'
 // tslint: enable
 import { BtnSettingsService } from '@sunbird-cb/collection'
@@ -41,7 +42,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
     public btnSettingsSvc: BtnSettingsService,
-    private http: HttpClient, 
+    private http: HttpClient,
     public mobileAppsService: MobileAppsService,
     private router: Router) { }
 
@@ -59,9 +60,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
       // tslint:disable-next-line: prefer-template
       this.contentStripData = (this.contentStripData.homeStrips || []).sort((a: any, b: any) => a.order - b.order)
-     
       // tslint:disable-next-line
-      for(let i=0; i < this.contentStripData.length; i++ ) {
+      // @ts-ignore
+      for (let i = 0; i < this.contentStripData.length; i++) {
         if (this.contentStripData[i] &&
           this.contentStripData[i]['strips'] &&
           this.contentStripData[i]['strips'][0] &&
@@ -156,7 +157,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     viewMoreUrl: {
                       path: '/app/careers/home',
                       viewMoreText: 'Career',
-                      queryParams: {}
+                      queryParams: {},
                     },
                     filters: [],
                     request: {
@@ -168,8 +169,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                   },
                 ],
               },
-            }
-          }
+            },
+          },
         ],
     }
 
@@ -221,7 +222,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         //   this.isNudgeOpen = false
         // }
         const profilePopUp = sessionStorage.getItem('hideUpdateProfilePopUp')
-        if (profilePopUp !== null){
+        if (profilePopUp !== null) {
           this.isNudgeOpen = false
         } else if (x && x.profileDetails && x.profileDetails.mandatoryFieldsExists) {
           this.isNudgeOpen = false
@@ -287,27 +288,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
     className === 'section_4') {
       isVisible = true
     } else {
-      if(className !== 'section_0' &&
+      if (className !== 'section_0' &&
        className !== 'section_1' &&
        className !== 'section_2' &&
        className !== 'section_3' &&
        className !== 'section_4') {
       // tslint:disable-next-line
-      for(let i = 0; i < this.sectionList.length; i++) {
-        if (this.sectionList[i]['section'] === className) {
-          if (document.getElementsByClassName(this.sectionList[i]['section'])
-          && document.getElementsByClassName(this.sectionList[i]['section'])[0]
-          && !this.sectionList[i]['isVisible']) {
-            const tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
-            const eleTop = tect.top
-            const eleBottom = tect.bottom
-            isVisible = (eleTop >= 0 ) && (eleBottom <= window.innerHeight)
-            this.sectionList[i]['isVisible'] = isVisible
-            break
-            // tslint:disable-next-line: prefer-template
+        for(let i = 0; i < this.sectionList.length; i++) {
+          if (this.sectionList[i]['section'] === className) {
+            if (document.getElementsByClassName(this.sectionList[i]['section'])
+            && document.getElementsByClassName(this.sectionList[i]['section'])[0]
+            && !this.sectionList[i]['isVisible']) {
+              const tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
+              const eleTop = tect.top
+              const eleBottom = tect.bottom
+              isVisible = (eleTop >= 0) && (eleBottom <= window.innerHeight)
+              this.sectionList[i]['isVisible'] = isVisible
+              break
+              // tslint:disable-next-line: prefer-template
+            }
           }
         }
-      }}
+      }
     }
   }
 
