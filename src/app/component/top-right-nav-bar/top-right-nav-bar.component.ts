@@ -67,7 +67,7 @@ export class TopRightNavBarComponent implements OnInit {
   getZohoForm() {
 
     const dialogRef = this.dialog.open(ZohoDialogComponent, {
-      width: '60%',
+      width: '45%',
       data: {
         view: 'zohoform',
         value: this.zohoHtml
