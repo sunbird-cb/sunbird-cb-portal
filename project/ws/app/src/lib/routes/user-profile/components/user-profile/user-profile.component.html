@@ -6,7 +6,7 @@
     <form class="" [formGroup]="createUserForm">
       <mat-tab-group animationDuration="0ms" class="mat-tab-labels w-full" mat-stretch-tabs
         [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index; tabClicked($event)">
-        <mat-tab label="Personal Details">
+        <mat-tab label="Mandatory Details">
           <ng-template mat-tab-label i18n>
             Mandatory details
           </ng-template>
@@ -488,7 +488,7 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab label="Academics" *ngIf="!isForcedUpdate">
+        <mat-tab label="Other Details" *ngIf="!isForcedUpdate">
           <ng-template mat-tab-label i18n>
             Other details
           </ng-template>

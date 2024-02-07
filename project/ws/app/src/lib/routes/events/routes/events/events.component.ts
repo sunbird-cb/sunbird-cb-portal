@@ -33,6 +33,7 @@ export class EventsComponent implements OnInit {
   sliderConfig = {
     showNavs: true,
     showDots: true,
+    cerificateCardMargin: false,
     maxWidgets: 2,
   }
   eventWidgetData: any
