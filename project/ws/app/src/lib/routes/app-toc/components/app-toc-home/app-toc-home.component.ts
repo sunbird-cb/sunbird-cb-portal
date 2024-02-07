@@ -1,32 +1,39 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
+import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
+import { FormControl, Validators } from '@angular/forms'
+import { HttpErrorResponse } from '@angular/common/http'
+import { MatDialog, MatSnackBar } from '@angular/material'
+import { Subscription, Observable } from 'rxjs'
+import { share } from 'rxjs/operators'
+
 import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
-import { Subscription, Observable } from 'rxjs'
-import { share } from 'rxjs/operators'
+import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
+import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
+import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
+import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
+
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { AccessControlService } from '@ws/author/src/public-api'
-import { FormControl, Validators } from '@angular/forms'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import { ActionService } from '../../services/action.service'
+import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { LoadCheckService } from '../../services/load-check.service'
+
 import * as dayjs from 'dayjs'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(isSameOrBefore)
+import moment from 'moment'
 
 // tslint:disable-next-line
 import _ from 'lodash'
-import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
-import { ActionService } from '../../services/action.service'
-import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
-import moment from 'moment'
-import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { environment } from 'src/environments/environment'
-import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
-dayjs.extend(isSameOrBefore)
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -55,6 +62,7 @@ const flattenItems = (items: any[], key: string | number) => {
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   show = false
+  skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
   content: NsContent.IContent | null = null
@@ -162,6 +170,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isClaimed = false
   monthlyCapExceed = false
   isCompletedThisMonth = false
+  @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
+  scrollLimit = 0
+  rcElem = {
+    offSetTop: 0,
+    BottomPos: 0,
+  }
+  scrolled = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -171,6 +186,22 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } else {
       this.sticky = false
     }
+
+    if (this.scrollLimit) {
+      if ((window.scrollY + this.rcElem.BottomPos) >= this.scrollLimit) {
+        this.rcElement.nativeElement.style.position = 'sticky'
+      } else {
+        this.rcElement.nativeElement.style.position = 'fixed'
+      }
+    }
+
+    // 236... (OffsetTop of right container + 104)
+    if (window.scrollY > (this.rcElem.offSetTop + 104)) {
+      this.scrolled = true
+    } else {
+      this.scrolled = false
+    }
+
   }
 
   constructor(
@@ -191,12 +222,20 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private actionSVC: ActionService,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
-    private telemertyService: TelemetryService,
+    private telemetryService: TelemetryService,
     private events: EventService,
+    private matSnackBar: MatSnackBar,
+    private loadCheckService: LoadCheckService
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
+
+    this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
+      // Present in app-toc-about.component
+      const ratingsDiv = document.getElementById('ratingsDiv') as any
+      this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+    })
   }
 
   ngOnInit() {
@@ -209,7 +248,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.serverDate = serverDate
     })
     // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
-    this.channelId = this.telemertyService.telemetryConfig ? this.telemertyService.telemetryConfig.channel : ''
+    this.channelId = this.telemetryService.telemetryConfig ? this.telemetryService.telemetryConfig.channel : ''
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
@@ -219,8 +258,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
         this.courseID = data.content.data.identifier
+        this.skeletonLoader = true
         this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
           this.contentReadData = res.result.content
+          this.skeletonLoader = false
+        },                                                                      (error: HttpErrorResponse) => {
+          if (!error.ok) {
+            this.skeletonLoader = false
+            this.matSnackBar.open('Unable to fetch content data, due to some error!')
+          }
         })
         this.initialrouteData = data
         this.banners = data.pageData.data.banners
@@ -450,7 +496,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    // this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    this.rcElem.BottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
+    this.rcElem.offSetTop = this.rcElement.nativeElement.offsetTop
   }
 
   handleBreadcrumbs() {
@@ -558,6 +605,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
+
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
       case NsAppToc.EWsTocErrorCode.API_FAILURE: {
@@ -685,8 +733,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         })
       }
     })
-
-    console.log('content - ', this.content)
 
   }
 
@@ -1055,16 +1101,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
 
   }
-
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   if ((window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) > this.showScrollHeight) {
-  //     this.showScroll = true
-  //   } else if (this.showScroll && (window.pageYOffset || document.documentElement.scrollTop
-  //     || document.body.scrollTop) < this.hideScrollHeight) {
-  //     this.showScroll = false
-  //   }
-  // }
 
   scrollToTop() {
     (function smoothscroll() {
@@ -1457,6 +1493,35 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     } catch {
       return []
     }
+  }
+
+  handleNavigateToReviews(): void {
+    const elementToView = document.getElementById('reviewContainer') as any
+    if (elementToView) { elementToView.scrollIntoView() }
+  }
+
+  handleEnrollBatch(): void {
+    const dialogRef = this.dialog.open(EnrollModalComponent, {
+      width: '420px',
+      data: { enroll: true },
+      panelClass: 'enroll-modal',
+      disableClose: true,
+    })
+
+    dialogRef.afterClosed().subscribe((_result: any) => {
+    })
+  }
+
+  handleConfirmation(): void {
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      width: '420px',
+      data: { enroll: true },
+      panelClass: 'confirmation-modal',
+      disableClose: true,
+    })
+
+    dialogRef.afterClosed().subscribe((_result: any) => {
+    })
   }
 
   ngOnDestroy() {

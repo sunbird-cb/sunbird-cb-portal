@@ -15,6 +15,7 @@ export class AppTocContentComponent implements OnInit {
 
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
+  @Input() skeletonLoader = false
 
   constructor() { }
 

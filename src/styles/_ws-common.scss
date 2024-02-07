@@ -112,3 +112,13 @@
 .highlightFilter {
   background: rgba(0, 0, 0, 0.04) !important;
 }
+
+.modal-button {
+  border-radius: 64px;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+  padding: 12px 36px;
+  cursor: pointer;
+  border: 1px solid $text-primary;
+  text-align: center;
+}
