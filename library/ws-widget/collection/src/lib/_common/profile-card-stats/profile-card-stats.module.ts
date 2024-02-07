@@ -7,6 +7,7 @@ import { AvatarPhotoModule } from './../avatar-photo/avatar-photo.module'
 import { SlidersDynamicModule } from './../../sliders-dynamic/sliders-dynamic.module'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [ProfileCardStatsComponent],
@@ -20,6 +21,7 @@ import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
     SlidersDynamicModule,
     PipeDurationTransformModule,
     WeeklyClapsModule,
+    TranslateModule
   ],
   exports: [
     ProfileCardStatsComponent,

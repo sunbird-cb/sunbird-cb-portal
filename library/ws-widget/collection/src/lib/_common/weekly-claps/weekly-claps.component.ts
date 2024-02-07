@@ -15,7 +15,7 @@ export class WeeklyClapsComponent implements OnInit {
   @Input() weeklyData: any = ''
 
   constructor(private dialog: MatDialog, private translate: TranslateService,
-    private multiLingualService: MultilingualTranslationsService) {
+              private multiLingualService: MultilingualTranslationsService) {
 
     this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
       // tslint:disable
