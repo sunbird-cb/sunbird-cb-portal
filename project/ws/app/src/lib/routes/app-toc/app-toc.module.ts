@@ -27,6 +27,7 @@ import {
   MatSnackBarModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatAutocompleteModule,
 } from '@angular/material'
 import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
@@ -124,11 +125,9 @@ import { AppTocSessionCardComponent } from './components/app-toc-session-card/ap
 import { EnrollQuestionnaireComponent } from './components/enroll-questionnaire/enroll-questionnaire.component'
 import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
-import { HttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import { HttpLoaderFactory } from '../knowledge-resource/knowledge-resource.module'
 import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
+import { SharedModule } from 'src/app/shared/shared.module'
 
 @NgModule({
   declarations: [
@@ -239,14 +238,10 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     AttendanceHelperModule,
     AttendanceCardModule,
     MicroSurveyModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({}),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
+    SharedModule,
   ],
   providers: [
     AppTocResolverService,
@@ -263,7 +258,7 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
     ActionService,
     MultilingualTranslationsService,
   ],
-  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent, TranslateModule],
+  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent],
   entryComponents: [
     AppTocDialogIntroVideoComponent,
     AppTocOverviewComponent,
