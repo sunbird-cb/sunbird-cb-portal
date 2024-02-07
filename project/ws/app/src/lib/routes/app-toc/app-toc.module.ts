@@ -127,7 +127,7 @@ import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
-import { SharedModule } from 'src/app/shared/shared.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -241,7 +241,7 @@ import { SharedModule } from 'src/app/shared/shared.module'
     MatChipsModule,
     MatAutocompleteModule,
     NgCircleProgressModule.forRoot({}),
-    SharedModule,
+    TranslateModule,
   ],
   providers: [
     AppTocResolverService,
