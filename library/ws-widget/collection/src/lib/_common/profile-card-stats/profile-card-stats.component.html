@@ -75,7 +75,7 @@
     <div class="flex flex-middle flex-between" (click)="myActivity()">
       <div class="flex flex-middle">
         <img class="stats-icon margin-right-s" width="20" height="20" src="/assets/icons/home/dashboard.svg">
-        <span class="activites">Show my activities</span>
+        <span class="activites">{{ 'profileCardStats.ShowMyActivities' | translate}}</span>
       </div>
       <div class="flex"><img class="stats-icon" width="20" height="20" src="/assets/icons/home/right_arrow.svg"></div>
     </div>
@@ -126,7 +126,7 @@
       <ng-container *ngIf="stats.enable">
         <div class="stats-data margin-bottom-m">
           <img class="stats-icon" width="20" height="20" [src]="stats.icon">
-          <div class="stats-title">{{stats.label}}</div>
+          <div class="stats-title">{{translateLabels(stats.key, 'profileCardStats')}}</div>
           <div class="stats-count ws-mat-default-text" *ngIf="countdata;else other_content">{{ countdata[stats.key] || 0}}</div>
           <ng-template #other_content> <div class="skeleton-box" style="width:46px;height:12px"></div></ng-template>
         </div>

@@ -51,6 +51,24 @@ export class MultilingualTranslationsService {
         }
     }
 
+    translateActualLabel(label: string, type: any, subtype: any) {
+        const sl = label.split(' ')
+        sl.forEach((w: any, index: any) => {
+            if (index !== 0) {
+                sl[index] = w[0].toUpperCase() + w.slice(1)
+            }
+        })
+        label = sl.join('')
+        label = label.replace(/\s/g, '')
+        if (subtype) {
+          const translationKey = type + '.' +  label + subtype
+          return this.translate.instant(translationKey)
+        }  {
+            const translationKey = type + '.' +  label
+            return this.translate.instant(translationKey)
+        }
+    }
+
     editProfileDetailsAPI(data: any) {
         return this.http.post<any>(this.editProfileDetails, data)
     }

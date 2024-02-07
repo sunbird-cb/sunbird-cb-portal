@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
@@ -29,7 +29,8 @@ export class ProfileCardStatsComponent implements OnInit {
   profileDelay = 0
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
-              private pipDuration: PipeDurationTransformPipe) { }
+              private pipDuration: PipeDurationTransformPipe,
+              private langtranslations: MultilingualTranslationsService,) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile
@@ -119,5 +120,8 @@ export class ProfileCardStatsComponent implements OnInit {
   }
   myActivity() {
     this.activity.emit(true)
+  }
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
   }
 }
