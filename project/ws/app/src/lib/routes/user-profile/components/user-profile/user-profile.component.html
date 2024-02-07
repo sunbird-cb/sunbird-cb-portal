@@ -499,7 +499,7 @@
                       i18n="Other Languages Known label|Label which explains the user to enter Other Languages Known"
                       i18n-aria-label aria-label="Other Languages Known label">
                       {{'userProfile.otherLanguages' | translate }}
-                    </p>{{selectedKnowLangs | json}}
+                    </p>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <mat-chip-list #chipList title="chip input for selecting languages">
                         <mat-chip *ngFor="let lang of selectedKnowLangs" [selectable]="true" [removable]="true"
