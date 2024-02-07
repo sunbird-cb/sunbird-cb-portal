@@ -261,7 +261,7 @@ export class AppTourComponent {
     setTimeout(() => {
       this.onCongrats()
     // tslint: disable-next-line
-    }, 3000)
+    },         3000)
     this.raiseGetStartedEndTelemetry()
     this.updateTourstatus({ visited: true, skipped: false })
   }
@@ -360,6 +360,7 @@ export class AppTourComponent {
   }
 
   translateTo(name: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey =  'tour.' + name
     return this.translate.instant(translationKey)
   }

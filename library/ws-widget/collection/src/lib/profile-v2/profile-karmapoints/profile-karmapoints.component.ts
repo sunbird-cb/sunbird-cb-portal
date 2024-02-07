@@ -3,7 +3,9 @@ import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
+/* tslint:disable */
 import _ from 'lodash'
+/* tslint:enable */
 @Component({
   selector: 'ws-widget-profile-v2-karmapoints',
   templateUrl: './profile-karmapoints.component.html',
@@ -81,6 +83,7 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   }
 
   translateName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profileKarmapoints.' + _.camelCase(menuName.replace(/\s/g, ''))
     return this.translate.instant(translationKey)
   }

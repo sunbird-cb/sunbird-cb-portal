@@ -2,10 +2,9 @@ import { Component, Input, OnInit } from '@angular/core'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
-// tslint: disable-next-line
-// @ts-ignore
+/* tslint:disable */
 import _ from 'lodash'
-// tslint: enable
+/* tslint:enable */
 @Component({
   selector: 'ws-footer-section',
   templateUrl: './footer-section.component.html',

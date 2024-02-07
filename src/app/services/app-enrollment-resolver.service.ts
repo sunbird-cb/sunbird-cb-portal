@@ -25,14 +25,14 @@ export class AppEnrollmentResolverService
             map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
                 // tslint: disable-next-line: align
                 // @ts-ignore
-                tap((resolveData: any) => {
+            tap((resolveData: any) => {
                     // @ts-ignore
                     return of({ error: null, data: resolveData })
                     // @ts-ignore
                 }),
                 // tslint: disable-next-line: align
                 // @ts-ignore
-                catchError((error: any) => of({ error, data: null })),
+            catchError((error: any) => of({ error, data: null })),
             )
     }
 }

@@ -102,6 +102,7 @@ export class AppFooterComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'common.' + hubName
     return this.translate.instant(translationKey)
   }

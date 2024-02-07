@@ -20,8 +20,8 @@ export class AppContentResolverService
         const collectionId = _route.queryParams && _route.queryParams.collectionId || ''
         return this.contentSvc.fetchProgramContent(collectionId).pipe(
         map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
-            tap((resolveData: any) => { return of({ error: null, data: resolveData }) }), 
-            catchError((error: any) => of({ error, data: null })),
+        tap((resolveData: any) => of({ error: null, data: resolveData })),
+        catchError((error: any) => of({ error, data: null })),
         )
     }
 }

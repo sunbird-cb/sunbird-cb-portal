@@ -171,9 +171,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             if (eachCourse.issuedCertificates.length) {
               // tslint: disable-next-line
               eachCourse.issuedCertificates = eachCourse.issuedCertificates.map((icObj: any) => {
-                // tslint: disable
-                icObj = { ...icObj, ...courseDetails }
-                return icObj
+                const nicObj = { ...icObj, ...courseDetails }
+                return nicObj
               })
             } else {
               eachCourse.issuedCertificates.push(courseDetails)
@@ -219,15 +218,15 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
                   subThemeMapping[v5Obj.competencyTheme].push(v5Obj.competencySubTheme)
                 }
               })
-              // tslint: disable-next-line
-              for (const key in subThemeMapping) {
+              // for (const key in subThemeMapping) {
+              //   this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
+              // }
+              subThemeMapping.forEach((key: any) => {
                 this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
-                // tslint: disable-next-line: whitespace
-              }
-              // tslint: disable-next-line: whitespace
+              })
             }
           })
-          
+
           competenciesV5.forEach((v5Obj: any) => {
             v5Obj.subTheme = []
             v5Obj.contentConsumed = []
@@ -255,7 +254,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
           this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all
           this.competency.skeletonLoading = false
-        }, (error: HttpErrorResponse) => {
+        },
+        (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.matSnackBar.open('Unable to pull Enrollment list details!')
             this.competency.skeletonLoading = false
@@ -363,7 +363,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
           // tslint:disable-next-line: max-line-length
           if (filterValue['competencyArea'].some((r: any) =>  data.competencyArea.toLowerCase().trim().includes((r.toLowerCase() === 'behavior') ? 'behavioural' : r.toLowerCase()))) {
-            return data 
+            return data
           }
         })
         filterAppliedOnLocal = true
@@ -382,7 +382,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       if (filterValue['competencySubTheme'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          const returnedValue = data.subTheme.filter((stName: any) => { 
+          const returnedValue = data.subTheme.filter((stName: any) => {
             return filterValue['competencySubTheme'].includes(stName)
           })
           return (returnedValue.length) ? data : false

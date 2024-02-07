@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, OnDestroy } from '@angular/core'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
 import { environment } from 'src/environments/environment'
 
@@ -26,10 +26,10 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
       const lang = localStorage.getItem('websiteLanguage')!
 
       this.translate.use(lang)
-      console.log('current lang ------', this.translate.getBrowserLang())
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event)
-      })
+      // console.log('current lang ------', this.translate.getBrowserLang())
+      // this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      //   console.log('onLangChange', event)
+      // })
     }
   }
 
@@ -60,9 +60,7 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
       }
       // tslint:disable-next-line: align
     } catch (error) {
-      // tslint:disable-next-line 
-      // tslint: disable-next-line: whitespace
-      console.error('Video progress time error')
+      // console.error('Video progress time error')
     }
     this.raiseVideStartTelemetry()
   }

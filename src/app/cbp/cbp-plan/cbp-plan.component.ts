@@ -4,9 +4,9 @@ import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 import {
   NsContent,
 } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
-// tslint: disable
-// @ts-ignore
+/* tslint:disable */
 import _ from 'lodash'
+/* tslint:enable */
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -264,7 +264,7 @@ export class CbpPlanComponent implements OnInit {
           filterAppliedonLocal = filterAppliedonLocal ? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
             if (filterValue['competencyArea'].some((r: any) => data.competencyArea.includes(r))) {
-              return data 
+              return data
             }
           })
           filterAppliedonLocal = true
@@ -274,7 +274,7 @@ export class CbpPlanComponent implements OnInit {
           filterAppliedonLocal = filterAppliedonLocal ? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
             if (filterValue['competencyTheme'].some((r: any) => data.competencyTheme.includes(r))) {
-              return data 
+              return data
             }
           })
           filterAppliedonLocal = true
@@ -294,8 +294,8 @@ export class CbpPlanComponent implements OnInit {
           filterAppliedonLocal = true
         }
 
-        if (filterValue['providers'].length){
-          filterAppliedonLocal = filterAppliedonLocal? true : false
+        if (filterValue['providers'].length) {
+          filterAppliedonLocal = filterAppliedonLocal ? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
             if (filterValue['providers'].includes(data.organisation[0])) {
               return data

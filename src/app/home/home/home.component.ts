@@ -5,10 +5,9 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/config
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-// tslint:disable-next-line
-// @ts-ignore
+/* tslint:disable */
 import _ from 'lodash'
-// tslint: enable
+/* tslint:enable */
 import { BtnSettingsService } from '@sunbird-cb/collection'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { TranslateService } from '@ngx-translate/core'
@@ -63,7 +62,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       // tslint:disable-next-line: prefer-template
       this.contentStripData = (this.contentStripData.homeStrips || []).sort((a: any, b: any) => a.order - b.order)
       // tslint:disable-next-line
-      // @ts-ignore
       for (let i = 0; i < this.contentStripData.length; i++) {
         if (this.contentStripData[i] &&
           this.contentStripData[i]['strips'] &&
@@ -217,8 +215,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   handleButtonClick(): void {
-    console.log('Working!!!')
-
+    // console.log('Working!!!')
   }
 
   translateHub(hubName: string): string {

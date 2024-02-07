@@ -33,7 +33,7 @@ import {
   EventService,
   WsEvents,
 } from '@sunbird-cb/utils'
-import { delay, first } from 'rxjs/operators'
+import { delay, first, catchError, map } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
 // import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
@@ -43,9 +43,6 @@ import { SwUpdate } from '@angular/service-worker'
 import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
-import { catchError, map } from 'rxjs/operators'
-// tslint:disable-next-line
-// @ts-ignore
 import { concat, interval, timer, of } from 'rxjs'
 // import { AppIntroComponent } from '../app-intro/app-intro.component'
 

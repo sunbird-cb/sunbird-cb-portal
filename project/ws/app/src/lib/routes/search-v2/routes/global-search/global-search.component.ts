@@ -73,6 +73,7 @@ export class GlobalSearchComponent implements OnInit {
   }
 
   translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'globalsearch.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

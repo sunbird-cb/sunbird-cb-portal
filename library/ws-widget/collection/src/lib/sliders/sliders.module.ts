@@ -4,7 +4,9 @@ import { SlidersComponent } from './sliders.component'
 import { RouterModule } from '@angular/router'
 import { NavigationModule, ImageResponsiveModule } from '@sunbird-cb/utils'
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser'
+/* tslint:disable */
 import  Hammer from 'hammerjs'
+/* tslint:enable */
 export class MyHammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
     const mc = new Hammer(element, {

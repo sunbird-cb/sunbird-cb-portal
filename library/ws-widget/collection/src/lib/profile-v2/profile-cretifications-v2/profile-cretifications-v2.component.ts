@@ -116,6 +116,7 @@ if (data.length > 0) {
   }
 
   translateTabName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profileCretificationsV2.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

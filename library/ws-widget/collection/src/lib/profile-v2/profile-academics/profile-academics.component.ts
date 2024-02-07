@@ -29,11 +29,13 @@ export class ProfileAcademicsComponent extends WidgetBaseComponent implements On
   }
 
   translateTabName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profileV2Academics.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }
 
   getDefaultTranslate(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profileV2Academics.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

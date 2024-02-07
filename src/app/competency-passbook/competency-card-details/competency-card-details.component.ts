@@ -58,12 +58,12 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     // tslint: disable-next-line
     this.cpService.fetchCertificate(obj.identifier)
       .pipe(takeUntil(this.destroySubject$))
-      .subscribe((res) => {
+      .subscribe(res => {
         // tslint: disable-next-line
         obj['printURI'] = res.result.printUri
         obj['loading'] = false
         // tslint: disable-next-line
-      }, (error: HttpErrorResponse) => {
+      },         (error: HttpErrorResponse) => {
         if (!error.ok) {
           obj['loading'] = false
           obj['error'] = 'Failed to fetch Certificate'

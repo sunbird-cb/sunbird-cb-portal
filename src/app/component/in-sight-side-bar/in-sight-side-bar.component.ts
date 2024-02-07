@@ -210,7 +210,7 @@ export class InsightSideBarComponent implements OnInit {
     this.collapsed = event
     // tslint:disable-next-line: whitespace
   }
-  // tslint:disable-next-line: whitespace  
+  // tslint:disable-next-line: whitespace
   goToActivity(_e: any) {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`)
   }
