@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./app-tour-video.component.scss'],
 })
 export class AppTourVideoComponent implements OnInit, OnDestroy {
-
   @Input() showVideoTour: any
   @Input() isMobile: any
   @Input() videoProgressTime = 0
@@ -18,6 +17,7 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
   videoPlayedProgress = true
   environment: any
   videoUrl: any
+  // tslint:disable-next-line
   @ViewChild('tourVideoTag', { static: false }) tourVideoTag!: ElementRef<HTMLVideoElement>
 
   constructor(private eventService: EventService, private translate: TranslateService) {
@@ -55,9 +55,13 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
               }
             }
           }
-        },         2000)
+          // tslint:disable-next-line
+        }, 2000)
       }
+      // tslint:disable-next-line: align
     } catch (error) {
+      // tslint:disable-next-line 
+      // tslint: disable-next-line: whitespace
       console.error('Video progress time error')
     }
     this.raiseVideStartTelemetry()
@@ -115,5 +119,4 @@ export class AppTourVideoComponent implements OnInit, OnDestroy {
     }
     this.eventService.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
-
 }

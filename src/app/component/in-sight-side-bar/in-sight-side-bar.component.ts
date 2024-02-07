@@ -12,10 +12,10 @@ const DEFAULT_DISCUSS_DURATION = 600
 const DEFAULT_DURATION = 100
 
 const noData = {
-  desc : 'Do you have any questions, suggestions or, ideas in your mind? Post it.',
-  linkUrl : 'https://portal.karmayogibm.nic.in/page/learn',
-  linkText : 'Start discussion',
-  iconImg : '/assets/icons/edit.svg',
+  desc: 'Do you have any questions, suggestions or, ideas in your mind? Post it.',
+  linkUrl: 'https://portal.karmayogibm.nic.in/page/learn',
+  linkText: 'Start discussion',
+  iconImg: '/assets/icons/edit.svg',
 }
 
 @Component({
@@ -26,22 +26,29 @@ const noData = {
     trigger('collapse', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
       state('true', style({  height: '0', visibility: 'hidden'  })),
+      // tslint:disable-next-line
       transition('false => true', animate(DEFAULT_DURATION + 'ms ease-in')),
+      // tslint:disable-next-line
       transition('true => false', animate(DEFAULT_DURATION + 'ms ease-out')),
     ]),
     trigger('collapseWeekly', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
       state('true', style({  height: '0', visibility: 'hidden'  })),
       // state('true', style({  position: 'absolute', width: '90%',marginRight: '16px', marginLeft:'16px',top: '-118%', zIndex: '9' })),
+      // tslint:disable-next-line: prefer-template
       transition('false => true', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-in')),
+      // tslint:disable-next-line: prefer-template
       transition('true => false', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-out')),
     ]),
 
     trigger('collapsDiscuss', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
       state('true', style({  height: '0', visibility: 'hidden'  })),
+      // tslint:disable-next-line:max-line-length
       // state('true', style({  position: 'absolute', width: '80%', transform: 'scaleY(0.7)',marginRight: '32px', marginLeft:'32px',top: '-300%', zIndex: '6' })),
+      // tslint:disable-next-line: prefer-template
       transition('false => true', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-in')),
+      // tslint:disable-next-line: prefer-template
       transition('true => false', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-out')),
     ]),
   ],
@@ -62,7 +69,6 @@ export class InsightSideBarComponent implements OnInit {
   }
   pendingRequestData: any = []
   pendingRequestSkeleton = true
-
   constructor(
     private homePageSvc: HomePageService,
     private configSvc: ConfigurationsService,
@@ -94,11 +100,11 @@ export class InsightSideBarComponent implements OnInit {
     const request = {
       request: {
           filters: {
-              primaryCategory: 'programs',
-              organisations: [
-                  'across',
-                  this.userData.rootOrgId,
-              ],
+            primaryCategory: 'programs',
+            organisations: [
+                'across',
+                this.userData.rootOrgId,
+            ],
           },
       },
     }
@@ -110,7 +116,9 @@ export class InsightSideBarComponent implements OnInit {
         this.constructWeeklyData()
         this.profileDataLoading = false
       }
-    },                                                  (_error: any) => {
+      // tslint:disable-next-line: align
+    }, (_error: any) => {
+      // tslint:disable-next-line: align
       this.insightsData = ''
       this.profileDataLoading = false
       this.clapsDataLoading = false
@@ -135,6 +143,7 @@ export class InsightSideBarComponent implements OnInit {
         const data = {
           title: ele.label,
           icon: ele.growth === 'positive' ?  'arrow_upward' : 'arrow_downward',
+          // tslint:disable-next-line: prefer-template
           data: `${ele.growth === 'positive' && ele.progress > 1 ?  '+' + Math.round(ele.progress) + '%' : ''}`,
           colorData: ele.growth === 'positive' ? 'color-green' : 'color-red',
         }
@@ -150,7 +159,6 @@ export class InsightSideBarComponent implements OnInit {
     if (this.insightsData && this.insightsData['weekly-claps']) {
       this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
     }
-
     this.clapsDataLoading = false
   }
 
@@ -173,14 +181,16 @@ export class InsightSideBarComponent implements OnInit {
   getPendingRequestData() {
     this.homePageSvc.getRecentRequests().subscribe(
       (res: any) => {
-
         this.pendingRequestSkeleton = false
         this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
           return elem
         })
+        // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
+        // tslint:disable-next-line: align
         if (!error.ok) {
+          // tslint:disable-next-line: align
           this.pendingRequestSkeleton = false
         }
       }
@@ -192,13 +202,15 @@ export class InsightSideBarComponent implements OnInit {
   }
 
   moveToUserProile(id: string) {
+    // tslint:disable-next-line: prefer-template
     this.router.navigateByUrl('app/person-profile/' + id + '#profileInfo')
   }
 
   expandCollapse(event: any) {
     this.collapsed = event
+    // tslint:disable-next-line: whitespace
   }
-
+  // tslint:disable-next-line: whitespace  
   goToActivity(_e: any) {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`)
   }
@@ -261,4 +273,3 @@ export class InsightSideBarComponent implements OnInit {
     )
   }
 }
-

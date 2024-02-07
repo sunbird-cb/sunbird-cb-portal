@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core'
 })
 
 export class DiscussHubComponent implements OnInit {
-
+  // tslint:disable-next-line:no-input-rename
   @Input('discussConfig') discussConfig: any
   userData: any
   discussion = {
@@ -43,18 +43,14 @@ export class DiscussHubComponent implements OnInit {
   }
 
   ngOnInit() {
+    // tslint:disable-next-line: whitespace
     this.userData = this.configService && this.configService.userProfile
-    if (this.discussConfig.trendingDiscussions.active) {
-      this.fetchTrendingDiscussions()
-    }
-
-    if (this.discussConfig.updatePosts.active) {
-      this.fetchUpdatesOnPosts()
-    }
+    if (this.discussConfig.trendingDiscussions.active) { this.fetchTrendingDiscussions() }
+    if (this.discussConfig.updatePosts.active) { this.fetchUpdatesOnPosts() }
   }
 
   translateHub(hubName: string): string {
-    const translationKey =  hubName
+    const translationKey = hubName
     return this.translate.instant(translationKey)
   }
 
@@ -142,5 +138,4 @@ export class DiscussHubComponent implements OnInit {
     localStorage.setItem('home', JSON.stringify(config))
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
-
 }

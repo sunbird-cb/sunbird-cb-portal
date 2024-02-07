@@ -8,7 +8,8 @@ import { MatIconModule } from '@angular/material/icon'
 
 import { HeaderModule } from '../header/header.module'
 import {
-  GridLayoutModule,  SlidersModule, DiscussStripMultipleModule, NetworkStripMultipleModule, ContentStripWithTabsModule, AvatarPhotoModule,
+  GridLayoutModule, SlidersModule, DiscussStripMultipleModule,
+  NetworkStripMultipleModule, ContentStripWithTabsModule, AvatarPhotoModule,
 } from '@sunbird-cb/collection'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
@@ -36,7 +37,11 @@ import { HttpLoaderFactory } from '../app.module'
 import { HttpClient } from '@angular/common/http'
 
 @NgModule({
-  declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent, HomeOtherPortalComponent, HomeContainerComponent, DiscussHubComponent, NetworkHubComponent],
+  declarations: [
+    HomeComponent, FeedListComponent, InsightSideBarComponent,
+    PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent,
+    HomeOtherPortalComponent, HomeContainerComponent, DiscussHubComponent,
+    NetworkHubComponent],
   imports: [
     CommonModule,
     RouterModule,

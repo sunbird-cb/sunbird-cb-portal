@@ -145,8 +145,10 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
-    const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
-                                                               this.activatedRoute.snapshot.queryParams.batchId, this.activatedRoute.snapshot.params.resourceId)
+    const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+      this.activatedRoute.snapshot.queryParams.collectionId,
+      this.activatedRoute.snapshot.queryParams.batchId,
+      this.activatedRoute.snapshot.params.resourceId)
     const req: NsContent.IContinueLearningDataReq = {
       request: {
         userId,

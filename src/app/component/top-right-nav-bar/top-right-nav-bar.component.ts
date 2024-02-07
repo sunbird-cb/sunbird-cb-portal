@@ -62,10 +62,7 @@ export class TopRightNavBarComponent implements OnInit {
       }
     })
   }
-
-  ngOnChanges() {
-  }
-
+  // ngOnChanges() {}
   openDialog(): void {
     this.dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '1000px',

@@ -510,7 +510,11 @@ export class PublicRequestComponent implements OnInit {
 
   public goBackUrl() {
     const formData = this.requestForm.value
-    this.signupSvc.updateSignUpData({ firstname: formData.firstname, mobile: formData.mobile, email: formData.email, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified })
+    this.signupSvc.updateSignUpData({
+      firstname: formData.firstname,
+      mobile: formData.mobile, email: formData.email,
+      isMobileVerified: this.isMobileVerified,
+      isEmailVerified: this.isEmailVerified })
     this._location.back()
   }
   numericOnly(event: any): boolean {

@@ -11,7 +11,6 @@ import { TranslateService } from '@ngx-translate/core'
   styleUrls: ['./app-nav-bar.component.scss'],
 })
 export class AppNavBarComponent implements OnInit, OnChanges {
-
   @Input() mode: 'top' | 'bottom' = 'top'
   @Input() headerFooterConfigData: any
   // @Input()
@@ -93,7 +92,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       setInterval(() => {
         this.janDataEnable = true
         this.displayLogo()
-       },         this.logoDisplayTime)
+        // tslint:disable-next-line
+       }, this.logoDisplayTime)
     }
 
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
@@ -101,7 +101,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event.url)
-          // console.log("activeRoute",localStorage.getItem("activeRoute"));
+          // console.log("activeRoute",localStorage.getItem("activeRoute"))
           if (localStorage.getItem('activeRoute')) {
             const route = localStorage.getItem('activeRoute')
             this.activeRoute = route ? route.toLowerCase().toString() : ''
@@ -157,14 +157,16 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.startTour()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
-    },                                1000)
+    // tslint:disable-next-line
+    }, 1000)
   }
 
   displayLogo() {
     const animationDur = this.jan26Data.desktop.animationDuration
     setTimeout(() => {
       this.janDataEnable = false
-    },         animationDur)
+      // tslint:disable-next-line
+    }, animationDur)
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -187,6 +189,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       } else {
         this.isPublicHomePage = false
       }
+    // tslint:disable-next-line: max-line-length
     } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
       this.showAppNavBar = false
     } else {
@@ -326,7 +329,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       {},
       {
         module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
-    })
+        // tslint: disable-next-line: whitespace
+      }
+      // tslint: disable-next-line: whitespace
+      )
   }
 
   public getItem(item: any) {

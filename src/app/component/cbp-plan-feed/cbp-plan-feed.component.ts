@@ -58,13 +58,14 @@ export class CbpPlanFeedComponent implements OnInit {
 
   emitSearchEvent() {
     this.searchRequest.emit({ query: this.searchControl.value })
+    // tslint:disable-next-line: whitespace
   }
-
   openFilter() {
       this.toggleFilter = true
       this.toggleFilterEvent.emit(this.toggleFilter)
   }
-  CloseFilter(value: any, key: any) {
+  // tslint: disable-next-line
+  closeFilter(value: any, key: any) {
     this.closeFilterKey.emit({ value, key })
   }
 }
