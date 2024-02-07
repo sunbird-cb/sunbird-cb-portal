@@ -37,7 +37,7 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
   exports: [
-    TranslateModule
+    TranslateModule,
   ]
 })
 
