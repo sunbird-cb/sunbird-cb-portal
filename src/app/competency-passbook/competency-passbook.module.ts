@@ -34,7 +34,7 @@ import { TranslateModule } from '@ngx-translate/core'
     SkeletonLoaderModule,
     PipeSafeSanitizerModule,
     CbpFiltersModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     TranslateModule
