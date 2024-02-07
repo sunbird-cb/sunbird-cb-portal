@@ -71,8 +71,8 @@
       <mat-card-header class="flex items-baseline margin-fix">
         <mat-card-title class="margin-l-0 f-medium  flex-1">
           <span class="width-expand">
-            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length > 1 ">Connection requests</span>
-            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length === 1 ">Connection request</span>
+            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length > 1 ">{{ 'network.cRequests'| translate }}</span>
+            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length === 1 ">{{ 'network.cRequest'| translate }}</span>
           </span>
         </mat-card-title>
         <span class="spacer"></span>

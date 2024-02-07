@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators'
 // Project files and components
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-competency-list',
@@ -112,11 +113,11 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   filterObjData: any = {
     "primaryCategory":[],
     "status":[],
-    "timeDuration":[], 
-    "competencyArea": [], 
-    "competencyTheme": [], 
-    "competencySubTheme": [], 
-    "providers": [] 
+    "timeDuration":[],
+    "competencyArea": [],
+    "competencyTheme": [],
+    "competencySubTheme": [],
+    "providers": []
   };
   filterObjData2 = {...this.filterObjData};
   tabValue: string = '';
@@ -127,8 +128,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     private configService: ConfigurationsService,
     private router: Router,
     private matSnackBar: MatSnackBar,
+    private translate: TranslateService,
     @Inject(DOCUMENT) private document: Document
-  ) { 
+  ) {
     if (window.innerWidth < 768) {
       this.isMobile = true;
       this.skeletonArr = [1, 2, 3];
@@ -136,6 +138,11 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       this.skeletonArr = [1, 2, 3, 4, 5, 6];
       this.showAll = true;
       this.isMobile = false;
+    }
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
   }
 
@@ -214,13 +221,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
                   subThemeMapping[v5Obj.competencyTheme].push(v5Obj.competencySubTheme);
                 }
               });
-              
+
               for (let key in subThemeMapping) {
                 this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
               }
             }
           });
-          
+
           competenciesV5.forEach((v5Obj: any) => {
             v5Obj.subTheme = [];
             v5Obj.contentConsumed = [];
@@ -238,14 +245,14 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               }
             });
           });
-          
+
           this.competency.all = [...this.competency.behavioural, ...this.competency.functional, ...this.competency.domain];
           this.getOtherData();
           this.competency.all = this.competency.all.sort((a: any, b: any) => b.latest - a.latest);
 
           this.competencyArray = (this.isMobile) ? this.competency.all.slice(0, 3) : this.competency.all;
           this.competency.skeletonLoading = false;
-          
+
         }, (error: HttpErrorResponse) => {
           if (!error.ok) {
             this.matSnackBar.open("Unable to pull Enrollment list details!");
@@ -293,7 +300,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   handleShowAll(): void {
     this.showAll = !this.showAll;
-    this.competencyArray = (this.showAll) ? this.competency['all'] : this.competency['all'].slice(0, 3); 
+    this.competencyArray = (this.showAll) ? this.competency['all'] : this.competency['all'].slice(0, 3);
   }
 
   handleClick(param: string): void {
@@ -348,7 +355,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
           if(filterValue['competencyArea'].some((r: any) =>  data.competencyArea.toLowerCase().trim().includes((r.toLowerCase() === 'behavior') ? 'behavioural' : r.toLowerCase()))) {
-            return data 
+            return data
           }
         })
         filterAppliedOnLocal = true;
@@ -365,7 +372,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       if(filterValue['competencySubTheme'].length) {
         filterAppliedOnLocal = filterAppliedOnLocal ? true : false
         finalFilterValue = (filterAppliedOnLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
-          let returnedValue = data.subTheme.filter((stName: any) => { 
+          let returnedValue = data.subTheme.filter((stName: any) => {
             return filterValue['competencySubTheme'].includes(stName)
           })
           return (returnedValue.length) ? data : false;

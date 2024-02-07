@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 // import { ConnectionHoverService } from '../../components/connection-name/connection-hover.servive'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -25,6 +25,7 @@ export class NetworkMyConnectionComponent implements OnInit {
     // private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
     private translate: TranslateService,
+    private multiLingualService: MultilingualTranslationsService,
   ) {
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
@@ -39,6 +40,16 @@ export class NetworkMyConnectionComponent implements OnInit {
       && this.route.snapshot.data.myConnectionList.data.result.data) {
       this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
     }
+    this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
+      // tslint:disable
+      console.log("daata -----------" , data)
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+
+    })
   }
 
   ngOnInit() {

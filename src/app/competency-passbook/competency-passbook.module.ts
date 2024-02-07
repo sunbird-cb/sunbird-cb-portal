@@ -13,13 +13,14 @@ import { CompetencyListComponent } from './competency-list/competency-list.compo
 import { CompetencyCardDetailsComponent } from './competency-card-details/competency-card-details.component';
 import { CompetencyPassbookSideBarComponent } from './../component/competency-passbook-side-bar/competency-passbook-side-bar.component';
 import { CompetencySearchComponent } from './competency-search/competency-search.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    CompetencyPassbookComponent, 
-    CompetencyPassbookSideBarComponent, 
-    CompetencySearchComponent, 
-    CompetencyListComponent, 
+    CompetencyPassbookComponent,
+    CompetencyPassbookSideBarComponent,
+    CompetencySearchComponent,
+    CompetencyListComponent,
     CompetencyCardDetailsComponent
   ],
   imports: [
@@ -31,7 +32,11 @@ import { CompetencySearchComponent } from './competency-search/competency-search
     CompetencyPassbookRoutingModule,
     SkeletonLoaderModule,
     PipeSafeSanitizerModule,
-    CbpFiltersModule
+    CbpFiltersModule,
+    TranslateModule
+  ],
+  exports: [
+    TranslateModule
   ]
 })
 
