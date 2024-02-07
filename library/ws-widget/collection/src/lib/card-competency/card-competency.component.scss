@@ -23,6 +23,13 @@
     border-top-left-radius: 8px;
 }
 
+.ellipsis {
+    white-space: nowrap;
+    width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .detail {
     width: 100%;
     max-width: 344px;
@@ -30,9 +37,10 @@
     border-radius: 8px;
     position: relative;
     top: 4px;
+    height: inherit;
 
     &>div {
-        padding: 4px 16px 16px 16px;
+        padding: 8px 16px 16px 16px;
     }
 
     .chip-container {
@@ -44,3 +52,29 @@
         }
     }
 }
+
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.expanded {
+    padding-bottom: 12px;
+
+    .competency-passbook-theme {
+        max-width: 372px;
+        width: 100%;
+        min-height: 92px;
+        height: auto;
+
+        .detail {
+            width: 100%;
+            max-width: inherit;
+            min-height: inherit;
+            height: inherit;
+        }
+    }
+}
+

@@ -76,9 +76,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   competenciesObject: any = {}
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
-    active: true,
     key: 'blendedPrograms',
-    logo: 'school',
+    logo: '',
     title: 'Blended Program',
     stripTitleLink: {
       link: '',
@@ -95,18 +94,13 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
       cardSubType: 'standard',
     },
     viewMoreUrl: {
-      path: '/app/seeAll',
+      path: '',
       viewMoreText: 'Show all',
-      queryParams: {
-        key: 'blendedPrograms',
-      },
-      loaderConfig: {
-        cardSubType: 'card-portrait-click-skeleton',
-      },
-      stripConfig: {
-        cardSubType: 'card-portrait-click',
-      },
+      queryParams: '',
     },
+    // loaderConfig: {
+    //   cardSubType: 'card-portrait-click-skeleton',
+    // },
     tabs: [],
     filters: [],
   }
@@ -133,7 +127,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
     if (!changes.skeletonLoader.currentValue) {
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
-      },         500)
+      },500)
     }
   }
 

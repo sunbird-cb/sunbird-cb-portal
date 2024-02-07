@@ -172,7 +172,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isCompletedThisMonth = false
   @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
   scrollLimit = 0
-  rcElemBottomPos = 0
+  rcElem = {
+    offSetTop: 0,
+    BottomPos: 0
+  }
   scrolled = false
 
   @HostListener('window:scroll', ['$event'])
@@ -185,14 +188,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
 
     if (this.scrollLimit) {
-      if ((window.scrollY + this.rcElemBottomPos) >= this.scrollLimit) {
+      if ((window.scrollY + this.rcElem.BottomPos) >= this.scrollLimit) {
         this.rcElement.nativeElement.style.position = 'sticky'
       } else {
         this.rcElement.nativeElement.style.position = 'fixed'
       }
     }
-
-    if (window.scrollY > (this.rcElement.nativeElement.offsetTop + 104)) {
+    
+    // 236... (OffsetTop of right container + 104)
+    if (window.scrollY > (this.rcElem.offSetTop + 104)) {
       this.scrolled = true
     } else {
       this.scrolled = false
@@ -492,7 +496,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    this.rcElemBottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
+    this.rcElem.BottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
+    this.rcElem.offSetTop = this.rcElement.nativeElement.offsetTop
   }
 
   handleBreadcrumbs() {
