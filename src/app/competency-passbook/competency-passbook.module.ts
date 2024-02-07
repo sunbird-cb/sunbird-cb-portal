@@ -14,6 +14,7 @@ import { CompetencyCardDetailsComponent } from './competency-card-details/compet
 // tslint:disable-next-line: max-line-length
 import { CompetencyPassbookSideBarComponent } from './../component/competency-passbook-side-bar/competency-passbook-side-bar.component'
 import { CompetencySearchComponent } from './competency-search/competency-search.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -33,6 +34,10 @@ import { CompetencySearchComponent } from './competency-search/competency-search
     SkeletonLoaderModule,
     PipeSafeSanitizerModule,
     CbpFiltersModule,
+    TranslateModule,
+  ],
+  exports: [
+    TranslateModule,
   ],
 })
 

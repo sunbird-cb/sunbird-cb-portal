@@ -3,7 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -28,12 +28,18 @@ export class NetworkMyMdoComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private eventSvc: EventService,
     private translate: TranslateService,
+    private multiLingualService: MultilingualTranslationsService,
   ) {
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      const lang = localStorage.getItem('websiteLanguage')!
-      this.translate.use(lang)
-    }
+    this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
+      // tslint:disable
+      console.log("daata -----------" , data)
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+
+    })
     // console.log('this.route.snapshot.data.myMdoList.data :', this.route.snapshot.data.myMdoList.data)
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.data = this.route.snapshot.data.myMdoList.data.result.data.

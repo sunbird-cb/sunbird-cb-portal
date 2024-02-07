@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators'
 // Project files and components
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-competency-list',
@@ -127,10 +128,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     private configService: ConfigurationsService,
     private router: Router,
     private matSnackBar: MatSnackBar,
-    @Inject(DOCUMENT) private document: Document,
-    // tslint: disable-next-line: whitespace
+    private translate: TranslateService,
+    @Inject(DOCUMENT) private document: Document
   ) {
-    // tslint: disable-next-line: whitespace
     if (window.innerWidth < 768) {
       this.isMobile = true
       this.skeletonArr = [1, 2, 3]
@@ -138,6 +138,11 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       this.skeletonArr = [1, 2, 3, 4, 5, 6]
       this.showAll = true
       this.isMobile = false
+    }
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
   }
 

@@ -3,7 +3,8 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-connection-recommended-card',
@@ -20,8 +21,20 @@ export class ConnectionRecommendedCardComponent implements OnInit {
   constructor(
     private networkV2Service: NetworkV2Service, private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
-    private router: Router
-  ) { }
+    private router: Router,
+    private translate: TranslateService,
+    private multiLingualService: MultilingualTranslationsService,
+  ) {
+    this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
+      // tslint:disable
+      console.log("daata -----------" , data)
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+  }
 
   ngOnInit() {
 

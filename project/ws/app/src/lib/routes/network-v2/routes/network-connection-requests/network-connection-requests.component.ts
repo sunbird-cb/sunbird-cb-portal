@@ -3,7 +3,7 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -25,6 +25,7 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     private networkV2Service: NetworkV2Service,
     private eventSvc: EventService,
     private translate: TranslateService,
+    private multiLingualService: MultilingualTranslationsService,
   ) {
     if (this.route.snapshot.data.connectionRequests
       && this.route.snapshot.data.connectionRequests.data
@@ -39,6 +40,16 @@ export class NetworkConnectionRequestsComponent implements OnInit {
           return v
         })
       }
+      this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
+        // tslint:disable
+        console.log("daata -----------" , data)
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+
+      })
    }
 
   ngOnInit() {
