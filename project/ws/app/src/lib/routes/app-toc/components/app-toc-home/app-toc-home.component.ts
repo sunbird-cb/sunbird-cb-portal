@@ -174,7 +174,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   scrollLimit = 0
   rcElem = {
     offSetTop: 0,
-    BottomPos: 0
+    BottomPos: 0,
   }
   scrolled = false
 
@@ -194,7 +194,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.rcElement.nativeElement.style.position = 'fixed'
       }
     }
-    
+
     // 236... (OffsetTop of right container + 104)
     if (window.scrollY > (this.rcElem.offSetTop + 104)) {
       this.scrolled = true

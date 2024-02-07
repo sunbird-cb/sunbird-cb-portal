@@ -127,7 +127,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
     if (!changes.skeletonLoader.currentValue) {
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
-      },500)
+      },         500)
     }
   }
 
