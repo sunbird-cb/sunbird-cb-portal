@@ -243,6 +243,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
   }
 
   translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profilehome.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

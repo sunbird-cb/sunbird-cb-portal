@@ -35,6 +35,7 @@ export class ProfileCareerComponent extends WidgetBaseComponent implements OnIni
   }
 
   translateTabName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profileV2Career.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

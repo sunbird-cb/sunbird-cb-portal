@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router'
   styleUrls: ['./upcoming-timeline.component.scss'],
 })
 export class UpcomingTimelineComponent implements OnInit {
-
   @Output()
   filterValueEmit = new EventEmitter()
   @Input() upcommingList: any
@@ -19,9 +18,7 @@ export class UpcomingTimelineComponent implements OnInit {
   cbpConfig: any
   seeAllPageConfig: any
   contentDataList: any
-  constructor(
-    private activatedRoute: ActivatedRoute
-  ) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     if (this.activatedRoute.snapshot.data.pageData) {

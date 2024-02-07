@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { InfoDialogComponent } from './info-dialog.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { InfoDialogComponent } from './info-dialog.component'
 
 describe('InfoDialogComponent', () => {
-  let component: InfoDialogComponent;
-  let fixture: ComponentFixture<InfoDialogComponent>;
+  let component: InfoDialogComponent
+  let fixture: ComponentFixture<InfoDialogComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoDialogComponent ]
+      declarations: [InfoDialogComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InfoDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(InfoDialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

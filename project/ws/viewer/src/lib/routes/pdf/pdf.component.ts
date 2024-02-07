@@ -217,8 +217,10 @@ export class PdfComponent implements OnInit, OnDestroy {
       // this.activatedRoute.data.subscribe(data => {
       //   userId = data.profileData.data.userId
       // })
-      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
-                                                                 this.activatedRoute.snapshot.queryParams.batchId, pdfId)
+      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+        this.activatedRoute.snapshot.queryParams.collectionId,
+        this.activatedRoute.snapshot.queryParams.batchId,
+        pdfId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,

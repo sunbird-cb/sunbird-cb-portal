@@ -23,48 +23,57 @@ export class MultilingualTranslationsService {
     }
 
     translateLabelWithoutspace(label: string, type: any, subtype: any) {
-        label = label.replace(/\s/g, '')
+        let nlabel = label
+        nlabel = nlabel.replace(/\s/g, '')
         if (subtype) {
-            const translationKey = type + '.' +  label + subtype
+            // tslint:disable-next-line: prefer-template
+            const translationKey = type + '.' +  nlabel + subtype
             return this.translate.instant(translationKey)
         }
-        const translationKey = type + '.' +  label
-        return this.translate.instant(translationKey)
+        // tslint:disable-next-line: prefer-template
+        const translationKeyn = type + '.' +  nlabel
+        return this.translate.instant(translationKeyn)
     }
 
     translateLabel(label: string, type: any, subtype: any) {
-        label = label.toLowerCase()
-        const sl = label.split(' ')
+        let nlabel = label
+        nlabel = nlabel.toLowerCase()
+        const sl = nlabel.split(' ')
         sl.forEach((w: any, index: any) => {
             if (index !== 0) {
                 sl[index] = w[0].toUpperCase() + w.slice(1)
             }
         })
-        label = sl.join('')
-        label = label.replace(/\s/g, '')
+        nlabel = sl.join('')
+        nlabel = nlabel.replace(/\s/g, '')
         if (subtype) {
-          const translationKey = type + '.' +  label + subtype
+            // tslint:disable-next-line: prefer-template
+          const translationKey = type + '.' +  nlabel + subtype
           return this.translate.instant(translationKey)
         }  {
-            const translationKey = type + '.' +  label
+            // tslint:disable-next-line: prefer-template
+            const translationKey = type + '.' +  nlabel
             return this.translate.instant(translationKey)
         }
     }
 
     translateActualLabel(label: string, type: any, subtype: any) {
-        const sl = label.split(' ')
+        let nlabel = label
+        const sl = nlabel.split(' ')
         sl.forEach((w: any, index: any) => {
             if (index !== 0) {
                 sl[index] = w[0].toUpperCase() + w.slice(1)
             }
         })
-        label = sl.join('')
-        label = label.replace(/\s/g, '')
+        nlabel = sl.join('')
+        nlabel = nlabel.replace(/\s/g, '')
         if (subtype) {
-          const translationKey = type + '.' +  label + subtype
+            // tslint:disable-next-line: prefer-template
+          const translationKey = type + '.' +  nlabel + subtype
           return this.translate.instant(translationKey)
         }  {
-            const translationKey = type + '.' +  label
+            // tslint:disable-next-line: prefer-template
+            const translationKey = type + '.' +  nlabel
             return this.translate.instant(translationKey)
         }
     }

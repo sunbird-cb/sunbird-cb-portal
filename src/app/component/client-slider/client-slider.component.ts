@@ -19,6 +19,6 @@ export class ClientSliderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clients =  this.clientList
+    this.clients = this.clientList
   }
 }

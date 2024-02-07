@@ -26,6 +26,7 @@ import { Component, Input, OnInit } from '@angular/core'
 //     icon : 'youtube'
 //   },
 //   {
+// tslint:disable-next-line: max-line-length
 //     url: 'https://open.spotify.com/user/31cr3bizg7gpg5vytxl4bzyhw43a?si=5up31eyNSl-Y4Svr_Kfr7g&utm_source=copy-link&utm_medium=copy-link&nd=1&_branch_match_id=1242771130436995949&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXLy7IL8lMq9TLyczL1g%2BqyEsqywiKyHdJAgBCVoQFIAAAAA%3D%3D',
 //     alt: 'Spotify',
 //     icon : 'spotify'

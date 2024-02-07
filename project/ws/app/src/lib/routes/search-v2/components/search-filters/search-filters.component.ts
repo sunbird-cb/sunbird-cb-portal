@@ -202,7 +202,6 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   modifyUserFilters(fil: any, mainparentType: any) {
-    debugger
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {
@@ -274,6 +273,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'searchfilters.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

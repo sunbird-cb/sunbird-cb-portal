@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UpcomingTimelineComponent } from './upcoming-timeline.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { UpcomingTimelineComponent } from './upcoming-timeline.component'
 
 describe('UpcomingTimelineComponent', () => {
-  let component: UpcomingTimelineComponent;
-  let fixture: ComponentFixture<UpcomingTimelineComponent>;
+  let component: UpcomingTimelineComponent
+  let fixture: ComponentFixture<UpcomingTimelineComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpcomingTimelineComponent ]
+      declarations: [UpcomingTimelineComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpcomingTimelineComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(UpcomingTimelineComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
