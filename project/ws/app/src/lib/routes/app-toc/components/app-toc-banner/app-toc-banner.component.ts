@@ -1372,7 +1372,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       obj.request.recipients = recipients
       this.tocSvc.shareContent(obj).subscribe(result => {
         if (result.responseCode === 'OK') {
-          this.openSnackbar('Emails successfylly shared with registered Karmayogis')
+          this.openSnackbar('Emails successfully shared with registered Karmayogis')
         }
         this.users = []
         this.enableShare = false
