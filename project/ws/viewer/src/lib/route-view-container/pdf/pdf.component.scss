@@ -10,9 +10,10 @@
 }
 
 .padding-dynamic {
-  padding: $size-xs;
-  padding-top: $size-m;
-
+  // padding: $size-xs;
+  // padding-top: $size-m;
+  border-radius: none !important;
+  box-shadow: none !important;
   @include breakpoint-xs {
     padding: $size-xs;
     // padding-top: 40vh;
@@ -109,4 +110,9 @@
   border-radius: 2px;
   box-sizing: border-box;
   margin-bottom: $size-m;
+}
+
+.pdf-outer-container {
+  height: 557px;
+  overflow-y: auto;
 }

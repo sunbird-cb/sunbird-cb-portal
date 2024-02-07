@@ -8,7 +8,7 @@ import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
-
+import { ViewerHeaderSideBarToggleService } from './viewer-header-side-bar-toggle.service'
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
   notFound = 'notFound',
@@ -49,6 +49,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private screenSizeSubscription: Subscription | null = null
   private resourceChangeSubscription: Subscription | null = null
   leafNodesCount: any
+  viewerHeaderSideBarToggleFlag = true;
+  isMobile = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -60,11 +62,19 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private widgetServ: WidgetContentService,
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
-    private abc: MobileAppsService
+    private abc: MobileAppsService,
+    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
+
+    if(window.innerWidth <= 1200) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
   }
+  
 
   getContentData(e: any) {
     e.activatedRoute.data.subscribe((data: { content: { data: NsContent.IContent } }) => {
@@ -84,6 +94,23 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+
+    this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data:any)=>{
+      if(data) {
+        if(this.isMobile) {
+          this.sideNavBarOpened = false;
+          this.viewerHeaderSideBarToggleFlag = data;
+        } else {
+          this.sideNavBarOpened = true;
+          this.viewerHeaderSideBarToggleFlag = data;
+        }
+        
+      } else {
+        this.sideNavBarOpened = false;
+        this.viewerHeaderSideBarToggleFlag = data;
+      }
+      
+    })
     this.getAuthDataIdentifer()
     // this.getEnrollmentList()
     this.isNotEmbed = !(

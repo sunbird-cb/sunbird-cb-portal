@@ -42,7 +42,8 @@
   $colorLightBlue: #cbe2f0;
   $linkColour: rgb(27, 76, 161);
   outline-color: mat-color($accent, lighter);
-
+  $colorAccent: rgb(27, 76, 161); 
+  
   .icon-svg {
     fill: $iconColor;
   }

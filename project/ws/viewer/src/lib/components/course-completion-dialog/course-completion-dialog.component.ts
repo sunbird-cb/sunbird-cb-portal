@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
-import { LoggerService } from '@sunbird-cb/utils'
-
+import { RatingService } from '@sunbird-cb/collection/src/public-api'
+import { EventService, WsEvents, LoggerService } from '@sunbird-cb/utils/src/public-api'
 @Component({
   selector: 'viewer-course-completion-dialog',
   templateUrl: './course-completion-dialog.component.html',
@@ -11,13 +10,15 @@ import { LoggerService } from '@sunbird-cb/utils'
 })
 export class CourseCompletionDialogComponent implements OnInit {
   courseName = ''
-  userRating: any
+  userRating: any= {}
   showRating = false
+  isEditMode = false;
   constructor(
     private ratingSvc: RatingService,
     private tocSvc: AppTocService,
     private loggerSvc: LoggerService,
     public dialogRef: MatDialogRef<CourseCompletionDialogComponent>,
+    public events: EventService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
@@ -26,11 +27,12 @@ export class CourseCompletionDialogComponent implements OnInit {
     } else {
       this.courseName = 'course'
     }
-  }
-
-  openRatingDialog() {
     this.getUserRating()
   }
+
+  // openRatingDialog() {
+  //   this.getUserRating()
+  // }
 
   getUserRating() {
     if (this.data && this.data.identifier && this.data.primaryCategory) {
@@ -39,10 +41,15 @@ export class CourseCompletionDialogComponent implements OnInit {
           if (res && res.result && res.result.response) {
             this.userRating = res.result.response
             this.tocSvc.changeUpdateReviews(true)
-            this.showRating = true
+            // this.showRating = true
+            this.isEditMode = true;
           } else {
-            this.userRating = 0
-            this.showRating = true
+            this.userRating = {
+              "rating": 0,
+              "comment": null
+          }
+          this.isEditMode = false;
+          // this.showRating = true
           }
         },
         (err: any) => {
@@ -50,5 +57,27 @@ export class CourseCompletionDialogComponent implements OnInit {
         }
       )
     }
+  }
+
+  addRating(index: number) {  
+    this.showRating = true;
+    this.userRating = {
+      "rating": index + 1 ,
+      "comment": null
+    }
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'rating',
+        subType: 'content',
+        id: this.data.content.identifier || '',
+      },
+      {
+        id: this.data.content.identifier || '',
+        rating: this.userRating.rating,
+      },
+      {
+      pageIdExt: 'rating-popup',
+      module: WsEvents.EnumTelemetrymodules.FEEDBACK,
+    })
   }
 }

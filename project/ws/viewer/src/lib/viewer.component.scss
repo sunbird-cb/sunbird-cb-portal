@@ -78,3 +78,22 @@
     }
   }
 }
+
+.sidenavContent{
+  background-color: rgb(27, 76, 161);
+}
+
+::ng-deep .mat-drawer-content{
+  height: 100% !important;
+}
+
+.viewer-player-container {
+  height: 557px;
+  overflow: hidden;
+}
+
+.toc-container {
+  background: #fff;
+  margin: 0;
+  padding: 16px 30px;
+}

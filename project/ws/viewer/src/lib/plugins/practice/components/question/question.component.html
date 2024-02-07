@@ -1,76 +1,104 @@
 <mat-card *ngIf="!(question?.questionType === 'mtf' || question?.questionType === 'ftb')"
   class="flex flex-1 respo margin-bottom-m no-shadow">
-  <div class="respo flex flex-1 flex-column padding-top-m  ws-mat-accent-border right-border">
-    <div class="flex flex-1- flex-column respo_inner">
-      <div class="flex flex-middle">
-        <h3 class="mat-subheading-2 ws-mat-black60-text margin-bottom-m">
-          <ng-container i18n="question number label">Question &nbsp;</ng-container>{{ questionNumber }}
-          <ng-container i18n="question number of total questions">of</ng-container>
-          {{ total }}
-        </h3>
+  <div class="flex flex-column width-100">
+    <div class="flex flex-row width-100 justify-between">
+      <div>
+        <p class="margin-bottom-m">
+          <ng-container i18n="question number label"><span class="subheading-1">Question</span></ng-container><span class="question-number">&nbsp;{{ questionNumber }}&nbsp;</span>
+          <ng-container i18n="question number of total questions"><span class="question-number">of</span></ng-container>
+          <span class="question-number">&nbsp;{{ total }}</span>
+        </p>
       </div>
-
-      <div class="flex flex-1">
-        <h2 *ngIf="question.questionType !== 'ftb'" class="mat-h2" [innerHTML]="question?.question"
-          class="quiz-question">
-        </h2>
-        <ng-container *ngIf="question.questionType === 'ftb'">
-          <viewer-fitb-question [primaryCategory]="primaryCategory" class="flex-1" [question]="question"
-            (update)="update($event)"></viewer-fitb-question>
-        </ng-container>
-      </div>
-    </div>
-  </div>
-  <div class="flex flex-1">
-    <div class="flex flex-1 flex-column">
-      <div class="flex flex-1">
-        <span class="spacer"></span>
-        <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="flag_btn">
-        <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
-        <mat-icon *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
-        </button>
-      </div>
-      <div class="flex flex-1 viewer_quest_box">
-        <!-- {{log(question)}} -->
-        <ng-container *ngIf="question.questionType === 'mcq-mca'">
-          <viewer-mcq-mca-question   [primaryCategory]="primaryCategory" class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
-            (update)="update($event)">
-          </viewer-mcq-mca-question>
-        </ng-container>
-
-        <ng-container *ngIf="question.questionType === 'mcq-sca'">
-          <viewer-mcq-sca-question   [primaryCategory]="primaryCategory" class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
-            (update)="update($event)"></viewer-mcq-sca-question>
-        </ng-container>
-        <ng-container *ngIf="question.questionType === 'mtf'">
-          <viewer-mtf-question   [primaryCategory]="primaryCategory" class="flex-1" [question]="question" (update)="update($event)"></viewer-mtf-question>
-          <div *ngIf="
-          viewState !== 'review' &&
-          numConnections &&
-          matchHintDisplay.length !== 0
-        " style="display: flex;flex-direction: column;">
-            <p i18n="option explanation label">Explanation</p>
-            <table mat-table [dataSource]="matchHintDisplay" class="mat-elevation-z8">
-              <ng-container matColumnDef="text">
-                <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Option">
-                  Option
-                </th>
-                <td mat-cell *matCellDef="let element">{{ element.text }}</td>
-              </ng-container>
-              <ng-container matColumnDef="hint">
-                <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Hint">
-                  Hint
-                </th>
-                <td mat-cell *matCellDef="let element" [innerHTML]="element.hint"></td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="['text', 'hint']"></tr>
-              <tr mat-row *matRowDef="let row; columns: ['text', 'hint']"></tr>
-            </table>
+      <div class="flex flex-row align-center justify-around">
+        <ng-container *ngIf="ePrimaryCategory.PRACTICE_RESOURCE === primaryCategory && ((questionNumber) <= totalQCount)">
+          <div *ngIf="!showAnswer && !isMobile"  class="rounded-flag cursor-pointer">
+            <div class="flex" (click)="checkAns(questionNumber)">
+              <span>Show Answer</span><img class="ml-2" src="assets/icons/final-assessment/view.svg"/>
+            </div>
           </div>
-        </ng-container>
+          <div *ngIf="!showAnswer && isMobile"  class="cursor-pointer">
+            <div class="flex" (click)="checkAns(questionNumber)">
+              <img class="hw-24" src="assets/icons/final-assessment/view.svg"/>
+            </div>
+          </div>
+
+        </ng-container>        
+        <div class=" flex flex-row align-center justify-around rounded-flag ml-10" *ngIf="!isMobile">
+          <div>
+            <span>Flag</span>
+          </div>
+          <div>
+            <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">
+            <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
+            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+            </button>
+          </div>             
+        </div>
+        <div class=" flex flex-row align-center justify-around ml-2" *ngIf="isMobile">          
+          <div>
+            <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">
+            <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
+            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+            </button>
+          </div>             
+        </div>
+
       </div>
     </div>
+    <div class="respo flex flex-column padding-top-m">
+      <div class="flex flex-column respo_inner">
+        <div class="flex flex-1">
+          <h2 *ngIf="question.questionType !== 'ftb'" class="mat-h2" [innerHTML]="question?.question"
+            class="quiz-question">
+          </h2>
+          <ng-container *ngIf="question.questionType === 'ftb'">
+            <viewer-fitb-question [primaryCategory]="primaryCategory" class="flex-1" [question]="question"
+              (update)="update($event)"></viewer-fitb-question>
+          </ng-container>
+        </div>
+        <div class="flex flex-1">
+          <!-- {{log(question)}} -->
+          <ng-container *ngIf="question.questionType === 'mcq-mca'">
+            <viewer-mcq-mca-question   [primaryCategory]="primaryCategory" class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
+              (update)="update($event)">
+            </viewer-mcq-mca-question>
+          </ng-container>
+  
+          <ng-container *ngIf="question.questionType === 'mcq-sca'">
+            <viewer-mcq-sca-question   [primaryCategory]="primaryCategory" class="flex-1" [question]="question" [itemSelectedList]="itemSelectedList1"
+              (update)="update($event)"></viewer-mcq-sca-question>
+          </ng-container>
+          <ng-container *ngIf="question.questionType === 'mtf'">
+            <viewer-mtf-question   [primaryCategory]="primaryCategory" class="flex-1" [question]="question" (update)="update($event)"></viewer-mtf-question>
+            <div *ngIf="
+            viewState !== 'review' &&
+            numConnections &&
+            matchHintDisplay.length !== 0
+          " style="display: flex;flex-direction: column;">
+              <p i18n="option explanation label">Explanation</p>
+              <table mat-table [dataSource]="matchHintDisplay" class="mat-elevation-z8">
+                <ng-container matColumnDef="text">
+                  <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Option">
+                    Option
+                  </th>
+                  <td mat-cell *matCellDef="let element">{{ element.text }}</td>
+                </ng-container>
+                <ng-container matColumnDef="hint">
+                  <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Hint">
+                    Hint
+                  </th>
+                  <td mat-cell *matCellDef="let element" [innerHTML]="element.hint"></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="['text', 'hint']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['text', 'hint']"></tr>
+              </table>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div> 
   </div>
+  
 </mat-card>
 <!-- created a duplicate as design changed -->
 <mat-card *ngIf="(question?.questionType === 'mtf' || question?.questionType === 'ftb')"
