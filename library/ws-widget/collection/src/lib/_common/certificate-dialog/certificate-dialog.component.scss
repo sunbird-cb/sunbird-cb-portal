@@ -3,7 +3,7 @@
     box-shadow: none !important;
 }
 .certificate-banner-image {
-    height: 500px;
+    height: 30rem;
     display: flex;
     width: auto;
     margin: 0px auto;
@@ -12,6 +12,16 @@
         height: auto;
         flex: 1;
     }
+}
+
+.certificate-img-box {
+    max-height: 35rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    // border: 2px solid;
+}
+.certificate-img-content {
+    overflow: hidden;
 }
 
 a.download_btn {
@@ -36,8 +46,11 @@ a.download_btn {
 }
 .close-button {
     float: right;
-    top: -24px;
-    right: -24px;
+    top: -16px;
+    right: -16px;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
 }
 
 .close-icon {
@@ -55,6 +68,17 @@ a.download_btn {
 }
 ::ng-deep .icon-outside .mat-dialog-container {
     overflow: unset;
+}
+
+// ::ng-deep .mat-dialog-container {
+//     height: 90% !important;
+//     overflow-y: auto;
+//     border:2px solid red;
+// }
+
+::ng-deep .cdk-overlay-pane {
+    max-height: 96%!important;
+    overflow-y: auto!important;
 }
 
 .certificate-banner-image {

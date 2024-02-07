@@ -39,6 +39,7 @@
     justify-content: end;
     gap: 16px;
 }
+
 @media screen and (max-width: 768px) {
     ::ng-deep .cdk-overlay-pane{
         max-width: 100vw !important;
@@ -48,7 +49,7 @@
      }
 }
 
-::ng-deep .cdk-overlay-pane {
-    max-height: 96%!important;
-    overflow-y: auto!important;
-}
+// ::ng-deep .cdk-overlay-pane {
+//     max-height: 96%!important;
+//     overflow-y: auto!important;
+// }
