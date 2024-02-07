@@ -1,0 +1,19 @@
+::ng-deep .sticky-mat-tabs {
+    .mat-tab-header {
+        top: 96px;
+        z-index: 1000;
+        position: sticky;
+        position: -webkit-sticky;
+        background: #eff3f9;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    ::ng-deep .sticky-mat-tabs {
+        .mat-tab-header {
+            top: 185px;
+            position: fixed;
+            width: calc(100% - 32px);
+        }
+    }
+}

@@ -312,7 +312,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     }
   }
 
-  openFeedbackDialog(contentP: any): void {
+  openFeedbackDialog(contentP?: any): void {
     const contentTmp = {
       identifier: this.collectionId,
       primaryCategory: this.collectionType,
