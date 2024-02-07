@@ -16,7 +16,7 @@ export class ContentTocComponent implements OnInit {
   @Input() initialRouteData: any
   routeSubscription: Subscription | null = null
   @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
-
+  @Input() contentTabFlag = true;
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   constructor() { }

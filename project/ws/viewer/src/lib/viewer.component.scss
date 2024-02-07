@@ -84,5 +84,16 @@
 }
 
 ::ng-deep .mat-drawer-content{
-  height: auto !important;
+  height: 100% !important;
+}
+
+.viewer-player-container {
+  height: 557px;
+  overflow: hidden;
+}
+
+.toc-container {
+  background: #fff;
+  margin: 0;
+  padding: 16px 30px;
 }

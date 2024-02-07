@@ -103,8 +103,8 @@
 }
 
 .padding-dynamic {
-  padding: $size-s;
-  padding-top: $size-m;
+  // padding: $size-s;
+  // padding-top: $size-m;
   @include breakpoint-xs {
     padding: $size-xs;
     padding-top: 40vh;
@@ -139,9 +139,9 @@
 
 .video-player {
   width: 100%;
-  height: 75vh;
+  height: 59vh;
   @include breakpoint-lt-xl {
-    height: 70vh;
+    height: 59vh;
   }
   @include breakpoint-lt-l {
     height: 65vh;
@@ -230,4 +230,10 @@
 .audio-player-embed {
   height: 100vh;
   width: 100vw;
+}
+
+.audio-player-container .mat-card {
+  background: transparent;
+  box-shadow: none;
+  padding: 0 16px;
 }
