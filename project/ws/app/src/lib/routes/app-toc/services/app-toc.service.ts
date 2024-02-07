@@ -669,6 +669,4 @@ export class AppTocService {
   shareContent(reqBody: any) {
     return this.http.post<any>(`${API_END_POINTS.SHARE_CONTENT}`, reqBody)
   }
-
-
 }

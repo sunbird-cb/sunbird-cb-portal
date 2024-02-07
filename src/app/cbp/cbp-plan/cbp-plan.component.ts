@@ -4,8 +4,9 @@ import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 import {
   NsContent,
 } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
-// tslint:disable-next-line
+/* tslint:disable */
 import _ from 'lodash'
+/* tslint:enable */
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -113,17 +114,17 @@ export class CbpPlanComponent implements OnInit {
     //     })
     //     await res.forEach((ele: any) => {
     //       if (ele.planDuration === 'overdue') {
-    //         this.overDueList.push(ele);
+    //         this.overDueList.push(ele)
     //       } else {
-    //         this.upcommingList.push(ele);
+    //         this.upcommingList.push(ele)
     //       }
     //     })
 
     //     this.contentFeedListCopy = res
-    //     this.contentFeedList = this.transformContentsToWidgets(res, this.getFeedStrip());
-    //     this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips);
-    //     this.overDueList = this.transformContentsToWidgets(this.overDueList, this.cbpAllConfig.cbpUpcomingStrips);
-    //     const all = this.overDueList.length + this.upcommingList.length;
+    //     this.contentFeedList = this.transformContentsToWidgets(res, this.getFeedStrip())
+    //     this.upcommingList = this.transformContentsToWidgets(this.upcommingList, this.cbpAllConfig.cbpUpcomingStrips)
+    //     this.overDueList = this.transformContentsToWidgets(this.overDueList, this.cbpAllConfig.cbpUpcomingStrips)
+    //     const all = this.overDueList.length + this.upcommingList.length
     //     this.usersCbpCount = {
     //       upcoming: this.upcommingList.length,
     //       overdue: this.overDueList.length,
@@ -163,7 +164,7 @@ export class CbpPlanComponent implements OnInit {
       },
     }))
   }
-  private transformSkeletonToWidgets(
+  private transformSkeletonToWidgets (
     strip: any
   ) {
     return [1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 10].map(_content => ({
@@ -191,7 +192,9 @@ export class CbpPlanComponent implements OnInit {
   }
   clearFilterObj(event: any) {
     this.filterObjData = event
+    // tslint: disable-next-line: whitespace
     this.filterData(event)
+    // tslint: disable-next-line: whitespace
   }
 
   filterData(filterValue: any) {
@@ -237,21 +240,26 @@ export class CbpPlanComponent implements OnInit {
             if (filterValue['timeDuration'].some((time: any) => {
               const count = Number(time.slice(0, -2))
               if (time.includes('sw')) {
+                // tslint:disable-next-line: max-line-length
                 return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'week'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
-              }  if (time.includes('ad')) {
+              }
+              if (time.includes('ad')) {
+                // tslint:disable-next-line: max-line-length
                 return dayjs(data.endDate).isSameOrBefore(dayjs(dayjs().add(count, 'day'))) && dayjs(data.endDate).isSameOrAfter(dayjs())
-              }   if (time.includes('sm')) {
+              }
+              if (time.includes('sm')) {
+                // tslint:disable-next-line: max-line-length
                 return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(count, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
               }
               return true
+              // tslint: disable-next-line: whitespace
             })
             ) {
               return data
             }
           })
           filterAppliedonLocal = true
-        }
-
+        }// tslint: disable-next-line: whitespace
         if (filterValue['competencyArea'].length) {
           filterAppliedonLocal = filterAppliedonLocal ? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
@@ -261,7 +269,7 @@ export class CbpPlanComponent implements OnInit {
           })
           filterAppliedonLocal = true
         }
-
+        // tslint: disable-next-line: whitespace
         if (filterValue['competencyTheme'].length) {
           filterAppliedonLocal = filterAppliedonLocal ? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
@@ -271,14 +279,18 @@ export class CbpPlanComponent implements OnInit {
           })
           filterAppliedonLocal = true
         }
-
+        // tslint: disable-next-line: whitespace
         if (filterValue['competencySubTheme'].length) {
           filterAppliedonLocal = filterAppliedonLocal ? true : false
           finalFilterValue = (filterAppliedonLocal ? finalFilterValue : this.filteredData).filter((data: any) => {
             if (filterValue['competencySubTheme'].some((r: any) => data.competencySubTheme.includes(r))) {
+              // tslint: disable-next-line: whitespace
               return data
+              // tslint: disable-next-line: whitespace
             }
+            // tslint: disable-next-line: whitespace
           })
+          // tslint: disable-next-line: whitespace
           filterAppliedonLocal = true
         }
 
@@ -291,13 +303,11 @@ export class CbpPlanComponent implements OnInit {
           })
           filterAppliedonLocal = true
         }
-
     } else {
       this.filterApplied = false
       finalFilterValue = this.cbpOriginalData
     }
     this.contentFeedListCopy = finalFilterValue
-
     this.contentFeedList = this.transformContentsToWidgets(finalFilterValue, this.getFeedStrip())
   }
 

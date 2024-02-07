@@ -22,8 +22,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
 })
 export class SharedModule {
-  constructor(protected translate: TranslateService, 
-    private langtranslations: MultilingualTranslationsService) {
+  constructor(protected translate: TranslateService,
+              private langtranslations: MultilingualTranslationsService) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       const lang = localStorage.getItem('websiteLanguage')!

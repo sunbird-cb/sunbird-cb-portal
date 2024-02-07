@@ -11,11 +11,7 @@ export class AppHierarchyResolverService
     Resolve<
     Observable<IResolveResponse<any>> | IResolveResponse<any>
     > {
-    constructor(
-        private contentSvc: WidgetContentService
-
-    ) {
-     }
+    constructor(private contentSvc: WidgetContentService) {}
 
     resolve(
         _route: ActivatedRouteSnapshot,
@@ -29,12 +25,12 @@ export class AppHierarchyResolverService
         map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
             tap((resolveData: any) => {
                 // tslint:disable-next-line
-                console.log("========> after api call bind data <===========", resolveData)
+                // console.log("========> after api call bind data <===========", resolveData)
                 return of({ error: null, data: resolveData })
             }),
             catchError((error: any) => {
                 // tslint:disable-next-line
-                console.log("========> catch error Hierarchy api call <===========", error)
+                // console.log("========> catch error Hierarchy api call <===========", error)
                 return of({ error, data: null })
             }),
         )

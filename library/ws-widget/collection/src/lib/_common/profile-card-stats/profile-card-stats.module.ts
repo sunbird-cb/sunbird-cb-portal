@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core'
     SlidersDynamicModule,
     PipeDurationTransformModule,
     WeeklyClapsModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     ProfileCardStatsComponent,

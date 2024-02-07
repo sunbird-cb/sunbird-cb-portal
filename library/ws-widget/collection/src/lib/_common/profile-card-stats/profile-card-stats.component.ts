@@ -30,7 +30,7 @@ export class ProfileCardStatsComponent implements OnInit {
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe,
-              private langtranslations: MultilingualTranslationsService,) { }
+              private langtranslations: MultilingualTranslationsService) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile

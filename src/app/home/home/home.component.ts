@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/lib/services/configurations.service'
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-// tslint:disable-next-line
+/* tslint:disable */
 import _ from 'lodash'
+/* tslint:enable */
 import { BtnSettingsService } from '@sunbird-cb/collection'
 import { MobileAppsService } from '../../services/mobile-apps.service'
-import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
@@ -37,9 +37,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
   enrollData: any
   enrollInterval: any
   jan26Change: any
-  constructor(private activatedRoute: ActivatedRoute,  private configSvc: ConfigurationsService, public btnSettingsSvc: BtnSettingsService,
-              private http: HttpClient, public mobileAppsService: MobileAppsService, private router: Router,
-              private translate: TranslateService) { }
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private configSvc: ConfigurationsService,
+    public btnSettingsSvc: BtnSettingsService,
+    private http: HttpClient,
+    public mobileAppsService: MobileAppsService,
+    private router: Router,
+    private translate: TranslateService) { }
 
   ngOnInit() {
     if (this.configSvc) {
@@ -53,13 +59,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
     if (this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
       this.contentStripData = this.activatedRoute.snapshot.data.pageData.data || []
+      // tslint:disable-next-line: prefer-template
       this.contentStripData = (this.contentStripData.homeStrips || []).sort((a: any, b: any) => a.order - b.order)
+      // tslint:disable-next-line
       for (let i = 0; i < this.contentStripData.length; i++) {
         if (this.contentStripData[i] &&
           this.contentStripData[i]['strips'] &&
           this.contentStripData[i]['strips'][0] &&
           this.contentStripData[i]['strips'][0]['active']) {
             const obj: any = {}
+            // tslint:disable-next-line: prefer-template
             obj['section'] = 'section_' + i
             obj['isVisible'] = false
             this.sectionList.push(obj)
@@ -166,7 +175,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     this.sliderData = this.activatedRoute.snapshot.data.pageData.data.sliderData
-       this.sectionList.push({ section: 'slider', isVisible: false })
+    this.sectionList.push({ section: 'slider', isVisible: false })
     this.sectionList.push({ section: 'discuss', isVisible: false })
     this.sectionList.push({ section: 'network', isVisible: false })
 
@@ -179,12 +188,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    for (let i = 0; i < this.sectionList.length; i++) {
-      if (this.sectionList[i]['section'] == 'section_0'
-      || this.sectionList[i]['section'] == 'section_1'
-      || this.sectionList[i]['section'] == 'section_2'
-      || this.sectionList[i]['section'] == 'section_3'
-      || this.sectionList[i]['section'] == 'section_4') {
+    // tslint:disable-next-line
+    for(let i = 0; i < this.sectionList.length; i++) {
+      // tslint:disable-next-line
+      if (this.sectionList[i]['section'] === 'section_0'
+      || this.sectionList[i]['section'] === 'section_1'
+      || this.sectionList[i]['section'] === 'section_2'
+      || this.sectionList[i]['section'] === 'section_3'
+      || this.sectionList[i]['section'] === 'section_4') {
         this.sectionList[i]['isVisible'] = true
       }
     }
@@ -204,8 +215,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   handleButtonClick(): void {
-    console.log('Working!!!')
-
+    // console.log('Working!!!')
   }
 
   translateHub(hubName: string): string {
@@ -247,8 +257,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
-    for (let i = 0; i < this.sectionList.length; i++) {
-      if (this.sectionList[i]['section'] !== 'section_0' &&
+    // tslint:disable-next-line
+    for(let i = 0; i < this.sectionList.length; i++) {
+      // tslint:disable-next-line
+      if(this.sectionList[i]['section'] !== 'section_0' &&
        this.sectionList[i]['section'] !== 'section_1' &&
        this.sectionList[i]['section'] !== 'section_2' &&
        this.sectionList[i]['section'] !== 'section_3' &&
@@ -277,35 +289,36 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   checkSectionVisibility(className: string) {
     let isVisible = false
+    // tslint:disable-next-line
     if (className === 'section_0' ||
     className === 'section_1' ||
     className === 'section_2' ||
     className === 'section_3' ||
     className === 'section_4') {
       isVisible = true
-
     } else {
       if (className !== 'section_0' &&
        className !== 'section_1' &&
        className !== 'section_2' &&
        className !== 'section_3' &&
        className !== 'section_4') {
-      for (let i = 0; i < this.sectionList.length; i++) {
-        if (this.sectionList[i]['section'] === className) {
-          if (document.getElementsByClassName(this.sectionList[i]['section'])
-          && document.getElementsByClassName(this.sectionList[i]['section'])[0]
-          && !this.sectionList[i]['isVisible']) {
-            const tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
-          const eleTop = tect.top
-          const eleBottom = tect.bottom
-          isVisible = (eleTop >= 0) && (eleBottom <= window.innerHeight)
-          this.sectionList[i]['isVisible'] = isVisible
-          break
+      // tslint:disable-next-line
+        for(let i = 0; i < this.sectionList.length; i++) {
+          if (this.sectionList[i]['section'] === className) {
+            if (document.getElementsByClassName(this.sectionList[i]['section'])
+            && document.getElementsByClassName(this.sectionList[i]['section'])[0]
+            && !this.sectionList[i]['isVisible']) {
+              const tect = document.getElementsByClassName(this.sectionList[i]['section'])[0].getBoundingClientRect()
+              const eleTop = tect.top
+              const eleBottom = tect.bottom
+              isVisible = (eleTop >= 0) && (eleBottom <= window.innerHeight)
+              this.sectionList[i]['isVisible'] = isVisible
+              break
+              // tslint:disable-next-line: prefer-template
+            }
+          }
         }
-
-        }
-
-      }}
+      }
     }
   }
 
@@ -325,5 +338,4 @@ export class HomeComponent implements OnInit, AfterViewInit {
   closeKarmaPointsPanel() {
     this.isKPPanelenabled = false
   }
-
 }

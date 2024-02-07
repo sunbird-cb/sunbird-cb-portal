@@ -10,11 +10,7 @@ export class DiscussionInfoComponent implements OnInit {
   @Input() dataToBind: any
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  getBackgroundColor() {
-
-  }
-
+  getBackgroundColor() { }
 }

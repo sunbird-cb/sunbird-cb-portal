@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core'
 import { HttpErrorResponse } from '@angular/common/http'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MatSnackBar } from '@angular/material'
-
 import { HomePageService } from 'src/app/services/home-page.service'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -13,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core'
 })
 
 export class NetworkHubComponent implements OnInit {
-
+  // tslint:disable-next-line:no-input-rename
   @Input('networkConfig') networkConfig: any
   userInfo: any
   network = {
@@ -50,7 +49,6 @@ export class NetworkHubComponent implements OnInit {
     if (this.networkConfig.networkSuggestions.active) {
       this.fetchNetworkRecommendations()
     }
-
   }
 
   translateHub(hubName: string): string {
@@ -60,7 +58,7 @@ export class NetworkHubComponent implements OnInit {
 
   fetchNetworkRecommendations(): void {
     const payload = {
-      size : 2,
+      size: 2,
       offset: 0,
       search: [
         {
@@ -82,6 +80,7 @@ export class NetworkHubComponent implements OnInit {
             return obj
           })
         }
+        // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.network.suggestionsLoader = false
@@ -100,6 +99,7 @@ export class NetworkHubComponent implements OnInit {
           elem.connecting = false
           return elem
         })
+      // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.recentRequests.loadSkeleton = false
@@ -107,7 +107,7 @@ export class NetworkHubComponent implements OnInit {
       }
     )
   }
-
+// tslint:disable-next-line: whitespace
   handleUpdateRequest(event: any): void {
     this.homePageService.updateConnection(event.payload).subscribe(
       (_res: any) => {
@@ -118,6 +118,7 @@ export class NetworkHubComponent implements OnInit {
         }
         event.reqObject.connecting = false
         this.fetchRecentRequests()
+      // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.matSnackBar.open('Unable to update connection, due to some error!')
@@ -138,6 +139,7 @@ export class NetworkHubComponent implements OnInit {
       userDepartmentTo: obj.employmentDetails.departmentName,
     }
 
+    // console.log("payload - ", payload);
     obj.connecting = true
     this.homePageService.connectToNetwork(payload).subscribe(
       (_res: any) => {
@@ -177,5 +179,4 @@ export class NetworkHubComponent implements OnInit {
     }
     return initials.toUpperCase()
   }
-
 }

@@ -47,6 +47,7 @@ export class LeftMenuComponent implements OnInit {
   }
 
   translateLetMenuName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'knowledgeleftmenu.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

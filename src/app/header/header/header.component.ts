@@ -18,14 +18,17 @@ export class HeaderComponent implements OnInit {
   mobileTopHeaderVisibilityStatus = true
   @Input() mode: any
   @Input() headerFooterConfigData: any
-  constructor(private valueSvc: ValueService, public headerService: HeaderService, public mobileAppsService: MobileAppsService) { }
+  constructor(
+    private valueSvc: ValueService,
+    public headerService: HeaderService,
+    public mobileAppsService: MobileAppsService) { }
 
   ngOnInit() {
     this.headerService.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
-
-    this.widgetData = {
+    // tslint:disable-next-line: whitespace
+    this.widgetData = { // tslint:disable-next-line: whitespace
       widgets: [
         [
           {
@@ -39,12 +42,11 @@ export class HeaderComponent implements OnInit {
           },
         ],
       ],
-    }
-  }
+    } // tslint:disable-next-line: whitespace
+  } // tslint:disable-next-line: whitespace
 
   downloadApp(): void {
     const userAgent = navigator.userAgent
-
     // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {
       window.open('https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&hl=en&gl=US', '_blank')
@@ -61,8 +63,10 @@ export class HeaderComponent implements OnInit {
   }
 
   get navBarRequired(): boolean {
+    // tslint:disable-next-line: whitespace
     return this.isNavBarRequired
   }
+
   get isShowNavbar(): boolean {
     return this.showNavbar
   }
@@ -70,7 +74,5 @@ export class HeaderComponent implements OnInit {
   hideMobileTopHeader() {
     this.mobileTopHeaderVisibilityStatus = false
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.next(this.mobileTopHeaderVisibilityStatus)
-
   }
-
 }

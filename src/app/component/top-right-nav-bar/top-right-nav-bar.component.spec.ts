@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { TopRightNavBarComponent } from './top-right-nav-bar.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { TopRightNavBarComponent } from './top-right-nav-bar.component'
 
 describe('TopRightNavBarComponent', () => {
-  let component: TopRightNavBarComponent;
-  let fixture: ComponentFixture<TopRightNavBarComponent>;
+  let component: TopRightNavBarComponent
+  let fixture: ComponentFixture<TopRightNavBarComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopRightNavBarComponent ]
+      declarations: [TopRightNavBarComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TopRightNavBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(TopRightNavBarComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -28,7 +28,8 @@ export class CbpPlanStatsComponent implements OnInit {
   onfilterChange(filterData: any) {
     this.filterLoaded = true
     this.cbpLoader = true
-   const filteredValue =  this.cbpOriginalData.filter((data: any) => {
+    const filteredValue = this.cbpOriginalData.filter((data: any) => {
+      // tslint:disable-next-line:max-line-length
       return dayjs(data.endDate).isSameOrAfter(dayjs(dayjs().subtract(filterData.id, 'month'))) && dayjs(data.endDate).isSameOrBefore(dayjs())
     })
     const overDueList = []
@@ -46,7 +47,7 @@ export class CbpPlanStatsComponent implements OnInit {
       all: upcommingList.length + overDueList.length,
     }
     // this.timePeriodFilter.emit(data)
-
+    // tslint:disable-next-line: whitespace
     this.cbpLoader = false
   }
 

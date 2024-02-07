@@ -9,19 +9,12 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatTooltipModule,
+  MatDialogModule,
 } from '@angular/material'
-import { MatDialogModule } from '@angular/material'
 import { HeaderComponent } from './header/header.component'
 import { AppNavBarComponent } from '../component/app-nav-bar/app-nav-bar.component'
 import { RouterModule } from '@angular/router'
-
-import {
-  GridLayoutModule,
-} from '@sunbird-cb/collection'
-import {
-  BtnFeatureModule, ErrorResolverModule, TourModule,
-  StickyHeaderModule,
-} from '@sunbird-cb/collection'
+import { GridLayoutModule, BtnFeatureModule, ErrorResolverModule, TourModule, StickyHeaderModule } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { SearchModule } from '@ws/app/src/public-api'
 import { SharedModule } from '../shared/shared.module'

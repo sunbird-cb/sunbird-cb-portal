@@ -11,24 +11,23 @@ import { TranslateService } from '@ngx-translate/core'
 })
 
 export class AppTourComponent {
-
-  constructor(private guidedTourService: GuidedTourService,
-              private utilitySvc: UtilityService, private configSvc: ConfigurationsService,
-              private events: EventService, private userProfileSvc: UserProfileService,
-              private translate: TranslateService) {
-      if (localStorage.getItem('websiteLanguage')) {
-        this.translate.setDefaultLang('en')
-        const lang = localStorage.getItem('websiteLanguage')!
-        this.translate.use(lang)
-      }
-    this.isMobile = this.utilitySvc.isMobile
-    this.raiseGetStartedStartTelemetry()
-  }
   progressIndicatorLocation = ProgressIndicatorLocation.TopOfTourBlock
   currentWindow: any
   videoProgressTime = 114
   tourStatus: any = { visited: true, skipped: false }
-
+  showpopup = true
+  noScroll  = true
+  closePopupIcon = true
+  showCompletePopup  = false
+  showVideoTour = false
+  isMobile = false
+  hideCloseBtn = false
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.skipTour('', '')
+    }
+  }
+  // tslint:disable-next-line
   private readonly TOUR: GuidedTour = {
     tourId: 'purchases-tour',
     useOrb: false,
@@ -37,7 +36,8 @@ export class AppTourComponent {
     prevCallback: (currentStep, stepObject) => this.prevCb(currentStep, stepObject),
     closeModalCallback: () => setTimeout(() => {
       this.closeModal()
-    },                                   500),
+      // tslint:disable-next-line
+    }, 500),
     steps: [
       {
         icon: 'school',
@@ -94,7 +94,7 @@ export class AppTourComponent {
     ],
     preventBackdropFromAdvancing: true,
   }
-
+  // tslint:disable-next-line
   private readonly MOBILE_TOUR: GuidedTour = {
     tourId: 'purchases-tour',
     useOrb: false,
@@ -158,18 +158,21 @@ export class AppTourComponent {
       },
     ],
   }
-  showpopup = true
-  noScroll = true
-  closePopupIcon = true
-  showCompletePopup = false
-  showVideoTour = false
-  isMobile = false
-  hideCloseBtn = false
 
-  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      this.skipTour('', '')
+  constructor(
+    private guidedTourService: GuidedTourService,
+    private utilitySvc: UtilityService,
+    private configSvc: ConfigurationsService,
+    private events: EventService,
+    private userProfileSvc: UserProfileService,
+    private translate: TranslateService) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
+    this.isMobile = this.utilitySvc.isMobile
+    this.raiseGetStartedStartTelemetry()
   }
 
   updateTourstatus(status: any) {
@@ -179,7 +182,7 @@ export class AppTourComponent {
         profileDetails: { get_started_tour: status },
       },
     }
-    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe(_res => {
+    this.userProfileSvc.editProfileDetails(reqUpdates).subscribe((_res: any) => {
       // console.log("re s ", res )
     })
   }
@@ -200,15 +203,18 @@ export class AppTourComponent {
       // @ts-ignore
       setTimeout(() => {
         this.guidedTourService.startTour(this.MOBILE_TOUR)
-      },         2000)
+        // tslint:disable-next-line: align
+      }, 2000)
     } else {
       this.guidedTourService.startTour(this.TOUR)
       setTimeout(() => {
         // @ts-ignore
         const _left = parseFloat(document.getElementsByClassName('tour_learn')[0]['style']['left'].split('px')[0])
         // @ts-ignore
+        // tslint:disable-next-line: prefer-template
         document.getElementsByClassName('tour_learn')[0]['style']['left'] = (_left - 10) + 'px'
-      },         100)
+        // tslint:disable-next-line: align
+      }, 100)
     }
 
   }
@@ -221,6 +227,7 @@ export class AppTourComponent {
       this.raiseTemeletyInterat(screen, subType)
     } else {
       if (this.currentWindow) {
+        // tslint:disable-next-line: max-line-length
         this.raiseTemeletyInterat(`${this.currentWindow.title.toLowerCase().replace(' ', '-')}-skip`, this.currentWindow.title.toLowerCase())
       } else {
         this.raiseTemeletyInterat('welcome-skip', 'welcome')
@@ -233,13 +240,17 @@ export class AppTourComponent {
     this.showCompletePopup = false
     this.closePopupIcon = false
     setTimeout(() => {
+      // tslint:disable-next-line
       this.guidedTourService && this.guidedTourService.skipTour()
-    },         2000)
+      // tslint:disable-next-line: align
+    }, 2000)
     if (this.isMobile) {
+      // tslint:disable-next-line: align
        // @ts-ignore
        setTimeout(() => {
          this.guidedTourService.startTour(this.MOBILE_TOUR)
-       },         2000)
+         // tslint:disable-next-line: align
+       }, 2000)
     }
   }
 
@@ -249,6 +260,7 @@ export class AppTourComponent {
     this.showCompletePopup = true
     setTimeout(() => {
       this.onCongrats()
+    // tslint: disable-next-line
     },         3000)
     this.raiseGetStartedEndTelemetry()
     this.updateTourstatus({ visited: true, skipped: false })
@@ -271,10 +283,11 @@ export class AppTourComponent {
 
   nextCb(currentStep: number, stepObject: any) {
     // if (stepObject.title == 'My Profile') {
-    //   this.hideCloseBtn = true;
+    //   this.hideCloseBtn = true
     // }
     this.currentWindow = stepObject
     const currentStepObj: any = this.TOUR.steps[currentStep - 1]
+    // tslint:disable-next-line: max-line-length
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ', '-')}-next`, currentStepObj.title.toLowerCase())
   }
 
@@ -282,6 +295,7 @@ export class AppTourComponent {
     this.hideCloseBtn = false
     this.currentWindow = stepObject
     const currentStepObj: any = this.TOUR.steps[currentStep +  1]
+    // tslint:disable-next-line: max-line-length
     this.raiseTemeletyInterat(`${currentStepObj.title.toLowerCase().replace(' ', '-')}-previous`, currentStepObj.title.toLowerCase())
   }
 
@@ -304,12 +318,12 @@ export class AppTourComponent {
     this.events.dispatchGetStartedEvent<WsEvents.IWsEventTelemetryInteract>(event)
   }
 
-  raiseTemeletyInterat(id: string, stype: string) {
+  raiseTemeletyInterat(idn: string, stype: string) {
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
       data: {
-        edata: { type: 'click', id, subType: stype },
+        edata: { type: 'click', id: idn, subType: stype },
         object: {},
         state: WsEvents.EnumTelemetrySubType.Interact,
         eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
@@ -346,6 +360,7 @@ export class AppTourComponent {
   }
 
   translateTo(name: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey =  'tour.' + name
     return this.translate.instant(translationKey)
   }

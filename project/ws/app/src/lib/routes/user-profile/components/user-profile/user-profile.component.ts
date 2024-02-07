@@ -1952,6 +1952,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     )
   }
   translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'userProfile.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

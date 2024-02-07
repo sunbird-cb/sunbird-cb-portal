@@ -31,11 +31,13 @@ export class ProfileHobbiesComponent extends WidgetBaseComponent implements OnIn
   }
 
   translateTabName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profileV2Hobbies.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }
 
   getDefaultTranslate(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'profileV2Hobbies.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }

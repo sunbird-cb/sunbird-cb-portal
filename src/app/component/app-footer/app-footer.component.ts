@@ -13,7 +13,8 @@ import { environment } from 'src/environments/environment'
   selector: 'ws-app-footer',
   templateUrl: './app-footer.component.html',
   styleUrls: ['./app-footer.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  // tslint:disable-next-line
+  encapsulation: ViewEncapsulation.None
 })
 export class AppFooterComponent implements OnInit {
   @Input() headerFooterConfigData: any
@@ -80,7 +81,6 @@ export class AppFooterComponent implements OnInit {
       }
     }
   }
-
   hasRole(role: string[]): boolean {
     let returnValue = false
     role.forEach(v => {
@@ -102,6 +102,7 @@ export class AppFooterComponent implements OnInit {
   }
 
   translateHub(hubName: string): string {
+    // tslint:disable-next-line: prefer-template
     const translationKey = 'common.' + hubName
     return this.translate.instant(translationKey)
   }
@@ -111,7 +112,7 @@ export class AppFooterComponent implements OnInit {
   }
 
   onClick(event: any) {
-    console.log(event.target.parentElement)
+    // console.log(event.target.parentElement)
     event.target.parentElement.classList.toggle('open')
   }
 }
