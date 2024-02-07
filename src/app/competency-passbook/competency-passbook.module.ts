@@ -38,7 +38,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
   exports: [
     TranslateModule,
-  ]
+  ],
 })
 
 export class CompetencyPassbookModule { }
