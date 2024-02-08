@@ -34,8 +34,6 @@ export class SharedModule {
     // })
 
     this.langtranslations.languageSelectedObservable.subscribe(() => {
-      // console.log("daata -----------" , this.langtranslations.selectedLang)
-      // console.log('data', data)
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         const lang = localStorage.getItem('websiteLanguage')!

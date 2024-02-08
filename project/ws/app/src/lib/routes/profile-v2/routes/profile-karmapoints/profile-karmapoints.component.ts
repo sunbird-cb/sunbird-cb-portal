@@ -30,9 +30,7 @@ export class ProfileKarmapointsComponent implements OnInit {
     private langtranslations: MultilingualTranslationsService
   ) {
     this.currentUser = this.configSvc && this.configSvc.userProfile
-    this.langtranslations.languageSelectedObservable.subscribe((data: any) => {
-      // tslint:disable
-      console.log("daata -----------" , data)
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         const lang = localStorage.getItem('websiteLanguage')!

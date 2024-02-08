@@ -33,9 +33,7 @@ export class CareersComponent implements OnInit {
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['careersCategoryId'] || 1
     this.setPagination()
-    this.langtranslations.languageSelectedObservable.subscribe((data: any) => {
-      // tslint:disable
-      console.log("daata -----------" , data)
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         const lang = localStorage.getItem('websiteLanguage')!

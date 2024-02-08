@@ -39,10 +39,8 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   }
   constructor(private configSvc: ConfigurationsService,
               private activateRoute: ActivatedRoute, private langtranslations: MultilingualTranslationsService,
-              private translate: TranslateService,) {
-                this.langtranslations.languageSelectedObservable.subscribe((data: any) => {
-                  // tslint:disable
-                  console.log("daata -----------" , data)
+              private translate: TranslateService) {
+                this.langtranslations.languageSelectedObservable.subscribe(() => {
                   if (localStorage.getItem('websiteLanguage')) {
                     this.translate.setDefaultLang('en')
                     const lang = localStorage.getItem('websiteLanguage')!
