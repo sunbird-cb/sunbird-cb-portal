@@ -48,6 +48,15 @@ export class TopRightNavBarComponent implements OnInit {
         this.selectedLanguage = lang
         this.translate.use(lang)
       }
+
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+          this.selectedLanguage = lang
+        }
+      })
   }
 
   ngOnInit() {
