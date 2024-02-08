@@ -5,6 +5,7 @@ import { KnowledgeResourceService } from '../../services/knowledge-resource.serv
 // tslint:disable
 import _ from 'lodash'
 import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:enable
 
 @Component({
@@ -21,13 +22,16 @@ export class KnowledgeSavedComponent implements OnInit {
   constructor(private activateRoute: ActivatedRoute,
               private kwResources: KnowledgeResourceService,
               private translate: TranslateService,
+              private langtranslations: MultilingualTranslationsService,
     ) {
       this.filterSaved(null)
-      if (localStorage.getItem('websiteLanguage')) {
-        this.translate.setDefaultLang('en')
-        const lang = localStorage.getItem('websiteLanguage')!
-        this.translate.use(lang)
-      }
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+      })
   }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { map } from 'rxjs/operators'
-import { ValueService } from '@sunbird-cb/utils'
+import { MultilingualTranslationsService, ValueService } from '@sunbird-cb/utils'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 import { ActivatedRoute } from '@angular/router'
@@ -34,13 +34,16 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
     private kwResources: KnowledgeResourceService,
     private activateRoute: ActivatedRoute,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     ) {
       this.allResources = _.get(this.activateRoute.snapshot, 'data.allResources.data.responseData') || []
-      if (localStorage.getItem('websiteLanguage')) {
-        this.translate.setDefaultLang('en')
-        const lang = localStorage.getItem('websiteLanguage')!
-        this.translate.use(lang)
-      }
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+      })
      }
 
   ngOnInit() {
