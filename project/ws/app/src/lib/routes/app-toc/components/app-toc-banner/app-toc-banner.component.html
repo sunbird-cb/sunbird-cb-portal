@@ -412,7 +412,7 @@
       <div class="contnet">
           <section class="w-full flex align-center justify-between ">
             <div class="mb-2">
-                <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">Share with Karmayogis</h2>
+                <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">{{'contentSharing.header' | translate}}</h2>
             </div>
             <div class="cursor-pointer"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
           </section>
@@ -431,7 +431,7 @@
                             </mat-chip>
                             <input
                                 tabindex="-1"
-                                placeholder="{{users.length === 0 ? placehoderText : ''}}"
+                                placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
                                 #userInput
                                 formControlName="review"
                                 [formControl]="userCtrl"
@@ -454,18 +454,18 @@
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-hint align="start">Note: Emails will be sent only to registered karmayogis.</mat-hint>
-                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} characters</mat-hint>
+                        <mat-hint align="start">{{'contentSharing.note' | translate}}</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingCharacter' | translate}}</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
                     <div class="flex flex-1 flex-end">
-                        <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">Copy link &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
+                        <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">{{'contentSharing.copyLink' | translate}} &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
                         <button mat-stroked-button type="submit"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
                             [disabled]="users.length === 0 || users.length === maxEmailsLimit" (click)="submitSharing()"
                             >
-                            Send<mat-icon >play_arrow</mat-icon>
+                            {{'contentSharing.send' | translate}}<mat-icon >play_arrow</mat-icon>
                         </button>
                     </div>
                 </div>
