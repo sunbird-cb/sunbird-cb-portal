@@ -9,8 +9,8 @@
   <form class="flex-1">
     <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary" >
       <mat-icon matPrefix class="flex items-center justify-center">search</mat-icon>
-      <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2" i18n-placeholder="search content"
-          [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput maxlength="50" />
+      <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2"
+          placeholder="{{'knowledgeall.search' | translate }}" i18-aria-label aria-label="Query" matInput maxlength="50" />
     </mat-form-field>
   </form>
   </div>
