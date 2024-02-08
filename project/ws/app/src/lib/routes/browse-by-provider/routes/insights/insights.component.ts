@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { TranslateService } from '@ngx-translate/core';
-import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api';
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-insights',
@@ -11,7 +11,7 @@ import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-ap
 })
 export class InsightsComponent implements OnInit {
 
-  constructor(private translate: TranslateService,private langtranslations: MultilingualTranslationsService) {
+  constructor(private translate: TranslateService, private langtranslations: MultilingualTranslationsService) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')

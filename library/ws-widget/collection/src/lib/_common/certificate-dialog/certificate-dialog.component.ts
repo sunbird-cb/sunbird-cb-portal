@@ -6,6 +6,9 @@ import { jsPDF } from 'jspdf'
   selector: 'ws-widget-certificate-dialog',
   templateUrl: './certificate-dialog.component.html',
   styleUrls: ['./certificate-dialog.component.scss'],
+   /* tslint:disable */
+   host: { class: 'certificate-inner-dialog-panel' },
+   /* tslint:enable */
 })
 export class CertificateDialogComponent implements OnInit {
   url!: string

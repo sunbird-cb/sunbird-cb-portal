@@ -130,7 +130,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.fonts.sort((a, b) => a.scale - b.scale)
 
       this.multiLang = instanceConfig.webistelanguages
-      console.log('multilang', this.multiLang)
+      // console.log('multilang', this.multiLang)
 
       this.allowedLangCode = instanceConfig.locals.reduce(
         (agg: { [path: string]: NsInstanceConfig.ILocalsConfig }, u) => {
@@ -284,7 +284,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   selectLanguage(event: any) {
-    console.log('event', event)
+    // console.log('event', event)
     this.selectedLanguage = event
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.langtranslations.updatelanguageSelected(

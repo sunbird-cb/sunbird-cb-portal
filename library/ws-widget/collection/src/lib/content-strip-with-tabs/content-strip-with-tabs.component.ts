@@ -38,6 +38,7 @@ interface IStripUnitContentData {
     showNavs: boolean,
     showDots: boolean,
     maxWidgets?: number
+    cerificateCardMargin?: boolean
   },
   tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
   stripName?: string
