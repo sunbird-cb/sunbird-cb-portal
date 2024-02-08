@@ -25,7 +25,7 @@ export class NetworkMyConnectionComponent implements OnInit {
     // private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
     private translate: TranslateService,
-    private multiLingualService: MultilingualTranslationsService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data
     // this.data = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
@@ -40,9 +40,7 @@ export class NetworkMyConnectionComponent implements OnInit {
       && this.route.snapshot.data.myConnectionList.data.result.data) {
       this.datalist = this.route.snapshot.data.myConnectionList.data.result.data
     }
-    this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
-      // tslint:disable
-      console.log("daata -----------" , data)
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         const lang = localStorage.getItem('websiteLanguage')!

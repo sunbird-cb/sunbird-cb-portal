@@ -34,13 +34,11 @@ export class NetworkHomeComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
     private translate: TranslateService,
-    private multiLingualService: MultilingualTranslationsService,
+    private langtranslations: MultilingualTranslationsService,
     @Inject(DOCUMENT) private document: Document
   ) {
 
-    this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
-      // tslint:disable
-      console.log("daata -----------" , data)
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         const lang = localStorage.getItem('websiteLanguage')!

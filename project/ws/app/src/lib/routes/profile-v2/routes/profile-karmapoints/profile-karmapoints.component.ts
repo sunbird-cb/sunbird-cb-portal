@@ -30,11 +30,13 @@ export class ProfileKarmapointsComponent implements OnInit {
     private langtranslations: MultilingualTranslationsService
   ) {
     this.currentUser = this.configSvc && this.configSvc.userProfile
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      const lang = localStorage.getItem('websiteLanguage')!
-      this.translate.use(lang)
-    }
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {
