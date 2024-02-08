@@ -1,12 +1,11 @@
-<mat-card class="no-shadow">
+<mat-card class="no-shadow certificate-img-box">
     <button mat-icon-button class="close-button" [mat-dialog-close]="true">
         <mat-icon class="close-icon" color="warn">close</mat-icon>
     </button>
-    <mat-card-title>
-        <span i18n>{{'certificatedialog.downloadCertificate' | translate}}</span>
-        <!-- <span i18n>Download Certificate</span> -->
-    </mat-card-title>
-    <mat-card-content>
+    <!-- <mat-card-title>
+     
+    </mat-card-title> -->
+    <mat-card-content class="certificate-img-content">
         <img #certificate [src]="url| pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image">
     </mat-card-content>
     <mat-card-actions class="flex flex-row-reverse">

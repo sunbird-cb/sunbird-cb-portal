@@ -30,7 +30,7 @@
                 </mat-select>
             </mat-form-field>
         </li>
-        <li matTooltipClass="right-nav-tooltip" matTooltip="{{ 'toprightnavbar.needHelp' | translate }}" class="help-icon" id="help-icon" *ngIf="item.type === 'helpButton' && rnc.section === 'help' && rnc.active && item?.forPreview">
+        <li matTooltipClass="right-nav-tooltip" matTooltip="{{ 'toprightnavbar.needHelp' | translate }}" (click)="getZohoForm()" class="help-icon" id="help-icon" *ngIf="item.type === 'helpButton' && rnc.section === 'help' && rnc.active && item?.forPreview">
             <img  src="/assets/icons/top-nav/help_icon.svg">
         </li>
         <li matTooltipClass="right-nav-tooltip" matTooltip="{{ 'toprightnavbar.profile' | translate }}">

@@ -18,6 +18,10 @@
 
 </ng-container>
 
+<ng-container  [ngTemplateOutlet]="zohoform" *ngIf="data.view === 'zohoform'">
+
+</ng-container>
+
 <ng-template #ccomp>
     <p class="mat-subheading-2 margin-bottom-xs">{{'dialogbox.whatAreCompetencies' | translate}}</p>
     <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">{{'dialogbox.p13' | translate}}
@@ -110,6 +114,12 @@
             <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">           - &nbsp; {{'dialogbox.p6' | translate}}</p>
             <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">          -  &nbsp; {{'dialogbox.p7' | translate}}</p>
         </div>
+</ng-template>
+
+
+<ng-template #zohoform>
+   
+    <div [innerHtml]="data?.value"></div>
 </ng-template>
 
 
