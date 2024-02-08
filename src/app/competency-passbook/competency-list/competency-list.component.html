@@ -264,7 +264,7 @@
 
     <div class="mobile-right-container" *ngIf="!showAll">
         <div class="flex flex-col gap-6 px-4">
-            <div class="text-base font-bold">Recently associated competencies</div>
+            <div class="text-base font-bold">{{'competencyList.recentCompetencies' | translate }}</div>
             <div class="flex flex-wrap gap-4">
                 <ng-container *ngIf="competency.skeletonLoading">
                     <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>

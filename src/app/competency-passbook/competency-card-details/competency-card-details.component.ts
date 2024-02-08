@@ -8,6 +8,8 @@ import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 // Project files and components
 import { CompetencyPassbookService } from '../competency-passbook.service'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-competency-card-details',
@@ -29,7 +31,16 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     private actRouter: ActivatedRoute,
     private router: Router,
     private cpService: CompetencyPassbookService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
     this.isMobile = (window.innerWidth < 768) ? true : false
     this.actRouter.queryParams.subscribe((params: any) => {
       this.params = params

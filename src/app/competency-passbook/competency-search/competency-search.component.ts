@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, EventEmitter, Output } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { fromEvent } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 
@@ -14,7 +16,15 @@ export class CompetencySearchComponent implements OnInit, AfterViewInit {
   clearIcon = false
   @Output() searchValue = new EventEmitter<string>()
   @Output() enableFilter = new EventEmitter<boolean>()
-  constructor() { }
+  constructor(private translate: TranslateService, private langtranslations: MultilingualTranslationsService,) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+  }
 
   ngOnInit() {
   }
