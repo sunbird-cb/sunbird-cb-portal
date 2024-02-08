@@ -3,7 +3,7 @@ import { NSDiscussData } from '../../../discuss/models/discuss.model'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { DiscussService } from '../../../discuss/services/discuss.service'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -27,17 +27,21 @@ export class CareersComponent implements OnInit {
     private discussService: DiscussService,
     private eventSvc: EventService,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['careersCategoryId'] || 1
     this.setPagination()
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      const lang = localStorage.getItem('websiteLanguage')!
-
-      this.translate.use(lang)
-    }
+    this.langtranslations.languageSelectedObservable.subscribe((data: any) => {
+      // tslint:disable
+      console.log("daata -----------" , data)
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {

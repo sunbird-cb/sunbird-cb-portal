@@ -27,10 +27,10 @@ export class NetworkRecommendedComponent implements OnInit {
     private route: ActivatedRoute,
     private eventSvc: EventService,
     private translate: TranslateService,
-    private multiLingualService: MultilingualTranslationsService,
+    private langtranslations: MultilingualTranslationsService,
 
   ) {
-    this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
+    this.langtranslations.languageSelectedObservable.subscribe((data: any) => {
       // tslint:disable
       console.log("daata -----------" , data)
       if (localStorage.getItem('websiteLanguage')) {

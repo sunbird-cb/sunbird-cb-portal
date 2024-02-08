@@ -7,6 +7,7 @@ import { Subject, Observable } from 'rxjs'
 import _ from 'lodash'
 import { LocalDataService } from '../../../browse-by-competency/services/localService';
 import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:enable
 
 @Component({
@@ -47,14 +48,18 @@ export class AllProvidersComponent implements OnInit {
   constructor(
     private browseProviderSvc: BrowseProviderService,
     private localService: LocalDataService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
-    if (localStorage.getItem('websiteLanguage')) {
-      this.translate.setDefaultLang('en')
-      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, '')
-      this.translate.use(lang)
-    }
+    this.langtranslations.languageSelectedObservable.subscribe((data: any) => {
+      // tslint:disable
+      console.log("daata -----------" , data)
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
    }
 
   ngOnInit() {
