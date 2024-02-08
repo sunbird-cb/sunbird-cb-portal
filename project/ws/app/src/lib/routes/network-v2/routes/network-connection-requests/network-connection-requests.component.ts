@@ -25,7 +25,7 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     private networkV2Service: NetworkV2Service,
     private eventSvc: EventService,
     private translate: TranslateService,
-    private multiLingualService: MultilingualTranslationsService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
     if (this.route.snapshot.data.connectionRequests
       && this.route.snapshot.data.connectionRequests.data
@@ -40,9 +40,7 @@ export class NetworkConnectionRequestsComponent implements OnInit {
           return v
         })
       }
-      this.multiLingualService.languageSelectedObservable.subscribe((data: any) => {
-        // tslint:disable
-        console.log("daata -----------" , data)
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
         if (localStorage.getItem('websiteLanguage')) {
           this.translate.setDefaultLang('en')
           const lang = localStorage.getItem('websiteLanguage')!
