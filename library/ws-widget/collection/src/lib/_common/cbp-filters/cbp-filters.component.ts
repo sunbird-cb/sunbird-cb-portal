@@ -1,9 +1,11 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren, Inject } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { MAT_BOTTOM_SHEET_DATA, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetRef } from '@angular/material/bottom-sheet'
 import { AppCbpPlansService } from 'src/app/services/app-cbp-plans.service'
 // tslint:disable
 import _ from 'lodash'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
 	selector: 'ws-widget-cbp-filters',
@@ -75,10 +77,19 @@ export class CbpFiltersComponent implements OnInit {
 	constructor(
 		@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
 		private bottomSheetRef: MatBottomSheetRef<CbpFiltersComponent>,
-		private appCbpPlansService: AppCbpPlansService) {
+		private appCbpPlansService: AppCbpPlansService,
+		private translate: TranslateService,
+		private langtranslations: MultilingualTranslationsService,) {
 		if (this.data) {
 			this.filterObj = this.data.filterObj
 		}
+		this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
 	}
 
 	ngOnInit() {
@@ -364,7 +375,7 @@ export class CbpFiltersComponent implements OnInit {
 		) {
 			this.filterEmpty = false
 			return false
-		} 
+		}
 		this.filterEmpty = true
 		return true
 	}

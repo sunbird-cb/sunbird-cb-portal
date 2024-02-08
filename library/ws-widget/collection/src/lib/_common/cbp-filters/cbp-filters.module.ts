@@ -13,6 +13,7 @@ import {
 
 import { CbpFiltersComponent } from './cbp-filters.component'
 import { FilterSearchPipeModule } from 'src/app/pipes/filter-search/filter-search.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import { FilterSearchPipeModule } from 'src/app/pipes/filter-search/filter-searc
         MatMenuModule,
         MatRadioModule,
         FilterSearchPipeModule,
+        TranslateModule
     ],
     exports: [
         CbpFiltersComponent,
