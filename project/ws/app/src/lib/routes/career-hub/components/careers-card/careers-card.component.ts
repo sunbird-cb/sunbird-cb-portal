@@ -14,7 +14,7 @@ export class CareersCardComponent implements OnInit {
   discuss!: NSDiscussData.IDiscussionData
 
   constructor(private router: Router, private translate: TranslateService,
-    private langtranslations: MultilingualTranslationsService) {
+              private langtranslations: MultilingualTranslationsService) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')

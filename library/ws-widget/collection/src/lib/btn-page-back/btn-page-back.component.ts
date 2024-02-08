@@ -184,7 +184,7 @@ export class BtnPageBackComponent extends WidgetBaseComponent
   }
 
   translateLabels(label: string, type: any, subtype: any) {
-    return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
+    return this.langtranslations.translateLabel(label, type, subtype)
   }
 
 }

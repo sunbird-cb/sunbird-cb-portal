@@ -25,8 +25,8 @@ export class ConnectionRecommendedCardComponent implements OnInit {
     private translate: TranslateService,
     private langtranslations: MultilingualTranslationsService,
   ) {
-    this.langtranslations.languageSelectedObservable.subscribe((data: any) => {
-      if (data && localStorage.getItem('websiteLanguage')) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         const lang = localStorage.getItem('websiteLanguage')!
         this.translate.use(lang)
