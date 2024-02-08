@@ -91,11 +91,11 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
-import { HeaderModule } from './header/header.module';
-import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
-import { SocialLinkComponent } from './component/social-link/social-link.component';
-import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
-import { AppLogoComponent } from './component/app-logo/app-logo.component';
+import { HeaderModule } from './header/header.module'
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
+import { SocialLinkComponent } from './component/social-link/social-link.component'
+import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component'
+import { AppLogoComponent } from './component/app-logo/app-logo.component'
 import { ProfileV3Module } from '@ws/app/src/lib/routes/profile-v3/profile-v3.module'
 import { NoDataComponent } from './component/no-data/no-data.component'
 

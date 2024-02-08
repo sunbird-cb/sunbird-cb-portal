@@ -144,9 +144,12 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   }
   translateAnswer(label: string, type: any) {
     let htmlAnswer = '<p class=\'mat-body-2\'><ng-container>'
-    label = label.replace(/\s/g, '')
-    const translationKey = type + '.' +  label
+    const labeln = label.replace(/\s/g, '')
+    // tslint:disable-next-line: prefer-template
+    const translationKey = type + '.' +  labeln
+    // tslint:disable-next-line: prefer-template
     htmlAnswer = htmlAnswer + this.translate.instant(translationKey)
+    // tslint:disable-next-line: prefer-template
     htmlAnswer = htmlAnswer + '</ng-container></p>'
     return htmlAnswer
   }

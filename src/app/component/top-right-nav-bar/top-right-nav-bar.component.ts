@@ -112,13 +112,13 @@ export class TopRightNavBarComponent implements OnInit {
       data: {
         view: 'zohoform',
         value: this.zohoHtml,
-      }
+      },
     })
     dialogRef.afterClosed().subscribe(() => {
     })
     setTimeout(() => {
       this.callXMLRequest()
-    }, 0)
+    },         0)
   }
 
   openDialog(): void {
@@ -133,23 +133,24 @@ export class TopRightNavBarComponent implements OnInit {
   callXMLRequest() {
     let webFormxhr: any = {}
     webFormxhr = new XMLHttpRequest()
+    // tslint:disable-next-line: prefer-template
     webFormxhr.open('GET', 'https://desk.zoho.in/support/GenerateCaptcha?action=getNewCaptcha&_=' + new Date().getTime(), true)
     webFormxhr.onreadystatechange = () => {
       if (webFormxhr.readyState === 4 && webFormxhr.status === 200) {
         try {
           const response = (webFormxhr.responseText != null) ? JSON.parse(webFormxhr.responseText) : ''
-          let zsCaptchaUrl: any = document.getElementById('zsCaptchaUrl')
+          const zsCaptchaUrl: any = document.getElementById('zsCaptchaUrl')
           if (zsCaptchaUrl) {
             zsCaptchaUrl.src = response.captchaUrl
             zsCaptchaUrl.style.display = 'block'
           }
-          let xJdfEaS: any = document.getElementsByName('xJdfEaS')[0]
+          const xJdfEaS: any = document.getElementsByName('xJdfEaS')[0]
           xJdfEaS.value = response.captchaDigest
-          let zsCaptchaLoading: any = document.getElementById('zsCaptchaLoading')
+          const zsCaptchaLoading: any = document.getElementById('zsCaptchaLoading')
           zsCaptchaLoading.style.display = 'none'
-          let zsCaptcha: any = document.getElementById('zsCaptcha')
+          const zsCaptcha: any = document.getElementById('zsCaptcha')
           zsCaptcha.style.display = 'block'
-          let refreshCaptcha: any = document.getElementById('refreshCaptcha')
+          const refreshCaptcha: any = document.getElementById('refreshCaptcha')
           if (refreshCaptcha) {
             refreshCaptcha.addEventListener('click', () => {
               this.callXMLRequest()
