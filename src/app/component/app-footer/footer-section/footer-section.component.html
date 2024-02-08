@@ -66,12 +66,12 @@
                 <ul *ngIf="item?.slug === 'hub'">
                     <ng-container *ngFor="let hub of (hubsList || [])">
                         <li>
-                            <ng-container *ngIf="hub.hubname == 'Discuss'">
+                            <ng-container *ngIf="hub.hubname == ('Discuss' || 'Learn' || 'Network')">
                                 <a class="footer_sub_text mat-body cursor-pointer" (click)="navigate()">{{ translateLabels(hub.hubname, 'common') }}</a>
                             </ng-container>
-                            <ng-container *ngIf="hub.hubname != 'Discuss'">
+                            <ng-container *ngIf="hub.hubname != ('Discuss' || 'Learn' || 'Network')">
                                 <a class="footer_sub_text mat-body cursor-pointer"
-                                    [routerLink]="hub.path">{{ translateLabels(hub.hubname, 'common') }}</a>
+                                    [routerLink]="hub.path">{{ translateLabelsWithSpace(hub.hubname, 'common') }}</a>
                             </ng-container>
                         </li>
                     </ng-container>
