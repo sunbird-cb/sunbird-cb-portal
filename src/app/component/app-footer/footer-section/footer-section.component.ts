@@ -132,4 +132,8 @@ export class FooterSectionComponent implements OnInit {
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
+
+  translateLabelsWithSpace(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
 }
