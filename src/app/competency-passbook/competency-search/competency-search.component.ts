@@ -16,7 +16,7 @@ export class CompetencySearchComponent implements OnInit, AfterViewInit {
   clearIcon = false
   @Output() searchValue = new EventEmitter<string>()
   @Output() enableFilter = new EventEmitter<boolean>()
-  constructor(private translate: TranslateService, private langtranslations: MultilingualTranslationsService,) {
+  constructor(private translate: TranslateService, private langtranslations: MultilingualTranslationsService) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')

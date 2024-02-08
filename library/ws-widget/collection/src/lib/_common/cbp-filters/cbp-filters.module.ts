@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core'
         MatMenuModule,
         MatRadioModule,
         FilterSearchPipeModule,
-        TranslateModule
+        TranslateModule,
     ],
     exports: [
         CbpFiltersComponent,

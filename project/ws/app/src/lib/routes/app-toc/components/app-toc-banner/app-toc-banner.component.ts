@@ -1294,7 +1294,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       const input = event.input
       const value = event.value
       if (this.users.length === this.maxEmailsLimit) {
-        this.openSnackbar(this.translateLabels('maxLimit','contentSharing',''))
+        this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
       const ePattern = new RegExp(`^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`)
@@ -1307,7 +1307,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         this.userCtrl.setValue(null)
       } else {
-        this.openSnackbar(this.translateLabels('invalidEmail','contentSharing',''))
+        this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
         return
       }
     }
@@ -1323,7 +1323,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   selected(event: MatAutocompleteSelectedEvent): void {
     if (this.users.length === this.maxEmailsLimit) {
-      this.openSnackbar(this.translateLabels('maxLimit','contentSharing',''))
+      this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
       return
     }
     this.users.push(event.option.value)
@@ -1376,7 +1376,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       obj.request.recipients = recipients
       this.tocSvc.shareContent(obj).subscribe(result => {
         if (result.responseCode === 'OK') {
-          this.openSnackbar(this.translateLabels('success','contentSharing',''))
+          this.openSnackbar(this.translateLabels('success', 'contentSharing', ''))
         }
         this.users = []
         this.enableShare = false
