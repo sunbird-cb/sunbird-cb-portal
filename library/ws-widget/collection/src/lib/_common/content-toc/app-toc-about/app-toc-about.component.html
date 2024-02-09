@@ -1,4 +1,43 @@
 <div class="flex flex-col gap-10 mt-4">
+
+    <div class="padding-m batch-timer flex" *ngIf="days >= 0">
+        <div class="time-block">
+            <p class="timer-title">This batch starts in</p>
+            <div class="flex time-wrapper">
+                <div>
+                    <p class="count">{{days || 0}}</p>
+                    <p class="time-label">DAYS</p>
+                </div>
+                <span>:</span>
+                <div>
+                    <p class="count">{{ minutes === 60? hours + 1 : hours}}</p>
+                    <p class="time-label">HOURS</p>
+                </div>
+                <span>:</span>
+                <div>
+                    <p class="count">{{minutes === 60? 00 : minutes }}</p>
+                    <p class="time-label">MINUTES</p>
+                </div>
+                <!-- <span>:</span>
+                    <div>
+                      <p class="count">{{seconds}}</p>
+                      <p class="time-label">MINUTES</p>
+                </div> -->
+            </div>
+        </div>
+        <div class="help">
+            <div class="flex batch-wrapper">
+                <ng-container *ngIf="!showMsg">
+                    <div class="batch-duration-wrap">
+                        <p class="timer-title">Batch duration</p>
+                        <p class="duration-days">{{getBatchDuration}} Days</p>
+                    </div>
+                </ng-container>
+                <p class="batch-info" *ngIf="showMsg">Kindly check the location details and plan in advance.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="flex flex-col">
         <ng-container *ngIf="skeletonLoader">
             <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
@@ -14,7 +53,7 @@
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1">Summary</div>
             <div [ngClass]="{'desc-ellipsis': summaryEllipsis}">
-                {{ content?.description }}
+                {{ handleCapitalize(content?.description) }}
                 <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
                     (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span> -->
             </div>
@@ -46,8 +85,8 @@
         </ng-container>
     </div>
 
-    <div class="flex flex-col gap-3">
-        <ng-container *ngIf="skeletonLoader">
+    <ng-container *ngIf="skeletonLoader">
+        <div class="flex flex-col gap-3">
             <ws-widget-skeleton-loader [width]="'120px'" [height]="'16px'"
                 [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
             <div class="flex flex-row gap-3">
@@ -61,25 +100,36 @@
                 <ws-widget-skeleton-loader [width]="'40%'" [height]="'80px'"
                     [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
             </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!skeletonLoader">
+        <ng-container *ngIf="!strip?.loaderWidgets?.length || !competenciesObject">
+            <div class="flex flex-col">
+                <div class="mat-subheading-1">Competencies</div>
+                No competencies found
+            </div>
         </ng-container>
-        <ng-container *ngIf="!skeletonLoader">
-            <div class="text-base font-bold">Competencies</div>
-            <div class="flex flex-row gap-3 sm:gap-4 mb-3">
-                <ng-container *ngFor="let item of this.competenciesObject | keyvalue" >
-                    <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === item.key}" (click)="handleShowCompetencies(item, 'selected')">{{ item.key }}</div>
+        <ng-container *ngIf="strip?.loaderWidgets?.length > 0">
+            <div class="flex flex-col gap-3">
+                <div class="mat-subheading-1">Competencies</div>
+                <div class="flex flex-row gap-3 sm:gap-4 mb-3">
+                    <ng-container *ngFor="let item of competenciesObject" >
+                        <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === item.key}" (click)="handleShowCompetencies(item, 'selected')">{{ item.key }}</div>
+                    </ng-container>
+                </div>
+                <ng-container *ngFor="let item of competenciesObject">
+                    <div *ngIf="item?.key === competencySelected">
+                        <ws-utils-horizontal-scroller-v2 [sliderConfig]="strip.sliderConfig" [loadStatus]="'done'" [stripConfig]="strip.stripConfig">
+                            <ng-container *ngFor="let widget of strip?.loaderWidgets; trackBy: tracker">
+                                <ng-container [wsResolverWidget]="widget"></ng-container>
+                            </ng-container>
+                        </ws-utils-horizontal-scroller-v2>
+                    </div>
                 </ng-container>
             </div>
-            <ng-container *ngFor="let item of this.competenciesObject | keyvalue">
-                <div *ngIf="item?.key === competencySelected">
-                    <ws-utils-horizontal-scroller-v2 [sliderConfig]="strip.sliderConfig" [loadStatus]="'done'" [stripConfig]="strip.stripConfig">
-                        <ng-container *ngFor="let widget of strip?.loaderWidgets; trackBy: tracker">
-                            <ng-container [wsResolverWidget]="widget"></ng-container>
-                        </ng-container>
-                    </ws-utils-horizontal-scroller-v2>
-                </div>
-            </ng-container>
         </ng-container>
-    </div>
+    </ng-container>
 
     <div class="flex flex-col gap-3">
         <ng-container *ngIf="skeletonLoader">

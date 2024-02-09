@@ -61,7 +61,7 @@ const flattenItems = (items: any[], key: string | number) => {
 })
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
-  show = false
+  show = true
   skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
@@ -1522,6 +1522,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
+  }
+
+  public handleEnrollmentEndDate(batch: any) {
+    const enrollmentEndDate = dayjs(_.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
+    const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
+    return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
+      (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
   }
 
   ngOnDestroy() {

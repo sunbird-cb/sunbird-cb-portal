@@ -25,7 +25,7 @@ import { NSQuiz } from '../quiz/quiz.model'
 import { environment } from 'src/environments/environment'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ViewerDataService } from '../../viewer-data.service'
-import { ViewerHeaderSideBarToggleService } from './../../viewer-header-side-bar-toggle.service';
+import { ViewerHeaderSideBarToggleService } from './../../viewer-header-side-bar-toggle.service'
 // import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
@@ -111,10 +111,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   showAnswer = false
   matchHintDisplay: any[] = []
   canAttempt!: NSPractice.IRetakeAssessment
-  isMobile = false;
-  questionAttemptedCount = 0;
-  expandFalse = true;
-  showOverlay = false;
+  isMobile = false
+  questionAttemptedCount = 0
+  expandFalse = true
+  showOverlay = false
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -128,18 +128,18 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private sanitized: DomSanitizer,
     private viewerDataSvc: ViewerDataService,
     private viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService
-    
+
   ) {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
     }
   }
   init() {
-    
-    if(window.innerWidth <= 1200) {
-      this.isMobile = true;
+
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
     } else {
-      this.isMobile = false;
+      this.isMobile = false
     }
     // this.getSections()
     this.isSubmitted = false
@@ -660,8 +660,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (this.markSectionAsComplete(answered) && this.selectedSection) {
       this.quizSvc.setFullAttemptSection(this.selectedSection)
     }
-    if(this.questionAnswerHash) {
-      this.questionAttemptedCount = Object.keys(this.questionAnswerHash).length;
+    if (this.questionAnswerHash) {
+      this.questionAttemptedCount = Object.keys(this.questionAnswerHash).length
     }
   }
   markSectionAsComplete(answered: any): boolean {
@@ -842,11 +842,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   async submitQuiz() {
 
     this.raiseTelemetry('quiz', null, 'submit')
-    this.showOverlay = true;
-    setTimeout(()=>{
-      this.showOverlay = false; 
-      this.viewerHeaderSideBarToggleService.visibilityStatus.next(true);
-    },1000)
+    this.showOverlay = true
+    setTimeout(() => {
+      this.showOverlay = false
+      this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
+    },         1000)
     this.isSubmitted = true
     this.ngOnDestroy()
     if (!this.quizJson.isAssessment) {
@@ -1129,7 +1129,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.attemptSubData = []
     this.currentQuestionIndex = 0
     this.currentQuestion = null
-    
+
     // this.viewState = 'initial'
     // this.isSubmitted = true
   }

@@ -126,6 +126,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
 import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
+import { AppTocRcComponent } from './components/app-toc-rc/app-toc-rc.component'
 
 @NgModule({
   declarations: [
@@ -156,6 +157,7 @@ import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content
     AppTocSessionCardComponent,
     EnrollQuestionnaireComponent,
     KarmaPointsPanelComponent,
+    AppTocRcComponent,
   ],
   imports: [
     CommonModule,

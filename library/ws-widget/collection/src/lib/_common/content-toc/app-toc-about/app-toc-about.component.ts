@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
@@ -8,6 +8,7 @@ import { ReviewsContentComponent } from '../reviews-content/reviews-content.comp
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
@@ -50,7 +51,7 @@ interface IStripUnitContentData {
   styleUrls: ['./app-toc-about.component.scss'],
 })
 
-export class AppTocAboutComponent implements OnInit, OnChanges {
+export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
@@ -73,7 +74,20 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   reviewPage = 1
   ratingViewCount = 3
   reviewDefaultLimit = 2
-  competenciesObject: any = {}
+  competenciesObject: any = []
+
+  // countdown var
+  date: any
+  now: any
+  targetDate: any
+  targetTime: any
+  difference = 0
+  days: any
+  hours: any
+  minutes: any
+  seconds: any
+  serverDateSubscription: any
+  serverDate: any
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -111,6 +125,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   constructor(
     private ratingService: RatingService,
     private loggerService: LoggerService,
+    private tocService: AppTocService,
     private dialog: MatDialog,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService
@@ -120,6 +135,34 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
       this.loadCompetencies()
+    }
+
+    this.tocService.serverDate.subscribe(serverDate => {
+      this.serverDate = serverDate
+      this.ngAfterViewInit()
+    })
+  }
+
+  ngAfterViewInit(): void {
+    let serverDate = this.serverDate
+    if (this.serverDate) {
+      setInterval(() => {
+        // this.tickTock();
+        serverDate = serverDate  +  1000
+        this.date = new Date(serverDate)
+        this.now = this.date.getTime()
+        this.difference = this.targetTime - this.now
+        this.difference = this.difference / (1000 * 60 * 60 * 24)
+
+        this.days = Math.floor(this.difference)
+        this.hours = 23 - this.date.getHours()
+        this.minutes = 60 - this.date.getMinutes()
+        this.seconds = 60 - this.date.getSeconds()
+        Number(this.hours)
+        !isNaN(this.days)
+          ? (this.days = Math.floor(this.difference))
+          : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
+      },          1000)
     }
   }
 
@@ -133,31 +176,40 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
 
   loadCompetencies(): void {
     if (this.content && this.content.competencies_v5 && this.content.competencies_v5.length) {
+      const competenciesObject: any = {}
       this.content.competencies_v5.forEach((_obj: any) => {
-        if (this.competenciesObject[_obj.competencyArea]) {
-          if (this.competenciesObject[_obj.competencyArea][_obj.competencyTheme]) {
-            const competencyTheme = this.competenciesObject[_obj.competencyArea][_obj.competencyTheme]
+        if (competenciesObject[_obj.competencyArea]) {
+          if (competenciesObject[_obj.competencyArea][_obj.competencyTheme]) {
+            const competencyTheme = competenciesObject[_obj.competencyArea][_obj.competencyTheme]
             if (competencyTheme.indexOf(_obj.competencySubTheme) === -1) {
               competencyTheme.push(_obj.competencySubTheme)
             }
           } else {
-            this.competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
-            this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
+            competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
+            competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
           }
         } else {
-          this.competenciesObject[_obj.competencyArea] = {}
-          this.competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
-          this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
+          competenciesObject[_obj.competencyArea] = {}
+          competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
+          competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
         }
       })
 
-      this.handleShowCompetencies(this.competenciesObject)
+      for (const key in competenciesObject) {
+        if (competenciesObject.hasOwnProperty(key)) {
+          const _temp: any = {}
+          _temp['key'] = key
+          _temp['value'] = competenciesObject[key]
+          this.competenciesObject.push(_temp)
+        }
+      }
+      this.handleShowCompetencies(this.competenciesObject[0])
     }
   }
 
-  handleShowCompetencies(item: any, selectedFlag?: string): void {
-    this.competencySelected = (selectedFlag) ? item.key : Object.keys(item)[0]
-    const valueObj = (selectedFlag) ? item.value : Object.values(item)[0]
+  handleShowCompetencies(item: any): void {
+    this.competencySelected = item.key
+    const valueObj = item.value
     const competencyArray = []
     for (const key in valueObj) {
       if (valueObj.hasOwnProperty(key)) {

@@ -7,7 +7,7 @@ import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 
 import { PipeDurationTransformModule, PipeLimitToModule } from '@sunbird-cb/utils'
-import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module';
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import {
   MatCardModule,
   MatDialogModule,
@@ -23,7 +23,7 @@ import {
   MatExpansionModule,
   MatTooltipModule,
   MatChipsModule,
-  MatCheckboxModule
+  MatCheckboxModule,
 } from '@angular/material'
 
 import {
@@ -68,7 +68,7 @@ import { MatchTheFollowingQuesComponent } from './components/question/mtf/mtf.co
     MatTooltipModule,
     MatCheckboxModule,
     MatChipsModule,
-    SkeletonLoaderModule
+    SkeletonLoaderModule,
   ],
   exports: [
     PracticeComponent,

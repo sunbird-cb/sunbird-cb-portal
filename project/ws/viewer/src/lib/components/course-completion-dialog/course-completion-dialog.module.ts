@@ -13,7 +13,7 @@ import { ContentRatingV2DialogModule } from '@sunbird-cb/collection/src/lib/_com
     MatDividerModule,
     MatCardModule,
     ContentRatingV2DialogModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports: [CourseCompletionDialogComponent],
   entryComponents: [CourseCompletionDialogComponent],

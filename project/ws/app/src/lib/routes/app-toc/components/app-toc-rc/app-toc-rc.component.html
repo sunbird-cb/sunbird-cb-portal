@@ -1,0 +1,456 @@
+<div class="shadow-md right-content" #rightContainer>
+    <ng-container *ngIf="skeletonLoader">
+        <ws-widget-skeleton-loader [width]="'384px'" [height]="'224px'"
+            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+    </ng-container>
+    <ng-container *ngIf="!skeletonLoader">
+        <div class="flex flex-col image-div"
+            [ngStyle]="{ 'background-image': 'url(' + content?.posterImage + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}" [ngClass]="{'image-backdrop': scrolled}">
+            <div class="flex flex-col justify-between text-container">
+                <div class="flex items-center gap-4 justify-between"
+                    [ngClass]="{'justify-between': scrolled, 'justify-end': !scrolled}">
+                    <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2" *ngIf="scrolled">
+                        <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
+                        <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
+                    </div>
+                    <div class="flex flex-row items-center justify-end gap-2 share-tag">
+                        <mat-icon>share</mat-icon>
+                        <div>Share</div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1" *ngIf="scrolled">
+                    <div class="text-xl leading-6 text-white font-bold">{{ handleCapitalize(content?.name) }}</div>
+                    <div class="text-sm text-white">By {{ content?.source }}</div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="flex flex-col gap-4 p-5 border-bottom">
+        <!-- Batch related UI -->
+        <div class="flex flex-col gap-4"
+            *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+            <div class="flex flex-row gap-3 justify-around">
+                <div class="batch-info">
+                    <div class="font-base font-bold">50</div>
+                    <div class="batch-label">Batch size</div>
+                </div>
+                <div class="batch-info">
+                    <div class="font-base font-bold">20</div>
+                    <div class="batch-label">Total applied</div>
+                </div>
+                <div class="batch-info">
+                    <div class="font-base font-bold">15</div>
+                    <div class="batch-label">Total enrolled</div>
+                </div>
+            </div>
+            <div class="flex flex-col batch-div">
+                <div class="flex flex-col gap-1">
+                    <div class="flex flex-row gap-4 batch-details" [matMenuTriggerFor]="batch">
+                        <div class="flex-1">
+                            <div class="flex flex-col gap-1">
+                                <div class="font-bold">Batch - 1</div>
+                                <div class="text-xs leading-4">1 Jan, 2024 to 28 Feb, 2024</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center items-center">
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                        </div>
+                    </div>
+                    <div class="batch-enrolled">Your request is done</div>
+                    <div class="expired">No active batch is available</div>
+                </div>
+                <mat-menu #batch="matMenu" yPosition="below" class="batch-menu">
+                    <button class="flex gap-2 items-center" mat-menu-item>
+                        <span>Batch - 1 (1 Jan, 2024 to 2 Jan, 2024)</span>
+                    </button>
+                    <button class="flex gap-2 items-center" mat-menu-item>
+                        <span>Batch - 2 (3 Jan, 2024 to 4 Jan, 2024)</span>
+                    </button>
+                    <button class="flex gap-2 items-center" mat-menu-item disabled>
+                        <span>Batch - 3 (5 Jan, 2024 to 6 Jan, 2024)</span>
+                        <span class="expired">Expired</span>
+                    </button>
+                </mat-menu>
+
+                <div class="flex flex-row justify-center items-center mt-4">
+                    <button class="withdraw-batch">Withdraw your request</button>
+                </div>
+
+                <div class="flex flex-row gap-4 mt-4">
+                    <div class="flex-1">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-xs leading-4">Last enroll date</div>
+                            <div class="font-bold">10/06/2023</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row justify-center items-center">
+                        <button class="enroll-button" (click)="handleEnrollBatch()">Request to Enroll</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Batch related UI -->
+
+        <div class="flex flex-col gap-4">
+            <ng-container *ngIf="skeletonLoader">
+                <ws-widget-skeleton-loader [width]="'336px'" [height]="'40px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'336px'" [height]="'68px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            </ng-container>
+
+            <ng-container *ngIf="!skeletonLoader">
+                <ng-container
+                    *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
+                    <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
+                        <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM
+                            && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM
+                            && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
+                            content?.primaryCategory !== primaryCategory.BLENDED_PROGRAM">
+                            <ng-container *ngIf="(actionBtnStatus === 'grant' && !(isMobile && content?.isInIntranet) &&
+                                !(content?.primaryCategory === primaryCategory.COURSE && content?.children.length === 0 && !content?.artifactUrl?.length) &&
+                                !(content?.primaryCategory === primaryCategory.COURSE && !batchData?.enrolled) &&
+                                !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl) &&
+                                !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)) &&
+                                !(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId)">
+                                <button *ngIf="showStart.show && !isPostAssessment"
+                                    [routerLink]="(resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url"
+                                    [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')"
+                                    class="flex action-button justify-center">
+                                    <ng-container
+                                        *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
+                                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                                            {{ resumeData ? "Resume" : "Start" }}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="content.completionPercentage === 100 || certData">
+                                        {{ resumeData ? "Start again" : "Start" }}
+                                    </ng-container>
+                                </button>
+                                <button *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
+                                    [routerLink]="firstResourceLink?.url" class="flex action-button justify-center">
+                                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
+                                </button>
+
+                                <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
+                                    <ng-container *ngIf="isAcbpClaim">
+                                        <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                                    </ng-container>
+                                    <ng-container *ngIf="!isAcbpClaim && !monthlyCapExceed">
+                                        <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
+                                    </ng-container>
+                                </div>
+
+                                <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
+                                    <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
+                                        <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'"
+                                            (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                                    </div>
+                                    <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
+                                        <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                                    </div>
+                                    <div *ngIf="!isAcbpCourse && monthlyCapExceed && !isCompletedThisMonth">
+                                        <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment">
+                                    <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf=" (actionBtnStatus === 'grant' && !(isMobile && content?.isInIntranet) &&
+                                !( content?.primaryCategory === primaryCategory.COURSE && content?.children.length === 0 && !content?.artifactUrl?.length ) &&
+                                !( content?.primaryCategory === primaryCategory.COURSE && batchData?.enrolled ) &&
+                                !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl)) && 
+                                !(content?.primaryCategory === primaryCategory.PROGRAM) &&
+                                !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)">
+                                <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE  && !enrollBtnLoading">
+                                    <button class="flex action-button justify-center" (click)="autoBatchAssign()">
+                                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                                            Enroll
+                                        </ng-container>
+                                    </button>
+                                    <ng-container *ngIf="isAcbpCourse">
+                                        <ws-app-karmapoints-panel [btntype]="'ACBP'"
+                                            [data]="kparray"></ws-app-karmapoints-panel>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="!isAcbpCourse && !monthlyCapExceed && userEnrollmentList && !userEnrollmentList.length">
+                                        <ws-app-karmapoints-panel [btntype]="'Enroll'"
+                                            [data]="kparray"></ws-app-karmapoints-panel>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+
+                        <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
+                            <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) && content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
+                                <span class="mat-subheading-1" i18n>You are not invited for this Program.</span>
+                            </ng-container>
+                            <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
+                                <span class="mat-subheading-1" i18n>No Active Batches!</span>
+                            </ng-container>
+                            <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
+                                <span class="mat-subheading-1" i18n> Batch will start {{getStartDate}}!!.</span>
+                            </ng-container>
+                            <ng-container *ngIf="isBatchInProgress &&
+                                ( actionBtnStatus === 'grant' &&
+                                !(isMobile && content?.isInIntranet) &&
+                                (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) ||
+                                (content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL && currentCourseBatchId) 
+                                )">
+                                <button *ngIf="showStart.show && !isPostAssessment"
+                                    [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
+                                    [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
+                                    class="flex action-button justify-center">
+                                    <ng-container
+                                        *ngIf="!content.completionPercentage || content.completionPercentage < 100">
+                                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                                            {{ resumeData && (content.completionPercentage < 100 &&
+                                                content.completionPercentage> 0) ? "Resume" : "Start" }}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="content.completionPercentage === 100">
+                                        {{ resumeData || content.completionPercentage === 100 ? "Start again" : "Start" }}
+                                    </ng-container>
+                                </button>
+                                <button *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
+                                    [routerLink]="firstResourceLink?.url" class="flex action-button justify-center">
+                                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
+                                </button>
+                                <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100)">
+                                    <ng-container *ngIf="isAcbpClaim">
+                                        <ws-app-karmapoints-panel [btntype]="'ACBP'"
+                                            [data]="kparray"></ws-app-karmapoints-panel>
+                                    </ng-container>
+                                    <ng-container *ngIf="!isAcbpClaim && !monthlyCapExceed">
+                                        <ws-app-karmapoints-panel [btntype]="'Resume'"
+                                            [data]="kparray"></ws-app-karmapoints-panel>
+                                    </ng-container>
+                                </div>
+                                <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
+                                    <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
+                                        <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'"
+                                            (clickClaimKarmaPoints)="handleClickOfClaim($event)"></ws-app-karmapoints-panel>
+                                    </div>
+                                    <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
+                                        <ws-app-karmapoints-panel [btntype]="'Start again'"
+                                            [data]="kparray"></ws-app-karmapoints-panel>
+                                    </div>
+                                    <div *ngIf="!isAcbpCourse && monthlyCapExceed && !isCompletedThisMonth">
+                                        <ws-app-karmapoints-panel [btntype]="'Start again'"
+                                            [data]="kparray"></ws-app-karmapoints-panel>
+                                    </div>
+                                </div>
+                                <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment">
+                                    <ws-app-karmapoints-panel [btntype]="'Take Assessment'"
+                                        [data]="kparray"></ws-app-karmapoints-panel>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+
+                        <ng-container
+                            *ngIf="isBatchInProgress && (content?.primaryCategory === primaryCategory.CURATED_PROGRAM && batchData?.enrolled)">
+                            <button *ngIf="showStart.show && !isPostAssessment"
+                                [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
+                                [queryParams]="resumeData ? handleGenerateQuery('RESUME') : handleGenerateQuery('START')"
+                                class="flex action-button justify-center">
+                                <ng-container
+                                    *ngIf="!content.completionPercentage || content.completionPercentage < 100">
+                                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                                        {{ resumeData && (content.completionPercentage < 100 &&
+                                            content.completionPercentage> 0) ? "Resume" : "Start" }}
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="content.completionPercentage === 100">
+                                    {{ resumeData || content.completionPercentage === 100 ? "Start again" : "Start" }}
+                                </ng-container>
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="enrollBtnLoading">
+                            <ws-widget-skeleton-loader [width]="'100%'" [height]="'36px'"
+                                [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+                        </ng-container>
+
+                        <ng-container
+                            *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled && !enrollBtnLoading">
+                            <button class="flex action-button justify-center" (click)="autoBatchAssign()">
+                                <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                                    Enroll
+                                </ng-container>
+                            </button>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled && !enrollBtnLoading">
+                            <button class="flex action-button justify-center resume" (click)="autoBatchAssign()">
+                                <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                                    Enroll
+                                </ng-container>
+                            </button>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled">
+                            <button class="flex action-button justify-center resume"
+                                [routerLink]="firstResourceLink?.url"
+                                [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
+                                Take test
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+                            <ng-container
+                                *ngIf="batchData?.workFlow?.wfInitiated &&
+                                    !(batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN)">
+                                <div class="ws-mat-accent-text ws-mat-accent-light-bg flex items-center justify-center statusMsg">
+                                    <p class="margin-remove-bottom font-bold">
+                                        Request under review
+                                    </p>
+                                </div>
+                            </ng-container>
+                            <ng-container>
+                                <button *ngIf="showStart.show && batchData?.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.APPROVED" [routerLink]="isBatchInProgress? (resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url : '' " [queryParams]="isBatchInProgress ? (resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START') : '' " class="flex action-button justify-center resume" [ngClass]="{'disable-start-btn': !isBatchInProgress}">
+                                    <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
+                                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                                            {{ resumeData && (content.completionPercentage < 100 && content.completionPercentage> 0) ? "Resume" : "Start" }}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="content.completionPercentage === 100 || certData">
+                                        {{ resumeData || content.completionPercentage === 100 ? "Start again" : "Start" }}
+                                    </ng-container>
+                                </button>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
+                            <a [href]="content?.registrationUrl" target="_blank"
+                                class="flex action-button justify-center" i18n>Register</a>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <div class="flex flex-row gap-2 slider-div">
+                    <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
+                    <div class="text-xs">By completing this course earn 10 more Karma Points</div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="skeletonLoader">
+                <div class="flex flex-wrap gap-6">
+                    <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                        <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                        <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                        <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                        <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                        <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'40px'" [height]="'8px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container
+                *ngIf="!skeletonLoader && tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
+                <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-col kpi-values items-center gap-2 ">
+                        <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
+                        <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' :
+                            'Course' }}</div>
+                    </div>
+                    <div class="flex flex-col kpi-values items-center gap-3">
+                        <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+                        <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ?
+                            'Modules' : 'Module' }}</div>
+                    </div>
+                    <div class="flex flex-col kpi-values items-center gap-2">
+                        <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+                        <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video'
+                            }}</div>
+                    </div>
+                    <div class="flex flex-col kpi-values items-center gap-2">
+                        <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+                        <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
+                    </div>
+                    <div class="flex flex-col kpi-values items-center gap-2">
+                        <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+                        <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ?
+                            'Final assessments' : 'Final assessment' }} </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-8 p-5">
+        <ng-container *ngIf="skeletonLoader">
+            <div class="flex flex-col gap-4" *ngFor="let i of [1, 2]">
+                <ws-widget-skeleton-loader [width]="'72px'" [height]="'20px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+
+                <div class="flex flex-row items-center gap-3">
+                    <ws-widget-skeleton-loader [width]="'36px'" [height]="'36px'"
+                        [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
+                    <div class="flex flex-col gap-2">
+                        <ws-widget-skeleton-loader [width]="'124px'" [height]="'20px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'124px'" [height]="'12px'"
+                            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!skeletonLoader">
+            <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorDetails)?.length">
+                <div class="text-base font-bold">Authors</div>
+                <div class="flex flex-row gap-4 items-center"
+                    *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
+                    <div class="flex items-center justify-center">
+                        <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'"
+                            [photoUrl]="author?.photo || ''" [name]="author?.name">
+                        </ws-widget-avatar-photo>
+                    </div>
+                    <div class="flex flex-col gap-1 justify-center">
+                        <div class="font-bold">{{ author?.name }}</div>
+                        <div class="text-xs leading-3">Author</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
+                <div class="text-base font-bold">Curators</div>
+                <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
+                    <div class="flex items-center justify-center">
+                        <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'"
+                            [photoUrl]="author?.photo || ''" [name]="creator?.name">
+                        </ws-widget-avatar-photo>
+                    </div>
+                    <div class="flex flex-col gap-1 justify-center">
+                        <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
+                        <div class="text-xs leading-3">Curator</div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -10,9 +10,9 @@ import { EventService, WsEvents, LoggerService } from '@sunbird-cb/utils/src/pub
 })
 export class CourseCompletionDialogComponent implements OnInit {
   courseName = ''
-  userRating: any= {}
+  userRating: any = {}
   showRating = false
-  isEditMode = false;
+  isEditMode = false
   constructor(
     private ratingSvc: RatingService,
     private tocSvc: AppTocService,
@@ -42,13 +42,13 @@ export class CourseCompletionDialogComponent implements OnInit {
             this.userRating = res.result.response
             this.tocSvc.changeUpdateReviews(true)
             // this.showRating = true
-            this.isEditMode = true;
+            this.isEditMode = true
           } else {
             this.userRating = {
-              "rating": 0,
-              "comment": null
+              rating: 0,
+              comment: null,
           }
-          this.isEditMode = false;
+          this.isEditMode = false
           // this.showRating = true
           }
         },
@@ -59,11 +59,11 @@ export class CourseCompletionDialogComponent implements OnInit {
     }
   }
 
-  addRating(index: number) {  
-    this.showRating = true;
+  addRating(index: number) {
+    this.showRating = true
     this.userRating = {
-      "rating": index + 1 ,
-      "comment": null
+      rating: index + 1 ,
+      comment: null,
     }
     this.events.raiseInteractTelemetry(
       {
