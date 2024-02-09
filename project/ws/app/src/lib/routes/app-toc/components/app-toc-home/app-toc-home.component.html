@@ -134,7 +134,12 @@
               <div class="batch-label">Total enrolled</div>
             </div>
           </div>
-          <ng-container *ngIf="batchData && !batchData?.enrolled && 
+          
+          <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+            [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
+            [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
+          </ws-app-toc-banner>
+          <!-- <ng-container *ngIf="batchData && !batchData?.enrolled && 
             (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED)) && batchData?.content?.length">
             <div class="flex flex-col batch-div">
               <div class="flex flex-col gap-1">
@@ -149,8 +154,8 @@
                     <mat-icon>keyboard_arrow_down</mat-icon>
                   </div>
                 </div>
-                <!-- <div class="batch-enrolled">Your request is done</div>
-                <div class="expired">No active batch is available</div> -->
+                <div class="batch-enrolled">Your request is done</div>
+                <div class="expired">No active batch is available</div>
               </div>
               <mat-menu #batch="matMenu" yPosition="below" class="batch-menu">
                 <ng-container *ngFor="let batch of batchData.content; let i = index">
@@ -162,13 +167,6 @@
                     <span class="expired">Expired</span>
                   </button>
                 </ng-container>
-                <!-- <button class="flex gap-2 items-center" mat-menu-item>
-                  <span>Batch - 2 (3 Jan, 2024 to 4 Jan, 2024)</span>
-                </button>
-                <button class="flex gap-2 items-center" mat-menu-item disabled>
-                  <span>Batch - 3 (5 Jan, 2024 to 6 Jan, 2024)</span>
-                  <span class="expired">Expired</span>
-                </button> -->
               </mat-menu>
               
               <div class="flex flex-row justify-center items-center mt-4">
@@ -187,7 +185,7 @@
                 </div>
               </div>
             </div>
-          </ng-container>
+          </ng-container> -->
         </div>
   
         <div class="flex flex-col gap-4">

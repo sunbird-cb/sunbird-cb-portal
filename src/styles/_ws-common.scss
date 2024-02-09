@@ -122,3 +122,9 @@
   border: 1px solid $text-primary;
   text-align: center;
 }
+
+.expired, .error {
+  font-size: 12px;
+  color: $colorRed;
+  font-weight: bold;
+}
