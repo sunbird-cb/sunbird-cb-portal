@@ -1191,7 +1191,8 @@
           <div class="progress-btn">
             <button class="resume-btn flex flex-middle flex-between" [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
             [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
-              <span class="margin-right-s">{{!widgetData.content?.completionPercentage ? 'Start' : 'Resume'}}</span>
+              <span class="margin-right-s">
+                {{!widgetData.content?.completionPercentage ? translateLabels('start', 'cardcontentv2') : translateLabels('resume', 'cardcontentv2')}}</span>
               <img class="stats-icon" height="20" width="20" src="/assets/icons/home/play.svg">
             </button>
           </div>
@@ -1201,7 +1202,7 @@
         <div class="flex flex-align-end progress-wrapper flex-end mt-1">
           <div class="progress-btn">
             <button class="resume-btn flex flex-middle flex-between view-btn" [ngClass]="{'disable-btn': downloadCertificateLoading || widgetData?.content?.issuedCertificates?.length === 0}" (click)="!downloadCertificateLoading && downloadCertificate(widgetData.content);$event.stopPropagation()" >
-              <span class="margin-right-xs">View Certificate</span>
+              <span class="margin-right-xs">{{'cardcontentv2.viewCertificate' | translate }}</span>
               <img class="stats-icon" *ngIf="!downloadCertificateLoading" height="20" width="20" src="/assets/icons/home/eye-white.svg">
               <div class="center flex flex-middle"  *ngIf="downloadCertificateLoading">
                 <mat-spinner strokeWidth="2" stroke="'red'" class="white-spinner" [diameter]="16"></mat-spinner>
