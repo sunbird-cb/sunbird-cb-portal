@@ -12,6 +12,8 @@ import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 dayjs.extend(isBetween)
@@ -46,8 +48,19 @@ export class CbpPlanComponent implements OnInit {
   mobileTopHeaderVisibilityStatus = true
   constructor(
     private activatedRoute: ActivatedRoute,
-    private widgetSvc: WidgetUserService
-    ) { }
+    private widgetSvc: WidgetUserService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
+
+    ) {
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+      })
+    }
 
   ngOnInit() {
     if (this.activatedRoute.snapshot.data.pageData) {
