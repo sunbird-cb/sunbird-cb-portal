@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms'
 import { AppCbpPlansService } from 'src/app/services/app-cbp-plans.service'
 // tslint:disable
 import _ from 'lodash'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 // tslint:enable
 
 @Component({
@@ -42,7 +44,18 @@ export class FilterComponent implements OnInit {
   }
   searchThemeControl = new FormControl()
   @ViewChildren('checkboxes') checkboxes!: QueryList<ElementRef>
-  constructor(private appCbpPlansService: AppCbpPlansService) {}
+  constructor(private appCbpPlansService: AppCbpPlansService,
+              private translate: TranslateService,
+              private langtranslations: MultilingualTranslationsService
+    ) {
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+      })
+    }
 
   ngOnInit() {
       this.setDefaultValues()

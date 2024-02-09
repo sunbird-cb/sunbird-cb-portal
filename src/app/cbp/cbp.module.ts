@@ -67,7 +67,7 @@ import { TranslateModule } from '@ngx-translate/core'
     FilterSearchPipeModule,
     MatMenuModule,
     MatRadioModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     HeaderModule,
