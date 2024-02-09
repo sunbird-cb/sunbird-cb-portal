@@ -163,9 +163,33 @@ span.optional-span {
   }
 }
 
+.collection-wrapper {
+  padding: 1rem;
+}
+
 .child-wrapper {
-  background-color: #eff3f9;
+  .collection-wrapper {
+    padding: 1rem 1rem 1rem 0;
+  }
+}
+
+.collection-wrapper.open {
+  // background-color: #eff3f9;
+  // border-radius: 0 0 8px 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+}
+
+.collection-wrapper.close {
+  // background-color: #eff3f9;
+  // border-radius: 0 0 8px 8px;
+  border: none
+}
+
+
+.child-wrapper.open {
+  // background-color: #eff3f9;
   border-radius: 0 0 8px 8px;
+  // padding: 1rem 0 1rem 0;
 }
 
 .children-container {
@@ -174,8 +198,8 @@ span.optional-span {
   }
 
   .resource-container {
-    margin-bottom: 20px;
-    margin-right: 8px;
+    margin-bottom: 16px;
+    // margin-right: 8px;
 
     .resource {
       padding: 0;
@@ -188,6 +212,39 @@ span.optional-span {
     }
   }
 }
+
+
+
+// for giving top margin to last level, first child resource
+:nth-child(1 of .resourceCard) .resource{
+  margin-top: 16px;
+}
+
+
+// for selecting modules that are not last children of parent, to give border
+.moduleCard:not(:last-child) >  .collection-wrapper.close.module {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+}
+
+// for selecting modules that are not last children of parent and open so that border comes at end of its children
+.moduleCard:not(:last-child) >  .collection-wrapper.open.module + .child-wrapper.open {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+}
+
+// .collection-wrapper.close.module {
+//   // background-color: #eff3f9;
+//   // border-radius: 0 0 8px 8px;
+//   border-bottom: 4px solid rgba(0, 0, 0, 0.08)
+// }
+
+// .collection-wrapper.open.module + .child-wrapper.open {
+//   // background-color: #eff3f9;
+//   // border-radius: 0 0 8px 8px;
+//   border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+//   border-radius: 0;
+// }
 
 .content-heading {
   letter-spacing: 0px;
@@ -332,6 +389,9 @@ span.optional-span {
   .mat-icon {
     fill: #fff;
     color: #fff;
+    font-size: 16px;
+    height: auto;
+    width: auto;
   }
 }
 
