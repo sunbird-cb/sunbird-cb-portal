@@ -15,6 +15,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>
   @Output() initiateLoadMore = new EventEmitter()
+  @Output() loadLatestReviews = new EventEmitter()
   clearIcon = false
   disableLoadMore = false
   reviews: any[] = []
@@ -76,6 +77,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   handleReviewsFilter(str: string): void {
     this.showFilterIndicator = str
+    this.loadLatestReviews.emit(true)
   }
 
   handleLoadMore(): void {

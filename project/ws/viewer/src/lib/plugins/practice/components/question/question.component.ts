@@ -23,10 +23,11 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() total = 0
   @Input() viewState = 'initial'
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
-  @Input() ePrimaryCategory:any;
-  @Input() totalQCount:any;
-  @Input() showAnswer:any;
-  @Input() current_Question:any;
+  @Input() ePrimaryCategory: any
+  @Input() totalQCount: any
+  @Input() showAnswer: any
+  // tslint:disable-next-line
+  @Input() current_Question: any
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
@@ -45,7 +46,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() itemSelectedList: string[] = []
   @Input() markedQuestions: Set<string> = new Set()
   @Output() itemSelected = new EventEmitter<string | Object>()
-  @Input()
+  
   quizAnswerHash: { [questionId: string]: string[] } = {}
   title = 'match'
   itemSelectedList1: any
@@ -54,7 +55,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   correctOption: boolean[] = []
   unTouchedBlank: boolean[] = []
   matchHintDisplay: NSPractice.IOption[] = []
-  isMobile = false;
+  isMobile = false
   constructor(
     // private domSanitizer: DomSanitizer,
     // private elementRef: ElementRef,
@@ -62,10 +63,10 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    if(window.innerWidth <= 1200) {
-      this.isMobile = true;
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
     } else {
-      this.isMobile = false;
+      this.isMobile = false
     }
     this.init()
   }

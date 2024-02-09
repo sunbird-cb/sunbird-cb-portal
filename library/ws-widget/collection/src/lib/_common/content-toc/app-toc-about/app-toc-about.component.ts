@@ -62,7 +62,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   authReplies: any
   ratingSummaryProcessed: any
   ratingReviews: any[] = []
-  reviews: any[] = []
+  latestReviews: any[] = []
   dialogRef: any
   displayLoader = false
   disableLoadMore = false
@@ -71,8 +71,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   lastLookUp: any
   ratingLookup: any
   reviewPage = 1
-  ratingViewCount = 3
-  reviewDefaultLimit = 2
+  ratingViewCount = 7
+  reviewDefaultLimit = 6
   competenciesObject: any = {}
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
@@ -213,7 +213,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
           }
 
           this.ratingSummaryProcessed = this.processRatingSummary()
-          this.fetchRatingLookup()
         },
         (err: any) => {
           this.loggerService.error('USER RATING FETCH ERROR >', err)
@@ -287,9 +286,9 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   getAuthorReply(identifier: string, primaryCategory: NsContent.EPrimaryCategory, userIds: any[]) {
     const request = {
       request: {
-          activityId: identifier,
-          activityType: primaryCategory,
-          userId: userIds,
+        activityId: identifier,
+        activityType: primaryCategory,
+        userId: userIds,
       },
     }
 
@@ -305,7 +304,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
           })
         }
 
-        this.reviews = Object.values(this.authReplies)
+        // this.latestReviews = Object.values(this.authReplies)
         return this.authReplies
       },
       (err: any) => {
@@ -402,8 +401,12 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
     this.dialogRef.afterClosed().subscribe((_result: any) => {
     })
 
-    this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: any) => {
+    this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: boolean) => {
       this.loadMore()
+    })
+
+    this.dialogRef.componentInstance.loadLatestReviews.subscribe((_value: boolean) => {
+      this.fetchRatingLookup()
     })
   }
 
