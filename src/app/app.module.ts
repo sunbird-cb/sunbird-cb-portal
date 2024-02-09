@@ -158,6 +158,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    BrowserModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
     AppRoutingModule,

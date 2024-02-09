@@ -1,10 +1,13 @@
 <section *ngIf="isNotEmbed">
-  <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
-    (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
-  </viewer-viewer-top-bar>
-  <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
-    (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" >
-  </viewer-viewer-top-bar>
+  <ng-container>
+    <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+    </viewer-viewer-top-bar>
+    <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+    </viewer-viewer-top-bar>
+  </ng-container>
+
   <mat-sidenav-container autosize class="viewer-sidenav-container">
     <mat-sidenav [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">
@@ -20,6 +23,11 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="sidenavContent" #scrollableContent>
+      <ng-container *ngIf="viewerHeaderSideBarToggleFlag">
+        <viewer-viewer-secondary-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview"
+          [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+        </viewer-viewer-secondary-top-bar>
+      </ng-container>
       <section *ngIf="status === 'error'">
         <div *ngIf="errorWidgetData?.widgetData?.errorType" [wsResolverWidget]="errorWidgetData"></div>
         <div *ngIf="error.errorType === errorType.mimeTypeMismatch">
@@ -96,7 +104,15 @@
           </div>
         </div>
       </div>
-      <router-outlet (activate)="getContentData($event)"></router-outlet>
+      <div class="viewer-player-container">
+        <router-outlet (activate)="getContentData($event)"></router-outlet>
+      </div>
+      <div class="toc-container" *ngIf="viewerHeaderSideBarToggleFlag">
+        <div class="pb-4 lg:py-4">
+          <ws-widget-content-toc [contentTabFlag]="false" [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
+          [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
+        </div>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </section>

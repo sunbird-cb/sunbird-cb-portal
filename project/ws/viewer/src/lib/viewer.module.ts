@@ -14,6 +14,7 @@ import {
   MatProgressSpinnerModule,
   MatSnackBarModule,
   MatTabsModule,
+  MatProgressBarModule,
 } from '@angular/material'
 
 import { ViewerRoutingModule } from './viewer-routing.module'
@@ -40,6 +41,7 @@ import {
   DisplayContentTypeIconModule,
   BtnContentFeedbackV2Module,
   PlayerBriefModule,
+  ContentProgressModule,
 } from '@sunbird-cb/collection'
 
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
@@ -48,6 +50,8 @@ import { ViewerTocComponent } from './components/viewer-toc/viewer-toc.component
 import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.module'
 import { TranslateModule } from '@ngx-translate/core'
 
+import { ViewerSecondaryTopBarModule } from './components/viewer-secondary-top-bar/viewer-secondary-top-bar.module'
+import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
 @NgModule({
   declarations: [ViewerComponent, ViewerTocComponent],
   imports: [
@@ -62,6 +66,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatListModule,
     MatTreeModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatSnackBarModule,
     ViewerRoutingModule,
     ErrorResolverModule,
@@ -86,6 +91,9 @@ import { TranslateModule } from '@ngx-translate/core'
     MatTabsModule,
     PlayerBriefModule,
     ViewerTopBarModule,
+    ViewerSecondaryTopBarModule,
+    ContentProgressModule,
+    ContentTocModule
   ],
 })
 export class ViewerModule { }

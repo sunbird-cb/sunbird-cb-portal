@@ -10,8 +10,8 @@
 }
 
 .padding-dynamic {
-  padding: $size-xs;
-  padding-top: $size-m;
+  // padding: $size-xs;
+  // padding-top: $size-m;
   @include breakpoint-xs {
     padding: 0;
     padding-top: $size-m!important;
@@ -72,6 +72,10 @@
 }
 
 .video-player-mobile {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  padding: 0 16px;
   @include breakpoint-xs {
     padding: 0;
   }

@@ -20,8 +20,13 @@ export class ResultComponent implements OnChanges {
   staticImage = '/assets/images/exam/practice-result.png'
   questionTYP = NsContent.EPrimaryCategory
   selectedQuestionData: any
-
+  activeQuestionSet:any = '';
+  color = 'warn';
+  mode = 'determinate';
+  value = 45;
+  showText = 'Rating';
   constructor() {
+    
   }
 
   ngOnChanges() {
@@ -46,7 +51,8 @@ export class ResultComponent implements OnChanges {
   retryResult() {
     this.fetchResult.emit()
   }
-  getQuestionCount(data: any) {
+  getQuestionCount(data: any, activeQuestionSet:any) {
+    this.activeQuestionSet = activeQuestionSet;
     this.selectedQuestionData = data
   }
 }

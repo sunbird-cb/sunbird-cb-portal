@@ -155,15 +155,6 @@ export class AppTocService {
         this.resumeDataSubscription = this.resumeData.subscribe(
           (dataResult: any) => {
             if (dataResult && dataResult.length) {
-              // dataResult.map((item: any) => {
-              //   if ( && content.children) {
-              //     const foundContent = content.children.find(el => el.identifier === item.contentId)
-              //     if (foundContent) {
-              //       foundContent.completionPercentage = item.completionPercentage
-              //       foundContent.completionStatus = item.status
-              //     }
-              //   }
-              // })
               this.mapCompletionPercentage(content, dataResult)
             }
           },
@@ -640,6 +631,7 @@ export class AppTocService {
       course.children.map((courseChild: any) => {
           if ((courseChild && courseChild.children) || courseChild.primaryCategory === 'Course Unit') {
             this.mapCompletionChildPercentageProgram(courseChild)
+            course['moduleCount'] = course['moduleCount'] ? course['moduleCount'] + 1 : 1
           } else {
             courseChild['completionPercentage'] = 100
             courseChild['completionStatus'] = 2

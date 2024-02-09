@@ -1,0 +1,89 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+
+.themes-button {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: #E6E8EF;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.theme-activated {
+    border: 1px solid $text-primary;
+    background-color: #DEE6F2;
+    color: $text-primary;
+    font-weight: 700;
+}
+
+.discussion-div {
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 1);
+
+    mat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 40px;
+        color: $colorOrange;
+    }
+}
+
+.ratings-div {
+    background-color: rgba(27, 76, 161, 0.08);
+    padding: 24px;
+
+    .ratings-container {
+        max-width: 380px;
+        width: 100%;
+    }
+
+    .comment-div {
+        background-color: #FFF;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.16);
+        max-width: 360px;
+        width: 100%;
+
+        .rating-start-value {
+            mat-icon {
+                color: $colorOrange;
+            }
+        }
+    }
+}
+
+$title-line-count: 3;
+.text-ellipsis {
+    white-space: break-spaces;
+    position: relative;
+    overflow: hidden;
+    text-overflow: clip ;
+    display: -webkit-box;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+}
+
+.desc-ellipsis {
+    @extend .text-ellipsis;
+    min-height: $title-line-count * 24px;
+}
+
+::ng-deep .ratings-modal-box {
+    max-width: 880px !important;
+    width: 100% !important;
+
+    .mat-dialog-container {
+        padding: 0px;
+        border-radius: 12px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    ::ng-deep .ratings-modal-box {
+        max-width: 90vw !important;
+    }
+}

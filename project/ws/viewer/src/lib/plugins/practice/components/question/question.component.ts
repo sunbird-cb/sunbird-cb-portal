@@ -23,6 +23,10 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() total = 0
   @Input() viewState = 'initial'
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+  @Input() ePrimaryCategory:any;
+  @Input() totalQCount:any;
+  @Input() showAnswer:any;
+  @Input() current_Question:any;
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
@@ -50,7 +54,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   correctOption: boolean[] = []
   unTouchedBlank: boolean[] = []
   matchHintDisplay: NSPractice.IOption[] = []
-
+  isMobile = false;
   constructor(
     // private domSanitizer: DomSanitizer,
     // private elementRef: ElementRef,
@@ -58,6 +62,11 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    if(window.innerWidth <= 1200) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
     this.init()
   }
 
@@ -116,6 +125,13 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     const elementById: HTMLElement | null = document.getElementById(id)
     if (elementById && color) {
       elementById.style.borderColor = color
+    }
+  }
+
+  checkAns(quesIdx: number) {
+    if (quesIdx > 0 && quesIdx <= this.totalQCount && this.current_Question.editorState && this.current_Question.editorState.options) {
+      this.showAnswer = true
+      this.practiceSvc.shCorrectAnswer(true)
     }
   }
 

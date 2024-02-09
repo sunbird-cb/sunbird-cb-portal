@@ -20,6 +20,11 @@ export namespace NsCardContent {
     criteriaField?: string
   }
 
+  export interface ICompetency extends ICard {
+    competencyArea: ''
+    competencyObject: {}
+  }
+
   export type TCardSubType =
     | 'standard'
     | 'minimal'

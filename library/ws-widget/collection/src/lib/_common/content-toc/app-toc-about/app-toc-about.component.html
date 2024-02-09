@@ -1,0 +1,221 @@
+<div class="flex flex-col gap-10 mt-4">
+    <div class="flex flex-col">
+        <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            <div class="flex flex-col gap-2 mt-4">
+                <ws-widget-skeleton-loader [width]="'80%'" [height]="'16px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'95%'" [height]="'16px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'65%'" [height]="'16px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!skeletonLoader">
+            <div class="mat-subheading-1">Summary</div>
+            <div [ngClass]="{'desc-ellipsis': summaryEllipsis}">
+                {{ content?.description }}
+                <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
+                    (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span> -->
+            </div>
+            <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="summaryEllipsis" (click)="summaryEllipsis = !summaryEllipsis">view more</div> -->
+        </ng-container>
+    </div>
+
+    <div class="flex flex-col">
+        <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'"
+                [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            <div class="flex flex-col gap-2 mt-4">
+                <ws-widget-skeleton-loader [width]="'80%'" [height]="'16px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'95%'" [height]="'16px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'65%'" [height]="'16px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!skeletonLoader">
+            <div class="mat-subheading-1">Description</div>
+            <div [ngClass]="{'desc-ellipsis': descEllipsis}">
+                <span [innerHTML]="content?.instructions"></span>
+                <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!descEllipsis"
+                    (click)="descEllipsis = !descEllipsis">&nbsp;view less</span> -->
+            </div>
+            <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="descEllipsis" (click)="descEllipsis = !descEllipsis" >view more</div> -->
+        </ng-container>
+    </div>
+
+    <div class="flex flex-col gap-3">
+        <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'120px'" [height]="'16px'"
+                [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            <div class="flex flex-row gap-3">
+                <ng-container *ngFor="let i of [1, 2]">
+                    <ws-widget-skeleton-loader [width]="'120px'" [height]="'32px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                </ng-container>
+            </div>
+            <div class="flex flex-row gap-4">
+                <ws-widget-skeleton-loader [width]="'40%'" [height]="'80px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'40%'" [height]="'80px'"
+                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!skeletonLoader">
+            <div class="text-base font-bold">Competencies</div>
+            <div class="flex flex-row gap-3 sm:gap-4 mb-3">
+                <ng-container *ngFor="let item of this.competenciesObject | keyvalue" >
+                    <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === item.key}" (click)="handleShowCompetencies(item, 'selected')">{{ item.key }}</div>
+                </ng-container>
+            </div>
+            <ng-container *ngFor="let item of this.competenciesObject | keyvalue">
+                <div *ngIf="item?.key === competencySelected">
+                    <ws-utils-horizontal-scroller-v2 [sliderConfig]="strip.sliderConfig" [loadStatus]="'done'" [stripConfig]="strip.stripConfig">
+                        <ng-container *ngFor="let widget of strip?.loaderWidgets; trackBy: tracker">
+                            <ng-container [wsResolverWidget]="widget"></ng-container>
+                        </ng-container>
+                    </ws-utils-horizontal-scroller-v2>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+
+    <div class="flex flex-col gap-3">
+        <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'48px'" [height]="'16px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            <div class="flex flex-col gap-2 mt-4">
+                <ws-widget-skeleton-loader [width]="'95%'" [height]="'16px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!skeletonLoader">
+            <div class="text-base font-bold">Tags</div>
+            <div class="flex flex-wrap gap-2">
+                <ng-container *ngFor="let tag of tags; let i = index">
+                    <div class="text-xs">{{ tag }}</div>
+                    <div class="flex items-center" *ngIf="tags?.length > (i+1)">
+                        <span class="period"></span>
+                    </div>
+                </ng-container>
+                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs mb-1">View more</div>
+            </div>
+        </ng-container>
+    </div>
+
+    <ng-container *ngIf="skeletonLoader">
+        <ws-widget-skeleton-loader [width]="'100%'" [height]="'72px'"
+            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+    </ng-container>
+    <ng-container *ngIf="!skeletonLoader">
+        <div class="flex flex-col sm:flex-row p-6 gap-6 items-center discussion-div">
+            <div class="flex-1">
+                <div class="flex flex-col sm:flex-row gap-5 items-center">
+                    <mat-icon>forum</mat-icon>
+                    <div class="text-center sm:text-left">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
+                </div>
+            </div>
+            <div class="flex-none">
+                <button [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" class="action-button">Start discussion</button>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="flex flex-col gap-3">
+        <ng-container *ngIf="skeletonLoader">
+            <div class="flex flex-col gap-6">
+                <div class="flex flex-col gap-4" *ngFor="let i of [1, 2]">
+                    <ws-widget-skeleton-loader [width]="'72px'" [height]="'20px'"
+                        [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            
+                    <div class="flex flex-row items-center gap-3">
+                        <ws-widget-skeleton-loader [width]="'36px'" [height]="'36px'"
+                            [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
+                        <div class="flex flex-col gap-2">
+                            <ws-widget-skeleton-loader [width]="'124px'" [height]="'20px'"
+                                [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'124px'" [height]="'12px'"
+                                [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!skeletonLoader">
+            <div class="text-base font-bold">Authors and curators</div>
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
+                    <div class="flex items-center justify-center">
+                        <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'"
+                            [photoUrl]="author.photo || ''" [name]="author.name">
+                        </ws-widget-avatar-photo>
+                    </div>
+                    <div class="flex flex-col gap-1 justify-center">
+                        <div class="font-bold">{{ author?.name }}</div>
+                        <div class="text-xs leading-3">Author</div>
+                    </div>
+                </div>
+    
+                <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
+                    <div class="flex items-center justify-center">
+                        <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="creator.photo || ''"
+                            [name]="creator.name">
+                        </ws-widget-avatar-photo>
+                    </div>
+                    <div class="flex flex-col gap-1 justify-center">
+                        <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
+                        <div class="text-xs leading-3">Curator</div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <ng-container *ngIf="skeletonLoader">
+        <ws-widget-skeleton-loader [width]="'100%'" [height]="'400px'"
+            [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+    </ng-container>
+    <ng-container *ngIf="!skeletonLoader">
+        <div class="flex flex-col ratings-div gap-10" id="ratingsDiv">
+            <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed" ></ws-widget-rating-summary>
+    
+            <div class="flex flex-col gap-3">
+                <div class="flex flex-row gap-4">
+                    <div class="flex-1 mat-subheading-1" id="reviewContainer">Top reviews</div>
+                    <ng-container *ngIf="reviews && reviews?.length">
+                        <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
+                    </ng-container>
+                </div>
+                <ng-container *ngIf="reviews && reviews?.length">
+                    <div class="flex flex-wrap gap-5">
+                        <div class="comment-div" *ngFor="let eachReview of reviews; let i = index">
+                            <div class="p-4 flex flex-col gap-6">
+                                <div class="flex flex-row gap-4">
+                                    <div class="flex-1">{{ handleCapitalize(eachReview?.review) }}</div>
+                                    <div class="flex flex-row gap-2 rating-start-value">
+                                        <mat-icon>star</mat-icon>
+                                        <div>{{ eachReview?.rating }}</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row gap-2 items-center">
+                                    <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''" [name]="eachReview?.firstName"></ws-widget-avatar-photo>
+                                    <div>{{ handleCapitalize(eachReview?.firstName) }}</div>
+                                    <div class="flex items-center">
+                                        <span class="period"></span>
+                                    </div>
+                                    <div>{{ eachReview?.updatedon | pipeRelativeTime }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div *ngIf="!reviews || !reviews?.length">
+                    <div class="flex flex-col text-center items-center justify-center bg-white p-4 rounded-md">
+                        <div class="font-base font-bold">No reviews found!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

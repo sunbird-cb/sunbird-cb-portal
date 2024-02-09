@@ -1,0 +1,18 @@
+<div class="py-6">
+    <div class="main-container flex flex-col gap-4">
+        <ng-container *ngIf="content?.children?.length; else noChildren">
+            <div class="content-card " *ngFor="let card of content?.children; trackBy: contentTrackBy; let i = index;">
+                <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [rootId]="contextId" [batchId]="batchId"
+                  [rootContentType]="contextPath" [content]="card" [index]="i"></ws-widget-app-toc-content-card-v2>
+            </div>
+        </ng-container>
+        <ng-template #noChildren>
+            <div *ngIf="!isPlayable"
+                class="ws-mat-primary-default-text ws-mat-primary-lite-background px-6 py-8 font-normal text-base noChildren"
+                i18n>
+                The preview for this type of content is unavailable. Please click on Start button above to view.
+            </div>
+            <!-- <ng-container *ngIf="isPlayable" [wsResolverWidget]="contentPlayWidgetConfig"></ng-container> -->
+        </ng-template>
+    </div>
+</div>

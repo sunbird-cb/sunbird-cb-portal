@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { ActivatedRoute } from '@angular/router'
-
+import { ViewerHeaderSideBarToggleService } from './../../../../viewer-header-side-bar-toggle.service';
 @Component({
   selector: 'viewer-overview',
   templateUrl: './overview.component.html',
@@ -29,7 +29,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   isretakeAllowed = false
   dataSubscription: any
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService) { }
 
   ngOnInit() {
     this.dataSubscription = this.route.data.subscribe(data => {
@@ -48,5 +48,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
   overviewed(event: NSPractice.TUserSelectionType) {
     this.loading = true
     this.userSelection.emit(event)
+    this.viewerHeaderSideBarToggleService.visibilityStatus.next(false);
   }
 }

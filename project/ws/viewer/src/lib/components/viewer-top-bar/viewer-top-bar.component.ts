@@ -4,11 +4,12 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 // import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
+import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
   selector: 'viewer-viewer-top-bar',
@@ -48,6 +49,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   userid: any
   channelId: any
   optionalLink = false
+  userRating: any
+  userId: any
+  currentDataFromEnrollList: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -60,6 +64,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private router: Router,
     private widgetServ: WidgetContentService,
     private viewerSvc: ViewerUtilService,
+    private ratingSvc: RatingService,
+    private loggerSvc: LoggerService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -149,7 +155,11 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     })
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId') as string
+      this.collectionType = params.get('collectionType') as string
       this.isPreview = params.get('preview') === 'true' ? true : false
+      const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+      this.currentDataFromEnrollList =  enrollList[this.collectionId]
+      this.getUserRating(false)
     })
 
     this.viewerDataServiceResourceSubscription = this.viewerDataSvc.changedSubject.subscribe(
@@ -279,5 +289,45 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
+  }
+
+  getUserRating(fireUpdate: boolean) {
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
+    if (this.collectionId && this.collectionType) {
+      this.ratingSvc.getRating(this.collectionId, this.collectionType, this.userId).subscribe(
+        (res: any) => {
+          if (res && res.result && res.result.response) {
+            this.userRating = res.result.response
+            if (fireUpdate) {
+              // this.tocSvc.changeUpdateReviews(true)
+            }
+          }
+        },
+        (err: any) => {
+          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+        }
+      )
+    }
+  }
+
+  openFeedbackDialog(contentP?: any): void {
+    const contentTmp = {
+      identifier: this.collectionId,
+      primaryCategory: this.collectionType,
+    }
+    const content = contentP ? contentP : contentTmp
+    const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
+      // height: '400px',
+      width: '770px',
+      data: { content, userId: this.userId, userRating: this.userRating },
+    })
+    // dialogRef.componentInstance.xyz = this.configSvc
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.getUserRating(false)
+      }
+    })
   }
 }

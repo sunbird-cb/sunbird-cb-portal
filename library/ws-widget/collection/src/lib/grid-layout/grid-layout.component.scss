@@ -31,14 +31,15 @@
 
 .new-box-hubs {
   margin: 0 0 $size-s 0;
-  height:40px;
+  height: 40px;
   background-color: #fff;
 }
 
 @media (max-width: 768px) {
-  // .new-box-hubs {
-  //   margin: 6px 0px;
-  // }
+  .new-box-hubs {
+    margin: 6px 0px;
+    height: 52px;
+  }
 }
 
 .new-box-left {

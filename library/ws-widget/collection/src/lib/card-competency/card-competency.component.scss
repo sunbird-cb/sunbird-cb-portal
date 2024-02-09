@@ -1,0 +1,80 @@
+@import 'ws-vars';
+
+.behavioural {
+    background-color: #F8B861;
+}
+
+.functional {
+    background-color: #E24577;
+}
+
+.domain {
+    background-color: #7B47A4;
+}
+
+.competency-passbook-theme {
+    width: 100%;
+    max-width: 344px;
+    min-width: 320px;
+    height: 80px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 8px;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail {
+    width: 100%;
+    max-width: 344px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    position: relative;
+    top: 4px;
+    height: inherit;
+
+    &>div {
+        padding: 8px 16px 16px 16px;
+    }
+
+    .chip-container {
+        .chip {
+            border: 1px solid $text-primary;
+            color: $text-primary;
+            line-height: 12px;
+            padding: 4px 8px;
+        }
+    }
+}
+
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.expanded {
+    padding-bottom: 12px;
+
+    .competency-passbook-theme {
+        max-width: 372px;
+        width: 100%;
+        min-height: 92px;
+        height: auto;
+
+        .detail {
+            width: 100%;
+            max-width: inherit;
+            min-height: inherit;
+            height: inherit;
+        }
+    }
+}
+
