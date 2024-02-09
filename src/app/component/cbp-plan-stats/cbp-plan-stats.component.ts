@@ -23,7 +23,7 @@ export class CbpPlanStatsComponent implements OnInit {
   dataChange: any = false
 
   constructor(private translate: TranslateService,
-    private langtranslations: MultilingualTranslationsService) {
+              private langtranslations: MultilingualTranslationsService) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
