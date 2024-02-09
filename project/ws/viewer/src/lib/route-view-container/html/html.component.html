@@ -1,16 +1,43 @@
-<div
-  [ngClass]="{'padding-remove-left': isScormContent && isLtMedium, 'padding-remove-right': isScormContent && isLtMedium}"
+<div [ngClass]="{'padding-remove-left': isScormContent && isLtMedium, 'padding-remove-right': isScormContent && isLtMedium}"
   class="padding-dynamic" *ngIf="htmlData && isNotEmbed">
   <div class="flex flex-around flex-wrapped">
     <div class="w-full">
       <div #htmlContainer>
-        <mat-card [ngClass]="{'padding-remove': isLtMedium}">
+        <mat-card class="html-viewer-container" [ngClass]="{'padding-remove': isLtMedium}">
           <mat-card-content>
             <div id="fullScreenContainer" [ngClass]="{ 'video-player': htmlData?.isIframeSupported != 'no' }">
-              <viewer-plugin-html [htmlContent]="htmlData">
+              <viewer-plugin-html [htmlContent]="htmlData" *ngIf="playScormContentFlag">
               </viewer-plugin-html>
+              
+               <div class="start-scorm-content-container" *ngIf="!playScormContentFlag">
+                  <div class="flex flex-around flex-wrapped">
+                    <div class="w-full">
+                      <div #htmlContainer>
+                        <mat-card class="html-viewer-container">
+                          <mat-card-content>
+                            <div class="content-instruction">
+                              <div>
+                                <p class="content-instruction-desc">This content must be completed in one go; otherwise, your progress will not be saved</p>
+                              </div>
+                              <div class="cursor-pointer">
+                                <button color="secondary" class="play-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="playScormContentFlag=true">
+                                  <ng-container>
+                                    <span class="mr-1">
+                                      <mat-icon class="vertical-align-middle">play_circle_filled</mat-icon>
+                                      <span class="fw-700">Play</span>
+                                    </span>
+                                  </ng-container>                
+                                </button>
+                              </div>
+                            </div>
+                          </mat-card-content>
+                        </mat-card>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <div class="flex justify-end mt-3">
+            <div class="flex justify-end mt-3" *ngIf="!isMobile">
               <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
                 [widgetData]="{ fsContainer: htmlContainer }">
               </ws-widget-btn-fullscreen>
@@ -28,46 +55,12 @@
                         ]
                 ">
               </ws-widget-btn-content-download>
-              <!-- TODO: Blocking this button for now, as the functionality is not working -->
-              <!-- <ws-widget-btn-content-like
-                              [widgetData]="htmlData | pipePartialContent: ['identifier']"
-                            ></ws-widget-btn-content-like> -->
-              <!-- <ws-widget-btn-content-like [forPreview]="forPreview" [widgetData]="{
-                  identifier: htmlData.identifier,
-                  isDisabled: isPreviewMode
-                }">
-              </ws-widget-btn-content-like> -->
-              <!-- <ws-widget-btn-content-share [forPreview]="forPreview" [widgetData]="htmlData"
-                [isDisabled]="isPreviewMode">
-              </ws-widget-btn-content-share> -->
-              <!-- <ws-widget-btn-goals [forPreview]="forPreview"></ws-widget-btn-goals> -->
-              <!-- <ws-widget-btn-playlist [forPreview]="forPreview" [widgetData]="{
-                  contentId: htmlData?.identifier,
-                  contentName: htmlData?.name,
-                  contentType: 'Resource',
-                  mode: 'dialog',
-                  isDisabled: isPreviewMode
-                }">
-              </ws-widget-btn-playlist> -->
-              <!-- <ws-widget-btn-content-feedback></ws-widget-btn-content-feedback> -->
-              <!-- <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview" [widgetData]="{
-                  identifier: htmlData.identifier,
-                  name: htmlData.name,
-                  isDisabled: isPreviewMode
-                }">
-              </ws-widget-btn-content-feedback-v2> -->
             </div>
           </mat-card-content>
         </mat-card>
       </div>
     </div>
   </div>
-  <!-- <div class="padding-m" *ngIf="discussionForumWidget && isRestricted">
-    <div class="video-discussion-forum-in">
-      <h2 class="mat-toolbar discussion-head">Discussion Forum</h2>
-      <ng-container [wsResolverWidget]="discussionForumWidget"></ng-container>
-    </div>
-  </div> -->
 </div>
 <div class="full-height-width-iframe" *ngIf="!isNotEmbed">
   <mat-card #fullScreenContainer [ngClass]="{'padding-remove': isLtMedium}">
@@ -84,3 +77,4 @@
     </mat-card-content>
   </mat-card>
 </div>
+

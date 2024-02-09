@@ -106,8 +106,8 @@
   // padding: $size-s;
   // padding-top: $size-m;
   @include breakpoint-xs {
-    padding: $size-xs;
-    padding-top: 40vh;
+    // padding: $size-xs;
+    // padding-top: 40vh;
   }
 }
 
@@ -158,12 +158,8 @@
 }
 
 .video-player-m {
-  position: fixed;
-  top: 55px;
-  left: 0px;
-  height: 40vh;
-  width: 100vw;
-  z-index: 1000;
+  position: relative;
+  height: 34vh;
   background: black;
   @include breakpoint-gt-xs {
     display: none;

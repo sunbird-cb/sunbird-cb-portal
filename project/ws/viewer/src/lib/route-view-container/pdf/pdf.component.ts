@@ -29,12 +29,20 @@ export class PdfComponent implements OnInit {
   > | null = null
   isTypeOfCollection = false
   isRestricted = false
+  playPdfContentFlag = true;
+  isMobile = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private configSvc: ConfigurationsService
   ) { }
 
   ngOnInit() {
+    if(window.innerWidth <= 1200) {
+      this.playPdfContentFlag = false
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
     if (this.configSvc.restrictedFeatures) {
       this.isRestricted =
         !this.configSvc.restrictedFeatures.has('disscussionForum')

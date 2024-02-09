@@ -73,8 +73,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   reviewPage = 1
   ratingViewCount = 3
   reviewDefaultLimit = 2
-  competenciesObject: any = {}
-
+  competenciesObject: any = {}  
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
     logo: '',
@@ -124,7 +123,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.skeletonLoader.currentValue) {
+    if (changes.skeletonLoader && !changes.skeletonLoader.currentValue) {
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
       },         500)

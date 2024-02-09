@@ -13,8 +13,8 @@
   // padding: $size-xs;
   // padding-top: $size-m;
   @include breakpoint-xs {
-    padding: 0;
-    padding-top: $size-m!important;
+    // padding: 0;
+    // padding-top: $size-m!important;
   }
 }
 

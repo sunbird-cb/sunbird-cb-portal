@@ -9,3 +9,12 @@
   width: 100%;
   min-height: 573px;
 }
+
+
+@media only screen and (min-width: 280px) and (max-width: 768px) {
+  .video-js {
+    height:auto;
+    width: 100%;
+    min-height: auto;
+  }
+}

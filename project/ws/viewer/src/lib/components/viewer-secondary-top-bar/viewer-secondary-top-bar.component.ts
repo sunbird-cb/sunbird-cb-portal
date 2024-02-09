@@ -21,6 +21,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
+  @Input() contentMIMEType:any;
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -49,6 +50,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   userid: any
   channelId: any
   optionalLink = false
+  isMobile = false;
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -74,6 +76,11 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getAuthDataIdentifer()
+    if(window.innerWidth <= 1200) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
 
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true

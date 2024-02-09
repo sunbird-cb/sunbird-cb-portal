@@ -51,6 +51,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   leafNodesCount: any
   viewerHeaderSideBarToggleFlag = true;
   isMobile = false;
+  contentMIMEType = '';
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -80,6 +81,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     e.activatedRoute.data.subscribe((data: { content: { data: NsContent.IContent } }) => {
       if (data.content && data.content.data) {
         this.content = data.content.data
+        console.log('this.content-->', this.content)
+        this.contentMIMEType = data.content.data.mimeType;
       }
     })
   }

@@ -96,4 +96,24 @@
   background: #fff;
   margin: 0;
   padding: 16px 30px;
+
+}
+
+.toc-container-mobile {
+  background: #fff;
+  margin: 0;
+  padding: 16px 30px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+@media screen and (min-width: 280px) and (max-width: 768px) {
+  .viewer-player-container {
+    height: auto;
+    min-height: 25%;
+  }
+
+  .viewer-sidenav-container {
+    height: calc(100vh - 56px);
+  }
 }
