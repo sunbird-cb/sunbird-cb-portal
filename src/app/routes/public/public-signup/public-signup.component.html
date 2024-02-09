@@ -19,9 +19,9 @@
         <span class="dot"></span>
       </div> -->
   </div>
-  <div class="right_container flex flex-col items-center justify-center py-8">
+  <div class="right_container flex flex-col py-8">
     <div class="langdiv">
-      <mat-form-field class="custom-lang">
+      <mat-form-field class="custom-lang float-right margin-right-xl">
         <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
         <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
             <mat-option *ngFor="let lang of multiLang" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">
