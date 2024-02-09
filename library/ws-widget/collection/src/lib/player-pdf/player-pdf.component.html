@@ -9,10 +9,10 @@
           <mat-icon>chevron_left</mat-icon>
         </button>
         <mat-form-field class="auto-mat-form-field-input-infix">
-          <span matPrefix i18n *ngIf="!isSmallViewPort">Page</span>
+          <span matPrefix i18n *ngIf="!isSmallViewPort">{{ 'player.page' | translate }}</span>
           <input label="PageNumber" aria-label="Page Number" i18n-aria-label class="pdf-page-num" type="number" min="1"
             [max]="totalPages" [formControl]="currentPage" matInput />
-          <span matSuffix style="margin-left: 12px;">of {{ totalPages }}</span>
+          <span matSuffix style="margin-left: 12px;">{{ 'player.of' | translate }} {{ totalPages }}</span>
         </mat-form-field>
         <button mat-icon-button [disabled]="currentPage.value >= totalPages" (click)="loadPageNum(currentPage.value + 1)"
           aria-label="next page" i18n-aria-label>

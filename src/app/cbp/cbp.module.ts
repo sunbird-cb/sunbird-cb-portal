@@ -34,6 +34,7 @@ import { CbpPlanFeedComponent } from '../component/cbp-plan-feed/cbp-plan-feed.c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { FilterComponent } from '../component/filter/filter.component'
 import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.module'
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [CbpPlanComponent, CbpPlanStatsComponent, MyCompetencyPassbookComponent,
     UpcomingTimelineComponent,
@@ -66,6 +67,7 @@ import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.mod
     FilterSearchPipeModule,
     MatMenuModule,
     MatRadioModule,
+    TranslateModule,
   ],
   exports: [
     HeaderModule,

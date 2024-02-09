@@ -11,6 +11,7 @@ import { NsCardContent } from './card-content-v2.model'
 import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
+import { TranslateService } from '@ngx-translate/core'
 // import { Router } from '@angular/router'
 
 @Component({
@@ -49,10 +50,18 @@ export class CardContentV2Component extends WidgetBaseComponent
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
     private langtranslations: MultilingualTranslationsService,
-    private certificateService: CertificateService
+    private certificateService: CertificateService,
+    private translate: TranslateService,
 
   ) {
     super()
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {
@@ -384,7 +393,7 @@ export class CardContentV2Component extends WidgetBaseComponent
           cbpList[data.identifier] = data
         })
       }
-      this.cbPlanMapData = cbpList 
+      this.cbPlanMapData = cbpList
       // this.karmaPointLoading = false
       clearInterval(this.cbPlanInterval)
     }

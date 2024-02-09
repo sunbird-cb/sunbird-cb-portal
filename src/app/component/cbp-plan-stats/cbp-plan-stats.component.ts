@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -20,7 +22,16 @@ export class CbpPlanStatsComponent implements OnInit {
 
   dataChange: any = false
 
-  constructor() { }
+  constructor(private translate: TranslateService,
+              private langtranslations: MultilingualTranslationsService) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+   }
 
   ngOnInit() {
   }

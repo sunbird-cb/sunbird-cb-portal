@@ -8,7 +8,7 @@ import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component'
 import { MatSnackBar } from '@angular/material';
-import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { ThemePalette } from '@angular/material/core'
 import { TranslateService } from '@ngx-translate/core'
 @Component({
@@ -56,7 +56,15 @@ export class CompetenceAllComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private eventSvc: EventService,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
     this.searchJson = [
       { type: 'COMPETENCY', field: 'name', keyword: '' },
       { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
@@ -466,7 +474,7 @@ export class CompetenceAllComponent implements OnInit {
     } else {
       instance.isUpdate = false
     }
-   
+
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response && response.action === 'ADD') {
         this.addCompetency(response.id);

@@ -9,6 +9,8 @@ import { TStatus, ViewerDataService } from './viewer-data.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 import { ViewerHeaderSideBarToggleService } from './viewer-header-side-bar-toggle.service'
+import { TranslateService } from '@ngx-translate/core'
+
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
   notFound = 'notFound',
@@ -49,8 +51,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private screenSizeSubscription: Subscription | null = null
   private resourceChangeSubscription: Subscription | null = null
   leafNodesCount: any
-  viewerHeaderSideBarToggleFlag = true;
-  isMobile = false;
+  viewerHeaderSideBarToggleFlag = true
+  isMobile = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -63,18 +65,26 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
     private abc: MobileAppsService,
-    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService
+    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
+    private translate: TranslateService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
 
-    if(window.innerWidth <= 1200) {
-      this.isMobile = true;
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
     } else {
-      this.isMobile = false;
+      this.isMobile = false
+    }
+    this.rootSvc.showNavbarDisplay$.next(false)
+    this.abc.mobileTopHeaderVisibilityStatus.next(false)
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.translate.use(lang)
     }
   }
-  
 
   getContentData(e: any) {
     e.activatedRoute.data.subscribe((data: { content: { data: NsContent.IContent } }) => {
@@ -95,21 +105,21 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
 
-    this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data:any)=>{
-      if(data) {
-        if(this.isMobile) {
-          this.sideNavBarOpened = false;
-          this.viewerHeaderSideBarToggleFlag = data;
+    this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data: any) => {
+      if (data) {
+        if (this.isMobile) {
+          this.sideNavBarOpened = false
+          this.viewerHeaderSideBarToggleFlag = data
         } else {
-          this.sideNavBarOpened = true;
-          this.viewerHeaderSideBarToggleFlag = data;
+          this.sideNavBarOpened = true
+          this.viewerHeaderSideBarToggleFlag = data
         }
-        
+
       } else {
-        this.sideNavBarOpened = false;
-        this.viewerHeaderSideBarToggleFlag = data;
+        this.sideNavBarOpened = false
+        this.viewerHeaderSideBarToggleFlag = data
       }
-      
+
     })
     this.getAuthDataIdentifer()
     // this.getEnrollmentList()

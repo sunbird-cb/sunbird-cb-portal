@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { distinctUntilChanged } from 'rxjs/operators'
 
 @Component({
@@ -43,7 +45,17 @@ export class CbpPlanFeedComponent implements OnInit {
   }
 
   constructor(
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService) {
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+      })
+    }
 
   ngOnInit() {
     if (this.activatedRoute.snapshot.data.pageData) {
