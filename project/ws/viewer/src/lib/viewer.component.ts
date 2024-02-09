@@ -8,6 +8,7 @@ import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
+import { TranslateService } from '@ngx-translate/core'
 
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
@@ -60,10 +61,17 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private widgetServ: WidgetContentService,
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
-    private abc: MobileAppsService
+    private abc: MobileAppsService,
+    private translate: TranslateService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.translate.use(lang)
+    }
   }
 
   getContentData(e: any) {
