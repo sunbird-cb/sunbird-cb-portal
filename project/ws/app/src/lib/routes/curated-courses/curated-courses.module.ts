@@ -31,6 +31,7 @@ import { CuratedPopularCardComponent } from './components/curated-popular-card/c
 import { CuratedCollectionService } from './services/curated-collection.service'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
     CardContentModule,
     CardContentV2Module,
     PipeFilterV3Module,
+    TranslateModule,
   ],
   providers: [
     CuratedCollectionService,

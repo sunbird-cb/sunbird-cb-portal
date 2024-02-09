@@ -1,7 +1,5 @@
-   
 <ws-footer-section [environment]="environment" [hubsList]="hubsList" [headerFooterConfigData]="headerFooterConfigData"></ws-footer-section>
-
-
+ 
 <div class="mat-toolbar mat-ws-mat-primary-text footer-container">
   <div class="mat-body text-center flex-1">
     <ng-container>
@@ -10,7 +8,7 @@
           <ws-app-logo [classList]="'logo-dim app-logo'" [path]="'/page/home'" [logoSrc]="'/assets/instances/eagle/app_logos/KarmayogiBharat_Logo_Horizontal.svg'"></ws-app-logo>
         </div>
         <div class="copyright">
-          <span class="font-14" i18n>&copy; Copyright 2023-2024</span>
+          <span class="font-14" i18n>&copy; {{ 'footer.copyright' | translate }} 2023-2024</span>
         </div>
       </div>
     </ng-container>

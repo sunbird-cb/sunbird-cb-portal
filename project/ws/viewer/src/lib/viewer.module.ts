@@ -46,6 +46,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ViewerComponent } from './viewer.component'
 import { ViewerTocComponent } from './components/viewer-toc/viewer-toc.component'
 import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [ViewerComponent, ViewerTocComponent],
@@ -81,6 +82,7 @@ import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.m
     BtnContentFeedbackV2Module,
     DisplayContentTypeIconModule,
     PipePartialContentModule,
+    TranslateModule.forChild(),
     MatTabsModule,
     PlayerBriefModule,
     ViewerTopBarModule,

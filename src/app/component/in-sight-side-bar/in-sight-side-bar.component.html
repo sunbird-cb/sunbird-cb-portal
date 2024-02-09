@@ -11,7 +11,7 @@
         <div class="flex flex-col discussion-card " >
             <div class="flex mat-subheading-1 p-4">
                 <div class="flex flex-row gap-1 mat-subheading-1 cursor-pointer feed-title" (click)="navigate(); raiseTelemetry('my-discussions')">
-                    My Discussions
+                    {{ 'home.myDiscussions' | translate }}
                     <mat-icon class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon">
                         chevron_right
                     </mat-icon>

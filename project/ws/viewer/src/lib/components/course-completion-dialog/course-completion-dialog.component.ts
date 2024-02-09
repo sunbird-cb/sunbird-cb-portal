@@ -2,7 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
-import { LoggerService } from '@sunbird-cb/utils'
+import { LoggerService, MultilingualTranslationsService } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'viewer-course-completion-dialog',
@@ -17,8 +18,16 @@ export class CourseCompletionDialogComponent implements OnInit {
     private ratingSvc: RatingService,
     private tocSvc: AppTocService,
     private loggerSvc: LoggerService,
+    private translate: TranslateService,
     public dialogRef: MatDialogRef<CourseCompletionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    private langtranslations: MultilingualTranslationsService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    }
 
   ngOnInit() {
     if (typeof(this.data.courseName) !== 'undefined') {
@@ -50,5 +59,9 @@ export class CourseCompletionDialogComponent implements OnInit {
         }
       )
     }
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

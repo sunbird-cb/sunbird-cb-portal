@@ -6,6 +6,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { WidgetResolverService } from '@sunbird-cb/resolver/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-public-home',
@@ -32,9 +33,15 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     private ws: WidgetResolverService,
+    private translate: TranslateService,
   ) {
     // setTimeout(() => {
     this.loadData()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
     // },         1000)
   }
 
@@ -61,6 +68,11 @@ export class PublicHomeComponent implements OnInit, OnDestroy {
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs
     }
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   ngOnDestroy() {

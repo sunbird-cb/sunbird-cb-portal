@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ILeftMenu, IMenu } from './left-menu.model'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 // tslint:disable-next-line: import-spacing
 // import  defaultImg  from './base64.json'
 @Component({
@@ -15,8 +17,17 @@ export class LeftMenuComponent extends WidgetBaseComponent
   currentFragment = ''
   defaultImg = '/assets/instances/eagle/app_logos/default.png'
   // @Input() Source
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
   ngOnDestroy(): void {
     // throw new Error('Method not implemented.')
@@ -86,5 +97,9 @@ export class LeftMenuComponent extends WidgetBaseComponent
       returnValue = true
     }
     return returnValue
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

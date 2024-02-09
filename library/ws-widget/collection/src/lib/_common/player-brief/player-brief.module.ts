@@ -8,6 +8,7 @@ import { UserImageModule } from '../user-image/user-image.module'
 import { BtnMailUserModule } from '../../btn-mail-user/btn-mail-user.module'
 import { MarkAsCompleteModule } from '../mark-as-complete/mark-as-complete.module'
 import { MatDividerModule, MatChipsModule, MatIconModule, MatCardModule, MatButtonModule } from '@angular/material'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [PlayerBriefComponent],
@@ -25,6 +26,7 @@ import { MatDividerModule, MatChipsModule, MatIconModule, MatCardModule, MatButt
     BtnMailUserModule,
     MatButtonModule,
     MarkAsCompleteModule,
+    TranslateModule,
   ],
   exports: [PlayerBriefComponent],
 })

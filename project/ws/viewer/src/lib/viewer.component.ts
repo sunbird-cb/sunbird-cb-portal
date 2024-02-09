@@ -167,8 +167,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     this.userSvc.fetchUserBatchList(userId).subscribe(
       (result: any) => {
-        let courses: NsContent.ICourse[] = result && result.courses
-        this.widgetServ.currentBatchEnrollmentList = courses 
+        const courses: NsContent.ICourse[] = result && result.courses
+        this.widgetServ.currentBatchEnrollmentList = courses
       })
   }
 

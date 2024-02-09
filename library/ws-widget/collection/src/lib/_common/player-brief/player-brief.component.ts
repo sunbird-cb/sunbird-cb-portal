@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { NsContent } from '../../_services/widget-content.model'
-import { ConfigurationsService, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService, UtilityService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 import { WidgetContentService } from '../../_services/widget-content.service'
 
@@ -30,6 +30,7 @@ export class PlayerBriefComponent implements OnInit {
     private utilitySvc: UtilityService,
     private router: Router,
     private widgetContentSvc: WidgetContentService,
+    private langtranslations: MultilingualTranslationsService,
   ) { }
   isDownloadableDesktop = false
   isDownloadableIos = false
@@ -136,5 +137,9 @@ export class PlayerBriefComponent implements OnInit {
     } catch {
       return []
     }
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

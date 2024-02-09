@@ -11,6 +11,7 @@ import { BtnFullscreenModule, BtnPageBackNavModule } from '@sunbird-cb/collectio
 import { RouterModule } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
 import { CourseCompletionDialogModule } from '../course-completion-dialog/course-completion-dialog.module'
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [ViewerTopBarComponent],
   imports: [
@@ -23,6 +24,7 @@ import { CourseCompletionDialogModule } from '../course-completion-dialog/course
     MatTooltipModule,
     RouterModule,
     CourseCompletionDialogModule,
+    TranslateModule,
   ],
   exports: [ViewerTopBarComponent],
   providers: [ValueService],

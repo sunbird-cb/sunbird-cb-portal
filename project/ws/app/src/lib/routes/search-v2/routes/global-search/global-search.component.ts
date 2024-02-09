@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-global-search',
@@ -14,8 +15,12 @@ export class GlobalSearchComponent implements OnInit {
   selectedTab = 1
   tabs = ['All', 'Learn', 'Network', 'Discuss', 'Careers']
 
-  constructor(private activated: ActivatedRoute) {
-
+  constructor(private activated: ActivatedRoute, private translate: TranslateService) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -65,6 +70,12 @@ export class GlobalSearchComponent implements OnInit {
         this.filtersPanel = queryParams.get('filtersPanel')
       }
     })
+  }
+
+  translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'globalsearch.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 
 }

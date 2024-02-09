@@ -1,11 +1,11 @@
 <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
     <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
         <a href="javascript:void(0)" i18n-aria-label aria-label="First page" (click)="setPage(1)"
-            class="page-link">First</a>
+            class="page-link">{{ 'careerPagination.first' | translate }}</a>
     </li>
     <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
         <a href="javascript:void(0)" i18n-aria-label aria-label="Previous page" (click)="setPage(pager.currentPage - 1)"
-            class="page-link">Previous</a>
+            class="page-link">{{ 'careerPagination.previous' | translate }}</a>
     </li>
     <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page.page}"
         class="page-item number-item">
@@ -15,10 +15,10 @@
     </li>
     <li [ngClass]="{disabled:pager.currentPage === pager.totalPage}" class="page-item next-item">
         <a href="javascript:void(0)" i18n-aria-label aria-label="Next page" (click)="setPage(pager.currentPage + 1)"
-            class="page-link">Next</a>
+            class="page-link">{{ 'careerPagination.next' | translate }}</a>
     </li>
     <li [ngClass]="{disabled:pager.currentPage === pager.totalPage}" class="page-item last-item">
         <a href="javascript:void(0)" i18n-aria-label aria-label="Last page" (click)="setPage(pager.totalPage)"
-            class="page-link">Last</a>
+            class="page-link">{{ 'careerPagination.last' | translate }}</a>
     </li>
 </ul>

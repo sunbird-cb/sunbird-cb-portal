@@ -32,6 +32,7 @@ import { LoaderService } from '@ws/author/src/public-api'
 import _ from 'lodash'
 import { OtpService } from '../../services/otp.services';
 import { environment } from 'src/environments/environment'
+import { TranslateService } from '@ngx-translate/core'
 import { RequestDialogComponent } from '../request-dialog/request-dialog.component'
 import { USER_PROFILE_MSG_CONFIG } from './user-profile-constant'
 
@@ -156,8 +157,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private loader: LoaderService,
     private eventSvc: EventService,
     private otpService: OtpService,
+    private translate: TranslateService,
     private pipeImgUrl: PipeCertificateImageURL
   ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
@@ -1944,7 +1951,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data,
     )
   }
-
+  translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'userProfile.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
+  }
   dialogReqHelp(type: string) {
     const mob = this.createUserForm.controls['mobile'].value
     const primaryEmail = this.createUserForm.controls['primaryEmail'].value

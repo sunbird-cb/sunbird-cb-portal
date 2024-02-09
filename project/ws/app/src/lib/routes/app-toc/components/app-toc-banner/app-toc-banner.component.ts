@@ -11,7 +11,7 @@ import {
   viewerRouteGenerator,
   WidgetContentService,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
 import { AccessControlService } from '@ws/author'
 import { Subscription } from 'rxjs'
@@ -32,6 +32,7 @@ import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
+import { TranslateService } from '@ngx-translate/core'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 dayjs.extend(isSameOrBefore)
@@ -126,7 +127,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   users: any[] = []
   allUsers: any[] = []
   apiResponse: any
-  placehoderText = 'To: Add an email'
   courseDetails: any
   userProfile: any
   maxEmailsLimit = 30
@@ -148,9 +148,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private actionSVC: ActionService,
     private logger: LoggerService,
     private datePipe: DatePipe,
+    private translate: TranslateService,
     private userAutoComplete: UserAutocompleteService,
     private events: EventService,
+    private langtranslations: MultilingualTranslationsService
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
     this.helpEmail = environment.helpEmail
     this.shareForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
@@ -382,8 +391,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.content.name,
       )
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
-      /* tslint:disable-next-line */
-      console.log(this.resumeDataLink,'=====> banner resum data link <========')
     }
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       // this.disableEnrollBtn = true
@@ -1074,9 +1081,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.content.primaryCategory,
         this.getBatchId(),
       )
-
-      /* tslint:disable-next-line */
-      console.log(this.firstResourceLink,'=====> banner first data link <========')
     }
   }
   private assignPathAndUpdateBanner(url: string) {
@@ -1290,7 +1294,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       const input = event.input
       const value = event.value
       if (this.users.length === this.maxEmailsLimit) {
-        this.openSnackbar('Maximum email limit reached')
+        this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
       const ePattern = new RegExp(`^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`)
@@ -1303,7 +1307,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         this.userCtrl.setValue(null)
       } else {
-        this.openSnackbar('Invalid email')
+        this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
         return
       }
     }
@@ -1319,7 +1323,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   selected(event: MatAutocompleteSelectedEvent): void {
     if (this.users.length === this.maxEmailsLimit) {
-      this.openSnackbar('Maximum email limit reached')
+      this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
       return
     }
     this.users.push(event.option.value)
@@ -1372,14 +1376,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       obj.request.recipients = recipients
       this.tocSvc.shareContent(obj).subscribe(result => {
         if (result.responseCode === 'OK') {
-          this.openSnackbar('Emails successfully shared with registered Karmayogis')
+          this.openSnackbar(this.translateLabels('success', 'contentSharing', ''))
         }
         this.users = []
         this.enableShare = false
       }, error => {
         // tslint:disable
         console.log(error)
-        this.openSnackbar('Something went wrong. Please try after sometime')
+        this.openSnackbar(this.translateLabels('error','contentSharing',''))
       })
     }
   }
@@ -1400,7 +1404,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
-    this.openSnackbar('Link copied')
+    this.openSnackbar(this.translateLabels('linkCopied','contentSharing',''))
     this.raiseTelemetry('copyToClipboard')
   }
 
@@ -1420,5 +1424,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         module: WsEvents.EnumTelemetrymodules.CONTENT,
       }
     )
+  }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    return this.langtranslations.translateActualLabel(label, type, subtype)
   }
 }

@@ -5,14 +5,14 @@
 
 <div class="w-full pt-10  px-2">
     <div class="flex flex-1 flex-column margin-fix mb-2">
-        <h2 class="f-medium">All openings </h2>
+        <h2 class="f-medium">{{ 'career.labelAllOpenings' | translate }}</h2>
     </div>
     <div class="flex flex-1 flex-column margin-fix search">
         <form (submit)="updateQuery(queryControl.value)">
             <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
                 <mat-icon matPrefix class="ml-5 flex items-center justify-center py-5">search</mat-icon>
                 <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
-                    [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
+                    [placeholder]="'common.search' | translate" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
                     accesskey="F" maxlength="50" />
             </mat-form-field>
         </form>
@@ -22,11 +22,11 @@
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'timestamp',
                             'ws-mat-accent-border':currentFilter !== 'timestamp'}"
                 (click)="filter('timestamp'); tabTelemetry('Recent', 0)">
-                Recent </a>
+                {{ 'career.tabRecent' | translate }}  </a>
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'viewcount',
                             'ws-mat-accent-border':currentFilter !== 'viewcount'}"
                 (click)="filter('viewcount'); tabTelemetry('Most Viewed', 1)">
-                Most Viewed </a>
+                {{ 'career.tabMostViewed' | translate }} </a>
         </div>
     </div>
     <div class="flex flex-wrap margin-fix">
@@ -37,7 +37,7 @@
                 <ws-app-careers-card class="w-fix" [discuss]="discuss"></ws-app-careers-card>
             </div>
         </ng-container>
-        <h2 *ngIf="data.topics?.length<=0">No Opening found</h2>
+        <h2 *ngIf="data.topics?.length<=0">{{ 'msg.noOpeningFound' | translate }}</h2>
     </div>
     <div class="flex flex-1 flex-column margin-fix pagination-container">
         <ws-app-careers-pagination [pager]="pager" (changePage)="navigateWithPage($event)"></ws-app-careers-pagination>

@@ -34,7 +34,7 @@
           {{btn.icon}}
         </mat-icon>
         <span class="ws-mat-default-text" i18n>
-          {{btn.name}}
+          {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
       <button *ngIf="i>=1 && btn.name !== 'Moderated courses'" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
@@ -43,7 +43,7 @@
           {{btn.icon}}
         </mat-icon>
         <span class="ws-mat-default-text" i18n>
-          {{btn.name}}
+          {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
       <button *ngIf="i>=1 && btn.name === 'Moderated courses' && showModeratedCourseTab" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
@@ -52,7 +52,7 @@
           {{btn.icon}}
         </mat-icon>
         <span class="ws-mat-default-text" i18n>
-          {{btn.name}}
+          {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
     </ng-container>

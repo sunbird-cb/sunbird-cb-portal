@@ -7,7 +7,7 @@ import { HttpBackend, HttpClient } from '@angular/common/http'
 import { ActivatedRoute } from '@angular/router';
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { NsContent } from '@sunbird-cb/collection'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import { ViewerUtilService } from '../../../viewer-util.service'
 const API_END_POINTS = {
   SCROM_ADD_UPDTE: '/apis/protected/v8/scrom/add',

@@ -13,6 +13,7 @@ import {
   ConfigurationsService,
   UserPreferenceService,
   UtilityService,
+  MultilingualTranslationsService,
 } from '@sunbird-cb/utils'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { BtnSettingsService } from '@sunbird-cb/collection'
@@ -20,6 +21,7 @@ import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { Router, ActivatedRoute } from '@angular/router'
 import { MatSnackBar, MatSelectChange, MatTabChangeEvent } from '@angular/material'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-settings',
@@ -55,6 +57,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   showIntranetSettings = false
   isLanguageEnabled = true
   // showProfileSettings = false
+  selectedLanguage = 'en'
+  multiLang: any = []
 
   constructor(
     // todo mobile settings removed
@@ -65,7 +69,25 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private utilitySvc: UtilityService,
-  ) { }
+    private langtranslations: MultilingualTranslationsService,
+    private translate: TranslateService,
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+      this.selectedLanguage = lang
+    }
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+        this.selectedLanguage = lang
+      }
+    })
+  }
 
   ngOnInit() {
     const tab = this.route.snapshot.queryParamMap.get('tab')
@@ -106,6 +128,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }
       this.chosenLanguage = this.appLanguage
       this.fonts.sort((a, b) => a.scale - b.scale)
+
+      this.multiLang = instanceConfig.webistelanguages
+      // console.log('multilang', this.multiLang)
 
       this.allowedLangCode = instanceConfig.locals.reduce(
         (agg: { [path: string]: NsInstanceConfig.ILocalsConfig }, u) => {
@@ -256,5 +281,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
          break */
     }
     this.router.navigate([], { queryParams: { tab } })
+  }
+
+  selectLanguage(event: any) {
+    // console.log('event', event)
+    this.selectedLanguage = event
+    localStorage.setItem('websiteLanguage', this.selectedLanguage)
+    this.langtranslations.updatelanguageSelected(
+      true,
+      this.selectedLanguage,
+      this.configSvc.unMappedUser ? this.configSvc.unMappedUser.id : ''
+    )
   }
 }

@@ -197,7 +197,8 @@
         [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" class="flex flex-middle">
         <mat-icon>toc</mat-icon>
         <h3 class="margin-remove" i18n>
-          View details
+          <!-- View details -->
+          {{ 'cardcontentv2.viewDetails' | translate }}
         </h3>
       </a>
 
@@ -486,7 +487,7 @@
               </div>
               <div *ngIf="!widgetData.content.viewCount || !widgetData.content.viewCount.Client" class="duration-time"
                 i18n-title title="View Count">
-                No views
+                {{ 'cardcontentv2.noviews' | translate }}
               </div>
               <div *ngIf="widgetData.content.resourceType" class="resource-type" i18n-title title="resource Type">
                 {{ widgetData.content.resourceType }}
@@ -620,13 +621,13 @@
           </div>
           <div class="flex flex-1">
             <div class="ws-mat-default-text">
-              <span>{{5}} hours ago</span>
+              <span>{{5}} {{'cardcontentv2.hoursAgo' | translate}}</span>
             </div>
           </div>
         </div>
         <div class="flex flex-1 flex-row">
           <div class="flex-9 description-text mb-4" i18n-title title="Description">
-            Asked by <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="['/app/person-profile']"
+            {{'cardcontentv2.askedBy' | translate}} <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="['/app/person-profile']"
               [queryParams]="{'emailId':'amit.sengar@tarento.com'}" role="link" aria-label="Content" i18n-aria-label>
               <span class="ws-mat-default-text">{{'Amit Kumar'}}</span>
             </a>
@@ -765,18 +766,19 @@
                 <img [src]="widgetData.content.creatorLogo | pipePublicURL " class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
                 [alt]="(widgetData.content.sourceName + '_' + widgetData.content.identifier)" />
               </div>
-              <span class="org-text">By {{ (widgetData.content.organisation && widgetData.content.organisation[0]) ? widgetData.content.organisation[0] : 'Karmayogi Bharat' }}</span>
+              <span class="org-text">{{'cardcontentv2.by' | translate}} {{ (widgetData.content.organisation && widgetData.content.organisation[0]) ? widgetData.content.organisation[0] : 'Karmayogi Bharat' }}</span>
             </div>
             <div class="flex flex-middle rating-session margin-top-m">
               <div class="flex flex-middle" *ngIf="widgetData?.content?.avgRating">
                 <mat-icon class="mr-1">star</mat-icon>
                 <span>{{widgetData.content.avgRating}}</span>
               </div>
+              <!-- <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostEnrolled' | translate }}</span> -->
               <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostEnrolled')">
-                <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
               </ng-container>
               <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-                <span class="most-enrolled-text margin-left-xs">Most trending</span>
+                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}Most trending</span>
               </ng-container>
             </div>
           </div>
@@ -784,7 +786,7 @@
       </ng-container>
       <ng-container *ngIf="isCardFlipped">
         <div class="flex items-center">
-          <h2 class="mat-subheading-2 flex-1 min-w-0 margin-remove-bottom" i18n>Reason</h2>
+          <h2 class="mat-subheading-2 flex-1 min-w-0 margin-remove-bottom" i18n>{{'cardcontentv2.reason' | translate}}</h2>
           <button mat-icon-button (click)="isCardFlipped = false">
             <mat-icon>close</mat-icon>
           </button>
@@ -843,9 +845,9 @@
             role="link" i18n-aria-label>
 
             <div class="text-gray-time complexity flex-between flex-center">
-              <div *ngIf="showIsMode" i18n i18n-title title="Newly Added"
+              <div *ngIf="showIsMode" i18n i18n-title title="{{'cardcontentv2.newlyAdded' | translate}}"
                 class="mode-tag px-2 ws-mat-accent-background">
-                Newly Added
+                {{'cardcontentv2.newlyAdded' | translate}}
               </div>
             </div>
 
@@ -903,7 +905,7 @@
       </ng-container>
       <ng-container *ngIf="isCardFlipped">
         <div class="flex items-center">
-          <h2 class="mat-subheading-2 flex-1 min-w-0 margin-remove-bottom" i18n>Reason</h2>
+          <h2 class="mat-subheading-2 flex-1 min-w-0 margin-remove-bottom" i18n>{{'cardcontentv2.reason' | translate}}</h2>
           <button mat-icon-button (click)="isCardFlipped = false">
             <mat-icon>close</mat-icon>
           </button>
@@ -974,7 +976,7 @@
       </div>
 
       <div class="bottomsection">
-        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData.content.creator">By {{widgetData.content.creator}}</p>
+        <p class="mat-body-2 ws-mat-black-text margin-bottom-xxs" *ngIf="widgetData.content.creator">{{'cardcontentv2.by' | translate}} {{widgetData.content.creator}}</p>
         <div class="contentdata margin-bottom-xm">
           <ul
             class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text highlighting_list">
@@ -1081,11 +1083,12 @@
             <mat-icon>star</mat-icon>
             <span class="rating-number">{{widgetData?.content?.avgRating}}</span>
           </div>
+          <!-- <span class="most-enrolled-text margin-left-m">{{ 'cardcontentv2.mostEnrolled' | translate }}</span> -->
           <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostEnrolled')">
-            <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+            <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
           </ng-container>
           <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-            <span class="most-enrolled-text margin-left-xs">Most trending</span>
+            <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}</span>
           </ng-container>
         </div>
       </div>
@@ -1342,9 +1345,9 @@
           <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="widgetData?.content?.linkUrl" [state]="widgetData?.stateData"
             role="link" i18n-aria-label>
             <div class="text-gray-time complexity flex-between flex-center">
-              <div *ngIf="showIsMode" i18n i18n-title title="Newly Added"
+              <div *ngIf="showIsMode" i18n i18n-title title="{{'cardcontentv2.newlyAdded' | translate}}"
                 class="mode-tag px-2 ws-mat-accent-background">
-                Newly Added
+                {{'cardcontentv2.newlyAdded' | translate}}
               </div>
             </div>
 
@@ -1409,7 +1412,7 @@
       </ng-container>
       <ng-container *ngIf="isCardFlipped">
         <div class="flex items-center">
-          <h2 class="mat-subheading-2 flex-1 min-w-0 margin-remove-bottom" i18n>Reason</h2>
+          <h2 class="mat-subheading-2 flex-1 min-w-0 margin-remove-bottom" i18n>{{'cardcontentv2.reason' | translate}}</h2>
           <button mat-icon-button (click)="isCardFlipped = false">
             <mat-icon>close</mat-icon>
           </button>

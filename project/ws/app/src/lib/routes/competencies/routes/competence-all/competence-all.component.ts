@@ -6,10 +6,11 @@ import { CompetenceService } from '../../services/competence.service'
 /* tslint:disable */
 import _ from 'lodash';
 import { FormControl } from '@angular/forms';
-import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
+import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component'
 import { MatSnackBar } from '@angular/material';
 import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
-import {ThemePalette} from '@angular/material/core'
+import { ThemePalette } from '@angular/material/core'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'app-competence-all',
   templateUrl: './competence-all.component.html',
@@ -54,11 +55,18 @@ export class CompetenceAllComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
     private eventSvc: EventService,
+    private translate: TranslateService,
   ) {
     this.searchJson = [
       { type: 'COMPETENCY', field: 'name', keyword: '' },
       { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
     ]
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
 
     const searchObj = {
       searches: this.searchJson,
@@ -136,6 +144,11 @@ export class CompetenceAllComponent implements OnInit {
     }
   }
   ngOnInit() { }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
+  }
 
   getProfile() {
     this.competencySvc.fetchProfileById(this.configSvc.unMappedUser.id).subscribe(response => {

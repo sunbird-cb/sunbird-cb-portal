@@ -2,8 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { NsUser, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsUser, ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { CardNetWorkService } from '@sunbird-cb/collection'
+import { TranslateService } from '@ngx-translate/core'
 import { DOCUMENT } from '@angular/common'
 @Component({
   selector: 'ws-app-network-home',
@@ -32,8 +33,19 @@ export class NetworkHomeComponent implements OnInit {
     private cardNetworkService: CardNetWorkService,
     private activeRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     @Inject(DOCUMENT) private document: Document
   ) {
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+
+    })
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     if (this.activeRoute.parent) {

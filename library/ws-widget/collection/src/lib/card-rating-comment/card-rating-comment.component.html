@@ -39,7 +39,7 @@
                         {{review.review}}
                     </div>
                     <div *ngIf="review?.comment" class="margin-top-m">
-                        <a class="custom-link" (click)="showAuthReply()">View reply</a>
+                        <a class="custom-link" (click)="showAuthReply()">{{ 'cardratingcommet.viewReply' | translate }}</a>
                         <div class="margin-top-m mat-body-1 break-all" *ngIf="showauthreply">
                             {{review?.comment}}
                         </div>

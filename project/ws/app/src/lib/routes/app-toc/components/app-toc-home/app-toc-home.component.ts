@@ -9,7 +9,7 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, LoggerService, MultilingualTranslationsService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -19,7 +19,7 @@ import { AccessControlService } from '@ws/author/src/public-api'
 import { FormControl, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
@@ -30,6 +30,7 @@ import moment from 'moment'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { environment } from 'src/environments/environment'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { TranslateService } from '@ngx-translate/core'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
 dayjs.extend(isSameOrBefore)
@@ -194,13 +195,19 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private telemertyService: TelemetryService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     private events: EventService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
-
   ngOnInit() {
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -328,7 +335,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
-
   }
 
   getKarmapointsLimit() {
@@ -1594,5 +1600,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     },                                    (_err: any) => {
       this.tocSvc.changeServerDate(new Date().getTime())
     })
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

@@ -1,9 +1,9 @@
 <div class="flex flex-col gap-8 mobile-container">
     <!-- Breadcrumbs -->
     <div class="flex flex-row gap-1 items-center">
-        <div class="ws-mat-default-text font-semibold cursor-pointer" [routerLink]="['/page/competency-passbook/list']">Passbook list</div>
+        <div class="ws-mat-default-text font-semibold cursor-pointer" [routerLink]="['/page/competency-passbook/list']">{{'competencyCardDetails.passbookList' | translate}}</div>
         <mat-icon>navigate_next</mat-icon>
-        <div class="">Passbook details</div>
+        <div class="">{{'competencyCardDetails.passbookDetails' | translate}}</div>
     </div>
 
     <div class="flex flex-col gap-5">
@@ -11,7 +11,7 @@
             <div class="flex-1">
                 <div class="flex flex-col gap-2 justify-center">
                     <div class="text-2xl font-semibold header text-primary">{{ themeDetails?.competencyTheme }}</div>
-                    <div class="text-sm" *ngIf="updatedTime">Last updated on {{ updatedTime | date: 'MMM yyyy' }} </div>
+                    <div class="text-sm" *ngIf="updatedTime">{{'competencyCardDetails.lastUpdatedOn' | translate}} {{ updatedTime | date: 'MMM yyyy' }} </div>
                 </div>
             </div>
             <div class="flex justify-center items-center">
@@ -21,19 +21,19 @@
 
         <div class="chips-container">
             <div class="flex flex-col gap-3">
-                <div class="text-base font-semibold">Competency sub-theme ({{ themeDetails?.subTheme?.length }})</div>
+                <div class="text-base font-semibold">{{'competencyCardDetails.competencySubTheme' | translate}} ({{ themeDetails?.subTheme?.length }})</div>
                 <div class="flex flex-wrap gap-3">
-                    <div class="flex items-center text-center" *ngIf="!themeDetails?.subTheme || !themeDetails?.subTheme?.length" >No Sub theme data found!</div>
+                    <div class="flex items-center text-center" *ngIf="!themeDetails?.subTheme || !themeDetails?.subTheme?.length" >{{'competencyCardDetails.noSubTheme' | translate}}</div>
                     <ng-container *ngFor="let chip of themeDetails?.subTheme; let i = index">
                         <div class="chip rounded-full p-2 text-xs" [ngClass]="{'hide': ((isMobile) ? i > 2 : i > 9) && !viewMoreST}">
                             {{ chip }}
                         </div>
                     </ng-container>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="((isMobile) ? themeDetails?.subTheme?.length > 3 : themeDetails?.subTheme?.length > 10 )  && !viewMoreST" (click)="viewMoreST = !viewMoreST">
-                        View more
+                        {{'competencyCardDetails.viewMore' | translate}}
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="viewMoreST" (click)="viewMoreST = !viewMoreST">
-                        View less
+                        {{'competencyCardDetails.viewLess' | translate}}
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="flex flex-col gap-5">
-        <div class="text-base font-semibold">Associated Certificates 
+        <div class="text-base font-semibold">{{'competencyCardDetails.associatedCertificates' | translate}}
             <span *ngIf="certificateData?.length">({{ certificateData?.length }})</span>
         </div>
 
@@ -49,8 +49,8 @@
             <ng-container *ngIf="!certificateData || !certificateData?.length">
                 <div class="p-12 no-data-div rounded-md">
                     <div class="flex flex-col justify-center items-center gap-2">
-                        <div class="text-lg font-semibold">No Certificates found!</div>
-                        <div class="text-base text-center">No certificates found associated with this competency theme</div>
+                        <div class="text-lg font-semibold">{{'competencyCardDetails.noCertificates' | translate}}</div>
+                        <div class="text-base text-center">{{'competencyCardDetails.noCertificatesWithCompetency' | translate}}</div>
                     </div>
                 </div>
             </ng-container>
@@ -61,7 +61,7 @@
                         <div class="flex flex-row">
                             <div class="flex-1">
                                 <div class="text-base font-semibold cursor-pointer" (click)="handleNavigate(eachCert)" >{{ eachCert?.courseName }}</div>
-                                <div class="text-xs font-light" *ngIf="eachCert?.identifier" >Issued on {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
+                                <div class="text-xs font-light" *ngIf="eachCert?.identifier" >{{'competencyCardDetails.issuedOn' | translate}} {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
                             </div>
                             <div class="flex justify-center">
                                 <ng-container *ngIf="eachCert?.loading">
@@ -100,11 +100,11 @@
                         </div>
                     </ng-container>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="themeDetails.courseSubThemes[i]?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
-                        View more
+                        {{'competencyCardDetails.viewMore' | translate}}
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="eachCert?.viewMore"
                         (click)="handleViewMore(eachCert, 'less')">
-                        View less
+                        {{'competencyCardDetails.viewLess' | translate}}
                     </div>
                 </div>
             </div>

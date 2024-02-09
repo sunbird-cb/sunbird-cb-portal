@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 // const socialLink = [
 //   {
 //     url: 'https://www.linkedin.com/company/karmayogi-bharat/',
@@ -26,6 +26,7 @@ import { Component, Input, OnInit } from '@angular/core';
 //     icon : 'youtube'
 //   },
 //   {
+// tslint:disable-next-line: max-line-length
 //     url: 'https://open.spotify.com/user/31cr3bizg7gpg5vytxl4bzyhw43a?si=5up31eyNSl-Y4Svr_Kfr7g&utm_source=copy-link&utm_medium=copy-link&nd=1&_branch_match_id=1242771130436995949&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXLy7IL8lMq9TLyczL1g%2BqyEsqywiKyHdJAgBCVoQFIAAAAA%3D%3D',
 //     alt: 'Spotify',
 //     icon : 'spotify'
@@ -35,14 +36,14 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'ws-social-link',
   templateUrl: './social-link.component.html',
-  styleUrls: ['./social-link.component.scss']
+  styleUrls: ['./social-link.component.scss'],
 })
 export class SocialLinkComponent implements OnInit {
-  @Input() socialLinks:any = []
+  @Input() socialLinks: any = []
   constructor() { }
 
   ngOnInit() {
-    console.log('headerFooterConfigData', this.socialLinks)
+    // console.log('headerFooterConfigData', this.socialLinks)
    // this.socialLinks = socialLink;
   }
 

@@ -54,8 +54,8 @@
 
   <mat-divider *ngIf="collection" class="margin-bottom-xs"></mat-divider>
   <div *ngIf="collection" class="flex flex-middle">
-    <div i18n class="padding-left-m" *ngIf="tocMode === 'TREE'">Structure</div>
-    <div i18n class="padding-left-m" *ngIf="tocMode === 'FLAT'">Queue</div>
+    <div i18n class="padding-left-m" *ngIf="tocMode === 'TREE'">{{ 'viewertoc.structure' | translate }}</div>
+    <div i18n class="padding-left-m" *ngIf="tocMode === 'FLAT'">{{ 'viewertoc.queue' | translate }}</div>
     <span class="spacer"></span>
     <div class="margin-right-m">
       <mat-slide-toggle [checked]="tocMode === 'FLAT'" (change)="changeTocMode()"><span i18n accesskey="T">
@@ -70,7 +70,7 @@
   <mat-card *ngIf="collection && pathSet && !pathSet.has(resourceId)">
     <mat-card-content>
       <span class="width-expand flex flex-middle mat-error" i18n>
-        The Resource is not part of the collection
+        {{ 'viewertoc.resourceNotPartOfCollection' | translate }}
       </span>
     </mat-card-content>
   </mat-card>
@@ -135,7 +135,7 @@
   </div>
   <div *ngIf="isErrorOccurred" class="flex flex-center">
     <h2 i18n class="mat-sub-heading">
-      Unsupported Collection Type
+      {{ 'viewertoc.unsupportedType' | translate }}
     </h2>
   </div>
 </ng-template>
