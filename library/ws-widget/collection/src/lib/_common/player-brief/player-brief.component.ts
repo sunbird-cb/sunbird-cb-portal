@@ -140,6 +140,6 @@ export class PlayerBriefComponent implements OnInit {
   }
 
   translateLabels(label: string, type: any) {
-    return this.langtranslations.translateLabelWithoutspace(label, type, '')
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

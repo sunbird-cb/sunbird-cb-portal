@@ -5,6 +5,8 @@ import { NSCompetencie } from '../../models/competencies.model'
 import _ from 'lodash'
 import { Router } from '@angular/router'
 import { CompetenceAssessmentService } from '../../services/comp-assessment.service'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 // import { Router } from '@angular/router'
 
 export interface IDialogData {
@@ -35,8 +37,18 @@ export class CompetenceViewComponent implements OnInit {
     public dialogRef: MatDialogRef<CompetenceViewComponent>,
     @Inject(MAT_DIALOG_DATA) public dData: NSCompetencie.ICompetencie,
     private router: Router,
-    private aAService: CompetenceAssessmentService
-  ) { }
+    private aAService: CompetenceAssessmentService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
+  ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+   }
   ngOnInit() {
     if (this.dData && this.dData.competencySelfAttestedLevel && this.dData.competencySelfAttestedLevel !== '') {
       this.isUpdate = true

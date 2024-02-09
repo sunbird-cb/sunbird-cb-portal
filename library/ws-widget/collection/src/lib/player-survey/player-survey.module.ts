@@ -29,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core'
     BtnFullscreenModule,
     MatInputModule,
     MicroSurveyModule,
-    TranslateModule,
+    TranslateModule.forChild(),
   ],
   exports: [PlayerSurveyComponent],
   entryComponents: [PlayerSurveyComponent],
