@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatTooltipModule,
     RouterModule,
     CourseCompletionDialogModule,
-    TranslateModule,
+    TranslateModule.forChild(),
   ],
   exports: [ViewerTopBarComponent],
   providers: [ValueService],

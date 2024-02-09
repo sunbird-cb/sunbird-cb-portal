@@ -26,7 +26,7 @@ import { TranslateModule } from '@ngx-translate/core'
     BtnMailUserModule,
     MatButtonModule,
     MarkAsCompleteModule,
-    TranslateModule,
+    TranslateModule.forChild(),
   ],
   exports: [PlayerBriefComponent],
 })
