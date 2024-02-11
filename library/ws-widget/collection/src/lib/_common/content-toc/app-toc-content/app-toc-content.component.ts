@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { Subscription } from 'rxjs'
@@ -17,9 +18,10 @@ export class AppTocContentComponent implements OnInit {
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   @Input() skeletonLoader = false
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   ngOnInit() {
   }
-
 }
