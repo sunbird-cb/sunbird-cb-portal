@@ -24,6 +24,7 @@ import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
+import { TimerService } from '../../services/timer.service'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -115,7 +116,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private tagSvc: TitleTagService,
     private actionSVC: ActionService,
     private logger: LoggerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private timerService: TimerService
   ) {
     this.helpEmail = environment.helpEmail
   }
@@ -139,6 +141,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           }
         })
       }
+
       if (this.content && this.content.identifier) {
         this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
           this.contentReadData = res.result.content
@@ -153,6 +156,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
+    
     this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -259,17 +263,19 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.getLearningUrls()
       this.setBatchControl()
     }
+
     if (this.resumeData && this.resumeData.length > 0 && this.content) {
       let resumeDataV2: any
-
       if (this.content.completionPercentage === 100) {
         resumeDataV2 = this.getResumeDataFromList('start')
       } else {
         resumeDataV2 = this.getResumeDataFromList()
       }
+
       if (!resumeDataV2.mimeType) {
         resumeDataV2.mimeType = this.getMimeType(this.content, resumeDataV2.identifier)
       }
+
       this.resumeDataLink = viewerRouteGenerator(
         resumeDataV2.identifier,
         resumeDataV2.mimeType,
@@ -310,6 +316,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       disableClose: true,
       panelClass: ['animate__animated', 'animate__slideInLeft'],
     })
+
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
         // tslint:disable-next-line:max-line-length
@@ -353,6 +360,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       return false
     })
+
     // conflicts check end
     if (userList && userList.length === 0) {
       if (this.content && this.content.wfSurveyLink) {
@@ -804,22 +812,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return false
   }
 
-  ngOnDestroy() {
-    this.tocSvc.analyticsFetchStatus = 'none'
-    if (this.routerParamSubscription) {
-      this.routerParamSubscription.unsubscribe()
-    }
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
-    if (this.batchWFDataSubscription) {
-      this.batchWFDataSubscription.unsubscribe()
-    }
-    if (this.selectedBatchSubscription) {
-      this.selectedBatchSubscription.unsubscribe()
-    }
-  }
-
    getBatchUserCount(batchData: any) {
     if (batchData && batchData.batchId) {
       const req = {
@@ -1041,6 +1033,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       return qParams
     }
+
     if (this.resumeDataLink && type === 'RESUME') {
       let qParams: { [key: string]: string } = {
         ...this.resumeDataLink.queryParams,
@@ -1082,28 +1075,41 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return { color, 'background-color': bgColor }
   }
 
-  // ngAfterViewInit
   ngAfterViewInit() {
     let serverDate = this.serverDate
-   if (this.serverDate) {
-    setInterval(() => {
-      // this.tickTock();
-      serverDate = serverDate  +  1000
-      this.date = new Date(serverDate)
-      this.now = this.date.getTime()
-      this.difference = this.targetTime - this.now
-      this.difference = this.difference / (1000 * 60 * 60 * 24)
+    if (this.serverDate) {
+      setInterval(() => {
+        let timer = {
+          days: 0,
+          hours: 0,
+          min: 0,
+          seconds: 0
+        }
+        serverDate = serverDate  +  1000
+        this.date = new Date(serverDate)
+        this.now = this.date.getTime()
+        this.difference = this.targetTime - this.now
+        this.difference = this.difference / (1000 * 60 * 60 * 24)
 
-      this.days = Math.floor(this.difference)
-      this.hours = 23 - this.date.getHours()
-      this.minutes = 60 - this.date.getMinutes()
-      this.seconds = 60 - this.date.getSeconds()
-      Number(this.hours)
-      !isNaN(this.days)
-        ? (this.days = Math.floor(this.difference))
-        : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
-    },          1000)
-   }
+        this.days = Math.floor(this.difference)
+        this.hours = 23 - this.date.getHours()
+        this.minutes = 60 - this.date.getMinutes()
+        this.seconds = 60 - this.date.getSeconds()
+        Number(this.hours)
+        !isNaN(this.days)
+          ? (this.days = Math.floor(this.difference))
+          : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
+        
+        timer = {
+          days: this.days,
+          hours: this.hours,
+          min: this.minutes,
+          seconds: this.seconds
+        }
+        this.timerService.setTimerData(timer)
+        
+      }, 1000)
+    }
   }
 
   get showDisableMsg() {
@@ -1126,5 +1132,21 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return this.tocConfig[msg]
     }
     return ''
+  }
+
+  ngOnDestroy() {
+    this.tocSvc.analyticsFetchStatus = 'none'
+    if (this.routerParamSubscription) {
+      this.routerParamSubscription.unsubscribe()
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe()
+    }
+    if (this.batchWFDataSubscription) {
+      this.batchWFDataSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
+    }
   }
 }

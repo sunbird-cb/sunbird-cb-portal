@@ -46,7 +46,13 @@
     }
 }
 
-::ng-deep .mat-form-field {
+::ng-deep .mat-select-panel {
+    .mat-option {
+        height: 48px !important;
+    }
+}
+
+::ng-deep .batch-form-field {
     .mat-form-field-wrapper {
         margin: 0px;
         padding-bottom: 0px;
@@ -70,6 +76,13 @@
 .mb-0 {
     margin-bottom: 0px !important;
 }
+
+.batch-timings {
+    // color: rgba($color: #000, $alpha: 0.87);
+    text-transform: uppercase;
+    line-height: 20px;
+}
+
 // Latest CSS code
 
 

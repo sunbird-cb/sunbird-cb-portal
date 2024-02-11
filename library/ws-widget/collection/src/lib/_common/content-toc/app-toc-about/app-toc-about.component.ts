@@ -1,17 +1,23 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
+import dayjs from 'dayjs'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 
 import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
 
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
+dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
 
 interface IStripUnitContentData {
   key: string
@@ -51,7 +57,7 @@ interface IStripUnitContentData {
   styleUrls: ['./app-toc-about.component.scss'],
 })
 
-export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges {
+export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
@@ -128,7 +134,8 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges {
     private tocService: AppTocService,
     private dialog: MatDialog,
     private matSnackBar: MatSnackBar,
-    private loadCheckService: LoadCheckService
+    private loadCheckService: LoadCheckService,
+    private timerService: TimerService
   ) { }
 
   ngOnInit() {
@@ -143,27 +150,11 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges {
     })
   }
 
+  timer: any = {};
   ngAfterViewInit(): void {
-    let serverDate = this.serverDate
-    if (this.serverDate) {
-      setInterval(() => {
-        // this.tickTock();
-        serverDate = serverDate  +  1000
-        this.date = new Date(serverDate)
-        this.now = this.date.getTime()
-        this.difference = this.targetTime - this.now
-        this.difference = this.difference / (1000 * 60 * 60 * 24)
-
-        this.days = Math.floor(this.difference)
-        this.hours = 23 - this.date.getHours()
-        this.minutes = 60 - this.date.getMinutes()
-        this.seconds = 60 - this.date.getSeconds()
-        Number(this.hours)
-        !isNaN(this.days)
-          ? (this.days = Math.floor(this.difference))
-          : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
-      },          1000)
-    }
+    this.timerService.getTimerData().subscribe((_timer: any) => {
+      this.timer = _timer
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -466,6 +457,10 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges {
       this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
       this.fetchRatingLookup()
     }
+  }
+
+  ngOnDestroy(): void {
+    
   }
 
 }
