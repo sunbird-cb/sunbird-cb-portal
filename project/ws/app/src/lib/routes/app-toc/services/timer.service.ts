@@ -15,6 +15,6 @@ export class TimerService {
     }
 
     public setTimerData(timerObj: any) {
-        this.timer$.next(timerObj);
+        this.timer$.next(timerObj)
     }
 }

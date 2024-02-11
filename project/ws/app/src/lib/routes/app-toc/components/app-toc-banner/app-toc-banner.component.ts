@@ -156,7 +156,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
-    
+
     this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -1083,7 +1083,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           days: 0,
           hours: 0,
           min: 0,
-          seconds: 0
+          seconds: 0,
         }
         serverDate = serverDate  +  1000
         this.date = new Date(serverDate)
@@ -1099,16 +1099,16 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         !isNaN(this.days)
           ? (this.days = Math.floor(this.difference))
           : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
-        
+
         timer = {
           days: this.days,
           hours: this.hours,
           min: this.minutes,
-          seconds: this.seconds
+          seconds: this.seconds,
         }
         this.timerService.setTimerData(timer)
-        
-      }, 1000)
+
+      },          1000)
     }
   }
 

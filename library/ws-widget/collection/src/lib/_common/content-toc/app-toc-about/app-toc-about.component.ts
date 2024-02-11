@@ -59,6 +59,16 @@ interface IStripUnitContentData {
 
 export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
+  constructor(
+    private ratingService: RatingService,
+    private loggerService: LoggerService,
+    private tocService: AppTocService,
+    private dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    private loadCheckService: LoadCheckService,
+    private timerService: TimerService
+  ) { }
+
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
@@ -128,15 +138,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   // tslint:disable-next-line:max-line-length
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
 
-  constructor(
-    private ratingService: RatingService,
-    private loggerService: LoggerService,
-    private tocService: AppTocService,
-    private dialog: MatDialog,
-    private matSnackBar: MatSnackBar,
-    private loadCheckService: LoadCheckService,
-    private timerService: TimerService
-  ) { }
+  timer: any = {}
 
   ngOnInit() {
     if (this.content && this.content.identifier) {
@@ -149,12 +151,10 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
       this.ngAfterViewInit()
     })
   }
-
-  timer: any = {};
   ngAfterViewInit(): void {
     this.timerService.getTimerData().subscribe((_timer: any) => {
       this.timer = _timer
-    });
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -460,7 +460,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   ngOnDestroy(): void {
-    
+
   }
 
 }
