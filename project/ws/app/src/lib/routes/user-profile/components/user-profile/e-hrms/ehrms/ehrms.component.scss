@@ -10,7 +10,71 @@
   .w-full {
     width: 100%;
   }
+  .salutation-width {
+    width: 22%;
+    margin-right: 3%;
+    @include breakpoint-xs {
+      width: 100%;
+    }
+    @include breakpoint-s {
+     width: 100%;
+    }
+  }
+.first-name-width {
+  width: 75%;
+  @include breakpoint-xs {
+    width: 100%;
+  }
+  @include breakpoint-s {
+   width: 100%;
+  }
+}
+//////////
+.loader-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: 45px;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+}
 
+.loader-ripple {
+  display: inline-block;
+  position: relative;
+  width: 84px;
+  height: 84px;
+}
+
+.loader-ripple div {
+  position: absolute;
+  border: 4px solid #000;
+  opacity: 1;
+  border-radius: 50%;
+  animation: loader-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.loader-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+
+@keyframes loader-ripple {
+  0% {
+    top: 38px;
+    left: 38px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+
+  100% {
+    top: -1px;
+    left: -1px;
+    width: 78px;
+    height: 78px;
+    opacity: 0;
+  }
+}
 //   .profile-box .mat-form-field.salutation-form-field {
 //   width:80%;
 // }
@@ -42,7 +106,7 @@
   }
 }
 .input-wrapper {
-    flex: 1;
+    // flex: 1;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -69,7 +133,7 @@
   
 }
 .ehrms-profile-img {
-  height: 90px;
+  height: 94px;
   object-fit: cover;
   object-position: center;
 }
@@ -81,4 +145,127 @@
   @include breakpoint-s {
     flex-direction: column;
   }
+}
+.box-responsive-rightDiv {
+  padding-bottom: 216px;
+  @include breakpoint-xs {
+    padding-bottom: 0px;
+  }
+  @include breakpoint-s {
+    padding-bottom: 0px;
+  }
+}
+.text-width {
+  width: 15%;
+}
+.text-width-img {
+  height: 90px;
+  object-fit: cover;
+  object-position: center;
+  background-color: #DDDBDD;
+}
+.text-width-salutation1 {
+  width: 68%;
+  @include breakpoint-xs {
+    width: 20%;
+  }
+  @include breakpoint-s {
+    width: 20%;
+  }
+}
+.text-width-salutation2 {
+  width: 20%;
+}
+.text-width-add {
+  width: 25%;
+}
+.box-responsive-rightDiv1 {
+  padding-bottom: 150px;
+  @include breakpoint-xs {
+    padding-bottom: 0px;
+  }
+  @include breakpoint-s {
+    padding-bottom: 0px;
+  }
+}
+.bg-grey-skeleton {
+  border-radius: 8px;
+  height: 100%;
+}
+.default-text-field {
+  font-size: 14px;
+  border: 2px solid lightgrey;
+  border-radius: 6px;
+  height: 30px;
+  background-color: transparent;
+  margin-top: 13px;
+  opacity: 60%;
+  padding: 8px 0px 0px 8px;
+  margin-bottom: 20px;
+  @include breakpoint-xs {
+    height: auto;
+  }
+  // @include breakpoint-m {
+  //   // padding: 1px 0px 0px 8px;
+  //   height: auto;
+  // }
+  @include breakpoint-s {
+    // padding: 1px 0px 0px 8px;
+    height: auto;
+  }
+}
+.text-field-disable {
+  background-color: #edebeb;
+  pointer-events: none;
+
+}
+.initials {
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 19px;
+  letter-spacing: 0.2625px;
+  border-radius: 50%;
+}
+.ehrms-profile-link-initials {
+  overflow: hidden;
+  display: flex;
+  height: 100px;
+  width: 100px;
+
+  @include breakpoint-xs {
+    margin:0px auto;
+  }
+  @include breakpoint-s {
+    margin:0px auto;
+  }
+}
+.ehrms-profile-img-initials {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-name-initial {
+    font-size: 25px;
+    line-height: 20px;
+    padding-top: 8px;
+    letter-spacing: .2625px;
+}
+::ng-deep .text-field-disable .mat-form-field-outline {
+  min-height: 40px;
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-radius: 8px;
+}
+.api-error-text {
+  text-align: center;
+  // position: relative;
+  // top: 50%;
+}
+.err-text {
+  font-size: 18px;
 }

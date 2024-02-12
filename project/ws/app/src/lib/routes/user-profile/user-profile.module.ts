@@ -36,6 +36,7 @@ import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { OtpService } from './services/otp.services'
 import { RequestDialogComponent } from './components/request-dialog/request-dialog.component';
 import { EhrmsComponent } from './components/user-profile/e-hrms/ehrms/ehrms.component'
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { EhrmsComponent } from './components/user-profile/e-hrms/ehrms/ehrms.com
     MatTabsModule,
     MatAutocompleteModule,
     PipeDurationTransformModule,
+    SkeletonLoaderModule
   ],
   providers: [UserProfileService, LoaderService, OtpService],
   entryComponents: [RequestDialogComponent],
