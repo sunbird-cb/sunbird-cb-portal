@@ -32,7 +32,6 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() itemSelectedList: string[] = []
   @Input() markedQuestions: Set<string> = new Set()
   @Output() itemSelected = new EventEmitter<string | Object>()
-  @Input()
 
   quizAnswerHash: { [questionId: string]: string[] } = {}
   title = 'match'
