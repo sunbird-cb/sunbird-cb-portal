@@ -85,6 +85,12 @@
   }
 }
 
+::ng-deep.mat-select-panel {
+  margin-top: 3em !important;
+  margin-left: -1em !important;
+  max-height: 505px !important;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
