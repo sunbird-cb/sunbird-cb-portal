@@ -29,6 +29,7 @@ import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboar
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component'
 import { DesiredcomptencyCardComponent } from './components/desiredcomptency-card/desiredcomptency-card.component'
 import { CompLocalService } from './services/comp.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { CompLocalService } from './services/comp.service'
     BrowseByCompetencyModule,
     MatChipsModule,
     PipeListFilterModule,
+    TranslateModule,
   ],
   providers: [
     TopicService,

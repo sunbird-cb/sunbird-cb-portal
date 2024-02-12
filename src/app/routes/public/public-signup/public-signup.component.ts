@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core
 import { Subscription, Observable, interval } from 'rxjs'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
 import { SignupService } from './signup.service'
-import { LoggerService, ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils/src/public-api'
+import { LoggerService, ConfigurationsService, NsInstanceConfig, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { startWith, map, pairwise } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { MatSnackBar, MatDialog } from '@angular/material'
@@ -13,6 +13,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common'
 import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
+import { TranslateService } from '@ngx-translate/core'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -135,6 +136,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   searching = false
   groupsOriginal: any = []
 
+  selectedLanguage = 'en'
+  multiLang: any = []
+
   constructor(
     private signupSvc: SignupService,
     private loggerSvc: LoggerService,
@@ -146,15 +150,25 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private router: Router,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
-    let userData : any = {}
-    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe(res=> {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.selectedLanguage = lang
+      this.translate.use(lang)
+    }
+
+    let userData: any = {}
+    this.userdataSubscription = this.signupSvc.updateSignupDataObservable.subscribe((res: any) => {
       userData = res
     })
     this.isMobileVerified = userData && userData.isMobileVerified || false
     this.isEmailVerified = userData && userData.isEmailVerified || false
     this.registrationForm = new FormGroup({
-      firstname: new FormControl( userData && userData.firstname || '', [Validators.required, Validators.pattern(this.namePatern)]),
+      firstname: new FormControl(userData && userData.firstname || '', [Validators.required, Validators.pattern(this.namePatern)]),
       // lastname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // tslint:disable-next-line:max-line-length
       // position: new FormControl('', [Validators.required,  Validators.pattern(this.customCharsPattern), forbiddenNamesValidatorPosition(this.masterPositions)]),
@@ -163,7 +177,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:max-line-length
       email: new FormControl(userData && userData.email || '', [Validators.required, Validators.pattern(this.emailPattern)]),
       // department: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterDepartments)]),
-      mobile: new FormControl(userData && userData.mobile || '', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
+      mobile: new FormControl(userData && userData.mobile || '', [Validators.required,
+        Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       confirmBox: new FormControl(false, [Validators.required]),
       confirmTermsBox: new FormControl(false, [Validators.required]),
       type: new FormControl('ministry', [Validators.required]),
@@ -180,7 +195,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const instanceConfig = this.configSvc.instanceConfig
     this.positionsOriginal = this.activatedRoute.snapshot.data.positions.data || []
     if (this.activatedRoute.snapshot.data.group.data) {
-      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele:any) => ele !== 'Others')
+      this.groupsOriginal = this.activatedRoute.snapshot.data.group.data.filter((ele: any) => ele !== 'Others')
       this.masterGroup = this.groupsOriginal
     } else {
       this.groupsOriginal = []
@@ -188,12 +203,13 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
     this.OrgsSearchChange()
     // this.onPositionsChange()
-    //this.onGroupChange()
+    // this.onGroupChange()
     this.onPhoneChange()
     this.onEmailChange()
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
       this.portalID = `${this.telemetryConfig.pdata.id}`
+      this.multiLang = instanceConfig.webistelanguages
     }
 
     if (isPlatformBrowser(this._platformId)) {
@@ -387,7 +403,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number',)
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
 
@@ -415,7 +431,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const mob = this.registrationForm.get('mobile')
 
     if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
+      if (otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
@@ -513,12 +529,12 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   }
 
   verifyOtpEmail(otp: any) {
-    console.log(otp)
+    // console.log(otp)
     const email = this.registrationForm.get('email')
     if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
+      if (otp && otp.value.length < 4) {
         this.snackBar.open('Please enter a valid OTP.')
-      } else if ( email && email.value && email.valid) {
+      } else if (email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
             this.otpEmailSend = true
@@ -729,5 +745,11 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const pattren = /^([0-9])$/
     const result = pattren.test(event.key)
     return result
+  }
+
+  selectLanguage(event: any) {
+    this.selectedLanguage = event
+    localStorage.setItem('websiteLanguage', this.selectedLanguage)
+    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 }

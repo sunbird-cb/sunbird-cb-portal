@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService, NsPage } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-public-contact',
@@ -36,7 +37,17 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
       this.sticky = false
     }
   }
-  constructor(private configSvc: ConfigurationsService, private activateRoute: ActivatedRoute) { }
+  constructor(private configSvc: ConfigurationsService,
+              private activateRoute: ActivatedRoute, private langtranslations: MultilingualTranslationsService,
+              private translate: TranslateService) {
+                this.langtranslations.languageSelectedObservable.subscribe(() => {
+                  if (localStorage.getItem('websiteLanguage')) {
+                    this.translate.setDefaultLang('en')
+                    const lang = localStorage.getItem('websiteLanguage')!
+                    this.translate.use(lang)
+                  }
+                })
+     }
 
   ngOnInit() {
     this.subscriptionContact = this.activateRoute.data.subscribe(data => {
@@ -127,4 +138,20 @@ export class PublicContactComponent implements OnInit, AfterViewInit, OnDestroy 
   closeNav() {
     this.showSideMenu = this.showSideMenu ? false : true
   }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
+  }
+  translateAnswer(label: string, type: any) {
+    let htmlAnswer = '<p class=\'mat-body-2\'><ng-container>'
+    const labeln = label.replace(/\s/g, '')
+    // tslint:disable-next-line: prefer-template
+    const translationKey = type + '.' +  labeln
+    // tslint:disable-next-line: prefer-template
+    htmlAnswer = htmlAnswer + this.translate.instant(translationKey)
+    // tslint:disable-next-line: prefer-template
+    htmlAnswer = htmlAnswer + '</ng-container></p>'
+    return htmlAnswer
+  }
+
 }

@@ -2,14 +2,14 @@
 </ws-widget-btn-page-back>
 <div class="container-balanced main_content_box">
     <div class="top_card_container">
-        <h2 class="mat-h1 margin-bottom-m inline-block "> Latest collections</h2>
+        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'curatedpage.latestCollections' | translate }}</h2>
         <div class="top_card_inner_box flex">
             <ng-container *ngFor="let c of allCollections | slice:0:8; let i=index">
                 <ws-app-curated-popular-card [collection]="c"></ws-app-curated-popular-card>
             </ng-container>
         </div>
         <h4 *ngIf="allCollections?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-            No curated collections found!
+            {{ 'curatedpage.noCuratedCollection' | translate }}
         </h4>
         <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
@@ -17,7 +17,7 @@
     </div>
 
         <div class="all_provider_box">
-            <h2 class="mat-h1 margin-bottom-m inline-block "> Curated collections </h2>
+            <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'curatedpage.curatedCollections' | translate }} </h2>
             <div class="all_provider_inner">
                 <!-- search box and dropdown-->
                 <form [formGroup]="searchForm">
@@ -30,7 +30,7 @@
                                     </mat-icon>
                                     <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
                                         aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
-                                        [placeholder]="'Search'" matInput />
+                                        [placeholder]="'curatedpage.search' | translate" matInput />
                                 </mat-form-field>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                   }"></ws-widget-card-content>
                             </ng-container>
                             <h4 *ngIf="allCollections?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-                                No curated collections found!
+                                {{ 'curatedpage.noCuratedCollection' | translate }}
                              </h4>
                         </div>
                     <!-- </mat-sidenav-content>

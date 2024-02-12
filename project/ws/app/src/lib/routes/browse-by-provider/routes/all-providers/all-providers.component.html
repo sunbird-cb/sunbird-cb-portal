@@ -2,25 +2,23 @@
 </ws-widget-btn-page-back>
 <div class="container-balanced main_content_box">
     <div class="top_card_container">
-        <h2 class="mat-h1 margin-bottom-m inline-block "> Popular providers</h2>
+        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allproviderscomponent.popularProviders' | translate }}</h2>
         <div class="top_card_inner_box flex">
             <ng-container *ngFor="let p of allProviders | slice:0:8; let i=index">
                 <ws-app-popular-provider-card [provider]="p"></ws-app-popular-provider-card>
             </ng-container>
         </div>
         <h4 *ngIf="allProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-            No providers found! 
+            {{ 'allproviderscomponent.noProvidersFound' | translate }}
         </h4>
         <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
         </div>
     </div>
 
-
-
     <!--===========  All competencies section ============= -->
     <div class="all_provider_box">
-        <h2 class="mat-h1 margin-bottom-m inline-block "> All providers </h2>
+        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allproviderscomponent.allProviders' | translate }}</h2>
         <div class="all_provider_inner">
             <!-- search box and dropdown-->
             <form [formGroup]="searchForm">
@@ -33,7 +31,7 @@
                                 </mat-icon>
                                 <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
                                     aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
-                                    [placeholder]="'Search'" matInput />
+                                    [placeholder]="'allproviderscomponent.search' | translate" matInput />
                             </mat-form-field>
                         </div>
                     </div>
@@ -43,9 +41,9 @@
                             <div class="item">
                                 <mat-form-field class="" appearance="outline">
                                     <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
-                                        placeholder="Sort by">
-                                        <mat-option [value]="'asc'" slected>Ascending ( A - Z )</mat-option>
-                                        <mat-option [value]="'desc'">Descending ( Z - A )</mat-option>
+                                        placeholder="{{ 'allproviderscomponent.sortBy' | translate }}">
+                                        <mat-option [value]="'asc'" slected>{{ 'allproviderscomponent.ascending' | translate }} ( A - Z )</mat-option>
+                                        <mat-option [value]="'desc'">{{ 'allproviderscomponent.descending' | translate }} ( Z - A )</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -65,7 +63,7 @@
                             <ws-app-provider-card [provider]="p"></ws-app-provider-card>
                         </ng-container>
                         <h4 *ngIf="allProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-                            No providers found! 
+                            {{ 'allproviderscomponent.noProvidersFound' | translate }}
                          </h4>
                     </div>
                 </mat-sidenav-content>

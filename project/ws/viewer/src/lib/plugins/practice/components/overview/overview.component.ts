@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { ActivatedRoute } from '@angular/router'
-import { ViewerHeaderSideBarToggleService } from './../../../../viewer-header-side-bar-toggle.service';
+import { ViewerHeaderSideBarToggleService } from './../../../../viewer-header-side-bar-toggle.service'
 @Component({
   selector: 'viewer-overview',
   templateUrl: './overview.component.html',
@@ -48,6 +48,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
   overviewed(event: NSPractice.TUserSelectionType) {
     this.loading = true
     this.userSelection.emit(event)
-    this.viewerHeaderSideBarToggleService.visibilityStatus.next(false);
+    this.viewerHeaderSideBarToggleService.visibilityStatus.next(false)
   }
 }

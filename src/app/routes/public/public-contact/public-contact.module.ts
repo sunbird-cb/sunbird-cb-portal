@@ -14,6 +14,7 @@ import { BtnPageBackModule, LeftMenuModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { FormsModule } from '@angular/forms'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [PublicContactComponent],
@@ -31,7 +32,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'
     MatInputModule,
     FormsModule,
     Ng2SearchPipeModule,
+    TranslateModule,
   ],
-  exports: [PublicContactComponent],
+  exports: [PublicContactComponent, TranslateModule],
+
 })
 export class PublicContactModule { }

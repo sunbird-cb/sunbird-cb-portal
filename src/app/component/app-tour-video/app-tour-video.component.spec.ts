@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AppTourVideoComponent } from './app-tour-video.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { AppTourVideoComponent } from './app-tour-video.component'
 
 describe('AppTourVideoComponent', () => {
-  let component: AppTourVideoComponent;
-  let fixture: ComponentFixture<AppTourVideoComponent>;
+  let component: AppTourVideoComponent
+  let fixture: ComponentFixture<AppTourVideoComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppTourVideoComponent ]
+      declarations: [AppTourVideoComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppTourVideoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(AppTourVideoComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

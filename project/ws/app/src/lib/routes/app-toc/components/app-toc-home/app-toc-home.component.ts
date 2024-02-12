@@ -1,15 +1,22 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
 import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
+import {
+  NsContent,
+  WidgetContentService,
+  WidgetUserService,
+  viewerRouteGenerator,
+  NsPlaylist,
+  NsGoal,
+} from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ConfigurationsService, EventService, LoggerService, MultilingualTranslationsService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { FormControl, Validators } from '@angular/forms'
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 
-import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
 import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
@@ -19,20 +26,21 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import dayjs from 'dayjs'
+// tslint:disable-next-line
+import _ from 'lodash'
+import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { TranslateService } from '@ngx-translate/core'
 import { LoadCheckService } from '../../services/load-check.service'
 
-import * as dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 import moment from 'moment'
 
-// tslint:disable-next-line
-import _ from 'lodash'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
-import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { environment } from 'src/environments/environment'
 
 export enum ErrorType {
@@ -223,6 +231,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private telemetryService: TelemetryService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     private events: EventService,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService
@@ -230,6 +240,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.historyData = history.state
     this.handleBreadcrumbs()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
 
     this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
       // Present in app-toc-about.component
@@ -237,7 +252,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
     })
   }
-
   ngOnInit() {
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -1524,6 +1538,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
+  // public handleEnrollmentEndDate(batch: any) {
+  //   const enrollmentEndDate = dayjs(_.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
+  //   const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
+  //   return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
+  //     (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
+  // }
+
   ngOnDestroy() {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe()
@@ -1541,5 +1562,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.selectedBatchSubscription) {
       this.selectedBatchSubscription.unsubscribe()
     }
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

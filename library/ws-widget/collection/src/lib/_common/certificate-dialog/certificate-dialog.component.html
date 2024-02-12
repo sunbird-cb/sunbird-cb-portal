@@ -1,18 +1,18 @@
-<mat-card class="no-shadow">
+<mat-card class="no-shadow certificate-img-box">
     <button mat-icon-button class="close-button" [mat-dialog-close]="true">
         <mat-icon class="close-icon" color="warn">close</mat-icon>
     </button>
-    <mat-card-title>
-        <!-- <span i18n>Download Certificate</span> -->
-    </mat-card-title>
-    <mat-card-content>
+    <!-- <mat-card-title>
+     
+    </mat-card-title> -->
+    <mat-card-content class="certificate-img-content">
         <img #certificate [src]="url| pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image">
     </mat-card-content>
     <mat-card-actions class="flex flex-row-reverse">
         <!-- <ws-widget-svg-to-pdf></ws-widget-svg-to-pdf> -->
         <a mat-button  [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent">
             <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
-            Download
+            {{'certificatedialog.download' | translate}}
         </a>
         <!-- <a mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu" class="ws-mat-accent-border-active mat-accent">
             <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
@@ -21,15 +21,15 @@
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)='downloadCertPdf()'>
                 <mat-icon>picture_as_pdf</mat-icon>
-                <span>PDF</span>
+                <span>{{'certificatedialog.pdf' | translate}}</span>
             </button>
             <button mat-menu-item (click)='downloadCertPng()'>
                 <mat-icon>photo</mat-icon>
-                <span>PNG</span>
+                <span>{{'certificatedialog.png' | translate}}</span>
             </button>
             <button mat-menu-item (click)='downloadCert()'>
                 <mat-icon>photo_size_select_actual</mat-icon>
-                <span>SVG</span>
+                <span>{{'certificatedialog.svg' | translate}}</span>
             </button>
         </mat-menu>
     </mat-card-actions>

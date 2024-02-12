@@ -371,7 +371,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
     this.eventSvc.dispatchEvent(event)
   }
 
-
   // tslint:disable
   // private raiseRealTimeProgress() {
   //   this.realTimeProgressRequest = {

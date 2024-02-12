@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CompetencyPassbookComponent } from './competency-passbook.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { CompetencyPassbookComponent } from './competency-passbook.component'
 
 describe('CompetencyPassbookComponent', () => {
-  let component: CompetencyPassbookComponent;
-  let fixture: ComponentFixture<CompetencyPassbookComponent>;
+  let component: CompetencyPassbookComponent
+  let fixture: ComponentFixture<CompetencyPassbookComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CompetencyPassbookComponent ]
+      declarations: [CompetencyPassbookComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompetencyPassbookComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CompetencyPassbookComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

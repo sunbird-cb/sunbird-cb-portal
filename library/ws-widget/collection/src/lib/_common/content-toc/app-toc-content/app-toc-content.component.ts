@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { Subscription } from 'rxjs'
@@ -8,6 +7,7 @@ import { Subscription } from 'rxjs'
   templateUrl: './app-toc-content.component.html',
   styleUrls: ['./app-toc-content.component.scss'],
 })
+
 export class AppTocContentComponent implements OnInit {
   @Input() content: NsContent.IContent | null = null
   @Input() initialRouteData: any
@@ -18,9 +18,7 @@ export class AppTocContentComponent implements OnInit {
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   @Input() skeletonLoader = false
 
-  constructor(
-    private http: HttpClient,
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }

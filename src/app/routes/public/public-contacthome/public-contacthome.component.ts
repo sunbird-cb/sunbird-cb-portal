@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
 import { environment } from 'src/environments/environment'
 // import { DOCUMENT } from '@angular/common'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-public-contacthome',
@@ -18,10 +19,14 @@ export class PublicContacthomeComponent implements OnInit {
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
 
   constructor(
-    private configSvc: ConfigurationsService )
-    // @Inject(DOCUMENT) private document: Document, 
-    // private elementRef:ElementRef) 
-    {}
+    private configSvc: ConfigurationsService,
+    private translate: TranslateService) {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    }
 
   ngOnInit() {
     this.environment = environment
@@ -31,6 +36,11 @@ export class PublicContacthomeComponent implements OnInit {
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs
     }
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   preventData(event: any) {

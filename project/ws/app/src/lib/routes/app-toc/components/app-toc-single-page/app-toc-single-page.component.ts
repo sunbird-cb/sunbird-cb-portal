@@ -2,7 +2,7 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit, OnChanges } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { Observable, Subscription, Subject } from 'rxjs'
 import { share, debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
@@ -18,6 +18,7 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -100,8 +101,15 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
     private ratingSvc: RatingService,
-    // private discussionEventsService: DiscussionEventsService
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.translate.use(lang)
+    }
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
       this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
@@ -802,5 +810,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchRatingLookup()
       }
     }
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

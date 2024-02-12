@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PlayerOfflineSessionComponent } from './player-offline-session.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { PlayerOfflineSessionComponent } from './player-offline-session.component'
 
 describe('PlayerOfflineSessionComponent', () => {
-  let component: PlayerOfflineSessionComponent;
-  let fixture: ComponentFixture<PlayerOfflineSessionComponent>;
+  let component: PlayerOfflineSessionComponent
+  let fixture: ComponentFixture<PlayerOfflineSessionComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerOfflineSessionComponent ]
+      declarations: [PlayerOfflineSessionComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayerOfflineSessionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PlayerOfflineSessionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

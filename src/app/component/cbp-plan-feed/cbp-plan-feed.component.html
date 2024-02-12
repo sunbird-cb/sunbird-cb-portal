@@ -1,9 +1,9 @@
 <div class="flex flex-col gap-4 mt-0 md:mt-8" id="listPage">
-    <h5 class="heading">My iGOT</h5>
+    <h5 class="heading">{{'cbpPlanFeed.title' | translate}}</h5>
     <div class="flex flex-middle">
         <form class="w-full">
             <div appearance="none" class="w-full relative search-block">
-              <input name="search" [formControl]="searchControl"  i18n-placeholder placeholder="Search">
+              <input name="search" [formControl]="searchControl"  placeholder="{{'cbpPlanFeed.search' | translate}}">
               <mat-icon  aria-hidden="true" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color absolute" role="img"> search </mat-icon>
             </div>
         </form>
@@ -25,7 +25,7 @@
                         <ng-template #allEle>
                             <p>{{item1}}</p>
                         </ng-template>
-                        <mat-icon aria-hidden="true" (click)="CloseFilter(item1,item.key)" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color filter-acbp cursor-pointer" role="img"> close </mat-icon>
+                        <mat-icon aria-hidden="true" (click)="closeFilter(item1,item.key)" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color filter-acbp cursor-pointer" role="img"> close </mat-icon>
                     </div>
                 </ng-container>
         </ng-container>
@@ -40,9 +40,8 @@
         <div class="w-full flex flex-col items-center justify-center">
             <img alt="" class="mt-4 mb-4" src="assets/icons/search-empty.svg">
             <div class="mat-subheading-1 text-center">
-                <p>No results found</p>
-                <p class="search-help-text">Try adjusting your search
-                    to find what you are looking for</p>
+                <p>{{'cbpPlanFeed.noResults' | translate}}</p>
+                <p class="search-help-text">{{'cbpPlanFeed.helpText' | translate}}</p>
             </div>
           </div>
     </ng-template>

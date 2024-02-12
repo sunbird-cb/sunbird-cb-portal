@@ -16,7 +16,7 @@ import { Router } from '@angular/router'
 export class ContentRatingV2DialogComponent implements OnInit {
   @Input() ccuserRating: any
   @Input() navigatetoTOC: any
-  @Input() rateFromCompletionDialog:any;
+  @Input() rateFromCompletionDialog: any
   @Input()  isEditMode = false
   content: NsContent.IContent | null = null
   userRating = 0

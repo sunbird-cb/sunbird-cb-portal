@@ -1,7 +1,7 @@
 <div class="flex-1">
     <div class="flex flex-col gap-4">
-        <div class="mat-subheading-1">Recent requests</div>
-    
+        <div class="mat-subheading-1">{{ 'home.networkRecentReq' | translate }}</div>
+
         <ng-container *ngIf="recentRequests.loadSkeleton">
             <div class="flex flex-col gap-3">
                 <div class="flex flex-row gap-2 discussion-card p-3" *ngFor="let i of [1, 2, 3]">
@@ -26,16 +26,18 @@
                 </div>
             </div>
         </ng-container>
-    
+
         <ng-container *ngIf="!recentRequests.loadSkeleton">
             <ng-container *ngIf="!recentRequests.data || !recentRequests.data.length">
                 <div class="flex flex-col gap-4 items-center p-5">
                     <img src="assets/icons/home/users.svg" alt="users icon img" />
-                    <div class="text-center">Built your connections within your department and other departments.</div>
-                    <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']" [queryParams]="{page: 'people_connection_request'}">Find Connections</button>
+                    <div class="text-center">{{ 'home.networkBuildConn' | translate }}</div>
+                    <button class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']" [queryParams]="{page: 'people_connection_request'}">
+                        {{ 'home.networkFindConn' | translate }}
+                    </button>
                 </div>
             </ng-container>
-    
+
             <ng-container *ngIf="recentRequests.data.length">
                 <div class="flex-1 h-full">
                     <ng-container *ngFor="let reqData of recentRequests.data | slice:0:3;let isLast=last">
@@ -52,7 +54,7 @@
                                         <mat-icon class="pending">cached</mat-icon>
                                     </div>
                                 </ng-container>
-            
+
                                 <ng-container *ngIf="!reqData.connecting">
                                     <div class="flex justify-center items-center" (click)="handleRequest(reqData, 'Rejected')">
                                         <mat-icon class="cancel">cancel</mat-icon>
@@ -68,7 +70,7 @@
                 <div class="flex justify-center items-center" *ngIf="recentRequests?.data?.length > 3">
                     <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer"
                         [routerLink]="['/app/network-v2/home']" [queryParams]="{page: 'people_connection_request'}">
-                        <div>Show all</div>
+                        <div>{{ 'home.showAll' | translate }}</div>
                         <mat-icon>
                             chevron_right
                         </mat-icon>

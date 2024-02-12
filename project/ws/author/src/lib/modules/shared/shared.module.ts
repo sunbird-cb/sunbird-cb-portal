@@ -60,6 +60,9 @@ import { ShowHideToolTipDirective } from './directives/show-hide-tool-tip.direct
 import { StatusTrackComponent } from './components/status-track/status-track.component'
 import { FeedbackFormComponent } from './components/feedback-form/feedback-form.component'
 import { StatusContentDisplayComponent } from './components/status-content-display/status-content-display.component'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpClient } from '@angular/common/http'
+import { HttpLoaderFactory } from 'src/app/app.module'
 
 @NgModule({
   declarations: [
@@ -120,6 +123,13 @@ import { StatusContentDisplayComponent } from './components/status-content-displ
     ImageCropModule,
     PipeContentRouteModule,
     PipeOrderByModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     MatIconModule,
@@ -173,6 +183,7 @@ import { StatusContentDisplayComponent } from './components/status-content-displ
     StatusTrackComponent,
     FeedbackFormComponent,
     StatusContentDisplayComponent,
+    TranslateModule,
   ],
   providers: [
     ApiService,
