@@ -168,9 +168,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       debounceTime(200),
       distinctUntilChanged()
     ).subscribe((res: any) => {
-      this.filteredUsers = []
-      this.allUsers = []
       if (res) {
+        this.filteredUsers = []
+        //this.allUsers = []
         this.getUsersToShare(res)
       }
     })
@@ -1365,12 +1365,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     const recipients: any = []
     this.users.forEach((selectedUser: any) => {
-      const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
-      if (selectedUserObj.length) {
-        recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
-      } else {
+      if (selectedUser.includes('@') && selectedUser.includes('.')) {
         recipients.push({ email: selectedUser })
+      } else {
+        const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
+        if (selectedUserObj.length) {
+          recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
+        }
       }
+
     })
     if (recipients.length) {
       obj.request.recipients = recipients
@@ -1379,7 +1382,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           this.openSnackbar(this.translateLabels('success', 'contentSharing', ''))
         }
         this.users = []
+        this.filteredUsers = []
+        this.allUsers = []
         this.enableShare = false
+        this.userCtrl.setValue(null)
       }, error => {
         // tslint:disable
         console.log(error)
@@ -1392,6 +1398,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.enableShare = false
     this.users = []
     this.filteredUsers = []
+    this.allUsers = []
     this.userCtrl.setValue(null)
     this.raiseTelemetry('shareClose')
   }
