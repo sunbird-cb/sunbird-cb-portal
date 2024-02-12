@@ -1538,6 +1538,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
+  // public handleEnrollmentEndDate(batch: any) {
+  //   const enrollmentEndDate = dayjs(_.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
+  //   const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
+  //   return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
+  //     (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
+  // }
+
   ngOnDestroy() {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe()

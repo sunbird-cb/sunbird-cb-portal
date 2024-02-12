@@ -56,8 +56,8 @@ export class CourseCompletionDialogComponent implements OnInit {
             this.isEditMode = true
           } else {
             this.userRating = {
-              'rating': 0,
-              'comment': null,
+              rating: 0,
+              comment: null,
           }
           this.isEditMode = false
           // this.showRating = true
@@ -73,8 +73,8 @@ export class CourseCompletionDialogComponent implements OnInit {
   addRating(index: number) {
     this.showRating = true
     this.userRating = {
-      'rating': index + 1 ,
-      'comment': null,
+      rating: index + 1 ,
+      comment: null,
     }
     this.events.raiseInteractTelemetry(
       {

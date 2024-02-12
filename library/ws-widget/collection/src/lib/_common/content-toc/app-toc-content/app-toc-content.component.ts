@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs'
   templateUrl: './app-toc-content.component.html',
   styleUrls: ['./app-toc-content.component.scss'],
 })
+
 export class AppTocContentComponent implements OnInit {
   @Input() content: NsContent.IContent | null = null
   @Input() initialRouteData: any
