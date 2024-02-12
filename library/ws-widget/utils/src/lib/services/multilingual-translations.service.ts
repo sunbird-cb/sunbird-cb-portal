@@ -50,10 +50,10 @@ export class MultilingualTranslationsService {
             // tslint:disable-next-line: prefer-template
           const translationKey = type + '.' +  nlabel + subtype
           return this.translate.instant(translationKey)
-        } 
+        }
         // tslint:disable-next-line: prefer-template
-        const translationKey = type + '.' +  nlabel
-        return this.translate.instant(translationKey)
+        const translationKeyn = type + '.' +  nlabel
+        return this.translate.instant(translationKeyn)
     }
 
     translateActualLabel(label: string, type: any, subtype: any) {
@@ -70,11 +70,10 @@ export class MultilingualTranslationsService {
             // tslint:disable-next-line: prefer-template
           const translationKey = type + '.' +  nlabel + subtype
           return this.translate.instant(translationKey)
-        }  {
-            // tslint:disable-next-line: prefer-template
-            const translationKey = type + '.' +  nlabel
-            return this.translate.instant(translationKey)
         }
+        // tslint:disable-next-line: prefer-template
+        const translationKeyn = type + '.' +  nlabel
+        return this.translate.instant(translationKeyn)
     }
 
     editProfileDetailsAPI(data: any) {
