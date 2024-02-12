@@ -12,10 +12,11 @@ import { ReviewsContentComponent } from '../reviews-content/reviews-content.comp
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
-import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
+import { ReviewComponentDataService } from '../content-services/review-component-data.service'
 
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
+
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -62,11 +63,11 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   constructor(
     private ratingService: RatingService,
     private loggerService: LoggerService,
-    private tocService: AppTocService,
     private dialog: MatDialog,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService,
-    private timerService: TimerService
+    private timerService: TimerService,
+    private reviewDataService: ReviewComponentDataService
   ) { }
 
   @Input() content: NsContent.IContent | null = null
@@ -78,7 +79,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   ratingSummary: any
   authReplies: any
   ratingSummaryProcessed: any
-  ratingReviews: any[] = []
+  topRatingReviews: any[] = []
   latestReviews: any[] = []
   dialogRef: any
   displayLoader = false
@@ -298,14 +299,16 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
         this.disableLoadMore = false
       }
       this.lastLookUp = response[response.length - 1]
-      this.ratingReviews = this.ratingLookup
+      this.latestReviews = this.ratingLookup
       this.authReplies = []
-      this.authReplies = _.keyBy(this.ratingReviews, 'userId')
-      const userIds = _.map(this.ratingReviews, 'userId')
+      this.authReplies = _.keyBy(this.latestReviews, 'userId')
+      const userIds = _.map(this.latestReviews, 'userId')
       if (this.content && userIds) {
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
-      this.ratingReviews = this.ratingReviews.slice()
+      this.latestReviews = this.latestReviews.slice()
+      this.reviewDataService.setReviewData(this.latestReviews)
+
     }
   }
 
@@ -397,7 +400,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
       ratingSummaryPr.latest50Reviews = modifiedReviews
-      this.ratingReviews = modifiedReviews
+      this.topRatingReviews = modifiedReviews
     }
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
@@ -419,7 +422,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   handleOpenReviewModal(): void {
     this.dialogRef = this.dialog.open(ReviewsContentComponent, {
       width: '400px',
-      data: { ratings: this.ratingSummaryProcessed, reviews: this.authReplies },
+      data: { ratings: this.ratingSummaryProcessed, reviews: this.authReplies, latestReviews: this.ratingLookup },
       panelClass: 'ratings-modal-box',
       disableClose: true,
     })

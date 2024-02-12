@@ -5,6 +5,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 // tslint:disable-next-line
 import _ from 'lodash'
 
+import { ReviewComponentDataService } from '../content-services/review-component-data.service'
+
 @Component({
   selector: 'ws-widget-reviews-content',
   templateUrl: './reviews-content.component.html',
@@ -24,8 +26,13 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dialogRef: MatDialogRef<ReviewsContentComponent>,
+    private reviewDataService: ReviewComponentDataService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {
+    this.reviewDataService.getReviewData().subscribe((_review: any) => {
+      this.reviews = _review
+    })
+  }
 
   ngOnInit() {
     this.reviews = Object.values(this.data.reviews)

@@ -233,14 +233,14 @@
             <div class="flex flex-col gap-3">
                 <div class="flex flex-row gap-4">
                     <div class="flex-1 mat-subheading-1" id="reviewContainer">Top reviews</div>
-                    <ng-container *ngIf="ratingReviews && ratingReviews?.length">
+                    <ng-container *ngIf="topRatingReviews && topRatingReviews?.length">
                         <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
                     </ng-container>
                 </div>
                 
-                <ng-container *ngIf="ratingReviews && ratingReviews?.length">
+                <ng-container *ngIf="topRatingReviews && topRatingReviews?.length">
                     <div class="flex flex-wrap gap-5">
-                        <div class="comment-div" *ngFor="let eachReview of ratingReviews; let i = index">
+                        <div class="comment-div" *ngFor="let eachReview of topRatingReviews | slice:0:4; let i = index">
                             <div class="p-4 flex flex-col gap-6">
                                 <div class="flex flex-row gap-4">
                                     <div class="flex-1">{{ handleCapitalize(eachReview?.review) }}</div>
@@ -261,7 +261,7 @@
                         </div>
                     </div>
                 </ng-container>
-                <div *ngIf="!ratingReviews || !ratingReviews?.length">
+                <div *ngIf="!topRatingReviews || !topRatingReviews?.length">
                     <div class="flex flex-col text-center items-center justify-center bg-white p-4 rounded-md">
                         <div class="font-base font-bold">No reviews found!</div>
                     </div>
