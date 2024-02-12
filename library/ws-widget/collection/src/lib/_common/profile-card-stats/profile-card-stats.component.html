@@ -3,16 +3,20 @@
     <div *ngIf="!showrepublicBanner" class="expand-icon invisible md:visible">
         <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
     </div>
-    <div class="position-absolute" [ngClass]="showrepublicBanner ? 'fade-in default-public-banner' : 'fade-out hide-default-public-banner' ">
+    <div class="position-absolute" *ngIf="showrepublicBanner" [ngClass]="showrepublicBanner ? 'fade-in default-public-banner' : 'fade-out hide-default-public-banner' ">
       <ng-container *ngIf="!isLoading">
         <div class="republic-details  hidden md:block">
           <div *ngIf="republicDayData.backgroupImage"><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
           <div class="flex flex-col aligncenter">
-            <div class="greet-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
+            <div class="greet-text" [ngStyle]="{color: republicDayData.textColor}">
+              {{translateLabels(republicDayData.greet, 'profileNudge')}} {{userName}}!
+            </div>
             <div class="center-image">
               <img *ngIf="republicDayData.centerImage" [src]="republicDayData.centerImage">
             </div>
-            <div class="info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
+            <div class="info-text" [ngStyle]="{color: republicDayData.textColor}">
+              {{translateLabels(republicDayData.info, 'profileNudge')}}
+            </div>
           </div>
         </div>
         <div class="republic-details  block md:hidden">
@@ -22,8 +26,12 @@
               <img *ngIf="republicDayData.centerImage" [src]="republicDayData.centerImage" class="image">
             </div>
             <div class="mobile-info">
-              <div class="mobile-greet" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.greet}}</div>
-              <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">{{republicDayData.info}}</div>
+              <div class="mobile-greet" [ngStyle]="{color: republicDayData.textColor}">
+                {{translateLabels(republicDayData.greet, 'profileNudge')}} {{userName}}!
+              </div>
+              <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">
+                {{translateLabels(republicDayData.info, 'profileNudge')}}
+              </div>
             </div>
           </div>
         </div>
@@ -75,7 +83,7 @@
     <div class="flex flex-middle flex-between" (click)="myActivity()">
       <div class="flex flex-middle">
         <img class="stats-icon margin-right-s" width="20" height="20" src="/assets/icons/home/dashboard.svg">
-        <span class="activites">Show my activities</span>
+        <span class="activites">{{ 'profileCardStats.ShowMyActivities' | translate}}</span>
       </div>
       <div class="flex"><img class="stats-icon" width="20" height="20" src="/assets/icons/home/right_arrow.svg"></div>
     </div>
@@ -126,7 +134,7 @@
       <ng-container *ngIf="stats.enable">
         <div class="stats-data margin-bottom-m">
           <img class="stats-icon" width="20" height="20" [src]="stats.icon">
-          <div class="stats-title">{{stats.label}}</div>
+          <div class="stats-title">{{translateLabels(stats.key, 'profileCardStats')}}</div>
           <div class="stats-count ws-mat-default-text" *ngIf="countdata;else other_content">{{ countdata[stats.key] || 0}}</div>
           <ng-template #other_content> <div class="skeleton-box" style="width:46px;height:12px"></div></ng-template>
         </div>

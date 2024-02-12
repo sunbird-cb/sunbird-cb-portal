@@ -1,20 +1,21 @@
-import { AUTO_STYLE, animate, state, transition, trigger,style } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
-import { HomePageService } from 'src/app/services/home-page.service';
+import { AUTO_STYLE, animate, state, transition, trigger, style } from '@angular/animations'
+import { Component, OnInit } from '@angular/core'
+import { HomePageService } from 'src/app/services/home-page.service'
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { TranslateService } from '@ngx-translate/core'
 
-const DEFAULT_WEEKLY_DURATION = 300;
-const DEFAULT_DISCUSS_DURATION = 600;
-const DEFAULT_DURATION = 100;
+const DEFAULT_WEEKLY_DURATION = 300
+const DEFAULT_DISCUSS_DURATION = 600
+const DEFAULT_DURATION = 100
 
 const noData = {
-  "desc" : "Do you have any questions, suggestions or, ideas in your mind? Post it.",
-  "linkUrl" : "https://portal.karmayogibm.nic.in/page/learn",
-  "linkText" : "Start discussion",
-  "iconImg" : "/assets/icons/edit.svg",
+  desc: 'Do you have any questions, suggestions or, ideas in your mind? Post it.',
+  linkUrl: 'https://portal.karmayogibm.nic.in/page/learn',
+  linkText: 'Start discussion',
+  iconImg: '/assets/icons/edit.svg',
 }
 
 @Component({
@@ -25,50 +26,63 @@ const noData = {
     trigger('collapse', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
       state('true', style({  height: '0', visibility: 'hidden'  })),
+      // tslint:disable-next-line
       transition('false => true', animate(DEFAULT_DURATION + 'ms ease-in')),
-      transition('true => false', animate(DEFAULT_DURATION + 'ms ease-out'))
+      // tslint:disable-next-line
+      transition('true => false', animate(DEFAULT_DURATION + 'ms ease-out')),
     ]),
     trigger('collapseWeekly', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
       state('true', style({  height: '0', visibility: 'hidden'  })),
       // state('true', style({  position: 'absolute', width: '90%',marginRight: '16px', marginLeft:'16px',top: '-118%', zIndex: '9' })),
+      // tslint:disable-next-line: prefer-template
       transition('false => true', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-in')),
-      transition('true => false', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-out'))
+      // tslint:disable-next-line: prefer-template
+      transition('true => false', animate(DEFAULT_WEEKLY_DURATION + 'ms ease-out')),
     ]),
 
     trigger('collapsDiscuss', [
       state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
       state('true', style({  height: '0', visibility: 'hidden'  })),
+      // tslint:disable-next-line:max-line-length
       // state('true', style({  position: 'absolute', width: '80%', transform: 'scaleY(0.7)',marginRight: '32px', marginLeft:'32px',top: '-300%', zIndex: '6' })),
+      // tslint:disable-next-line: prefer-template
       transition('false => true', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-in')),
-      transition('true => false', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-out'))
-    ])
-  ]
+      // tslint:disable-next-line: prefer-template
+      transition('true => false', animate(DEFAULT_DISCUSS_DURATION + 'ms ease-out')),
+    ]),
+  ],
 })
 
 export class InsightSideBarComponent implements OnInit {
-  profileDataLoading: boolean = true
+  profileDataLoading = true
   homePageData: any
-  noDataValue : {} | undefined
-  clapsDataLoading: boolean = true
+  noDataValue: {} | undefined
+  clapsDataLoading = true
   collapsed = false
   userData: any
   insightsData: any
   discussion = {
     loadSkeleton: false,
     data: [],
-    error: false
-  };
-  pendingRequestData:any = []
-  pendingRequestSkeleton = true;
-  
+    error: false,
+  }
+  pendingRequestData: any = []
+  pendingRequestSkeleton = true
   constructor(
-    private homePageSvc:HomePageService,
-    private configSvc:ConfigurationsService,
+    private homePageSvc: HomePageService,
+    private configSvc: ConfigurationsService,
     private activatedRoute: ActivatedRoute,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router,
-    private events: EventService) { }
+    private translate: TranslateService,
+    private events: EventService,
+    private router: Router) {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    }
 
   ngOnInit() {
     this.userData = this.configSvc && this.configSvc.userProfile
@@ -76,33 +90,35 @@ export class InsightSideBarComponent implements OnInit {
       this.homePageData = this.activatedRoute.snapshot.data.pageData.data
     }
     this.getInsights()
-    this.getPendingRequestData();
+    this.getPendingRequestData()
     this.noDataValue = noData
-    this.getDiscussionsData();
+    this.getDiscussionsData()
   }
 
   getInsights() {
     this.profileDataLoading = true
     const request = {
-      "request": {
-          "filters": {
-              "primaryCategory": "programs",
-              "organisations": [
-                  "across",
-                  this.userData.rootOrgId
-              ]
-          }
-      }
+      request: {
+          filters: {
+            primaryCategory: 'programs',
+            organisations: [
+                'across',
+                this.userData.rootOrgId,
+            ],
+          },
+      },
     }
 
     this.homePageSvc.getInsightsData(request).subscribe((res: any) => {
-      if(res && res.result && res.result.response) {
+      if (res && res.result && res.result.response) {
         this.insightsData = res.result.response
         this.constructNudgeData()
         this.constructWeeklyData()
         this.profileDataLoading = false
       }
+      // tslint:disable-next-line: align
     }, (_error: any) => {
+      // tslint:disable-next-line: align
       this.insightsData = ''
       this.profileDataLoading = false
       this.clapsDataLoading = false
@@ -110,89 +126,93 @@ export class InsightSideBarComponent implements OnInit {
   }
 
   constructNudgeData() {
-    let nudgeData: any = {
-      type:'data',
+    const nudgeData: any = {
+      type: 'data',
       iconsDisplay: false,
-      cardClass:'slider-container',
-      height:'auto',
-      width:'',
+      cardClass: 'slider-container',
+      height: 'auto',
+      width: '',
       sliderData: [],
-      negativeDisplay:false,
-      "dot-default":"dot-grey",
-      "dot-active":"dot-active"
+      negativeDisplay: false,
+      'dot-default': 'dot-grey',
+      'dot-active': 'dot-active',
     }
-    let sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
-    this.insightsData.nudges.forEach((ele: any)=>{
-      if(ele) {
-        let data = {
-          "title": ele.label,
-          "icon": ele.growth === 'positive' ?  "arrow_upward" :"arrow_downward",
-          "data": `${ele.growth === 'positive' && ele.progress > 1?  '+' + Math.round(ele.progress)+'%': ""}`,
-          "colorData": ele.growth === 'positive' ? 'color-green' : 'color-red',
+    const sliderData: { title: any; icon: string; data: string; colorData: string; }[] = []
+    this.insightsData.nudges.forEach((ele: any) => {
+      if (ele) {
+        const data = {
+          title: ele.label,
+          icon: ele.growth === 'positive' ?  'arrow_upward' : 'arrow_downward',
+          // tslint:disable-next-line: prefer-template
+          data: `${ele.growth === 'positive' && ele.progress > 1 ?  '+' + Math.round(ele.progress) + '%' : ''}`,
+          colorData: ele.growth === 'positive' ? 'color-green' : 'color-red',
         }
         sliderData.push(data)
       }
     })
     nudgeData.sliderData = sliderData
-    this.insightsData['sliderData']= nudgeData
+    this.insightsData['sliderData'] = nudgeData
     this.profileDataLoading = false
   }
 
   constructWeeklyData() {
-    if(this.insightsData && this.insightsData['weekly-claps']) {
+    if (this.insightsData && this.insightsData['weekly-claps']) {
       this.insightsData['weeklyClaps'] = this.insightsData['weekly-claps']
     }
-
     this.clapsDataLoading = false
   }
 
   getDiscussionsData(): void {
-    this.discussion.loadSkeleton = true;
+    this.discussion.loadSkeleton = true
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = false;
-        this.discussion.data = res && res.latestPosts;
+        this.discussion.loadSkeleton = false
+        this.discussion.data = res && res.latestPosts
       },
       (error: HttpErrorResponse) => {
         if (!error.ok) {
-          this.discussion.loadSkeleton = false;
-          this.discussion.error = true;
+          this.discussion.loadSkeleton = false
+          this.discussion.error = true
         }
       }
-    );
+    )
   }
 
   getPendingRequestData() {
     this.homePageSvc.getRecentRequests().subscribe(
       (res: any) => {
-        
-        this.pendingRequestSkeleton = false;
+        this.pendingRequestSkeleton = false
         this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
-          return elem;
-        });
+          return elem
+        })
+        // tslint:disable-next-line: align
       }, (error: HttpErrorResponse) => {
+        // tslint:disable-next-line: align
         if (!error.ok) {
-          this.pendingRequestSkeleton = false;
+          // tslint:disable-next-line: align
+          this.pendingRequestSkeleton = false
         }
       }
-    );
+    )
   }
 
   navigateTo() {
-    this.router.navigateByUrl('app/network-v2/connection-requests');
+    this.router.navigateByUrl('app/network-v2/connection-requests')
   }
 
-  moveToUserProile(id:string) {
-    this.router.navigateByUrl('app/person-profile/'+id+'#profileInfo');
+  moveToUserProile(id: string) {
+    // tslint:disable-next-line: prefer-template
+    this.router.navigateByUrl('app/person-profile/' + id + '#profileInfo')
   }
 
-  expandCollapse(event:any) {
+  expandCollapse(event: any) {
     this.collapsed = event
+    // tslint:disable-next-line: whitespace
   }
-  
+  // tslint:disable-next-line: whitespace
   goToActivity(_e: any) {
-    this.router.navigateByUrl(`app/person-profile/me?tab=1`);
+    this.router.navigateByUrl(`app/person-profile/me?tab=1`)
   }
 
   navigate() {
@@ -244,14 +264,12 @@ export class InsightSideBarComponent implements OnInit {
       {
         type: WsEvents.EnumInteractTypes.CLICK,
         subType: WsEvents.EnumInteractSubTypes.PORTAL_NUDGE,
-        id: `${nudgename}-nudge`
+        id: `${nudgename}-nudge`,
       },
       {},
       {
-        module: WsEvents.EnumTelemetrymodules.HOME
+        module: WsEvents.EnumTelemetrymodules.HOME,
       }
     )
   }
 }
-
-

@@ -2,18 +2,17 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
-
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
   styleUrls: ['./app-nav-bar.component.scss'],
 })
 export class AppNavBarComponent implements OnInit, OnChanges {
-
   @Input() mode: 'top' | 'bottom' = 'top'
-  @Input() headerFooterConfigData:any;
+  @Input() headerFooterConfigData: any
   // @Input()
   // @HostBinding('id')
   // public id!: string
@@ -24,6 +23,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
   forPreview = window.location.href.includes('/public/')
     || window.location.href.includes('&preview=true')
+  enableLang: any
   isPlayerPage = window.location.href.includes('/viewer/')
   instanceVal = ''
   btnAppsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
@@ -43,15 +43,15 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isPublicHomePage = window.location.href.includes('/public/home')
   isSetUpPage = false
   isLoggedIn = false
-  fontContainerFlag = false;
-  activeRoute = '';
+  fontContainerFlag = false
+  activeRoute = ''
   countdata: any
   enrollInterval: any
-  karmaPointLoading: boolean = true
+  karmaPointLoading = true
   tooltipDelay: any = 1000
   jan26Data: any
   logoDisplayTime: any
-  janDataEnable:boolean = true
+  janDataEnable = true
   // defaultLogo: false
   animationDuration: number | undefined
 
@@ -60,8 +60,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private configSvc: ConfigurationsService,
     private tourService: CustomTourService,
     private router: Router,
-    private events: EventService
-
+    private translate: TranslateService,
+    private events: EventService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -76,6 +77,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -84,9 +90,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.logoDisplayTime = this.jan26Data.desktop.logoDisplayTime
       this.displayLogo()
       setInterval(() => {
-        this.janDataEnable = true;
+        this.janDataEnable = true
         this.displayLogo()
-       }, this.logoDisplayTime);
+        // tslint:disable-next-line
+       }, this.logoDisplayTime)
     }
 
     // console.log('headerFooterConfigData',this.headerFooterConfigData)
@@ -94,10 +101,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       if (event instanceof NavigationEnd) {
           // Hide loading indicator
           // console.log('event', event.url)
-          // console.log("activeRoute",localStorage.getItem("activeRoute"));
-          if(localStorage.getItem("activeRoute")) {
-            let route = localStorage.getItem("activeRoute");
-            this.activeRoute = route ? route.toLowerCase().toString() : '';
+          // console.log("activeRoute",localStorage.getItem("activeRoute"))
+          if (localStorage.getItem('activeRoute')) {
+            const route = localStorage.getItem('activeRoute')
+            this.activeRoute = route ? route.toLowerCase().toString() : ''
           }
 
           if (event.url.includes('/page/home')) {
@@ -150,14 +157,16 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.startTour()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
-    },1000)
+    // tslint:disable-next-line
+    }, 1000)
   }
 
   displayLogo() {
     const animationDur = this.jan26Data.desktop.animationDuration
-    setTimeout(() =>{
-      this.janDataEnable = false;
-    }, animationDur);
+    setTimeout(() => {
+      this.janDataEnable = false
+      // tslint:disable-next-line
+    }, animationDur)
   }
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
@@ -180,6 +189,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       } else {
         this.isPublicHomePage = false
       }
+    // tslint:disable-next-line: max-line-length
     } else if ((e.url.includes('/app/setup') && this.configSvc.instanceConfig && !this.configSvc.instanceConfig.showNavBarInSetup)) {
       this.showAppNavBar = false
     } else {
@@ -261,6 +271,12 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     || window.location.href.includes('/certs')
     return this.forPreview
   }
+  get isenableLang(): boolean {
+    if (window.location.href.includes('/public/faq') || window.location.href.includes('/public/contact')) {
+      return true
+    }
+    return false
+  }
   get isThisSetUpPage(): boolean {
     if (window.location.pathname.includes('/app/setup')) {
       this.isSetUpPage = true
@@ -270,18 +286,21 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     return this.isSetUpPage
   }
 
-  redirectToPath(pathConfig:any) {
-    if(pathConfig && pathConfig.key) {
-      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } } );
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
+  }
+  redirectToPath(pathConfig: any) {
+    if (pathConfig && pathConfig.key) {
+      this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } })
     } else {
-      this.router.navigate([pathConfig.path]);
+      this.router.navigate([pathConfig.path])
     }
-    this.configSvc.openExploreMenuForMWeb.next(false);
+    this.configSvc.openExploreMenuForMWeb.next(false)
   }
 
   openExploreMenu() {
-    this.activeRoute = 'explore';
-    this.configSvc.openExploreMenuForMWeb.next(true);
+    this.activeRoute = 'explore'
+    this.configSvc.openExploreMenuForMWeb.next(true)
   }
 
   getKarmaCount() {
@@ -297,7 +316,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
   viewKarmapoints() {
     this.raiseTelemetry()
-    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints'});
+    this.router.navigate(['/app/person-profile/me'], { fragment: 'karmapoints' })
   }
 
   raiseTelemetry() {
@@ -310,7 +329,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       {},
       {
         module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
-    })
+        // tslint: disable-next-line: whitespace
+      }
+      // tslint: disable-next-line: whitespace
+      )
+  }
+
+  public getItem(item: any) {
+    return { ...item, forPreview: !this.isforPreview, enableLang: this.enableLang }
   }
 
 }

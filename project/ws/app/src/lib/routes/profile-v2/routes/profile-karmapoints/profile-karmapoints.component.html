@@ -2,11 +2,11 @@
   <mat-card class="flex-custom">
     <mat-card-content>
       <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
-        Karma Points
+        {{ 'profileKarmapoints.karmaPoints' | translate }}
       </span>
       <a class="flex-4 mobile-margin show-all" [routerLink]="['/public/faq']" fragment="KarmaPoints">
         <!-- <img class="info-icon" alt="info" src="/assets/icons/info.svg"> -->
-        <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="kpTooltiptext">info_outline</mat-icon>
+        <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="translateLabels('tooltip', 'profileKarmapoints', '')">info_outline</mat-icon>
       </a>
     </mat-card-content>
     <ng-container *ngIf="karmaPointsHistory.length > 0">
@@ -22,7 +22,7 @@
               <div class="mat-subheading-2">
                 <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
                 <span class="bonus-points">+ {{karmapoints.points}}</span>
-                <div *ngIf="getAdditonInfo(karmapoints) > 0"><span class="bonus-badge">BONUS</span></div>
+                <div *ngIf="getAdditonInfo(karmapoints) > 0"><span class="bonus-badge">{{ 'profileKarmapoints.bonus' | translate }}</span></div>
               </div>
             </div>
           </mat-card>
@@ -33,13 +33,13 @@
       </div>
       <div class="text-right margin-right-xxl margin-bottom-m ng-star-inserted" *ngIf="showMoreBtn">
         <button class="mat-raised-button mat-button-base mat-primary" (click)="loadMore()">
-          Load more...
+          {{ 'common.loadMore' | translate }}
         </button>
       </div>
     </ng-container>
     <ng-container *ngIf="!karmaPointsHistory.length">
       <div class="flex flex-1 mobile-margin margin-f">
-        <span class="mat-subtitle flex-1 mobile-margin"> No karma points information available </span>
+        <span class="mat-subtitle flex-1 mobile-margin"> {{ 'profileKarmapoints.noKarmaPoints' | translate }} </span>
       </div>
     </ng-container>
   </mat-card>

@@ -64,6 +64,7 @@ export namespace NsInstanceConfig {
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
     positions: any
+    webistelanguages: any[]
     profileTimelyNudges: any
   }
   export interface IPortalUrls {
@@ -294,6 +295,7 @@ export namespace NsUser {
     profileUpdateCompletion?: number
     profileImageUrl?: string
     professionalDetails?: any
+    webPortalLang?: any
   }
 
   export interface INodebbUserProfile {

@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material'
 import { AuthKeycloakService } from '../../services/auth-keycloak.service'
 import { ConfigurationsService } from '../../services/configurations.service'
 import { UtilityService } from '../../services/utility.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-utils-logout',
@@ -18,8 +19,15 @@ export class LogoutComponent implements OnInit {
     public dialogRef: MatDialogRef<LogoutComponent>,
     private authSvc: AuthKeycloakService,
     private configSvc: ConfigurationsService,
-    private utilitySvc: UtilityService
-  ) { }
+    private utilitySvc: UtilityService,
+    private translate: TranslateService
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+   }
 
   ngOnInit() {
     if (this.configSvc.restrictedFeatures) {
@@ -39,6 +47,9 @@ export class LogoutComponent implements OnInit {
     }
     if (localStorage.getItem('platformratingTime')) {
       localStorage.removeItem('platformratingTime')
+    }
+    if (localStorage.getItem('websiteLanguage')) {
+      localStorage.removeItem('websiteLanguage')
     }
     // this.authSvc.logout()
     this.authSvc.force_logout()

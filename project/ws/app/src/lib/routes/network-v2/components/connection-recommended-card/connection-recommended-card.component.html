@@ -8,7 +8,7 @@
         <div class="name-container flex flex-col width-expand">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link" (click)="goToUserProfile(user)">
                 <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname;else firstNameCheck">
-                    {{user?.personalDetails?.firstname}} 
+                    {{user?.personalDetails?.firstname}}
                     <span class="profile-badge" *ngIf="user && user?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
                     </span>
                 </div>
@@ -31,7 +31,7 @@
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()">
-                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>Connect</span>
+                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>{{ 'connectionPeopleCard.connect' | translate }}</span>
             </button>
         </div>
     </div>

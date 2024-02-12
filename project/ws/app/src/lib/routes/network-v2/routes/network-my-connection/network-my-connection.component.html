@@ -3,9 +3,9 @@
         <form (submit)="updateQuery(queryControl.value)">
             <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
                 <mat-icon matPrefix class="ml-5 flex items-center justify-center">search</mat-icon>
-                <mat-label>Search user</mat-label>
+                <mat-label>{{ 'network.searchUser' | translate }}</mat-label>
                 <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
-                    [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
+                    [placeholder]="'common.search' | translate" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
                     accesskey="F" maxlength="50" />
             </mat-form-field>
         </form>
@@ -15,11 +15,11 @@
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'timestamp',
                             'ws-mat-accent-border':currentFilter !== 'timestamp'}" mat-button
                 (click)="filter('timestamp', 'desc'); tabTelemetry('Last added', 0)">
-                Last added </a>
+                {{ 'common.lastAdded' | translate }} </a>
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'fullName',
                             'ws-mat-accent-border':currentFilter !== 'fullName'}" mat-button
                 (click)="filter('fullName', 'asc'); tabTelemetry('Sort by name', 1)">
-                Sort by name </a>
+                {{ 'common.sortByName' | translate }} </a>
         </div>
     </div>
     <div class="flex flex-1 mb-4">
@@ -27,12 +27,12 @@
             <mat-card-header>
                 <mat-card-title class="w-full margin-l-0 f-medium">
                     <h2 *ngIf="data && data.length && !enableSearchFeature && data.length > 1 ">{{data.length}}
-                        connections</h2>
+                         {{ 'common.connections' | translate }}</h2>
                     <h2 *ngIf="data && data.length && !enableSearchFeature && data.length === 1">{{data.length}}
-                        connection</h2>
-                    <h2 *ngIf="data && data.length && enableSearchFeature">Search results</h2>
-                    <h4 class="w-full text-center ws-mat-black60-text" *ngIf="data && data.length <= 0">No connections
-                        found!</h4>
+                        {{ 'common.connection' | translate }}</h2>
+                    <h2 *ngIf="data && data.length && enableSearchFeature">{{data.length}}
+                        {{ 'msg.searchResult' | translate }}</h2>
+                    <h4 class="w-full text-center ws-mat-black60-text" *ngIf="data && data.length <= 0">{{ 'msg.noConnectionFound' | translate }}</h4>
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content class="margin-left-m mb-0-imp">
@@ -46,8 +46,8 @@
                         *ngFor="let user of data | pipeFilterSearch: searchInput.value: 'fullName':'surname' ">
                         <ws-app-my-connection-card class="mr-4 mb-5" [user]="user" *ngIf="user !== -1">
                         </ws-app-my-connection-card>
-                        <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">No search results found!
-                        </h4>
+                        <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">
+                            {{ 'network.noSearchResultFound' | translate }}</h4>
                     </ng-container>
                 </ng-container>
                 <ng-container *ngIf="data && data.length && currentFilter === 'timestamp'">
@@ -55,7 +55,7 @@
                         *ngFor="let user of data | pipeFilterSearch: searchInput.value: 'fullName':'surname' ">
                         <ws-app-my-connection-card class="mr-4 mb-5" [user]="user" *ngIf="user !== -1">
                         </ws-app-my-connection-card>
-                        <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">No search results found!
+                        <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">{{ 'network.noSearchResultFound' | translate }}
                         </h4>
                     </ng-container>
                 </ng-container>

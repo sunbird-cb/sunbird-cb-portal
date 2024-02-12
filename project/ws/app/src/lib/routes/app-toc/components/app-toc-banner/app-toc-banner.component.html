@@ -227,7 +227,7 @@
                             ({{batch.startDate | date: 'dd-MM-yyyy'}} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})</p>
                         </mat-option>
                       </mat-select>
-                      <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
+                      <mat-error *ngIf="batchControl.hasError('required')">{{'apptocbanner.pleaseChooseBatch' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="flex flex-wrap mt-3">
@@ -236,18 +236,18 @@
                       <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }"
                       [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
                         <ng-container i18n>
-                          Request to enroll
+                          {{'apptocbanner.requestToEnroll' | translate}}
                         </ng-container>
                       </button>
                     </div>
                     <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
-                      <p class="mat-body-2 margin-remove-bottom">Last enrollment date</p>
+                      <p class="mat-body-2 margin-remove-bottom">{{'apptocbanner.lastEnrollmentDate' | translate}}</p>
                       <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate | date: 'dd-MM-yyyy'}}</p>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="showRejected">
                     <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                      Your enrollment request is {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.
+                      {{'apptocbanner.yourEnrollmentRequest' | translate}} {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.
                     </h3>
                   </ng-container>
                 </div>
@@ -267,7 +267,7 @@
                 <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white"
                   (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
                     <ng-container i18n>
-                      Withdraw your request
+                      {{'apptocbanner.withDrawYourRequest' | translate}}
                     </ng-container>
                   </button>
               </ng-container>
@@ -280,27 +280,27 @@
             </ng-container>
             <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData?.content?.length">
               <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                No batches
+                {{'apptocbanner.noBatches' | translate}}
               </h3>
             </ng-container>
           </div>
           <div class="padding-m batch-timer flex" *ngIf="days >= 0">
             <div class="time-block">
-              <p class="timer-title">This batch starts in</p>
+              <p class="timer-title">{{'apptocbanner.thisBatchStarts' | translate}}</p>
               <div class="flex time-wrapper">
                 <div>
                   <p class="count">{{days || 0}}</p>
-                  <p class="time-label">DAYS</p>
+                  <p class="time-label">{{'apptocbanner.dayS' | translate}}</p>
                 </div>
                 <span>:</span>
                 <div >
                   <p class="count">{{ minutes === 60? hours + 1 : hours}}</p>
-                  <p class="time-label">HOURS</p>
+                  <p class="time-label">{{'apptocbanner.hours' | translate}}</p>
                 </div>
                 <span>:</span>
                 <div>
                   <p class="count">{{minutes === 60? 00 : minutes }}</p>
-                  <p class="time-label">MINUTES</p>
+                  <p class="time-label">{{'apptocbanner.minutes' | translate}}</p>
                 </div>
                 <!-- <span>:</span>
                 <div>
@@ -313,11 +313,11 @@
               <div class="flex batch-wrapper">
                 <ng-container *ngIf="!showMsg">
                     <div class="batch-duration-wrap">
-                      <p class="timer-title">Batch duration</p>
-                      <p class="duration-days">{{getBatchDuration}} Days</p>
+                      <p class="timer-title">{{'apptocbanner.batchDuration' | translate}}</p>
+                      <p class="duration-days">{{getBatchDuration}} {{'apptocbanner.days' | translate}}</p>
                     </div>
                 </ng-container>
-                <p class="batch-info" *ngIf="showMsg">Kindly check the location details and plan in advance.</p>
+                <p class="batch-info" *ngIf="showMsg">{{'apptocbanner.kindlyCheckLocationDetails' | translate}}</p>
               </div>
             </div>
           </div>
@@ -329,7 +329,7 @@
 </div>
 <div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content && batchControl?.value?.batchAttributes?.batchLocationDetails">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-    <h2>Batch location</h2>
+    <h2>{{'apptocbanner.batchLocation' | translate}}</h2>
     <p>{{batchControl?.value?.batchAttributes?.batchLocationDetails}}</p>
   </ng-container>
 </div>
@@ -372,7 +372,7 @@
     [widgetData]="content | pipePartialContent: ['identifier', 'name']">
   </ws-widget-btn-content-feedback-v2>
 </ng-template>
-<ng-template #authView i18n>View</ng-template>
+<ng-template #authView i18n>{{'apptocbanner.view' | translate}}</ng-template>
 <ng-template #statusMsg>
   <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
     <div class="flex" *ngIf="showMsg">
@@ -412,7 +412,7 @@
       <div class="contnet">
           <section class="w-full flex align-center justify-between ">
             <div class="mb-2">
-                <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">Share with Karmayogis</h2>
+                <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">{{'contentSharing.header' | translate}}</h2>
             </div>
             <div class="cursor-pointer"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
           </section>
@@ -431,7 +431,7 @@
                             </mat-chip>
                             <input
                                 tabindex="-1"
-                                placeholder="{{users.length === 0 ? placehoderText : ''}}"
+                                placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
                                 #userInput
                                 formControlName="review"
                                 [formControl]="userCtrl"
@@ -449,23 +449,23 @@
                                     </div>
                                     <div>
                                         <div>{{user.name}}</div>
-                                        <div class="emailText">{{user.email}}</div>
+                                        <div class="emailText">{{user.maskedEmail}}</div>
                                     </div>
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-hint align="start">Note: Emails will be sent only to registered karmayogis.</mat-hint>
-                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} characters</mat-hint>
+                        <mat-hint align="start">{{'contentSharing.note' | translate}}</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingEmails' | translate}}</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
                     <div class="flex flex-1 flex-end">
-                        <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">Copy link &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
+                        <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">{{'contentSharing.copyLink' | translate}} &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
                         <button mat-stroked-button type="submit"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
-                            [disabled]="users.length === 0 || users.length === maxEmailsLimit" (click)="submitSharing()"
+                            [disabled]="users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
                             >
-                            Send<mat-icon >play_arrow</mat-icon>
+                            {{'contentSharing.send' | translate}}<mat-icon >play_arrow</mat-icon>
                         </button>
                     </div>
                 </div>

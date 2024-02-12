@@ -107,8 +107,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private valueSvc: ValueService,
     private contentSvc: WidgetContentService,
     private homeSvc: HomePageService,
-    private matSnackBar: MatSnackBar,
-
+    private matSnackBar: MatSnackBar
     // @Inject(DOCUMENT) private document: Document
   ) {
     this.Math = Math

@@ -3,7 +3,8 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-network-connection-requests',
@@ -23,6 +24,8 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
     private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
     if (this.route.snapshot.data.connectionRequests
       && this.route.snapshot.data.connectionRequests.data
@@ -37,12 +40,25 @@ export class NetworkConnectionRequestsComponent implements OnInit {
           return v
         })
       }
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+
+      })
    }
 
   ngOnInit() {
     if (this.datalist && this.datalist.length > 0) {
       this.filter('timestamp', 'desc')
     }
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   updateQuery(key: string) {

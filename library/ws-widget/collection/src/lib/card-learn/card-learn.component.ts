@@ -1,9 +1,10 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { NSSearch } from '@sunbird-cb/collection'
 import { SearchApiService } from '../_services/search-api.service'
+import { TranslateService } from '@ngx-translate/core'
 
 // import { ActivitiesService } from '@ws/app/src/lib/routes/activities/services/activities.service'
 // import { IActivity, IActivityCard, IChallenges } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
@@ -37,9 +38,12 @@ export class CardLearnComponent extends WidgetBaseComponent
     private router: Router,
     private activateroute: ActivatedRoute,
     private searchApiService: SearchApiService,
+    private langtranslations: MultilingualTranslationsService,
+    private translate: TranslateService,
     // private activitiesSvc: ActivitiesService,
     // private snackBar: MatSnackBar,
   ) {
+
     super()
     if (this.configSvc.userProfile) {
       this.givenName = this.configSvc.userProfile.givenName
@@ -55,6 +59,13 @@ export class CardLearnComponent extends WidgetBaseComponent
     } else {
       this.showActivities = false
     }
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
 
   }
   hasRole(role: string[]): boolean {
@@ -141,6 +152,10 @@ export class CardLearnComponent extends WidgetBaseComponent
 
   allActivities() {
     this.router.navigate(['app', 'activities'])
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
 }

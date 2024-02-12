@@ -35,13 +35,13 @@ export class WidgetUserService {
   }
 
   fetchUserBatchList(userId: string | undefined): Observable<NsContent.ICourse[]> {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
       'Pragma': 'no-cache',
-      'Expires': '0'
+      'Expires': '0',
     })
     return this.http
-      .get(API_END_POINTS.FETCH_USER_ENROLLMENT_LIST(userId), {headers})
+      .get(API_END_POINTS.FETCH_USER_ENROLLMENT_LIST(userId), { headers })
       .pipe(
         catchError(this.handleError),
         map(

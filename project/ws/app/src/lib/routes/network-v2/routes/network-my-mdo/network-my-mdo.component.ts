@@ -3,7 +3,8 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-network-my-mdo',
@@ -25,8 +26,18 @@ export class NetworkMyMdoComponent implements OnInit {
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
     private configSvc: ConfigurationsService,
-    private eventSvc: EventService
+    private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+
+    })
     // console.log('this.route.snapshot.data.myMdoList.data :', this.route.snapshot.data.myMdoList.data)
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.data = this.route.snapshot.data.myMdoList.data.result.data.
@@ -49,6 +60,11 @@ export class NetworkMyMdoComponent implements OnInit {
         this.enableSearchFeature = true
       }
     })
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   updateQuery(key: string) {

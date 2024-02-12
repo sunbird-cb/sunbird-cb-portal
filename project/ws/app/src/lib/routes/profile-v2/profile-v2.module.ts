@@ -44,6 +44,7 @@ import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update
 import { DiscussionsModule } from '@sunbird-cb/collection/src/lib/_common/discussions/discussions.module'
 import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/recent-requests/recent-requests.module'
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module'
+import { TranslateModule } from '@ngx-translate/core'
 import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profile-karmapoints.component'
 // import { ShareModule } from 'ngx-sharebuttons';
 
@@ -98,6 +99,7 @@ import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profil
     DiscussionsModule,
     RecentRequestsModule,
     PendingRequestModule,
+    TranslateModule,
     MatTooltipModule,
     // ShareModule
   ],

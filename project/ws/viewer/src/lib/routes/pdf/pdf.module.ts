@@ -33,6 +33,7 @@ import { PdfComponent } from './pdf.component'
 import { RouterModule } from '@angular/router'
 
 import { PdfModule as PdfViewContainerModule } from '../../route-view-container/pdf/pdf.module'
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [PdfComponent],
   imports: [
@@ -57,6 +58,7 @@ import { PdfModule as PdfViewContainerModule } from '../../route-view-container/
     UserContentRatingModule,
     BtnContentFeedbackV2Module,
     PdfViewContainerModule,
+    TranslateModule.forRoot(),
   ],
 })
 export class PdfModule { }

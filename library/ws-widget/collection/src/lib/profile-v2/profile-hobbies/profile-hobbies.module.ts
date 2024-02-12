@@ -6,10 +6,14 @@ import {
 } from '@angular/material'
 import { BrowserModule } from '@angular/platform-browser'
 
+import { TranslateModule } from '@ngx-translate/core'
+
 @NgModule({
   declarations: [ProfileHobbiesComponent],
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule,
-    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule],
+    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule,
+    TranslateModule,
+  ],
   entryComponents: [ProfileHobbiesComponent],
 })
 export class ProfileHobbiesModule {

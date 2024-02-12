@@ -8,14 +8,14 @@
     <div class="discussion-card flex-1 p-4" *ngIf="discussConfig?.trendingDiscussions?.active">
         <div class="flex flex-col h-full gap-4">
             <div class="flex flex-row gap-3 mat-subheading-1">
-                <div class="flex flex-grow">Trending discussions</div>
+                <div class="flex flex-grow">{{ 'home.subDiscussTrendingDiscuss' | translate }}</div>
             </div>
 
             <ws-widget-discussions [discussion]="discussion" [count]="3" [trend]="true"></ws-widget-discussions>
 
             <div class="flex justify-center items-center" *ngIf="!discussion.loadSkeleton && (!discussion.error || discussion.data)">
                 <div class="flex ws-mat-default-text items-center justify-center mat-body-1 cursor-pointer" (click)="navigate()" >
-                    <div>Show all</div>
+                    <div>{{ 'home.showAll' | translate }}</div>
                     <mat-icon>
                         chevron_right
                     </mat-icon>

@@ -6,6 +6,8 @@ import { Subject, Observable } from 'rxjs'
 // tslint:disable
 import _ from 'lodash'
 import { LocalDataService } from '../../../browse-by-competency/services/localService';
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:enable
 
 @Component({
@@ -46,7 +48,17 @@ export class AllProvidersComponent implements OnInit {
   constructor(
     private browseProviderSvc: BrowseProviderService,
     private localService: LocalDataService,
-  ) { }
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
+  ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+   }
 
   ngOnInit() {
     this.searchForm = new FormGroup({
@@ -57,7 +69,7 @@ export class AllProvidersComponent implements OnInit {
     this.searchForm.valueChanges
       .pipe(
         debounceTime(500),
-        switchMap(async formValue => {
+        switchMap(async (formValue: any) => {
           this.sortBy = formValue.sortByControl
           this.updateQuery(formValue.searchKey)
         }),
