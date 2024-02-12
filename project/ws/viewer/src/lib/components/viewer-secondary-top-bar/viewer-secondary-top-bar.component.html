@@ -42,10 +42,33 @@
           </a>
       </div>
   </ng-container>  
+  
   <ng-container *ngIf="isMobile">
     <div class="flex flex-1 mobile-viewer-header">
           <div class="cross-icon">
-            <img src="assets/icons/final-assessment/mobile-cross.svg"/>
+            <div *ngIf="handleBackFromPdfScormFullScreenFlag">
+              <img src="assets/icons/final-assessment/mobile-cross.svg"/>
+            </div>
+            <div *ngIf="!handleBackFromPdfScormFullScreenFlag"> 
+              <ws-widget-btn-page-back-nav *ngIf="!isPreview && !needToHide" [widgetData]="{
+                url: isTypeOfCollection
+                  ? collectionType === 'Playlist'
+                    ? '/app/playlist/me/' + collectionId
+                    : (forPreview ? '/pulic' : '/app') + '/toc/' + collectionId + '/overview'
+                  : (forPreview ? '/public' : '/app') + '/toc/' + resourceId + '/overview',
+                titles: [],
+                queryParams : isTypeOfCollection
+                ? collectionType === 'Playlist'
+                  ? {}
+                  : {}
+                : {primaryCategory: resourcePrimaryCategory}
+              }"></ws-widget-btn-page-back-nav>
+            <ws-widget-btn-page-back-nav *ngIf="needToHide" [widgetData]="{
+                url: '/app/competencies/home',
+                titles: []
+              }"></ws-widget-btn-page-back-nav>
+            </div>
+           
           </div>
           <div class="resource-name">
             <p class="width-expand heading  text-truncate">
@@ -53,7 +76,8 @@
             </p>
           </div>          
       </div>
-      <div class="flex nexPrevContainerMobile">
+      <ng-container *ngIf="contentMIMEType !== 'application/vnd.sunbird.questionset'">
+        <div class="flex nexPrevContainerMobile">
           <a mat-icon-button class="margin-left-16" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
             accesskey="<">
@@ -88,5 +112,7 @@
             <mat-icon>menu</mat-icon>
           </a> -->
       </div>
+      </ng-container>
+    
   </ng-container> 
   </mat-toolbar>

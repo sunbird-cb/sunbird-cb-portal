@@ -50,6 +50,7 @@ import { ViewerTocComponent } from './components/viewer-toc/viewer-toc.component
 import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.module'
 import { ViewerSecondaryTopBarModule } from './components/viewer-secondary-top-bar/viewer-secondary-top-bar.module'
 import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
+import { PdfScormDataService } from './pdf-scorm-data-service'
 @NgModule({
   declarations: [ViewerComponent, ViewerTocComponent],
   imports: [
@@ -92,5 +93,6 @@ import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content
     ContentProgressModule,
     ContentTocModule
   ],
+  providers:[PdfScormDataService]
 })
 export class ViewerModule { }

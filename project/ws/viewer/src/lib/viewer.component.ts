@@ -9,6 +9,7 @@ import { TStatus, ViewerDataService } from './viewer-data.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 import { ViewerHeaderSideBarToggleService } from './viewer-header-side-bar-toggle.service'
+import { PdfScormDataService } from './pdf-scorm-data-service'
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
   notFound = 'notFound',
@@ -52,6 +53,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   viewerHeaderSideBarToggleFlag = true;
   isMobile = false;
   contentMIMEType = '';
+  handleBackFromPdfScormFullScreenFlag = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -64,7 +66,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
     private abc: MobileAppsService,
-    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService
+    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
+    public pdfScormDataService: PdfScormDataService
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
@@ -97,6 +100,9 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data:any)=>{
+      this.handleBackFromPdfScormFullScreenFlag = data;
+    });
 
     this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data:any)=>{
       if(data) {

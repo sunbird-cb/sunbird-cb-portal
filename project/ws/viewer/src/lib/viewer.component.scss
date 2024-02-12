@@ -89,7 +89,7 @@
 
 .viewer-player-container {
   height: 557px;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .toc-container {
@@ -107,7 +107,7 @@
   border-top-right-radius: 16px;
 }
 
-@media screen and (min-width: 280px) and (max-width: 768px) {
+@media screen and (min-width: 280px) and (max-width: 912px) {
   .viewer-player-container {
     height: auto;
     min-height: 25%;

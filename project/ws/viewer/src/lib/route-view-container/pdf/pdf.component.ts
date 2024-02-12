@@ -3,7 +3,7 @@ import { NsContent, NsDiscussionForum } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-
+import { PdfScormDataService } from '../../pdf-scorm-data-service'
 @Component({
   selector: 'viewer-pdf-container',
   templateUrl: './pdf.component.html',
@@ -33,7 +33,8 @@ export class PdfComponent implements OnInit {
   isMobile = false;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
+    private pdfScormDataService: PdfScormDataService
   ) { }
 
   ngOnInit() {
@@ -48,5 +49,10 @@ export class PdfComponent implements OnInit {
         !this.configSvc.restrictedFeatures.has('disscussionForum')
     }
     this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
+  }
+
+  openPdf() {
+    this.playPdfContentFlag = true;
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.next(true);
   }
 }

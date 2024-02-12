@@ -139,22 +139,23 @@
 
 .video-player {
   width: 100%;
-  height: 59vh;
-  @include breakpoint-lt-xl {
-    height: 59vh;
-  }
-  @include breakpoint-lt-l {
-    height: 65vh;
-  }
-  @include breakpoint-lt-m {
-    height: 60vh;
-  }
-  @include breakpoint-lt-s {
-    height: 55vh;
-  }
-  @include breakpoint-xs {
-    display: none;
-  }
+  height: 557px;
+  // height: 59vh;
+  // @include breakpoint-lt-xl {
+  //   height: 59vh;
+  // }
+  // @include breakpoint-lt-l {
+  //   height: 65vh;
+  // }
+  // @include breakpoint-lt-m {
+  //   height: 60vh;
+  // }
+  // @include breakpoint-lt-s {
+  //   height: 55vh;
+  // }
+  // @include breakpoint-xs {
+  //   display: none;
+  // }
 }
 
 .video-player-m {

@@ -59,9 +59,10 @@
 
 
 .video-player-mobile {
-  padding: 0 16px !important;
+  // padding: 0 16px !important;
   background: transparent !important;
   box-shadow: none !important;
+  padding:0 !important;
   @include breakpoint-xs {
     padding: 0 !important;
   }
