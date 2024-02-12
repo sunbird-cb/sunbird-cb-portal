@@ -61,7 +61,7 @@ const flattenItems = (items: any[], key: string | number) => {
 })
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
-  show = true
+  show = false
   skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
