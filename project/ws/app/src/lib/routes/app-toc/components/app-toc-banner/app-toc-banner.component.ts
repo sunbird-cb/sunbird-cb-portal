@@ -274,7 +274,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     }
 
-    if (this.content && (
+    if (this.content && this.content.courseCategory !== 'Moderated Course' && (
       this.content.primaryCategory === this.primaryCategory.COURSE ||
       this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
       this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
@@ -1297,7 +1297,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
-      const ePattern = new RegExp(`^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`)
+      const ePattern = new RegExp(`^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
       if (ePattern.test(value)) {
         if ((value || '').trim()) {
           this.users.push(value.trim())
@@ -1336,7 +1336,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   filterSharedUsers(value: string): string[] {
     if (value) {
       const filterValue = value.toLowerCase()
-      return this.allUsers.filter(user => user.name.toLowerCase().indexOf(filterValue) === 0)
+      return this.allUsers.filter(user => user.name.toLowerCase().includes(filterValue))
     }
     return []
   }
