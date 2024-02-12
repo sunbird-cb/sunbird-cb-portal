@@ -18,8 +18,7 @@ export class AppTocContentComponent implements OnInit {
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   @Input() skeletonLoader = false
 
-  constructor(
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }

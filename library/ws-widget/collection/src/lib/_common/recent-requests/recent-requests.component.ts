@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
@@ -13,8 +14,15 @@ export class RecentRequestsComponent implements OnInit {
   userInfo: any
 
   constructor(
+    private translate: TranslateService,
     private configService: ConfigurationsService
-  ) { }
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+  }
 
   ngOnInit() {
     this.userInfo =  this.configService && this.configService.userProfile

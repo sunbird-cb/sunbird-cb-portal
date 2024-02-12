@@ -1,4 +1,4 @@
-<section class="horizontal-scroll-container h-full" [ngClass]="{'px-4': sliderConfig.showNavs}">
+<section class="horizontal-scroll-container h-full" [ngClass]="{'px-4': sliderConfig.showNavs, 'mt-5':sliderConfig.cerificateCardMargin}">
     <ng-container *ngIf="sliderConfig?.showNavs">
         <button i18n-aria-label aria-label="back" name="content-backward-button" mat-mini-fab color="" 
             (click)="showPrev()" class="prevBtn  mat-elevation-z" [hidden]="!enablePrev"

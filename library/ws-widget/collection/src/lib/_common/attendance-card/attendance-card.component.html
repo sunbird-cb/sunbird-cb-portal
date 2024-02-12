@@ -1,21 +1,21 @@
 <div class="">
-    <p class="font-bold mat-body-1 margin-bottom-xs ws-mat-black60-text"> Attendance status</p>
+    <p class="font-bold mat-body-1 margin-bottom-xs ws-mat-black60-text">{{'attendancecard.attendanceStatus' | translate}}</p>
     <div class="ws-mat-orange-light-bg p-5">
         <div class="flex justify-center items-center">
             <div class="mr-5" [ngStyle]="{'opacity': (session?.completionStatus === 2) ? 1 : 0.7}">
-                <span class="mat-body-2">Session attendance</span>
+                <span class="mat-body-2">{{'attendancecard.sessionAttendance' | translate}}</span>
 
                 <div class="flex" *ngIf="!session?.completionStatus || session?.completionStatus !== 2">
                     <img class="mat-icon mr-3" src="/assets/icons/attendance_qr.svg" alt="qr icon" title="attendance" />
-                    <span class="mat-body-2">Unmarked</span>
+                    <span class="mat-body-2">{{'attendancecard.unmarked' | translate}}</span>
                 </div>
                 <div class="flex" *ngIf="session?.completionStatus === 2">
                     <mat-icon class="ws-mat-green-2-text mr-3">check_circle</mat-icon>
-                    <span class="mat-body-2">Marked @{{session?.lastCompletedTime | date :'shortTime'}}</span>
+                    <span class="mat-body-2">{{'attendancecard.marked' | translate}} @{{session?.lastCompletedTime | date :'shortTime'}}</span>
                 </div>
             </div>
             <div class="flex-1 flex justify-center">
-                <span  *ngIf="showInfo" class="mat-body-2">After the batch starts, you will be able to mark the attendace through mobile.</span>
+                <span  *ngIf="showInfo" class="mat-body-2">{{'attendancecard.afterBatchStarts' | translate}}</span>
             </div>
             <div class="text-right ml-5">
                 <img class="mat-icon cursor-pointer" src="/assets/icons/rounded_question.svg" alt="attendance help"

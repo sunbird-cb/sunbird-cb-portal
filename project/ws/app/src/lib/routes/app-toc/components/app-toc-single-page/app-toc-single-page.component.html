@@ -1,5 +1,5 @@
 <mat-tab-group [selectedIndex]="tabSelectedIndex" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
-    <mat-tab label="Overview">
+    <mat-tab label="{{'apptocsinglepage.overview' | translate}}">
         <ng-template matTabContent>
             <section id="overview">
                 <div class="fixed-width flex flex-wrap">
@@ -11,7 +11,7 @@
                         showSubtitleOnBanner &&
                         content?.description
                         " class="unit-meta-item">
-                            <h2 class="section-heading">{{ tocConfig?.overview?.description?.displayName }}</h2>
+                            <h2 class="section-heading">{{ translateLabels(tocConfig?.overview?.description?.displayName, 'apptocsinglepage') }}</h2>
                             <mat-card-content>
                                 <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.description)">
                                 </div>
@@ -20,7 +20,8 @@
                         <!-- Content Body -->
                         <mat-card *ngIf="tocConfig?.overview?.body?.enabled && content?.instructions"
                             class="unit-meta-item">
-                            <h2 class="section-heading">{{ tocConfig?.overview?.body?.displayName }}</h2>
+                            <h2 class="section-heading">{{ translateLabels(tocConfig?.overview?.body?.displayName, 'apptocsinglepage') }}
+                            </h2>
                             <mat-card-content>
                                 <div class="section-content mat-body-1" [innerHTML]="sanitize(content?.instructions)">
                                 </div>
@@ -264,7 +265,7 @@
                 (cohortResults[cohortTypesEnum.AUTHORS] && cohortResults[cohortTypesEnum.AUTHORS].length > 0)">
                 <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
-                        <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Authors and curators</h2>
+                        <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">{{'apptocsinglepage.authorsAndCurators' | translate}}</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
                             <!-- authors -->
                             <div *ngFor="let author of parseJsonData(content?.creatorDetails)"
@@ -277,7 +278,7 @@
                                 </ws-widget-avatar-photo>
                                 <div class="margin-left-xl">
                                     <div class="user-name">{{ author.name }}</div>
-                                    <p class="mat-body-2  mb-0  ws-mat-black60-text">Author</p>
+                                    <p class="mat-body-2  mb-0  ws-mat-black60-text">{{'apptocsinglepage.author' | translate}}</p>
                                 </div>
                             </div>
                             <!-- curators -->
@@ -291,7 +292,7 @@
                             </ws-widget-avatar-photo>
                             <div class="">
                                 <div class="user-name">{{ author.name }}</div>
-                                <p class="mat-body-2 mb-0 ws-mat-black60-text">Curator</p>
+                                <p class="mat-body-2 mb-0 ws-mat-black60-text">{{'apptocsinglepage.curator' | translate}}</p>
                             </div>
                         </div>
                             <!-- <div *ngIf="cohortResults[cohortTypesEnum.AUTHORS]">
@@ -315,7 +316,7 @@
             <section id="director" *ngIf="checkForFacilitators.length">
                 <div class="fluid-width contacts-container">
                     <div class="fixed-width flex flex-col flex-wrap">
-                        <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">Program director & facilitators</h2>
+                        <h2 _ngcontent-qml-c28="" class="mat-toolbar contacts-head">{{'apptocsinglepage.programDirectorFacilitators' | translate}}</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 col-gap-4">
                             <!-- <ng-container *ngFor="let sessionDetails of selectedBatchData?.content[0]?.batchAttributes?.sessionDetails_v2"> -->
                                 <ng-container *ngFor="let facilitator of checkForFacilitators">
@@ -326,7 +327,7 @@
                                         </ws-widget-avatar-photo>
                                         <div class="margin-left-xl">
                                             <div class="user-name">{{ facilitator.name }}</div>
-                                            <p class="mat-body-2  mb-0  ws-mat-black60-text">Facilitator</p>
+                                            <p class="mat-body-2  mb-0  ws-mat-black60-text">{{'apptocsinglepage.facilitator' | translate}}</p>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -362,13 +363,13 @@
                     (competencies.length) || (content?.competencies && competencies.length))">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
-                        <h2 class="mat-toolbar contacts-head">Competencies</h2>
+                        <h2 class="mat-toolbar contacts-head">{{'apptocsinglepage.competencies' | translate}}</h2>
                     </div>
                     <div>
                         <table class="compt-table width-1-1 text-left">
                             <tr>
-                                <th class="padding-xs ws-mat-black60-text mat-body-1">Competency</th>
-                                <th class="padding-xs ws-mat-black60-text mat-body-1">Type</th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">{{'apptocsinglepage.competency' | translate}}</th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">{{'apptocsinglepage.type' | translate}}</th>
                             </tr>
                             <tr *ngFor="let comp of competencies">
                                 <td class="padding-xs mat-body-1">{{comp.name}}</td>
@@ -381,7 +382,7 @@
             <section id="rating" *ngIf="!forPreview">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
-                        <h2 class="mat-toolbar contacts-head">Ratings and reviews</h2>
+                        <h2 class="mat-toolbar contacts-head">{{'apptocsinglepage.ratingsReviews' | translate}}</h2>
                     </div>
                     <!-- <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary> -->
 
@@ -398,7 +399,7 @@
                                             <!-- <mat-label>Search</mat-label> -->
                                             <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
                                                 aria-label="Search" formControlName="searchKey"
-                                                i18n-placeholder="search" [placeholder]="'Search'" matInput  maxlength="50"/>
+                                                i18n-placeholder="search" [placeholder]="'apptocsinglepage.search' | translate" matInput  maxlength="50"/>
                                             <!-- (input)="updateQuery(searchKey.value)" -->
                                         </mat-form-field>
                                     </div>
@@ -406,16 +407,14 @@
                                 <div class="item_dropdown_box">
                                     <div class="flex flex-1 flex-wrap section-input">
                                         <div class="item">
-
                                             <mat-form-field class="" appearance="outline">
                                                 <mat-select #sortBySelect formControlName="sortByControl"
                                                     i18n-placeholder placeholder="Sort by">
-                                                    <mat-option [value]="'topReviews'" selected>Top reviews
+                                                    <mat-option [value]="'topReviews'" slected>{{'apptocsinglepage.topReviews' | translate}}
                                                     </mat-option>
-                                                    <mat-option [value]="'latestReviews'">Latest reviews</mat-option>
+                                                    <mat-option [value]="'latestReviews'">{{'apptocsinglepage.latestReviews' | translate}}</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
-
                                         </div>
                                     </div>
                                 </div>
@@ -444,7 +443,7 @@
                             </div>
                         </ng-container>
                     </div> -->
-                    
+
                     <div class="rating-comments" *ngIf="ratingReviews">
                         <div infiniteScroll
                         [infiniteScrollDistance]="1"
@@ -470,7 +469,7 @@
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Content" *ngIf="content?.children?.length">
+    <mat-tab label="{{'apptocsinglepage.content' | translate}}" *ngIf="content?.children?.length">
         <ng-template matTabContent>
             <section id="content">
                 <div class="fixed-width">
@@ -480,8 +479,7 @@
             </section>
         </ng-template>
     </mat-tab>
-
-    <mat-tab label="Sessions" *ngIf="content?.children?.length && (content?.primaryCategory === primaryCategory.BLENDED_PROGRAM)">
+    <mat-tab label="{{'apptocsinglepage.sessions' | translate}}" *ngIf="content?.children?.length && (content?.primaryCategory === primaryCategory.BLENDED_PROGRAM)">
         <ng-template matTabContent>
             <section id="content">
                 <div class="fixed-width">
@@ -491,7 +489,7 @@
             </section>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Discussion" *ngIf="!forPreview">
+    <mat-tab label="{{'apptocsinglepage.discussion' | translate}}" *ngIf="!forPreview">
         <ng-template matTabContent>
             <section id="discussion-forum">
                 <div class="fixed-width toc-discussion-container">
@@ -501,10 +499,7 @@
             </section>
         </ng-template>
     </mat-tab>
-
 </mat-tab-group>
-
-
 
 <!-- <section id="cohorts">
     <div class="fixed-width toc-discussion-container">
@@ -526,7 +521,7 @@
                     | pipeNameTransform
                     }}
                 </div>
-                <p class="mat-body-2 ws-mat-black60-text">Curator</p>
+                <p class="mat-body-2 ws-mat-black60-text">{{'apptocsinglepage.curator' | translate}}</p>
             </div>
         </div>
     </div>

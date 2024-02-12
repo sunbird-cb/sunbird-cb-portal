@@ -8,7 +8,8 @@ import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:enable */
 
 @Component({
@@ -45,11 +46,22 @@ export class CompetenceSysComponent implements OnInit {
     private competencySvc: CompetenceService,
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     // this.tabsData =
     //   (this.route.parent &&
     //     this.route.parent.snapshot.data.pageData.data.tabs) ||
     //   []
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+
     if (
       this.route.snapshot.data &&
       this.route.snapshot.data.profile &&

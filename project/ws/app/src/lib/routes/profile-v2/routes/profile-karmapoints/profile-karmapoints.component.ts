@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import moment from 'moment'
 
 @Component({
@@ -15,7 +16,6 @@ import moment from 'moment'
 export class ProfileKarmapointsComponent implements OnInit {
   currentUser: any
   karmaPointsHistory: any = []
-  kpTooltiptext = 'Karma Points are a reward for high learning engagement at iGOT. For more information, visit Karma Points FAQs.'
   total = 0
   count = 0
   lastDate: any = moment(new Date()).valueOf()
@@ -26,8 +26,17 @@ export class ProfileKarmapointsComponent implements OnInit {
     private configSvc: ConfigurationsService,
     public router: Router,
     private contentSvc: WidgetContentService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.currentUser = this.configSvc && this.configSvc.userProfile
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {
@@ -90,6 +99,10 @@ export class ProfileKarmapointsComponent implements OnInit {
       return 'First Enrollment'
     }
     return `${row ? row.operation_type.split('_').join(' ') : 'No Title'}`
+  }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    return this.langtranslations.translateLabel(label, type, subtype)
   }
 
 }

@@ -40,7 +40,7 @@ export class PublicLogoutComponent implements OnInit, OnDestroy {
     this.routerSubsc = this.activateRoute.queryParamMap.subscribe(params => {
       this.message = _.get(params, 'params.error')
 
-      if(this.message || this.message !== 'undefined' || this.message !== null || this.message !== ''){
+      if (this.message || this.message !== 'undefined' || this.message !== null || this.message !== '') {
         this.authSvc.force_logout()
       }
     })

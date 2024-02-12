@@ -148,7 +148,7 @@
               " class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important">
               <a mat-button [routerLink]="'/app/user-profile/details'">
                 <mat-icon class="margin-right-xs">edit</mat-icon>
-                <span i18n>{{ 'Edit Profile' }}</span>
+                <span i18n>{{ 'profileView.editProfile' | translate }}</span>
               </a>
             </div>
           </div> -->
@@ -174,20 +174,20 @@
                 </span>
                 <span class="ws-mat-default-text">
                   {{ countdata }}</span>
-                <span class="pad-4"> Karma points</span>
+                <span class="pad-4"> {{ 'profileView.karmaPoints' | translate }}</span>
               </span>
               <span class="flex margin-right-l mobile">
                 <span class="ws-mat-default-text">{{
                   connectionRequests?.length
                   }}</span>
-                <span class="pad-4">Connections</span>
+                <span class="pad-4">{{ 'profileView.connections' | translate }}</span>
               </span>
               <span class="flex margin-right-l mobile">
                 <!-- {{discussProfileData | json}} -->
                 <span class="ws-mat-default-text">{{
                   Math.abs(discussProfileData?.topiccount || 0)
                   }}</span>
-                <span class="pad-4">Discussions</span>
+                <span class="pad-4">{{ 'profileView.discussions' | translate }}</span>
               </span>
             </div>
 
@@ -203,7 +203,7 @@
       <div class="flex-1" role="link" tabindex="0">
         <div class="flex flex-1">
           <mat-card-title class="flex-4 mobile-margin text-capitalize mat-h2">
-            No Information Available
+            {{ 'profileView.noInfoavailable' | translate }}
           </mat-card-title>
         </div>
       </div>
@@ -226,7 +226,7 @@
         portalProfile.userId === currentUser?.userId
       ">
           <ng-template matTabContent>
-            <p class="margin-top-s tab-heading">Your stats</p>
+            <p class="margin-top-s tab-heading">{{ 'profileView.yourStats' | translate }}</p>
             <div class="margin-bottom-m margin-top-m">
               <div class="profile-section">
                 <ws-widget-profile-card-stats [isMobile]="true" (expandCollapse)="expandCollapse($event)"
@@ -241,7 +241,7 @@
 
             <div class="flex flex-col margin-bottom-m mt-3 gap-3 discussion-card ">
               <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
-                <div class="flex flex-grow">My Discussions</div>
+                <div class="flex flex-grow">{{ 'profileView.myDiscussions' | translate }}</div>
                 <div class="text-2xl ws-mat-default-text">
                   <div class="text-sm" [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}">Show all
                   </div>
@@ -365,14 +365,14 @@
                         'ws-mat-accent-border font-medium':
                           currentFilter !== 'timestamp'
                       }" mat-button (click)="filter('timestamp')">
-                      Recent posts
+                      {{ 'profileView.recentPosts' | translate }}
                     </a>
                     <a href="javascript:void(0)" class="filter-option" i18n-aria-label role="button" [ngClass]="{
                         'ws-mat-accent-border-active': currentFilter === 'best',
                         'ws-mat-accent-border font-medium':
                           currentFilter !== 'best'
                       }" mat-button (click)="filter('best')">
-                      Best posts
+                      {{ 'profileView.bestPosts' | translate }}
                     </a>
                     <a href="javascript:void(0)" class="filter-option" i18n-aria-label role="button" [ngClass]="{
                         'ws-mat-accent-border-active':
@@ -383,7 +383,7 @@
                         portalProfile.id === currentUser?.userId ||
                         portalProfile.userId === currentUser?.userId
                       ">
-                      Saved posts
+                      {{ 'profileView.savedPosts' | translate }}
                     </a>
                   </div>
                 </div> -->
@@ -398,7 +398,7 @@
             <ng-container *ngIf="!(discussionList && discussionList.length > 0)">
               <mat-card class="no-shadow mat-card margin-bottom-l">
                 <mat-card-header>
-                  <mat-card-title>No Data</mat-card-title>
+                  <mat-card-title>{{ 'profileView.noData' | translate }}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
                   <span>&nbsp;</span>

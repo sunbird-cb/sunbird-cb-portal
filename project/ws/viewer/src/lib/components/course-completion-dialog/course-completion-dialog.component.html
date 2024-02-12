@@ -22,15 +22,15 @@
     <span>Your certificate of completion will be available shortly.</span>
   </mat-card-content>
 
-  <mat-card-content class="px-5">    
+  <mat-card-content class="px-5">
     <span>We would love to hear about your experience, so please take a moment to <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>rate the course</b></span> and share your thoughts with us.</span>
   </mat-card-content>
   <mat-divider inset></mat-divider>
   <mat-card-actions class="flex flex-row-reverse">
     <button mat-button  type="button"
     class="ws-mat-accent-border-active mat-accent .blue-border" [mat-dialog-close]="true" i18n>
-      Close
-    </button> 
+    {{ 'coursecompletiondialog.close' | translate }}
+    </button>
   </mat-card-actions>
 </mat-card>
 
@@ -57,7 +57,7 @@
     <button mat-button  type="button"
     class="ws-mat-accent-border-active mat-accent .blue-border" [mat-dialog-close]="true" i18n>
       Close
-    </button> 
+    </button>
   </mat-card-actions>
 </mat-card>
 <mat-card class="no-shadow" *ngIf="showRating">
@@ -66,8 +66,8 @@
 <div class="congrats-container" *ngIf="!showRating">
     <div class="header">
       <div><img src="assets/icons/final-assessment/congrats_badge.svg"/></div>
-      <div class="heading-text"><span i18n>Congratulations on completing</span></div>
-      <div class="subheading-text"><span i18n>Your certificate of completion will be available shortly.</span></div>
+      <div class="heading-text"><span i18n>{{ translateLabels('congratulations', 'coursecompletiondialog') }}</span></div>
+      <div class="subheading-text"><span i18n>{{ 'coursecompletiondialog.yourCertificateAvailableShortly' | translate }}</span></div>
     </div>
     <div class="seperator"></div>
     <div class="rating-panel">
@@ -89,5 +89,5 @@
 <div>
 <mat-card class="no-shadow" *ngIf="showRating">
   <ws-widget-content-rating-v2-dialog [isEditMode]="isEditMode" [ccuserRating]="userRating"  [navigatetoTOC]="true"></ws-widget-content-rating-v2-dialog>
-  </mat-card> 
+  </mat-card>
 </div>

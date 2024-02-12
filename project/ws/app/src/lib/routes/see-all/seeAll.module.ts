@@ -45,6 +45,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { SeeAllRoutingModule } from './seeAll-routing.module'
 import { SeeAllHomeComponent } from './components/see-all-home/see-all-home.component'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
     MatDividerModule,
     UserAutocompleteModule,
     InfiniteScrollModule,
+    TranslateModule,
   ],
   exports: [SeeAllHomeComponent],
   providers: [],

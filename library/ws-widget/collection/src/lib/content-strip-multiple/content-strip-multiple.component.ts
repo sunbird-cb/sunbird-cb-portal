@@ -10,6 +10,7 @@ import {
   EventService,
   ConfigurationsService,
   UtilityService,
+  MultilingualTranslationsService,
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
@@ -83,6 +84,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
     private userSvc: WidgetUserService,
     private http: HttpClient,
     private searchApiService: SearchApiService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     super()
   }
@@ -1197,5 +1199,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       })
       .catch(_err => { })
       .finally(() => Promise.resolve())
+  }
+
+  translateLabels(label: string) {
+    return this.langtranslations.translateLabelWithoutspace(label, 'contentstripmultiple', '')
   }
 }

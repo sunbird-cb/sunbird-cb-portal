@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { InfoDialogComponent } from '../info-dialog/info-dialog.component'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/lib/services/multilingual-translations.service'
 
 @Component({
   selector: 'ws-widget-weekly-claps',
@@ -12,7 +14,18 @@ export class WeeklyClapsComponent implements OnInit {
   @Input() insightsData: any = ''
   @Input() weeklyData: any = ''
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private translate: TranslateService,
+              private langtranslations: MultilingualTranslationsService) {
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+
+    })
+   }
 
   ngOnInit() {
     // if(this.activatedRoute.snapshot.data.pageData) {

@@ -105,7 +105,7 @@ export class PdfComponent implements OnInit, OnDestroy {
             this.widgetResolverPdfData.widgetData.collectionId = ''
           }
           this.widgetResolverPdfData.widgetData.resumePage = 1
-          if ( this.pdfData && this.pdfData.identifier) {
+          if (this.pdfData && this.pdfData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
                 this.pdfData.identifier,
@@ -217,8 +217,10 @@ export class PdfComponent implements OnInit, OnDestroy {
       // this.activatedRoute.data.subscribe(data => {
       //   userId = data.profileData.data.userId
       // })
-      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
-        this.activatedRoute.snapshot.queryParams.batchId, pdfId)
+      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+        this.activatedRoute.snapshot.queryParams.collectionId,
+        this.activatedRoute.snapshot.queryParams.batchId,
+        pdfId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,

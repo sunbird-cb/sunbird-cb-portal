@@ -12,11 +12,11 @@
     <mat-sidenav [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">
       <mat-tab-group>
-        <mat-tab *ngIf="isTypeOfCollection" i18n-label label="Contents">
+        <mat-tab *ngIf="isTypeOfCollection" i18n-label label="{{'viewercomponent.contents' | translate}}">
           <viewer-viewer-toc [forPreview]="forPreview" (hidenav)="minimizeBar()">
           </viewer-viewer-toc>
         </mat-tab>
-        <mat-tab i18n-label label="Details">
+        <mat-tab i18n-label label="{{'viewercomponent.details' | translate}}">
           <ws-widget-player-brief [forPreview]="forPreview" [content]="content"></ws-widget-player-brief>
         </mat-tab>
       </mat-tab-group>
@@ -32,11 +32,11 @@
         <div *ngIf="errorWidgetData?.widgetData?.errorType" [wsResolverWidget]="errorWidgetData"></div>
         <div *ngIf="error.errorType === errorType.mimeTypeMismatch">
           <mat-card>
-            <mat-card-title i18n>Looks like we are having some issues in our content.</mat-card-title>
+            <mat-card-title i18n>{{ 'viewercomponent.issueInContent' | translate }}</mat-card-title>
             <mat-card-content>
               <div class="mat-caption">
                 <ng-container i18n>
-                  Debug Message: This content is of a different mimeType (
+                  {{ 'viewercomponent.differentMimetype' | translate }} (
                 </ng-container>
                 <ng-container>
                   {{ error?.mimeType }}
@@ -46,25 +46,25 @@
                 </ng-container>
               </div>
               <div>
-                <strong i18n>Possible Link: </strong>
+                <strong i18n>{{ 'viewercomponent.possibleLink' | translate }} </strong>
                 <a [routerLink]="error.probableUrl">
                   {{ error.probableUrl }}
                 </a>
               </div>
               <div class="margin-top-m text-center">
-                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>Report to us</a>
-                <span i18n> and we will make it work</span>
+                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>{{ 'viewercomponent.reportToUs' | translate }}</a>
+                <span i18n> {{ 'viewercomponent.weWillMakeItWork' | translate }}</span>
               </div>
             </mat-card-content>
           </mat-card>
         </div>
         <div *ngIf="error.errorType === errorType.previewUnAuthorised">
           <mat-card class="margin-m">
-            <mat-card-title i18n>Looks like you are not authorized to preview this content.</mat-card-title>
+            <mat-card-title i18n>{{ 'viewercomponent.notAuthorizedToPreview' | translate }}</mat-card-title>
             <mat-card-content>
               <div>
-                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>Report to us</a>
-                <span i18n> and we will make it work</span>
+                <a class="ws-mat-primary-text" [routerLink]="'/feedback/bug'" i18n>{{ 'viewercomponent.reportToUs' | translate }}</a>
+                <span i18n> {{ 'viewercomponent.weWillMakeItWork' | translate }}</span>
               </div>
             </mat-card-content>
           </mat-card>
@@ -81,10 +81,8 @@
           <a class="padding-right-s padding-top-xs cheight" *ngIf="!show" role="button" (click)="show=true">
             <mat-icon class="cursor-pointer ws-mat-primary-text">visibility</mat-icon>
           </a>
-          <span *ngIf="show" i18n
-            class="flex flex-1 flex-center padding-xs ws-mat-primary-text mat-subheading-1 margin-0">
-            If you are a government official, register or sign in so you can track your learning progress and get
-            certified. </span>
+          <span *ngIf="show" i18n class="flex flex-1 flex-center padding-xs ws-mat-primary-text mat-subheading-1 margin-0">
+            {{ 'viewercomponent.ifGovtOfficial' | translate }}</span>
         </div>
         <div class="flex flex-1 flex-column" *ngIf="show">
           <div class="flex flex-1 flex-row-c">
@@ -98,17 +96,17 @@
             <div class="flex flex-1 flex-center">
               <a i18n mat-button [href]="'/protected/v8/resource?redirect_uri=/app/toc/'+ collectionId +'/overview'"
                 class="flex text-center margin-right-s flex-end  ws-mat-default-text ws-mat-accent-border-active">
-                Sign in</a>
-              <span i18n class="flex ws-mat-default-text margin-left-s margin-right-s margin-top-xs-2">or</span>
+                {{ 'common.signIn' | translate }}</a>
+              <span i18n class="flex ws-mat-default-text margin-left-s margin-right-s margin-top-xs-2">{{ 'common.or' | translate }}</span>
               <a mat-button i18n routerLink="/public/signup"
-                class="btn btn-primary flex text-center text-white-b margin-left-s flex-end">Register</a>
+                class="btn btn-primary flex text-center text-white-b margin-left-s flex-end">{{ 'common.register' | translate }}</a>
             </div>
           </div>
         </div>
       </div>
       <div class="viewer-player-container">
         <router-outlet (activate)="getContentData($event)"></router-outlet>
-      </div>      
+      </div>
       <div class="toc-container" *ngIf="viewerHeaderSideBarToggleFlag">
         <div class="pb-4 lg:py-4">
           <ws-widget-content-toc [contentTabFlag]="false" [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"

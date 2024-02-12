@@ -14,14 +14,14 @@
                 <img i18n-alt alt="today events" src="\assets\images\event\today-events.svg"/>
             </div>
             <div class="block md:hidden m-today-events-block">
-                <span class="width-expand m-today-events-title">Today's events</span>
+                <span class="width-expand m-today-events-title">{{ 'event.labelTodayEvent' | translate }}</span>
             </div>
             <div class="flex flex-3 event_text_box">
                 <mat-card class="flex-1 no-box-shadow">
                     <div class="hidden md:block">
                         <mat-card-header class="flex items-baseline margin-fix ">
                             <mat-card-title class="margin-l-0 f-medium  flex-1">
-                              <span class="width-expand">Today's events</span>
+                              <span class="width-expand">{{ 'event.labelTodayEvent' | translate }}</span>
                             </mat-card-title>
                             <span class="spacer"></span>
                           </mat-card-header>
@@ -32,7 +32,7 @@
                         </ng-container>
 
                     <ng-container *ngIf="todaysEvents && todaysEvents.length === 0">
-                        <h4 class="w-full ws-mat-black60-text">No events</h4>
+                        <h4 class="w-full ws-mat-black60-text">{{ 'event.noEvent' | translate }}</h4>
                     </ng-container>
                   </mat-card-content>
                   <mat-card-footer>
@@ -71,7 +71,7 @@
 
 <div class="w-full padding-top-xs event_card_main_box">
     <div class="flex flex-1 flex-column margin-fix mb-2">
-        <span class="f-medium mat-title">All events </span>
+        <span class="f-medium mat-title">{{ 'event.labelAllEvents' | translate }} </span>
     </div>
     <div class="flex flex-1 flex-column margin-fix search">
         <form (submit)="updateQuery(queryControl.value)">
@@ -97,44 +97,38 @@
         </div>
     </div> -->
     <mat-tab-group [selectedIndex]="0" class="custom-tabgroup" (selectedTabChange)="tabClicked($event)">
-        <mat-tab label="All" *ngIf="alltypeEvents?.length">
+        <mat-tab label="{{ 'event.all' | translate }}" *ngIf="alltypeEvents?.length">
             <ng-template matTabContent>
                 <section id="content">
                     <div class="w-full margin-top-xl margin-bottom-m event_card_box">
                         <ng-container
                             *ngFor="let event of alltypeEvents |  pipeFilterV2:'eventName': searchInput.value">
                             <ws-app-events-card class="" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
-                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results
-                                found!</h4>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.noSearchResultFound' | translate }}</h4>
                         </ng-container>
                     </div>
                 </section>
             </ng-template>
         </mat-tab>
-        <mat-tab label="Events in your MDO" *ngIf="featuredEvents?.length">
+        <mat-tab label="{{ 'event.mdoEvents' | translate }}" *ngIf="featuredEvents?.length">
             <ng-template matTabContent>
                 <section id="content">
                     <div class="w-full margin-top-xl margin-bottom-m">
-                        <ng-container
-                            *ngFor="let event of featuredEvents |  pipeFilterV2:'eventName': searchInput.value">
-                            <ws-app-events-card class="w-fix" [eventData]="event"
-                                *ngIf="event !== -1"></ws-app-events-card>
-                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results
-                                found!</h4>
+                        <ng-container *ngFor="let event of featuredEvents |  pipeFilterV2:'eventName': searchInput.value">
+                            <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.noSearchResultFound' | translate }}</h4>
                         </ng-container>
                     </div>
                 </section>
             </ng-template>
         </mat-tab>
-        <mat-tab label="Curated events" *ngIf="curatedEvents?.length">
+        <mat-tab label="{{ 'event.curatedEvents' | translate }}" *ngIf="curatedEvents?.length">
             <ng-template matTabContent>
                 <section id="content">
                     <div class="w-full margin-top-xl margin-bottom-m">
                         <ng-container *ngFor="let event of curatedEvents | pipeFilterV2:'eventName': searchInput.value">
-                            <ws-app-events-card class="w-fix" [eventData]="event"
-                                *ngIf="event !== -1"></ws-app-events-card>
-                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">No search results
-                                found!</h4>
+                            <ws-app-events-card class="w-fix" [eventData]="event" *ngIf="event !== -1"></ws-app-events-card>
+                            <h4 class="w-full text-center ws-mat-black60-text" *ngIf="event === -1">{{ 'msg.noSearchResultFound' | translate }}</h4>
                         </ng-container>
                     </div>
                 </section>

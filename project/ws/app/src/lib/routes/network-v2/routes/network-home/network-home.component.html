@@ -4,7 +4,8 @@
       <mat-icon matPrefix class="ml-5 flex items-center justify-center">search</mat-icon>
       <!-- <mat-placeholder>Search user</mat-placeholder> -->
       <!-- <input [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput type="search"> -->
-      <mat-label class="mat-body-2">Search user</mat-label>
+      <mat-label class="mat-body-2">{{ 'network.searchUser' | translate }}</mat-label>
+
       <input type="search" #searchInput class="ml-2" [(ngModel)]="nameFilter" (ngModelChange)="searchUser()" matInput
         type="search" [placeholder]="'Search user'" maxlength="50" />
     </mat-form-field>
@@ -12,14 +13,14 @@
   <div class="flex flex-1 mb-4">
     <mat-expansion-panel class="w-full mat-elevation-z" [expanded]="true" hideToggle *ngIf="!enableFeature">
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>User Search</mat-panel-title>
+        <mat-panel-title i18n>{{ 'network.userSearch' | translate }}</mat-panel-title>
 
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <div>
           <h4 class="w-full text-center ws-mat-black60-text"
             *ngIf="searchResultUserArray.length === 0 && !this.searchSpinner" i18n>
-            No search results found!
+            {{ 'network.noSearchResultFound' | translate }}
           </h4>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 col-gap-4">
             <ng-container *ngFor="let user of searchResultUserArray">
@@ -70,15 +71,15 @@
       <mat-card-header class="flex items-baseline margin-fix">
         <mat-card-title class="margin-l-0 f-medium  flex-1">
           <span class="width-expand">
-            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length > 1 ">Connection requests</span>
-            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length === 1 ">Connection request</span>
+            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length > 1 ">{{ 'network.cRequests'| translate }}</span>
+            <span class="mat-subheading-1" *ngIf="connectionRequests && connectionRequests.length === 1 ">{{ 'network.cRequest'| translate }}</span>
           </span>
         </mat-card-title>
         <span class="spacer"></span>
 
         <ng-container *ngIf="connectionRequests && connectionRequests.length > 3">
         <button mat-button color="default" type="button" class=" flex-auto-display see_all_btn" (click)="goToConnectionRequests()">
-          <span class="ws-mat-default-text" i18n>Show all </span>
+          <span class="ws-mat-default-text" i18n>{{ 'network.showAll'| translate }} </span>
           <mat-icon  class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">navigate_next </mat-icon>
         </button>
       </ng-container>
@@ -94,11 +95,11 @@
           </ng-container>
         </ng-container>
         <h4 *ngIf="connectionRequests && connectionRequests.length <=0" class="w-full text-center ws-mat-black60-text">
-          No connection requests!
+         {{ 'network.noConnectionRequests' | translate }}
         </h4>
         <!-- </ng-container> -->
       </mat-card-content>
-     
+
 
     </mat-card>
   </div>
@@ -107,12 +108,12 @@
       <mat-card-header class="flex items-baseline margin-fix">
         <mat-card-title class="margin-l-0 f-medium  flex-1">
           <span class="width-expand">
-            <span class="mat-subheading-1">People you may know</span>
+            <span class="mat-subheading-1">{{ 'msg.peopleYouMayKnow' | translate }}</span>
           </span>
         </mat-card-title>
         <span class="spacer"></span>
         <button mat-button color="default" type="button" class=" flex-auto-display see_all_btn" (click)="goToMyMdo()">
-          <span class="ws-mat-default-text" i18n>Show all </span>
+          <span class="ws-mat-default-text" i18n>{{ 'network.showAll'| translate }} </span>
           <mat-icon  class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">navigate_next </mat-icon>
         </button>
       </mat-card-header>
@@ -121,7 +122,7 @@
           <ws-app-connection-people-card class="mr-4 mb-5" [user]="user"
             (connection)="connectionUpdatePeopleCard($event)"></ws-app-connection-people-card>
         </ng-container>
-        <h4 class="ws-mat-black60-text" *ngIf="!recommendedUsers">No users found!</h4>
+        <h4 class="ws-mat-black60-text" *ngIf="!recommendedUsers">{{ 'msg.noUserFound' | translate }}</h4>
       </mat-card-content>
       <mat-card-actions align="end">
       </mat-card-actions>

@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
 // tslint:disable
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:enable
 
 @Component({
@@ -18,9 +20,18 @@ export class KnowledgeSavedComponent implements OnInit {
   searchText = ''
   // kwResources: any;
   constructor(private activateRoute: ActivatedRoute,
-              private kwResources: KnowledgeResourceService
+              private kwResources: KnowledgeResourceService,
+              private translate: TranslateService,
+              private langtranslations: MultilingualTranslationsService,
     ) {
       this.filterSaved(null)
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+      })
   }
 
   ngOnInit() {

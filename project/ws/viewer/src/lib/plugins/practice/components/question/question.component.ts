@@ -26,8 +26,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() ePrimaryCategory: any
   @Input() totalQCount: any
   @Input() showAnswer: any
-  // tslint:disable
-  @Input() current_Question: any
+  @Input() currentQuestion: any
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
@@ -46,7 +45,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() itemSelectedList: string[] = []
   @Input() markedQuestions: Set<string> = new Set()
   @Output() itemSelected = new EventEmitter<string | Object>()
-  
+
   quizAnswerHash: { [questionId: string]: string[] } = {}
   title = 'match'
   itemSelectedList1: any
@@ -130,7 +129,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   checkAns(quesIdx: number) {
-    if (quesIdx > 0 && quesIdx <= this.totalQCount && this.current_Question.editorState && this.current_Question.editorState.options) {
+    if (quesIdx > 0 && quesIdx <= this.totalQCount && this.currentQuestion.editorState && this.currentQuestion.editorState.options) {
       this.showAnswer = true
       this.practiceSvc.shCorrectAnswer(true)
     }

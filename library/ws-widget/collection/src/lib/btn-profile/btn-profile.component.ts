@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig, EventService, WsEvents } from '@sunbird-cb/utils'
 import { IBtnAppsConfig } from '../btn-apps/btn-apps.model'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
@@ -9,6 +9,7 @@ import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import _ from 'lodash'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { ActivatedRoute, Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:enable*/
 interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
@@ -52,7 +53,9 @@ export class BtnProfileComponent extends WidgetBaseComponent
     private dialog: MatDialog,
     private accessService: AccessControlService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
+    private events: EventService
   ) {
     super()
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
@@ -96,6 +99,12 @@ export class BtnProfileComponent extends WidgetBaseComponent
             )),
           }),
       )
+    }
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
   }
   updateUserInfo() {
@@ -197,5 +206,18 @@ export class BtnProfileComponent extends WidgetBaseComponent
 
   handleRedirectToCompetencyPassbook() {
     this.router.navigate(['/page/competency-passbook/list'])
+  }
+
+  raiseTelemetry(nudgename: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${nudgename}-nudge`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME,
+      }
+    )
   }
 }

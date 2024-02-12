@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ContentStripWithTabsComponent } from './content-strip-with-tabs.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ContentStripWithTabsComponent } from './content-strip-with-tabs.component'
 
 describe('ContentStripWithTabsComponent', () => {
-  let component: ContentStripWithTabsComponent;
-  let fixture: ComponentFixture<ContentStripWithTabsComponent>;
+  let component: ContentStripWithTabsComponent
+  let fixture: ComponentFixture<ContentStripWithTabsComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentStripWithTabsComponent ]
+      declarations: [ContentStripWithTabsComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContentStripWithTabsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ContentStripWithTabsComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -38,6 +38,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { RightMenuCardComponent } from './components/right-menu-card/right-menu-card.component'
 import { PresenterCardComponent } from './components/presenter-card/presenter-card.component'
 import { EventService } from './services/events.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { EventService } from './services/events.service'
     BtnPageBackModule,
     WidgetResolverModule,
     MatTabsModule,
+    TranslateModule.forChild({}),
     HorizontalScrollerV2Module,
     ContentStripWithTabsModule,
   ],

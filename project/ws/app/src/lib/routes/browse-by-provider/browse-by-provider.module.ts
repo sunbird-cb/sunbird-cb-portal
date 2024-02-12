@@ -40,6 +40,9 @@ import { BrowseProviderService } from './services/browse-provider.service'
 import { PopularProviderCardComponent } from './components/popular-provider-card/popular-provider-card.component'
 import { ProviderCardComponent } from './components/provider-card/provider-card.component'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
 
 @NgModule({
   declarations: [
@@ -84,6 +87,13 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
     WidgetResolverModule,
     CardContentModule,
     CardContentV2Module,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [BrowseProviderService],
 })

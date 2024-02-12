@@ -13,7 +13,7 @@ import { CourseCompletionDialogComponent } from '../course-completion-dialog/cou
 @Component({
   selector: 'viewer-viewer-secondary-top-bar',
   templateUrl: './viewer-secondary-top-bar.component.html',
-  styleUrls: ['./viewer-secondary-top-bar.component.scss']
+  styleUrls: ['./viewer-secondary-top-bar.component.scss'],
 })
 export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 

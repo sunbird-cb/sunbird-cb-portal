@@ -33,6 +33,7 @@ import { OfflineSessionModule as OfflineSessionContainerModule } from '../../rou
 import { OfflineSessionComponent } from './offline-session.component'
 import { RouterModule, Routes } from '@angular/router'
 import { ViewerResolve } from '../../viewer.resolve'
+import { TranslateModule } from '@ngx-translate/core'
 
 const routes: Routes = [
   {
@@ -68,6 +69,7 @@ const routes: Routes = [
     UserContentRatingModule,
     BtnContentFeedbackV2Module,
     OfflineSessionContainerModule,
+    TranslateModule.forChild(),
   ],
   providers: [ViewerResolve],
 })
