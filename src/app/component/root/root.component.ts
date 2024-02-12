@@ -85,6 +85,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   mobileTopHeaderVisibilityStatus = true;
   activeMenu:any = '';
   backGroundTheme:any
+  showHubs = true;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -235,6 +236,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       }
 
       if (event instanceof NavigationStart) {
+        
         this.showNavbar = true
         if (event.url.includes('preview') || event.url.includes('embed')) {
           this.isNavBarRequired = false
@@ -242,6 +244,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           this.isNavBarRequired = false
         } else {
           this.isNavBarRequired = true
+        }
+        if(event.url.includes('/public')) {
+          this.showHubs = false;
         }
         this.routeChangeInProgress = true
         this.changeDetector.detectChanges()
@@ -268,7 +273,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           this.showFooter = false
           this.showNavbar = false
           this.isNavBarRequired = false
-        } else {
+        } else {          
           this.showFooter = true
           this.showNavbar = true
           this.isNavBarRequired = true
