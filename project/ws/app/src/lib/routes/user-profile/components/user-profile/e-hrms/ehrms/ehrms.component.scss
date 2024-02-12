@@ -93,9 +93,9 @@
     padding: 1rem 1rem;
   }
 
-      &:first-child {
-        margin: 0px 10px 0px 0px !important;
-      }
+      // &:first-child {
+      //   margin: 0px 10px 0px 0px !important;
+      // }
 }
 .name-div {
   @include breakpoint-xs {
@@ -147,7 +147,7 @@
   }
 }
 .box-responsive-rightDiv {
-  padding-bottom: 216px;
+  padding-bottom: 150px;
   @include breakpoint-xs {
     padding-bottom: 0px;
   }
