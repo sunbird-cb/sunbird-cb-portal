@@ -50,11 +50,10 @@ export class MultilingualTranslationsService {
             // tslint:disable-next-line: prefer-template
           const translationKey = type + '.' +  nlabel + subtype
           return this.translate.instant(translationKey)
-        }  {
-            // tslint:disable-next-line: prefer-template
-            const translationKey = type + '.' +  nlabel
-            return this.translate.instant(translationKey)
-        }
+        } 
+        // tslint:disable-next-line: prefer-template
+        const translationKey = type + '.' +  nlabel
+        return this.translate.instant(translationKey)
     }
 
     translateActualLabel(label: string, type: any, subtype: any) {
