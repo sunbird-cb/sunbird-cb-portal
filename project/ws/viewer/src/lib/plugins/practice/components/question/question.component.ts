@@ -26,7 +26,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() ePrimaryCategory: any
   @Input() totalQCount: any
   @Input() showAnswer: any
-  // tslint:disable-next-line
+  // tslint:disable
   @Input() current_Question: any
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,

@@ -1,16 +1,23 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
+import dayjs from 'dayjs'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 
 import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
 
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
+dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
 
 interface IStripUnitContentData {
   key: string
@@ -50,7 +57,17 @@ interface IStripUnitContentData {
   styleUrls: ['./app-toc-about.component.scss'],
 })
 
-export class AppTocAboutComponent implements OnInit, OnChanges {
+export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+
+  constructor(
+    private ratingService: RatingService,
+    private loggerService: LoggerService,
+    private tocService: AppTocService,
+    private dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    private loadCheckService: LoadCheckService,
+    private timerService: TimerService
+  ) { }
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
@@ -108,19 +125,19 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
   // tslint:disable-next-line:max-line-length
   tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
 
-  constructor(
-    private ratingService: RatingService,
-    private loggerService: LoggerService,
-    private dialog: MatDialog,
-    private matSnackBar: MatSnackBar,
-    private loadCheckService: LoadCheckService
-  ) { }
+  timer: any = {}
 
   ngOnInit() {
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
       this.loadCompetencies()
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.timerService.getTimerData().subscribe((_timer: any) => {
+      this.timer = _timer
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -133,31 +150,40 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
 
   loadCompetencies(): void {
     if (this.content && this.content.competencies_v5 && this.content.competencies_v5.length) {
+      const competenciesObject: any = {}
       this.content.competencies_v5.forEach((_obj: any) => {
-        if (this.competenciesObject[_obj.competencyArea]) {
-          if (this.competenciesObject[_obj.competencyArea][_obj.competencyTheme]) {
-            const competencyTheme = this.competenciesObject[_obj.competencyArea][_obj.competencyTheme]
+        if (competenciesObject[_obj.competencyArea]) {
+          if (competenciesObject[_obj.competencyArea][_obj.competencyTheme]) {
+            const competencyTheme = competenciesObject[_obj.competencyArea][_obj.competencyTheme]
             if (competencyTheme.indexOf(_obj.competencySubTheme) === -1) {
               competencyTheme.push(_obj.competencySubTheme)
             }
           } else {
-            this.competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
-            this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
+            competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
+            competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
           }
         } else {
-          this.competenciesObject[_obj.competencyArea] = {}
-          this.competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
-          this.competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
+          competenciesObject[_obj.competencyArea] = {}
+          competenciesObject[_obj.competencyArea][_obj.competencyTheme] = []
+          competenciesObject[_obj.competencyArea][_obj.competencyTheme].push(_obj.competencySubTheme)
         }
       })
 
-      this.handleShowCompetencies(this.competenciesObject)
+      for (const key in competenciesObject) {
+        if (competenciesObject.hasOwnProperty(key)) {
+          const _temp: any = {}
+          _temp['key'] = key
+          _temp['value'] = competenciesObject[key]
+          this.competenciesObject.push(_temp)
+        }
+      }
+      this.handleShowCompetencies(this.competenciesObject[0])
     }
   }
 
-  handleShowCompetencies(item: any, selectedFlag?: string): void {
-    this.competencySelected = (selectedFlag) ? item.key : Object.keys(item)[0]
-    const valueObj = (selectedFlag) ? item.value : Object.values(item)[0]
+  handleShowCompetencies(item: any): void {
+    this.competencySelected = item.key
+    const valueObj = item.value
     const competencyArray = []
     for (const key in valueObj) {
       if (valueObj.hasOwnProperty(key)) {
@@ -417,6 +443,10 @@ export class AppTocAboutComponent implements OnInit, OnChanges {
       this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
       this.fetchRatingLookup()
     }
+  }
+
+  ngOnDestroy(): void {
+
   }
 
 }
