@@ -8,12 +8,12 @@
 
 
                     <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
-                        Competency type:
+                        {{'competencyDetailedView.type' | translate }}
                         <span
                             class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyType}}</span>
                     </p>
                     <p class="mat-body-1 ws-mat-black60-text highlight_point_text">
-                        Competency area:
+                        {{'competencyDetailedView.area' | translate }}
                         <span
                             class="mat-primary mat-subheading-1">{{competencyData?.additionalProperties?.competencyArea}}</span>
                     </p>
@@ -27,11 +27,11 @@
                         <button mat-button color="default" type="button" class="small-button blue-border flex-auto-display mat-button" (click)=view(competencyData) *ngIf="isAdded === false">
 
                             <!-- <span class="ws-mat-default-text" i18n>Add to your competencies</span> -->
-                            <span class="ws-mat-default-text" i18n>Self attest competency</span>
+                            <span class="ws-mat-default-text" i18n>{{'competencyDetailedView.selfAttestCompetency' | translate }}</span>
                         </button>
 
                         <button mat-button color="default" type="button" class="small-button blue-border flex-auto-display mat-button" (click)=remove(competencyData) *ngIf="isAdded === true">
-                            <span class="ws-mat-default-text" i18n>Remove from your competencies</span>
+                            <span class="ws-mat-default-text" i18n>{{'competencyDetailedView.removeFromYourCompetencies' | translate }}</span>
                         </button>
 
                         <!-- <button mat-button color="default" type="button" class="small-button view-all flex-auto-display mat-button">
@@ -45,10 +45,10 @@
         <div class="flex flex-column flex-wrap margin-fix margin-top-56">
             <div class="card_title_box flex flex-row justify-start margin-bottom-s">
                 <div class="left_title_div">
-                    <p class="margin-remove ws-mat-black60-text mat-subheading-2">Competency level</p>
+                    <p class="margin-remove ws-mat-black60-text mat-subheading-2">{{'competencyDetailedView.level' | translate }}</p>
                 </div>
                 <div class="right_title_div">
-                    <p class="margin-remove ws-mat-black60-text mat-subheading-2">Description</p>
+                    <p class="margin-remove ws-mat-black60-text mat-subheading-2">{{'competencyDetailedView.description' | translate }}</p>
                 </div>
             </div>
             <ng-container *ngIf="competencyData && competencyData?.children && competencyData?.children.length > 0">

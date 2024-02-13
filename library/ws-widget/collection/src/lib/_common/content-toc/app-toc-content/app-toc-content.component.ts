@@ -12,6 +12,7 @@ import { NsAppToc } from '../models/app-toc.model'
   templateUrl: './app-toc-content.component.html',
   styleUrls: ['./app-toc-content.component.scss'],
 })
+
 export class AppTocContentComponent implements OnInit {
   @Input() batchId!: string
   @Input() content: NsContent.IContent | null = null

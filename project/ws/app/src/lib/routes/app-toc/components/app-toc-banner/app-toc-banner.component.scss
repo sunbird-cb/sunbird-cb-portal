@@ -1,5 +1,92 @@
 @import 'ws-vars';
 @import 'ws-mixins';
+
+// Latest CSS code
+.button {
+    border-radius: 64px;
+    letter-spacing: 0.25px;
+    padding: 12px 36px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+.batch-div {
+    border-radius: 8px;
+    background-color: rgba($color: $colorOrange, $alpha: 0.2);
+    padding: 16px;
+
+    .batch-details {
+        padding: 16px;
+        border: 1px solid $colorOrange;
+        border-radius: 8px;
+        background-color: #FFF;
+        cursor: pointer;
+    }
+
+    .batch-enrolled {
+        font-weight: bold;
+        color: $colorGreen;
+        font-size: 0.75rem;
+    }
+
+    .withdraw-batch {
+        @extend .button;
+        color: $text-primary;
+        border: 1px solid $text-primary;
+        background-color: #FFF;
+        width: 100%;
+    }
+
+    .enroll-button {
+        @extend .button;
+        color: #FFF;
+        background-color: $colorOrange;
+        border: 1px solid $colorOrange;
+    }
+}
+
+::ng-deep .mat-select-panel {
+    .mat-option {
+        height: 48px !important;
+    }
+}
+
+::ng-deep .batch-form-field {
+    .mat-form-field-wrapper {
+        margin: 0px;
+        padding-bottom: 0px;
+    }
+
+    .mat-form-field-outline {
+        border-radius: 8px;
+    }
+
+    .mat-form-field-infix {
+        font-size: 14px;
+        border-top: 0.35rem solid transparent;
+        padding: 20px 0px;
+    }
+}
+
+.disable-btn {
+    opacity: 0.5;
+}
+
+.mb-0 {
+    margin-bottom: 0px !important;
+}
+
+.batch-timings {
+    // color: rgba($color: #000, $alpha: 0.87);
+    text-transform: uppercase;
+    line-height: 20px;
+}
+
+// Latest CSS code
+
+
+
 %container-padding {
     padding: $size-xl 2 * $size-xl;
     @include breakpoint-xs {
@@ -27,6 +114,10 @@
     /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0, rgba(0, 0, 0, 0.8) 100%);
 */
     background: inherit;
+}
+
+.category-text {
+    margin-left: 8px;
 }
 
 .fixed-width {
@@ -61,7 +152,7 @@
         img {
             height: 15px;
             object-fit: contain;
-            margin-right: 8px;
+            // margin-right: 8px;
         }
         span {
             opacity: 1;
@@ -344,7 +435,7 @@
                 line-height: 12px;
             }
         }
-    
+
         span {
             padding: 8px;
             font-size: 36px;
@@ -398,9 +489,6 @@
     line-height: 20px;
     padding: 26px;
 }
-.disable-btn {
-    opacity: 0.5;
-}
 
 @media (max-width:768px) {
     .batch-wrapper {
@@ -415,3 +503,142 @@
         width: 100%;
     }
 }
+
+
+.share-container {
+    position: fixed;
+    height: 100vh;
+    background: #131313a3;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.share-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: inherit;
+    width: inherit;
+}
+
+.karmasahayogi-icon {
+    position: absolute;
+    bottom: -5px;
+    left: calc(50% - 418px);
+}
+.triangle-left {
+    transform: translateY(100%);
+    position: absolute;
+    bottom: 28%;
+    left: -23px;
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-right: 50px solid #ffffff;
+    border-bottom: 25px solid transparent;
+}
+.contnet {
+    background-color: white;
+    width: 500px;
+    border-radius: 10px;
+    padding: 15px;
+}
+.content-div {
+    position: relative;
+}
+
+.copy-link-btn {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    color: red;
+    color: #0074b6!important;
+}
+.copy-link-btn:hover {
+    background-color: none!important;
+}
+.send-btn {
+    border-radius: 20px;
+}
+.send-btn .mat-icon {
+    margin-bottom: 2.5px;
+}
+::ng-deep .mat-chip-list-wrapper {
+    height: 100px;
+    overflow: auto;
+    display: block!important;
+}
+
+.iconText {
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    width: 30px;
+    display: inline-block;
+    text-align: center;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.iconDiv {
+    margin-right: 7px;
+}
+.emailText {
+    opacity: 0.6;
+}
+
+button:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+::ng-deep .mat-autocomplete-panel {
+    z-index: 99999;
+}
+
+::ng-deep .cdk-overlay-pane {
+    z-index: 9999!important
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+    padding: 5px 0;
+}
+::ng-deep .close-icon  {
+    padding-bottom: 5px;
+}
+::ng-deep .mat-chip-input {
+    padding-bottom: 9px;
+}
+::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip {
+    color: #0074b6 !important;
+}
+
+.loader {
+    position: absolute;
+    top: 42%;
+    left: 45%;
+    z-index: 1000;
+}
+
+@media (max-width:768px) {
+    .content-div {
+        width: 100%;
+    }
+    .contnet {
+        width: unset;
+        margin-bottom: 18%;
+    }
+    .left-over-emails {
+        display: none;
+    }
+    .karmasahayogi-icon {
+        left: 8%;
+        bottom: 20%;
+    }
+    .share-modal {
+        align-items: self-end;
+    }
+}
+
+

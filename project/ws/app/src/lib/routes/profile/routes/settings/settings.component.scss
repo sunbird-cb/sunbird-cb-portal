@@ -120,7 +120,7 @@
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 145%;
+  width: 100%;
   height: auto;
 
   .mat-card-image {
@@ -136,11 +136,11 @@
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 145%;
+  width: 100%;
 
   .mat-card-image {
     margin: 0;
-    width: 35%;
+    width: 28%;
   }
 
   .home-card-content {
@@ -152,7 +152,7 @@
   border-radius: 4px;
   padding: 0;
   margin-bottom: 20px;
-  width: 145%;
+  width: 100%;
 
   .mat-card-image {
     margin: 0;
@@ -218,4 +218,13 @@
   width: -webkit-fill-available;
     /* height: 13%; */
     max-width: 80%;
+}
+
+.mat-radio-button {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 0.4em 1em;
+  margin-right: 1em;
+  margin-bottom: 1em;
 }

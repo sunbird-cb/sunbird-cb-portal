@@ -5,6 +5,7 @@ import { GbSearchService } from '../../services/gb-search.service'
 import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-search-filters',
@@ -26,7 +27,14 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   constructor(
     private searchSrvc: GbSearchService,
     private activated: ActivatedRoute,
-    private router: Router) { }
+    private translate: TranslateService,
+    private router: Router) {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+     }
 
   ngOnInit() {
     this.newfacets.forEach((nf: any) => {
@@ -197,18 +205,18 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {
-        if (fs.name === fil.name && this.queryParams.has('t')) {
+        if (fs.name === this.translateTo(fil.name) && this.queryParams.has('t')) {
           setTimeout(() => {
             this.router.navigate(['/app/globalsearch'] , { queryParams: { q: '' } })
           },         500)
         }
 
-        if (fs.name === fil.name) {
+        if (fs.name === this.translateTo(fil.name)) {
           this.userFilters.splice(index, 1)
         }
       })
       this.myFilterArray.forEach((fs: any, index: number) => {
-        if (fs.name === fil.name) {
+        if (fs.name === this.translateTo(fil.name)) {
           this.myFilterArray.splice(index, 1)
         }
       })
@@ -216,7 +224,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
             const name = fasv.name.toLowerCase()
-            if (name === fil.name) {
+            if (name === this.translateTo(fil.name)) {
               fasv.ischecked = false
             }
 
@@ -233,7 +241,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
 
       const reqfilter = {
         mainType: mainparentType,
-        name: fil.name,
+        name: this.translateTo(fil.name),
         count: fil.count,
         ischecked: true,
         qParam : '',
@@ -243,7 +251,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
             const name = fasv.name.toLowerCase()
-            if (name.toLowerCase() === fil.name) {
+            if (name.toLowerCase() === this.translateTo(fil.name)) {
               fasv.ischecked = true
             }
           })
@@ -261,6 +269,12 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     }
   }
   getText(val: string) {
-    return _.startCase(val || '')
+    return this.translateTo(_.startCase(val || ''))
+  }
+
+  translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'searchfilters.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 }

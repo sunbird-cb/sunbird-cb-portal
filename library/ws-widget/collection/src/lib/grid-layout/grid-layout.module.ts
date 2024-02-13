@@ -5,10 +5,11 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { MatButtonModule, MatFormFieldModule, MatIconModule } from '@angular/material'
 import { FormsModule } from '@angular/forms'
 import { NPSGridService } from './nps-grid.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [GridLayoutComponent],
-  imports: [CommonModule, WidgetResolverModule, MatFormFieldModule, MatButtonModule, MatIconModule, FormsModule],
+  imports: [CommonModule, WidgetResolverModule, MatFormFieldModule, MatButtonModule, MatIconModule, FormsModule, TranslateModule],
   exports: [GridLayoutComponent],
   entryComponents: [GridLayoutComponent],
   providers: [

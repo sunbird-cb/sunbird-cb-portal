@@ -32,6 +32,7 @@ import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { PublicRequestComponent } from './public-request.component'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [PublicRequestComponent, RequestSuccessDialogComponent],
@@ -65,6 +66,7 @@ import { RequestSuccessDialogComponent } from './request-success-dialog/request-
     MatAutocompleteModule,
     PipeOrderByModule,
     PipeDurationTransformModule,
+    TranslateModule,
   ],
   exports: [PublicRequestComponent],
   providers: [RequestService],

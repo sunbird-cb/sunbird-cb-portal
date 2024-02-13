@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
@@ -27,12 +27,20 @@ export class ProfileCardStatsComponent implements OnInit {
   republicDayData: any = {}
   interval = 0
   profileDelay = 0
+  userName = ''
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
-              private pipDuration: PipeDurationTransformPipe) { }
+              private pipDuration: PipeDurationTransformPipe,
+              private langtranslations: MultilingualTranslationsService) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile
+    if (this.userInfo) {
+      this.userName = this.userInfo.firstName
+      if (this.userName.length > 18) {
+        this.userName = `${this.userInfo.firstName.slice(0, 18)}...`
+      }
+    }
     this.enrollInterval = setInterval(() => {
       this.getCounts()
     },                                1000)
@@ -42,16 +50,24 @@ export class ProfileCardStatsComponent implements OnInit {
     if (this.configSvc.profileTimelyNudges.enable) {
       this.profileDelay = this.configSvc.profileTimelyNudges.profileDelayInSec
     }
+    this.showrepublicBanner = false
+    this.getTimelyNudge()
+    const pDelayTime = this.profileDelay * 1000
     setTimeout(() => {
-      this.getTimelyNudge()
-    },         this.profileDelay * 1000)
+      // this.getTimelyNudge()
+      this.showrepublicBanner = true
+    },         pDelayTime)
+    const timeInterval = this.configSvc.profileTimelyNudges.nudgeDelayInSec
+    setTimeout(() => {
+        this.showrepublicBanner = false
+      },       ((1000 * timeInterval) + pDelayTime))
   }
 
   getTimelyNudge() {
     if (this.configSvc.profileTimelyNudges.enable) {
       const rand = Math.round(Math.random() * 4)
       const currentDate = new Date()
-      const timeInterval = this.configSvc.profileTimelyNudges.nudgeDelayInSec
+      // const timeInterval = this.configSvc.profileTimelyNudges.nudgeDelayInSec
       const hours = currentDate.getHours()
       const defaultData = this.configSvc.profileTimelyNudges.data[this.configSvc.profileTimelyNudges.data.length - 1]
       if (defaultData) {
@@ -59,32 +75,34 @@ export class ProfileCardStatsComponent implements OnInit {
         this.republicDayData['info'] = defaultData['info'][rand]
         this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
         this.republicDayData['textColor'] = defaultData['textColor']
-        let userName = this.userInfo.firstName
-        if (userName.length > 18) {
-          userName = `${this.userInfo.firstName.slice(0, 18)}...`
-        }
-        this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
-        this.showrepublicBanner = true
-        setTimeout(() => {
-          this.showrepublicBanner = false
-        },         (1000 * timeInterval))
+        this.republicDayData['greet'] = defaultData['greet']
+        // let userName = this.userInfo.firstName
+        // if (userName.length > 18) {
+        //   userName = `${this.userInfo.firstName.slice(0, 18)}...`
+        // }
+        // this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
+        // this.showrepublicBanner = true
+        // setTimeout(() => {
+        //   this.showrepublicBanner = false
+        // },         (1000 * timeInterval))
       }
       this.configSvc.profileTimelyNudges.data.filter((data: any) => {
         if (hours >= data.startTime && hours < data.endTime) {
           this.republicDayData['backgroupImage'] = data.backgroupImage
           this.republicDayData['info'] = data['info'][rand]
           this.republicDayData['centerImage'] = data['centerImage'][rand]
-          let userName = this.userInfo.firstName
-          if (userName.length > 18) {
-            userName = `${this.userInfo.firstName.slice(0, 18)}...`
-          }
-          this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
+          this.republicDayData['greet'] = data['greet']
           this.republicDayData['textColor'] = data['textColor']
-          this.showrepublicBanner = true
+          // let userName = this.userInfo.firstName
+          // if (userName.length > 18) {
+          //   userName = `${this.userInfo.firstName.slice(0, 18)}...`
+          // }
+          // this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
+          // this.showrepublicBanner = true
         }
-        setTimeout(() => {
-          this.showrepublicBanner = false
-        },         (1000 * timeInterval))
+        // setTimeout(() => {
+        //   this.showrepublicBanner = false
+        // },         (1000 * timeInterval))
       })
     }
   }
@@ -119,5 +137,8 @@ export class ProfileCardStatsComponent implements OnInit {
   }
   myActivity() {
     this.activity.emit(true)
+  }
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
   }
 }

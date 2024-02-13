@@ -36,19 +36,19 @@
             </div>
         </div>
     </div>
-    
+
     <div class="flex-1 flex-col" *ngIf="competency?.error">
         <div class="flex flex-col gap-1 error-div justify-center items-center">
             <mat-icon class="icon">report_off</mat-icon>
-            <div class="mat-subheading-1">No data found!</div>
-            <div class="text-center">Unable to fetch discussion info due to some error.</div>
+            <div class="mat-subheading-1">{{'competencyList.noDataFound' | translate }}</div>
+            <div class="text-center">{{'competencyList.unableToFetchData' | translate }}</div>
         </div>
     </div>
 
     <div class="flex-1 flex-col" *ngIf="!competencyArray?.length && !competency?.error">
         <div class="flex flex-col gap-3 justify-center items-center mt-12 p-6">
             <img src="assets/icons/competency/no-competencies.svg" alt="no competencies found image" />
-            <div class="font-bold">No competency found</div>
+            <div class="font-bold">{{'competencyList.noCompetencyDataFound' | translate }}</div>
         </div>
     </div>
 </ng-template>
@@ -136,7 +136,7 @@
     <div class="left-container" [ngClass]="{'hide': isMobile && showAll}" >
         <div class="flex flex-col gap-4 cp-container">
             <div class="flex flex-row gap-3">
-                <div class="flex-1 text-xl font-semibold">Learning History</div>
+                <div class="flex-1 text-xl font-semibold">{{'competencyList.title' | translate }}</div>
                 <!-- <div class="flex items-center">
                     <span class="filter-dot" *ngIf="showFilterIndicator !== 'all'"></span>
                     <mat-icon class="cursor-pointer" [matMenuTriggerFor]="filter">filter_list</mat-icon>
@@ -156,11 +156,11 @@
                     </mat-menu>
                 </div> -->
             </div>
-    
+
             <div class="flex flex-row gap-3 p-4">
                 <div class="flex-1">
                     <div class="flex flex-col gap-2" (click)="handleClick('all')">
-                        <div class="text-base secondary-title">My Competencies</div>
+                        <div class="text-base secondary-title">{{'competencyList.CompetenciesSubTitle' | translate }}</div>
                         <ng-container *ngIf="competency.skeletonLoading">
                             <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-2-loader'" [width]="'60px'" [height]="'40px'"></ws-widget-skeleton-loader>
                         </ng-container>
@@ -214,7 +214,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="competency-passbook-category" *ngFor="let elem of leftCardDetails">
                 <div class="p-4">
                     <div class="flex flex-row items-center">
@@ -237,7 +237,7 @@
                     <div class="separator"></div>
                     <div class="flex flex-row justify-between">
                         <div class="flex flex-col">
-                            <div class="text-xs text-color-white">Competency Sub Theme</div>
+                            <div class="text-xs text-color-white">{{'competencyList.subTheme' | translate }}</div>
                             <ng-container *ngIf="competency.skeletonLoading">
                                 <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                     [height]="'28px'"></ws-widget-skeleton-loader>
@@ -247,7 +247,7 @@
                             </ng-container>
                         </div>
                         <div class="flex flex-col">
-                            <div class="text-xs text-color-white">Content Consumed</div>
+                            <div class="text-xs text-color-white">{{'competencyList.contentConsumed' | translate }}</div>
                             <ng-container *ngIf="competency.skeletonLoading">
                                 <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                     [height]="'28px'"></ws-widget-skeleton-loader>
@@ -261,10 +261,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="mobile-right-container" *ngIf="!showAll">
         <div class="flex flex-col gap-6 px-4">
-            <div class="text-base font-bold">Recently associated competencies</div>
+            <div class="text-base font-bold">{{'competencyList.recentCompetencies' | translate }}</div>
             <div class="flex flex-wrap gap-4">
                 <ng-container *ngIf="competency.skeletonLoading">
                     <ng-container [ngTemplateOutlet]="skeletonLoader"></ng-container>

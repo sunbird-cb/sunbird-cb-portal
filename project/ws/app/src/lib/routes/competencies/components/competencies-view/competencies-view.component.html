@@ -3,22 +3,22 @@
     <span class="mat-h2 font-bold margin-bottom-m">{{dData.name}}</span>
     <h3 class="mat-h3">{{dData.description}}</h3>
     <div class="flex">
-      <h3 class="mat-h3">Competency type: &nbsp;</h3>
+      <h3 class="mat-h3">{{ 'competenceView.type' | translate }} &nbsp;</h3>
       <span class="mat-h3 font-medium">{{dData?.additionalProperties?.competencyType || dData?.competencyType}}</span>
     </div>
   </mat-card-content>
   <mat-card-actions class="flex flex-row-reverse responsive">
     <div class="mb-2 ws-mat-accent-text view-all ws-mat-primary-lite-background-important wid-auro">
       <a href="javascript:void(0)" mat-button mat-dialog-close i18n-aria-label class="flex">
-        <span i18n>&nbsp; {{'Cancel'}}</span>
+        <span i18n>&nbsp; {{ 'competenceView.cancel' | translate }}</span>
       </a>
     </div>
     <div class="mb-2 ml-2 mr-2 flex view-more text-white others">
       <a href="javascript:void(0)" mat-button i18n-aria-label *ngIf="isUpdate" (click)="remove()">
-        <span i18n>{{'Remove from your list'}}</span>
+        <span i18n>{{ 'competenceView.remove' | translate }}</span>
       </a>
       <a href="javascript:void(0)" mat-button i18n-aria-label *ngIf="!isUpdate" (click)="add()">
-        <span i18n>{{'Add to your competencies'}}</span>
+        <span i18n>{{ 'competenceView.add' | translate }}</span>
       </a>
     </div>
   </mat-card-actions>
@@ -27,15 +27,16 @@
 <mat-card class="competency-view-card" *ngIf="!isUpdate && !onlyCBP">
   <mat-card-content class="flex flex-1 custom">
     <div class="flex justify-between flex-row">
-      <span class="mat-h2 font-medium">Select your competency level</span>
+      <span class="mat-h2 font-medium">{{ 'competenceView.selectCompetency' | translate }}</span>
       <mat-card-actions>
         <a href="javascript:void(0)" class="mat-dialog-close" (click)="closeModal()">
           <mat-icon class="mat-icon ws-mat-black60-text">close</mat-icon>
         </a>
       </mat-card-actions>
     </div>
-    <h3 class="mat-h3 card_description margin-bottom-xl">You are self-declaring competency and you can also take the
-      competency assessment to add further credibility</h3>
+    <h3 class="mat-h3 card_description margin-bottom-xl">
+      {{ 'competenceView.description' | translate }}
+    </h3>
     <!-- new card added -->
     <ng-container *ngIf="dData && dData?.children && dData?.children.length > 0">
       <div class="learn-card-div hideScrollbar">
@@ -78,11 +79,11 @@
       </a> -->
       <a href="javascript:void(0)" class="text-white others" mat-button i18n-aria-label *ngIf="!isUpdate"
         (click)="add()">
-        <span i18n>{{'Add to your competencies'}}</span>
+        <span i18n>{{ 'competenceView.addToYourCompetencies' | translate }}</span>
       </a>
       <button class="text-white others" [disabled]="!assessmentId" (click)="test()" mat-button
         i18n-aria-label *ngIf="!isUpdate">
-        <span i18n>{{'Take assessment to add this competency' + assessmentId}}</span>
+        <span i18n>{{ 'competenceView.takeAssessment' | translate }} {{assessmentId}}</span>
     </button>
     </div>
   </mat-card-actions>
@@ -94,19 +95,19 @@
     <span class="mat-h2 font-bold margin-bottom-m">{{dData.name}}</span>
     <h3 class="mat-h3">{{dData.description}}</h3>
     <div class="flex">
-      <h3 class="mat-h3">Competency type: &nbsp;</h3>
+      <h3 class="mat-h3">{{ 'competenceView.type' | translate }} &nbsp;</h3>
       <span class="mat-h3 font-medium">{{dData?.additionalProperties?.competencyType || dData?.competencyType}}</span>
     </div>
   </mat-card-content>
   <mat-card-actions class="flex flex-row-reverse responsive">
     <div class="mb-2 ws-mat-accent-text view-all ws-mat-primary-lite-background-important wid-auro">
       <a href="javascript:void(0)" mat-button mat-dialog-close i18n-aria-label class="flex">
-        <span i18n>&nbsp; {{'Cancel'}}</span>
+        <span i18n>&nbsp; {{ 'competenceView.cancel' | translate }}</span>
       </a>
     </div>
     <div class="mb-2 ml-2 mr-2 flex view-more text-white others">
       <a href="javascript:void(0)" mat-button i18n-aria-label (click)="navigateTo()">
-        <span i18n>{{'Add to your competencies'}}</span>
+        <span i18n>{{ 'competenceView.add' | translate }}</span>
       </a>
     </div>
   </mat-card-actions>

@@ -16,7 +16,7 @@ const routes: Routes = [
     resolve: {
       pageData: CbpResolverService,
     },
-  }
+  },
 ]
 @NgModule({
   imports: [

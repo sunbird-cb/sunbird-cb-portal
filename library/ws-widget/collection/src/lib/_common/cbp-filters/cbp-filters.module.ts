@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
 import {
   MatIconModule,
   MatCardModule,
@@ -8,11 +8,12 @@ import {
   MatTabsModule,
   MatBottomSheetModule,
   MatMenuModule,
-  MatRadioModule
-} from '@angular/material';
+  MatRadioModule,
+} from '@angular/material'
 
-import { CbpFiltersComponent } from './cbp-filters.component';
-import { FilterSearchPipeModule } from 'src/app/pipes/filter-search/filter-search.module';
+import { CbpFiltersComponent } from './cbp-filters.component'
+import { FilterSearchPipeModule } from 'src/app/pipes/filter-search/filter-search.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
     imports: [
@@ -25,13 +26,14 @@ import { FilterSearchPipeModule } from 'src/app/pipes/filter-search/filter-searc
         MatBottomSheetModule,
         MatMenuModule,
         MatRadioModule,
-        FilterSearchPipeModule
+        FilterSearchPipeModule,
+        TranslateModule,
     ],
     exports: [
-        CbpFiltersComponent
+        CbpFiltersComponent,
     ],
     declarations: [
-        CbpFiltersComponent
+        CbpFiltersComponent,
     ],
     providers: [],
 })

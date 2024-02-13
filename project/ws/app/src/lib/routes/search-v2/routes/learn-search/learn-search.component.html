@@ -2,23 +2,23 @@
     <ng-container *ngIf="!filtersPanel || filtersPanel !=='hide'">
         <div class="topsection margin-bottom-m">
             <div class="display-inline-block">
-                <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults > 1">{{totalResults}} search
-                    results
-                    <span *ngIf="param">for '{{param}}'</span>
+                <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults > 1">{{totalResults}}
+                    {{'learnsearch.searchResults' | translate}}
+                    <span *ngIf="param">{{'learnsearch.for' | translate}} '{{param}}'</span>
                 </p>
-                <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults === 1">{{totalResults}} search
-                    result
-                    <span *ngIf="param">for '{{param}}'</span>
+                <p class="mat-body-2 font-bold-imp margin-bottom-m" *ngIf="totalResults === 1">{{totalResults}}
+                    {{'learnsearch.searchResult' | translate}}
+                    <span *ngIf="param">{{'learnsearch.for' | translate}} '{{param}}'</span>
                 </p>
                 <p *ngIf="myFilters && myFilters.length > 0" class="mat-body-2 ws-mat-black60-text filternames">
                     <span *ngFor="let mf of myFilters"
                         class="text-capitalize display-inline-block myfilter-custom margin-right-s ng-star-inserted padding-right-s padding-left-s padding-top-xs padding-bottom-xs">
 
-                        <span *ngIf="mf.name === 'application/vnd.ekstep.content-collection'">Course</span>
-                        <span *ngIf="mf.name === 'audio/mpeg'">Audio</span>
-                        <span *ngIf="mf.name === 'application/pdf'">PDF</span>
+                        <span *ngIf="mf.name === 'application/vnd.ekstep.content-collection'">{{'learnsearch.course' | translate}}</span>
+                        <span *ngIf="mf.name === 'audio/mpeg'">{{'learnsearch.audio' | translate}}</span>
+                        <span *ngIf="mf.name === 'application/pdf'">{{'learnsearch.pdf' | translate}}</span>
                         <!-- <span *ngIf="mf.name === 'application/vnd.ekstep.html-archive'">Interactive Content</span> -->
-                        <span *ngIf="mf.name === 'text/x-url'">Webpage</span>
+                        <span *ngIf="mf.name === 'text/x-url'">{{'learnsearch.webpage' | translate}}</span>
 
                         <span
                             *ngIf="mf.name !== 'text/x-url' && mf.name !== 'application/pdf' && mf.name !== 'audio/mpeg' && mf.name !== 'application/vnd.ekstep.content-collection'">{{mf.name}}</span>
@@ -130,7 +130,7 @@
                         </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">
-                            <p class="mat-body-2 margin-bottom-xxs" *ngIf="content.creator">By {{content.creator}}</p>
+                            <p class="mat-body-2 margin-bottom-xxs" *ngIf="content.creator">{{'learnsearch.by' | translate}} {{content.creator}}</p>
                             <div class="contentdata margin-bottom-xm">
                                 <ul
                                     class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
@@ -166,9 +166,8 @@
             <div class="margin-xl text-center" *ngIf="totalResults === 0">
                 <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
                     class="margin-top-l margin-bottom-s">
-                <h2 class="mat-h2" i18n="search route no result">No results found</h2>
-                <h3 class="mat-h3" i18n="search route you may try">Try removing the filters or search using different
-                    keywords</h3>
+                <h2 class="mat-h2" i18n="search route no result">{{'learnsearch.noResults' | translate}}</h2>
+                <h3 class="mat-h3" i18n="search route you may try">{{'learnsearch.removeFilters' | translate}}</h3>
             </div>
 
             <!-- </div> -->

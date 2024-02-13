@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CompetencySearchComponent } from './competency-search.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { CompetencySearchComponent } from './competency-search.component'
 
 describe('CompetencySearchComponent', () => {
-  let component: CompetencySearchComponent;
-  let fixture: ComponentFixture<CompetencySearchComponent>;
+  let component: CompetencySearchComponent
+  let fixture: ComponentFixture<CompetencySearchComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CompetencySearchComponent ]
+      declarations: [CompetencySearchComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompetencySearchComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CompetencySearchComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

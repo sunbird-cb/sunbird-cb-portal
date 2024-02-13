@@ -1,14 +1,9 @@
-<!-- <div [ngStyle]="{'background-color': ((content?.draftImage || '').length === 7? content?.draftImage : '#F8AD1E')}"> -->
-<div class="header-synopsis fixed-width margin-top-xl" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
-  *ngIf="content">
+<div class="header-synopsis fixed-width margin-top-xl" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="show">
   <div class="flex flex-row">
     <div class="flex-auto">
       <div class="header-title flex-col sm:flex-row">
         <!-- image -->
         <div *ngIf="content?.posterImage" class="float-left">
-          <!-- <img [src]="content?.posterImage | pipePublicURL" [id]="'source_' + content.identifier" [wsUtilsDefaultThumbnail]="defaultSLogo" class="app-icon"  [alt]="content.sourceName || iGOT"
-
-                    /> -->
           <img [src]="content?.posterImage | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon"
             [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
         </div>
@@ -22,23 +17,12 @@
               class="app-icon" [alt]="content.sourceName || iGOT" />
           </ng-template>
         </div>
-        <!-- <div *ngIf="!content?.posterImage" class="float-left">
-                  <ng-container *ngIf="content?.appIcon; else defaultImg">
-                    <img [src]="content?.appIcon | pipePublicURL" [id]="'source_' + content.identifier" class="app-icon" [alt]="content.sourceName || iGOT" />
-                  </ng-container>
-                  <ng-template #defaultImg class="float-left">
-                    <img [src]="defaultSLogo" loading="lazy" style="position: absolute; z-index: 2;"
-                    class="card-img ws-mat-primary-lite-background"
-                    [alt]="content.sourceName || iGOT" />
-                  </ng-template>
-                </div> -->
-        <!-- data -->
-        <!-- {{ defaultThumbnail | json }}//
-                {{ defaultSLogo | json }} // -->
         <div class="sm:ml-5 flex flex-auto" [id]="'m-c-'+ content.identifier">
           <div class="sm:ml-5 flex flex-col flex-auto">
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="contentReadData?.name">
               {{ contentReadData?.name }}
+              <div class="float-right cursor-pointer flex" (click)="onClickOfShare()" *ngIf="canShare">
+                <mat-icon class="ws-mat-accent-text padding-top-xs">share</mat-icon></div>
             </h1>
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="contentReadData?.name">
               {{ contentReadData?.name }}
@@ -46,23 +30,20 @@
             <span *ngIf="contentProgress === 1" class="margin-left-s">
               <mat-icon class="ws-mat-accent-text">check_circle</mat-icon>
             </span>
-            <div>
-              <div *ngIf="content?.primaryCategory" class="apIcon float-left mb-4">
-                <img src="/assets/icons/content/course.svg" [id]="'source_' + content.identifier"
-                  class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
-                  <span>{{content?.primaryCategory}}</span>
-              </div>
-              <div *ngIf="content?.appIcon" class="apIcon float-left mb-4">
-                <img [src]="content?.creatorLogo | pipePublicURL" [id]="'source_' + content.identifier"
-                  class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
-              </div>
+            <div *ngIf="content?.primaryCategory" class="apIcon float-left mb-4">
+              <img src="/assets/icons/content/course.svg" [id]="'source_' + content.identifier"
+                class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
+                <span>{{content?.primaryCategory}}</span>
+            </div>
+            <div *ngIf="content?.appIcon" class="apIcon float-left mb-4">
+              <img [src]="content?.creatorLogo | pipePublicURL" [id]="'source_' + content.identifier"
+                class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="content.sourceName || iGOT" />
             </div>
             <div [ngSwitch]="routePath" class="header-meta" [ngClass]="{ 'header-meta-banner': bannerUrl }">
               <!-- Overview Section -->
               <div class="banner-overview-container" [hidden]="!content?.purpose && showSubtitleOnBanner"
                 *ngSwitchCase="'overview'">
                 <h3 class="overview-description mat-body-1" *ngIf="showSubtitleOnBanner" i18n-title title="Subtitle">
-                  <!-- {{ content?.purpose | pipeLimitTo: 250 }} -->
                   {{ content?.source | pipeLimitTo: 250 }}
                 </h3>
                 <p class="overview-description mat-body-1" *ngIf="!showSubtitleOnBanner" i18n-title title="Description">
@@ -75,7 +56,7 @@
               </div>
               <!-- Toc Section -->
               <div *ngSwitchCase="'contents'">
-                <!-- Contents Bannner -->
+                <!-- Contents Banner -->
               </div>
               <!-- Analytics Section -->
               <div class="banner-overview-container mat-body-1" [hidden]="!content?.purpose && showSubtitleOnBanner"
@@ -96,7 +77,6 @@
               <span class="rating-number mat-body-2">{{ content?.averageRating }}&nbsp;</span>
               <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
                 {{ getRatingIcon(rating) }}</mat-icon>
-              <!--  <span i18n>from</span> -->
               <span class="margin-left-xs rating-count mat-body-2" *ngIf="content?.totalRating">
                 ( {{ content?.totalRating | pipeCountTransform }} )</span>
             </div>
@@ -104,225 +84,104 @@
               <span class="rating-number mat-body-2"> 0.0 &nbsp;</span>
               <mat-icon class="mat-icon material-icons" *ngFor="let rating of [1, 2, 3, 4, 5]">
                 {{ getRatingIcon(rating) }}</mat-icon>
-              <!--  <span i18n>from</span> -->
               <span class="margin-left-xs rating-count mat-body-2" *ngIf="!content?.totalRating">
                 ( {{ 0 | pipeCountTransform }} )</span>
             </div>
             <!-- tags -->
             <div class="tags margin-bottom-s" *ngIf="content?.keywords && content?.keywords?.length > 0">
-              <!-- <span *ngFor="let tag of content.keywords" class="tag" [ngStyle]="getBgColor(tag)"> -->
               <span *ngFor="let tag of content.keywords" class="tag">
                 {{tag}}
               </span>
             </div>
-            <!-- <div class="header-actions margin-top-m">
-                <ng-container *ngIf="
-                    actionBtnStatus !== 'wait' &&
-                    content?.status !== 'Deleted' &&
-                    content?.status !== 'Expired'
-                  ">
-                  <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-white text-center custom-button">
-                    <ng-container *ngIf="
-                        actionBtnStatus === 'grant' &&
-                        !(isMobile && content?.isInIntranet) &&
-                        !(
-                          content?.contentType === 'Course' &&
-                          content?.children.length === 0 &&
-                          !content?.artifactUrl?.length
-                        ) &&
-                        !(
-                          content?.contentType === 'Course' && !batchData?.enrolled
-                        ) &&
-                        !(content?.contentType === 'Resource' && !content?.artifactUrl)
-                      ">
-                      <a *ngIf="showStart.show && !isPostAssessment"
-                        [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
-                        [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
-                        class="mat-button mat-button-base">
-                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                          {{resumeData?"RESUME":"START"}}
-                        </ng-container>
-                      </a>
-                      <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment"
-                        [routerLink]="firstResourceLink?.url" class="mat-button mat-button-base">
-                        <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>TAKE ASSESSMENT</ng-container>
-                      </a>
-                    </ng-container>
-                    <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
-                      <a [href]="content?.registrationUrl" target="_blank" class="mat-button mat-button-base" i18n>REGISTER</a>
-                    </ng-container>
-                  </div>
-                </ng-container>
-                <h3 *ngIf="content?.status === 'Deleted' || content?.status === 'Expired'"
-                  class="margin-remove-bottom pt-4 info-msg" i18n>
-                  The content is expired or deleted.
-                </h3>
-                <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'Unpublished'">
-                  The content has been unpublished.
-                </h3>
-                <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'Draft'">
-                  The content is in draft.
-                </h3>
-                <h3 class="margin-remove-bottom pt-4 info-msg" i18n *ngIf="content?.status === 'InReview'">
-                  The content is in review.
-                </h3>
-              </div> -->
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
-      <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-      <ng-container i18n>This can be viewed only in the Intranet.</ng-container>
-    </p>
-    <p class="mt-5 mb-5 info-msg" *ngIf="showInstructorLedMsg">
-      <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-      <ng-container i18n>This is instructor-led classroom course and is not available online.</ng-container>
-    </p>
-
-    <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
-      <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-      <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
-    </p> -->
-  <!-- <ng-container *ngIf="content?.completionStatus == 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="100" [progressType]="'percentage'">
-      </ws-widget-content-progress>
-    </ng-container>
-    <ng-container *ngIf="content?.completionStatus < 2">
-      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-      [className]="'thick'" [progress]="content?.completionPercentage" [progressType]="'percentage'">
-      </ws-widget-content-progress>
-    </ng-container> -->
 </div>
-<!-- </div> -->
-<div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }"
-  *ngIf="content">
-  <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-    <div class="flex flex-row">
-      <div class="flex-auto batch-wrapper">
-          <div class="padding-m batch-container ws-mat-orange-light-bg">
-            <form>
-              <ng-container *ngIf="batchData && !batchData?.enrolled
-              && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED))
-              && batchData?.content?.length">
-                <div>
-                    <mat-form-field appearance="outline" class="w-full">
-                      <!-- <mat-label>Select batch to enroll</mat-label> -->
-                      <mat-select  #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)">
-                        <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
-                        [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
-                          <p>{{batch.name}}
-                            ({{batch.startDate | date: 'dd-MM-yyyy'}} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})</p>
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="flex flex-wrap mt-3">
-                  <ng-container *ngIf="!showRejected">
-                    <div class="flex-1">
-                      <button class="mat-button mat-raised-button resumeButton custom-button width-1-1 text-white" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }"
-                      [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
-                        <ng-container i18n>
-                          Request to enroll
-                        </ng-container>
-                      </button>
-                    </div>
-                    <div class="flex-col ml-3" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
-                      <p class="mat-body-2 margin-remove-bottom">Last enrollment date</p>
-                      <p class="mat-body-2 font-bold-imp margin-remove-bottom">{{selectedBatch.enrollmentEndDate | date: 'dd-MM-yyyy'}}</p>
-                    </div>
-                  </ng-container>
-                  <ng-container *ngIf="showRejected">
-                    <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                      Your enrollment request is {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.
-                    </h3>
-                  </ng-container>
-                </div>
-              </ng-container>
-            </form>
-            <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated
-            && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REMOVED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN)
-            && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.APPROVED)
-            && batchData?.content?.length">
-              <div>
-                <p class="margin-remove-bottom mat-body-1 padding-m bg-white">
-                  {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate | date: 'dd-MM-yyyy'}} - {{batchData?.workFlow?.batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
-                </p>
-              </div>
 
-              <ng-container>
-                <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white"
-                  (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
-                    <ng-container i18n>
-                      Withdraw your request
-                    </ng-container>
-                  </button>
-              </ng-container>
-            </ng-container>
-            <ng-container *ngIf="batchData && batchData?.enrolled && batchData?.content?.length">
-              <h3 class="margin-remove-bottom p-4 bg-white mat-body-1" i18n *ngFor="let batch of batchData.content">
-                {{batch.name}} ({{batch.startDate | date: 'dd-MM-yyyy' }} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
-              </h3>
-              <ng-container [ngTemplateOutlet]="statusMsg"></ng-container>
-            </ng-container>
-            <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData?.content?.length">
-              <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-                No batches
-              </h3>
-            </ng-container>
-          </div>
-          <div class="padding-m batch-timer flex" *ngIf="days >= 0">
-            <div class="time-block">
-              <p class="timer-title">This batch starts in</p>
-              <div class="flex time-wrapper">
-                <div>
-                  <p class="count">{{days || 0}}</p>
-                  <p class="time-label">DAYS</p>
+<ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+  <div class="batch-div">
+    <form class="flex flex-col gap-4">
+      <ng-container *ngIf="batchData && !batchData?.enrolled
+        && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED))
+        && batchData?.content?.length">
+        <mat-form-field appearance="outline" class="w-full batch-form-field">
+          <mat-select #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)" class="batch-dropdown">
+            <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
+            [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
+              <div class="flex flex-row items-center gap-2 h-10">
+                <div class="flex-1 text-sm batch-timings">
+                    {{ batch.name }} ( {{ batch.startDate | date: 'd MMM, yyyy' }} - {{ batch.endDate | date: 'd MMM, yyyy' || 'present' }} )
                 </div>
-                <span>:</span>
-                <div >
-                  <p class="count">{{ minutes === 60? hours + 1 : hours}}</p>
-                  <p class="time-label">HOURS</p>
+                <div class="expired" *ngIf="!handleEnrollmentEndDate(batch) || disableEnrollBtn">
+                  Expired
                 </div>
-                <span>:</span>
-                <div>
-                  <p class="count">{{minutes === 60? 00 : minutes }}</p>
-                  <p class="time-label">MINUTES</p>
-                </div>
-                <!-- <span>:</span>
-                <div>
-                  <p class="count">{{seconds}}</p>
-                  <p class="time-label">MINUTES</p>
-                </div> -->
+              </div>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
+        </mat-form-field>
+        <div class="flex flex-wrap gap-3">
+          <ng-container *ngIf="!showRejected">
+            <div class="flex-1">
+              <div class="flex flex-col gap-1" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
+                <p class="text-xs leading-4 mb-0">Last enroll date</p>
+                <p class="font-bold mb-0">{{ selectedBatch.enrollmentEndDate | date: 'd MMM, y' }}</p>
               </div>
             </div>
-            <div class="help">
-              <div class="flex batch-wrapper">
-                <ng-container *ngIf="!showMsg">
-                    <div class="batch-duration-wrap">
-                      <p class="timer-title">Batch duration</p>
-                      <p class="duration-days">{{getBatchDuration}} Days</p>
-                    </div>
+            <div class="flex flex-row justify-center items-center">
+              <button class="enroll-button" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }" [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
+                <ng-container i18n>
+                  Request to enroll
                 </ng-container>
-                <p class="batch-info" *ngIf="showMsg">Kindly check the location details and plan in advance.</p>
-              </div>
+              </button>
             </div>
-          </div>
-          <!-- showIcon{{showIcon}} showMsg{{showMsg}} WFIcon{{WFIcon}} iconColor{{iconColor}} -->
-      </div>
-    </div>
-    <ng-container  *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length" [ngTemplateOutlet]="statusMsg"></ng-container>
-  </ng-container>
-</div>
-<div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content && batchControl?.value?.batchAttributes?.batchLocationDetails">
+
+          </ng-container>
+          <ng-container *ngIf="showRejected">
+            <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
+              Your enrollment request is {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.</h3>
+          </ng-container>
+        </div>
+      </ng-container>
+    </form>
+    <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated &&
+      (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REMOVED) &&
+      (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN) &&
+      (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.APPROVED) && batchData?.content?.length">
+      <p class="margin-remove-bottom mat-body-1 padding-m bg-white">
+        {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate | date: 'dd-MM-yyyy'}} - {{batchData?.workFlow?.batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
+      </p>
+      <ng-container>
+        <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white"
+          (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
+            <ng-container i18n> Withdraw your request </ng-container>
+        </button>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="batchData && batchData?.enrolled && batchData?.content?.length">
+      <h3 class="margin-remove-bottom p-4 bg-white mat-body-1" i18n *ngFor="let batch of batchData.content">
+        {{batch.name}} ({{batch.startDate | date: 'dd-MM-yyyy' }} - {{batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
+      </h3>
+      <ng-container [ngTemplateOutlet]="statusMsg"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="batchData && !batchData?.enrolled && !batchData?.content?.length">
+      <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
+        No batches
+      </h3>
+    </ng-container>
+  </div>
+  <ng-container *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length" [ngTemplateOutlet]="statusMsg"></ng-container>
+</ng-container>
+
+<!-- <div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content && batchControl?.value?.batchAttributes?.batchLocationDetails">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-    <h2>Batch location</h2>
+    <h2>{{'apptocbanner.batchLocation' | translate}}</h2>
     <p>{{batchControl?.value?.batchAttributes?.batchLocationDetails}}</p>
   </ng-container>
-</div>
+</div> -->
+
 <mat-menu #actionMenu="matMenu">
   <div mat-menu-item>
     <ng-container *ngIf="content" [ngTemplateOutlet]="actions"></ng-container>
@@ -330,23 +189,12 @@
 </mat-menu>
 
 <ng-template #actions>
-  <!-- <a i18n-aria-label aria-label="Edit" mat-icon-button *ngIf="editButton"
-    [routerLink]="['/author/editor/' + content?.identifier]" color="primary">
-    <mat-icon>edit</mat-icon>
-  </a> -->
-  <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton"
-    [routerLink]="['/author/editor/' + content?.identifier]">
+  <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton" [routerLink]="['/author/editor/' + content?.identifier]">
     <mat-icon>publish</mat-icon>
   </a>
-  <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview" [widgetData]="
-      content
-        | pipePartialContent
-          : ['identifier', 'contentType', 'resourceType', 'mimeType', 'downloadUrl', 'isExternal',
-                  'artifactUrl']
-    "></ws-widget-btn-content-download>
-  <!-- <ws-widget-btn-content-like id="prevforlike" [forPreview]="forPreview"
-    [widgetData]="content | pipePartialContent: ['identifier']" [color]="default">
-  </ws-widget-btn-content-like> -->
+  <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview"
+    [widgetData]="content | pipePartialContent : ['identifier', 'contentType', 'resourceType', 'mimeType', 'downloadUrl', 'isExternal', 'artifactUrl']">
+  </ws-widget-btn-content-download>
   <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
   </ws-widget-btn-content-share>
   <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="contentReadData?.name"
@@ -362,18 +210,16 @@
     [widgetData]="content | pipePartialContent: ['identifier', 'name']">
   </ws-widget-btn-content-feedback-v2>
 </ng-template>
-<ng-template #authView i18n>View</ng-template>
+<ng-template #authView i18n>{{'apptocbanner.view' | translate}}</ng-template>
 <ng-template #statusMsg>
   <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
     <div class="flex" *ngIf="showMsg">
       <ng-container *ngIf="showIcon">
-        <!-- <mat-icon class="mr-3" [ngClass]="iconColor" svgIcon="verified"></mat-icon> -->
         <mat-icon class="mr-3" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
         <mat-icon class="mr-3 ws-mat-red-text"  style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
       </ng-container>
       <div class="mat-body-1">
         <p class="margin-remove-bottom ">{{getWFMsg}}</p>
-        <!-- <p class="ws-mat-default-text">{{tocConfig.BatchEnrollSupportMsg}}<u>{{helpEmail}}</u></p> -->
       </div>
     </div>
   </div>
@@ -385,8 +231,84 @@
       </ng-container>
       <div class="mat-body-1">
         <p class="margin-remove-bottom ">{{findMessage}}</p>
-        <!-- <p class="ws-mat-default-text">{{tocConfig.BatchEnrollSupportMsg}}<u>{{helpEmail}}</u></p> -->
       </div>
     </div>
   </div>
 </ng-template>
+
+<div class="share-container" *ngIf="enableShare">
+  <div *ngIf="showLoader" class="text-center my-2 loader">
+    <mat-spinner class="inline-block"></mat-spinner>
+  </div>
+  <div class="share-modal">
+    <div class="karmasahayogi-icon"><img alt="karmasahayogi-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
+    <div  class="content-div">
+      <div class="triangle-left hidden md:block"></div>
+      <div class="contnet">
+          <section class="w-full flex align-center justify-between ">
+            <div class="mb-2">
+                <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">{{'contentSharing.header' | translate}}</h2>
+            </div>
+            <div class="cursor-pointer"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
+          </section>
+          <form [formGroup]="shareForm">
+            <div class="mat-body-2">
+                <div class="md-5">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
+                            <mat-chip
+                                *ngFor="let user of users"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="remove(user)">
+                                {{user}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input
+                                tabindex="-1"
+                                placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
+                                #userInput
+                                formControlName="review"
+                                [formControl]="userCtrl"
+                                [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let user of filteredUsers" [value]="user.name">
+                                <div class="flex">
+                                    <div class="iconDiv">
+                                        <span class="iconText">{{user.iconText.substring(0,2)}}</span>
+                                    </div>
+                                    <div>
+                                        <div>{{user.name}}</div>
+                                        <div class="emailText">{{user.email}}</div>
+                                    </div>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-hint align="start">{{'contentSharing.note' | translate}}</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingCharacter' | translate}}</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="flex mt-5">
+                    <div class="flex flex-1 flex-end">
+                        <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">{{'contentSharing.copyLink' | translate}} &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
+                        <button mat-stroked-button type="submit"
+                            class="text-white ws-mat-primary-background flex-auto-display send-btn"
+                            [disabled]="users.length === 0 || users.length === maxEmailsLimit" (click)="submitSharing()"
+                            >
+                            {{'contentSharing.send' | translate}}<mat-icon >play_arrow</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

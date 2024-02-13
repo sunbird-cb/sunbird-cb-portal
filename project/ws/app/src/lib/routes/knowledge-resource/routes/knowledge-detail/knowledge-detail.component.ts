@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment'
 
 // tslint:disable
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 // tslint:enable
 
 @Component({
@@ -29,6 +31,8 @@ export class KnowledgeDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private kwResources: KnowledgeResourceService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     ) {
       // this.resource = _.get(this.route.snapshot, 'data.resource.data.responseData') || []
    }
@@ -47,6 +51,13 @@ export class KnowledgeDetailComponent implements OnInit {
         this.resource = reponse.responseData
       } else {
         this.resource = []
+      }
+    })
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
       }
     })
   }

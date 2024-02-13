@@ -12,14 +12,14 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        component: CompetencyListComponent
+        component: CompetencyListComponent,
       },
       {
         path: 'details',
-        component: CompetencyCardDetailsComponent
-      }
-    ]
-  }
+        component: CompetencyCardDetailsComponent,
+      },
+    ],
+  },
 ]
 
 @NgModule({

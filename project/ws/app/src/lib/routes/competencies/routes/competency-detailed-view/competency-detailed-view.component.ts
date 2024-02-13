@@ -8,7 +8,8 @@ import { NSCompetencie } from '../../models/competencies.model'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-competency-detailed-view',
@@ -67,7 +68,16 @@ export class CompetencyDetailedViewComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private competencySvc: CompetenceService,
     private configSvc: ConfigurationsService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
     this.getProfile()
   }
 

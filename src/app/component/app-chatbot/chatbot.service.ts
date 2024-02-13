@@ -7,20 +7,16 @@ import { Observable } from 'rxjs'
 })
 export class ChatbotService {
 
-  LANGUAGES ='/api/faq/v1/assistant/available/language'
+  LANGUAGES = '/api/faq/v1/assistant/available/language'
   CONFIG = '/api/faq/v1/assistant/configs/language'
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
-  getLangugages(): Observable<any>{
+  getLangugages(): Observable<any> {
     return this.http.get<any>(`${this.LANGUAGES}`)
   }
 
-  getChatData(tabType:any): any {
-    return this.http.post<any>(`${this.CONFIG}`,tabType)
+  getChatData(tabType: any): any {
+    return this.http.post<any>(`${this.CONFIG}`, tabType)
   }
 }
-
-
-
-

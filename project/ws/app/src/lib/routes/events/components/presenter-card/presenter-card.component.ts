@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-presenter-card',
@@ -10,7 +11,13 @@ export class PresenterCardComponent implements OnInit {
   initials: any
   badge!: any
 
-  constructor() { }
+  constructor(private translate: TranslateService) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+   }
 
   ngOnInit() {
     if (this.userData && !this.initials) {

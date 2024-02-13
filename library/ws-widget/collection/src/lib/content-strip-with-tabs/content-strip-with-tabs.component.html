@@ -26,7 +26,7 @@
                       ">
               <div class="flex flex-1 items-center">
                 <p class="mat-subheading-1 margin-remove inline-block" *ngIf="stripsResultDataMap[key]?.stripTitle">
-                  {{ stripsResultDataMap[key]?.stripTitle }}
+                  {{ translateLabels(stripsResultDataMap[key]?.stripTitle, 'home') }}
                 </p>
 
                 <button *ngIf="stripsResultDataMap[key]?.stripInfo?.icon" type="button" mat-icon-button
@@ -46,7 +46,7 @@
                   class="ml-4 view-more ws-mat-default-text">
                   <a class="flex ws-mat-default-text items-center justify-center mat-body-1" [routerLink]="stripsResultDataMap[key]?.viewMoreUrl?.path"
                     [queryParams]="stripsResultDataMap[key]?.viewMoreUrl?.queryParams">
-                    <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
+                    <span i18n class="ws-mat-default-text">{{translateLabels(widgetData.strips[0].viewMoreUrl.viewMoreText,'home')  || 'See all'}}</span>
                     <mat-icon class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" color="accent">navigate_next</mat-icon>
                   </a>
                 </div>
@@ -75,9 +75,9 @@
                 <mat-tab-group animationDuration="0ms" [selectedIndex]="getSelectedIndex(stripsResultDataMap[key], key)"
                 class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
                   (selectedTabChange)="tabClicked($event, stripsResultDataMap[key], key)">
-                  <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
+                  <mat-tab label="{{tab?.label}}" *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                     <ng-template mat-tab-label>
-                      <span>{{tab?.label}} &nbsp;</span>
+                      <span>{{ translateLabels(tab?.label, 'home') }} &nbsp;</span>
                       <span *ngIf="tab?.showTabDataCount && tab?.widgets?.length">({{tab?.widgets?.length}})</span>
                     </ng-template>
                     <div>
@@ -105,7 +105,7 @@
                       <ng-template #msgTemp>
                         <div class="w-full flex flex-col items-center justify-center">
                           <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.png">
-                          <div class="mat-subheading-1 text-center">{{tab.nodataMsg}}</div>
+                          <div class="mat-subheading-1 text-center">{{ translateLabels(tab.nodataMsg, 'home') }}</div>
                         </div>
                       </ng-template>
                       </div>

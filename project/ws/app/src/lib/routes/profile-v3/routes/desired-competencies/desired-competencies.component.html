@@ -1,18 +1,16 @@
 <div class="flex flex-col comptency_main_div margin-top-xl">
     <!-- <h4 class="mat-h4 main_title_text">Desired competencies</h4> -->
     <div class="flex flex-row justify-between margin-bottom-xs">
-        <h4 class="mast-h4 main_title_text margin-bottom-remove">Select competencies you want to possess</h4>
+        <h4 class="mast-h4 main_title_text margin-bottom-remove">{{'desiredcompetencies.header' | translate}}</h4>
         <div>
         <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
         </button>
-        What are competencies?
+        {{'desiredcompetencies.whatAreCompetencies' | translate}}
     </div>
     </div>
 
-    <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">Feel free to select competencies that you feel will help
-        you improve and deliver better at your workplace. This does not need to be exact.
-        This information helps us give you a more personalized experience and provide even more relevant content.</p>
+    <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">{{'desiredcompetencies.description' | translate}}</p>
 
     <!-- <ws-app-desiredcomptency-card [competenciesData]="alldesiredCompetencies" (selectedCompetency)="updateSelectedCompetency($event)"></ws-app-desiredcomptency-card> -->
     <div class="flex flex-1">

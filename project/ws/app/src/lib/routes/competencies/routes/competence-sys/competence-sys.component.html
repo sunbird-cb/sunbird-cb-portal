@@ -9,16 +9,17 @@
       <div class="w-full pt-5">
         <div class="flex flex-1 flex-column margin-fix mb-2" role="link" tabindex="0">
           <span class="mat-subheading-1">
-            All competencies
+            {{'competencies.allCompetencies' | translate}}
           </span>
         </div>
         <div class="flex flex-1 flex-row margin-fix search">
           <form (submit)="updateQuery(queryControl.value)" class="flex-1 search_form">
             <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
               <mat-icon matPrefix class="flex items-center justify-center">search</mat-icon>
-              <mat-label>Search</mat-label>
-              <input type="search" ng-model="searchText" #searchInput class="ml-2 flex-1" i18n-placeholder="search" [placeholder]="'Search'"
-                i18-aria-label aria-label="Search" matInput [formControl]="queryControl" maxlength="50" />
+              <mat-label>{{'competencies.search' | translate}}</mat-label>
+              <input type="search" ng-model="searchText" #searchInput class="ml-2 flex-1"
+              placeholder="{{'competencies.search' | translate}}"
+              aria-label="Search" matInput [formControl]="queryControl" maxlength="50" />
             </mat-form-field>
           </form>
           <!-- <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important"> -->

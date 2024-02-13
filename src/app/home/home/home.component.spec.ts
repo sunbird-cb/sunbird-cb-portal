@@ -1,25 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { WebComponent } from './home.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { WebComponent } from './home.component'
 
 describe('WebComponent', () => {
-  let component: WebComponent;
-  let fixture: ComponentFixture<WebComponent>;
+  let component: WebComponent
+  let fixture: ComponentFixture<WebComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WebComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [WebComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WebComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(WebComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

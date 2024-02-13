@@ -37,6 +37,7 @@ import { AppPublicPositionResolverService } from './position-resolver.service'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
 import { AppPublicGroupResolverService } from './group-resolver.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [PublicSignupComponent, SignupSuccessDialogueComponent, TermsAndConditionComponent],
@@ -71,6 +72,7 @@ import { AppPublicGroupResolverService } from './group-resolver.service'
     RecaptchaV3Module,
     PipeOrderByModule,
     PipeDurationTransformModule,
+    TranslateModule,
   ],
   exports: [PublicSignupComponent],
   providers: [

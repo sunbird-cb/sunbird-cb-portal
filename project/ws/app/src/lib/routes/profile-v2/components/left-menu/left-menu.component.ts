@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:disable*/
 import _ from 'lodash'
 
@@ -17,7 +18,22 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private events: EventService,
-  ) { }
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+  }
 
   ngOnInit(): void {
 
@@ -38,5 +54,10 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
       },
       { },
     )
+  }
+
+  translateLetMenuName(menuName: string): string {
+    const translationKey = 'profileV2LeftMenu.' + menuName.replace(/\s/g, "")
+    return this.translate.instant(translationKey);
   }
 }

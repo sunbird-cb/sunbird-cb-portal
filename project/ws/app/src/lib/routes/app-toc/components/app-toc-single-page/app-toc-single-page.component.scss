@@ -400,7 +400,8 @@ mat-divider {
   height:auto;
   max-height: 400px;
   padding: 0 15px 0 0;
-  overflow-y: scroll;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .view-all {
