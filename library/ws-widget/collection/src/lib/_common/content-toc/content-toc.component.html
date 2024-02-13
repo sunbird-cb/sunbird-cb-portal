@@ -3,7 +3,7 @@
         <ws-widget-app-toc-about [content]="content" [skeletonLoader]="skeletonLoader"></ws-widget-app-toc-about>
     </mat-tab>
     <mat-tab label="Content" *ngIf="contentTabFlag">
-        <ws-widget-app-toc-content [content]="content" [initialRouteData]="initialRouteData" [forPreview]="false"
+        <ws-widget-app-toc-content [batchId]="batchId" [content]="content" [tocStructure]="tocStructure" [config]="config"  [forPreview]="false"
         [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader"></ws-widget-app-toc-content>
     </mat-tab>
 </mat-tab-group>

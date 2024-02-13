@@ -59,19 +59,12 @@ span.optional-span {
 .tab:focus {
   outline: 1px solid !important;
 }
-.custom-chevron:focus {
-  outline: 0px solid !important;
-}
 
 .resource-container {
   display: flex;
   align-items: center;
   border-radius: 8px;
   // margin-bottom: 8px;
-
-  .resource {
-    padding: 16px;
-  }
 
   .card-thumbnail {
     height: 100%;
@@ -163,47 +156,14 @@ span.optional-span {
   }
 }
 
-.collection-wrapper {
-  padding: 1rem;
-}
-
-.child-wrapper {
-  .collection-wrapper {
-    padding: 1rem 1rem 1rem 0;
-  }
-}
-
-.collection-wrapper.open {
-  // background-color: #eff3f9;
-  // border-radius: 0 0 8px 8px;
-  border-bottom: 1px solid rgba(0,0,0,0.16);
-}
-
-.collection-wrapper.close {
-  // background-color: #eff3f9;
-  // border-radius: 0 0 8px 8px;
-  border: none
-}
-
-
-.child-wrapper.open {
-  // background-color: #eff3f9;
-  border-radius: 0 0 8px 8px;
-  // padding: 1rem 0 1rem 0;
-}
-
 .children-container {
   .mat-subheading-1 {
-    font: 500 16px/24px Lato !important;
+    font: 400 16px/24px Lato !important;
   }
 
   .resource-container {
-    margin-bottom: 16px;
-    // margin-right: 8px;
-
-    .resource {
-      padding: 0;
-    }
+    margin-bottom: 20px;
+    margin-right: 8px;
 
     // background-color: #fff;
     .card-thumbnail {
@@ -212,51 +172,6 @@ span.optional-span {
     }
   }
 }
-
-
-
-// for giving top margin to last level, first child resource
-:nth-child(1 of .resourceCard) .resource{
-  margin-top: 16px;
-}
-
-
-// for selecting modules that are not last children of parent, to give border
-.moduleCard:not(:last-child) >  .collection-wrapper.close.module {
-  border-bottom: 4px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0;
-}
-
-// for selecting modules that are not last children of parent and open so that border comes at end of its children
-.moduleCard:not(:last-child) >  .collection-wrapper.open.module + .child-wrapper.open {
-  border-bottom: 4px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0;
-}
-
-.course + .child-wrapper {
-  padding-left: 16px;
-}
-
-.moduleCard + .child-wrapper {
-  padding-left: 0 !important;
-}
-
-.module + .child-wrapper {
-  padding-left: 16px;
-}
-
-// .collection-wrapper.close.module {
-//   // background-color: #eff3f9;
-//   // border-radius: 0 0 8px 8px;
-//   border-bottom: 4px solid rgba(0, 0, 0, 0.08)
-// }
-
-// .collection-wrapper.open.module + .child-wrapper.open {
-//   // background-color: #eff3f9;
-//   // border-radius: 0 0 8px 8px;
-//   border-bottom: 4px solid rgba(0, 0, 0, 0.08);
-//   border-radius: 0;
-// }
 
 .content-heading {
   letter-spacing: 0px;
@@ -270,19 +185,11 @@ span.optional-span {
 
 .time-icon {
   // color: #34D6A4;
-  height: 16px;
-  width: 16px;
-  font-size: 16px;
+  // height: 21px;
+  // width: 21px;
+  // font-size: 20px;
   vertical-align: middle;
 }
-
-.separator-dot {
-    display: inline-block;
-    height: 5px;
-    width: 5px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, .4);
-  }
 
 .time-value {
   letter-spacing: 0px;
@@ -293,8 +200,8 @@ span.optional-span {
 .see-all-container {
   // text-align: right;
   position: absolute;
-  right: 16px;
-  top: 24px;
+  right: 2px;
+  top: 5px;
 
   // .see-all-btn {
   //   padding-right: 0;
@@ -387,37 +294,55 @@ span.optional-span {
   }
 }
 
-.certificate-btn {
-  height: 24px;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4px 11px;
-  color: #fff;
-  border-radius: 20px;
-  font: 400 12px/16px Lato;
-
-  .mat-icon {
-    fill: #fff;
-    color: #fff;
-    font-size: 16px;
-    height: auto;
-    width: auto;
-  }
+.bullet-span::before {
+  content: "\2022";
+  padding-right: 12px;
 }
 
-
+.download-link {
+  opacity: 1;
+  color: rgba(0,116,182,1);
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.5px;
+  line-height: 20px;
+  text-transform: uppercase;
+}
 // @media only screen and (max-width:469px) {
 // .children-container {
 // margin: $size-s 0 $size-m $size-s;
 // }
 // }
 
-.view-certificate-wrapper {
-  display: flex;
-  border-radius: 4px;
-  border: 1.5px solid rgba(0,116,182, 1);
+.offline {
+  border-radius: 2px;
   opacity: 1;
-  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2px;
+  opacity: 1;
+  color: rgba(255, 255, 255, 1);
+  font-family: "Lato-Regular";
+  font-size: 10px;
+  font-weight: 400;
+  font-style: Regular;
+  letter-spacing: 0.5px;
+  text-align: left;
+  line-height: 12px;
+}
+
+.online {
+  border-radius: 2px;
+  opacity: 1;
+  background-color: rgba(29, 137, 35, 1);
+  padding: 2px;
+  opacity: 1;
+  color: rgba(255, 255, 255, 1);
+  font-family: "Lato-Regular";
+  font-size: 10px;
+  font-weight: 400;
+  font-style: Regular;
+  letter-spacing: 0.5px;
+  text-align: left;
+  line-height: 12px;
 }

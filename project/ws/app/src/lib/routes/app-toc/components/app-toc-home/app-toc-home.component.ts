@@ -810,6 +810,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
+            this.checkModuleWiseData()
             this.currentCourseBatchId = enrolledCourse.batchId
             this.downloadCert(enrolledCourse.issuedCertificates)
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
@@ -867,6 +868,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 })
             }
           } else {
+            this.checkModuleWiseData()
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
@@ -887,6 +889,33 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
       },
     )
+  }
+
+  private mapModuleDurationAndProgress(content: NsContent.IContent | null) {
+    if (content && content.children) {
+      if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+        // content.children.map((item: NsContent.IContent)=> {
+          content = this.getCalculationsFromChildren(content)
+        // })
+      }
+      content.children.map((item: NsContent.IContent) => {
+        if (item.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          this.mapModuleDurationAndProgress(item)
+        }
+      })
+    }
+  }
+
+  private getCalculationsFromChildren(item: NsContent.IContent) {
+    console.log('item', item)
+    item['duration'] = item.children.reduce((sum, child) => {
+      return sum + Number(child.duration || 0)
+    },                                      0)
+    const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
+    const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
+    item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
+    item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1
+    return item
   }
 
   public fetchUserWFForBlended() {
@@ -1104,6 +1133,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
             this.tocSvc.updateResumaData(this.resumeData)
+            this.mapModuleDurationAndProgress(this.content)
           } else {
             this.resumeData = null
           }
@@ -1566,5 +1596,24 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
+  }
+  checkModuleWiseData() {
+    if (this.content && this.content.children) {
+      this.content.children.forEach((ele: any) => {
+        if (ele.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          let moduleResourseCount = 0
+          let offlineResourseCount = 0
+          ele.children.forEach((childEle: any) => {
+            if (childEle.primaryCategory !== NsContent.EPrimaryCategory.OFFLINE_SESSION) {
+              moduleResourseCount = moduleResourseCount + 1
+            } else {
+              offlineResourseCount = offlineResourseCount + 1
+            }
+          })
+          ele['moduleResourseCount'] = moduleResourseCount
+          ele['offlineResourseCount'] = offlineResourseCount
+        }
+      })
+    }
   }
 }

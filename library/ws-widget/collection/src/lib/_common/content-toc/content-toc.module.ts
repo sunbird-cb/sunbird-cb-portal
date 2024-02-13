@@ -22,6 +22,9 @@ import { ReviewsContentComponent } from './reviews-content/reviews-content.compo
 import { AppTocContentCardV2Component } from './app-toc-content-card-v2/app-toc-content-card-v2.component'
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component'
 import { EnrollModalComponent } from './enroll-modal/enroll-modal.component'
+import { AppTocSessionCardNewComponent } from './app-toc-session-card-new/app-toc-session-card-new.component'
+import { AppTocSessionsNewComponent } from './app-toc-sessions-new/app-toc-sessions-new.component'
+import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
 
 @NgModule({
   declarations: [
@@ -32,6 +35,8 @@ import { EnrollModalComponent } from './enroll-modal/enroll-modal.component'
     ReviewsContentComponent,
     ConfirmationModalComponent,
     EnrollModalComponent,
+    AppTocSessionCardNewComponent,
+    AppTocSessionsNewComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +61,7 @@ import { EnrollModalComponent } from './enroll-modal/enroll-modal.component'
     CardCompetencyModule,
     HorizontalScrollerV2Module,
     WidgetResolverModule,
+    AttendanceCardModule,
   ],
   exports: [
     ContentTocComponent,
