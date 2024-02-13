@@ -896,6 +896,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (content && content.children) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         // content.children.map((item: NsContent.IContent)=> {
+          /* tslint:disable-next-line */
           content = this.getCalculationsFromChildren(content)
         // })
       }
@@ -908,7 +909,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getCalculationsFromChildren(item: NsContent.IContent) {
-    console.log('item', item)
     item['duration'] = item.children.reduce((sum, child) => {
       return sum + Number(child.duration || 0)
     },                                      0)

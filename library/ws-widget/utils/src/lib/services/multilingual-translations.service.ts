@@ -24,7 +24,7 @@ export class MultilingualTranslationsService {
 
     translateLabelWithoutspace(label: string, type: any, subtype: any) {
         let nlabel = label
-        nlabel = nlabel.replace(/\s/g, '')
+        nlabel = nlabel && nlabel.replace(/\s/g, '')
         if (subtype) {
             // tslint:disable-next-line: prefer-template
             const translationKey = type + '.' +  nlabel + subtype

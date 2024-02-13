@@ -1,7 +1,7 @@
 <ng-container *ngIf="kpData && btnCategory !== 'claim' && pCategory === ''">
   <div class="flex flex-row items-center gap-2 slider-div">
     <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
-    <div class="text-xs">
+    <div class="flex flex-wrap gap-1 text-xs">
       <div *ngIf="kpData?.textBeforeIcon">{{ translateLabels(kpData?.textBeforeIcon, 'appKarmapointsPanel') }}</div>
       <div *ngIf="kpData?.points" class="font-bold"> {{kpData.points}} {{ translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }} </div>
       <div *ngIf="kpData?.textAfterIcon">{{ translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel') }}</div>
@@ -13,7 +13,7 @@
 <ng-container  *ngIf="kpData && btnCategory !== 'claim' && pCategory !== ''">
   <div class="flex flex-row items-center gap-2 slider-div">
     <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
-    <div class="text-xs">
+    <div class="flex flex-wrap gap-1 text-xs">
       <div>{{ getDynamicText(kpData.textBeforeIcon) }}</div>
       <div class="font-bold">{{ kpData.points }} {{ translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }}</div>
       <span *ngIf="kpData.textAfterIcon">{{ translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel') }}</span>
