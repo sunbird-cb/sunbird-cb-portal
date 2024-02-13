@@ -26,6 +26,11 @@
     text-align: center;
     font-size: 14px;
     height: 32px;
+    max-width: 124px;
+    height: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .download-app-chip span {
