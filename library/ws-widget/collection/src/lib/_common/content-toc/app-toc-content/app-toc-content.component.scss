@@ -83,3 +83,40 @@
     height: 28px;
     font-size: 28px;
 }
+.tab-list {
+  .tab-data {
+    border-radius: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 1;
+    background-color: #e5e9ef;
+    padding: 6px 16px;
+    cursor: pointer;
+    span{
+      opacity: 1;
+      color: rgba(0, 0, 0, 0.87);
+      font-family: "Lato-Regular";
+      font-size: 14px;
+      font-weight: 400;
+      font-style: Regular;
+      letter-spacing: 0.25px;
+      text-align: left;
+      line-height: 20px;
+    }
+  }
+  .active-tab {
+    border-radius: 18px;
+    border: 1px solid rgba(27, 76, 161, 1);
+    opacity: 1;
+    background-color: #dee6f2;
+    span {
+      color: rgba(27, 76, 161, 1);
+    }
+  }
+  .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+
+  }
+}
+

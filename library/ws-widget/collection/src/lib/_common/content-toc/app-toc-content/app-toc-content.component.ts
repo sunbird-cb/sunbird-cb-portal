@@ -17,6 +17,11 @@ export class AppTocContentComponent implements OnInit {
   @Input() batchId!: string
   @Input() content: NsContent.IContent | null = null
   @Input() forPreview = false
+  @Input() resumeData: NsContent.IContinueLearningData | null = null
+  @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
+  @Input() skeletonLoader = false
+  @Input() tocStructure: any
+  @Input() config: any
   isPlayable = false
   contentPlayWidgetConfig: NsWidgetResolver.IRenderConfigWithTypedData<any> | null = null
   defaultThumbnail = ''
@@ -28,6 +33,11 @@ export class AppTocContentComponent implements OnInit {
   expandPartOf = false
   contextId!: string
   contextPath!: string
+
+  typesOfContent: any
+  selectedTabType: any = 'content'
+  nsContent: any =  NsContent
+  otherResourse = 0
 
   constructor(
     private route: ActivatedRoute,
@@ -57,6 +67,34 @@ export class AppTocContentComponent implements OnInit {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
+    }
+    this.typesOfContent = [
+      {
+        name: 'Self-paced',
+        id: 'content',
+        disabled: false,
+      },
+      {
+        name: 'Instructor-led',
+        id: 'session',
+        disabled: false,
+      },
+    ]
+    this.otherResourse = 0
+    Object.keys(this.tocStructure).forEach((ele: any) => {
+      if (ele === 'offlineSession' || ele === 'learningModule') {
+      } else {
+
+        this.otherResourse = this.otherResourse + this.tocStructure[ele]
+      }
+    })
+    if (!this.otherResourse) {
+      setTimeout(() => {
+        this.selectedTabType = 'session'
+        this.typesOfContent[0].disabled = true
+      },         1000)
+    } else {
+      this.typesOfContent[1].disabled =  this.tocStructure['offlineSession'] ? false : true
     }
   }
 
