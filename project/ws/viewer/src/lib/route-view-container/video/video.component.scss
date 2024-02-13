@@ -13,8 +13,8 @@
   // padding: $size-xs;
   // padding-top: $size-m;
   @include breakpoint-xs {
-    padding: 0;
-    padding-top: $size-m!important;
+    // padding: 0;
+    // padding-top: $size-m!important;
   }
 }
 
@@ -46,36 +46,36 @@
 
 .video-player {
   width: 100%;
-  height: 75vh;
-  @include breakpoint-lt-xl {
-    height: 70vh;
-  }
-  @include breakpoint-lt-l {
-    height: 65vh;
-  }
-  @include breakpoint-lt-m {
-    height: 60vh;
-  }
-  @include breakpoint-lt-s {
-    height: 55vh;
-  }
-  @include breakpoint-xs {
-    // position: fixed;
-    // top: 55px;
-    padding-top: 1rem;
-    left: 0px;
-    height: 40vh;
-    width: 100vw;
-    z-index: 1000;
-    background: black;
-  }
+  height:557px;
+  // @include breakpoint-lt-xl {
+  //   height: 56vh;
+  // }
+  // @include breakpoint-lt-l {
+  //   height: 65vh;
+  // }
+  // @include breakpoint-lt-m {
+  //   height: 60vh;
+  // }
+  // @include breakpoint-lt-s {
+  //   height: 55vh;
+  // }
+  // @include breakpoint-xs {
+  //   // position: fixed;
+  //   // top: 55px;
+  //   padding-top: 1rem;
+  //   left: 0px;
+  //   height: 40vh;
+  //   width: 100vw;
+  //   z-index: 1000;
+  //   background: black;
+  // }
 }
 
 .video-player-mobile {
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0;
-  padding: 0 16px;
+  padding: 0;
   @include breakpoint-xs {
     padding: 0;
   }

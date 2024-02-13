@@ -3,7 +3,7 @@
 </div>
 <div class="padding-dynamic" *ngIf="audioData && isNotEmbed">
   <div class="flex flex-around flex-wrapped">
-    <div class="w-full audio-player-container">
+    <div class="w-full audio-player-container" *ngIf="!isMobile">
       <div *ngIf="!isScreenSizeSmall">
         <mat-card>
           <mat-card-content>

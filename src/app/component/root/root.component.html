@@ -12,7 +12,7 @@
 <!-- <ws-app-nav-bar class="top-nav-bar" *ngIf="
 navBarRequired && (isXSmall$ | async) === false
   " [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar> -->
-<ws-header *ngIf="navBarRequired" [hidden]="!isShowNavbar" [mode]="'top'" [headerFooterConfigData]="headerFooterConfigData"></ws-header>
+<ws-header *ngIf="navBarRequired" [hidden]="!isShowNavbar" [mode]="'top'" [headerFooterConfigData]="headerFooterConfigData" [showHubs]="showHubs"></ws-header>
 <!-- </ws-widget-sticky-header> -->
 <div class="height-adjust" [ngClass]="{
     'height-on-bottom custom-scroll':

@@ -30,6 +30,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     ],
   }
   @Input() itemSelectedList: string[] = []
+  @Input() current_Question:any
   @Input() markedQuestions: Set<string> = new Set()
   @Output() itemSelected = new EventEmitter<string | Object>()
 

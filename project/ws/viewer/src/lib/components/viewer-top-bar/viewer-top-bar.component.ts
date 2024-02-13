@@ -52,6 +52,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   userRating: any
   userId: any
   currentDataFromEnrollList: any
+  isMobile = false;
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -79,7 +80,11 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getAuthDataIdentifer()
-
+    if(window.innerWidth <= 1200) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
     }
