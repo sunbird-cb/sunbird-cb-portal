@@ -47,18 +47,15 @@
       <div class="w-full pt-5">
         <div class="flex flex-1 flex-column margin-fix mt-5 filter_outer_box">
           <div class="flex flex-1 filter">
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'acquired_by_you', 'ws-mat-accent-border':currentFilter !== 'acquired_by_you'}" 
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'acquired_by_you', 'ws-mat-accent-border':currentFilter !== 'acquired_by_you'}"
             (click)="filter('acquired_by_you'); tabTelemetry('Added by you', 2)">
             {{ 'competencies.acquiredByYou' | translate }} </a>
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'desired_competencies', 'ws-mat-accent-border':currentFilter !== 'desired_competencies'}"
-            (click)="filter('desired_competencies'); tabTelemetry('Added by you', 2)"> 
+            (click)="filter('desired_competencies'); tabTelemetry('Added by you', 2)">
             {{ 'competencies.desired' | translate }}</a>
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended', 'ws-mat-accent-border':currentFilter !== 'recommended'}" 
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended', 'ws-mat-accent-border':currentFilter !== 'recommended'}"
             (click)="filter('recommended'); tabTelemetry('Recommended from FRAC', 0)">
             {{ 'competencies.fromFRAC' | translate }}</a>
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended_from_wat', 'ws-mat-accent-border':currentFilter !== 'recommended_from_wat'}"
-              (click)="filter('recommended_from_wat'); tabTelemetry('Recommended from WAT', 1)">
-            {{ 'competencies.fromWAT' | translate }}</a>
           </div>
         </div>
 
