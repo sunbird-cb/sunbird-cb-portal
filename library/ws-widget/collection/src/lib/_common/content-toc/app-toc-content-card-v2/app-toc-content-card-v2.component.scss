@@ -233,6 +233,18 @@ span.optional-span {
   border-radius: 0;
 }
 
+.course + .child-wrapper {
+  padding-left: 16px;
+}
+
+.moduleCard + .child-wrapper {
+  padding-left: 0 !important;
+}
+
+.module + .child-wrapper {
+  padding-left: 16px;
+}
+
 // .collection-wrapper.close.module {
 //   // background-color: #eff3f9;
 //   // border-radius: 0 0 8px 8px;
