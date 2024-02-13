@@ -1,5 +1,3 @@
 <mat-progress-bar [mode]="'determinate'" [matTooltip]="progress + ' %'" [value]="progress" class="new-w  {{customClassName}}"
   [attr.aria-labelledby]="'m-c-'+ contentId" [ngClass]="{ 'visibility-0': progress === undefined, 'thick': className}"
-  i18n-aria-label>
-  {{progress}} %
-</mat-progress-bar>
+  i18n-aria-label> {{ progress }} % </mat-progress-bar>

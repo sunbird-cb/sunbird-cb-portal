@@ -85,7 +85,7 @@
 <div class="flex flex-row gap-6 fixed-width">
   <div class="toc-content">
     <div class="pb-4 lg:py-4">
-      <ws-widget-content-toc [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
+      <ws-widget-content-toc [content]="content" [changeTab]="changeTab" [initialRouteData]="initialrouteData" [forPreview]="false"
       [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader" ></ws-widget-content-toc>
     </div>
   </div>
@@ -118,6 +118,7 @@
           </div>
         </div>
       </ng-container>
+
       <div class="flex flex-col gap-4 p-5 border-bottom">
         <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
           <div class="flex flex-row gap-3 justify-around">
@@ -139,53 +140,6 @@
             [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
             [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
           </ws-app-toc-banner>
-          <!-- <ng-container *ngIf="batchData && !batchData?.enrolled && 
-            (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED)) && batchData?.content?.length">
-            <div class="flex flex-col batch-div">
-              <div class="flex flex-col gap-1">
-                <div class="flex flex-row gap-4 batch-details" [matMenuTriggerFor]="batch">
-                  <div class="flex-1">
-                    <div class="flex flex-col gap-1">
-                      <div class="font-bold">Batch - 1</div>
-                      <div class="text-xs leading-4">1 Jan, 2024 to 28 Feb, 2024</div>
-                    </div>
-                  </div>
-                  <div class="flex justify-center items-center">
-                    <mat-icon>keyboard_arrow_down</mat-icon>
-                  </div>
-                </div>
-                <div class="batch-enrolled">Your request is done</div>
-                <div class="expired">No active batch is available</div>
-              </div>
-              <mat-menu #batch="matMenu" yPosition="below" class="batch-menu">
-                <ng-container *ngFor="let batch of batchData.content; let i = index">
-                  <button class="flex gap-2 items-center" mat-menu-item [disabled]="!handleEnrollmentEndDate(batch)">
-                    <span>
-                      {{ batch.name }}
-                      ({{ batch.startDate | date: 'd MMM, y' }} - {{ batch.endDate | date: 'd MMM, y' || 'present' }})
-                    </span>
-                    <span class="expired">Expired</span>
-                  </button>
-                </ng-container>
-              </mat-menu>
-              
-              <div class="flex flex-row justify-center items-center mt-4">
-                <button class="withdraw-batch">Withdraw your request</button>
-              </div>
-
-              <div class="flex flex-row gap-4 mt-4">
-                <div class="flex-1">
-                  <div class="flex flex-col gap-1">
-                    <div class="text-xs leading-4">Last enroll date</div>
-                    <div class="font-bold">10/06/2023</div>
-                  </div>
-                </div>
-                <div class="flex flex-row justify-center items-center">
-                  <button class="enroll-button" (click)="handleEnrollBatch()" >Request to Enroll</button>
-                </div>
-              </div>
-            </div>
-          </ng-container> -->
         </div>
   
         <div class="flex flex-col gap-4">
@@ -197,6 +151,81 @@
           </ng-container>
 
           <ng-container *ngIf="!skeletonLoader">
+            <ng-container *ngIf="content?.isInIntranet && showIntranetMsg">
+              <div class="flex flex-col gap-4" *ngIf="content?.completionStatus == 2 || certData">
+                <div class="pending-certificate" *ngIf="!certData">
+                  <div>Kindly be patient. The certificate generation normally takes up to 24 hours,
+                    however, it might take longer sometimes.</div>
+                  <div>If the issue persists, please mail us at mission.karmayogi@gov.in</div>
+                </div>
+                <ng-container *ngIf="certData">
+                  <a class="certificate_box" (click)="openCertificateDialog()">
+                    <img [src]="certData | pipeSafeSanitizer: 'url'" class="certificate_banner" />
+                    <div class="flex items-center certificate_overlay">
+                      <div class="flex flex-col text-center gap-1 p-4">
+                        <div class="font-bold text-white">Congratulations!</div>
+                        <div class="text-white">Your certificate of completion is ready for you to download.</div>
+                      </div>
+                    </div>
+                  </a>
+                </ng-container>
+              </div>
+
+              <div class="flex flex-row items-center gap-2 info-div" *ngIf="content?.isInIntranet && showIntranetMsg">
+                <mat-icon>info</mat-icon>
+                <ng-container i18n>This can be viewed only in the Intranet.</ng-container>
+              </div>
+              <div class="flex flex-row items-center gap-2 info-div" *ngIf="showInstructorLedMsg">
+                <mat-icon>info</mat-icon>&nbsp;
+                <ng-container i18n>This is instructor-led classroom course and is not available online.</ng-container>
+              </div>
+              <div class="flex flex-row items-center gap-2 info-div" *ngIf="showStart.msg === 'youtubeForbidden'">
+                <mat-icon>info</mat-icon>&nbsp;
+                <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
+              </div>
+              <div *ngIf="showBtn">
+                <a href="{{ cscmsUrl }}" target="_blank" class="flex action-button justify-center">
+                  Apply for physical training</a>
+              </div>
+              
+              <div class="flex flex-row gap-2">
+                <div class="flex-1">
+                  <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
+                    <div class="flex flex-col gap-2">
+                      <div class="flex flex-row gap-4 text-sm">
+                        <div class="flex-1">Overall Progress</div>
+                        <div *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</div>
+                      </div>
+                      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
+                      </ws-widget-content-progress>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <ng-container *ngIf="resumeData">
+                  <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
+                    <mat-icon>star_purple500</mat-icon>
+                    <ng-container *ngIf="!userRating">
+                      <div>Rate Now</div>
+                    </ng-container>
+                    <ng-container *ngIf="userRating">
+                      <div>Edit Rating</div>
+                    </ng-container>
+                  </button>
+                </ng-container>
+              </div>
+              
+              <div *ngIf="resumeData && !userRating">
+                <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
+                  [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
+              </div>
+              
+              <div *ngIf="resumeData && userRating">
+                <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"
+                  [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
+              </div>
+            </ng-container> 
+
             <ng-container *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
               <div [hidden]="isResource && !content?.artifactUrl?.length" class="text-center">
                 <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM
@@ -260,7 +289,7 @@
                     !(content?.primaryCategory === primaryCategory.PROGRAM) &&
                     !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)">
                     <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE  && !enrollBtnLoading">
-                      <button class="flex action-button justify-center" (click)="autoBatchAssign()">
+                      <button class="flex action-button justify-center" (click)="handleAutoBatchAssign()">
                         <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                           Enroll
                         </ng-container>
@@ -355,14 +384,14 @@
                 </ng-container>
 
                 <ng-container *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled && !enrollBtnLoading">
-                  <button class="flex action-button justify-center" (click)="autoBatchAssign()">
+                  <button class="flex action-button justify-center" (click)="handleAutoBatchAssign()">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                       Enroll
                     </ng-container>
                   </button>
                 </ng-container>
                 <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled && !enrollBtnLoading">
-                  <button class="flex action-button justify-center resume" (click)="autoBatchAssign()">
+                  <button class="flex action-button justify-center resume" (click)="handleAutoBatchAssign()">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                       Enroll
                     </ng-container>
@@ -404,11 +433,6 @@
                 </ng-container>
               </div>
             </ng-container>
-
-            <div class="flex flex-row gap-2 slider-div">
-              <img src="/assets/icons/home/karma-badge.svg" width="32px" alt="badge image" />
-              <div class="text-xs">By completing this course earn 10 more Karma Points</div>
-            </div>
           </ng-container>
 
           <ng-container *ngIf="skeletonLoader">
@@ -520,6 +544,8 @@
   </div>
 </div>
 
+
+<!------------------------- Old code --------------------------->
 <ng-container *ngIf="show">
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
@@ -613,7 +639,7 @@
                 && !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)
               ">
                 <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE  && !enrollBtnLoading">
-                    <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+                    <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="handleAutoBatchAssign()">
                       <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                         Enroll
                       </ng-container>
@@ -712,14 +738,14 @@
                         [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled && !enrollBtnLoading">
-              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="handleAutoBatchAssign()">
                 <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                   Enroll
                 </ng-container>
               </a>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && !batchData?.enrolled && !enrollBtnLoading">
-              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+              <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="handleAutoBatchAssign()">
                 <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                   Enroll
                 </ng-container>
