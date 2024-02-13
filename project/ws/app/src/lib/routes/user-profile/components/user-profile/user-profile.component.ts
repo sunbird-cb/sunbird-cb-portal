@@ -145,7 +145,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isReqVKBuser = false
   isSaveButtoDisable = false
   isEhrmsId: any
-  ehrmsInfo : any
+  ehrmsInfo: any
 
   constructor(
     private snackBar: MatSnackBar,
@@ -761,11 +761,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
-          // debugger
-          if(data && data.profileDetails && data.profileDetails.additionalProperties && data.profileDetails.additionalProperties.externalSystem === 'DoPT eHRMS'){
+              // tslint:disable-next-line: max-line-length
+          if (data && data.profileDetails && data.profileDetails.additionalProperties && data.profileDetails.additionalProperties.externalSystem === 'DoPT eHRMS') {
             this.isEhrmsId = data.profileDetails.additionalProperties.externalSystemId
           }
-          
 
           const userData = {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
@@ -1945,7 +1944,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public tabClicked(tabEvent: MatTabChangeEvent) {
     // debugger
     this.ehrmsInfo = tabEvent.tab.textLabel
-    if(tabEvent.tab.textLabel === 'e-HRMS details' || tabEvent.index === 2) {
+    if (tabEvent.tab.textLabel === 'e-HRMS details' || tabEvent.index === 2) {
        this.isSaveButtoDisable = true
     } else {
       this.isSaveButtoDisable = false
@@ -1958,7 +1957,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
-    
+
   }
 
   dialogReqHelp(type: string) {

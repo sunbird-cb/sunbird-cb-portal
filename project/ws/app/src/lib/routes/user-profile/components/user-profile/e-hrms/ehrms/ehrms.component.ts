@@ -1,27 +1,27 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UserProfileService } from '../../../../services/user-profile.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, OnChanges } from '@angular/core'
+import { UserProfileService } from '../../../../services/user-profile.service'
+import { FormControl, FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'ws-app-ehrms',
   templateUrl: './ehrms.component.html',
-  styleUrls: ['./ehrms.component.scss']
+  styleUrls: ['./ehrms.component.scss'],
 })
 export class EhrmsComponent implements OnInit, OnChanges {
   @Input() ehrmsData: any
   // ehrmsTabclick
-  ehrmsApiResponse:any
+  ehrmsApiResponse: any
+  profilepic: any
   loaderVisible = false
   initials: any
   name = 'Guest User'
-  defaultMsg = 'No data found. Once you update e-HRMS, it will start reflecting.'
+  defaultMsg = 'This field value is not found. Please update your e-HRMS profile.'
   isErrorMsg = false
   getEhrmsForm: FormGroup
   constructor(
     private userProfileSvc: UserProfileService
-  ) { 
+  ) {
     this.getEhrmsForm = new FormGroup({
-      ehrmsprofilePicture: new FormControl('', []),
       ehrmsSalutation: new FormControl('', []),
       ehrmsFirstname: new FormControl('', []),
       ehrmsMiddlename: new FormControl('', []),
@@ -53,32 +53,26 @@ export class EhrmsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // debugger
-    // console.log('ehrmsData', this.ehrmsData)
-    // if(this.ehrmsData === 'ehrmsTabclick') {
-    //   // this.getEhrmsData()
-    // }
-    // this.getEhrmsData()
-    
+  
+
   }
   ngOnChanges() {
-    if(this.ehrmsData === 'e-HRMS details') {
+    if (this.ehrmsData === 'e-HRMS details') {
       this.getEhrmsData()
-      // we need to commentout this 
-      this.createInititals()
+      // this.createInititals()
     }
   }
   getEhrmsData () {
     this.loaderVisible = true
     this.userProfileSvc.fetchEhrmsDetails().subscribe(data => {
     this.ehrmsApiResponse = data.result.message[0]
-    // this.name = this.ehrmsApiResponse.first_name + ' ' + this.ehrmsApiResponse.last_name
-    this.name = this.ehrmsApiResponse.emp_name
+    this.name = this.ehrmsApiResponse.emp_first_name + ' ' + this.ehrmsApiResponse.emp_last_name
+    this.profilepic = this.ehrmsApiResponse.profile_photo
     this.createInititals()
     this.patchEhrmsDetails()
     this.loaderVisible = false
     },
-    (_err: any) => {
+                                                      (_err: any) => {
       this.isErrorMsg = true
       this.loaderVisible = false
       })
@@ -86,7 +80,7 @@ export class EhrmsComponent implements OnInit, OnChanges {
 
   patchEhrmsDetails () {
     this.getEhrmsForm.patchValue({
-      ehrmsSalutation : this.ehrmsApiResponse.emp_salutation,
+      ehrmsSalutation : this.ehrmsApiResponse.salutation,
       ehrmsFirstname : this.ehrmsApiResponse.emp_first_name,
       ehrmsMiddlename: this.ehrmsApiResponse.emp_middle_name,
       ehrmsLastname : this.ehrmsApiResponse.emp_last_name,
@@ -102,16 +96,16 @@ export class EhrmsComponent implements OnInit, OnChanges {
       ehrmsPosting : this.ehrmsApiResponse.place_of_posting,
       ehrmsEmailid : this.ehrmsApiResponse.emp_email,
       ehrmsMobile : this.ehrmsApiResponse.emp_mobile,
-      ehrmsPresentadd1 : this.ehrmsApiResponse.presetAdd1,
-      ehrmsPresentadd2 : this.ehrmsApiResponse.ehrmsPresentadd2,
-      ehrmsPresentstate : this.ehrmsApiResponse.ehrmsPresentstate,
-      ehrmsPresentdistrict : this.ehrmsApiResponse.ehrmsPresentdistrict,
-      ehrmsPresentpincode : this.ehrmsApiResponse.ehrmsPresentpincode,
-      ehrmsAddress1 : this.ehrmsApiResponse.ehrmsAddress1,
-      ehrmsAddress2 : this.ehrmsApiResponse.ehrmsAddress2,
-      ehrmsState : this.ehrmsApiResponse.ehrmsState,
-      ehrmsDistrict : this.ehrmsApiResponse.ehrmsDistrict,
-      ehrmsPincode : this.ehrmsApiResponse.ehrmsPincode,
+      ehrmsPresentadd1 : this.ehrmsApiResponse.present_address_1,
+      ehrmsPresentadd2 : this.ehrmsApiResponse.present_address_2,
+      ehrmsPresentstate : this.ehrmsApiResponse.present_state,
+      ehrmsPresentdistrict : this.ehrmsApiResponse.present_city,
+      ehrmsPresentpincode : this.ehrmsApiResponse.present_pincode,
+      ehrmsAddress1 : this.ehrmsApiResponse.prmnt_address_1,
+      ehrmsAddress2 : this.ehrmsApiResponse.prmnt_address_2,
+      ehrmsState : this.ehrmsApiResponse.prmnt_state,
+      ehrmsDistrict : this.ehrmsApiResponse.prmnt_city,
+      ehrmsPincode : this.ehrmsApiResponse.prmnt_pincode,
     })
   }
   get userInitials() {

@@ -87,6 +87,10 @@
     margin-left:0!important;
     padding: 1rem 1rem;
   }
+  // @include breakpoint-m {
+  //   box-sizing: border-box;
+  //   margin: 0px !important;
+  // }
   @include breakpoint-s {
     box-sizing: border-box;
     margin-left:0!important;
@@ -118,11 +122,15 @@
     width: 100%;
 }
 .ehrms-profile-link {
-  border-radius: 50%;
-  overflow: hidden;
+  height: 90px;
+  width: 90px;
   display: flex;
-  height: 95px;
-  width: 95px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #D9F2FE 0% 0% no-repeat padding-box;
+  border: 2px solid #FFFFFF;
+  position: relative;
 
   @include breakpoint-xs {
     margin:0px auto;
@@ -133,27 +141,38 @@
   
 }
 .ehrms-profile-img {
-  height: 94px;
+  // height: 94px;
+  // object-fit: cover;
+  // object-position: center;
   object-fit: cover;
-  object-position: center;
+  border-radius: 50%;
+  height: inherit;
+  width: 100%;
 }
 
 .ehrms-form-inner {
   @include breakpoint-xs {
     flex-direction: column;
   }
+  // @include breakpoint-m {
+  //   flex-direction: column;
+  //   box-sizing: border-box;
+  // }
   @include breakpoint-s {
     flex-direction: column;
   }
 }
 .box-responsive-rightDiv {
-  padding-bottom: 150px;
+  padding-bottom: 222px;
   @include breakpoint-xs {
     padding-bottom: 0px;
   }
   @include breakpoint-s {
     padding-bottom: 0px;
   }
+  // @include breakpoint-m {
+  //   padding-bottom: 0px;
+  // }
 }
 .text-width {
   width: 15%;
@@ -196,14 +215,23 @@
   font-size: 14px;
   border: 2px solid lightgrey;
   border-radius: 6px;
-  height: 30px;
+  height: 29px;
   background-color: transparent;
   margin-top: 13px;
   opacity: 60%;
-  padding: 8px 0px 0px 8px;
-  margin-bottom: 20px;
+  padding: 10px 0px 0px 7px;
+  margin-bottom: 15px;
+  word-break: break-all;
+    white-space: initial;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    min-height: 24px;
   @include breakpoint-xs {
     height: auto;
+    padding: 5px;
   }
   // @include breakpoint-m {
   //   // padding: 1px 0px 0px 8px;
@@ -212,6 +240,7 @@
   @include breakpoint-s {
     // padding: 1px 0px 0px 8px;
     height: auto;
+    padding: 5px;
   }
 }
 .text-field-disable {

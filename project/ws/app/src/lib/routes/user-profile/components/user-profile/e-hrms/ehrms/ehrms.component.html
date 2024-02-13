@@ -1,6 +1,6 @@
 
 <!-- <div class="profile-container container-balanced margin-top-xl mb-5" *ngIf="loaderVisible"> -->
-<div class="profile-container container-balanced margin-top-xl mb-5" *ngIf="loaderVisible">
+  <div class="profile-container container-balanced margin-top-xl mb-5" *ngIf="loaderVisible">
     <div class="flex flex-1 profile-box">
       <div class="ehrms-form">
         <div class="flex flex-row flex-1 ehrms-form-inner">
@@ -242,7 +242,6 @@
     </div>
   </div>
   <div class="profile-container container-balanced margin-top-xl mb-5" *ngIf="ehrmsApiResponse && !isErrorMsg">
-  <!-- <div class="profile-container container-balanced margin-top-xl mb-5" *ngIf="true"> -->
     <div class="flex flex-1 profile-box">
       <form class="ehrms-form" [formGroup]="getEhrmsForm">
         <div class="flex flex-row flex-1 ehrms-form-inner">
@@ -250,12 +249,12 @@
           <div class="flex-1 flex flex-col profile-top-col w-full bg-grey">
             <div>
               <!-- Need to update this condition -->
-              <a class="ehrms-profile-link" *ngIf="false">
-                <img src="https://portal.karmayogi.nic.in/assets/public/profileImage/1707385906028_WhatsAppImage20240110at17.42.409f088914.jpg" 
+              <div class="ehrms-profile-link" *ngIf="profilepic">
+                <img [src]="profilepic" 
                 alt="e-hrms profile picture" class="ehrms-profile-img">
-              </a>
+              </div>
                <!-- Need to update this condition -->
-              <div class="ehrms-profile-link-initials" *ngIf="true">
+              <div class="ehrms-profile-link-initials" *ngIf="!profilepic">
                  <div class="initials ehrms-profile-img-initials" i18n-aria-label>
                    <p class="profile-name-initial">{{ userInitials }} </p>
                  </div>
@@ -268,23 +267,23 @@
                   aria-label="First Name label">
                   Salutation
                 </label>
-                <mat-form-field appearance="outline" class="text-field-disable margin-top-xs salutation-form-field" *ngIf="getEhrmsForm?.controls['ehrmsSalutation']">
+                <mat-form-field appearance="outline" class="text-field-disable margin-top-xs salutation-form-field" *ngIf="(getEhrmsForm?.controls['ehrmsSalutation'])">
                   <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                     aria-label="First Name input" formControlName="ehrmsSalutation" disabled="true" />
                 </mat-form-field>
-                <div *ngIf="!(getEhrmsForm?.controls['ehrmsSalutation'])" class="default-text-field">{{defaultMsg}}</div>
+                <div *ngIf="!(getEhrmsForm?.controls['ehrmsSalutation'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
               </div>
               <div class="input-wrapper margin-top-s first-name-width">
-                <label for="firstName" class=" margin-remove-bottom form-label  "
+                <label for="firstName" class=" margin-remove-bottom form-label"
                   i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
                   aria-label="First Name label">
                   First Name
                 </label>
-                <mat-form-field appearance="outline" class="text-field-disable margin-top-xs" *ngIf="getEhrmsForm?.controls['ehrmsFirstname']">
+                <mat-form-field appearance="outline" class="text-field-disable margin-top-xs" *ngIf="(getEhrmsForm?.controls['ehrmsFirstname'])">
                   <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                     aria-label="First Name input" formControlName="ehrmsFirstname" disabled="true" />
                 </mat-form-field>
-                <div *ngIf="!(getEhrmsForm?.controls['ehrmsFirstname'])" class="default-text-field"><span>{{defaultMsg}}</span></div>
+                <div *ngIf="!(getEhrmsForm?.controls['ehrmsFirstname'])" class="default-text-field" i18n-matTooltip matTooltip="{{defaultMsg}}"><span>{{defaultMsg}}</span></div>
               </div>
             </div>
             <div class="input-wrapper margin-top-s">
@@ -297,7 +296,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsMiddlename" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsMiddlename'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsMiddlename'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
   
             <div class="input-wrapper margin-top-s">
@@ -310,7 +309,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsLastname" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsLastname'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsLastname'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -323,7 +322,7 @@
                   aria-label="First Name input" formControlName="ehrmsDob" disabled="true" />
                   <!-- <p>Date of birth is not</p> -->
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDob'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDob'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
   
             </div>
             <div class="input-wrapper margin-top-s">
@@ -336,7 +335,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsGender" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsGender'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsGender'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -348,7 +347,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsCategory" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsCategory'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsCategory'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -360,7 +359,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsDisabled" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDisabled'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDisabled'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -372,7 +371,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsMarital" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsMarital'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsMarital'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
           </div>
   
@@ -389,7 +388,7 @@
                   aria-label="First Name input" formControlName="ehrmsEmployeecode" disabled="true" >
                   <!-- <div *ngIf="!getEhrmsForm?.controls['ehrmsEmployeecode']">{{getEhrmsForm?.controls['ehrmsEmployeecode'] | json}}</div> -->
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsEmployeecode'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsEmployeecode'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -401,7 +400,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsService" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsService'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsService'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -413,7 +412,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsDesignation" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDesignation'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDesignation'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -425,7 +424,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsMdo" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsMdo'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsMdo'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -433,11 +432,11 @@
                 aria-label="First Name label">
                 Current Place of Posting
               </label>
-              <mat-form-field appearance="outline" class="text-field-disable margin-top-xs" *ngIf="getEhrmsForm?.controls['ehrmsPosting']">
+              <mat-form-field appearance="outline" class="text-field-disable margin-top-xs" *ngIf="(getEhrmsForm?.controls['ehrmsPosting'])">
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsPosting" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPosting'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPosting'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -449,7 +448,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsEmailid" disabled="true" />
               </mat-form-field>
-              <div *ngIf="(getEhrmsForm?.controls['ehrmsEmailid'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsEmailid'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -457,11 +456,11 @@
                 aria-label="First Name label">
                 Mobile No.
               </label>
-              <mat-form-field appearance="outline" class="text-field-disable margin-top-xs" *ngIf="!(getEhrmsForm?.controls['ehrmsMobile'])">
+              <mat-form-field appearance="outline" class="text-field-disable margin-top-xs" *ngIf="(getEhrmsForm?.controls['ehrmsMobile'])">
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsMobile" disabled="true" />
               </mat-form-field>
-              <div *ngIf="(getEhrmsForm?.controls['ehrmsMobile'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsMobile'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             
           </div>
@@ -482,7 +481,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsPresentadd1" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentadd1'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentadd1'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
   
             <div class="input-wrapper margin-top-s">
@@ -495,7 +494,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsPresentadd2" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentadd2'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentadd2'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -507,7 +506,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsPresentstate" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentstate'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentstate'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -519,7 +518,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsPresentdistrict" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentdistrict'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentdistrict'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -531,7 +530,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsPresentpincode" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentpincode'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPresentpincode'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
           </div>
   
@@ -548,7 +547,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsAddress1" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsAddress1'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsAddress1'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
   
             <div class="input-wrapper margin-top-s">
@@ -561,7 +560,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsAddress2" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsAddress2'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsAddress2'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -573,7 +572,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsState" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsState'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsState'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -585,7 +584,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsDistrict" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDistrict'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsDistrict'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
             </div>
             <div class="input-wrapper margin-top-s">
               <label for="firstName" class=" margin-remove-bottom form-label  "
@@ -597,7 +596,7 @@
                 <input id="firstName" matInput i18n-placeholder placeholder="" i18n-aria-label
                   aria-label="First Name input" formControlName="ehrmsPincode" disabled="true" />
               </mat-form-field>
-              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPincode'])" class="default-text-field">{{defaultMsg}}</div>
+              <div *ngIf="!(getEhrmsForm?.controls['ehrmsPincode'])" i18n-matTooltip matTooltip="{{defaultMsg}}" class="default-text-field">{{defaultMsg}}</div>
               
             </div>
           </div>
