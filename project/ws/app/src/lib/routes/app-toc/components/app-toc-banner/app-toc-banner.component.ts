@@ -1297,6 +1297,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
+      if(this.users.includes(value.trim())) {
+        this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
+        return
+      }
       const ePattern = new RegExp(`^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
       if (ePattern.test(value)) {
         if ((value || '').trim()) {
@@ -1324,6 +1328,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   selected(event: MatAutocompleteSelectedEvent): void {
     if (this.users.length === this.maxEmailsLimit) {
       this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
+      return
+    }
+    if(this.users.includes(event.option.value)) {
+      this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
       return
     }
     this.users.push(event.option.value)
