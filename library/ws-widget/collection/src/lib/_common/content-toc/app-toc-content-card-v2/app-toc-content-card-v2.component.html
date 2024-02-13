@@ -1,11 +1,11 @@
 <ng-container *ngIf="content">
     <ng-container *ngIf="isCollection">
-        <div class="collection-wrapper p-4 flex flex-col position-relative"
+        <div class="collection-wrapper p-4 flex flex-col position-relative" *ngIf="isModule && content?.moduleResourseCount"
             [ngClass]="{'open': viewChildren, 'close': !viewChildren, 'course':!isModule, ' module': isModule}">
             <div class="card-collection w-auto sm:w-100 padding-right-xl">
                 <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
             (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
-                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
+                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto" >
                     <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}"
                         (click)="viewChildren = !viewChildren">
                         <div class="flex flex-col sm:flex-row flex-wrap">
@@ -211,7 +211,7 @@
                     <div class="flex flex-col sm:flex-row flex-wrap">
                         <p class="margin-remove text-truncate mat-body-2 flex-auto font-bold">
                             <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
-                            {{ content?.name }}
+                            {{ content?.name }} 
                         </p>
                         <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
                     </div>
