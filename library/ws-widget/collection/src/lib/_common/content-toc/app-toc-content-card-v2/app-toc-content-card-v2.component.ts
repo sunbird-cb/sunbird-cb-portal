@@ -75,7 +75,7 @@ export class AppTocContentCardV2Component implements OnInit {
         this.viewChildren = this.expandAll
       }
       if(property === 'content') {
-        this.mapModuleDurationAndProgress(this.content)
+        // this.mapModuleDurationAndProgress(this.content)
       }
     }
   }
@@ -93,23 +93,11 @@ export class AppTocContentCardV2Component implements OnInit {
     return false
   }
 
-  private mapModuleDurationAndProgress(content: NsContent.IContent | null) {
-    if(content && content.children) {
-      content.children.map((item: NsContent.IContent)=> {
-        if(item.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-          console.log('item',item)
-          item.duration = item.children.reduce((sum, child) => {
-            console.log('CHild ', child.duration) 
-            return sum + Number(child.duration || 0)
-          }, 0)
-          console.log('item.duration',item.duration)
-          const completedItems = _.filter(item.children, (r)=> r.completionStatus ===2 || r.completionPercentage === 100)
-          const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
-          item.completionPercentage = Number((completedItems.length / totalCount).toFixed())
-          item.completionStatus = (item.completionPercentage >= 100) ? 2 : 1
-        }
-      })
+  public checkModule(content: NsContent.IContent | null):boolean {
+    if (content) {
+      return content.primaryCategory === NsContent.EPrimaryCategory.MODULE
     }
+    return false
   }
 
   checkIsModule(content: any): boolean {
@@ -142,7 +130,6 @@ export class AppTocContentCardV2Component implements OnInit {
         this.content.primaryCategory,
         this.batchId
       )
-      
       /* tslint:disable-next-line */
       // console.log(url,'=====> content card url link <========')
       return url
@@ -285,7 +272,7 @@ export class AppTocContentCardV2Component implements OnInit {
   }
 
   get isEnabled(): boolean {
-    return false
+    return true
   }
   openCertificateDialog(certData: any) {
     const cet = certData
