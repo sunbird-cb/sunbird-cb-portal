@@ -1415,7 +1415,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const textArea = document.createElement('textarea')
     textArea.value = window.location.href
     document.body.appendChild(textArea)
-    textArea.focus()
+    //textArea.focus()
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
