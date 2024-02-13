@@ -30,6 +30,7 @@ const API_ENDPOINTS = {
   updateProfilePic: '/apis/proxies/v8/storage/profilePhotoUpload/profileImage',
   GET_GROUPS: '/api/user/v1/groups',
   getApprovalReqs: '/apis/protected/v8/workflowhandler/applicationsSearch',
+  ehrmsDataRequest: '/apis/proxies/v8/ehrms/details',
 }
 
 @Injectable()
@@ -97,5 +98,15 @@ export class UserProfileService {
   }
   getApprovalReqs(data: any): Observable<any> {
     return this.http.post<any>(API_ENDPOINTS.getApprovalReqs, data)
+  }
+
+  fetchEhrmsDetails() {
+    return this.http
+      .get(API_ENDPOINTS.ehrmsDataRequest)
+      .pipe(
+        map(
+          (result: any) => result
+        )
+      )
   }
 }
