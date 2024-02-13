@@ -144,7 +144,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.skeletonLoader.currentValue) {
+    if (changes.skeletonLoader && !changes.skeletonLoader.currentValue) {
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
       },         500)

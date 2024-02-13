@@ -9,6 +9,7 @@ import { TStatus, ViewerDataService } from './viewer-data.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
 import { ViewerHeaderSideBarToggleService } from './viewer-header-side-bar-toggle.service'
+import { PdfScormDataService } from './pdf-scorm-data-service'
 import { TranslateService } from '@ngx-translate/core'
 
 export enum ErrorType {
@@ -51,8 +52,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private screenSizeSubscription: Subscription | null = null
   private resourceChangeSubscription: Subscription | null = null
   leafNodesCount: any
-  viewerHeaderSideBarToggleFlag = true
-  isMobile = false
+  viewerHeaderSideBarToggleFlag = true;
+  isMobile = false;
+  contentMIMEType = '';
+  handleBackFromPdfScormFullScreenFlag = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -66,6 +69,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private userSvc: WidgetUserService,
     private abc: MobileAppsService,
     public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
+    public pdfScormDataService: PdfScormDataService,
     private translate: TranslateService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
@@ -90,6 +94,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     e.activatedRoute.data.subscribe((data: { content: { data: NsContent.IContent } }) => {
       if (data.content && data.content.data) {
         this.content = data.content.data
+        console.log('this.content-->', this.content)
+        this.contentMIMEType = data.content.data.mimeType;
       }
     })
   }
@@ -104,6 +110,9 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data:any)=>{
+      this.handleBackFromPdfScormFullScreenFlag = data;
+    });
 
     this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data: any) => {
       if (data) {

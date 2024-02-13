@@ -12,10 +12,10 @@
 .padding-dynamic {
   // padding: $size-xs;
   // padding-top: $size-m;
-  @include breakpoint-xs {
-    padding: $size-xs;
-    padding-top: 40vh;
-  }
+  // @include breakpoint-xs {
+  //   padding: $size-xs;
+  //   padding-top: 40vh;
+  // }
 }
 
 .video-player-container {
@@ -47,23 +47,24 @@
 .video-player {
   width: 100%;
   @include breakpoint-xs {
-    position: fixed;
-    top: 55px;
-    left: 0px;
-    height: 40vh;
-    width: 100vw;
-    z-index: 1000;
+    position: relative;
+    // top: 55px;
+    // left: 0px;
+    height: 34vh;
+    // width: 100vw;
+    // z-index: 1000;
     background: black;
     }
 }
 
 
 .video-player-mobile {
-  padding: 0 16px !important;
+  // padding: 0 16px !important;
   background: transparent !important;
   box-shadow: none !important;
+  padding:0 !important;
   @include breakpoint-xs {
-    padding: 0;
+    padding: 0 !important;
   }
 }
 

@@ -1,5 +1,5 @@
 <section *ngIf="isNotEmbed">
-  <ng-container>
+  <ng-container *ngIf="!isMobile">
     <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
       (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
     </viewer-viewer-top-bar>
@@ -22,9 +22,11 @@
       </mat-tab-group>
     </mat-sidenav>
 
-    <mat-sidenav-content class="sidenavContent" #scrollableContent>
-      <ng-container *ngIf="viewerHeaderSideBarToggleFlag">
-        <viewer-viewer-secondary-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview"
+    <mat-sidenav-content #scrollableContent>
+      
+      <ng-container *ngIf="viewerHeaderSideBarToggleFlag && !isPreview">
+        <!-- *ngIf="fullScreenContainer" -->
+        <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType"
           [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
         </viewer-viewer-secondary-top-bar>
       </ng-container>
@@ -104,15 +106,39 @@
           </div>
         </div>
       </div>
-      <div class="viewer-player-container">
+      <div class="viewer-player-container" [ngClass]="contentMIMEType == 'application/vnd.sunbird.questionset' ? 'sidenavContent':''">
+
         <router-outlet (activate)="getContentData($event)"></router-outlet>
-      </div>
-      <div class="toc-container" *ngIf="viewerHeaderSideBarToggleFlag">
-        <div class="pb-4 lg:py-4">
-          <ws-widget-content-toc [contentTabFlag]="false" [content]="content" [forPreview]="false"
-          [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
+        
+        
+      </div>      
+      <ng-container *ngIf="isMobile">
+        <div class="mobile-top-bar-container" *ngIf="!(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
+          <ng-container>
+            <viewer-viewer-top-bar *ngIf="fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+              (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+            </viewer-viewer-top-bar>
+            <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+              (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+            </viewer-viewer-top-bar>
+          </ng-container>
         </div>
-      </div>
+        <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
+          <div class="pb-4 lg:py-4">
+            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isMobile">
+        <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
+          <div class="pb-4 lg:py-4">
+            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
+          </div>
+        </div>
+      </ng-container>
+      
     </mat-sidenav-content>
   </mat-sidenav-container>
 </section>
