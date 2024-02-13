@@ -49,11 +49,10 @@ export class EhrmsComponent implements OnInit, OnChanges {
       ehrmsDistrict: new FormControl('', []),
       ehrmsPincode: new FormControl('', []),
     })
-     
+
   }
 
   ngOnInit() {
-  
 
   }
   ngOnChanges() {
