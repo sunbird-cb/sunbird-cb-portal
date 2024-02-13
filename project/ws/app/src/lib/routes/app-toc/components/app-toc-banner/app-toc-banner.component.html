@@ -405,6 +405,7 @@
   <div *ngIf="showLoader" class="text-center my-2 loader">
     <mat-spinner class="inline-block"></mat-spinner>
   </div>
+  <div class="cursor-pointer close-share-dialog"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
   <div class="share-modal">
     <div class="karmasahayogi-icon"><img alt="karmasahayogi-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
     <div  class="content-div">
@@ -414,7 +415,6 @@
             <div class="mb-2">
                 <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">{{'contentSharing.header' | translate}}</h2>
             </div>
-            <div class="cursor-pointer"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
           </section>
           <form [formGroup]="shareForm">
             <div class="mat-body-2">
@@ -427,7 +427,7 @@
                                 [removable]="removable"
                                 (removed)="remove(user)">
                                 {{user}}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                <mat-icon matChipRemove *ngIf="removable">close</mat-icon>
                             </mat-chip>
                             <input
                                 tabindex="-1"
@@ -454,18 +454,19 @@
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-hint align="start">{{'contentSharing.note' | translate}}</mat-hint>
-                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingEmails' | translate}}</mat-hint>
+                        <mat-hint align="start"><b>{{'contentSharing.note' | translate}}</b></mat-hint>
+                        <mat-hint align="end" class="left-over-emails"><b>{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingEmails' | translate}}</b></mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
                     <div class="flex flex-1 flex-end">
                         <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">{{'contentSharing.copyLink' | translate}} &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
                         <button mat-stroked-button type="submit"
+                            [ngClass]="{'disable-send-btn': users.length === 0 || users.length}"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
                             [disabled]="users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
                             >
-                            {{'contentSharing.send' | translate}}<mat-icon >play_arrow</mat-icon>
+                            {{'contentSharing.send' | translate}}  <mat-icon>send</mat-icon>
                         </button>
                     </div>
                 </div>
