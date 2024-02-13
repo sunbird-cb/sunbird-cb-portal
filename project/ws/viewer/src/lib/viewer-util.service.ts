@@ -218,6 +218,7 @@ export class ViewerUtilService {
   }
 
   getContent(contentId: string): Observable<NsContent.IContent> {
+    alert()
     const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     let url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
     if (!forPreview) {

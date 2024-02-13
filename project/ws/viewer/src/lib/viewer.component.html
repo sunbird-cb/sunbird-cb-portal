@@ -24,7 +24,7 @@
 
     <mat-sidenav-content #scrollableContent>
       
-      <ng-container *ngIf="viewerHeaderSideBarToggleFlag">
+      <ng-container *ngIf="viewerHeaderSideBarToggleFlag && !isPreview">
         <!-- *ngIf="fullScreenContainer" -->
         <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType"
           [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
