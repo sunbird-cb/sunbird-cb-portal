@@ -91,8 +91,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   ratingViewCount = 3
   reviewDefaultLimit = 2
   competenciesObject: any = []
-  private destroySubject$ = new Subject<any>();
-
+  private destroySubject$ = new Subject<any>()
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',

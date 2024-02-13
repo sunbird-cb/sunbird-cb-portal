@@ -14,7 +14,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   tabChangeValue: any = ''
   @Input() content: NsContent.IContent | null = null
   @Input() initialRouteData: any
-  @Input() changeTab = false;
+  @Input() changeTab = false
   routeSubscription: Subscription | null = null
   @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   @Input() contentTabFlag = true
@@ -25,7 +25,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   sticky = false
   menuPosition: any
   isMobile = false
-  selectedTabIndex = 0;
+  selectedTabIndex = 0
 
   constructor(
     private utilityService: UtilityService
@@ -40,7 +40,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.changeTab && changes.changeTab.currentValue) {
-      this.selectedTabIndex = 1 
+      this.selectedTabIndex = 1
     }
   }
 
