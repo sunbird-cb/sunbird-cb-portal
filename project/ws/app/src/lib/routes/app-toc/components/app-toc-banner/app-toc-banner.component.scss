@@ -535,7 +535,7 @@ button:disabled {
     padding: 3px;
 }
 ::ng-deep .mat-chip-input {
-    padding-bottom: 9px;
+    padding-bottom: 9px!important;
 }
 ::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip {
     color: #0074b6 !important;
