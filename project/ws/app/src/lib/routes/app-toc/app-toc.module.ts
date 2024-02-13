@@ -27,6 +27,7 @@ import {
   MatSnackBarModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatAutocompleteModule,
 } from '@angular/material'
 import { DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
 
@@ -61,6 +62,7 @@ import {
   PipeFilterV3Module,
   PipeRelativeTimeModule,
   PipePublicURLModule,
+  MultilingualTranslationsService,
 } from '@sunbird-cb/utils'
 import {
   BtnCallModule,
@@ -125,6 +127,7 @@ import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
+import { TranslateModule } from '@ngx-translate/core'
 import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
 
 @NgModule({
@@ -236,8 +239,11 @@ import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content
     AttendanceHelperModule,
     AttendanceCardModule,
     MicroSurveyModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     ContentTocModule,
     NgCircleProgressModule.forRoot({}),
+    TranslateModule,
   ],
   providers: [
     AppTocResolverService,
@@ -252,6 +258,7 @@ import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content
     AccessControlService,
     ProfileResolverService,
     ActionService,
+    MultilingualTranslationsService,
   ],
   exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent],
   entryComponents: [

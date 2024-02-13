@@ -3,7 +3,7 @@
     <a style="pointer-events: none" disabled mat-list-item *ngIf="tab?.enabled" matRipple active routerLinkActive="ws-active-discuss-route"
       [routerLink]="getLink(tab.routerLink)" (click)="menuClick(tab)">
       <!-- <mat-icon>account_circle</mat-icon> -->
-      <span class="padding-left-xs">{{tab?.step}}. {{tab?.name}}</span>
+      <span class="padding-left-xs">{{tab?.step}}. {{translateTo(tab?.name)}}</span>
     </a>
   </ng-container>
 </mat-nav-list>

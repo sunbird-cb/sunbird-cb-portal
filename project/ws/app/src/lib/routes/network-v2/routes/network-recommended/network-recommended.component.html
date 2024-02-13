@@ -3,9 +3,9 @@
         <form (submit)="updateQuery(queryControl.value)">
             <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
                 <mat-icon matPrefix class="ml-5 flex items-center justify-center">search</mat-icon>
-                <mat-label>Search user</mat-label>
+                <mat-label>{{ 'network.searchUser' | translate }}</mat-label>
                 <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
-                    [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
+                    [placeholder]="'common.search' | translate" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"
                     accesskey="F" maxlength="50" />
             </mat-form-field>
         </form>
@@ -15,18 +15,18 @@
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'timestamp',
                             'ws-mat-accent-border':currentFilter !== 'timestamp'}" mat-button
                 (click)="filter('timestamp', 'desc'); tabTelemetry('Last added', 0)">
-                Last added </a>
+                {{ 'common.lastAdded' | translate }} </a>
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'personalDetails.firstname',
                             'ws-mat-accent-border':currentFilter !== 'personalDetails.firstname'}" mat-button
                 (click)="filter('personalDetails.firstname', 'asc'); tabTelemetry('Sort by name', 1)">
-                Sort by name </a>
+                {{ 'common.sortByName' | translate }} </a>
         </div>
     </div>
     <div class="flex flex-1 mb-4">
         <mat-card class="flex-1 remove-botton-radius">
             <mat-card-header>
                 <mat-card-title class="margin-l-0 f-medium">
-                    <h2>Recommended connections</h2>
+                    <h2>{{ 'network.connectionRequests' | translate }}</h2>
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content class="margin-left-m mb-0-imp flex flex-wrap ">
@@ -35,11 +35,11 @@
                         *ngFor="let user of data | orderBy: currentFilter : currentFilterSort | pipeFilterSearch: searchInput.value: 'firstname':'surname'">
                         <ws-app-connection-recommended-card class="mr-4 mb-5" [user]="user"
                             (connection)="connectionUpdate($event)" *ngIf="user !== -1"></ws-app-connection-recommended-card>
-                        <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">No search results found!
+                        <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">{{ 'msg.noSearchResultFound' | translate }}
                         </h4>
                     </ng-container>
                 </ng-container>
-                <h4 class="ws-mat-black60-text" *ngIf="data && data.length <= 0">No recommended users!</h4>
+                <h4 class="ws-mat-black60-text" *ngIf="data && data.length <= 0">{{ 'msg.moRecommUser' | translate }}</h4>
             </mat-card-content>
             <mat-card-actions align="center">
             </mat-card-actions>

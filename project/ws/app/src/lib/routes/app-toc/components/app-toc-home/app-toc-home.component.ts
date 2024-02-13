@@ -1,15 +1,22 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
 import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
+import {
+  NsContent,
+  WidgetContentService,
+  WidgetUserService,
+  viewerRouteGenerator,
+  NsPlaylist,
+  NsGoal,
+} from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ConfigurationsService, EventService, LoggerService, MultilingualTranslationsService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { FormControl, Validators } from '@angular/forms'
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 
-import { NsContent, WidgetContentService, WidgetUserService, viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, LoggerService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
 import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
@@ -19,20 +26,21 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import dayjs from 'dayjs'
+// tslint:disable-next-line
+import _ from 'lodash'
+import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { TranslateService } from '@ngx-translate/core'
 import { LoadCheckService } from '../../services/load-check.service'
 
-import * as dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 import moment from 'moment'
 
-// tslint:disable-next-line
-import _ from 'lodash'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
-import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { environment } from 'src/environments/environment'
 
 export enum ErrorType {
@@ -224,6 +232,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private telemetryService: TelemetryService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     private events: EventService,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService
@@ -231,6 +241,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.historyData = history.state
     this.handleBreadcrumbs()
     this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.next(true)
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
 
     this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
       // Present in app-toc-about.component
@@ -238,7 +253,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
     })
   }
-
   ngOnInit() {
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -797,6 +811,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
+            this.checkModuleWiseData()
             this.currentCourseBatchId = enrolledCourse.batchId
             this.downloadCert(enrolledCourse.issuedCertificates)
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
@@ -854,6 +869,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 })
             }
           } else {
+            this.checkModuleWiseData()
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
@@ -874,6 +890,33 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
       },
     )
+  }
+
+  private mapModuleDurationAndProgress(content: NsContent.IContent | null) {
+    if (content && content.children) {
+      if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+        // content.children.map((item: NsContent.IContent)=> {
+          content = this.getCalculationsFromChildren(content)
+        // })
+      }
+      content.children.map((item: NsContent.IContent) => {
+        if (item.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          this.mapModuleDurationAndProgress(item)
+        }
+      })
+    }
+  }
+
+  private getCalculationsFromChildren(item: NsContent.IContent) {
+    console.log('item', item)
+    item['duration'] = item.children.reduce((sum, child) => {
+      return sum + Number(child.duration || 0)
+    },                                      0)
+    const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
+    const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
+    item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
+    item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1
+    return item
   }
 
   public fetchUserWFForBlended() {
@@ -1090,6 +1133,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
             this.tocSvc.updateResumaData(this.resumeData)
+            this.mapModuleDurationAndProgress(this.content)
           } else {
             this.resumeData = null
           }
@@ -1540,6 +1584,29 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.selectedBatchSubscription) {
       this.selectedBatchSubscription.unsubscribe()
+    }
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
+  checkModuleWiseData() {
+    if (this.content && this.content.children) {
+      this.content.children.forEach((ele: any) => {
+        if (ele.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          let moduleResourseCount = 0
+          let offlineResourseCount = 0
+          ele.children.forEach((childEle: any) => {
+            if (childEle.primaryCategory !== NsContent.EPrimaryCategory.OFFLINE_SESSION) {
+              moduleResourseCount = moduleResourseCount + 1
+            } else {
+              offlineResourseCount = offlineResourseCount + 1
+            }
+          })
+          ele['moduleResourseCount'] = moduleResourseCount
+          ele['offlineResourseCount'] = offlineResourseCount
+        }
+      })
     }
   }
 }

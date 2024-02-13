@@ -5,6 +5,9 @@ import { MatIconModule } from '@angular/material/icon'
 import { SkeletonLoaderModule } from './../skeleton-loader/skeleton-loader.module'
 
 import { UpdatePostsComponent } from './update-posts.component'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
 
 @NgModule({
   declarations: [UpdatePostsComponent],
@@ -14,6 +17,13 @@ import { UpdatePostsComponent } from './update-posts.component'
     SkeletonLoaderModule,
     MatIconModule,
     RouterModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     UpdatePostsComponent,

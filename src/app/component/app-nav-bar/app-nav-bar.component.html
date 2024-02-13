@@ -33,7 +33,7 @@
             *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
           </ng-container>
           <ng-container *ngIf="!isforPreview">
-            <ws-app-search-input-home placeHolder="Search for learning content" class="my-search flex-1"
+            <ws-app-search-input-home placeHolder="{{ 'appnavbar.searchforLearningContents' | translate}}" class="my-search flex-1"
               [ref]="'home'">
             </ws-app-search-input-home>
           </ng-container>
@@ -59,12 +59,12 @@
         >
         <mat-icon>help_outline</mat-icon>
       </button> -->
-          <ng-container *ngIf="!isforPreview">
-            <div  class="hidden md:block md:flex" >
+          <ng-container >
+            <div  class="hidden md:block md:flex" *ngIf="!isforPreview">
               <ng-container [ngTemplateOutlet]="karmaBadge">
               </ng-container>
             </div>
-            <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"
+            <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: getItem(item) }"
               *ngFor="let item of primaryNavbarConfig?.mediumScreen?.right">
             </ng-container>
           </ng-container>
@@ -181,8 +181,9 @@
   <div class="flex flex-middle points-block">
     <img (click)="viewKarmapoints()" src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
     <div class="margin-left-xs">
-      <p class="karma-lbl flex ">Karma Points <img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button
-        matTooltip="Karma Points measure and map your engagement at iGOT. Points are updated within 4 hours."
+      <p class="karma-lbl flex ">
+        {{ 'appnavbar.karmaPoints' | translate }}<img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button
+        matTooltip="{{ 'appnavbar.karmaPointsToolTip' | translate }}"
         [matTooltipPosition]="'below'"  (click)="tooltip.show()"
         [matTooltipHideDelay]="tooltipDelay" class="cursor-pointer margin-left-xs" src="assets/icons/info.svg" alt="">
         </p>

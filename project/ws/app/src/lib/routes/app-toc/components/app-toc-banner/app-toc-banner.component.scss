@@ -116,6 +116,10 @@
     background: inherit;
 }
 
+.category-text {
+    margin-left: 8px;
+}
+
 .fixed-width {
     max-width: $max-width;
     display: block;
@@ -148,7 +152,7 @@
         img {
             height: 15px;
             object-fit: contain;
-            margin-right: 8px;
+            // margin-right: 8px;
         }
         span {
             opacity: 1;
@@ -431,7 +435,7 @@
                 line-height: 12px;
             }
         }
-    
+
         span {
             padding: 8px;
             font-size: 36px;
@@ -499,3 +503,142 @@
         width: 100%;
     }
 }
+
+
+.share-container {
+    position: fixed;
+    height: 100vh;
+    background: #131313a3;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.share-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: inherit;
+    width: inherit;
+}
+
+.karmasahayogi-icon {
+    position: absolute;
+    bottom: -5px;
+    left: calc(50% - 418px);
+}
+.triangle-left {
+    transform: translateY(100%);
+    position: absolute;
+    bottom: 28%;
+    left: -23px;
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-right: 50px solid #ffffff;
+    border-bottom: 25px solid transparent;
+}
+.contnet {
+    background-color: white;
+    width: 500px;
+    border-radius: 10px;
+    padding: 15px;
+}
+.content-div {
+    position: relative;
+}
+
+.copy-link-btn {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    color: red;
+    color: #0074b6!important;
+}
+.copy-link-btn:hover {
+    background-color: none!important;
+}
+.send-btn {
+    border-radius: 20px;
+}
+.send-btn .mat-icon {
+    margin-bottom: 2.5px;
+}
+::ng-deep .mat-chip-list-wrapper {
+    height: 100px;
+    overflow: auto;
+    display: block!important;
+}
+
+.iconText {
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    width: 30px;
+    display: inline-block;
+    text-align: center;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.iconDiv {
+    margin-right: 7px;
+}
+.emailText {
+    opacity: 0.6;
+}
+
+button:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+::ng-deep .mat-autocomplete-panel {
+    z-index: 99999;
+}
+
+::ng-deep .cdk-overlay-pane {
+    z-index: 9999!important
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+    padding: 5px 0;
+}
+::ng-deep .close-icon  {
+    padding-bottom: 5px;
+}
+::ng-deep .mat-chip-input {
+    padding-bottom: 9px;
+}
+::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip {
+    color: #0074b6 !important;
+}
+
+.loader {
+    position: absolute;
+    top: 42%;
+    left: 45%;
+    z-index: 1000;
+}
+
+@media (max-width:768px) {
+    .content-div {
+        width: 100%;
+    }
+    .contnet {
+        width: unset;
+        margin-bottom: 18%;
+    }
+    .left-over-emails {
+        display: none;
+    }
+    .karmasahayogi-icon {
+        left: 8%;
+        bottom: 20%;
+    }
+    .share-modal {
+        align-items: self-end;
+    }
+}
+
+

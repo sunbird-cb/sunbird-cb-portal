@@ -46,6 +46,7 @@ import { GlobalSearchComponent } from './routes/global-search/global-search.comp
 import { LearnSearchComponent } from './routes/learn-search/learn-search.component'
 import { SearchFiltersComponent } from './components/search-filters/search-filters.component'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
     MatDividerModule,
     UserAutocompleteModule,
     InfiniteScrollModule,
+    TranslateModule,
   ],
   exports: [],
   providers: [],

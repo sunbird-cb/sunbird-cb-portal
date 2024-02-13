@@ -5,7 +5,7 @@
         </button>
     </div>
     <mat-card-title>
-        <h2 i18n class="mat-h2 font-bold text-center">{{helperConfig?.title}}</h2>
+        <h2 i18n class="mat-h2 font-bold text-center">{{ translateLabels(helperConfig?.title, 'attendancehelper') }}</h2>
     </mat-card-title>
     <mat-card-content class="mt-10">
         <div class="step-container">
@@ -15,15 +15,15 @@
                         <img class="mat-icon1" src="{{step?.img}}" alt="{{step?.step}}" title="{{step?.step}}" />
                     </div>
                     <div class="flex-col flex-1 p-1">
-                        <div class="mat-body-2 ws-mat-black60-text mb-1">{{step?.step}}</div>
-                        <div i18n class="mat-body-3 font-bold mb-1">{{step?.title}}</div>
-                        <div class="mat-body-2 ws-mat-black60-text">{{step?.description}}</div>
+                        <div class="mat-body-2 ws-mat-black60-text mb-1">{{ translateLabels(step?.step, 'attendancehelper') }}</div>
+                        <div i18n class="mat-body-3 font-bold mb-1">{{ translateLabels(step?.title, 'attendancehelper') }}</div>
+                        <div class="mat-body-2 ws-mat-black60-text">{{ translateLabels(step?.description, 'attendancehelper') }}</div>
                     </div>
                 </div>
             </div>
         </div>
     </mat-card-content>
     <mat-card-actions class="flex justify-center mt-2">
-        <div class="mat-body-2 ws-mat-black60-text">{{helperConfig?.helpText}}</div>
+        <div class="mat-body-2 ws-mat-black60-text">{{ translateLabels(helperConfig?.helpText, 'attendancehelper') }}</div>
     </mat-card-actions>
 </mat-card>

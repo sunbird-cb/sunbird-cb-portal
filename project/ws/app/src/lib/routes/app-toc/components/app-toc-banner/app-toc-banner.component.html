@@ -21,6 +21,8 @@
           <div class="sm:ml-5 flex flex-col flex-auto">
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs hidden sm:block" [title]="contentReadData?.name">
               {{ contentReadData?.name }}
+              <div class="float-right cursor-pointer flex" (click)="onClickOfShare()" *ngIf="canShare">
+                <mat-icon class="ws-mat-accent-text padding-top-xs">share</mat-icon></div>
             </h1>
             <h1 class="mat-headline margin-remove-bottom padding-bottom-xs block sm:hidden" [title]="contentReadData?.name">
               {{ contentReadData?.name }}
@@ -135,7 +137,7 @@
                 </ng-container>
               </button>
             </div>
-            
+
           </ng-container>
           <ng-container *ngIf="showRejected">
             <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
@@ -144,9 +146,9 @@
         </div>
       </ng-container>
     </form>
-    <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated && 
-      (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REMOVED) && 
-      (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN) && 
+    <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated &&
+      (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REMOVED) &&
+      (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN) &&
       (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.APPROVED) && batchData?.content?.length">
       <p class="margin-remove-bottom mat-body-1 padding-m bg-white">
         {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate | date: 'dd-MM-yyyy'}} - {{batchData?.workFlow?.batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
@@ -175,7 +177,7 @@
 
 <!-- <div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content && batchControl?.value?.batchAttributes?.batchLocationDetails">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-    <h2>Batch location</h2>
+    <h2>{{'apptocbanner.batchLocation' | translate}}</h2>
     <p>{{batchControl?.value?.batchAttributes?.batchLocationDetails}}</p>
   </ng-container>
 </div> -->
@@ -190,7 +192,7 @@
   <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton" [routerLink]="['/author/editor/' + content?.identifier]">
     <mat-icon>publish</mat-icon>
   </a>
-  <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview" 
+  <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview"
     [widgetData]="content | pipePartialContent : ['identifier', 'contentType', 'resourceType', 'mimeType', 'downloadUrl', 'isExternal', 'artifactUrl']">
   </ws-widget-btn-content-download>
   <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
@@ -208,9 +210,7 @@
     [widgetData]="content | pipePartialContent: ['identifier', 'name']">
   </ws-widget-btn-content-feedback-v2>
 </ng-template>
-
-<ng-template #authView i18n>View</ng-template>
-
+<ng-template #authView i18n>{{'apptocbanner.view' | translate}}</ng-template>
 <ng-template #statusMsg>
   <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
     <div class="flex" *ngIf="showMsg">
@@ -235,3 +235,80 @@
     </div>
   </div>
 </ng-template>
+
+<div class="share-container" *ngIf="enableShare">
+  <div *ngIf="showLoader" class="text-center my-2 loader">
+    <mat-spinner class="inline-block"></mat-spinner>
+  </div>
+  <div class="share-modal">
+    <div class="karmasahayogi-icon"><img alt="karmasahayogi-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
+    <div  class="content-div">
+      <div class="triangle-left hidden md:block"></div>
+      <div class="contnet">
+          <section class="w-full flex align-center justify-between ">
+            <div class="mb-2">
+                <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">{{'contentSharing.header' | translate}}</h2>
+            </div>
+            <div class="cursor-pointer"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
+          </section>
+          <form [formGroup]="shareForm">
+            <div class="mat-body-2">
+                <div class="md-5">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
+                            <mat-chip
+                                *ngFor="let user of users"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="remove(user)">
+                                {{user}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input
+                                tabindex="-1"
+                                placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
+                                #userInput
+                                formControlName="review"
+                                [formControl]="userCtrl"
+                                [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let user of filteredUsers" [value]="user.name">
+                                <div class="flex">
+                                    <div class="iconDiv">
+                                        <span class="iconText">{{user.iconText.substring(0,2)}}</span>
+                                    </div>
+                                    <div>
+                                        <div>{{user.name}}</div>
+                                        <div class="emailText">{{user.email}}</div>
+                                    </div>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-hint align="start">{{'contentSharing.note' | translate}}</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingCharacter' | translate}}</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="flex mt-5">
+                    <div class="flex flex-1 flex-end">
+                        <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">{{'contentSharing.copyLink' | translate}} &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
+                        <button mat-stroked-button type="submit"
+                            class="text-white ws-mat-primary-background flex-auto-display send-btn"
+                            [disabled]="users.length === 0 || users.length === maxEmailsLimit" (click)="submitSharing()"
+                            >
+                            {{'contentSharing.send' | translate}}<mat-icon >play_arrow</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

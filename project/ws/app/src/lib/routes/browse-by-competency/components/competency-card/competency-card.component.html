@@ -27,7 +27,7 @@
                     <div class="contentdata margin-bottom-xm">
                         <a class="cursor-pointer ws-mat-default-text mat-subheading-2 explore_link"
                             (click)="competency.viewChildren = !competency.viewChildren; getCbps(competency.viewChildren)">
-                            Quick explore
+                            {{ 'competencycard.quickExplore' | translate }}
                             <mat-icon class="ml-5 mat-icon1 mat-icon notranslate material-icons mat-icon-no-color"
                                 *ngIf="!competency.viewChildren">
                                 expand_more</mat-icon>
@@ -60,13 +60,13 @@
                     </div>
                     <a class="margin-top-m ws-mat-default-text mat-subheading-2 load_more_link text-center"
                         [routerLink]="['/app/learn/browse-by/competency', competency?.name]">
-                        See all
+                        {{ 'competencycard.seeAll' | translate }}
                     </a>
                 </ng-container>
                 <ng-template #noData>
                     <h4 *ngIf="allCompetencies?.length <=0 && !displayLoader"
                         class="w-full text-center ws-mat-black60-text ">
-                        No CBPs found!
+                        {{ 'competencycard.noCbps' | translate }}
                     </h4>
                 </ng-template>
             </div>

@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FontSettingComponent } from './font-setting.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { FontSettingComponent } from './font-setting.component'
 
 describe('FontSettingComponent', () => {
-  let component: FontSettingComponent;
-  let fixture: ComponentFixture<FontSettingComponent>;
+  let component: FontSettingComponent
+  let fixture: ComponentFixture<FontSettingComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FontSettingComponent ]
+      declarations: [FontSettingComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FontSettingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(FontSettingComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

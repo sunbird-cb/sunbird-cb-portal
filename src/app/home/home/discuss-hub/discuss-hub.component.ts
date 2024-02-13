@@ -1,25 +1,26 @@
 
-import { Component, OnInit, Input } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ConfigurationsService } from '@sunbird-cb/utils';
-import { HomePageService } from 'src/app/services/home-page.service';
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service';
+import { Component, OnInit, Input } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { HomePageService } from 'src/app/services/home-page.service'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-discuss-hub',
   templateUrl: './discuss-hub.component.html',
-  styleUrls: ['./discuss-hub.component.scss']
+  styleUrls: ['./discuss-hub.component.scss'],
 })
 
 export class DiscussHubComponent implements OnInit {
-
-  @Input("discussConfig") discussConfig: any;
-  userData: any;
+  // tslint:disable-next-line:no-input-rename
+  @Input('discussConfig') discussConfig: any
+  userData: any
   discussion = {
     data: undefined,
     error: false,
     loadSkeleton: false,
-  };
+  }
 
   updatesPosts = {
     data: undefined,
@@ -31,60 +32,68 @@ export class DiscussHubComponent implements OnInit {
     private homePageService: HomePageService,
     private configService: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router
-  ) { }
-
-  ngOnInit() {
-    this.userData = this.configService && this.configService.userProfile 
-    if (this.discussConfig.trendingDiscussions.active) {
-      this.fetchTrendingDiscussions();
-    }
-
-    if (this.discussConfig.updatePosts.active) {
-      this.fetchUpdatesOnPosts();
+    private router: Router,
+    private translate: TranslateService,
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
   }
 
+  ngOnInit() {
+    // tslint:disable-next-line: whitespace
+    this.userData = this.configService && this.configService.userProfile
+    if (this.discussConfig.trendingDiscussions.active) { this.fetchTrendingDiscussions() }
+    if (this.discussConfig.updatePosts.active) { this.fetchUpdatesOnPosts() }
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey = hubName
+    return this.translate.instant(translationKey)
+  }
+
   fetchTrendingDiscussions(): void {
-    this.discussion.loadSkeleton = true;
+    this.discussion.loadSkeleton = true
     this.homePageService.getTrendingDiscussions().subscribe(
       (res: any) => {
-        this.discussion.loadSkeleton = false;
+        this.discussion.loadSkeleton = false
         if (res.topics && res.topics.length) {
           this.discussion.data = res.topics.sort((x: any, y: any) => {
-            return y.timestamp - x.timestamp;
-          });
+            return y.timestamp - x.timestamp
+          })
         }
       },
       (error: HttpErrorResponse) => {
         if (!error.ok) {
-          this.discussion.loadSkeleton = false;
-          this.discussion.error = true;
+          this.discussion.loadSkeleton = false
+          this.discussion.error = true
         }
       }
-    );
+    )
   }
 
   fetchUpdatesOnPosts(): void {
-    this.updatesPosts.loadSkeleton = true;
+    this.updatesPosts.loadSkeleton = true
     this.homePageService.getDiscussionsData(this.userData.userName).subscribe(
       (res: any) => {
-        this.updatesPosts.loadSkeleton = false;
+        this.updatesPosts.loadSkeleton = false
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.sort((x: any, y: any) => {
-          return y.timestamp - x.timestamp;
-        });
+          return y.timestamp - x.timestamp
+        })
         this.updatesPosts.data = res && res.latestPosts && res.latestPosts.filter((x: any) => {
-          if(x.upvotes > 0 || x.downvotes > 0){
+          if (x.upvotes > 0 || x.downvotes > 0) {
             return x
           }
-        });
+        })
       },
       (error: HttpErrorResponse) => {
-        if(!error.ok) {
-          this.updatesPosts.loadSkeleton = false;
-          this.updatesPosts.error = true;
+        if (!error.ok) {
+          this.updatesPosts.loadSkeleton = false
+          this.updatesPosts.error = true
         }
-    });
+    })
   }
 
   navigate() {
@@ -129,5 +138,4 @@ export class DiscussHubComponent implements OnInit {
     localStorage.setItem('home', JSON.stringify(config))
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
-
 }

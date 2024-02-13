@@ -33,7 +33,7 @@ import {
   EventService,
   WsEvents,
 } from '@sunbird-cb/utils'
-import { delay, first } from 'rxjs/operators'
+import { delay, first, catchError, map } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
 // import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
@@ -43,9 +43,7 @@ import { SwUpdate } from '@angular/service-worker'
 import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
-import { concat, interval, timer } from 'rxjs'
-import { of } from 'rxjs'
-import { catchError, map } from 'rxjs/operators'
+import { concat, interval, timer, of } from 'rxjs'
 // import { AppIntroComponent } from '../app-intro/app-intro.component'
 
 @Component({
@@ -78,13 +76,13 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   isSetupPage = false
   processed: any
   loginToken: any
-  showTour: boolean = false
+  showTour = false
   currentRouteData: any = []
   loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
-  headerFooterConfigData:any = {};
-  mobileTopHeaderVisibilityStatus = true;
-  activeMenu:any = '';
-  backGroundTheme:any
+  headerFooterConfigData: any = {}
+  mobileTopHeaderVisibilityStatus = true
+  activeMenu: any = ''
+  backGroundTheme: any
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -102,22 +100,25 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     private rootSvc: RootService,
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
-    private utilitySvc: UtilityService
+    private utilitySvc: UtilityService,
     // private dialogRef: MatDialogRef<any>,
   ) {
-    this.getHeaderFooterConfiguration().subscribe((sectionData)=>{
-      console.log('headerFooterConfigData',sectionData)
-      this.headerFooterConfigData =  sectionData.data;
-      this.showFooter = true;
+    this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
+      // console.log('headerFooterConfigData',sectionData)
+      this.headerFooterConfigData = sectionData.data
+      this.showFooter = true
     })
     if (window.location.pathname.includes('/public/home')
       || window.location.pathname.includes('/public/toc/')
       || window.location.pathname.includes('/viewer/')
       ) {
       this.customHeight = true
+      // tslint: disable
     }
-    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.get_started_tour) {
-      this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped || this.configSvc.unMappedUser.profileDetails.get_started_tour.visited
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails &&
+      this.configSvc.unMappedUser.profileDetails.get_started_tour) {
+      this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped ||
+      this.configSvc.unMappedUser.profileDetails.get_started_tour.visited
     }
     this.mobileAppsSvc.init()
     this.openIntro()
@@ -192,21 +193,22 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
   public skipToMainContent(): void {
     this.skipper.nativeElement.focus()
+    // tslint: disable
   }
+
   ngOnInit() {
-    //let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
-    //this.showTour = showTour && showTour.disable ? showTour.disable : false
-
-
-    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status:any)=> {
-        this.mobileTopHeaderVisibilityStatus = status;
+    // let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
+    // this.showTour = showTour && showTour.disable ? showTour.disable : false
+    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status: any) => {
+      this.mobileTopHeaderVisibilityStatus = status
     })
     this.configSvc.updateTourGuideMethod(this.showTour)
     this.route.queryParams
       .subscribe(params => {
-        console.log(params); // { orderby: "price" }
+        // tslint:disable-next-line
+        console.log(params) // { orderby: "price" }
       }
-    );
+    )
     if (window.location.pathname.includes('/public/home')) {
       this.customHeight = true
     }
@@ -303,31 +305,30 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
         // }
-        this.activeMenu = localStorage.getItem('activeMenu');
+        this.activeMenu = localStorage.getItem('activeMenu')
         this.openIntro()
 
       }
     })
-    this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
+    this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe((display: any) => {
       this.showNavbar = display
     })
-
   }
 
   changeBg26Jan() {
     this.backGroundTheme = this.configSvc.overrideThemeChanges
-    let docData:any = document.getElementById("app-bg")
-    if(this.backGroundTheme && this.backGroundTheme.isEnabled) {
-      docData.classList.add("jan-bg-change")
+    const docData: any = document.getElementById('app-bg')
+    if (this.backGroundTheme && this.backGroundTheme.isEnabled) {
+      docData.classList.add('jan-bg-change')
     } else {
-      docData.classList.remove("jan-bg-change")
+      docData.classList.remove('jan-bg-change')
     }
   }
 
   removeBg26Jan() {
     this.backGroundTheme = this.configSvc.overrideThemeChanges
-    let docData:any = document.getElementById("app-bg")
-    docData.classList.remove("jan-bg-change")
+    const docData: any = document.getElementById('app-bg')
+    docData.classList.remove('jan-bg-change')
   }
 
   raiseAppStartTelemetry() {
@@ -428,7 +429,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   getTourGuide() {
     let showTour = false
-    this.configSvc.updateTourGuide.subscribe((res:any) => {
+    this.configSvc.updateTourGuide.subscribe((res: any) => {
       showTour = res
     })
     this.showTour = showTour
@@ -436,19 +437,20 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   getHeaderFooterConfiguration() {
-    let baseUrl = this.configSvc.sitePath;
-    console.log('baseUrl', baseUrl+'/page/home.json');
-    return this.http.get(baseUrl+'/page/home.json').pipe(
+    const baseUrl = this.configSvc.sitePath
+    // console.log('baseUrl', baseUrl+'/page/home.json')
+    // tslint:disable-next-line: prefer-template
+    return this.http.get(baseUrl + '/page/home.json').pipe(
       map(data => ({ data, error: null })),
       catchError(err => of({ data: null, error: err })),
     )
   }
 
   ngAfterViewChecked() {
-    let show = this.getTourGuide()
-    if (show != this.showTour) { // check if it change, tell CD update view
-      this.showTour = this.showTour;
+    const show = this.getTourGuide()
+    if (show !== this.showTour) { // check if it change, tell CD update view
+      this.showTour = this.showTour
     }
-    this.changeDetector.detectChanges();
+    this.changeDetector.detectChanges()
   }
 }

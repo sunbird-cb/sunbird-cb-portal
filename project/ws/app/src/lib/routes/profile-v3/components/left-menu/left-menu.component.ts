@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { StepService } from '../../services/step.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-l-menu',
@@ -19,8 +20,14 @@ export class SetupLeftMenuComponent implements OnInit, OnDestroy {
   constructor(
     private events: EventService,
     private stepService: StepService,
+    private translate: TranslateService
   ) {
 
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit(): void {
@@ -52,6 +59,12 @@ export class SetupLeftMenuComponent implements OnInit, OnDestroy {
     // if (!this.stepService.currentStep.value.allowSkip) {
     return url
     // } return null
+  }
+
+  translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'profilehome.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 
 }

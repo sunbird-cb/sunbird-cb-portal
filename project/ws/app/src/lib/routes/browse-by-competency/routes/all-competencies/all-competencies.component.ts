@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core'
-import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, WsEvents } from '@sunbird-cb/utils'
 import { FormGroup, FormControl } from '@angular/forms'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
 import { NSBrowseCompetency } from '../../models/competencies.model'
@@ -9,6 +9,7 @@ import { Subject, Observable } from 'rxjs'
 import _ from 'lodash'
 // tslint:enable
 import { LocalDataService } from '../../services/localService'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-all-competencies',
@@ -41,7 +42,17 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
     private events: EventService,
     private browseCompServ: BrowseCompetencyService,
     private localDataService: LocalDataService,
-  ) { }
+    private langtranslations: MultilingualTranslationsService,
+    private translate: TranslateService,
+  ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+  }
 
   ngOnInit() {
     this.displayLoader = this.browseCompServ.isLoading()

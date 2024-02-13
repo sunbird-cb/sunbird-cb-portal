@@ -37,7 +37,6 @@ import { AppTourComponent } from './component/app-tour/app-tour.component'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
-
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
 // 😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵
@@ -553,6 +552,7 @@ const routes: Routes = [
   },
   {
     path: 'app/toc',
+    // loadChildren: () => import('../../project/ws/app/src/lib/routes/app-toc/app-toc.module').then(u => u.AppTocModule),
     loadChildren: () => import('./routes/route-app-toc.module').then(u => u.RouteAppTocModule),
     canActivate: [GeneralGuard],
     data: {
@@ -721,8 +721,8 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      //module: ModuleNameResolve,
-      //pageId: PageNameResolve,
+      // module: ModuleNameResolve,
+      // pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],
   },
@@ -955,7 +955,7 @@ const routes: Routes = [
     resolve: {
       hierarchyData: AppHierarchyResolverService,
       enrollmentData: AppEnrollmentResolverService,
-      contentRead: AppContentResolverService
+      contentRead: AppContentResolverService,
     },
     loadChildren: () => import('./routes/route-viewer.module').then(u => u.RouteViewerModule),
     canActivate: [GeneralGuard],

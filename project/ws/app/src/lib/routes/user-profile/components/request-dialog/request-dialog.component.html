@@ -3,7 +3,7 @@
         <div class="right_inner_container profile-box">
             <div class="flex">
                 <h2 class="mat-h1 margin-remove inline-block">
-                    Request to add designation
+                    {{'requestDialog.designationRequest' | translate }}
                 </h2>
             </div>
             <form [formGroup]="requestForm" novalidate>
@@ -15,22 +15,22 @@
                                 <label for="designation" class="margin-remove-bottom form-label required"
                                     i18n="Designation | Label which explains the user to enter designation"
                                     i18n-aria-label aria-label="Designation Field label">
-                                    Designation
+                                    {{'requestDialog.designation' | translate }}
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-s w-full">
-                                    <input id="designation" matInput type="text" placeholder="Enter your designation"
+                                    <input id="designation" matInput type="text" placeholder="{{translateLabels('designationPlaceholder', 'requestDialog')}}"
                                         i18n-placeholder="designation" formControlName="designation" autocomplete="off"
                                         i18n-aria-label aria-label="Designation" #position maxlength="150" />
                                     <mat-error [hidden]="false"
                                         i18n="Designation Error | Explains designation is required"
                                         *ngIf="requestForm?.controls['designation'].errors?.required" i18n-aria-label
                                         aria-label="Designation is mandatory">
-                                        Designation is mandatory
+                                         {{'requestDialog.designationMandatory' | translate }}
                                     </mat-error>
                                     <mat-error *ngIf="requestForm?.controls['designation'].errors?.pattern"
                                         i18n-aria-label
                                         aria-label="Only alphabets, numbers, space, &, -, and  () are allowed.">
-                                        Only alphabets, numbers, space, &, -, and () are allowed.
+                                        {{'requestDialog.designationvalidation' | translate }}
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -41,10 +41,10 @@
                                 <label for="organisation" class="margin-remove-bottom form-label required"
                                     i18n="Organisation | Label which explains the user to enter organisation"
                                     i18n-aria-label aria-label="Organisation Field label">
-                                    Organisation
+                                    {{'requestDialog.organisation' | translate }}
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-s w-full">
-                                    <input id="organisation" matInput type="text" placeholder="Enter your organisation"
+                                    <input id="organisation" matInput type="text" placeholder="{{translateLabels('organisationPlaceholder', 'requestDialog')}}"
                                         i18n-placeholder="organisation" formControlName="organisation"
                                         autocomplete="off" i18n-aria-label aria-label="organisation" #organisation
                                         maxlength="150" />
@@ -52,12 +52,12 @@
                                         i18n="Organisation Error | Explains organisation is required"
                                         *ngIf="requestForm?.controls['organisation'].errors?.required" i18n-aria-label
                                         aria-label="Please enter your organisation name">
-                                        Please enter your organisation name
+                                        {{'requestDialog.enterOrganisation' | translate }}
                                     </mat-error>
                                     <mat-error *ngIf="requestForm?.controls['organisation'].errors?.pattern"
                                         i18n-aria-label
                                         aria-label="Only alphabets, numbers, space, &, -, and  () are allowed.">
-                                        Only alphabets, numbers, space, &, -, and () are allowed.
+                                        {{'requestDialog.pleaseEnterOrganisation' | translate }}
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -69,20 +69,20 @@
                                 <label for="domain" class="margin-remove-bottom form-label required"
                                     i18n="Domain |Label which explains the user to enter domain" i18n-aria-label
                                     aria-label="Domain Field label">
-                                    Domain
+                                    {{'requestDialog.domain' | translate }}
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-s w-full">
-                                    <input id="domain" matInput type="text" placeholder="Example: @gov.in"
+                                    <input id="domain" matInput type="text" placeholder="{{'requestDialog.domainExample' | translate }}"
                                         i18n-placeholder="domain" formControlName="domain" autocomplete="off"
                                         i18n-aria-label aria-label="domain" #domain maxlength="63" />
                                     <mat-error [hidden]="false" i18n="Domain Error | Explains domain is required"
                                         *ngIf="requestForm?.controls['domain'].errors?.required" i18n-aria-label
                                         aria-label="domain is mandatory">
-                                        Enter your domain (Example: @gov.in)
+                                        {{'requestDialog.domainMandatory' | translate }}
                                     </mat-error>
                                     <mat-error *ngIf="requestForm?.controls['domain'].errors?.pattern" i18n-aria-label
                                         aria-label="Please enter a valid domain name">
-                                        Please enter a valid domain name
+                                        {{'requestDialog.domainValidation' | translate }}
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -101,13 +101,13 @@
                         <div class="flex flex-1 mt-6 add-cancel-btn justify-between">
                             <button mat-raised-button type="button" class="flex-auto-display mar"
                                 (click)="closeDialog()">
-                                <span class="ws-mat-default-text" i18n>Cancel</span>
+                                <span class="ws-mat-default-text" i18n>{{'requestDialog.cancel' | translate }}</span>
                             </button>
                             <button mat-raised-button type="submit"
                                 class="submitBtn text-white ws-mat-primary-background ws-mat-white-text"
                                 (click)="submitRequest()" [disabled]="!requestForm?.valid || disableBtn">
                                 <span class="text-white" i18n>
-                                    Submit
+                                    {{'requestDialog.submit' | translate }}
                                 </span>
                             </button>
                         </div>

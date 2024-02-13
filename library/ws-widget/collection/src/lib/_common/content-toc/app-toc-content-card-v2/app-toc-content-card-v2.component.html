@@ -1,11 +1,11 @@
 <ng-container *ngIf="content">
     <ng-container *ngIf="isCollection">
-        <div class="collection-wrapper p-4 flex flex-col position-relative"
+        <div class="collection-wrapper p-4 flex flex-col position-relative" *ngIf="isModule && content?.moduleResourseCount"
             [ngClass]="{'open': viewChildren, 'close': !viewChildren, 'course':!isModule, ' module': isModule}">
             <div class="card-collection w-auto sm:w-100 padding-right-xl">
                 <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
             (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
-                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
+                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto" >
                     <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}"
                         (click)="viewChildren = !viewChildren">
                         <div class="flex flex-col sm:flex-row flex-wrap">
@@ -21,21 +21,21 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="content?.completionStatus < 2">
-                                        <circle-progress class="flex items-center progress mr-2"
+                                        <circle-progress class="flex items-center progress mr-1"
                                             [percent]="content?.completionPercentage" [radius]="10" [outerStrokeWidth]="2"
                                             [innerStrokeWidth]="2" [space]="-2" [outerStrokeColor]="progressColor2()"
                                             [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true"
                                             [animationDuration]="250" [showTitle]="false" [showUnits]="false"
                                             [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
                                             [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
-                                            matTooltip="In progress" [showZeroOuterStroke]=false [backgroundPadding]="-9"
-                                            [startFromZero]="false" [backgroundPadding]="0" [imageHeight]="22"
-                                            [imageWidth]="22" [showBackground]="false" [outerStrokeLinecap]="'butt'">
+                                            matTooltip="In progress" [showZeroOuterStroke]=false [backgroundPadding]="-7"
+                                            [startFromZero]="false" [backgroundPadding]="0" [imageHeight]="18"
+                                            [imageWidth]="18" [showBackground]="false" [outerStrokeLinecap]="'butt'">
                                         </circle-progress>
                                     </ng-container>
                                 </ng-container>
                                 <ng-template #elseBlock>
-                                    <circle-progress class="flex items-center progress mr-2" [percent]="0" [radius]="11"
+                                    <circle-progress class="flex items-center progress mr-1" [percent]="0" [radius]="11"
                                         [outerStrokeWidth]="2" [innerStrokeWidth]="2" [outerStrokeColor]="'#808080'"
                                         [innerStrokeColor]="'#808080'" [animation]="true" [space]="-2" [showUnits]="false"
                                         [animationDuration]="250" [showTitle]="false" [backgroundPadding]="0"
@@ -91,10 +91,6 @@
                             </ng-container>
                         </div>
                     </div>
-                    <button *ngIf="content?.artifactUrl && isAllowed && !isEnabled" type="button" mat-icon-button
-                        [matMenuTriggerFor]="buttonMenu">
-                        <mat-icon>more_vertical</mat-icon>
-                    </button>
                     <!-- For course progress to be shown -->
                     <ng-container
                         *ngIf="!forPreview && content?.identifier && content?.completionPercentage && content.primaryCategory === 'Course'">
@@ -151,7 +147,7 @@
         </div>
         <div class="child-wrapper  " [ngClass]="{'open': viewChildren, 'close': !viewChildren}" *ngIf="viewChildren"
             [@panelInOut]>
-            <div class="children-container margin-left-l" [ngClass]="{'module': isModule, 'pl-4': !isModule}">
+            <div class="children-container margin-left-m" [ngClass]="{'module': isModule, '': !isModule}">
                 <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
                     [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1"
                     *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
@@ -163,10 +159,10 @@
     <div *ngIf="isResource" class="resource-container">
         <div class="resource flex  sm:flex-row flex-start width-expand w-100 sm:pr-4 sm:w-auto">
             <div class="flex flex-wrap items-start justify-start sm:justify-end">
-                <button *ngIf="!forPreview && content?.artifactUrl && !isXSmall && isAllowed && isEnabled" type="button"
+                <!-- <button *ngIf="!forPreview && content?.artifactUrl && !isXSmall && isAllowed && isEnabled" type="button"
                     mat-icon-button class="" [matMenuTriggerFor]="buttonMenu">
                     <mat-icon>more_vertical</mat-icon>
-                </button>
+                </button> -->
                 <ng-container
                     *ngIf="!forPreview && content?.identifier && content?.completionPercentage ; else elseBlock">
 
@@ -206,18 +202,18 @@
                 </ng-template>
             </div>
             <!-- deactivated as per NIC CEO requirement to access course wthout login -->
-            <a class="ml-4" [class.disabled]="(forPreview || !isEnabled) ? true : null"
-                [routerLink]="(isAllowed && !forPreview && !isEnabled) ? resourceLink.url : null"
-                [queryParams]="(isAllowed && !forPreview && !isEnabled)  ? resourceLink.queryParams : null">
+            <a class="ml-4" [class.disabled]="(forPreview || !isEnabled || !batchId) ? true : null"
+                [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
+        [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null"
+               >
                 <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled}"
                     (click)="viewChildren = !viewChildren; raiseTelemetry()">
                     <div class="flex flex-col sm:flex-row flex-wrap">
                         <p class="margin-remove text-truncate mat-body-2 flex-auto font-bold">
                             <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
-                            {{ content?.name }}
+                            {{ content?.name }} 
                         </p>
                         <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
-                        <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
                     </div>
                     <div class="resicons ws-mat-black60-text">
                         <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs"

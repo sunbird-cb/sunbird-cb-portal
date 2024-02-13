@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { CompLocalService } from '../../services/comp.service'
 import { FormControl } from '@angular/forms'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-desired-competencies',
@@ -37,11 +38,17 @@ export class DesiredCompetenciesComponent implements OnInit, OnDestroy {
     private activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private compLocalService: CompLocalService,
+    private translate: TranslateService
   ) {
     if (this.desiredCompSubscription) {
       this.desiredCompSubscription.unsubscribe()
     }
     this.loadCompetencies()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {

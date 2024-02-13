@@ -11,13 +11,11 @@
     <div class="flex flex-col flex-wrap w-100 flex-1 margin-top-l">
         <div class="flex margin-bottom-s top_chip_box">
             <p class="mat-body-2 margin-remove-bottom">
-                <mat-icon class="mat-icon margin-right-xs">info</mat-icon> Please list down your roles & activities as
-                part of your position
+                <mat-icon class="mat-icon margin-right-xs">info</mat-icon>  {{'rolesandactivities.roleHeader' | translate }}
             </p>
         </div>
-        <p class="mat-body-2 ws-mat-black60-text">Feel free to enter details in your own words, to the best of your
-            understanding. This information will help us tailor a more personalized experience
-            and add more relevant content on the platform.</p>
+        <p class="mat-body-2 ws-mat-black60-text"> {{'rolesandactivities.rolesDescription' | translate }}
+        </p>
     </div>
 
     <div class="flex flex-wrap margin-top-l flex-column">
@@ -28,32 +26,32 @@
                         <label for="roleName" class="margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label *ngIf="!editData"
                             aria-label="Role Name label">
-                            Add role
+                            {{'rolesandactivities.addRole' | translate }}
                         </label>
                         <label for="roleName" class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Role Name label|Label which explains the user to enter Role Name" i18n-aria-label *ngIf="editData"
                             aria-label="Role Name label">
-                            Edit role
+                            {{'rolesandactivities.editRole' | translate }}
                         </label>
                         <div>
                         <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openInfoDialog()">
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
                         </button>
-                        What is a role?
+                        {{'rolesandactivities.whatIsRole' | translate }}
                     </div>
 
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1" [ngClass]="{ 'mat-focused': textBoxActive}">
                         <input matInput autocomplete="off" id="roleName" #roleName name="roleName" maxlength="100"
-                            placeholder="Type the role name" formControlName="roleName" class="flex flex-1"  (input)="change($event)"/>
+                            placeholder="{{'rolesandactivities.typeRoleName' | translate }}" formControlName="roleName" class="flex flex-1"  (input)="change($event)"/>
                             <mat-error [hidden]="false" i18n="Role Error|Explains Role is required"
                             *ngIf="createRole?.controls['roleName'].errors?.required" i18n-aria-label
                             aria-label="Role is mandatory">
-                           Role is mandatory
+                            {{'rolesandactivities.roleIsMandatory' | translate }}
                         </mat-error>
                     </mat-form-field>
-                    <mat-hint class="text-right text_hint mat-body-2">Type the role name</mat-hint>
+                    <mat-hint class="text-right text_hint mat-body-2"> {{'rolesandactivities.typeRoleName' | translate }}</mat-hint>
 
                 </div>
                 <div class="input-wrapper margin-top-xl flex flex-col">
@@ -61,13 +59,13 @@
                         <label for="roleName" class="margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="activity label|Label which explains the user to enter activity" i18n-aria-label
                             aria-label="activity label">
-                            Add activities you perform as part of this role
+                            {{'rolesandactivities.addActivitiesForRole' | translate }}
                         </label>
                         <div>
                         <button [disabled]="infoIcon" mat-icon-button class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()">
                             <mat-icon class="mat-icon margin-right-xs">info_outlined</mat-icon>
                         </button>
-                        What is an activity?
+                        {{'rolesandactivities.whatIsActivity' | translate }}
                     </div>
                     </div>
 
@@ -77,7 +75,7 @@
                             <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1">
 
                                 <input #activity matInput i18n-placeholder="Type the activity and press enter" rows="5"
-                                    placeholder="Type the activity and press enter" formControlName="activity" i18n-aria-label
+                                    placeholder="{{'rolesandactivities.typeTheActivity' | translate}}" formControlName="activity" i18n-aria-label
                                     aria-label="Enter activity" [matChipInputFor]="chipListHobies" maxlength="100"
                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                     (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
@@ -87,7 +85,7 @@
                                     <mat-error [hidden]="false" i18n="activity Error|Explains activity is required"
                                     *ngIf="createRole?.controls['activity'].errors?.required" i18n-aria-label
                                     aria-label="activity is mandatory">
-                                   Activity is mandatory
+                                    {{'rolesandactivities.activityIsMandatory' | translate }}
                                 </mat-error>
 
                             </mat-form-field>
@@ -96,7 +94,7 @@
                         <div class="right-input-div">
                             <button mat-raised-button type="button" (click)="addActivity({
                                 input: activity, value: activity.value})" class="text-white btn-add-activity btn-responsive">
-                                <span class="text-white" i18n>Add activities</span>
+                                <span class="text-white" i18n> {{'rolesandactivities.addActivities' | translate }}</span>
                             </button>
                         </div>
 
@@ -104,7 +102,7 @@
 
 
                     <div class="flex flex-row justify-between margin-top-s">
-                        <mat-hint class="text-left text_hint mat-body-2">Start adding the activities.</mat-hint>
+                        <mat-hint class="text-left text_hint mat-body-2"> {{'rolesandactivities.startAddingActivities' | translate }}</mat-hint>
                         <!-- <mat-hint class="text-right text_hint mat-body-2">Type the activites and click on ‘Enter’ to add
                         </mat-hint> -->
                     </div>
@@ -127,11 +125,11 @@
                     </a> -->
                     <button mat-raised-button type="button" (click)="create()" class="text-white btn-success btn-responsive"
                     [disabled]="!createRole.value.roleName || selectedActivity.length === 0" *ngIf="!editData">
-                        <span class="text-white" i18n>Add role and activities</span>
+                        <span class="text-white" i18n> {{'rolesandactivities.addRoleandActivities' | translate }}</span>
                     </button>
                     <button mat-raised-button type="button" (click)="create()" class="text-white btn-success btn-responsive"
                     [disabled]="!createRole.value.roleName || selectedActivity.length === 0 || (editRole.name === orgroleselected.name && disableUpdate)"  *ngIf="editData">
-                        <span class="text-white" i18n>Update  role and activities</span>
+                        <span class="text-white" i18n> {{'rolesandactivities.updateRoleandActivities' | translate }}</span>
                     </button>
                     <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
                         <mat-spinner [diameter]="30"></mat-spinner>
@@ -151,14 +149,14 @@
                                 <a class="cursor-pointer flex margin-right-xs" (click)="edit(role, i)">
                                     <mat-icon class="flex  ws-mat-black60-text margin-right-xs" >edit
                                     </mat-icon>
-                                    Edit
+                                    {{'rolesandactivities.edit' | translate }}
                                 </a>
 
                                 <!-- <mat-card-actions> -->
                                 <!-- <div class="flex margin-left-xs"> -->
                                 <a  class="cursor-pointer flex" (click)="delete(role)">
                                     <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs"
-                                    >delete</mat-icon> Delete
+                                    >delete</mat-icon>  {{'rolesandactivities.delete' | translate }}
                                 </a>
 
                                 <!-- </div> -->
@@ -195,5 +193,5 @@
 </div>
 
 
-<input #deleteTitleRef type="hidden" i18n-value value="Confirmation Needed" />
-<input #deleteBodyRef type="hidden" i18n-value value="Do you want to delete the role and associated activities?" />
+<input #deleteTitleRef type="hidden" i18n-value value=" {{'rolesandactivities.confirmationNeeded' | translate }}" />
+<input #deleteBodyRef type="hidden" i18n-value value=" {{'rolesandactivities.confirmToDeleteRoles' | translate }}" />

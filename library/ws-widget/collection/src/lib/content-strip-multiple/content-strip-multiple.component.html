@@ -27,11 +27,12 @@
                     ">
               <div class="flex items-center flex-1">
                 <h1 class="mat-h1 margin-remove inline-block" *ngIf="stripsResultDataMap[key]?.stripTitle">
-                  {{ stripsResultDataMap[key]?.stripTitle }}
+                  <!-- {{ stripsResultDataMap[key]?.stripTitle }} -->
+                  {{ translateLabels(stripsResultDataMap[key]?.stripTitle)}}
                 </h1>
 
                 <button *ngIf="stripsResultDataMap[key]?.stripInfo?.icon" type="button" mat-icon-button
-                  (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="info"
+                  (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="{{ 'contentstripmultiple.info' | translate }}"
                   class="flex justify-center items-center">
                   <mat-icon>{{ stripsResultDataMap[key]?.stripInfo?.icon.icon }}</mat-icon>
                 </button>
@@ -39,7 +40,7 @@
                 <!-- viewAll -->
                 <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])" class="ws-mat-accent-text">
                   <div class="flex flex-row gap-2 items-center cursor-pointer" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path" [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
-                    <span i18n>Show all</span>
+                    <span i18n>{{ 'contentstripmultiple.showAll' | translate }}</span>
                     <mat-icon>chevron_right</mat-icon>
                   </div>
                 </div>
@@ -109,11 +110,12 @@
     <div class="w-full">
       <div class="p-4">
         <div class="text-3xl font-semibold text-center leading-tight" i18n>
-          Content not available
+          {{ 'contentstripmultiple.contentNotAvailable' | translate }}
         </div>
         <br />
         <div class="text-base font-medium text-center leading-normal" i18n>
-          Please try different keywords or change the search query.
+          <!-- Please try different keywords or change the search query. -->
+          {{ 'contentstripmultiple.tryDifferentKeywords' | translate }}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { MatButtonModule, MatDialogModule } from '@angular/material'
 
 import { LogoutComponent } from './logout.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [LogoutComponent],
@@ -10,6 +11,7 @@ import { LogoutComponent } from './logout.component'
     CommonModule,
     MatButtonModule,
     MatDialogModule,
+    TranslateModule,
   ],
   entryComponents: [LogoutComponent],
 })

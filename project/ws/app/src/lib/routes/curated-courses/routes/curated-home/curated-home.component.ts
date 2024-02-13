@@ -6,6 +6,8 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { ActivatedRoute } from '@angular/router'
 /* tslint:disable*/
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-curated-home',
@@ -52,7 +54,17 @@ export class CuratedHomeComponent implements OnInit {
   constructor(
     private curatedCollectionSvc: CuratedCollectionService,
     private route: ActivatedRoute,
-  ) { }
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
+  ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+  }
 
   ngOnInit() {
     this.searchReq = _.get(this.route, 'snapshot.data.pageData.data.search.searchReq') || this.searchReqDefault
