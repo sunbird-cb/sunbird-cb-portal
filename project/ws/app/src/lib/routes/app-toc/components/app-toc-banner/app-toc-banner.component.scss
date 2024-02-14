@@ -535,7 +535,7 @@ button:disabled {
     padding: 3px;
 }
 ::ng-deep .mat-chip-input {
-    padding-bottom: 9px;
+    padding-bottom: 9px!important;
 }
 ::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip {
     color: #0074b6 !important;
@@ -548,6 +548,9 @@ button:disabled {
     position: absolute;
     right: 30px;
     top: 30px;
+}
+.left-over-emails {
+    font-weight: 600;
 }
 
 
@@ -577,5 +580,24 @@ button:disabled {
         align-items: self-end;
     }
 }
+
+@media only screen
+  and (min-device-width: 820px)
+  and (max-device-width: 1180px) {
+    .karmasahayogi-icon{
+        left: calc(50% - 387px);
+    }
+    .content {
+        width: 500px;
+    }
+  }
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 819px) {
+    .triangle-left {
+        display: none;
+    }
+  }
 
 

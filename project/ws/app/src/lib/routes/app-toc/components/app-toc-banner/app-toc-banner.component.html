@@ -454,8 +454,8 @@
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-hint align="start"><b>{{'contentSharing.note' | translate}}</b></mat-hint>
-                        <mat-hint align="end" class="left-over-emails"><b>{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingEmails' | translate}}</b></mat-hint>
+                        <mat-hint align="start" class="left-over-emails">{{'contentSharing.note' | translate}}</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingEmails' | translate}}</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
@@ -466,7 +466,7 @@
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
                             [disabled]="users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
                             >
-                            {{'contentSharing.send' | translate}}  <mat-icon>send</mat-icon>
+                            {{'contentSharing.send' | translate}} &nbsp; <mat-icon>send</mat-icon>
                         </button>
                     </div>
                 </div>
