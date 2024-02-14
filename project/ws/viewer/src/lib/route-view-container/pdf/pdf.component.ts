@@ -29,8 +29,8 @@ export class PdfComponent implements OnInit {
   > | null = null
   isTypeOfCollection = false
   isRestricted = false
-  playPdfContentFlag = true;
-  isMobile = false;
+  playPdfContentFlag = true
+  isMobile = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
@@ -38,11 +38,11 @@ export class PdfComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(window.innerWidth <= 1200) {
+    if (window.innerWidth <= 1200) {
       this.playPdfContentFlag = false
-      this.isMobile = true;
+      this.isMobile = true
     } else {
-      this.isMobile = false;
+      this.isMobile = false
     }
     if (this.configSvc.restrictedFeatures) {
       this.isRestricted =
@@ -52,7 +52,7 @@ export class PdfComponent implements OnInit {
   }
 
   openPdf() {
-    this.playPdfContentFlag = true;
-    this.pdfScormDataService.handleBackFromPdfScormFullScreen.next(true);
+    this.playPdfContentFlag = true
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.next(true)
   }
 }

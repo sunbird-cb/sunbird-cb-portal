@@ -970,7 +970,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   downloadCert(certIdArr: any) {
-    if (certIdArr.length > 0) {
+    if (certIdArr.length) {
       const certId = certIdArr[0].identifier
 
       this.contentSvc.downloadCert(certId).subscribe(response => {

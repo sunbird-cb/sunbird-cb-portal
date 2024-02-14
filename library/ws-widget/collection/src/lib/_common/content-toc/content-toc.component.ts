@@ -14,6 +14,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
 
   tabChangeValue: any = ''
   @Input() content: NsContent.IContent | null = null
+  @Input() initialrouteData: any
   @Input() changeTab = false
   routeSubscription: Subscription | null = null
   @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
