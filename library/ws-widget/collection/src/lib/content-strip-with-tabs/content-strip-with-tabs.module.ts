@@ -28,6 +28,14 @@ import {
   MatTabsModule,
   MatAutocompleteModule} from '@angular/material'
 import { ContentStripWithTabsComponent } from './content-strip-with-tabs.component'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+
+// tslint:disable-next-line:function-name
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
 
 @NgModule({
   declarations: [ContentStripWithTabsComponent],
@@ -60,6 +68,13 @@ import { ContentStripWithTabsComponent } from './content-strip-with-tabs.compone
     MatButtonToggleModule,
     MatTabsModule,
     MatAutocompleteModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   entryComponents: [ContentStripWithTabsComponent],
   exports: [ContentStripWithTabsComponent],
