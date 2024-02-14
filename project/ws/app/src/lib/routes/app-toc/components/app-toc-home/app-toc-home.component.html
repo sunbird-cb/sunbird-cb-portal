@@ -195,7 +195,7 @@
                         <div class="flex-1">Overall Progress</div>
                         <div *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</div>
                       </div>
-                      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
+                      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'" [customClassName]="'content-progress'">
                       </ws-widget-content-progress>
                     </div>
                   </ng-container>
