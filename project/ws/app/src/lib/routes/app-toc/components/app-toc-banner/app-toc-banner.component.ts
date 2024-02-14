@@ -170,7 +170,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     ).subscribe((res: any) => {
       if (res) {
         this.filteredUsers = []
-        //this.allUsers = []
+        // this.allUsers = []
         this.getUsersToShare(res)
       }
     })
@@ -1297,7 +1297,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
-      if(this.users.includes(value.trim())) {
+      if (this.users.includes(value.trim())) {
         this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
         return
       }
@@ -1330,7 +1330,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
       return
     }
-    if(this.users.includes(event.option.value)) {
+    if (this.users.includes(event.option.value)) {
       this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
       return
     }

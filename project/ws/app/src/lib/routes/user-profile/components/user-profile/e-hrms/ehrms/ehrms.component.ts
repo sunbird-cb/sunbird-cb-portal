@@ -65,6 +65,7 @@ export class EhrmsComponent implements OnInit, OnChanges {
     this.loaderVisible = true
     this.userProfileSvc.fetchEhrmsDetails().subscribe(data => {
     this.ehrmsApiResponse = data.result.message[0]
+    // tslint:disable-next-line: prefer-template
     this.name = this.ehrmsApiResponse.emp_first_name + ' ' + this.ehrmsApiResponse.emp_last_name
     this.profilepic = this.ehrmsApiResponse.profile_photo
     this.createInititals()

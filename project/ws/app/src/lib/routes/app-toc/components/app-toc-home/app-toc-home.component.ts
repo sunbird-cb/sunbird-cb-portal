@@ -210,7 +210,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   ngOnInit() {
     this.configSvc.languageTranslationFlag.subscribe((data: any) => {
-      if(data) {
+      if (data) {
         if (localStorage.getItem('websiteLanguage')) {
           this.translate.setDefaultLang('en')
           const lang = localStorage.getItem('websiteLanguage')!
