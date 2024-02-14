@@ -105,9 +105,7 @@ export class TopRightNavBarComponent implements OnInit {
       this.selectedLanguage,
       this.configSvc.unMappedUser ? this.configSvc.unMappedUser.id : ''
     )
-    // if (this.router.url.includes('/toc/')) {
-    //   window.location.reload()
-    // }
+    this.configSvc.languageTranslationFlag.next(true)
   }
 
   getZohoForm() {

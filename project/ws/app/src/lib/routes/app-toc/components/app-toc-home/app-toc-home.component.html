@@ -119,11 +119,11 @@ TODO: edit option while preview Mode
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
                   <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                      {{resumeData? "Resume" : "Start"}}
+                      {{resumeData? translateLabels('resume', 'apptochome') : translateLabels('start', 'apptochome')}}
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="content.completionPercentage === 100 || certData">
-                    {{resumeData? "Start again" : "Start"}}
+                    {{resumeData? translateLabels('startAgain', 'apptochome') : translateLabels('start', 'apptochome')}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
