@@ -168,8 +168,8 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             }
             if (eachCourse.issuedCertificates.length) {
               eachCourse.issuedCertificates = eachCourse.issuedCertificates.map((icObj: any) => {
-                icObj = { ...icObj, ...courseDetails };
-                return icObj;
+                const newIcObj = { ...icObj, ...courseDetails };
+                return newIcObj;
               });
             } else {
               eachCourse.issuedCertificates.push(courseDetails);
@@ -216,7 +216,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
               });
               
               for (let key in subThemeMapping) {
-                this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
+                if (subThemeMapping.hasOwnProperty(key)) {
+                  this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
+                }
               }
             }
           });
