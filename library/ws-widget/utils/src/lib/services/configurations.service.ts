@@ -110,6 +110,7 @@ export class ConfigurationsService {
 
   changeNavBarFullView = new Subject()
   openExploreMenuForMWeb = new Subject()
+  languageTranslationFlag = new Subject()
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
   }

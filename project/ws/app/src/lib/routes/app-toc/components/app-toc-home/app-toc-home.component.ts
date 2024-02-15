@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core'
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation, Input } from '@angular/core'
 import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import {
@@ -89,7 +89,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isInIframe = false
   cbPlanEndDate: any
   cbPlanDuration: any
-  forPreview = window.location.href.includes('/author/')
+  @Input() forPreview:any = window.location.href.includes('/public/') || window.location.href.includes('/public/');
+  // forPreview = window.location.href.includes('/author/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
