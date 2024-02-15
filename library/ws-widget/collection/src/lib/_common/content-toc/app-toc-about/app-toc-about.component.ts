@@ -123,9 +123,6 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
     filters: [],
   }
 
-  // tslint:disable-next-line:max-line-length
-  tags = ['Self-awareness', 'Awareness', 'Law', 'Design', 'Manager', 'Management', 'Designer', 'Product', 'Project Manager', 'Product management', 'Technology', 'Software', 'Artificial', 'Chatgpt', 'AI', 'Law rules']
-
   timer: any = {}
 
   ngOnInit() {
