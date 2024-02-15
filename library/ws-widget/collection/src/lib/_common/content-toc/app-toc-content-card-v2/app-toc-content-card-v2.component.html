@@ -138,7 +138,7 @@
                     </ng-container>
 
                     <div class="see-all-container">
-                        <a href="javascript:void(0)" role="button" (click)="content.viewChildren = !content.viewChildren"
+                        <a href="javascript:void(0)" role="button" (click)="content.viewChildren = !content.viewChildren; expandActive = false"
                             class="padding-left-m see-all-btn tab custom-chevron customicon" mat-button>
                             <mat-icon *ngIf="!content.viewChildren && !isModule">keyboard_arrow_down</mat-icon>
                             <mat-icon *ngIf="content.viewChildren && !isModule">keyboard_arrow_up</mat-icon>

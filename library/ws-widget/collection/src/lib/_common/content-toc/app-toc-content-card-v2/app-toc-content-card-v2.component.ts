@@ -33,6 +33,7 @@ export class AppTocContentCardV2Component implements OnInit {
   @Input() batchId!: string
   @Input() index!:number
   @Input() pathSet!: any
+  @Input() expandActive = true
   hasContentStructure = false
   enumContentTypes = NsContent.EDisplayContentTypes
   contentStructure: NsAppToc.ITocStructure = {
@@ -83,7 +84,9 @@ export class AppTocContentCardV2Component implements OnInit {
   }
 
   check(content: any) {
-    content.viewChildren = this.pathSet.has(content.identifier)
+    if(this.expandActive) {
+      content.viewChildren = this.pathSet.has(content.identifier) || content.viewChildren
+    }
     return content.viewChildren
   }
 
