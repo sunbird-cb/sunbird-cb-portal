@@ -12,6 +12,8 @@ import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
 import { TranslateService } from '@ngx-translate/core'
+import { WidgetContentService } from '../_services/widget-content.service'
+import { Router } from '@angular/router'
 // import { Router } from '@angular/router'
 
 @Component({
@@ -41,7 +43,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
   prefChangeSubscription: Subscription | null = null
   sourceLogos: NsInstanceConfig.ISourceLogo[] | undefined
-
+  
   isIntranetAllowedSettings = false
   constructor(
     private dialog: MatDialog,
@@ -52,6 +54,8 @@ export class CardContentV2Component extends WidgetBaseComponent
     private langtranslations: MultilingualTranslationsService,
     private certificateService: CertificateService,
     private translate: TranslateService,
+    private contSvc: WidgetContentService,
+    private router: Router,
 
   ) {
     super()
@@ -397,5 +401,13 @@ export class CardContentV2Component extends WidgetBaseComponent
       // this.karmaPointLoading = false
       clearInterval(this.cbPlanInterval)
     }
+  }
+  getRedirectUrlData(content: any){
+    let urlData = this.contSvc.getResourseLink(content)
+    this.router.navigate(
+      [urlData.url],
+      {
+        queryParams: urlData.queryParams
+      })
   }
 }
