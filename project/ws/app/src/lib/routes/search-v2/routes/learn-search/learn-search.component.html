@@ -130,7 +130,7 @@
                         </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">
-                            <p class="mat-body-2 margin-bottom-xxs" *ngIf="content.creator">By {{content?.organisation[0]}}</p>
+                            <p class="mat-body-2 margin-bottom-xxs" *ngIf="content?.organisation?.length">By {{content?.organisation[0]}}</p>
                             <div class="contentdata margin-bottom-xm">
                                 <ul
                                     class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
