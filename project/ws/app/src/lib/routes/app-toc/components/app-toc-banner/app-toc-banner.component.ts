@@ -1354,13 +1354,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     let courseName = ''
     let coursePosterImageUrl = ''
     let courseProvider = ''
+    let primaryCategory = ''
     if (this.configSvc.userProfile) {
       courseProvider = this.configSvc.userProfile.rootOrgName || ''
     }
     if (this.content) {
         courseId = this.content.identifier,
         courseName = this.content.name,
-        coursePosterImageUrl = this.content.posterImage
+        coursePosterImageUrl = this.content.posterImage,
+        primaryCategory = this.content.primaryCategory
     }
     const obj = {
       request: {
@@ -1368,6 +1370,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         courseName,
         coursePosterImageUrl,
         courseProvider,
+        primaryCategory,
         recipients: '',
       },
     }
