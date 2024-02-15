@@ -420,7 +420,7 @@
             <div class="mat-body-2">
                 <div class="md-5">
                     <mat-form-field appearance="outline" class="w-full">
-                        <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
+                        <mat-chip-list #chipList aria-label="user selection" appearance="outline">
                             <mat-chip
                                 *ngFor="let user of users"
                                 [selectable]="selectable"
@@ -431,6 +431,7 @@
                             </mat-chip>
                             <input
                                 tabindex="-1"
+                                class="inputTextBox"
                                 placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
                                 #userInput
                                 formControlName="review"

@@ -544,6 +544,11 @@ button:disabled {
     color: #0074b6 !important;
 }
 
+::ng-deep .inputTextBox {
+    width: 95%!important;
+    overflow-x: hidden;
+}
+
 .close-share-dialog {
     position: absolute;
     right: 30px;
