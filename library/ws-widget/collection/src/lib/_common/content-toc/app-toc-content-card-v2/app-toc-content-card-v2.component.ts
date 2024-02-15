@@ -82,6 +82,11 @@ export class AppTocContentCardV2Component implements OnInit {
     }
   }
 
+  check(content: any) {
+    content.viewChildren = this.pathSet.has(content.identifier)
+    return content.viewChildren
+  }
+
   get isCollection(): boolean {
     if (this.content) {
       return this.content.mimeType === NsContent.EMimeTypes.COLLECTION

@@ -1,15 +1,16 @@
 <ng-container *ngIf="content">
     <ng-container *ngIf="isCollection">
         <div class="collection-wrapper p-4 flex flex-col position-relative"
-            [ngClass]="{'open': viewChildren,
-            'close': !viewChildren,
-                'course':!isModule, 'module': isModule}">
+            [ngClass]="{'open': check(content),
+            'close': !content.viewChildren,
+            'course':!isModule, 'module': isModule,
+            'content-active': pathSet?.has(content.identifier)}">
             <div class="card-collection w-auto sm:w-100 padding-right-xl">
                 <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
-            (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
+            (click)="content.viewChildren = !content.viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
                 <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto" >
                     <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}"
-                        (click)="viewChildren = !viewChildren">
+                        (click)="content.viewChildren = !content.viewChildren">
                         <div class="flex flex-col sm:flex-row flex-wrap">
                             <ng-container *ngIf="isModule">
                                 <ng-container
@@ -137,20 +138,20 @@
                     </ng-container>
 
                     <div class="see-all-container">
-                        <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
-                            class="margin-left-m see-all-btn tab custom-chevron customicon" mat-button>
-                            <mat-icon *ngIf="!viewChildren && !isModule">keyboard_arrow_down</mat-icon>
-                            <mat-icon *ngIf="viewChildren && !isModule">keyboard_arrow_up</mat-icon>
-                            <mat-icon *ngIf="!viewChildren && isModule">add</mat-icon>
-                            <mat-icon *ngIf="viewChildren && isModule">remove</mat-icon>
+                        <a href="javascript:void(0)" role="button" (click)="content.viewChildren = !content.viewChildren"
+                            class="padding-left-m see-all-btn tab custom-chevron customicon" mat-button>
+                            <mat-icon *ngIf="!content.viewChildren && !isModule">keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="content.viewChildren && !isModule">keyboard_arrow_up</mat-icon>
+                            <mat-icon *ngIf="!content.viewChildren && isModule">add</mat-icon>
+                            <mat-icon *ngIf="content.viewChildren && isModule">remove</mat-icon>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="child-wrapper  " [ngClass]="{'open': viewChildren, 'close': !viewChildren}" *ngIf="viewChildren"
+        <div class="child-wrapper  " [ngClass]="{'open': content.viewChildren, 'close': !content.viewChildren}" *ngIf="content.viewChildren"
             [@panelInOut]>
-            <div class="children-container margin-left-m" [ngClass]="{'module': isModule, '': !isModule}">
+            <div class="children-container padding-left-m" [ngClass]="{'module': isModule, '': !isModule}">
                 <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
                     [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1" [pathSet]="pathSet"
                     *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
@@ -210,12 +211,12 @@
         [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null"
                >
                 <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled && batchId}"
-                    (click)="viewChildren = !viewChildren; raiseTelemetry()">
+                    (click)="content.viewChildren = !content.viewChildren; raiseTelemetry()">
                     <div class="flex flex-col sm:flex-row flex-wrap">
                         <p class="margin-remove text-truncate mat-body-2 flex-auto font-bold" 
                         [ngClass]="{'text-active': pathSet?.has(content?.identifier)}">
                             <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
-                            {{ content?.name }} 
+                            {{ content?.name }}
                         </p>
                         <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
                     </div>
