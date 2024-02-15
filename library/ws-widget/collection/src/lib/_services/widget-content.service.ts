@@ -8,7 +8,7 @@ import { NsContent } from './widget-content.model'
 import { NSSearch } from './widget-search.model'
 // tslint:disable
 import _ from 'lodash'
-import { VIEWER_ROUTE_FROM_MIME, viewerRouteGenerator } from './viewer-route-util'
+import {  viewerRouteGenerator } from './viewer-route-util'
 // tslint:enable
 
 // TODO: move this in some common place

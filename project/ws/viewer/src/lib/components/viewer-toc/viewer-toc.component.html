@@ -52,8 +52,8 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-divider *ngIf="collection" class="margin-bottom-xs"></mat-divider>
-  <div *ngIf="collection" class="flex flex-middle">
+  <!-- <mat-divider *ngIf="collection" class="margin-bottom-xs"></mat-divider> -->
+  <!-- <div *ngIf="collection" class="flex flex-middle">
     <div i18n class="padding-left-m" *ngIf="tocMode === 'TREE'">{{ 'viewertoc.structure' | translate }}</div>
     <div i18n class="padding-left-m" *ngIf="tocMode === 'FLAT'">{{ 'viewertoc.queue' | translate }}</div>
     <span class="spacer"></span>
@@ -62,8 +62,8 @@
           <mat-icon>view_list</mat-icon>
         </span></mat-slide-toggle>
     </div>
-  </div>
-  <mat-divider class="margin-top-xs"></mat-divider>
+  </div> -->
+  <!-- <mat-divider class="margin-top-xs"></mat-divider>
   <section *ngIf="!collection">
     <div *ngIf="errorWidgetData?.widgetData?.errorType" [wsResolverWidget]="errorWidgetData"></div>
   </section>
@@ -73,24 +73,21 @@
         {{ 'viewertoc.resourceNotPartOfCollection' | translate }}
       </span>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
   <!-- Content Area -->
   <!-- Flat List -->
-  <mat-list [hidden]="tocMode !== 'FLAT'">
+  <!-- <mat-list [hidden]="tocMode !== 'FLAT'">
     <mat-list-item class="height-auto" *ngFor="let content of queue"
       [ngClass]="{ 'mat-toolbar': pathSet.has(content.identifier) }">
       <ng-container *ngTemplateOutlet="TocContentCard; context: { $implicit: content }"></ng-container>
     </mat-list-item>
-  </mat-list>
+  </mat-list> -->
   <!-- Tree -->
-  <ul [hidden]="tocMode !== 'TREE'" class="toc-tree">
+  <!-- <ul [hidden]="tocMode !== 'TREE'" class="toc-tree">
     <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl">
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
         <li class="mat-tree-node leaf-node">
           <ng-container *ngTemplateOutlet="TocContentList; context: { $implicit: node }"></ng-container>
-          <!-- <ng-container
-            *ngTemplateOutlet="TocContentCard; context: { $implicit: node }"
-          ></ng-container> -->
         </li>
       </mat-tree-node>
 
@@ -125,7 +122,9 @@
         </li>
       </mat-nested-tree-node>
     </mat-tree>
-  </ul>
+  </ul> -->
+  <ws-widget-app-toc-content [batchId]="batchId" [content]="contentData"    [forPreview]="false"
+   [batchData]="batchData"  [skeletonLoader]="skeletonLoader"></ws-widget-app-toc-content>
 </ng-container>
 
 <!-- Loading Template -->
