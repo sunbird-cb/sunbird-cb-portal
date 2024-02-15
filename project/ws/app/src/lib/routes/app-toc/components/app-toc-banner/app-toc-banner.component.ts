@@ -1314,6 +1314,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           input.value = ''
         }
         this.userCtrl.setValue(null)
+        const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+        if (el != null) {
+          setTimeout(() => {
+            el[0].scrollTop = el[0].scrollHeight
+          }, 200)
+        }
       } else {
         this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
         return
@@ -1343,6 +1349,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.userInput.nativeElement.value = ''
     }
     this.userCtrl.setValue(null)
+    const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+    if (el != null) {
+      setTimeout(() => {
+        el[0].scrollTop = el[0].scrollHeight
+      }, 200)
+    }
   }
 
   filterSharedUsers(value: string): string[] {
