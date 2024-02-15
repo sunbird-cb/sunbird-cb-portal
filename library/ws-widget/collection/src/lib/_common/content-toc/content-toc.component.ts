@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs'
 export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
 
   tabChangeValue: any = ''
-  @Input() content: NsContent.IContent | null = null
+  @Input() content!: NsContent.IContent
   @Input() initialRouteData: any
   @Input() changeTab = false
   routeSubscription: Subscription | null = null
@@ -32,7 +32,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(
     private route: ActivatedRoute,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
   ) { }
 
   ngOnInit() {

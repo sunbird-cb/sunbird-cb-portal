@@ -32,6 +32,7 @@ export class AppTocContentCardV2Component implements OnInit {
   @Input() forPreview = false
   @Input() batchId!: string
   @Input() index!:number
+  @Input() pathSet!: any
   hasContentStructure = false
   enumContentTypes = NsContent.EDisplayContentTypes
   contentStructure: NsAppToc.ITocStructure = {
@@ -74,11 +75,13 @@ export class AppTocContentCardV2Component implements OnInit {
       if (property === 'expandAll') {
         this.viewChildren = this.expandAll
       }
-      if(property === 'content') {
-        // this.mapModuleDurationAndProgress(this.content)
-      }
+      // if(property === 'pathSet') {
+      //   console.log('pathSet on changes -----', changes.pathSet.currentValue)
+      //   this.pathSet = changes.pathSet.currentValue
+      // }
     }
   }
+
   get isCollection(): boolean {
     if (this.content) {
       return this.content.mimeType === NsContent.EMimeTypes.COLLECTION
