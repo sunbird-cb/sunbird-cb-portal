@@ -1,7 +1,9 @@
 <ng-container *ngIf="content">
     <ng-container *ngIf="isCollection">
-        <div class="collection-wrapper p-4 flex flex-col position-relative" *ngIf="isModule && content?.moduleResourseCount"
-            [ngClass]="{'open': viewChildren, 'close': !viewChildren, 'course':!isModule, ' module': isModule}">
+        <div class="collection-wrapper p-4 flex flex-col position-relative"
+            [ngClass]="{'open': viewChildren,
+            'close': !viewChildren,
+                'course':!isModule, 'module': isModule}">
             <div class="card-collection w-auto sm:w-100 padding-right-xl">
                 <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
             (click)="viewChildren = !viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
@@ -44,7 +46,8 @@
                                         [imageHeight]="22" [imageWidth]="22" [showBackground]="false"></circle-progress>
                                 </ng-template>
                             </ng-container>
-                            <p class="margin-remove text-truncate mat-subheading-1 flex-auto font-bold">
+                            <p class="margin-remove text-truncate mat-subheading-1 flex-auto font-bold"
+                            [ngClass]="{'text-active': pathSet?.has(content.identifier)}">
                                 {{index}}. {{ content?.name }}
                             </p>
                             <ng-container *ngIf="content.issuedCertificatesSVG">
@@ -96,8 +99,8 @@
                         *ngIf="!forPreview && content?.identifier && content?.completionPercentage && content.primaryCategory === 'Course'">
                         <ng-container *ngIf="content?.completionStatus == 2">
                             <div class="mt-2 flex flex-1 flex-col  progress-container">
-                                <div class="flex flex-row justify-end w-full ws-mat-black-text">
-                                    <span class="mat-body-2  ws-mat-black-text">
+                                <div class="flex flex-row justify-end w-full ">
+                                    <span class="mat-body-2  ">
                                         {{content?.completionPercentage}}%</span>
                                 </div>
 
@@ -149,7 +152,7 @@
             [@panelInOut]>
             <div class="children-container margin-left-m" [ngClass]="{'module': isModule, '': !isModule}">
                 <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
-                    [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1"
+                    [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1" [pathSet]="pathSet"
                     *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
                     [ngClass]="{'moduleCard': checkIsModule(child), 'resourceCard': !checkIsModule(child), 'first': isFirst}">
                 </ws-widget-app-toc-content-card-v2>
@@ -206,10 +209,11 @@
                 [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
         [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null"
                >
-                <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled}"
+                <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled && batchId}"
                     (click)="viewChildren = !viewChildren; raiseTelemetry()">
                     <div class="flex flex-col sm:flex-row flex-wrap">
-                        <p class="margin-remove text-truncate mat-body-2 flex-auto font-bold">
+                        <p class="margin-remove text-truncate mat-body-2 flex-auto font-bold" 
+                        [ngClass]="{'text-active': pathSet?.has(content?.identifier)}">
                             <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
                             {{ content?.name }} 
                         </p>

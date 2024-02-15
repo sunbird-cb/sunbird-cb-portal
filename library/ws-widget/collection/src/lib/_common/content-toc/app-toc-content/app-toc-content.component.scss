@@ -55,6 +55,10 @@
       border: 1px solid rgba(221,221,221,0.5);
       overflow: hidden;
       position: relative;
+
+      &.content-active {
+        border: 1px solid #1a4ca1;
+      }
     }
 
     .noChildren {
