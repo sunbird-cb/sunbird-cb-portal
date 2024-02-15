@@ -260,7 +260,7 @@ import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content
     ActionService,
     MultilingualTranslationsService,
   ],
-  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent],
+  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent, AppTocHomeRootComponent, AppTocHomeComponent],
   entryComponents: [
     AppTocDialogIntroVideoComponent,
     AppTocOverviewComponent,

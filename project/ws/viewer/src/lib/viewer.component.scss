@@ -29,6 +29,7 @@
 
 .viewer-sidenav {
   width: 100%;
+  border-left: 1px solid #1a4ca1 !important;
 
   @include breakpoint-gt-xs {
     width: 25%;
