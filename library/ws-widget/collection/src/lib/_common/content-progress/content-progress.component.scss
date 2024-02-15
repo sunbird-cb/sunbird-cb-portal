@@ -15,10 +15,9 @@
   background-color: #EDEDED !important;
 }
 
-::ng-deep.theme-igot.day-mode .viewer-progress .mat-progress-bar-fill::after {
-  background: rgb(246, 153, 83);
+::ng-deep .content-progress .mat-progress-bar-fill::after {
+  background: rgb(246, 153, 83) !important;
 }
-
 
 ::ng-deep.theme-igot.day-mode .viewer-progress .mat-progress-bar-background {
   fill: rgba(255, 255, 255, 0) !important;

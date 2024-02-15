@@ -28,10 +28,10 @@ export class VideoComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private configSvc: ConfigurationsService) { }
 
   ngOnInit() {
-    if(window.innerWidth <= 1200) {
-      this.isMobile = true;
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
     } else {
-      this.isMobile = false;
+      this.isMobile = false
     }
     if (this.configSvc.restrictedFeatures) {
       this.isRestricted =

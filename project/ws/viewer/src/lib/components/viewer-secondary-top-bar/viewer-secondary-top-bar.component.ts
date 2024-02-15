@@ -21,7 +21,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
-  @Input() contentMIMEType:any;
+  @Input() contentMIMEType: any
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -50,8 +50,8 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   userid: any
   channelId: any
   optionalLink = false
-  isMobile = false;
-  handleBackFromPdfScormFullScreenFlag = false;
+  isMobile = false
+  handleBackFromPdfScormFullScreenFlag = false
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -78,15 +78,15 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getAuthDataIdentifer()
-    if(window.innerWidth <= 1200) {
-      this.isMobile = true;
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
     } else {
-      this.isMobile = false;
+      this.isMobile = false
     }
 
-    this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data:any)=>{
-      this.handleBackFromPdfScormFullScreenFlag = data;
-    });
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
+      this.handleBackFromPdfScormFullScreenFlag = data
+    })
 
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true

@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   mobileTopHeaderVisibilityStatus = true
   @Input() mode: any
   @Input() headerFooterConfigData: any
-  @Input() showHubs = false;
+  @Input() showHubs = false
   constructor(
     private valueSvc: ValueService,
     public headerService: HeaderService,
