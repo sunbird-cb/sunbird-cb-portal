@@ -70,6 +70,7 @@ const flattenItems = (items: any[], key: string | number) => {
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   show = false
+  changeTab = false
   skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
@@ -941,9 +942,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return batchId
   }
 
-  downloadCert(certidArr: any) {
-    if (certidArr.length > 0) {
-      const certId = certidArr[0].identifier
+  downloadCert(certIdArr: any) {
+    if (certIdArr.length) {
+      const certId = certIdArr[0].identifier
 
       this.contentSvc.downloadCert(certId).subscribe(response => {
         this.certData = response.result.printUri
@@ -954,15 +955,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   openCertificateDialog() {
     const cet = this.certData
     this.dialog.open(CertificateDialogComponent, {
-      // height: '400px',
-      width: '1300px',
+      width: '1200px',
       data: { cet },
-      // panelClass: 'custom-dialog-container',
     })
   }
 
-  public autoBatchAssign() {
+  public handleAutoBatchAssign() {
     this.enrollBtnLoading = true
+    this.changeTab = !this.changeTab
     this.userSvc.resetTime('enrollmentService')
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
       this.autoEnrollCuratedProgram()
@@ -981,7 +981,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         request: {
           userId,
           programId: this.content.identifier,
-          // as of now cureted program only one batch is coming need to check and modify
+          // as of now curated program only one batch is coming need to check and modify
           batchId: this.contentReadData && this.contentReadData.batches[0].batchId,
         },
       }
@@ -1540,13 +1540,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
   }
-
-  // public handleEnrollmentEndDate(batch: any) {
-  //   const enrollmentEndDate = dayjs(_.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
-  //   const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
-  //   return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
-  //     (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
-  // }
 
   ngOnDestroy() {
     if (this.routeSubscription) {

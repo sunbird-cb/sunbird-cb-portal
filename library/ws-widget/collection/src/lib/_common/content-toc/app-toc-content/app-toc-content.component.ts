@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
 import { ActivatedRoute, Data } from '@angular/router'
 import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'
 import { ConfigurationsService, UtilityService } from '@sunbird-cb/utils'
@@ -16,7 +16,7 @@ import { NsAppToc } from '../models/app-toc.model'
   styleUrls: ['./app-toc-content.component.scss'],
 })
 
-export class AppTocContentComponent implements OnInit {
+export class AppTocContentComponent implements OnInit, OnDestroy {
   @Input() batchId!: string
   @Input() content!: NsContent.IContent
   @Input() forPreview = false

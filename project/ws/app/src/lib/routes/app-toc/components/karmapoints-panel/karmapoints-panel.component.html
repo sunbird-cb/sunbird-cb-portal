@@ -1,20 +1,26 @@
-<div class="mat-caption karmapoints-panel margin-top-xs" *ngIf="kpData && btnCategory !== 'claim' && pCategory === ''">
-  <p class="margin-remove">{{ translateLabels(kpData.textBeforeIcon, 'appKarmapointsPanel') }}
-    <img src="/assets/icons/home/karma-badge.svg" alt="KarmaPoints">
-    <span class="font-bold"> {{kpData.points}} {{translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }} </span>
-    <span *ngIf="kpData.textAfterIcon">{{translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel')}}</span>
-    <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="translateLabels(kpData.toolTipText, 'appKarmapointsPanel')" *ngIf="kpData.toolTipText">info_outline</mat-icon>
-  </p>
-</div>
+<ng-container *ngIf="kpData && btnCategory !== 'claim' && pCategory === ''">
+  <div class="flex flex-row items-center gap-2 slider-div">
+    <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
+    <div class="flex flex-wrap gap-1 text-xs">
+      <div *ngIf="kpData?.textBeforeIcon">{{ translateLabels(kpData?.textBeforeIcon, 'appKarmapointsPanel') }}</div>
+      <div *ngIf="kpData?.points" class="font-bold"> {{kpData.points}} {{ translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }} </div>
+      <div *ngIf="kpData?.textAfterIcon">{{ translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel') }}</div>
+    </div>
+    <mat-icon class="cursor-pointer ws-mat-black60-text info-icon" width="20px" [matTooltip]="translateLabels(kpData.toolTipText, 'appKarmapointsPanel')" *ngIf="kpData.toolTipText">info_outline</mat-icon>
+  </div>
+</ng-container>
 
-<div class="mat-caption karmapoints-panel margin-top-xs" *ngIf="kpData && btnCategory !== 'claim' && pCategory !== ''">
-  <p class="margin-remove">{{getDynamicText(kpData.textBeforeIcon)}}
-    <img src="/assets/icons/home/karma-badge.svg" alt="KarmaPoints">
-    <span class="font-bold"> {{kpData.points}} {{translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }} </span>
-    <span *ngIf="kpData.textAfterIcon">{{translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel')}}</span>
-    <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="translateLabels(kpData.toolTipText, 'appKarmapointsPanel')" *ngIf="kpData.toolTipText">info_outline</mat-icon>
-  </p>
-</div>
+<ng-container  *ngIf="kpData && btnCategory !== 'claim' && pCategory !== ''">
+  <div class="flex flex-row items-center gap-2 slider-div">
+    <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
+    <div class="flex flex-wrap gap-1 text-xs">
+      <div>{{ getDynamicText(kpData.textBeforeIcon) }}</div>
+      <div class="font-bold">{{ kpData.points }} {{ translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }}</div>
+      <span *ngIf="kpData.textAfterIcon">{{ translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel') }}</span>
+    </div>
+    <mat-icon class="cursor-pointer ws-mat-black60-text info-icon" width="20px" [matTooltip]="translateLabels(kpData.toolTipText, 'appKarmapointsPanel')" *ngIf="kpData.toolTipText">info_outline</mat-icon>
+  </div>
+</ng-container>
 
 <button class="mat-caption karmapoints-panel karmapoints-panel-claim margin-top-m width-1-1"
   *ngIf="kpData && btnCategory === 'claim'" (click)="onClickOfClaim()">

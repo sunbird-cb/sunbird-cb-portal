@@ -666,7 +666,7 @@
 </ng-template>
 
 <ng-template #cardStandard>
-  <mat-card class="card-standard-container mr-5 padding-remove" [ngClass]="{
+  <mat-card class="card-standard-container mr-5 padding-remove cursor-pointer " [ngClass]="{
       greyOut:
         widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
           ? true
@@ -679,8 +679,7 @@
             : widgetData?.intranetMode === 'greyOut' && showIntranetContent
       }">
       <ng-container *ngIf="widgetData.content">
-        <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData?.content | pipeContentRoute: forPreview ).url"
-            [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+        <a (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()" 
             role="link" i18n-aria-label>
       <ng-container *ngIf="!isCardFlipped">
         <div class="status-danger" role="note" i18n-aria-label aria-label="Content expired or deleted" i18n-matTooltip
@@ -1063,8 +1062,7 @@
 
       <div class="flex main_title_box">
         <p class="mat-subheading-1 title-text font-bold-imp cursor-pointer content-title">
-          <a [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
-            [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData">
+          <a (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()">
             {{widgetData.content.name}}
           </a>
       </p>
@@ -1097,7 +1095,7 @@
 </ng-template>
 
 <ng-template #cardPortrait>
-    <mat-card class="card-portrait cursor-pointer" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''" [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']" [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+    <mat-card class="card-portrait cursor-pointer" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''" (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()" >
       <div class="course_widget portrait_widget flex  margin-bottom-xs">
         <div class="flex flex-end flex-middle course_port">
           <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
@@ -1466,8 +1464,7 @@
 </ng-template>
 
 <ng-template #cardPortraitClick>
-  <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData?.content | pipeContentRoute: forPreview ).url"
-  [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+  <a class="cursor-pointer" (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()" 
   role="link" i18n-aria-label>
   <mat-card class="card-portrait mr-2 card-portrait-clickable min-height-remove" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
      <div class="course_widget portrait_widget flex  margin-bottom-xs">

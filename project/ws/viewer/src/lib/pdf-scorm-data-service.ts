@@ -1,7 +1,6 @@
 import { Subject } from 'rxjs'
 
-
 export class PdfScormDataService {
-  handleBackFromPdfScormFullScreen = new Subject();
+  handleBackFromPdfScormFullScreen = new Subject()
   constructor() { }
 }

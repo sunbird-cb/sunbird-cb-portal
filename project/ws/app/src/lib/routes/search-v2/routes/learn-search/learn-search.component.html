@@ -124,9 +124,7 @@
 
                         <!-- <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title" (click)="navigateToToc(param, content.identifier, content.primaryCategory)"> -->
                         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-                            <a [routerLink]="['/app/toc/',content.identifier,'overview']"
-                                [queryParams]="{primaryCategory: content.primaryCategory}"
-                                [state]="statedata">{{content.name}}</a>
+                            <a (click)="getRedirectUrlData(content)">{{content.name}}</a>
                         </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">
