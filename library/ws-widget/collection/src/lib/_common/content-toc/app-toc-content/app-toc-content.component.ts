@@ -92,20 +92,22 @@ export class AppTocContentComponent implements OnInit, OnDestroy {
       },
     ]
     this.otherResourse = 0
-    Object.keys(this.tocStructure).forEach((ele: any) => {
-      if (ele === 'offlineSession' || ele === 'learningModule') {
+    if(this.tocStructure){
+      Object.keys(this.tocStructure).forEach((ele: any) => {
+        if (ele === 'offlineSession' || ele === 'learningModule') {
+        } else {
+  
+          this.otherResourse = this.otherResourse + this.tocStructure[ele]
+        }
+      })
+      if (!this.otherResourse) {
+        setTimeout(() => {
+          this.selectedTabType = 'session'
+          this.typesOfContent[0].disabled = true
+        },         1000)
       } else {
-
-        this.otherResourse = this.otherResourse + this.tocStructure[ele]
+        this.typesOfContent[1].disabled =  this.tocStructure['offlineSession'] ? false : true
       }
-    })
-    if (!this.otherResourse) {
-      setTimeout(() => {
-        this.selectedTabType = 'session'
-        this.typesOfContent[0].disabled = true
-      },         1000)
-    } else {
-      this.typesOfContent[1].disabled =  this.tocStructure['offlineSession'] ? false : true
     }
   }
 

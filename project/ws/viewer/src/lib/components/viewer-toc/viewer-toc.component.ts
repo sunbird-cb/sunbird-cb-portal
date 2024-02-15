@@ -63,6 +63,8 @@ interface ICollectionCard {
 export class ViewerTocComponent implements OnInit, OnDestroy {
   @Output() hidenav = new EventEmitter<boolean>()
   @Input() forPreview = false
+  @Input() contentData: any = {}
+  @Input() batchData: any
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -265,7 +267,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
       this.isFetching = false
       return viewerTocCardContent
-    } catch (err) {
+    } catch (err:any) {
       switch (err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'
@@ -323,7 +325,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       const viewerTocCardContent = this.convertContentToIViewerTocCard(content)
       this.isFetching = false
       return viewerTocCardContent
-    } catch (err) {
+    } catch (err: any) {
       switch (err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'
