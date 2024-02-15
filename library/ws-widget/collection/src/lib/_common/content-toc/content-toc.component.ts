@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core'
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 import { NsContent, UtilityService } from '@sunbird-cb/utils/src/public-api'
@@ -10,10 +10,12 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./content-toc.component.scss'],
 })
 
-export class ContentTocComponent implements OnInit, AfterViewInit {
+export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
 
   tabChangeValue: any = ''
-  @Input() content: NsContent.IContent | null = null
+  @Input() content!: NsContent.IContent
+  @Input() initialRouteData: any
+  @Input() changeTab = false
   routeSubscription: Subscription | null = null
   @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   @Input() contentTabFlag = true
@@ -25,11 +27,12 @@ export class ContentTocComponent implements OnInit, AfterViewInit {
   sticky = false
   menuPosition: any
   isMobile = false
+  selectedTabIndex = 0
   config: any
 
   constructor(
     private route: ActivatedRoute,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
   ) { }
 
   ngOnInit() {
@@ -41,6 +44,12 @@ export class ContentTocComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.isMobile = this.utilityService.isMobile
     this.menuPosition = this.tabElement._elementRef.nativeElement.offsetTop
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.changeTab && changes.changeTab.currentValue) {
+      this.selectedTabIndex = 1
+    }
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -55,5 +64,6 @@ export class ContentTocComponent implements OnInit, AfterViewInit {
 
   handleTabChange(event: MatTabChangeEvent): void {
     this.tabChangeValue = event.tab
+    this.selectedTabIndex = event.index
   }
 }

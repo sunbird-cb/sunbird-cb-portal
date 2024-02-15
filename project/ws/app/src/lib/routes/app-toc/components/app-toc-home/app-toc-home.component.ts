@@ -70,6 +70,7 @@ const flattenItems = (items: any[], key: string | number) => {
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   show = false
+  changeTab = false
   skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
   showMoreGlance = false
@@ -892,33 +893,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     )
   }
 
-  private mapModuleDurationAndProgress(content: NsContent.IContent | null) {
-    if (content && content.children) {
-      if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-        // content.children.map((item: NsContent.IContent)=> {
-          content = this.getCalculationsFromChildren(content)
-        // })
-      }
-      content.children.map((item: NsContent.IContent) => {
-        if (item.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-          this.mapModuleDurationAndProgress(item)
-        }
-      })
-    }
-  }
-
-  private getCalculationsFromChildren(item: NsContent.IContent) {
-    console.log('item', item)
-    item['duration'] = item.children.reduce((sum, child) => {
-      return sum + Number(child.duration || 0)
-    },                                      0)
-    const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
-    const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
-    item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
-    item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1
-    return item
-  }
-
   public fetchUserWFForBlended() {
     const applicationIds = (this.batchData && this.batchData.content && this.batchData.content.map(e => e.batchId)) || []
     const req = {
@@ -969,9 +943,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return batchId
   }
 
-  downloadCert(certidArr: any) {
-    if (certidArr.length > 0) {
-      const certId = certidArr[0].identifier
+  downloadCert(certIdArr: any) {
+    if (certIdArr.length) {
+      const certId = certIdArr[0].identifier
 
       this.contentSvc.downloadCert(certId).subscribe(response => {
         this.certData = response.result.printUri
@@ -982,15 +956,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   openCertificateDialog() {
     const cet = this.certData
     this.dialog.open(CertificateDialogComponent, {
-      // height: '400px',
-      width: '1300px',
+      width: '1200px',
       data: { cet },
-      // panelClass: 'custom-dialog-container',
     })
   }
 
-  public autoBatchAssign() {
+  public handleAutoBatchAssign() {
     this.enrollBtnLoading = true
+    this.changeTab = !this.changeTab
     this.userSvc.resetTime('enrollmentService')
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
       this.autoEnrollCuratedProgram()
@@ -1009,7 +982,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         request: {
           userId,
           programId: this.content.identifier,
-          // as of now cureted program only one batch is coming need to check and modify
+          // as of now curated program only one batch is coming need to check and modify
           batchId: this.contentReadData && this.contentReadData.batches[0].batchId,
         },
       }
@@ -1134,7 +1107,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
             this.tocSvc.updateResumaData(this.resumeData)
-            this.mapModuleDurationAndProgress(this.content)
+            this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
           } else {
             this.resumeData = null
           }
@@ -1568,13 +1541,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     dialogRef.afterClosed().subscribe((_result: any) => {
     })
   }
-
-  // public handleEnrollmentEndDate(batch: any) {
-  //   const enrollmentEndDate = dayjs(_.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
-  //   const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
-  //   return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
-  //     (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
-  // }
 
   ngOnDestroy() {
     if (this.routeSubscription) {

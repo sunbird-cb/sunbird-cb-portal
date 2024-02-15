@@ -13,7 +13,7 @@
       [opened]="sideNavBarOpened" [mode]="mode">
       <mat-tab-group>
         <mat-tab *ngIf="isTypeOfCollection" i18n-label label="{{'viewercomponent.contents' | translate}}">
-          <viewer-viewer-toc [forPreview]="forPreview" (hidenav)="minimizeBar()">
+          <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [batchData]="batchData" (hidenav)="minimizeBar()">
           </viewer-viewer-toc>
         </mat-tab>
         <mat-tab i18n-label label="{{'viewercomponent.details' | translate}}">
@@ -125,7 +125,7 @@
         </div>
         <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <div class="pb-4 lg:py-4">
-            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="hierarchyData" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
           </div>
         </div>
@@ -133,7 +133,7 @@
       <ng-container *ngIf="!isMobile">
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
           <div class="pb-4 lg:py-4">
-            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="hierarchyData" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
           </div>
         </div>

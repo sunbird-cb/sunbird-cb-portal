@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 // tslint:disable-next-line
 import _ from 'lodash'
 import dayjs from 'dayjs'
@@ -12,7 +14,6 @@ import { ReviewsContentComponent } from '../reviews-content/reviews-content.comp
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
-import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
 
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
@@ -62,7 +63,6 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   constructor(
     private ratingService: RatingService,
     private loggerService: LoggerService,
-    private tocService: AppTocService,
     private dialog: MatDialog,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService,
@@ -91,19 +91,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   ratingViewCount = 3
   reviewDefaultLimit = 2
   competenciesObject: any = []
-
-  // countdown var
-  date: any
-  now: any
-  targetDate: any
-  targetTime: any
-  difference = 0
-  days: any
-  hours: any
-  minutes: any
-  seconds: any
-  serverDateSubscription: any
-  serverDate: any
+  private destroySubject$ = new Subject<any>()
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -145,14 +133,12 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
       this.fetchRatingSummary()
       this.loadCompetencies()
     }
-
-    this.tocService.serverDate.subscribe(serverDate => {
-      this.serverDate = serverDate
-      this.ngAfterViewInit()
-    })
   }
+
   ngAfterViewInit(): void {
-    this.timerService.getTimerData().subscribe((_timer: any) => {
+    this.timerService.getTimerData()
+    .pipe(takeUntil(this.destroySubject$))
+    .subscribe((_timer: any) => {
       this.timer = _timer
     })
   }
@@ -460,7 +446,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   ngOnDestroy(): void {
-
+    this.destroySubject$.unsubscribe()
   }
 
 }

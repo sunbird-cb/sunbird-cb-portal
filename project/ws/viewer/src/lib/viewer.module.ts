@@ -109,6 +109,6 @@ import { PdfScormDataService } from './pdf-scorm-data-service'
     ContentProgressModule,
     ContentTocModule,
   ],
-  providers:[PdfScormDataService]
+  providers: [PdfScormDataService],
 })
 export class ViewerModule { }
