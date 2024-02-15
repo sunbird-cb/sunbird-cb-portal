@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs'
 export class ContentTocComponent implements OnInit, AfterViewInit {
 
   tabChangeValue: any = ''
-  @Input() content: NsContent.IContent | null = null
+  @Input() content!: NsContent.IContent
   routeSubscription: Subscription | null = null
   @Input() forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   @Input() contentTabFlag = true
@@ -29,7 +29,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
   ) { }
 
   ngOnInit() {

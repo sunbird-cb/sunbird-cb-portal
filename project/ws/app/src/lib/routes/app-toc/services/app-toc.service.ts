@@ -607,6 +607,7 @@ export class AppTocService {
       //   content.completionPercentage = parentContent.completionPercentage
       // // }
       // })
+      this.mapModuleDurationAndProgress(content, content)
     }
   }
   checkCompletedLeafnodes(leafNodes: any, completedCount: any) {
@@ -638,6 +639,41 @@ export class AppTocService {
           }
       })
     }
+  }
+
+  public mapModuleDurationAndProgress(content: NsContent.IContent | null, parent: NsContent.IContent | null) {
+    console.log('mapModuleDurationAndProgress ')
+    if (content && content.children) {
+      if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+        // content.children.map((item: NsContent.IContent)=> {
+          content = this.getCalculationsFromChildren(content)
+        // })
+      }
+
+      content.children.map((item: NsContent.IContent) => {
+        // if (item.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+        //   this.mapModuleDurationAndProgress(item, parent)
+        // } else {
+        //   this.mapModuleDurationAndProgress(item, parent)
+        // }
+        if (item && item.children) {
+          this.mapModuleDurationAndProgress(item, parent)
+        }
+      })
+    }
+  }
+
+  getCalculationsFromChildren(item: NsContent.IContent) {
+    console.log('item', item)
+    item['duration'] = item.children.reduce((sum, child) => {
+      return sum + Number(child.duration || 0)
+    },                                      0)
+    const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
+    console.log('completedItems ', completedItems)
+    const totalCount = _.toInteger(_.get(item, 'leafNodesCount')) || 1
+    item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
+    item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1
+    return item
   }
 
   fetchContentHistoryV2(req: NsContent.IContinueLearningDataReq): Observable<NsContent.IContinueLearningData> {

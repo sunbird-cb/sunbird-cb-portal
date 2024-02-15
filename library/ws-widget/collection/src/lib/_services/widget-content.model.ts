@@ -84,7 +84,7 @@ export namespace NsContent {
     playgroundInstructions?: string
     playgroundResources?: IResourcePlayground[]
     postContents?: IPrePostContent[]
-    posterImage: string
+    posterImage?: string
     preContents?: IPrePostContent[]
     preRequisites: string
     price?: {

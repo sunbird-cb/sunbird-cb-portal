@@ -891,33 +891,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     )
   }
 
-  private mapModuleDurationAndProgress(content: NsContent.IContent | null) {
-    if (content && content.children) {
-      if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-        // content.children.map((item: NsContent.IContent)=> {
-          content = this.getCalculationsFromChildren(content)
-        // })
-      }
-      content.children.map((item: NsContent.IContent) => {
-        if (item.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-          this.mapModuleDurationAndProgress(item)
-        }
-      })
-    }
-  }
-
-  private getCalculationsFromChildren(item: NsContent.IContent) {
-    console.log('item', item)
-    item['duration'] = item.children.reduce((sum, child) => {
-      return sum + Number(child.duration || 0)
-    },                                      0)
-    const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
-    const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
-    item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
-    item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1
-    return item
-  }
-
   public fetchUserWFForBlended() {
     const applicationIds = (this.batchData && this.batchData.content && this.batchData.content.map(e => e.batchId)) || []
     const req = {
@@ -1133,7 +1106,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
             this.tocSvc.updateResumaData(this.resumeData)
-            this.mapModuleDurationAndProgress(this.content)
+            this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
           } else {
             this.resumeData = null
           }

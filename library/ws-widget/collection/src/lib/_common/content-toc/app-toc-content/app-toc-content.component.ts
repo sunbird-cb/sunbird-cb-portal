@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
 import { ActivatedRoute, Data } from '@angular/router'
 import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, UtilityService } from '@sunbird-cb/utils'
+import {
+  WidgetContentService,
+} from '@sunbird-cb/collection'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { Subscription } from 'rxjs'
@@ -15,7 +18,7 @@ import { NsAppToc } from '../models/app-toc.model'
 
 export class AppTocContentComponent implements OnInit {
   @Input() batchId!: string
-  @Input() content: NsContent.IContent | null = null
+  @Input() content!: NsContent.IContent
   @Input() forPreview = false
   @Input() resumeData: NsContent.IContinueLearningData | null = null
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
@@ -38,12 +41,20 @@ export class AppTocContentComponent implements OnInit {
   selectedTabType: any = 'content'
   nsContent: any =  NsContent
   otherResourse = 0
+  pathSet = new Set()
 
   constructor(
     private route: ActivatedRoute,
     private tocSvc: AppTocService,
     private configSvc: ConfigurationsService,
-  ) { }
+    private utilitySvc: UtilityService,
+    private contentSvc: WidgetContentService,
+  ) {
+    this.tocSvc.resumeData.subscribe((res: any) => {
+      this.resumeData = res
+      this.getLastPlayedResource()
+    })
+  }
 
   ngOnInit() {
     // this.forPreview = window.location.href.includes('/author/')
@@ -107,6 +118,63 @@ export class AppTocContentComponent implements OnInit {
         this.contextId = this.content.identifier
         this.contextPath = this.content.primaryCategory
       }
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (const property in changes) {
+      if (property === 'resumeData') {
+        this.getLastPlayedResource()
+      }
+    }
+  }
+
+  private processCollectionForTree() {
+      this.pathSet = new Set()
+  }
+
+  getLastPlayedResource() {
+    let firstPlayableContent
+    let resumeDataV2: any
+    if (this.resumeData && this.resumeData.length > 0 && this.content) {
+      if (this.content.completionPercentage === 100) {
+        resumeDataV2 = this.getResumeDataFromList('start')
+      } else {
+        resumeDataV2 = this.getResumeDataFromList()
+      }
+      this.expandThePath(resumeDataV2.identifier)
+    } else {
+      firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+      this.expandThePath(firstPlayableContent.identifier)
+    }
+  }
+
+  expandThePath(resourceId: string) {
+    if (this.content && resourceId) {
+      const path = this.utilitySvc.getPath(this.content, resourceId)
+      // console.log('Path :: :: : ', path)
+      this.pathSet = new Set(path.map((u: { identifier: any }) => u.identifier))
+      // console.log('pathSet ::: ', this.pathSet)
+      // path.forEach((node: IViewerTocCard) => {
+      //   this.nestedTreeControl.expand(node)
+      // })
+    }
+  }
+
+  private getResumeDataFromList(type?: string) {
+    if (!type) {
+      // tslint:disable-next-line:max-line-length
+      const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+      return {
+        identifier: lastItem.contentId,
+        mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
+      }
+    }
+
+    const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
+    return {
+      identifier: firstItem.contentId,
+      mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
     }
   }
 
