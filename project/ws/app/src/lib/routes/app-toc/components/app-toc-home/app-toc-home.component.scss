@@ -177,11 +177,18 @@
     border-bottom: 1px solid rgba($color: #000, $alpha: 0.2);
   }
 
-  .slider-div {
+  .info-div {
     background-color: #FEF7ED;
     border: none;
     border-radius: 8px;
-    padding: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+  
+    .mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+    }
   }
 
   .kpi-values {
@@ -189,6 +196,14 @@
     padding: 8px;
     text-align: center;
   }
+}
+
+.pending-certificate {
+  border-radius: 16px;
+  padding: 24px 20px;
+  color: #FFF;
+  background-color: #1B2133;
+  font-size: 14px;
 }
 
 .batch-info {
@@ -205,6 +220,33 @@
   }
 }
 
+.certificate_box {
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+  }
+
+  .certificate_overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: 8px;
+  }
+}
+
 .button {
   border-radius: 64px;
   letter-spacing: 0.25px;
@@ -213,62 +255,6 @@
   cursor: pointer;
   text-align: center;
 }
-
-// .batch-div {
-//   border-radius: 8px;
-//   background-color: rgba($color: $colorOrange, $alpha: 0.2);
-//   padding: 16px;
-
-//   .batch-details {
-//     padding: 16px;
-//     border: 1px solid $colorOrange;
-//     border-radius: 8px;
-//     background-color: #FFF;
-//     cursor: pointer;
-//   }
-
-//   .batch-enrolled {
-//     font-weight: bold;
-//     color: $colorGreen;
-//     font-size: 0.75rem;
-//   }
-
-//   .withdraw-batch {
-//     @extend .button;
-//     color: $text-primary;
-//     border: 1px solid $text-primary;
-//     background-color: #FFF;
-//     width: 100%;
-//   }
-
-//   .enroll-button {
-//     @extend .button;
-//     color: #FFF;
-//     background-color: $colorOrange;
-//     border: 1px solid $colorOrange;
-//   }
-// } really
-
-// .batch-menu {
-//   width: 312px;
-//   border-radius: 8px;
-//   margin-top: 8px !important;
-//   max-width: 312px !important;
-
-//   .mat-menu-content {
-//     padding: 8px 16px !important;
-
-//     .mat-menu-item {
-//       padding: 0px;
-
-//       &:hover {
-//         background: none !important;
-//         color: $text-primary;
-//         font-weight: bold !important;
-//       }
-//     }
-//   }
-// }
 
 @media screen and (max-width: 1200px) {
   .right-container {
@@ -326,22 +312,39 @@
 .kpi-loader-div {
   width: 18%;
 }
-// New TOC page css...
+
+a.action-button {
+  color: #FFF !important;
+  width: auto;
+}
+
+.rate-button {
+  color: $text-primary;
+  font-size: 0.875rem;
+  font-weight: bold;
+  border: none;
+
+  .mat-button-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+//////////////................... New TOC page css.................///////////////
 
 %container-padding {
   padding: $size-xl 2 * $size-xl;
-
   @include breakpoint-xs {
     padding: $size-m $size-l;
   }
 }
+
 .text-white{
   color: #fff !important;
 }
+
 .custom-button {
-  // background: no-repeat padding-box #0074b6!important;
-  //   border-radius: 4px;
-  // color: #fff!important;
   width: 100%;
 }
 
@@ -417,45 +420,9 @@ mat-divider {
   }
 }
 
-.certificate_box {
-  height: 75px;
-  border-radius: 4px 4px;
-  position: relative;
-  width: 100%;
-  cursor: pointer;
-  overflow: hidden;
-  display: block;
-}
-
-img.certificate_banner {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.certificate_overlay {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
-p.certificate_text {
-  font-weight: 600!important;
-  z-index: 99;
-  margin-top: -70px;
-  color: #fff;
-  position: relative;
-  line-height: 1.2;
-}
-
 .blue-border{
   border: 2px  solid #0074b6 !important;
-  }
+}
 
 .hidden-xs-inline {
   display: inline;
@@ -707,13 +674,13 @@ p.certificate_text {
   opacity: 0.5;
 }
 
-.certificate-text {  
-  font-size: 15px;
-  line-height: 1.6;
-  a {
-    color: #0074b6;
-  }
-}
+// .certificate-text {  
+//   font-size: 15px;
+//   line-height: 1.6;
+//   a {
+//     color: #0074b6;
+//   }
+// }
 
 .cb-plan-wrap {
   opacity: 1;
