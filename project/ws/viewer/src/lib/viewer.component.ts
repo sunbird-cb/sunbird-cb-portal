@@ -59,6 +59,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   enrollmentList: any
   hierarchyData: any
   enrolledCourseData: any
+  batchData: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -128,6 +129,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       let enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
       debugger
       this.enrolledCourseData = enrolledCourseData
+      this.batchData = {
+        content: [enrolledCourseData.batch],
+        enrolled: true,
+      }
     }
     this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
       this.handleBackFromPdfScormFullScreenFlag = data
