@@ -294,21 +294,25 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (data.result && data.result.response) {
         this.apiResponse = data.result.response.content
         let name = ''
+        let pEmail = ''
         this.apiResponse.forEach((apiData: any) => {
           apiData.firstName.split(' ').forEach((d: any) => {
             name = name + d.substr(0, 1).toUpperCase()
           })
-          this.allUsers.push(
-            {
-              maskedEmail: apiData.maskedEmail,
-              id: apiData.identifier,
-              name: apiData.firstName,
-              iconText: name,
-              email: (
-                apiData.profileDetails && apiData.profileDetails.personalDetails) ?
-                apiData.profileDetails.personalDetails.primaryEmail : '',
+          if (apiData.profileDetails && apiData.profileDetails.personalDetails) {
+            pEmail = apiData.profileDetails.personalDetails.primaryEmail
+            if (!this.allUsers.filter(user => user.email.toLowerCase().includes(pEmail.toLowerCase())).length) {
+              this.allUsers.push(
+                {
+                  maskedEmail: apiData.maskedEmail,
+                  id: apiData.identifier,
+                  name: apiData.firstName,
+                  iconText: name,
+                  email: pEmail,
+                }
+              )
             }
-          )
+          }
         })
         this.showLoader = false
       }
@@ -1354,13 +1358,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     let courseName = ''
     let coursePosterImageUrl = ''
     let courseProvider = ''
+    let primaryCategory = ''
     if (this.configSvc.userProfile) {
       courseProvider = this.configSvc.userProfile.rootOrgName || ''
     }
     if (this.content) {
         courseId = this.content.identifier,
         courseName = this.content.name,
-        coursePosterImageUrl = this.content.posterImage
+        coursePosterImageUrl = this.content.posterImage,
+        primaryCategory = this.content.primaryCategory
     }
     const obj = {
       request: {
@@ -1368,6 +1374,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         courseName,
         coursePosterImageUrl,
         courseProvider,
+        primaryCategory,
         recipients: '',
       },
     }
