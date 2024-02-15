@@ -21,7 +21,7 @@
         </ng-container>
     </div>
 </div>
-<!-- {{tocStructure|json}} -->
+<!-- {{pathSet|json}} -->
 <ng-template #contentBlock>
     <ng-container *ngIf="content?.children?.length; else noChildren">
         <div class="content-card " *ngFor="let card of content?.children; trackBy: contentTrackBy; let i = index;" 

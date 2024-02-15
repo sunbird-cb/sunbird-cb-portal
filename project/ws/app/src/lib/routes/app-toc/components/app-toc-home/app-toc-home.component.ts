@@ -187,6 +187,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     BottomPos: 0,
   }
   scrolled = false
+  pathSet = new Set()
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -821,6 +822,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
               this.tocSvc.resumeData.subscribe((res: any) => {
                 this.resumeData = res
+                this.getLastPlayedResource()
               })
               if (this.resumeData && this.content) {
                 let resumeDataV2: any
@@ -886,6 +888,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           }
         }
         this.isCourseCompletedOnThisMonth()
+        this.getLastPlayedResource()
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
@@ -1581,6 +1584,36 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           ele['offlineResourseCount'] = offlineResourseCount
         }
       })
+    }
+  }
+  getLastPlayedResource() {
+    let firstPlayableContent
+    let resumeDataV2: any
+    if (this.resumeData && this.resumeData.length > 0 && this.content) {
+      if (this.content.completionPercentage === 100) {
+        resumeDataV2 = this.getResumeDataFromList('start')
+      } else {
+        resumeDataV2 = this.getResumeDataFromList()
+      }
+      this.expandThePath(resumeDataV2.identifier)
+    } else {
+      if(this.content){
+        firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+        this.expandThePath(firstPlayableContent.identifier)
+
+      }
+    }
+  }
+
+  expandThePath(resourceId: string) {
+    if (this.content && resourceId) {
+      const path = this.utilitySvc.getPath(this.content, resourceId)
+      // console.log('Path :: :: : ', path)
+      this.pathSet = new Set(path.map((u: { identifier: any }) => u.identifier))
+      // console.log('pathSet ::: ', this.pathSet)
+      // path.forEach((node: IViewerTocCard) => {
+      //   this.nestedTreeControl.expand(node)
+      // })
     }
   }
 }
