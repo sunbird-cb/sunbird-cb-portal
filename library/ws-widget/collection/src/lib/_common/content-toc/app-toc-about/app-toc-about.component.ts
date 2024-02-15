@@ -431,7 +431,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   handleCapitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return str && str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   handleOpenReviewModal(): void {
