@@ -347,7 +347,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               contentTemp.completionStatus = c.completionStatus || c.status || 0
               contentTemp.enrolledDate = c.enrolledDate || ''
               contentTemp.lastContentAccessTime = c.lastContentAccessTime || ''
+              contentTemp.lastReadContentStatus = c.lastReadContentStatus || ''
+              contentTemp.lastReadContentId = c.lastReadContentId || ''
+              contentTemp.lrcProgressDetails = c.lrcProgressDetails || ''
               contentTemp.issuedCertificates = c.issuedCertificates || []
+              contentTemp.batchId = c.batchId || ''
               return contentTemp
             })
           }
