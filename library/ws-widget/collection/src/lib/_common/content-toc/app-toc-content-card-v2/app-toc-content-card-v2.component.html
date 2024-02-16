@@ -19,7 +19,7 @@
                                     <ng-container *ngIf="content?.completionStatus == 2">
                                         <div class="completed mr-2">
                                             <div>
-                                                <mat-icon [color]="blue">check_circle</mat-icon>
+                                                <mat-icon class="completed-icon" [color]="blue">check_circle</mat-icon>
                                             </div>
                                         </div>
                                     </ng-container>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="flex flex-row gap-3 items-center content-key-values">
                             <mat-icon *ngIf="!isModule" alt="course"
-                                class="time-icon ws-mat-black60-text">video_library</mat-icon>
+                                class="time-icon icon-color">video_library</mat-icon>
                             <img *ngIf="isModule" alt="Module" class="time-icon"
                                 src="/assets/icons/content/grey/module.svg">
                             <div class="text-xs">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</div>
@@ -173,7 +173,7 @@
                     <ng-container *ngIf="content?.completionStatus == 2">
                         <div class="completed">
                             <div>
-                                <mat-icon [color]="blue">check_circle</mat-icon>
+                                <mat-icon class="completed-icon" [color]="blue">check_circle</mat-icon>
                             </div>
                         </div>
                     </ng-container>

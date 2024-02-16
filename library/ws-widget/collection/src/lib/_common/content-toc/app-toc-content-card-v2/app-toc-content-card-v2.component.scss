@@ -167,10 +167,14 @@ span.optional-span {
   }
 }
 
+.completed-icon {
+  color: #1a4ca1;
+}
+
 .collection-wrapper {
   padding: 1rem;
 
-  & .course.content-active {
+  &.course.content-active {
     background-color: #1a4ca1;
     color: #fff;
     .period{
@@ -179,13 +183,25 @@ span.optional-span {
     .text-active {
       color: #fff;
     }
+    & .icon-color{
+      color: #fff;
+    }
+
+    & .customicon .mat-icon {
+      color: #fff;
+    }
 
   }
 }
 
 .text-active {
   color: #1a4ca1;
+
+  &.font-bold{
+    font-weight: 600;
+  }
 }
+
 
 .child-wrapper {
   .collection-wrapper {
@@ -317,6 +333,10 @@ span.optional-span {
   width: 16px;
   font-size: 16px;
   vertical-align: middle;
+
+  &.icon-color{
+    color: rgba(0,0,0,0.6)
+  }
 }
 
 .period {
