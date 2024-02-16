@@ -572,7 +572,7 @@ export class AppTocService {
             }
           }
         } else {
-          if(content.primaryCategory !== NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+          if (content.primaryCategory !== NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
             const foundContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
           const req = {
             request: {

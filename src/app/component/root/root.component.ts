@@ -238,7 +238,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       }
 
       if (event instanceof NavigationStart) {
-        let isMobile = false;
+        let isMobile = false
         if (window.innerWidth <= 1200) {
           isMobile = true
         } else {
@@ -252,7 +252,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         } else {
           this.isNavBarRequired = true
         }
-        
+
         if (!(event.url.includes('/page/home')) && isMobile) {
           this.showHubs = false
         } else {

@@ -296,6 +296,6 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   }
 
   markAsComplete() {
-    this.viewerSvc.markAsCompleteSubject.next(true);
+    this.viewerSvc.markAsCompleteSubject.next(true)
   }
 }
