@@ -150,11 +150,11 @@ export class PlayerPdfComponent extends WidgetBaseComponent
       this.eventDispatcher(WsEvents.EnumTelemetrySubType.Init)
     }
 
-    this.viewerSvc.markAsCompleteSubject.subscribe((data:any)=>{
-      
-      if(data) {
-        this.currentPage.reset();
-        this.currentPage.setValue(this.totalPages);
+    this.viewerSvc.markAsCompleteSubject.subscribe((data: any) => {
+
+      if (data) {
+        this.currentPage.reset()
+        this.currentPage.setValue(this.totalPages)
         if (this.identifier) {
           this.saveContinueLearning(this.identifier)
           this.fireRealTimeProgress(this.identifier)
