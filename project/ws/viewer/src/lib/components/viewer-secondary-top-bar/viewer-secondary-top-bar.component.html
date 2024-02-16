@@ -12,10 +12,13 @@
             <mat-icon color="accent">navigate_before</mat-icon>
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">Previous</span>
           </a>
-          <a  mat-icon-button class="width-auto blue-rounded-btn"  *ngIf="contentMIMEType === 'application/pdf'">
-            <span *ngIf="logo" class="mat-body-2 font-bold-imp" (click)="markAsComplete()">Mark as Complete</span>
+          <ng-container *ngIf="contentMIMEType === 'application/pdf'">
+          <a  mat-icon-button class="width-auto blue-rounded-btn" [routerLink]="nextResourceUrl"
+          [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
+          queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
+            <span *ngIf="logo" class="mat-body-2 font-bold-imp">Mark as Complete</span>
           </a>
-         
+          </ng-container>
           <!-- [disabled]="!nextResourceUrl" -->
           <!-- {{nextResourceUrl}} -->
           <a mat-icon-button class="width-auto mr-10 " [routerLink]="nextResourceUrl"
