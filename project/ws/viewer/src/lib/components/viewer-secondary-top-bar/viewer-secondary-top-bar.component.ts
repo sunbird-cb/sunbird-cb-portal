@@ -294,4 +294,8 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
   }
+
+  markAsComplete() {
+    this.viewerSvc.markAsCompleteSubject.next(true);
+  }
 }
