@@ -121,8 +121,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   selectable = true
   removable = true
   addOnBlur = true
-  separatorKeysCodes: number[] = [ENTER, COMMA]
-  userCtrl = new FormControl()
+  separatorKeysCodes: number[] = [ENTER]
+  userCtrl = new FormControl('')
   filteredUsers: any []| undefined
   users: any[] = []
   allUsers: any[] = []
@@ -1302,7 +1302,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         return
       }
       if(this.users.includes(value.trim())) {
-        this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
+        this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
         return
       }
       const ePattern = new RegExp(`^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
@@ -1313,7 +1313,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (input) {
           input.value = ''
         }
-        this.userCtrl.setValue(null)
+        this.userCtrl.setValue('')
         const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
         if (el != null) {
           setTimeout(() => {
@@ -1341,14 +1341,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return
     }
     if(this.users.includes(event.option.value)) {
-      this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
+      this.openSnackbar(this.translateLabels('dulicateUser', 'contentSharing', ''))
       return
     }
     this.users.push(event.option.value)
     if (this.userInput) {
       this.userInput.nativeElement.value = ''
     }
-    this.userCtrl.setValue(null)
+    this.userCtrl.setValue('')
     const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
     if (el != null) {
       setTimeout(() => {
@@ -1412,7 +1412,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.filteredUsers = []
         this.allUsers = []
         this.enableShare = false
-        this.userCtrl.setValue(null)
+        this.userCtrl.setValue('')
       }, error => {
         // tslint:disable
         console.log(error)
@@ -1426,7 +1426,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.users = []
     this.filteredUsers = []
     this.allUsers = []
-    this.userCtrl.setValue(null)
+    this.userCtrl.setValue('')
     this.raiseTelemetry('shareClose')
   }
 
