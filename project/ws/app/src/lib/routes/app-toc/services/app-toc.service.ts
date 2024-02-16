@@ -571,7 +571,35 @@ export class AppTocService {
               })
             }
           }
+        } else {
+          if(content.primaryCategory !== NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+            const foundContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
+          const req = {
+            request: {
+              batchId: foundContent.batch.batchId,
+              userId: foundContent.userId,
+              courseId: foundContent.collectionId,
+              contentIds: [],
+              fields: [
+                'progressdetails',
+              ],
+            },
+          }
+          await this.fetchContentHistoryV2(req).toPromise().then((progressdata: any) => {
+            const data: any  = progressdata
+            if (data.result && data.result.contentList.length > 0) {
+              const completedCount = data.result.contentList.filter((ele: any) => ele.progress === 100)
+              this.checkCompletedLeafnodes(completedLeafNodes, completedCount)
+              totalCount = completedLeafNodes.length
+              inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
+              this.updateResumaData(inprogressDataCheck)
+              this.mapCompletionPercentage(content, data.result.contentList)
+            }
+            return progressdata
+          })
+          }
         }
+
       }
       if (content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
         // this.mapCompletionPercentage(content, this.resumeData)
@@ -642,10 +670,10 @@ export class AppTocService {
   }
 
   public mapModuleDurationAndProgress(content: NsContent.IContent | null, parent: NsContent.IContent | null) {
-    console.log('mapModuleDurationAndProgress ')
     if (content && content.children) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         // content.children.map((item: NsContent.IContent)=> {
+          /* tslint:disable-next-line */
           content = this.getCalculationsFromChildren(content)
         // })
       }
@@ -664,12 +692,10 @@ export class AppTocService {
   }
 
   getCalculationsFromChildren(item: NsContent.IContent) {
-    console.log('item', item)
     item['duration'] = item.children.reduce((sum, child) => {
       return sum + Number(child.duration || 0)
     },                                      0)
     const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
-    console.log('completedItems ', completedItems)
     const totalCount = _.toInteger(_.get(item, 'leafNodesCount')) || 1
     item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
     item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1

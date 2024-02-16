@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
 import { ActivatedRoute, Data } from '@angular/router'
 import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'
 import { ConfigurationsService, UtilityService } from '@sunbird-cb/utils'
@@ -16,7 +16,7 @@ import { NsAppToc } from '../models/app-toc.model'
   styleUrls: ['./app-toc-content.component.scss'],
 })
 
-export class AppTocContentComponent implements OnInit, OnDestroy {
+export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() batchId!: string
   @Input() content!: NsContent.IContent
   @Input() forPreview = false
@@ -46,9 +46,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private tocSvc: AppTocService,
-    private configSvc: ConfigurationsService,
-    private utilitySvc: UtilityService,
-    private contentSvc: WidgetContentService,
+    private configSvc: ConfigurationsService
   ) {
     this.tocSvc.resumeData.subscribe((res: any) => {
       this.resumeData = res
@@ -92,11 +90,11 @@ export class AppTocContentComponent implements OnInit, OnDestroy {
       },
     ]
     this.otherResourse = 0
-    if(this.tocStructure){
+    if (this.tocStructure) {
       Object.keys(this.tocStructure).forEach((ele: any) => {
         if (ele === 'offlineSession' || ele === 'learningModule') {
         } else {
-  
+
           this.otherResourse = this.otherResourse + this.tocStructure[ele]
         }
       })
@@ -166,7 +164,8 @@ export class AppTocContentComponent implements OnInit, OnDestroy {
   // private getResumeDataFromList(type?: string) {
   //   if (!type) {
   //     // tslint:disable-next-line:max-line-length
-  //     const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+  //     const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) =>
+  // new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
   //     return {
   //       identifier: lastItem.contentId,
   //       mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,

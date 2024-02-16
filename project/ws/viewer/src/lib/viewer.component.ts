@@ -11,6 +11,7 @@ import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.s
 import { ViewerHeaderSideBarToggleService } from './viewer-header-side-bar-toggle.service'
 import { PdfScormDataService } from './pdf-scorm-data-service'
 import { TranslateService } from '@ngx-translate/core'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
@@ -75,6 +76,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
     public pdfScormDataService: PdfScormDataService,
     private translate: TranslateService,
+    private tocSvc: AppTocService
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
@@ -113,7 +115,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
-    let contentData= this.activatedRoute.snapshot.data.hierarchyData
+    const contentData = this.activatedRoute.snapshot.data.hierarchyData
     && this.activatedRoute.snapshot.data.hierarchyData.data || ''
     this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData
     && this.activatedRoute.snapshot.data.enrollmentData.data || ''
@@ -122,12 +124,12 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     // if (contentRead.result && contentRead.result.content) {
     //   this.contentSvc.currentContentReadMetaData = contentRead.result.content
     // }
-    if(contentData && contentData.result&&contentData.result.content){
+    if (contentData && contentData.result && contentData.result.content) {
       this.hierarchyData = contentData.result.content
+      this.manipulateHierarchyData()
     }
-    if(this.collectionId && this.enrollmentList){
-      let enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
-      debugger
+    if (this.collectionId && this.enrollmentList) {
+      const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
       this.enrolledCourseData = enrolledCourseData
       this.batchData = {
         content: [enrolledCourseData.batch],
@@ -249,5 +251,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   get isPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     return this.forPreview
+  }
+
+  manipulateHierarchyData(){
+    this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
+    debugger
   }
 }

@@ -104,7 +104,7 @@ export class TopRightNavBarComponent implements OnInit {
       this.selectedLanguage,
       this.configSvc.unMappedUser ? this.configSvc.unMappedUser.id : ''
     )
-    this.configSvc.languageTranslationFlag.next(true);
+    this.configSvc.languageTranslationFlag.next(true)
     // if (this.router.url.includes('/toc/')) {
     //   window.location.reload()
     // }
