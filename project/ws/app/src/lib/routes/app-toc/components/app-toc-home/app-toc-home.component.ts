@@ -260,6 +260,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
   ngOnInit() {
+    this.configSvc.languageTranslationFlag.subscribe((data: any) => {
+      if (data) {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+      }
+    })
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
       this.selectedBatchData = batchData
@@ -443,7 +452,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
         if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
           this.isAcbpCourse = true
-          const eDate = dayjs(this.cbPlanEndDate.split('T')[0]).format('YYYY-MM-DD')
+          const eDate = dayjs(this.cbPlanEndDate).format('YYYY-MM-DD')
           if (dayjs(sDate).isSameOrBefore(eDate)) {
             const requestObj = {
               request: {
@@ -470,8 +479,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 this.isAcbpClaim = true
               }
             })
-          } else {
-            this.isAcbpCourse = false
           }
         }
       }

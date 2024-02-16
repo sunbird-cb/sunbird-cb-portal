@@ -134,13 +134,13 @@
               <div class="batch-label">Total enrolled</div>
             </div>
           </div>
-          
+
           <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
             [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
             [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
           </ws-app-toc-banner>
         </div>
-  
+
         <div class="flex flex-col gap-4">
           <ng-container *ngIf="skeletonLoader">
             <ws-widget-skeleton-loader [width]="'336px'" [height]="'40px'"
@@ -186,7 +186,7 @@
                 <a href="{{ cscmsUrl }}" target="_blank" class="flex action-button justify-center">
                   Apply for physical training</a>
               </div>
-              
+
               <div class="flex flex-row gap-2">
                 <div class="flex-1">
                   <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
@@ -213,17 +213,17 @@
                   </button>
                 </ng-container>
               </div>
-              
+
               <div *ngIf="resumeData && !userRating">
                 <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
                   [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
               </div>
-              
+
               <div *ngIf="resumeData && userRating">
                 <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"
                   [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
               </div>
-            </ng-container> 
+            </ng-container>
 
             <ng-container *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
               <div [hidden]="isResource && !content?.artifactUrl?.length" class="flex flex-col gap-4 text-center">
@@ -254,7 +254,7 @@
                       class="flex action-button justify-center">
                       <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
                     </button>
-            
+
                     <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
                       <ng-container *ngIf="isAcbpClaim">
                         <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
@@ -263,7 +263,7 @@
                         <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                       </ng-container>
                     </div>
-            
+
                     <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
                       <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
                         <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'"
@@ -276,7 +276,7 @@
                         <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
                       </div>
                     </div>
-            
+
                     <div *ngIf="isPostAssessment && showTakeAssessment?.post_assessment">
                       <ws-app-karmapoints-panel [btntype]="'Take Assessment'" [data]="kparray"></ws-app-karmapoints-panel>
                     </div>
@@ -284,7 +284,7 @@
                   <ng-container *ngIf=" (actionBtnStatus === 'grant' && !(isMobile && content?.isInIntranet) &&
                     !( content?.primaryCategory === primaryCategory.COURSE && content?.children.length === 0 && !content?.artifactUrl?.length ) &&
                     !( content?.primaryCategory === primaryCategory.COURSE && batchData?.enrolled ) &&
-                    !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl)) && 
+                    !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl)) &&
                     !(content?.primaryCategory === primaryCategory.PROGRAM) &&
                     !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)">
                     <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE  && !enrollBtnLoading">
@@ -317,7 +317,7 @@
                     ( actionBtnStatus === 'grant' &&
                       !(isMobile && content?.isInIntranet) &&
                       (content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) ||
-                      (content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL && currentCourseBatchId) 
+                      (content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL && currentCourseBatchId)
                     )">
                     <button *ngIf="showStart.show && !isPostAssessment"
                       [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
@@ -485,7 +485,7 @@
               </div>
               <div class="flex flex-col kpi-values items-center gap-2">
                 <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-                <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
+                <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ?
                 'Final assessments' : 'Final assessment' }} </div>
               </div>
             </div>
@@ -497,7 +497,7 @@
         <ng-container *ngIf="skeletonLoader">
           <div class="flex flex-col gap-4" *ngFor="let i of [1, 2]">
             <ws-widget-skeleton-loader [width]="'72px'" [height]="'20px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-  
+
             <div class="flex flex-row items-center gap-3">
               <ws-widget-skeleton-loader [width]="'36px'" [height]="'36px'" [bindingClass]="'rounded-full'"></ws-widget-skeleton-loader>
               <div class="flex flex-col gap-2">
@@ -585,30 +585,31 @@
                   class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
                   <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                      {{resumeData? "Resume" : "Start"}}
+                      {{resumeData? translateLabels('resume', 'apptochome') : translateLabels('start', 'apptochome')}}
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="content.completionPercentage === 100 || certData">
-                    {{ resumeData ? "Start again" : "Start"}}
+                    {{resumeData? translateLabels('startAgain', 'apptochome') : translateLabels('start', 'apptochome')}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
                   class="mat-button mat-button-base custom-button">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>{{'apptochome.takeAssessment' | translate}}</ng-container>
                 </a>
-
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100) && !certData">
-                  <ng-container *ngIf="isAcbpClaim">
+                  <ng-container *ngIf="isAcbpCourse && isAcbpClaim">
                     <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
                   </ng-container>
-                  <ng-container *ngIf="!isAcbpClaim && !monthlyCapExceed">
+                  <ng-container *ngIf="!isAcbpCourse && !isAcbpClaim && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                   </ng-container>
                 </div>
-
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100 || certData)">
                   <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP COMPLETED'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
                    <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
@@ -689,18 +690,20 @@
                 </a>
 
                 <div *ngIf="!isPostAssessment && (!content.completionPercentage || content.completionPercentage < 100)">
-                  <ng-container *ngIf="isAcbpClaim">
+                  <ng-container *ngIf="isAcbpCourse && isAcbpClaim">
                     <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
                   </ng-container>
-                  <ng-container *ngIf="!isAcbpClaim && !monthlyCapExceed">
+                  <ng-container *ngIf="!isAcbpCourse && !isAcbpClaim && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Resume'" [data]="kparray"></ws-app-karmapoints-panel>
                   </ng-container>
 
                 </div>
-
                 <div *ngIf="!isPostAssessment && (content.completionPercentage === 100)">
                   <div *ngIf="isAcbpCourse && isAcbpClaim && !isClaimed">
                     <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'" [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+                  </div>
+                  <div *ngIf="isAcbpCourse && isAcbpClaim && isClaimed">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP COMPLETED'" [data]="kparray"></ws-app-karmapoints-panel>
                   </div>
                   <div *ngIf="!isAcbpCourse && !monthlyCapExceed">
                     <ws-app-karmapoints-panel [btntype]="'Start again'" [data]="kparray"></ws-app-karmapoints-panel>
@@ -805,7 +808,7 @@
       </div>
 
       <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
-        
+
         <div  *ngIf="content?.completionStatus == 2 || certData"  class="margin-bottom-xs">
           <ng-container *ngIf="!certData">
             <span class="certificate-text block">{{'apptochome.certificationTakesTime' | translate}}</span>

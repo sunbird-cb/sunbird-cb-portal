@@ -490,6 +490,10 @@
     padding: 26px;
 }
 
+.disable-send-btn[disabled] {
+    background-color: #000!important;
+}
+
 @media (max-width:768px) {
     .batch-wrapper {
         flex-wrap: wrap;
@@ -525,7 +529,7 @@
 .karmasahayogi-icon {
     position: absolute;
     bottom: -5px;
-    left: calc(50% - 418px);
+    left: calc(50% - 464px);
 }
 .triangle-left {
     transform: translateY(100%);
@@ -540,7 +544,7 @@
 }
 .contnet {
     background-color: white;
-    width: 500px;
+    width: 613px;
     border-radius: 10px;
     padding: 15px;
 }
@@ -554,6 +558,7 @@
     margin-right: 20px;
     color: red;
     color: #0074b6!important;
+    font-weight: 600;
 }
 .copy-link-btn:hover {
     background-color: none!important;
@@ -568,6 +573,7 @@
     height: 100px;
     overflow: auto;
     display: block!important;
+    scroll-behavior: smooth;
 }
 
 .iconText {
@@ -592,6 +598,7 @@
 button:disabled {
     pointer-events: none;
     opacity: 0.5;
+    color: #000;
 }
 
 ::ng-deep .mat-autocomplete-panel {
@@ -602,17 +609,39 @@ button:disabled {
     z-index: 9999!important
 }
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
-    padding: 5px 0;
+    padding: 5px 2px!important;
 }
+
 ::ng-deep .close-icon  {
-    padding-bottom: 5px;
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    padding: 3px;
 }
 ::ng-deep .mat-chip-input {
-    padding-bottom: 9px;
+    padding-bottom: 9px!important;
 }
 ::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip {
     color: #0074b6 !important;
 }
+::ng-deep .theme-igot.day-mode .mat-chip.mat-standard-chip mat-icon {
+    color: #0074b6 !important;
+}
+
+::ng-deep .inputTextBox {
+    width: 95%!important;
+    overflow-x: hidden;
+}
+
+.close-share-dialog {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+.left-over-emails {
+    font-weight: 600;
+}
+
 
 .loader {
     position: absolute;
@@ -640,5 +669,24 @@ button:disabled {
         align-items: self-end;
     }
 }
+
+@media only screen
+  and (min-device-width: 820px)
+  and (max-device-width: 1180px) {
+    .karmasahayogi-icon{
+        left: calc(50% - 387px);
+    }
+    .content {
+        width: 500px;
+    }
+  }
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 819px) {
+    .triangle-left {
+        display: none;
+    }
+  }
 
 

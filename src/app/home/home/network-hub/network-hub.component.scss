@@ -85,3 +85,11 @@ $title-line-count: 1;
         flex-direction: column;
     }
 }
+
+.textwrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 64px;
+    display: inline-flex;
+  }
