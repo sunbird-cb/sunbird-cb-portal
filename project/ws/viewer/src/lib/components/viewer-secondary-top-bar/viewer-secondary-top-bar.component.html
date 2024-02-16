@@ -13,7 +13,7 @@
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">Previous</span>
           </a>
           <a  mat-icon-button class="width-auto blue-rounded-btn"  *ngIf="contentMIMEType === 'application/pdf'">
-            <span *ngIf="logo" class="mat-body-2 font-bold-imp">Mark as Complete</span>
+            <span *ngIf="logo" class="mat-body-2 font-bold-imp" (click)="markAsComplete()">Mark as Complete</span>
           </a>
          
           <!-- [disabled]="!nextResourceUrl" -->

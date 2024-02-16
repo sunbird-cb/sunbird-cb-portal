@@ -89,8 +89,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isInIframe = false
   cbPlanEndDate: any
   cbPlanDuration: any
-  @Input() forPreview:any = window.location.href.includes('/public/') || window.location.href.includes('/public/');
-  // forPreview = window.location.href.includes('/author/')
+  @Input() forPreview:any = window.location.href.includes('/public/') || window.location.href.includes('/author/');
+  //forPreview = window.location.href.includes('/author/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
