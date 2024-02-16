@@ -419,59 +419,56 @@ export class WidgetContentService {
     return this.http.post<any>(API_END_POINTS.USER_KARMA_POINTS, {})
   }
 
-  getEnrolledData(doId: string){
-    let enrollmentMapData = JSON.parse(localStorage.getItem('enrollmentMapData')|| '{}')
-    let enrolledCourseData = enrollmentMapData[doId]
+  getEnrolledData(doId: string) {
+    const enrollmentMapData = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+    const enrolledCourseData = enrollmentMapData[doId]
     return enrolledCourseData
   }
 
-  getResourseLink( content: any, hierarchyData?: any, batchId?: any){
-    if(content.lrcProgressDetails && content.lrcProgressDetails.mimeType) {
-      if(content.completionPercentage  === 100) {
+  getResourseLink(content: any, hierarchyData?: any, batchId?: any) {
+    if (content.lrcProgressDetails && content.lrcProgressDetails.mimeType) {
+      if (content.completionPercentage  === 100) {
         return this.gotoTocPage(content)
-      } else if(content.lrcProgressDetails && content.lrcProgressDetails.mimeType){
-        return this.getResourseDataWithData(content)
-      }
+      } 
       return this.getResourseDataWithData(content)
-    } else if(content.mimeType && batchId){
-      let url = viewerRouteGenerator(
+    }
+    if (content.mimeType && batchId) {
+      const url = viewerRouteGenerator(
         content.identifier,
         content.mimeType,
         hierarchyData.identifier,
         'Course',
         false,
-        "Learning Resource",
+        'Learning Resource',
         batchId,
         hierarchyData.name,
       )
       return url
-    }  else {
-      let enrolledCourseData: any = this.getEnrolledData(content.identifier)
-      if(enrolledCourseData && enrolledCourseData.batchId) {
-        if(enrolledCourseData.completionPercentage  === 100) {
-          return this.gotoTocPage(enrolledCourseData)
-        } else if(enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType){
-          enrolledCourseData  = {
-            ...enrolledCourseData,
-            identifier:enrolledCourseData.collectionId,
-            primaryCategory: enrolledCourseData.content.primaryCategory,
-            name:enrolledCourseData.content.name
-          }
-          return this.getResourseDataWithData(enrolledCourseData)
-        }
-        let urlData = {
-          url: `/viewer`,
-          queryParams:{ collectionId:content.identifier,batchId: enrolledCourseData.batchId,checkFirstChild: true}
-        }
-        return urlData
-      } else {
-        return this.gotoTocPage(content)
-      }
     }
+    let enrolledCourseData: any = this.getEnrolledData(content.identifier)
+    if (enrolledCourseData && enrolledCourseData.batchId) {
+      if (enrolledCourseData.completionPercentage  === 100) {
+        return this.gotoTocPage(enrolledCourseData)
+      }  if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
+        enrolledCourseData  = {
+          ...enrolledCourseData,
+          identifier: enrolledCourseData.collectionId,
+          primaryCategory: enrolledCourseData.content.primaryCategory,
+          name: enrolledCourseData.content.name,
+        }
+        return this.getResourseDataWithData(enrolledCourseData)
+      }
+      const urlData = {
+        url: `/viewer`,
+        queryParams: { collectionId: content.identifier, batchId: enrolledCourseData.batchId, checkFirstChild: true },
+      }
+      return urlData
+    }
+    return this.gotoTocPage(content)
   }
-  getResourseDataWithData(content:any){
-    if(content){
-      let url = viewerRouteGenerator(
+  getResourseDataWithData(content: any) {
+    if (content) {
+      const url = viewerRouteGenerator(
         content.lastReadContentId,
         content.lrcProgressDetails.mimeType,
         content.identifier,
@@ -486,12 +483,12 @@ export class WidgetContentService {
     return this.gotoTocPage(content)
   }
   gotoTocPage(content: any) {
-    let urlData: any = {
-      url: `/app/toc/${content.identifier? content.identifier :content.collectionId}/overview`,
-      queryParams:{batchId: content.batchId}
+    const urlData: any = {
+      url: `/app/toc/${content.identifier ? content.identifier : content.collectionId}/overview`,
+      queryParams: { batchId: content.batchId },
     }
-    if(content.endDate) {
-      urlData.queryParams = {...urlData.queryParams,planType: 'cbPlan', endDate: content.endDate} 
+    if (content.endDate) {
+      urlData.queryParams = { ...urlData.queryParams, planType: 'cbPlan', endDate: content.endDate }
     }
     return urlData
   }

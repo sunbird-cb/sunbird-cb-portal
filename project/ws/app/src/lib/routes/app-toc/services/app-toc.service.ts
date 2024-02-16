@@ -642,7 +642,6 @@ export class AppTocService {
   }
 
   public mapModuleDurationAndProgress(content: NsContent.IContent | null, parent: NsContent.IContent | null) {
-    console.log('mapModuleDurationAndProgress ')
     if (content && content.children) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         // content.children.map((item: NsContent.IContent)=> {
@@ -664,12 +663,10 @@ export class AppTocService {
   }
 
   getCalculationsFromChildren(item: NsContent.IContent) {
-    console.log('item', item)
     item['duration'] = item.children.reduce((sum, child) => {
       return sum + Number(child.duration || 0)
     },                                      0)
     const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
-    console.log('completedItems ', completedItems)
     const totalCount = _.toInteger(_.get(item, 'leafNodesCount')) || 1
     item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
     item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1
