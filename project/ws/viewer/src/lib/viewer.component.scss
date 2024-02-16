@@ -118,3 +118,22 @@
     height: calc(100vh);
   }
 }
+
+::-webkit-scrollbar {
+  width: 4px;   // for vertical scroll bar
+  height: 8px;  // for horizontal scroll bar
+  z-index: 10;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(27, 76, 161);
+}
+
+// ::-webkit-scrollbar-thumb {
+//   background-color: rgb(27, 76, 161);
+//   border-radius: 180px;
+// }
+
+::ng-deep .mat-drawer.mat-drawer-side{
+  z-index: 0 !important;
+}

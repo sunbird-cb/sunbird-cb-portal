@@ -39,10 +39,15 @@
           <!-- <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
             [widgetData]="{ fsContainer: frameReference }"></ws-widget-btn-fullscreen> -->
           <!-- </a> -->
-          <a href="javascript:void(0)" mat-icon-button *ngIf="isTypeOfCollection" role="link" class="width-auto"
-            [ngClass]="{'xsmall': !logo}" (click)="toggleSideBar()" accesskey="M">
-            <mat-icon>menu</mat-icon>
-          </a>
+          
+         
+      </div>
+      <div>
+        <a href="javascript:void(0)" mat-icon-button *ngIf="isTypeOfCollection" role="link" class="width-auto center-toggle"
+        [ngClass]="{'xsmall': !logo}" (click)="toggleSideBar()" accesskey="M">
+        <mat-icon class="flex align-center blue-color" *ngIf="toggleSideBarFlag">navigate_next</mat-icon>
+        <mat-icon class="flex align-center blue-color" *ngIf="!toggleSideBarFlag">navigate_before</mat-icon>
+      </a>
       </div>
   </ng-container>  
   
