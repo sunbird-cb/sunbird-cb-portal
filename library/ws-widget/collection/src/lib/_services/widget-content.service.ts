@@ -429,7 +429,7 @@ export class WidgetContentService {
     if (content.lrcProgressDetails && content.lrcProgressDetails.mimeType) {
       if (content.completionPercentage  === 100) {
         return this.gotoTocPage(content)
-      } 
+      }
       return this.getResourseDataWithData(content)
     }
     if (content.mimeType && batchId) {

@@ -1,7 +1,7 @@
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { noop, Observable } from 'rxjs'
+import { noop, Observable, Subject } from 'rxjs'
 import dayjs from 'dayjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { environment } from 'src/environments/environment'
@@ -19,6 +19,7 @@ export class ViewerUtilService {
   }
   downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
   authoringBase = '/apis/authContent/'
+  markAsCompleteSubject = new Subject()
   constructor(
     private http: HttpClient,
     private configservice: ConfigurationsService,

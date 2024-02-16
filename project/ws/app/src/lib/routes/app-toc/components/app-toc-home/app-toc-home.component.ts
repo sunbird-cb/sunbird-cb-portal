@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked, HostListener, ElementRef, ViewChild, ViewEncapsulation, Input } from '@angular/core'
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked,
+  HostListener, ElementRef, ViewChild, ViewEncapsulation, Input } from '@angular/core'
 import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import {
@@ -10,7 +11,10 @@ import {
   NsGoal,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, LoggerService, MultilingualTranslationsService, NsPage, TFetchStatus, TelemetryService, UtilityService, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService,
+  LoggerService, MultilingualTranslationsService,
+  NsPage, TFetchStatus, TelemetryService,
+  UtilityService, WsEvents } from '@sunbird-cb/utils'
 import { FormControl, Validators } from '@angular/forms'
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatDialog, MatSnackBar } from '@angular/material'
@@ -89,7 +93,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isInIframe = false
   cbPlanEndDate: any
   cbPlanDuration: any
-  @Input() forPreview: any = window.location.href.includes('/public/') || window.location.href.includes('/public/')
+  @Input() forPreview: any = window.location.href.includes('/public/') || window.location.href.includes('/author/')
   // forPreview = window.location.href.includes('/author/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {

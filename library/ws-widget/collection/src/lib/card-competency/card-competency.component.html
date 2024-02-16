@@ -5,7 +5,7 @@
                 <div class="text-base font-bold ellipsis" title="{{ widgetData?.content?.key }}">{{ widgetData?.content?.key }}</div>
                 <div class="flex flex-wrap gap-4 chip-container">
                     <ng-container *ngFor="let subTheme of widgetData?.content?.value; let i = index">
-                        <div class="chip rounded-full text-xs" [ngClass]="{'hide': (i >= 1 && !isExpanded), 'chip-ellipsis': !isExpanded && widgetData?.content?.value?.length > 1 }" title="{{ subTheme }}">
+                        <div class="chip rounded-full text-xs" [ngClass]="{'hidden': (i >= 1 && !isExpanded), 'chip-ellipsis': !isExpanded && widgetData?.content?.value?.length > 1 }" title="{{ subTheme }}">
                             {{ subTheme }}
                         </div>
                     </ng-container>

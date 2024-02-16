@@ -571,7 +571,35 @@ export class AppTocService {
               })
             }
           }
+        } else {
+          if (content.primaryCategory !== NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+            const foundContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
+          const req = {
+            request: {
+              batchId: foundContent.batch.batchId,
+              userId: foundContent.userId,
+              courseId: foundContent.collectionId,
+              contentIds: [],
+              fields: [
+                'progressdetails',
+              ],
+            },
+          }
+          await this.fetchContentHistoryV2(req).toPromise().then((progressdata: any) => {
+            const data: any  = progressdata
+            if (data.result && data.result.contentList.length > 0) {
+              const completedCount = data.result.contentList.filter((ele: any) => ele.progress === 100)
+              this.checkCompletedLeafnodes(completedLeafNodes, completedCount)
+              totalCount = completedLeafNodes.length
+              inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
+              this.updateResumaData(inprogressDataCheck)
+              this.mapCompletionPercentage(content, data.result.contentList)
+            }
+            return progressdata
+          })
+          }
         }
+
       }
       if (content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
         // this.mapCompletionPercentage(content, this.resumeData)
@@ -645,6 +673,7 @@ export class AppTocService {
     if (content && content.children) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         // content.children.map((item: NsContent.IContent)=> {
+          /* tslint:disable-next-line */
           content = this.getCalculationsFromChildren(content)
         // })
       }

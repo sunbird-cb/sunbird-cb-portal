@@ -238,7 +238,12 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       }
 
       if (event instanceof NavigationStart) {
-
+        let isMobile = false
+        if (window.innerWidth <= 1200) {
+          isMobile = true
+        } else {
+          isMobile = false
+        }
         this.showNavbar = true
         if (event.url.includes('preview') || event.url.includes('embed')) {
           this.isNavBarRequired = false
@@ -247,8 +252,15 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
         } else {
           this.isNavBarRequired = true
         }
-        if (event.url.includes('/public')) {
+
+        if (!(event.url.includes('/page/home')) && isMobile) {
           this.showHubs = false
+        } else {
+          if (event.url.includes('/public')) {
+            this.showHubs = false
+          } else {
+            this.showHubs = true
+          }
         }
         this.routeChangeInProgress = true
         this.changeDetector.detectChanges()

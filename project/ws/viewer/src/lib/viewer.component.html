@@ -11,7 +11,7 @@
   <mat-sidenav-container autosize class="viewer-sidenav-container">
     <mat-sidenav [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">
-      <mat-tab-group>
+      <!-- <mat-tab-group>
         <mat-tab *ngIf="isTypeOfCollection" i18n-label label="{{'viewercomponent.contents' | translate}}">
           <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [batchData]="batchData" (hidenav)="minimizeBar()">
           </viewer-viewer-toc>
@@ -19,7 +19,9 @@
         <mat-tab i18n-label label="{{'viewercomponent.details' | translate}}">
           <ws-widget-player-brief [forPreview]="forPreview" [content]="content"></ws-widget-player-brief>
         </mat-tab>
-      </mat-tab-group>
+      </mat-tab-group> -->
+      <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [batchData]="batchData" (hidenav)="minimizeBar()">
+      </viewer-viewer-toc>
     </mat-sidenav>
 
     <mat-sidenav-content #scrollableContent>
