@@ -1,4 +1,5 @@
-<div class="flex flex-col ws-mat-primary-lite-background-important box-height">
+<div class="blue-bg">
+<div class="flex flex-col box-height">
   <div class="assessment-container">
   <div class="assessment-stats-count">
     <div class="flex flex-row justify-end">
@@ -31,7 +32,7 @@
   </div>  
 </div>
 
-<div class="flex auto-w ws-mat-primary-lite-background-important result_main">
+<div class="flex auto-w result_main">
   <!-- <div class="flex flex-1 max-w relative result_image_box">
     <div class="flex percent-div">
       <div class="flex flex-1 flex-column flex-center center">
@@ -247,7 +248,7 @@
     </div>
   </div>
 </div>
-
+</div>
 <ng-template #incorrectDetail let-data="data" >
   <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data,'wrong')">
     <div class="flex">

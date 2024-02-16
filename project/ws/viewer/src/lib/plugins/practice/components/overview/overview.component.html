@@ -77,7 +77,7 @@
           <div>{{( timeLimit | pipeDurationTransform: 'hms')}}</div>
         </div>
       </div>
-      <div class="start-assessment-cta hidden md:block">
+      <div class="start-assessment-cta md:block">
         <button *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" [class.spinner]="loading" [disabled]="loading" (click)="overviewed('start')" class="bg-blue-800 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide">
           <span class="padding-xs" i18n>Start assessment</span>
         </button>
