@@ -89,7 +89,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isInIframe = false
   cbPlanEndDate: any
   cbPlanDuration: any
-  @Input() forPreview:any = window.location.href.includes('/public/') || window.location.href.includes('/public/');
+  @Input() forPreview: any = window.location.href.includes('/public/') || window.location.href.includes('/public/')
   // forPreview = window.location.href.includes('/author/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
@@ -1597,7 +1597,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
       this.expandThePath(resumeDataV2.identifier)
     } else {
-      if(this.content){
+      if (this.content) {
         firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
         this.expandThePath(firstPlayableContent.identifier)
 

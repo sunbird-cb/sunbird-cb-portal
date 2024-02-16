@@ -113,7 +113,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
-    let contentData= this.activatedRoute.snapshot.data.hierarchyData
+    const contentData = this.activatedRoute.snapshot.data.hierarchyData
     && this.activatedRoute.snapshot.data.hierarchyData.data || ''
     this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData
     && this.activatedRoute.snapshot.data.enrollmentData.data || ''
@@ -122,12 +122,11 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     // if (contentRead.result && contentRead.result.content) {
     //   this.contentSvc.currentContentReadMetaData = contentRead.result.content
     // }
-    if(contentData && contentData.result&&contentData.result.content){
+    if (contentData && contentData.result && contentData.result.content) {
       this.hierarchyData = contentData.result.content
     }
-    if(this.collectionId && this.enrollmentList){
-      let enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
-      debugger
+    if (this.collectionId && this.enrollmentList) {
+      const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
       this.enrolledCourseData = enrolledCourseData
       this.batchData = {
         content: [enrolledCourseData.batch],

@@ -13,12 +13,12 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
 })
 export class AppTocHomeComponent implements OnInit {
   @ViewChild(AppTocHomeDirective, { static: true }) wsAppAppTocHome!: AppTocHomeDirective
-  @Input() forPreview:any
+  @Input() forPreview: any
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private appTocHomeSvc: AppTocHomeService,
     private translate: TranslateService,
-    private configSvc:ConfigurationsService
+    private configSvc: ConfigurationsService
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -38,7 +38,7 @@ export class AppTocHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.configSvc.languageTranslationFlag.subscribe(()=>{
+    this.configSvc.languageTranslationFlag.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
         const lang = localStorage.getItem('websiteLanguage')!
