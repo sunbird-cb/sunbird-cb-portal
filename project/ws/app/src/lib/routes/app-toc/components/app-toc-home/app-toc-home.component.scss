@@ -169,7 +169,7 @@
     position: fixed;
     z-index: 10;
     top: 132px;
-    max-width: 384px;
+    width: 384px;
     margin-bottom: 1rem;
   }
 
@@ -192,9 +192,14 @@
   }
 
   .kpi-values {
-    width: 60px;
+    width: 64px;
     padding: 8px;
     text-align: center;
+
+    .timer-icon {
+      color: $text-primary;
+      height: 20px;
+    }
   }
 }
 
@@ -322,7 +327,7 @@ a.action-button {
   color: $text-primary;
   font-size: 0.875rem;
   font-weight: bold;
-  border: none;
+  border: none !important;
 
   .mat-button-wrapper {
     display: flex;
