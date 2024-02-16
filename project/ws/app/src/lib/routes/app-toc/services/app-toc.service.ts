@@ -673,6 +673,7 @@ export class AppTocService {
     if (content && content.children) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         // content.children.map((item: NsContent.IContent)=> {
+          /* tslint:disable-next-line */
           content = this.getCalculationsFromChildren(content)
         // })
       }

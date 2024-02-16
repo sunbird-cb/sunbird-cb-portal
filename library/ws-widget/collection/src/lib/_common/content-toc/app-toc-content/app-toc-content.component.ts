@@ -164,7 +164,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   // private getResumeDataFromList(type?: string) {
   //   if (!type) {
   //     // tslint:disable-next-line:max-line-length
-  //     const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => 
+  //     const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) =>
   // new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
   //     return {
   //       identifier: lastItem.contentId,
