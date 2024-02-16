@@ -90,3 +90,11 @@
 .knowledge_box_full {
   overflow: hidden;
 }
+
+@media only screen and (max-width : 768px) {
+
+  .mob-16 {
+    padding: 0 16px;
+  }
+
+}
