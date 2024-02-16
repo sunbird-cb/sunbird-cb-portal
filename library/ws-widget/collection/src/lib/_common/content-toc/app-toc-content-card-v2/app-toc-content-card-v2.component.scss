@@ -167,14 +167,28 @@ span.optional-span {
   }
 }
 
+.completed-icon {
+  color: #1a4ca1;
+}
+
 .collection-wrapper {
   padding: 1rem;
 
-  & .content-active {
+  &.course.content-active {
     background-color: #1a4ca1;
     color: #fff;
     .period{
       background: #fff
+    }
+    .text-active {
+      color: #fff;
+    }
+    & .icon-color{
+      color: #fff;
+    }
+
+    & .customicon .mat-icon {
+      color: #fff;
     }
 
   }
@@ -182,7 +196,12 @@ span.optional-span {
 
 .text-active {
   color: #1a4ca1;
+
+  &.font-bold{
+    font-weight: 600;
+  }
 }
+
 
 .child-wrapper {
   .collection-wrapper {
@@ -234,7 +253,7 @@ span.optional-span {
 
 // for giving top margin to last level, first child resource
 :nth-child(1 of .resourceCard) .resource{
-  margin-top: 16px;
+  margin-top: 16px !important;
 }
 
 
@@ -271,25 +290,25 @@ span.optional-span {
 //   border-bottom: 4px solid rgba(0, 0, 0, 0.08)
 // }
 
-.collection-wrapper.open.course + .child-wrapper.open {
-  // background-color: #eff3f9;
-  // border-radius: 0 0 8px 8px;
-  // border-bottom: 4px solid rgba(0, 0, 0, 0.08);
-  // border-radius: 0;
-  .collection-wrapper.open.module + .child-wrapper.open {
-    background-color: #eff3f9;
-    border-radius: 0 0 8px 8px;
-    border-bottom: 4px solid rgba(0, 0, 0, 0.08);
-    border-radius: 0;
-  }
-}
-
-// .collection-wrapper.open.course + .child-wrapper.open:has(.collection-wrapper.open.module + .child-wrapper.open) {
-//   background-color: #eff3f9;
-//   border-radius: 0 0 8px 8px;
+// .collection-wrapper.open.course + .child-wrapper.open {
+//   // background-color: #eff3f9;
+//   // border-radius: 0 0 8px 8px;
 //   // border-bottom: 4px solid rgba(0, 0, 0, 0.08);
-//   border-radius: 0;
+//   // border-radius: 0;
+//   .collection-wrapper.open.module + .child-wrapper.open {
+//     background-color: #eff3f9;
+//     border-radius: 0 0 8px 8px;
+//     border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+//     border-radius: 0;
+//   }
 // }
+
+.collection-wrapper.open.course + .child-wrapper.open:has(.collection-wrapper.open.module + .child-wrapper.open) {
+  background-color: #eff3f9;
+  border-radius: 0 0 8px 8px;
+  // border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+}
 
 .collection-wrapper.open.module + .child-wrapper.open {
   background-color: #eff3f9;
@@ -314,6 +333,10 @@ span.optional-span {
   width: 16px;
   font-size: 16px;
   vertical-align: middle;
+
+  &.icon-color{
+    color: rgba(0,0,0,0.6)
+  }
 }
 
 .period {

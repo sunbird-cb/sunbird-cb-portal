@@ -150,8 +150,9 @@
           </ng-container>
 
           <ng-container *ngIf="!skeletonLoader">
+
             <ng-container *ngIf="content?.isInIntranet && showIntranetMsg">
-              <div class="flex flex-col gap-4" *ngIf="content?.completionStatus == 2 || certData">
+              <div class="flex flex-col gap-4" *ngIf="content?.completionStatus === 2 || certData">
                 <div class="pending-certificate" *ngIf="!certData">
                   <div>Kindly be patient. The certificate generation normally takes up to 24 hours,
                     however, it might take longer sometimes.</div>
@@ -186,44 +187,44 @@
                 <a href="{{ cscmsUrl }}" target="_blank" class="flex action-button justify-center">
                   Apply for physical training</a>
               </div>
+            </ng-container>
               
-              <div class="flex flex-row gap-2">
-                <div class="flex-1">
-                  <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
-                    <div class="flex flex-col gap-2">
-                      <div class="flex flex-row gap-4 text-sm">
-                        <div class="flex-1">Overall Progress</div>
-                        <div *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</div>
-                      </div>
-                      <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'" [customClassName]="'content-progress'">
-                      </ws-widget-content-progress>
+            <div class="flex flex-row gap-2">
+              <div class="flex-1">
+                <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
+                  <div class="flex flex-col gap-2">
+                    <div class="flex flex-row gap-4 text-sm">
+                      <div class="flex-1">Overall Progress</div>
+                      <div *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</div>
                     </div>
-                  </ng-container>
-                </div>
-
-                <ng-container *ngIf="resumeData">
-                  <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
-                    <mat-icon>star_purple500</mat-icon>
-                    <ng-container *ngIf="!userRating">
-                      <div>Rate Now</div>
-                    </ng-container>
-                    <ng-container *ngIf="userRating">
-                      <div>Edit Rating</div>
-                    </ng-container>
-                  </button>
+                    <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'" [customClassName]="'content-progress'">
+                    </ws-widget-content-progress>
+                  </div>
                 </ng-container>
               </div>
-              
-              <div *ngIf="resumeData && !userRating">
-                <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
-                  [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
-              </div>
-              
-              <div *ngIf="resumeData && userRating">
-                <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"
-                  [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
-              </div>
-            </ng-container> 
+              <ng-container *ngIf="resumeData">
+                <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
+                  <mat-icon>star_purple500</mat-icon>
+                  <ng-container *ngIf="!userRating">
+                    <div>Rate Now</div>
+                  </ng-container>
+                  <ng-container *ngIf="userRating">
+                    <div>Edit Rating</div>
+                  </ng-container>
+                </button>
+              </ng-container>
+            </div>
+            
+            <div *ngIf="resumeData && !userRating">
+              <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
+                [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
+            </div>
+            
+            <div *ngIf="resumeData && userRating">
+              <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"
+                [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
+            </div>
+            
 
             <ng-container *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
               <div [hidden]="isResource && !content?.artifactUrl?.length" class="flex flex-col gap-4 text-center">
@@ -237,7 +238,7 @@
                     !(content?.primaryCategory === primaryCategory.RESOURCE && !content?.artifactUrl) &&
                     !(content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL)) &&
                     !(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId)">
-                    <button *ngIf="showStart.show && !isPostAssessment"
+                    <a *ngIf="showStart.show && !isPostAssessment"
                       [routerLink]="(resumeData && !certData) ? resumeDataLink?.url : firstResourceLink?.url"
                       [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')"
                       class="flex action-button justify-center">
@@ -249,7 +250,8 @@
                       <ng-container *ngIf="content.completionPercentage === 100 || certData">
                         {{ resumeData ? "Start again" : "Start" }}
                       </ng-container>
-                    </button>
+                    </a>
+
                     <button *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
                       class="flex action-button justify-center">
                       <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>Take Assessment</ng-container>
@@ -465,29 +467,66 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="!skeletonLoader && tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
+          <ng-container *ngIf="!skeletonLoader">
             <div class="flex flex-wrap gap-2">
-              <div class="flex flex-col kpi-values items-center gap-2 ">
-                <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
-                <div class="text-xs">{{ tocStructure?.course }} {{ (tocStructure?.course > 1) ? 'Courses' : 'Course' }}</div>
+              
+              <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration">
+                <mat-icon class="timer-icon">timer</mat-icon>
+                <div class="text-xs">{{ content?.duration | pipeDurationTransform: 'hms' }}</div>
               </div>
-              <div class="flex flex-col kpi-values items-center gap-3">
-                <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
-                <div class="text-xs">{{ tocStructure?.learningModule }} {{ (tocStructure?.learningModule > 1) ? 'Modules' : 'Module' }}</div>
-              </div>
-              <div class="flex flex-col kpi-values items-center gap-2">
-                <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
-                <div class="text-xs">{{ tocStructure?.video }} {{ (tocStructure?.video > 1) ? 'Videos' : 'Video' }}</div>
-              </div>
-              <div class="flex flex-col kpi-values items-center gap-2">
-                <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-                <div class="text-xs">{{ tocStructure?.pdf }} PDF's</div>
-              </div>
-              <div class="flex flex-col kpi-values items-center gap-2">
-                <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-                <div class="text-xs">{{ tocStructure?.assessment }} {{ (tocStructure?.assessment > 1) ? 
-                'Final assessments' : 'Final assessment' }} </div>
-              </div>
+
+              <ng-container *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.course > 0">
+                  <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.course }} Course(s)</div>
+                </div>
+  
+                <div class="flex flex-col kpi-values items-center gap-3" *ngIf="tocStructure?.learningModule > 0">
+                  <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.learningModule }} Module(s)</div>
+                </div>
+  
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.video > 0">
+                  <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.video }} Video(s)</div>
+                </div>
+                
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.pdf > 0">
+                  <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.pdf }} PDF's</div>
+                </div>
+  
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.podcast > 0">
+                  <img src="/assets/icons/content/audio.svg" width="20px" alt="podcast image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.podcast }} Audio(s)</div>
+                </div>
+
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.webPage > 0">
+                  <img src="/assets/icons/content/content_copy.svg" width="20px" alt="web page image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.webPage }} Web Page(s)</div>
+                </div>
+
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.interactivecontent > 0">
+                  <img src="/assets/icons/content/link.svg" width="20px" alt="interactive content image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.interactivecontent }} Interactive Content(s)</div>
+                </div>
+  
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.assessment > 0">
+                  <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.assessment }} Final assessment(s) </div>
+                </div>
+
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.practiceTest > 0">
+                  <img src="/assets/icons/content/assessment.svg" width="20px" alt="practice test image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.practiceTest }} Practice test(s) </div>
+                </div>
+
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.other > 0">
+                  <img src="/assets/icons/content/course.svg" width="20px" alt="other items image" />
+                  <div class="text-xs" i18n>{{ tocStructure?.other }} Other Item(s) </div>
+                </div>
+                
+              </ng-container>
             </div>
           </ng-container>
         </div>
@@ -804,9 +843,9 @@
         </h3>
       </div>
 
+      content?.isInIntranet = {{ content?.isInIntranet }}
       <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
-        
-        <div  *ngIf="content?.completionStatus == 2 || certData"  class="margin-bottom-xs">
+        <div *ngIf="content?.completionStatus == 2 || certData"  class="margin-bottom-xs">
           <ng-container *ngIf="!certData">
             <span class="certificate-text block">{{'apptochome.certificationTakesTime' | translate}}</span>
             <span class="certificate-text block">{{'apptochome.issuePersistsMailus' | translate}} <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
@@ -823,78 +862,79 @@
           </ng-container>
         </div>
 
-
-      <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
-        <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-        <ng-container i18n>{{'apptochome.viewedInIntranet' | translate}}</ng-container>
-      </p>
-      <p class="mt-5 mb-5 info-msg" *ngIf="showInstructorLedMsg">
-        <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-        <ng-container i18n>{{'apptochome.notAvailableOnline' | translate}}</ng-container>
-      </p>
-
-      <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
-        <mat-icon class="align-bottom">info</mat-icon>&nbsp;
-        <ng-container i18n>{{'apptochome.youtubeContentBlocked' | translate}}</ng-container>
-      </p>
-
-      <div *ngIf="showBtn">
-        <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">{{'apptochome.applyForPhysicalTraining' | translate}}</a>
-    </div>
-
-      <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
-       <div class="flex flex-row justify-between w-full">
-        <p class="mat-body-2 font-bold-imp ws-mat-black60-text">{{'apptochome.yourProgress' | translate}}</p>
-
-        <span *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</span>
-       </div>
-
-        <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
-          [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
-        </ws-widget-content-progress>
-      </ng-container>
-      <div *ngIf="resumeData" class="margin-top-l width-1-1">
-        <button mat-stroked-button color="accent" type="button"
-          class="w-full text-left actbutton mat-body-2 blue-border" (click)="openFeedbackDialog(content)">
-          <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
-          <ng-container *ngIf="!userRating">
-            <span>{{'apptochome.rateThis' | translate}}</span>
-            <span class="lowercase">
-
-              <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
-                {{content?.primaryCategory}}
-              </ng-container>
-              <ng-container *ngIf="content?.primaryCategory === primaryCategory.COURSE ||
-                content.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
-                {{'apptochome.course' | translate}}
-              </ng-container>
-            </span>
-          </ng-container>
-          <ng-container *ngIf="userRating">
-            <span>{{'apptochome.editRating' | translate}}</span>
-            <!-- <span class="lowercase"> {{content?.primaryCategory}} </span> -->
-          </ng-container>
-        </button>
-      </div>
-
-      <div *ngIf="resumeData && !userRating">
-        <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray" [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
-      </div>
-
-      <div *ngIf="resumeData && userRating">
-        <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray" [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
-      </div>
-
-    <ng-container *ngIf="cbPlanEndDate">
-      <div class="cb-plan-wrap">
-        <p>{{'apptochome.cbpDeadLine' | translate}}</p>
-        <p>
-          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.OVERDUE" class="cb-danger">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
-          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.SUCCESS" class="cb-success">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
-          <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.UPCOMING" class="cb-warning">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+        <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
+          <mat-icon class="align-bottom">info</mat-icon>&nbsp;
+          <ng-container i18n>{{'apptochome.viewedInIntranet' | translate}}</ng-container>
         </p>
-      </div>
-    </ng-container>
+
+        <p class="mt-5 mb-5 info-msg" *ngIf="showInstructorLedMsg">
+          <mat-icon class="align-bottom">info</mat-icon>&nbsp;
+          <ng-container i18n>{{'apptochome.notAvailableOnline' | translate}}</ng-container>
+        </p>
+
+        <p class="mt-5 mb-5 info-msg" *ngIf="showStart.msg === 'youtubeForbidden'">
+          <mat-icon class="align-bottom">info</mat-icon>&nbsp;
+          <ng-container i18n>{{'apptochome.youtubeContentBlocked' | translate}}</ng-container>
+        </p>
+
+        <div *ngIf="showBtn">
+          <a href="{{cscmsUrl}}" target="_blank" class="text-white custom-button mat-button margin-bottom-m">{{'apptochome.applyForPhysicalTraining' | translate}}</a>
+        </div>
+
+        <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
+          <div class="flex flex-row justify-between w-full">
+            <p class="mat-body-2 font-bold-imp ws-mat-black60-text">{{'apptochome.yourProgress' | translate}}</p>
+            <span *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</span>
+          </div>
+
+          <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+            [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'">
+          </ws-widget-content-progress>
+        </ng-container>
+
+        <div *ngIf="resumeData" class="margin-top-l width-1-1">
+          <button mat-stroked-button color="accent" type="button"
+            class="w-full text-left actbutton mat-body-2 blue-border" (click)="openFeedbackDialog(content)">
+            <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color">star_purple500</mat-icon>
+            <ng-container *ngIf="!userRating">
+              <span>{{'apptochome.rateThis' | translate}}</span>
+              <span class="lowercase">
+
+                <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
+                  {{content?.primaryCategory}}
+                </ng-container>
+                <ng-container *ngIf="content?.primaryCategory === primaryCategory.COURSE ||
+                  content.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
+                  {{'apptochome.course' | translate}}
+                </ng-container>
+              </span>
+            </ng-container>
+            <ng-container *ngIf="userRating">
+              <span>{{'apptochome.editRating' | translate}}</span>
+              <!-- <span class="lowercase"> {{content?.primaryCategory}} </span> -->
+            </ng-container>
+          </button>
+        </div>
+
+        <div *ngIf="resumeData && !userRating">
+          <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray" [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
+        </div>
+
+        <div *ngIf="resumeData && userRating">
+          <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray" [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
+        </div>
+
+        <ng-container *ngIf="cbPlanEndDate">
+          <div class="cb-plan-wrap">
+            <p>{{'apptochome.cbpDeadLine' | translate}}</p>
+            <p>
+              <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.OVERDUE" class="cb-danger">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+              <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.SUCCESS" class="cb-success">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+              <span *ngIf="cbPlanDuration === nsCardContentData?.ACBPConst?.UPCOMING" class="cb-warning">{{cbPlanEndDate | date: 'd MMM, y'}}</span>
+            </p>
+          </div>
+        </ng-container>
+      
       <!-- at glance -->
       <div class="margin-top-l glance-container">
         <div class="margin-bottom-m">

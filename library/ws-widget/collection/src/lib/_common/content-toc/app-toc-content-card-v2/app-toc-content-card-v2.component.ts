@@ -142,7 +142,7 @@ export class AppTocContentCardV2Component implements OnInit {
         this.batchId
       )
       /* tslint:disable-next-line */
-      // console.log(url,'=====> content card url link <========')
+      // console.log(this.content.identifier, '------', url,'=====> content card url link <========')
       return url
     }
     return { url: '', queryParams: {} }
