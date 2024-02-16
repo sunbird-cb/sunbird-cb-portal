@@ -23,6 +23,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   @Input() skeletonLoader = false
   @Input() tocStructure: any = {}
+  @Input() pathSet: any
   @ViewChild('stickyMenu', { static: false }) tabElement!: MatTabGroup
   sticky = false
   menuPosition: any

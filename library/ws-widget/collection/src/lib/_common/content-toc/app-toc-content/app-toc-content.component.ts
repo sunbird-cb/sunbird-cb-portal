@@ -41,7 +41,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy {
   selectedTabType: any = 'content'
   nsContent: any =  NsContent
   otherResourse = 0
-  pathSet = new Set()
+  @Input() pathSet = new Set()
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +52,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy {
   ) {
     this.tocSvc.resumeData.subscribe((res: any) => {
       this.resumeData = res
-      this.getLastPlayedResource()
+      // this.getLastPlayedResource()
     })
   }
 
@@ -126,59 +126,59 @@ export class AppTocContentComponent implements OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
       if (property === 'resumeData') {
-        this.getLastPlayedResource()
+        // this.getLastPlayedResource()
       }
     }
   }
 
-  private processCollectionForTree() {
-      this.pathSet = new Set()
-  }
+  // private processCollectionForTree() {
+  //     this.pathSet = new Set()
+  // }
 
-  getLastPlayedResource() {
-    let firstPlayableContent
-    let resumeDataV2: any
-    if (this.resumeData && this.resumeData.length > 0 && this.content) {
-      if (this.content.completionPercentage === 100) {
-        resumeDataV2 = this.getResumeDataFromList('start')
-      } else {
-        resumeDataV2 = this.getResumeDataFromList()
-      }
-      this.expandThePath(resumeDataV2.identifier)
-    } else {
-      firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
-      this.expandThePath(firstPlayableContent.identifier)
-    }
-  }
+  // getLastPlayedResource() {
+  //   let firstPlayableContent
+  //   let resumeDataV2: any
+  //   if (this.resumeData && this.resumeData.length > 0 && this.content) {
+  //     if (this.content.completionPercentage === 100) {
+  //       resumeDataV2 = this.getResumeDataFromList('start')
+  //     } else {
+  //       resumeDataV2 = this.getResumeDataFromList()
+  //     }
+  //     this.expandThePath(resumeDataV2.identifier)
+  //   } else {
+  //     firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+  //     this.expandThePath(firstPlayableContent.identifier)
+  //   }
+  // }
 
-  expandThePath(resourceId: string) {
-    if (this.content && resourceId) {
-      const path = this.utilitySvc.getPath(this.content, resourceId)
-      // console.log('Path :: :: : ', path)
-      this.pathSet = new Set(path.map((u: { identifier: any }) => u.identifier))
-      // console.log('pathSet ::: ', this.pathSet)
-      // path.forEach((node: IViewerTocCard) => {
-      //   this.nestedTreeControl.expand(node)
-      // })
-    }
-  }
+  // expandThePath(resourceId: string) {
+  //   if (this.content && resourceId) {
+  //     const path = this.utilitySvc.getPath(this.content, resourceId)
+  //     // console.log('Path :: :: : ', path)
+  //     this.pathSet = new Set(path.map((u: { identifier: any }) => u.identifier))
+  //     // console.log('pathSet ::: ', this.pathSet)
+  //     // path.forEach((node: IViewerTocCard) => {
+  //     //   this.nestedTreeControl.expand(node)
+  //     // })
+  //   }
+  // }
 
-  private getResumeDataFromList(type?: string) {
-    if (!type) {
-      // tslint:disable-next-line:max-line-length
-      const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
-      return {
-        identifier: lastItem.contentId,
-        mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
-      }
-    }
+  // private getResumeDataFromList(type?: string) {
+  //   if (!type) {
+  //     // tslint:disable-next-line:max-line-length
+  //     const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+  //     return {
+  //       identifier: lastItem.contentId,
+  //       mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
+  //     }
+  //   }
 
-    const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
-    return {
-      identifier: firstItem.contentId,
-      mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
-    }
-  }
+  //   const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
+  //   return {
+  //     identifier: firstItem.contentId,
+  //     mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
+  //   }
+  // }
 
   ngOnDestroy() {
     if (this.routeSubscription) {
