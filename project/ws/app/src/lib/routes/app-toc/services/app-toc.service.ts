@@ -572,9 +572,9 @@ export class AppTocService {
             }
           }
         } else {
-          if(content.primaryCategory !== NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+          if (content.primaryCategory !== NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
             const foundContent = enrolmentList && enrolmentList.find((el: any) => el.collectionId === content.identifier)
-            if(foundContent) {
+            if (foundContent) {
               const req = {
                 request: {
                   batchId: foundContent.batch.batchId,
@@ -599,7 +599,7 @@ export class AppTocService {
                 return progressdata
               })
             }
-          
+
           }
         }
 
