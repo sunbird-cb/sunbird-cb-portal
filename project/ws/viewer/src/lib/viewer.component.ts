@@ -11,6 +11,7 @@ import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.s
 import { ViewerHeaderSideBarToggleService } from './viewer-header-side-bar-toggle.service'
 import { PdfScormDataService } from './pdf-scorm-data-service'
 import { TranslateService } from '@ngx-translate/core'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
@@ -75,6 +76,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
     public pdfScormDataService: PdfScormDataService,
     private translate: TranslateService,
+    private tocSvc: AppTocService
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
@@ -124,6 +126,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     // }
     if (contentData && contentData.result && contentData.result.content) {
       this.hierarchyData = contentData.result.content
+      this.manipulateHierarchyData()
     }
     if (this.collectionId && this.enrollmentList) {
       const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
@@ -248,5 +251,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   get isPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     return this.forPreview
+  }
+
+  manipulateHierarchyData(){
+    this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
+    debugger
   }
 }
