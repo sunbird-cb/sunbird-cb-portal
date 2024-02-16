@@ -170,11 +170,14 @@ span.optional-span {
 .collection-wrapper {
   padding: 1rem;
 
-  & .content-active {
+  & .course.content-active {
     background-color: #1a4ca1;
     color: #fff;
     .period{
       background: #fff
+    }
+    .text-active {
+      color: #fff;
     }
 
   }
@@ -234,7 +237,7 @@ span.optional-span {
 
 // for giving top margin to last level, first child resource
 :nth-child(1 of .resourceCard) .resource{
-  margin-top: 16px;
+  margin-top: 16px !important;
 }
 
 
