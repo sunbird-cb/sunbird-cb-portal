@@ -35,6 +35,7 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { HttpLoaderFactory } from '../app.module'
 import { HttpClient } from '@angular/common/http'
+import { UserLeaderboardModule } from '@sunbird-cb/collection/src/lib/_common/user-leaderboard/user-leaderboard.module'
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { HttpClient } from '@angular/common/http'
     MatIconModule,
     SharedModule,
     ProfileCardStatsModule,
+    UserLeaderboardModule,
     MatIconModule,
     WeeklyClapsModule,
     UpdatePostsModule,
