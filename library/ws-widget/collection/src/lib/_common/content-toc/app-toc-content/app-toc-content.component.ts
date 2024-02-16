@@ -46,9 +46,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private tocSvc: AppTocService,
-    private configSvc: ConfigurationsService,
-    private utilitySvc: UtilityService,
-    private contentSvc: WidgetContentService,
+    private configSvc: ConfigurationsService
   ) {
     this.tocSvc.resumeData.subscribe((res: any) => {
       this.resumeData = res

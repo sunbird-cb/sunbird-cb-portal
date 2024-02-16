@@ -267,7 +267,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
       this.isFetching = false
       return viewerTocCardContent
-    } catch (err: any) {
+    } catch (err) {
       switch (err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'
@@ -325,7 +325,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       const viewerTocCardContent = this.convertContentToIViewerTocCard(content)
       this.isFetching = false
       return viewerTocCardContent
-    } catch (err: any) {
+    } catch (err) {
       switch (err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'
