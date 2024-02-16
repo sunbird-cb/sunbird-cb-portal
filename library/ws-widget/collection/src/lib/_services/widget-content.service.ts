@@ -8,6 +8,7 @@ import { NsContent } from './widget-content.model'
 import { NSSearch } from './widget-search.model'
 // tslint:disable
 import _ from 'lodash'
+import {  viewerRouteGenerator } from './viewer-route-util'
 // tslint:enable
 
 // TODO: move this in some common place
@@ -418,4 +419,77 @@ export class WidgetContentService {
     return this.http.post<any>(API_END_POINTS.USER_KARMA_POINTS, {})
   }
 
+  getEnrolledData(doId: string) {
+    const enrollmentMapData = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+    const enrolledCourseData = enrollmentMapData[doId]
+    return enrolledCourseData
+  }
+
+  getResourseLink(content: any, hierarchyData?: any, batchId?: any) {
+    if (content.lrcProgressDetails && content.lrcProgressDetails.mimeType) {
+      if (content.completionPercentage  === 100) {
+        return this.gotoTocPage(content)
+      }
+      return this.getResourseDataWithData(content)
+    }
+    if (content.mimeType && batchId) {
+      const url = viewerRouteGenerator(
+        content.identifier,
+        content.mimeType,
+        hierarchyData.identifier,
+        'Course',
+        false,
+        'Learning Resource',
+        batchId,
+        hierarchyData.name,
+      )
+      return url
+    }
+    let enrolledCourseData: any = this.getEnrolledData(content.identifier)
+    if (enrolledCourseData && enrolledCourseData.batchId) {
+      if (enrolledCourseData.completionPercentage  === 100) {
+        return this.gotoTocPage(enrolledCourseData)
+      }  if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
+        enrolledCourseData  = {
+          ...enrolledCourseData,
+          identifier: enrolledCourseData.collectionId,
+          primaryCategory: enrolledCourseData.content.primaryCategory,
+          name: enrolledCourseData.content.name,
+        }
+        return this.getResourseDataWithData(enrolledCourseData)
+      }
+      const urlData = {
+        url: `/viewer`,
+        queryParams: { collectionId: content.identifier, batchId: enrolledCourseData.batchId, checkFirstChild: true },
+      }
+      return urlData
+    }
+    return this.gotoTocPage(content)
+  }
+  getResourseDataWithData(content: any) {
+    if (content) {
+      const url = viewerRouteGenerator(
+        content.lastReadContentId,
+        content.lrcProgressDetails.mimeType,
+        content.identifier,
+        'Course',
+        false,
+        content.primaryCategory,
+        content.batchId,
+        content.name,
+      )
+      return url
+    }
+    return this.gotoTocPage(content)
+  }
+  gotoTocPage(content: any) {
+    const urlData: any = {
+      url: `/app/toc/${content.identifier ? content.identifier : content.collectionId}/overview`,
+      queryParams: { batchId: content.batchId },
+    }
+    if (content.endDate) {
+      urlData.queryParams = { ...urlData.queryParams, planType: 'cbPlan', endDate: content.endDate }
+    }
+    return urlData
+  }
 }

@@ -1,8 +1,5 @@
-import { Component, OnDestroy,
-  OnInit, AfterViewInit,
-  AfterViewChecked, HostListener,
-  ElementRef, ViewChild,
-  ViewEncapsulation } from '@angular/core'
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked,
+  HostListener, ElementRef, ViewChild, ViewEncapsulation, Input } from '@angular/core'
 import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
 import {
@@ -96,7 +93,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isInIframe = false
   cbPlanEndDate: any
   cbPlanDuration: any
-  forPreview = window.location.href.includes('/author/')
+  @Input() forPreview: any = window.location.href.includes('/public/') || window.location.href.includes('/public/')
+  // forPreview = window.location.href.includes('/author/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
@@ -193,6 +191,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     BottomPos: 0,
   }
   scrolled = false
+  pathSet = new Set()
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -827,6 +826,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
               this.tocSvc.resumeData.subscribe((res: any) => {
                 this.resumeData = res
+                this.getLastPlayedResource()
               })
               if (this.resumeData && this.content) {
                 let resumeDataV2: any
@@ -892,38 +892,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           }
         }
         this.isCourseCompletedOnThisMonth()
+        this.getLastPlayedResource()
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
       },
     )
-  }
-
-  private mapModuleDurationAndProgress(content: NsContent.IContent | null) {
-    if (content && content.children) {
-      if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-        // content.children.map((item: NsContent.IContent)=> {
-          /* tslint:disable-next-line */
-          content = this.getCalculationsFromChildren(content)
-        // })
-      }
-      content.children.map((item: NsContent.IContent) => {
-        if (item.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-          this.mapModuleDurationAndProgress(item)
-        }
-      })
-    }
-  }
-
-  private getCalculationsFromChildren(item: NsContent.IContent) {
-    item['duration'] = item.children.reduce((sum, child) => {
-      return sum + Number(child.duration || 0)
-    },                                      0)
-    const completedItems = _.filter(item.children, r => r.completionStatus === 2 || r.completionPercentage === 100)
-    const totalCount = _.toInteger(_.get(this.content, 'leafNodesCount')) || 1
-    item['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
-    item['completionStatus'] = (item.completionPercentage >= 100) ? 2 : 1
-    return item
   }
 
   public fetchUserWFForBlended() {
@@ -1140,7 +1114,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               }
             }
             this.tocSvc.updateResumaData(this.resumeData)
-            this.mapModuleDurationAndProgress(this.content)
+            this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
           } else {
             this.resumeData = null
           }
@@ -1614,6 +1588,36 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           ele['offlineResourseCount'] = offlineResourseCount
         }
       })
+    }
+  }
+  getLastPlayedResource() {
+    let firstPlayableContent
+    let resumeDataV2: any
+    if (this.resumeData && this.resumeData.length > 0 && this.content) {
+      if (this.content.completionPercentage === 100) {
+        resumeDataV2 = this.getResumeDataFromList('start')
+      } else {
+        resumeDataV2 = this.getResumeDataFromList()
+      }
+      this.expandThePath(resumeDataV2.identifier)
+    } else {
+      if (this.content) {
+        firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+        this.expandThePath(firstPlayableContent.identifier)
+
+      }
+    }
+  }
+
+  expandThePath(resourceId: string) {
+    if (this.content && resourceId) {
+      const path = this.utilitySvc.getPath(this.content, resourceId)
+      // console.log('Path :: :: : ', path)
+      this.pathSet = new Set(path.map((u: { identifier: any }) => u.identifier))
+      // console.log('pathSet ::: ', this.pathSet)
+      // path.forEach((node: IViewerTocCard) => {
+      //   this.nestedTreeControl.expand(node)
+      // })
     }
   }
 }

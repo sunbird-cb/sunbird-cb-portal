@@ -56,6 +56,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   isMobile = false
   contentMIMEType = ''
   handleBackFromPdfScormFullScreenFlag = false
+  enrollmentList: any
+  hierarchyData: any
+  enrolledCourseData: any
+  batchData: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -109,6 +113,26 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    const contentData = this.activatedRoute.snapshot.data.hierarchyData
+    && this.activatedRoute.snapshot.data.hierarchyData.data || ''
+    this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData
+    && this.activatedRoute.snapshot.data.enrollmentData.data || ''
+    // const contentRead = this.activatedRoute.snapshot.data.contentRead
+    && this.activatedRoute.snapshot.data.contentRead.data || ''
+    // if (contentRead.result && contentRead.result.content) {
+    //   this.contentSvc.currentContentReadMetaData = contentRead.result.content
+    // }
+    if (contentData && contentData.result && contentData.result.content) {
+      this.hierarchyData = contentData.result.content
+    }
+    if (this.collectionId && this.enrollmentList) {
+      const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
+      this.enrolledCourseData = enrolledCourseData
+      this.batchData = {
+        content: [enrolledCourseData.batch],
+        enrolled: true,
+      }
+    }
     this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
       this.handleBackFromPdfScormFullScreenFlag = data
     })

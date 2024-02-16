@@ -1299,7 +1299,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.content) {
         courseId = this.content.identifier,
         courseName = this.content.name,
-        coursePosterImageUrl = this.content.posterImage
+        coursePosterImageUrl = this.content.posterImage || ''
     }
     const obj = {
       request: {

@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GbSearchService } from '../../services/gb-search.service'
 import { ConfigurationsService, EventService, ValueService } from '@sunbird-cb/utils'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { TranslateService } from '@ngx-translate/core'
+import { WidgetContentService } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
   selector: 'ws-app-learn-search',
@@ -74,7 +75,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     private events: EventService,
     private activated: ActivatedRoute,
     private valueSvc: ValueService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private contSvc: WidgetContentService,
+    private router: Router,
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -480,5 +483,13 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
 
+  }
+  getRedirectUrlData(content: any) {
+    const urlData = this.contSvc.getResourseLink(content)
+    this.router.navigate(
+      [urlData.url],
+      {
+        queryParams: urlData.queryParams,
+      })
   }
 }

@@ -84,7 +84,7 @@ export namespace NsContent {
     playgroundInstructions?: string
     playgroundResources?: IResourcePlayground[]
     postContents?: IPrePostContent[]
-    posterImage: string
+    posterImage?: string
     preContents?: IPrePostContent[]
     preRequisites: string
     price?: {
@@ -110,6 +110,7 @@ export namespace NsContent {
     sourceIconUrl?: string
     sourceUrl?: string
     ssoEnabled?: boolean
+    lastReadContentId?: string
     status:
     | 'Draft'
     | 'InReview'
@@ -211,7 +212,7 @@ export namespace NsContent {
     enrolledDate: string
     issuedCertificates: []
     lastContentAccessTime?: string
-    lastReadContentId: string | null
+    lastReadContentId?: string
     lastReadContentStatus: string | null
     leafNodesCount: number
     progress: number

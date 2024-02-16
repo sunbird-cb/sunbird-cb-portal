@@ -21,6 +21,7 @@ export namespace NsContent {
     complexityLevel: string
     contentId: string
     contentType: EContentTypes
+    difficultyLevel: string
     primaryCategory: EPrimaryCategory
     contentUrlAtSource: string
     creatorContacts: ICreator[]
@@ -126,6 +127,8 @@ export namespace NsContent {
     references?: { url: string; title: string }[]
     resumePage?: number // For player WebModule in UI
     [key: string]: any
+    optionalReading: boolean
+    additionalTags?: string[]
   }
 
   export enum EPrimaryCategory {
@@ -179,7 +182,7 @@ export namespace NsContent {
     name: string
     creatorDetails: ICreator[]
     creatorContacts: ICreator[]
-    PosterImage: string
+    PosterImage?: string
     resourceType?: string
     totalRating?: number
   }
