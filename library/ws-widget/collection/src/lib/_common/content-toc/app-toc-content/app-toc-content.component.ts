@@ -2,7 +2,6 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { ActivatedRoute, Data } from '@angular/router'
 import { NsWidgetResolver } from '@sunbird-cb/resolver/src/public-api'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { Subscription } from 'rxjs'
