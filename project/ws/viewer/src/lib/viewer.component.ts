@@ -253,8 +253,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this.forPreview
   }
 
-  manipulateHierarchyData(){
+  manipulateHierarchyData() {
     this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
-    debugger
   }
 }
