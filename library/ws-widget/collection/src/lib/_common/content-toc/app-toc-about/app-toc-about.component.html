@@ -52,12 +52,12 @@
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1">Summary</div>
-            <div [ngClass]="{'desc-ellipsis': summaryEllipsis}">
+            <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
                 {{ handleCapitalize(content?.description) }}
-                <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!summaryEllipsis"
-                    (click)="summaryEllipsis = !summaryEllipsis">&nbsp;view less</span> -->
+                <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.viewLess"
+                    (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;View less</span>
             </div>
-            <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="summaryEllipsis" (click)="summaryEllipsis = !summaryEllipsis">view more</div> -->
+            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.ellipsis" (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">View more</div>
         </ng-container>
     </div>
 
@@ -76,12 +76,12 @@
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1">Description</div>
-            <div [ngClass]="{'desc-ellipsis': descEllipsis}">
+            <div class="desc" [ngClass]="{'desc-ellipsis': description.ellipsis}" #descElem>
                 <span [innerHTML]="content?.instructions"></span>
-                <!-- <span class="ws-mat-default-text font-bold cursor-pointer" *ngIf="!descEllipsis"
-                    (click)="descEllipsis = !descEllipsis">&nbsp;view less</span> -->
+                <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="description.viewLess"
+                    (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;View less</span>
             </div>
-            <!-- <div class="ws-mat-default-text font-bold cursor-pointer" *ngIf="descEllipsis" (click)="descEllipsis = !descEllipsis" >view more</div> -->
+            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="description.ellipsis" (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess" >View more</div>
         </ng-container>
     </div>
 
@@ -143,12 +143,14 @@
             <div class="mat-subheading-1">Tags</div>
             <div class="flex flex-wrap gap-2" *ngIf="content?.keywords?.length">
                 <ng-container *ngFor="let tag of content?.keywords; let i = index">
-                    <div class="text-xs">{{ tag }}</div>
-                    <div class="flex items-center" *ngIf="tags?.length > (i+1)">
+                    <div class="text-xs" [ngClass]="{'hidden': (i > 8 && !viewMoreTags)}">{{ tag }}</div>
+                    <div class="flex items-center" [ngClass]="{'hidden': (i > 8 && !viewMoreTags)}" *ngIf="content?.keywords?.length > (i + 1)">
                         <span class="period"></span>
                     </div>
                 </ng-container>
-                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs mb-1">View more</div>
+                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="content?.keywords?.length > 8 && !viewMoreTags" (click)="viewMoreTags = !viewMoreTags">View more</div>
+                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="viewMoreTags"
+                 (click)="viewMoreTags = !viewMoreTags">View less</div>
             </div>
             <div class="flex flex-wrap gap-2" *ngIf="!content?.keywords?.length">
                 No tags found

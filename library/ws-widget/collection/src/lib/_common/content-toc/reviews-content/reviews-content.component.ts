@@ -71,7 +71,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
   }
 
   handleCapitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return str && str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   handleReviewsFilter(str: string): void {

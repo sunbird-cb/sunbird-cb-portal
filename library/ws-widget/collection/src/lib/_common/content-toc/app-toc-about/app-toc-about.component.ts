@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 import { Subject } from 'rxjs'
@@ -17,6 +17,7 @@ import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-c
 import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
 
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
+
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -71,9 +72,18 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
+  @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
+  @ViewChild('descElem', { static: false }) descElem !: ElementRef
+
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
-  descEllipsis = false
-  summaryEllipsis = false
+  summary = {
+    ellipsis: false,
+    viewLess: false,
+  }
+  description = {
+    ellipsis: false,
+    viewLess: false,
+  }
   competencySelected = ''
   ratingSummary: any
   authReplies: any
@@ -92,6 +102,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   reviewDefaultLimit = 2
   competenciesObject: any = []
   private destroySubject$ = new Subject<any>()
+  viewMoreTags = false
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -144,6 +155,14 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
     if (changes.skeletonLoader && !changes.skeletonLoader.currentValue) {
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
+
+        if (this.summaryElem.nativeElement.offsetHeight > 72) {
+          this.summary.ellipsis = true
+        }
+
+        if (this.descElem.nativeElement.offsetHeight > 72) {
+          this.description.ellipsis = true
+        }
       },         500)
     }
   }
@@ -414,7 +433,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   handleCapitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return str && str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   handleOpenReviewModal(): void {
