@@ -89,6 +89,6 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   handleLoadMore(): void {
     this.displayLoader = true
-    this.initiateLoadMore.emit(true)
+    this.initiateLoadMore.emit(this.showFilterIndicator)
   }
 }

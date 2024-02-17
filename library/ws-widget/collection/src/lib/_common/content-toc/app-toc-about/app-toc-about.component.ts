@@ -250,7 +250,6 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   fetchRatingLookup() {
-    this.displayLoader = true
     if (this.content && this.content.identifier && this.content.primaryCategory) {
       const req = {
         activityId: this.content.identifier,
@@ -268,8 +267,10 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
           if (res && res.result && res.result.response) {
             if (this.reviewPage > 1) {
               res.result.response.map((item: any) => {
-                if (!this.ratingLookup.find((o: any) => o.updatedOnUUID === item.updatedOnUUID)) {
-                  this.ratingLookup.push(item)
+                if (this.ratingLookup) {
+                  if (!this.ratingLookup.find((o: any) => o.updatedOnUUID === item.updatedOnUUID)) {
+                    this.ratingLookup.push(item)
+                  }
                 }
               })
             } else {
@@ -306,9 +307,10 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
       if (this.content && userIds) {
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
-      this.latestReviews = this.latestReviews.slice()
-      this.reviewDataService.setReviewData(this.latestReviews)
-
+      if (this.latestReviews) {
+        this.latestReviews = this.latestReviews.slice()
+        this.reviewDataService.setReviewData(this.latestReviews)
+      }
     }
   }
 
@@ -430,8 +432,8 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
     this.dialogRef.afterClosed().subscribe((_result: any) => {
     })
 
-    this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: boolean) => {
-      this.loadMore()
+    this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: string) => {
+      this.loadMore(_value)
     })
 
     this.dialogRef.componentInstance.loadLatestReviews.subscribe((_value: boolean) => {
@@ -439,12 +441,16 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
     })
   }
 
-  loadMore() {
+  loadMore(selectedReview: string) {
     if (!this.disableLoadMore) {
       this.lookupLoading = true
       this.reviewPage = this.reviewPage + 1
       this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
-      this.fetchRatingLookup()
+      if (selectedReview === 'Latest') {
+        this.fetchRatingLookup()
+      } else {
+        this.fetchRatingSummary()
+      }
     }
   }
 
