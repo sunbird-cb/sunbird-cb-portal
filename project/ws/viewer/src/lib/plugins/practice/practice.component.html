@@ -222,7 +222,7 @@
                 </div>
                 <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId))">
-                  <mat-chip-list><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
+                  <mat-chip-list class="question-flag"><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
                 </div>
                 <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
@@ -460,7 +460,7 @@
                     </div>
                     <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId))">
-                      <mat-chip-list><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
+                      <mat-chip-list class="question-flag"><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
                     </div>
                     <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
@@ -848,11 +848,11 @@
                   }" class="margin-xs">
                     <div *ngIf="!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId)">
-                      <mat-chip-list><mat-chip class="light-blue-small">&nbsp;&nbsp;&nbsp;&nbsp;</mat-chip></mat-chip-list>
+                      <mat-chip-list class="question-flag"><mat-chip class="light-blue-small">&nbsp;&nbsp;&nbsp;&nbsp;</mat-chip></mat-chip-list>
                     </div>
                     <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId))">
-                      <mat-chip-list><mat-chip class="orange-small">{{ i + 1 }}</mat-chip></mat-chip-list>
+                      <mat-chip-list class="question-flag"><mat-chip class="orange-small">{{ i + 1 }}</mat-chip></mat-chip-list>
                     </div>
                     <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"

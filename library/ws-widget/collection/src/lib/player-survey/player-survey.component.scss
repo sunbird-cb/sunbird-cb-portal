@@ -60,3 +60,9 @@
 ::ng-deep .main-lib-body .main-container {
   overflow-y: auto !important;
 }
+
+@media screen and (min-width: 280px) and (max-width: 912px) {
+  .course-survey {
+   width: 98%;
+  }
+}
