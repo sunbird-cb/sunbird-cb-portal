@@ -36,7 +36,6 @@ import { TranslateService } from '@ngx-translate/core'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { TimerService } from '../../services/timer.service'
-import { LoadCheckService } from '../../services/load-check.service'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -359,7 +358,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.tocSvc.subtitleOnBanners
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(_changes: SimpleChanges): void {
     this.assignPathAndUpdateBanner(this.router.url)
     if (this.content) {
       this.fetchExternalContentAccess()

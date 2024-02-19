@@ -336,6 +336,49 @@ a.action-button {
   }
 }
 
+.mobile-enroll-div {
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  bottom: 0px;
+  width: calc(100% - 32px);
+  display: none;
+}
+
+@media screen and (max-width: 1200x) {
+  .mobile-enroll-div {
+    display: block;
+  }
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: inherit;
+  filter: blur(10px);
+  /* Adjust the blur radius as needed */
+  z-index: -1;
+}
+
+.action-button::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  // box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 -4px -4px rgba(255, 255, 255, 0.6);
+  /* Adjust the blur radius and shadow spread as needed */
+  border-radius: inherit;
+  z-index: -1;
+}
+
 //////////////................... New TOC page css.................///////////////
 
 %container-padding {

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ShareTocComponent } from './share-toc.component';
+import { ShareTocComponent } from './share-toc.component'
 
 describe('ShareTocComponent', () => {
-  let component: ShareTocComponent;
-  let fixture: ComponentFixture<ShareTocComponent>;
+  let component: ShareTocComponent
+  let fixture: ComponentFixture<ShareTocComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShareTocComponent ]
+      declarations: [ShareTocComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShareTocComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ShareTocComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

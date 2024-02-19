@@ -1,7 +1,9 @@
 @import 'ws-mixins';
 @import 'ws-vars';
 
-
+.mt60 {
+    margin-top: 60px;
+}
 
 ::ng-deep .desc {
     .mat-body p {
