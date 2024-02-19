@@ -420,7 +420,7 @@
             <div class="mat-body-2">
                 <div class="md-5">
                     <mat-form-field appearance="outline" class="w-full">
-                        <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
+                        <mat-chip-list #chipList aria-label="user selection" appearance="outline">
                             <mat-chip
                                 *ngFor="let user of users"
                                 [selectable]="selectable"
@@ -431,6 +431,7 @@
                             </mat-chip>
                             <input
                                 tabindex="-1"
+                                class="inputTextBox"
                                 placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
                                 #userInput
                                 formControlName="review"
@@ -464,7 +465,7 @@
                         <button mat-stroked-button type="submit"
                             [ngClass]="{'disable-send-btn': users.length === 0 || users.length}"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
-                            [disabled]="users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
+                            [disabled]="userCtrl.value.length || users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
                             >
                             {{'contentSharing.send' | translate}} &nbsp; <mat-icon>send</mat-icon>
                         </button>
