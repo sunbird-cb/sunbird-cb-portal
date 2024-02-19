@@ -73,7 +73,7 @@ const flattenItems = (items: any[], key: string | number) => {
 })
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
-  show = true
+  show = false
   changeTab = false
   skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
@@ -257,10 +257,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
       // Present in app-toc-about.component
-      const ratingsDiv = document.getElementById('ratingsDiv') as any
-      this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
-    })    
+      if (document.getElementById('ratingsDiv')) {
+        const ratingsDiv = document.getElementById('ratingsDiv') as any
+        this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+      }
+      if (document.getElementById('contentContainer')) {
+        const contentDiv = document.getElementById('contentContainer') as any
+        this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
+      }
+    })
   }
+
   ngOnInit() {
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -1564,28 +1571,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
-  ngOnDestroy() {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
-    if (this.batchSubscription) {
-      this.batchSubscription.unsubscribe()
-    }
-    if (this.batchDataSubscription) {
-      this.batchDataSubscription.unsubscribe()
-    }
-    this.tocSvc.analyticsFetchStatus = 'none'
-    if (this.routerParamSubscription) {
-      this.routerParamSubscription.unsubscribe()
-    }
-    if (this.selectedBatchSubscription) {
-      this.selectedBatchSubscription.unsubscribe()
-    }
-  }
-
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
+
   checkModuleWiseData() {
     if (this.content && this.content.children) {
       this.content.children.forEach((ele: any) => {
@@ -1605,6 +1594,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       })
     }
   }
+
   getLastPlayedResource() {
     let firstPlayableContent
     let resumeDataV2: any
@@ -1661,5 +1651,24 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   resetEnableShare() {
     this.enableShare = false
+  }
+
+  ngOnDestroy() {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe()
+    }
+    if (this.batchSubscription) {
+      this.batchSubscription.unsubscribe()
+    }
+    if (this.batchDataSubscription) {
+      this.batchDataSubscription.unsubscribe()
+    }
+    this.tocSvc.analyticsFetchStatus = 'none'
+    if (this.routerParamSubscription) {
+      this.routerParamSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
+    }
   }
 }
