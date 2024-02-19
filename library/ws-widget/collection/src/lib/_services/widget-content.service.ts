@@ -439,7 +439,9 @@ export class WidgetContentService {
           primaryCategory: enrolledCourseData.content.primaryCategory,
           name: enrolledCourseData.content.name,
         }
-        return this.getResourseDataWithData(enrolledCourseData, enrolledCourseData.lastReadContentId, enrolledCourseData.lrcProgressDetails.mimeType)
+        return this.getResourseDataWithData(enrolledCourseData,
+          enrolledCourseData.lastReadContentId,
+          enrolledCourseData.lrcProgressDetails.mimeType)
       } else {
         if(enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId) {
           let doId = enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId
@@ -462,13 +464,12 @@ export class WidgetContentService {
         }else {
           return this.gotoTocPage(content)
         }
-
       }
     } else {
       return this.gotoTocPage(content)
     }
-    
   }
+  
   getResourseDataWithData(content: any, resourseId: any, mimeType: any) {
     if (content) {
       const url = viewerRouteGenerator(
