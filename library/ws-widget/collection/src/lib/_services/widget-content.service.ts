@@ -428,7 +428,6 @@ export class WidgetContentService {
   async getResourseLink(content: any) {
     let urlData: any
     let enrolledCourseData: any = this.getEnrolledData(content.identifier)
-    console.log(enrolledCourseData)
     if(enrolledCourseData) {
       if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
         if (enrolledCourseData.completionPercentage  === 100) {
@@ -455,7 +454,6 @@ export class WidgetContentService {
               }
               urlData =  this.getResourseDataWithData(enrolledCourseData, contentData.identifier, contentData.mimeType)
               if(urlData) {
-                console.log(urlData,'urlData-------')
                 return urlData
               }
             }
