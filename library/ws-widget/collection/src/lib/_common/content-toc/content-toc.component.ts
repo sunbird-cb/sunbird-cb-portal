@@ -59,7 +59,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.scrollY
-    if (windowScroll >= (this.menuPosition - ((this.isMobile) ? 185 : 104))) {
+    if (windowScroll >= (this.menuPosition - ((this.isMobile) ? 136 : 104))) {
       this.sticky = true
     } else {
       this.sticky = false

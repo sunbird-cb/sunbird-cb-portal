@@ -72,6 +72,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
+  @Input() sticky = false
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
 

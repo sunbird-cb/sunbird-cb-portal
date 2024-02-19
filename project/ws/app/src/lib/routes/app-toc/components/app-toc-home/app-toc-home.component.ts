@@ -32,7 +32,7 @@ import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import dayjs from 'dayjs'
 // tslint:disable-next-line
-import _ from 'lodash'
+import _, { filter } from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
@@ -185,6 +185,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   monthlyCapExceed = false
   isCompletedThisMonth = false
   @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
+  @ViewChild('bannerDetails', { static: true }) bannerElem!: ElementRef
   scrollLimit = 0
   rcElem = {
     offSetTop: 0,
@@ -193,6 +194,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   scrolled = false
   pathSet = new Set()
   clickToShare = false
+  previousURL: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -634,7 +636,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
-
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
       case NsAppToc.EWsTocErrorCode.API_FAILURE: {

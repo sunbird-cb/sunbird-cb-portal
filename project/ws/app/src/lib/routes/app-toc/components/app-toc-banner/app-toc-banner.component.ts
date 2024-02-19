@@ -359,7 +359,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.tocSvc.subtitleOnBanners
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(_changes: SimpleChanges): void {
     this.assignPathAndUpdateBanner(this.router.url)
     if (this.content) {
       this.fetchExternalContentAccess()
