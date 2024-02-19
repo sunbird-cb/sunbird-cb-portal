@@ -1318,7 +1318,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (el != null) {
           setTimeout(() => {
             el[0].scrollTop = el[0].scrollHeight
-          }, 200)
+          },         200)
         }
       } else {
         this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
@@ -1353,7 +1353,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (el != null) {
       setTimeout(() => {
         el[0].scrollTop = el[0].scrollHeight
-      }, 200)
+      },         200)
     }
   }
 
