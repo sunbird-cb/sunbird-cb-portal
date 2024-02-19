@@ -27,16 +27,16 @@ export class AppHierarchyResolverService
                 // tslint:disable-next-line
                 // console.log("========> after api call bind data <===========", resolveData)
                 // this.router.queryParams
-                if (_route.queryParams && _route.queryParams.checkFirstChild) {
-                    const content = resolveData.data.result.content
-                    const firstChildData = this.contentSvc.getFirstChildInHierarchy(content)
-                    const url = this.contentSvc.getResourseLink(firstChildData, content, _route.queryParams.batchId)
-                    this.router.navigate(
-                        [url.url],
-                        {
-                          queryParams: url.queryParams,
-                        })
-                }
+                // if (_route.queryParams && _route.queryParams.checkFirstChild) {
+                //     const content = resolveData.data.result.content
+                //     const firstChildData = this.contentSvc.getFirstChildInHierarchy(content)
+                //     const url = this.contentSvc.getResourseLink(firstChildData, content, _route.queryParams.batchId)
+                //     this.router.navigate(
+                //         [url.url],
+                //         {
+                //           queryParams: url.queryParams,
+                //         })
+                // }
 
                 return of({ error: null, data: resolveData })
             }),

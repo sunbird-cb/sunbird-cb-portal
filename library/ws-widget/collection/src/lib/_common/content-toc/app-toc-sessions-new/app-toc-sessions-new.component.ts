@@ -12,6 +12,10 @@ export class AppTocSessionsNewComponent implements OnInit {
   @Input() content: NsContent.IContent | null = null
   @Input() forPreview = false
   @Input() config = null
+  @Input() batchId!: string
+  @Input() rootId!: string
+  @Input() rootContentType!: string
+  @Input() pathSet!: any
   sessionList: any = []
   sessionListMap: any = {}
 

@@ -13,7 +13,7 @@
             <ng-container [ngTemplateOutlet]="contentBlock"></ng-container>
         </ng-container>
         <ng-container *ngIf="selectedTabType === 'session' && content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
-            <ws-widget-app-app-toc-sessions-new [batchData]="batchData" [config]="config"  [content]="content">
+            <ws-widget-app-app-toc-sessions-new [batchData]="batchData" [pathSet]="pathSet" [rootId]="contextId" [rootContentType]="contextPath"  [batchId]="batchId" [config]="config"  [content]="content">
             </ws-widget-app-app-toc-sessions-new>
         </ng-container>
         <ng-container *ngIf="content?.primaryCategory !== nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
