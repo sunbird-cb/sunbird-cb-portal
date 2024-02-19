@@ -3,14 +3,13 @@ import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
-// import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, LoggerService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
+import { ConfigurationsService, LoggerService, NsPage, ValueService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
-
 @Component({
   selector: 'viewer-viewer-top-bar',
   templateUrl: './viewer-top-bar.component.html',
@@ -21,6 +20,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
+  @Input() content:any;
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -53,6 +53,10 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   userId: any
   currentDataFromEnrollList: any
   isMobile = false
+  enableShare = false;
+  rootOrgId:any;
+  canShare = false;
+  primaryCategory = NsContent.EPrimaryCategory
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -67,6 +71,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
     private loggerSvc: LoggerService,
+    private events: EventService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -96,6 +101,10 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
       )
+      if(this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
+      
     }
     //   this.route.data.subscribe((data: any) => {
     //     this.appIcon =
@@ -174,6 +183,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
+    
+    
+    
   }
 
   updateProgress(status: number, resourceId: any) {
@@ -334,5 +346,31 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.getUserRating(false)
       }
     })
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
   }
 }

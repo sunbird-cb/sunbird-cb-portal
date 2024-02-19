@@ -87,7 +87,7 @@ export class AppTocContentCardV2Component implements OnInit {
 
   check(content: any) {
     if(this.expandActive) {
-      content.viewChildren = this.pathSet.has(content.identifier) || content.viewChildren
+      content.viewChildren = this.pathSet && this.pathSet.has(content.identifier) || content.viewChildren
     }
     return content.viewChildren
   }

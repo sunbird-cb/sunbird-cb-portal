@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
@@ -36,6 +36,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { TimerService } from '../../services/timer.service'
+import { LoadCheckService } from '../../services/load-check.service'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -57,6 +58,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() userEnrollmentList: NsContent.ICourse[] | null = null
   @Output() withdrawOrEnroll = new EventEmitter<string>()
   @Input() contentReadData: NsContent.IContent | null = null
+  @Input() clickToShare = false
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -151,7 +153,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private userAutoComplete: UserAutocompleteService,
     private events: EventService,
     private langtranslations: MultilingualTranslationsService,
-    private timerService: TimerService
+    private timerService: TimerService,
   ) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
@@ -160,10 +162,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.translate.use(lang)
       }
     })
+
     this.helpEmail = environment.helpEmail
     this.shareForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
     })
+
     this.userCtrl.valueChanges.pipe(
       debounceTime(200),
       distinctUntilChanged()
@@ -355,7 +359,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.tocSvc.subtitleOnBanners
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges): void {
     this.assignPathAndUpdateBanner(this.router.url)
     if (this.content) {
       this.fetchExternalContentAccess()
@@ -1376,6 +1380,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   translateLabels(label: string, type: any, subtype: any) {
     return this.langtranslations.translateActualLabel(label, type, subtype)
   }
+
   ngOnDestroy() {
     this.tocSvc.analyticsFetchStatus = 'none'
     if (this.routerParamSubscription) {

@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router'
 import { NsContent, UtilityService } from '@sunbird-cb/utils/src/public-api'
 import { Subscription } from 'rxjs'
 
+import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
+
 @Component({
   selector: 'ws-widget-content-toc',
   templateUrl: './content-toc.component.html',
@@ -24,6 +26,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() skeletonLoader = false
   @Input() tocStructure: any = {}
   @Input() pathSet: any
+  @Input() fromViewer = false;
   @ViewChild('stickyMenu', { static: false }) tabElement!: MatTabGroup
   sticky = false
   menuPosition: any
@@ -34,6 +37,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private utilityService: UtilityService,
+    private loadCheckService: LoadCheckService
   ) { }
 
   ngOnInit() {
@@ -66,5 +70,8 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   handleTabChange(event: MatTabChangeEvent): void {
     this.tabChangeValue = event.tab
     this.selectedTabIndex = event.index
+    if (this.selectedTabIndex === 1) {
+      this.loadCheckService.componentLoaded(true)
+    }
   }
 }

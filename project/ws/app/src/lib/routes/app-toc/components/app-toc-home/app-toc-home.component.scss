@@ -74,17 +74,17 @@
   margin: 0 auto;
   padding: 0;
 
-  @include breakpoint-s {
-    padding: 0 16px;
-  }
+  // @include breakpoint-s {
+  //   padding: 0 16px;
+  // }
 
-  @include breakpoint-xs {
-    padding: 0 16px;
-  }
+  // @include breakpoint-xs {
+  //   padding: 0 16px;
+  // }
 
-  @include breakpoint-m {
-    padding: 0 8px !important;
-  }
+  // @include breakpoint-m {
+  //   padding: 0 8px !important;
+  // }
 }
 
 .mat-subheading-1 {
@@ -724,5 +724,17 @@ mat-divider {
     background-color: #ef951e !important;
     color: rgba(255,255,255,1) !important;
     opacity: 1;
+  }
+}
+
+@media screen and (min-width:280px) and (max-width: 768px) {
+  .toc-banner {
+    width: 92%;
+    padding: 0 16px;
+  }
+
+  .toc-content {
+    width: 92%;
+    padding: 0 16px;
   }
 }

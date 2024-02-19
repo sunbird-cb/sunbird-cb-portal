@@ -104,7 +104,7 @@
                 <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
                 <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
               </div>
-              <div class="flex flex-row items-center justify-end gap-2 share-tag">
+              <div (click)="onClickOfShare()" class="flex flex-row items-center justify-end gap-2 share-tag" *ngIf="canShare">
                 <mat-icon>share</mat-icon>
                 <div>Share</div>
               </div>
@@ -225,7 +225,7 @@
                 [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
             </div>
             
-
+            
             <ng-container *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
               <div [hidden]="isResource && !content?.artifactUrl?.length" class="flex flex-col gap-4 text-center">
                 <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM
@@ -502,7 +502,7 @@
                 </div>
 
                 <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.webPage > 0">
-                  <img src="/assets/icons/content/content_copy.svg" width="20px" alt="web page image" />
+                  <mat-icon>content_copy</mat-icon>
                   <div class="text-xs" i18n>{{ tocStructure?.webPage }} Web Page(s)</div>
                 </div>
 
@@ -511,9 +511,9 @@
                   <div class="text-xs" i18n>{{ tocStructure?.interactivecontent }} Interactive Content(s)</div>
                 </div>
   
-                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.assessment > 0">
+                <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.finalTest > 0">
                   <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-                  <div class="text-xs" i18n>{{ tocStructure?.assessment }} Final assessment(s) </div>
+                  <div class="text-xs" i18n>{{ tocStructure?.finalTest }} Final assessment(s) </div>
                 </div>
 
                 <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.practiceTest > 0">
@@ -587,8 +587,8 @@
 <ng-container *ngIf="show">
   <div class="fixed-width flex flex-wrap">
     <div class="meta-section">
-      <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
-      </ws-app-toc-banner>
+      <!-- <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content" [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics" [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
+      </ws-app-toc-banner> -->
       <div role="none" class="toc-body margin-top-xl">
         <ws-app-app-toc-single-page [content]="content" [initialrouteData]="initialrouteData" [forPreview]="false"
         [resumeData]="resumeData" [batchData]="batchData">
@@ -1250,3 +1250,4 @@
 <button mat-fab color="accent" [ngClass]="{'show-scroll': showScroll}" (click)="scrollToTop()" class="scroll-to-top">
   <mat-icon color="primary">keyboard_arrow_up</mat-icon>
 </button> -->
+<ws-app-share-toc *ngIf="enableShare" [rootOrgId]="rootOrgId" [content]="content" (resetEnableShare)="resetEnableShare($event)"></ws-app-share-toc>
