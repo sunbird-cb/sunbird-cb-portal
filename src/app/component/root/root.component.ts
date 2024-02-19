@@ -296,7 +296,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           this.showNavbar = true
           this.isNavBarRequired = true
         }
-        
+
         if (!!this.currentUrl.startsWith('/app/toc/')) {
           this.showBottomNav = false
         }
