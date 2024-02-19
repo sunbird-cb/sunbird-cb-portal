@@ -776,6 +776,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     })
 
+    this.tocSvc.contentLoader.next(false)
   }
 
   getUserRating(fireUpdate: boolean) {
@@ -910,6 +911,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.fetchBatchDetails()
             }
             this.enrollBtnLoading = false
+            this.tocSvc.contentLoader.next(false)
           }
         }
         this.isCourseCompletedOnThisMonth()
@@ -1136,6 +1138,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
             this.tocSvc.updateResumaData(this.resumeData)
             this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
+            this.getLastPlayedResource()
           } else {
             this.resumeData = null
           }

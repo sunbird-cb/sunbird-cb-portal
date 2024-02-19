@@ -65,6 +65,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   @Input() forPreview = false
   @Input() contentData: any = {}
   @Input() batchData: any
+  @Input() tocStructure: any
 
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -402,8 +402,8 @@ export class CardContentV2Component extends WidgetBaseComponent
       clearInterval(this.cbPlanInterval)
     }
   }
-  getRedirectUrlData(content: any){
-    let urlData = this.contSvc.getResourseLink(content)
+  async getRedirectUrlData(content: any){
+    let urlData = await this.contSvc.getResourseLink(content)
     this.router.navigate(
       [urlData.url],
       {

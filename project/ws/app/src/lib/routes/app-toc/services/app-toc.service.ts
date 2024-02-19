@@ -56,6 +56,9 @@ export class AppTocService {
   public serverDate = new BehaviorSubject('')
   currentServerDate = this.serverDate.asObservable()
 
+  public contentLoader = new BehaviorSubject(false)
+  contentLoader$ = this.contentLoader.asObservable()
+
   constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) { }
 
   get subtitleOnBanners(): boolean {
@@ -116,10 +119,12 @@ export class AppTocService {
             })
           }
         }
+        this.contentLoader.next(false)
       },
       () => {
         // tslint:disable-next-line: no-console
         console.log('error on resumeDataSubscription')
+        this.contentLoader.next(false)
       })
   }
 
@@ -149,6 +154,7 @@ export class AppTocService {
   initData(data: Data, needResumeData: boolean = false): NsAppToc.IWsTocResponse {
     let content: NsContent.IContent | null = null
     let errorCode: NsAppToc.EWsTocErrorCode | null = null
+    this.contentLoader.next(true)
     if (data.content && data.content.data && data.content.data.identifier) {
       content = data.content.data
       if (needResumeData) {
@@ -639,6 +645,7 @@ export class AppTocService {
       // // }
       // })
       this.mapModuleDurationAndProgress(content, content)
+      this.contentLoader.next(false)
     }
   }
   checkCompletedLeafnodes(leafNodes: any, completedCount: any) {
@@ -673,6 +680,7 @@ export class AppTocService {
   }
 
   public mapModuleDurationAndProgress(content: NsContent.IContent | null, parent: NsContent.IContent | null) {
+    this.contentLoader.next(true)
     if (content && content.children) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         // content.children.map((item: NsContent.IContent)=> {
@@ -691,6 +699,7 @@ export class AppTocService {
           this.mapModuleDurationAndProgress(item, parent)
         }
       })
+      this.contentLoader.next(false)
     }
   }
 
