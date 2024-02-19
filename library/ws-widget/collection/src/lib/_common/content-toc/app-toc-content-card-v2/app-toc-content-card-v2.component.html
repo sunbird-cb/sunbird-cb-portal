@@ -210,6 +210,7 @@
                 [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
         [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null"
                >
+               <span [ngClass]="{'resource-active': pathSet?.has(content?.identifier)}"></span>
                 <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled && batchId}"
                     (click)="content.viewChildren = !content.viewChildren; raiseTelemetry()">
                     <div class="flex flex-col sm:flex-row flex-wrap">

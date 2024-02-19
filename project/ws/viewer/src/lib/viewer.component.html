@@ -20,7 +20,7 @@
           <ws-widget-player-brief [forPreview]="forPreview" [content]="content"></ws-widget-player-brief>
         </mat-tab>
       </mat-tab-group> -->
-      <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [batchData]="batchData" (hidenav)="minimizeBar()">
+      <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" [batchData]="batchData" (hidenav)="minimizeBar()">
       </viewer-viewer-toc>
     </mat-sidenav>
 
@@ -127,7 +127,7 @@
         </div>
         <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <div class="pb-4 lg:py-4">
-            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="hierarchyData" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="hierarchyData" [tocStructure]="tocStructure" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
           </div>
         </div>
@@ -135,7 +135,7 @@
       <ng-container *ngIf="!isMobile">
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
           <div class="pb-4 lg:py-4">
-            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="hierarchyData" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [contentTabFlag]="isMobile" [content]="hierarchyData" [tocStructure]="tocStructure" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
           </div>
         </div>

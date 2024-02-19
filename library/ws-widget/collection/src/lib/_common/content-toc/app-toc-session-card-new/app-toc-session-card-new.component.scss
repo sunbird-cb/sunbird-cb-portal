@@ -346,3 +346,10 @@ span.optional-span {
   text-align: left;
   line-height: 12px;
 }
+.text-active {
+  color: #1a4ca1;
+
+  &.font-bold{
+    font-weight: 600;
+  }
+}

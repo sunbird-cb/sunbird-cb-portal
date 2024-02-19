@@ -1115,6 +1115,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
             this.tocSvc.updateResumaData(this.resumeData)
             this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
+            this.getLastPlayedResource()
           } else {
             this.resumeData = null
           }

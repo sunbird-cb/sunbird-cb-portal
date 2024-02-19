@@ -33,7 +33,7 @@
        <div class="child-wrapper  " [ngClass]="{'open': viewChildren, 'close': !viewChildren}" *ngIf="viewChildren"
        [@panelInOut]>
             <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">
-                <ws-widget-app-toc-session-card-new [forPreview]="forPreview" [content]="child" [index]="j+1" [expandAll]="expandAll" [rootId]="rootId" [batchData]="batchData" [config]="config"
+                <ws-widget-app-toc-session-card-new [forPreview]="forPreview"  [pathSet]="pathSet"  [content]="child" [index]="j+1" [expandAll]="expandAll" [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [batchData]="batchData" [config]="config"
                 [session]="session" *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
                 [ngClass]="{'moduleCard': true, 'first': isFirst}"></ws-widget-app-toc-session-card-new>
             </div>
@@ -42,12 +42,12 @@
     <div *ngIf="isResource" class="resource-container mt-4">
        <div class="resource flex  sm:flex-row flex-start width-expand w-100  sm:w-auto">
           <a class="w-full" [class.disabled]="(forPreview || !isEnabled) ? true : null"
-          [routerLink]="(isAllowed && !forPreview && !isEnabled) ? resourceLink.url : null"
-          [queryParams]="(isAllowed && !forPreview && !isEnabled)  ? resourceLink.queryParams : null">
+          [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
+          [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null">
           <div class="text-truncate1 " [ngClass]="{'cursor-pointer': !isEnabled}"
           (click)="viewChildren = !viewChildren; raiseTelemetry()">
           <div class="flex flex-col sm:flex-row flex-wrap">
-             <p class="margin-remove text-truncate1 mat-body-2 flex-auto font-bold">
+             <p class="margin-remove text-truncate1 mat-body-2 flex-auto font-bold" [ngClass]="{'text-active': pathSet?.has(content?.identifier)}">
                 {{ content?.name }} <span class="margin-left-s"
                 [ngClass]="{'offline': session[content?.identifier]?.sessionType.toLowerCase() === 'offline','online':session[content?.identifier]?.sessionType.toLowerCase() !== 'offline'}"> {{session[content?.identifier]?.sessionType || ''}}</span>
              </p>
