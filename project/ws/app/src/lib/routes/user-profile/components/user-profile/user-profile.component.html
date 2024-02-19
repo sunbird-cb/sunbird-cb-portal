@@ -1288,6 +1288,13 @@
           </div>
           <!-- </div> -->
         </mat-tab>
+        <!-- e-HRMS functionality block -->
+        <mat-tab label="e-HRMS details" *ngIf="isEhrmsId">
+          <ng-template mat-tab-label i18n>
+            e-HRMS details
+          </ng-template>
+           <ws-app-ehrms [ehrmsData]="ehrmsInfo"></ws-app-ehrms>
+        </mat-tab>
 
         <!-- <mat-tab label="Certification & Skills" *ngIf="!isForcedUpdate"> -->
         <!-- <ng-template mat-tab-label i18n>
@@ -1374,7 +1381,7 @@
           </div> -->
         <!-- </mat-tab> -->
       </mat-tab-group>
-      <div class="flex justify-center  md:justify-end mt-5 mb-5">
+      <div class="flex justify-center  md:justify-end mt-5 mb-5" *ngIf="!isSaveButtoDisable">
         <div *ngIf="uploadSaveData" class="pr-4 flex items-center justify-center">
           <mat-spinner [diameter]="30"></mat-spinner>
         </div>
