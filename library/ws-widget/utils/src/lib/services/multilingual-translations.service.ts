@@ -21,7 +21,8 @@ export class MultilingualTranslationsService {
 
     getLanguage() {
         if (this.configSvc.unMappedUser) {
-            if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
+            if (this.configSvc.unMappedUser.profileDetails &&
+                this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
               const lang = this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang
               this.translate.use(lang)
               localStorage.setItem('websiteLanguage', lang)
