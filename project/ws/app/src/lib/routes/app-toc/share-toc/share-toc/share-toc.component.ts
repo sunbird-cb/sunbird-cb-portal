@@ -92,12 +92,10 @@ export class ShareTocComponent implements OnInit {
         })
         this.showLoader = false
       }
-      console.log('allUsers', this.allUsers);
       if (this.allUsers.length === 0) {
         this.filteredUsers = []
       }
       this.filteredUsers = this.filterSharedUsers(queryStr)
-      console.log('filteredUsers', this.filteredUsers);
     })
   }
 

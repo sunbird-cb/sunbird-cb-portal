@@ -115,7 +115,6 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     })
 
     this.viewerDataServiceSubscription = this.viewerDataSvc.tocChangeSubject.subscribe(data => {
-      console.log('secondary nav data', data);
       if (data.prevResource) {
         this.prevResourceUrl = data.prevResource.viewerUrl
         this.prevResourceUrlParams = {

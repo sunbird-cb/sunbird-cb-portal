@@ -705,7 +705,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.tocStructure.learningModule = this.content.primaryCategory === this.primaryCategory.MODULE ? -1 : 0
       this.tocStructure.course = this.content.primaryCategory === this.primaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSvc.getTocStructure(this.content, this.tocStructure)
-      console.log('this.primaryCategory', this.primaryCategory)
       for (const progType in this.tocStructure) {
         if (this.tocStructure[progType] > 0) {
           this.hasTocStructure = true

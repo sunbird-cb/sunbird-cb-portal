@@ -270,7 +270,6 @@ export class AppTocService {
           break
         // case NsContent.EMimeTypes.HTML:
         case NsContent.EMimeTypes.TEXT_WEB:
-          console.log(tocStructure.webPage);
           tocStructure.webPage += 1
           break
         case NsContent.EMimeTypes.SURVEY:
