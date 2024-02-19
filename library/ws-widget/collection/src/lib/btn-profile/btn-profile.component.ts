@@ -150,6 +150,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   logout() {
+    this.raiseTelemetry('signout')
     this.dialog.open<LogoutComponent>(LogoutComponent)
   }
 
@@ -187,24 +188,29 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   redirectToTourPage() {
+    // this.raiseGetStartedImpression('Get Started')
+    this.raiseTelemetry('Get Started')
     this.router.navigate(['/page/home'], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
     this.configSvc.updateTourGuideMethod(false)
   }
 
   redirectToMyLearning() {
+    this.raiseTelemetry('My Learning')
     // /app/seeAll?key=continueLearning
     this.router.navigate(['/app/seeAll'], { queryParams: { key: 'continueLearning' } })
   }
 
   handleRedirectToCompetencyPassbook() {
+    this.raiseTelemetry('Learning History')
     this.router.navigate(['/page/competency-passbook/list'])
   }
 
-  raiseTelemetry(nudgename: any) {
+  raiseTelemetry(tabname: string) {
+    let name = tabname.toLowerCase().split(' ').join('-')
     this.events.raiseInteractTelemetry(
       {
         type: WsEvents.EnumInteractTypes.CLICK,
-        id: `${nudgename}-nudge`,
+        id: `${name}`,
       },
       {},
       {
@@ -212,4 +218,15 @@ export class BtnProfileComponent extends WidgetBaseComponent
       }
     )
   }
+
+  // rasieProfileMenuTelemetry(tabname: string) {
+  //   tabname = tabname.toLowerCase().split(' ').join('-')
+  //   const data: WsEvents.ITelemetryTabData = {
+  //     label: `${tabname}`
+  //   }
+  //   this.events.handleTabTelemetry(
+  //     WsEvents.EnumInteractTypes.CLICK,
+  //     data,
+  //   )
+  // }
 }

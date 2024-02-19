@@ -287,7 +287,7 @@ export class AppTourComponent {
         object: {},
         state: WsEvents.EnumTelemetrySubType.Loaded,
         eventSubType: WsEvents.EnumTelemetrySubType.GetStarted,
-        type: 'Get Started',
+       type: 'Get Started',
         mode: 'view',
       },
       pageContext: {pageId: "/home", module: WsEvents.EnumTelemetrySubType.GetStarted},

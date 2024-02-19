@@ -11,7 +11,7 @@
 </ws-widget-tree-catalog-menu> -->
 
 <a href="javascript:void(0)" mat-icon-button i18n-aria-label class="new-margin"
-  #rootTrigger="matMenuTrigger" [matMenuTriggerFor]="settingsMenu" role="link">
+  #rootTrigger="matMenuTrigger" [matMenuTriggerFor]="settingsMenu" role="link" (click)="raiseTelemetry('profile icon')">
   <span class="flex flex-column flex-middle">
     <ws-widget-avatar-photo class="widgetData?.removeClass ? '' : 'margin-top-xs'" [datalen]="1" [randomColor]="true"  [photoUrl]="profileImage" [name]="getGivenName" size="l-xs" [showBadge]="verifiedBadge ? true : false">
     </ws-widget-avatar-photo>
@@ -44,7 +44,7 @@
   </section> -->
 
   <section class="padding-s border-bottom">
-    <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile" (click)="raiseTelemetry('profile')">
+    <a role="link" routerLink="/app/person-profile/me" fragment="profileInfo" class="all-features" id="viewprofile" (click)="raiseTelemetry('view profile')">
       <div class="float-left">
         <ws-widget-avatar-photo [name]="getGivenName" [size]="'profile-round-m'" [photoUrl]="profileImage"></ws-widget-avatar-photo>
         <span *ngIf="verifiedBadge" class="profile-badge">  
@@ -84,14 +84,14 @@
       <!-- <mat-icon>settings</mat-icon> -->
       <span i18n>'Get Started' tour</span>
     </a>
-    <a mat-menu-item role="link" (click)="redirectToMyLearning()" class="app-features flex items-center">
+    <a mat-menu-item role="link" (click)="redirectToMyLearning();" class="app-features flex items-center">
       <!-- <mat-icon>settings</mat-icon> -->
       <span i18n>My Learning</span>
     </a>
     <a mat-menu-item role="link" (click)="handleRedirectToCompetencyPassbook()" class="app-features flex items-center">
       <span i18n>Learning History</span>
     </a>
-    <a mat-menu-item role="link" routerLink="/app/profile/settings" class="all-features flex items-center">
+    <a mat-menu-item role="link" routerLink="/app/profile/settings" class="all-features flex items-center" (click)="raiseTelemetry('Settings')">
       <!-- <mat-icon>settings</mat-icon> -->
       <span i18n>Settings</span>
     </a>
