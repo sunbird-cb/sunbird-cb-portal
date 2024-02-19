@@ -206,7 +206,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   raiseTelemetry(tabname: string) {
-    let name = tabname.toLowerCase().split(' ').join('-')
+    const name = tabname.toLowerCase().split(' ').join('-')
     this.events.raiseInteractTelemetry(
       {
         type: WsEvents.EnumInteractTypes.CLICK,

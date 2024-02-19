@@ -99,5 +99,5 @@ export class CertificateDialogComponent implements OnInit {
       }
     )
   }
-  
+
 }

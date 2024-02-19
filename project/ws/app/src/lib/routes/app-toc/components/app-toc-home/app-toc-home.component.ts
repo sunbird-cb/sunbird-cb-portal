@@ -443,7 +443,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.openSnackbar('Karma points are successfully claimed.')
       this.getUserEnrollmentList()
     },
-    (error: any) => {
+                                                        (error: any) => {
       // tslint:disable:no-console
       console.log(error)
       this.openSnackbar('something went wrong.')
