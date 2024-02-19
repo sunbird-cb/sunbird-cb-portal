@@ -180,7 +180,12 @@
     <ng-container *ngIf="!skeletonLoader">
         <ng-container *ngIf="!strip?.loaderWidgets?.length || !competenciesObject">
             <div class="flex flex-col">
-                <div class="mat-subheading-1">Competencies</div>
+                <div class="mat-subheading-1">Competencies 
+                    <span><mat-icon class="cursor-pointer infoIcon vertical-align-middle" [matTooltipPosition]="'below'" [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job.
+                        Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles.
+                        Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them.
+                        Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon></span>
+                </div>
                 No competencies found
             </div>
         </ng-container>
