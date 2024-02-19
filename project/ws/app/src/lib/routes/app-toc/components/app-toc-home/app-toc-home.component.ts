@@ -73,7 +73,7 @@ const flattenItems = (items: any[], key: string | number) => {
 })
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
-  show = true
+  show = false
   changeTab = false
   skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
@@ -192,7 +192,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   scrolled = false
   pathSet = new Set()
-
+  canShare =false;
+  enableShare = false;  
+  rootOrgId:any;
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -255,10 +257,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
       // Present in app-toc-about.component
-      const ratingsDiv = document.getElementById('ratingsDiv') as any
-      this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+      if (document.getElementById('ratingsDiv')) {
+        const ratingsDiv = document.getElementById('ratingsDiv') as any
+        this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+      }
+      if (document.getElementById('contentContainer')) {
+        const contentDiv = document.getElementById('contentContainer') as any
+        this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
+      }
     })
   }
+
   ngOnInit() {
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -397,6 +406,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         contentType: this.content.contentType,
         primaryCategory: this.content.primaryCategory,
       }
+    }
+    if (this.content && (
+      this.content.primaryCategory === this.primaryCategory.COURSE ||
+      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
+      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
+      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
+      ) {
+        this.canShare = true
+        if (this.configSvc.userProfile) {
+          this.rootOrgId = this.configSvc.userProfile.rootOrgId
+          // this.getUsersToShare('')
+        }
     }
   }
 
@@ -1551,28 +1572,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
-  ngOnDestroy() {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
-    if (this.batchSubscription) {
-      this.batchSubscription.unsubscribe()
-    }
-    if (this.batchDataSubscription) {
-      this.batchDataSubscription.unsubscribe()
-    }
-    this.tocSvc.analyticsFetchStatus = 'none'
-    if (this.routerParamSubscription) {
-      this.routerParamSubscription.unsubscribe()
-    }
-    if (this.selectedBatchSubscription) {
-      this.selectedBatchSubscription.unsubscribe()
-    }
-  }
-
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
+
   checkModuleWiseData() {
     if (this.content && this.content.children) {
       this.content.children.forEach((ele: any) => {
@@ -1592,6 +1595,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       })
     }
   }
+
   getLastPlayedResource() {
     let firstPlayableContent
     let resumeDataV2: any
@@ -1620,6 +1624,52 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       // path.forEach((node: IViewerTocCard) => {
       //   this.nestedTreeControl.expand(node)
       // })
+    }
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
+  }
+
+  ngOnDestroy() {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe()
+    }
+    if (this.batchSubscription) {
+      this.batchSubscription.unsubscribe()
+    }
+    if (this.batchDataSubscription) {
+      this.batchDataSubscription.unsubscribe()
+    }
+    this.tocSvc.analyticsFetchStatus = 'none'
+    if (this.routerParamSubscription) {
+      this.routerParamSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
     }
   }
 }

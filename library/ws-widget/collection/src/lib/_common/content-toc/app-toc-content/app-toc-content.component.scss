@@ -1,6 +1,10 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+.content-container {
+  min-height: 600px;
+}
+
 .content-accordion {
     .content-panel {
         box-shadow: none;

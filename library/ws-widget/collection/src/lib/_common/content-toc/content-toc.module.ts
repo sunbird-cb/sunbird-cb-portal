@@ -25,7 +25,7 @@ import { EnrollModalComponent } from './enroll-modal/enroll-modal.component'
 import { AppTocSessionCardNewComponent } from './app-toc-session-card-new/app-toc-session-card-new.component'
 import { AppTocSessionsNewComponent } from './app-toc-sessions-new/app-toc-sessions-new.component'
 import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
-
+import { MatTooltipModule } from '@angular/material'
 @NgModule({
   declarations: [
     ContentTocComponent,
@@ -62,6 +62,7 @@ import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
     HorizontalScrollerV2Module,
     WidgetResolverModule,
     AttendanceCardModule,
+    MatTooltipModule
   ],
   exports: [
     ContentTocComponent,
