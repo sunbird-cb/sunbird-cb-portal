@@ -1,0 +1,76 @@
+<div class="share-container">
+    <div *ngIf="showLoader" class="text-center my-2 loader">
+      <mat-spinner class="inline-block"></mat-spinner>
+    </div>
+    <div class="share-modal">
+      <div class="karmasahayogi-icon"><img alt="karmasahayogi-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
+      <div  class="content-div">
+        <div class="triangle-left hidden md:block"></div>
+        <div class="contnet">
+            <section class="w-full flex align-center justify-between ">
+              <div class="mb-2">
+                  <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">{{'contentSharing.header' | translate}}</h2>
+              </div>
+              <div class="cursor-pointer"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
+            </section>
+            <form [formGroup]="shareForm">
+              <div class="mat-body-2">
+                  <div class="md-5">
+                      <mat-form-field appearance="outline" class="w-full">
+                          <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
+                              <mat-chip
+                                  *ngFor="let user of users"
+                                  [selectable]="selectable"
+                                  [removable]="removable"
+                                  (removed)="remove(user)">
+                                  {{user}}
+                                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                  tabindex="-1"
+                                  placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
+                                  #userInput
+                                  formControlName="review"
+                                  [formControl]="userCtrl"
+                                  [matAutocomplete]="auto"
+                                  [matChipInputFor]="chipList"
+                                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                  [matChipInputAddOnBlur]="addOnBlur"
+                                  (matChipInputTokenEnd)="add($event)">
+                          </mat-chip-list>
+                          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                              <mat-option *ngFor="let user of filteredUsers" [value]="user.name">
+                                  <div class="flex">
+                                      <div class="iconDiv">
+                                          <span class="iconText">{{user.iconText.substring(0,2)}}</span>
+                                      </div>
+                                      <div>
+                                          <div>{{user.name}}</div>
+                                          <div class="emailText">{{user.email}}</div>
+                                      </div>
+                                  </div>
+                              </mat-option>
+                          </mat-autocomplete>
+                          <mat-hint align="start">{{'contentSharing.note' | translate}}</mat-hint>
+                          <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingCharacter' | translate}}</mat-hint>
+                      </mat-form-field>
+                  </div>
+                  <div class="flex mt-5">
+                      <div class="flex flex-1 flex-end">
+                          <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">{{'contentSharing.copyLink' | translate}} &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
+                          <button mat-stroked-button type="submit"
+                              class="text-white flex-auto-display send-btn" [ngClass]="(users.length === 0 || users.length === maxEmailsLimit) ? 'gray-background': 'active-background'"
+                              [disabled]="users.length === 0 || users.length === maxEmailsLimit" (click)="submitSharing()"
+                              >
+                              {{'contentSharing.send' | translate}}<mat-icon >play_arrow</mat-icon>
+                          </button>
+                      </div>
+                  </div>
+  
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+  </div>

@@ -17,7 +17,7 @@ import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-c
 import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
 
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
-
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -59,7 +59,7 @@ interface IStripUnitContentData {
   styleUrls: ['./app-toc-about.component.scss'],
 })
 
-export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, OnChanges, OnDestroy {
 
   constructor(
     private ratingService: RatingService,
@@ -67,12 +67,23 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
     private dialog: MatDialog,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService,
-    private timerService: TimerService
-  ) { }
+    private timerService: TimerService,
+    private tocSvc: AppTocService,
+  ) {
+
+  }
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
   @Input() sticky = false
+  @Input() tocStructure: any
+  @Input() batchId: any
+  @Input() pathSet: any
+  @Input() config: any
+  @Input() resumeData: any
+  @Input() forPreview = false
+  @Input() batchData: any
+  @Input() fromViewer = false
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
 
@@ -136,8 +147,13 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   timer: any = {}
-
+  isMobile = false
   ngOnInit() {
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
       this.loadCompetencies()
@@ -165,6 +181,37 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
           this.description.ellipsis = true
         }
       },         500)
+    }
+
+    if (this.content) {
+      this.tocStructure = {
+        assessment: 0,
+        course: 0,
+        handsOn: 0,
+        interactiveVideo: 0,
+        learningModule: 0,
+        other: 0,
+        pdf: 0,
+        survey: 0,
+        podcast: 0,
+        practiceTest: 0,
+        finalTest: 0,
+        quiz: 0,
+        video: 0,
+        webModule: 0,
+        webPage: 0,
+        youtube: 0,
+        interactivecontent: 0,
+        offlineSession: 0,
+      }
+      this.tocStructure.learningModule = this.content.primaryCategory === 'Course Unit' ? -1 : 0
+      this.tocStructure.course = this.content.primaryCategory === 'Course' ? -1 : 0
+      this.tocStructure = this.tocSvc.getTocStructure(this.content, this.tocStructure)
+      for (const progType in this.tocStructure) {
+        if (this.tocStructure[progType] > 0) {
+          break
+        }
+      }
     }
   }
 

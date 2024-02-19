@@ -425,56 +425,59 @@ export class WidgetContentService {
     return enrolledCourseData
   }
 
-  getResourseLink(content: any, hierarchyData?: any, batchId?: any) {
-    if (content.lrcProgressDetails && content.lrcProgressDetails.mimeType) {
-      if (content.completionPercentage  === 100) {
-        return this.gotoTocPage(content)
-      }
-      return this.getResourseDataWithData(content)
-    }
-    if (content.mimeType && batchId) {
-      const url = viewerRouteGenerator(
-        content.identifier,
-        content.mimeType,
-        hierarchyData.identifier,
-        'Course',
-        false,
-        'Learning Resource',
-        batchId,
-        hierarchyData.name,
-      )
-      return url
-    }
+  async getResourseLink(content: any) {
+    let urlData: any
     let enrolledCourseData: any = this.getEnrolledData(content.identifier)
-    if (enrolledCourseData && enrolledCourseData.batchId) {
-      if (enrolledCourseData.completionPercentage  === 100) {
-        return this.gotoTocPage(enrolledCourseData)
-      }  if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
+    if (enrolledCourseData) {
+      if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
+        if (enrolledCourseData.completionPercentage  === 100) {
+          return this.gotoTocPage(enrolledCourseData)
+        }
         enrolledCourseData  = {
           ...enrolledCourseData,
           identifier: enrolledCourseData.collectionId,
           primaryCategory: enrolledCourseData.content.primaryCategory,
           name: enrolledCourseData.content.name,
         }
-        return this.getResourseDataWithData(enrolledCourseData)
+        return this.getResourseDataWithData(enrolledCourseData,
+                                            enrolledCourseData.lastReadContentId,
+                                            enrolledCourseData.lrcProgressDetails.mimeType)
       }
-      const urlData = {
-        url: `/viewer`,
-        queryParams: { collectionId: content.identifier, batchId: enrolledCourseData.batchId, checkFirstChild: true },
-      }
-      return urlData
+        if (enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId) {
+          const doId = enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId
+          const responseData = await this.fetchProgramContent(doId).toPromise().then(async (res: any) => {
+            if (res && res.result && res.result.content) {
+              const contentData: any = res.result.content
+              enrolledCourseData  = {
+                ...enrolledCourseData,
+                identifier: enrolledCourseData.collectionId,
+                primaryCategory: enrolledCourseData.content.primaryCategory,
+                name: enrolledCourseData.content.name,
+              }
+              urlData =  this.getResourseDataWithData(enrolledCourseData, contentData.identifier, contentData.mimeType)
+              if (urlData) {
+                return urlData
+              }
+            }
+          })
+          return responseData ? responseData : this.gotoTocPage(content)
+        }
+          return this.gotoTocPage(content)
+
     }
-    return this.gotoTocPage(content)
+      return this.gotoTocPage(content)
+
   }
-  getResourseDataWithData(content: any) {
+
+  getResourseDataWithData(content: any, resourseId: any, mimeType: any) {
     if (content) {
       const url = viewerRouteGenerator(
-        content.lastReadContentId,
-        content.lrcProgressDetails.mimeType,
+        resourseId,
+        mimeType,
         content.identifier,
         'Course',
         false,
-        content.primaryCategory,
+        'Learning Resource',
         content.batchId,
         content.name,
       )

@@ -484,8 +484,8 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     }
 
   }
-  getRedirectUrlData(content: any) {
-    const urlData = this.contSvc.getResourseLink(content)
+  async getRedirectUrlData(content: any) {
+    const urlData = await this.contSvc.getResourseLink(content)
     this.router.navigate(
       [urlData.url],
       {

@@ -2,7 +2,7 @@
     <div class="main-container">
       <ng-container *ngIf="batchData?.content[0]?.batchAttributes?.sessionDetails_v2?.length > 0; else noChildren">
         <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m">
-            <ws-widget-app-toc-session-card-new [forPreview]="forPreview" [content]="content" [rootId]="contextId" [batchData]="batchData" [config]="config"
+            <ws-widget-app-toc-session-card-new [forPreview]="forPreview" [batchId]="batchId" [content]="content"  [pathSet]="pathSet"  [rootId]="rootId" [rootContentType]="rootContentType" [rootId]="contextId" [batchData]="batchData" [config]="config"
               [session]="sessionListMap"></ws-widget-app-toc-session-card-new>
           </div>
       </ng-container>

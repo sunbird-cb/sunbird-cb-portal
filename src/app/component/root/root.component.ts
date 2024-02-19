@@ -85,6 +85,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   backGroundTheme: any
   showHubs = true
   showBottomNav = true
+  viewerPage = false
 
   constructor(
     private router: Router,
@@ -263,6 +264,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           } else {
             this.showHubs = true
           }
+        }
+        if (event.url.includes('/viewer')) {
+          this.viewerPage = true
         }
         this.routeChangeInProgress = true
         this.changeDetector.detectChanges()

@@ -35,3 +35,48 @@
 
 //   }
 // }
+@media only screen and (min-width: 360px) and (max-width: 360px) {
+  .video-js {
+    height:auto !important;
+    width: 100%;
+    min-height: auto !important;
+    padding-top: 70% !important;
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 389px) {
+  .video-js {
+    height:auto !important;
+    width: 100%;
+    min-height: auto !important;
+    padding-top: 60% !important;
+  }
+}
+
+
+@media only screen and (min-width: 390px) and (max-width: 768px) {
+  .video-js {
+    height:auto !important;
+    width: 100%;
+    min-height: auto !important;
+    padding-top: 74% !important;
+  }
+}
+
+@media only screen and (min-width: 390px) and (max-width: 539px) {
+  .video-js {
+    height:auto !important;
+    width: 100%;
+    min-height: auto !important;
+    padding-top: 74% !important;
+  }
+}
+
+@media only screen and (min-width: 540px) and (max-width: 540px) {
+  .video-js {
+    height:auto !important;
+    width: 100%;
+    min-height: auto !important;
+    padding-top: 38% !important;
+  }
+}

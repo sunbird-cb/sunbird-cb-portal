@@ -32,7 +32,7 @@ import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import dayjs from 'dayjs'
 // tslint:disable-next-line
-import _, { filter } from 'lodash'
+import _ from 'lodash'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
@@ -193,9 +193,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   scrolled = false
   pathSet = new Set()
-  clickToShare = false
-  previousURL: any
-
+  canShare = false
+  enableShare = false
+  rootOrgId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -407,6 +407,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         contentType: this.content.contentType,
         primaryCategory: this.content.primaryCategory,
       }
+    }
+    if (this.content && (
+      this.content.primaryCategory === this.primaryCategory.COURSE ||
+      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
+      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
+      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
+      ) {
+        this.canShare = true
+        if (this.configSvc.userProfile) {
+          this.rootOrgId = this.configSvc.userProfile.rootOrgId
+          // this.getUsersToShare('')
+        }
     }
   }
 
@@ -764,6 +776,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     })
 
+    this.tocSvc.contentLoader.next(false)
   }
 
   getUserRating(fireUpdate: boolean) {
@@ -898,6 +911,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.fetchBatchDetails()
             }
             this.enrollBtnLoading = false
+            this.tocSvc.contentLoader.next(false)
           }
         }
         this.isCourseCompletedOnThisMonth()
@@ -1124,6 +1138,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
             this.tocSvc.updateResumaData(this.resumeData)
             this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
+            this.getLastPlayedResource()
           } else {
             this.resumeData = null
           }
@@ -1611,6 +1626,34 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       //   this.nestedTreeControl.expand(node)
       // })
     }
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+
+  /* tslint:disable */
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
   }
 
   ngOnDestroy() {

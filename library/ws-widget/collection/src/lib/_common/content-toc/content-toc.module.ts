@@ -2,7 +2,17 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { FormsModule } from '@angular/forms'
-import { MatIconModule, MatTabsModule, MatProgressBarModule, MatExpansionModule, MatMenuModule, MatProgressSpinnerModule, MatSnackBarModule, MatRadioModule } from '@angular/material'
+import {
+  MatIconModule,
+  MatTabsModule,
+  MatProgressBarModule,
+  MatExpansionModule,
+  MatMenuModule,
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  MatRadioModule ,
+  MatTooltipModule,
+} from '@angular/material'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { NgCircleProgressModule } from 'ng-circle-progress'
 
@@ -25,7 +35,7 @@ import { EnrollModalComponent } from './enroll-modal/enroll-modal.component'
 import { AppTocSessionCardNewComponent } from './app-toc-session-card-new/app-toc-session-card-new.component'
 import { AppTocSessionsNewComponent } from './app-toc-sessions-new/app-toc-sessions-new.component'
 import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
-
+import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-skeleton/app-toc-content-card-v2-skeleton.component'
 @NgModule({
   declarations: [
     ContentTocComponent,
@@ -37,6 +47,7 @@ import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
     EnrollModalComponent,
     AppTocSessionCardNewComponent,
     AppTocSessionsNewComponent,
+    AppTocContentCardV2SkeletonComponent,
   ],
   imports: [
     CommonModule,
@@ -62,6 +73,7 @@ import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
     HorizontalScrollerV2Module,
     WidgetResolverModule,
     AttendanceCardModule,
+    MatTooltipModule,
   ],
   exports: [
     ContentTocComponent,
