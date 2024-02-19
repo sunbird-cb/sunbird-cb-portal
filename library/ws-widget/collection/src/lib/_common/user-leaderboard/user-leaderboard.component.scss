@@ -1,3 +1,149 @@
 @import 'ws-common';
 @import 'ws-vars';
 @import 'ws-mixins';
+
+.user-leaderboard-wrapper {
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 1;
+    background-color: white;
+
+    .podium-img {
+      width: 100%;
+      margin-top: -25px;
+    }
+
+    .podium-content {
+      background-color: #1B4CA1;
+      padding: 16px;
+      border-top-right-radius: 16px;
+      border-top-left-radius: 16px;
+    }
+    .podium-title {
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      .month {
+        color: #F3962F;
+      }
+    }
+    .podium {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      padding-top: 10px;
+
+      .rank {
+        width: 30%;
+        height: 145px;
+        text-align: center;
+        background-color: white;
+        border-radius: 10px;
+        z-index: 100
+      }
+      .rank-left {
+        margin-top: 20px;
+      }
+      .rank-right {
+        margin-top: 20px;
+      }
+      .podium-rank-content {
+        padding: 20px 5px;
+      }
+    }
+
+    .rank-user-img {
+      height: 29px;
+      width: 29px;
+      border-radius: 50%;
+      background-color: green;
+      color: white;
+      font-weight: 600;
+      font-size: 12px;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      .crown-img {
+        position: absolute;
+        left: 5px;
+        top: -10px;
+
+      }
+
+    }
+
+    .rank-user-name {
+      font-size: 12px;
+    }
+    .rank-user-points {
+      font-weight: 600;
+    }
+
+
+   .user-list-wrapper {
+      margin-top: -20px;
+    .current-user {
+      background-color: rgba(239, 149, 30, 0.16) !important;
+      font-weight: 600;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      padding: 7px 0px 0px 0px;
+      font-weight: normal;
+      font-size: .8rem;
+      .rank-change {
+        width: 10%;
+      }
+      .user-note {
+        width: 90%;
+      }
+
+    }
+    .user {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 16px;
+        .user-rank {
+          width: 10%;
+          font-weight: 600;
+        }
+        .user-img {
+          width: 13%;
+        }
+        .user-name {
+          width: 52%;
+        }
+        .user-points {
+          width: 25%;
+        }
+
+        .circle {
+          border-radius: 50%;
+          width: 29px;
+          height: 29px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgb(0, 100, 0);
+        }
+
+        .initial{
+          color: #ffffff;
+          font-size: 12px;
+          line-height: 12px;
+          letter-spacing: 0.2625px;
+        }
+
+
+      }
+   }
+}
