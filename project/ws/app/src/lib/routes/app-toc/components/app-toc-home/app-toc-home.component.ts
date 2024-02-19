@@ -192,7 +192,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   scrolled = false
   pathSet = new Set()
-
+  canShare =false;
+  enableShare = false;  
+  rootOrgId:any;
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -257,7 +259,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       // Present in app-toc-about.component
       const ratingsDiv = document.getElementById('ratingsDiv') as any
       this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
-    })
+    })    
   }
   ngOnInit() {
     this.getServerDateTime()
@@ -397,6 +399,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         contentType: this.content.contentType,
         primaryCategory: this.content.primaryCategory,
       }
+    }
+    if (this.content && (
+      this.content.primaryCategory === this.primaryCategory.COURSE ||
+      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
+      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
+      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
+      ) {
+        this.canShare = true
+        if (this.configSvc.userProfile) {
+          this.rootOrgId = this.configSvc.userProfile.rootOrgId
+          // this.getUsersToShare('')
+        }
     }
   }
 
@@ -684,6 +698,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.tocStructure.learningModule = this.content.primaryCategory === this.primaryCategory.MODULE ? -1 : 0
       this.tocStructure.course = this.content.primaryCategory === this.primaryCategory.COURSE ? -1 : 0
       this.tocStructure = this.tocSvc.getTocStructure(this.content, this.tocStructure)
+      console.log('this.primaryCategory', this.primaryCategory)
       for (const progType in this.tocStructure) {
         if (this.tocStructure[progType] > 0) {
           this.hasTocStructure = true
@@ -1619,5 +1634,32 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       //   this.nestedTreeControl.expand(node)
       // })
     }
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
   }
 }

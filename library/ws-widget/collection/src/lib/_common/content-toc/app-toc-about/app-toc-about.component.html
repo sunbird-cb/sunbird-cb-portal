@@ -1,4 +1,11 @@
 <div class="flex flex-col gap-10 mt-4">
+    <div class="earned-certificate-container flex flex-row" *ngIf="false">        
+        <div class="ribbon"></div>
+        <div class="earned-certificate">Certificate earned</div>
+        <div class="earned-certificate-container-background">
+
+        </div>
+    </div>
 
     <ng-container *ngIf="timer.days >= 0">
         <div class="flex flex-col gap-6 batch-timer">
@@ -51,7 +58,74 @@
             </div>
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
-            <div class="mat-subheading-1">Summary</div>
+            <ng-container *ngIf="fromViewer">
+                <div class="text-xl leading-5 font-bold">{{ handleCapitalize(content?.name) }}
+                </div>
+                <div class="leading-4">By {{ content?.source }}</div>                
+            </ng-container>
+            <ng-container *ngIf="fromViewer || isMobile">
+                <div class="flex gap-2" [ngClass]="isMobile ? 'horizontal-strip' : 'flex-wrap'">
+                            
+                    <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.duration">
+                      <mat-icon class="timer-icon">timer</mat-icon>
+                      <div class="text-xs">{{ content?.duration | pipeDurationTransform: 'hms' }}</div>
+                    </div>
+      
+                    <ng-container *ngIf="content?.children?.length">
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.course > 0">
+                        <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.course }} Course(s)</div>
+                      </div>
+        
+                      <div class="flex flex-col kpi-values items-center gap-3" *ngIf="tocStructure?.learningModule > 0">
+                        <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.learningModule }} Module(s)</div>
+                      </div>
+        
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.video > 0">
+                        <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.video }} Video(s)</div>
+                      </div>
+                      
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.pdf > 0">
+                        <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.pdf }} PDF's</div>
+                      </div>
+        
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.podcast > 0">
+                        <img src="/assets/icons/content/audio.svg" width="20px" alt="podcast image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.podcast }} Audio(s)</div>
+                      </div>
+      
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.webPage > 0">
+                        <mat-icon>content_copy</mat-icon>
+                        <div class="text-xs" i18n>{{ tocStructure?.webPage }} Web Page(s)</div>
+                      </div>
+      
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.interactivecontent > 0">
+                        <img src="/assets/icons/content/link.svg" width="20px" alt="interactive content image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.interactivecontent }} Interactive Content(s)</div>
+                      </div>
+        
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.finalTest > 0">
+                        <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.finalTest }} Final assessment(s) </div>
+                      </div>
+      
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.practiceTest > 0">
+                        <img src="/assets/icons/content/assessment.svg" width="20px" alt="practice test image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.practiceTest }} Practice test(s) </div>
+                      </div>
+      
+                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.other > 0">
+                        <img src="/assets/icons/content/course.svg" width="20px" alt="other items image" />
+                        <div class="text-xs" i18n>{{ tocStructure?.other }} Other Item(s) </div>
+                      </div>
+                      
+                    </ng-container>
+                </div>
+            </ng-container>
+            <div class="mat-subheading-1 summary">Summary</div>
             <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
                 {{ handleCapitalize(content?.description) }}
                 <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.viewLess"

@@ -101,6 +101,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (data.content && data.content.data) {
         this.content = data.content.data
         this.contentMIMEType = data.content.data.mimeType
+        console.log('this.content',this.content)
       }
     })
   }

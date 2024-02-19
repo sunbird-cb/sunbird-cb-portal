@@ -11,9 +11,9 @@
 @media screen and (max-width: 768px) {
     ::ng-deep .sticky-mat-tabs {
         .mat-tab-header {
-            top: 185px;
+            top: 120px;
             position: fixed;
-            width: calc(100% - 32px);
+            width: calc(100%);
         }
     }
 }
