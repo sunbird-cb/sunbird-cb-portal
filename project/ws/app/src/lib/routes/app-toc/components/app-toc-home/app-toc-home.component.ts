@@ -73,7 +73,7 @@ const flattenItems = (items: any[], key: string | number) => {
 })
 
 export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
-  show = true
+  show = false
   changeTab = false
   skeletonLoader = false
   banners: NsAppToc.ITocBanner | null = null
@@ -260,13 +260,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const ratingsDiv = document.getElementById('ratingsDiv') as any
         this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
       }
-      if (document.getElementById("contentContainer")) {
-        const contentDiv = document.getElementById("contentContainer") as any
+      if (document.getElementById('contentContainer')) {
+        const contentDiv = document.getElementById('contentContainer') as any
         this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
       }
     })
   }
-  
+
   ngOnInit() {
     this.getServerDateTime()
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -1560,7 +1560,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
-  
+
   checkModuleWiseData() {
     if (this.content && this.content.children) {
       this.content.children.forEach((ele: any) => {

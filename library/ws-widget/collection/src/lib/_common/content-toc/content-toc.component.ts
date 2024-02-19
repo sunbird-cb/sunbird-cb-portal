@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router'
 import { NsContent, UtilityService } from '@sunbird-cb/utils/src/public-api'
 import { Subscription } from 'rxjs'
 
-import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service' 
+import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
 
 @Component({
   selector: 'ws-widget-content-toc',
@@ -70,7 +70,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
     this.tabChangeValue = event.tab
     this.selectedTabIndex = event.index
     if (this.selectedTabIndex === 1) {
-      this.loadCheckService.componentLoaded(true);
+      this.loadCheckService.componentLoaded(true)
     }
   }
 }
