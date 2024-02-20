@@ -354,6 +354,25 @@
   }
 }
 
+.hidden {
+  display: none !important;
+}
+
+.arrow-back {
+  display: none !important;
+}
+
+@media screen and (max-width: 767px) {
+  .points-block {
+    display: none !important;
+  }
+
+  .arrow-back {
+    display: flex !important;
+    flex-direction: row;
+  }
+}
+
 ::ng-deep .mat-tooltip {
   position: relative;
   opacity: 1;

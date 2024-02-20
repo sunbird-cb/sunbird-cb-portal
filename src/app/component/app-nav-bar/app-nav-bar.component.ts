@@ -68,20 +68,24 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     if (this.configSvc.restrictedFeatures) {
       this.isHelpMenuRestricted = this.configSvc.restrictedFeatures.has('helpNavBarMenu')
     }
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.cancelTour()
       } else if (event instanceof NavigationEnd) {
+        localStorage.setItem('previousUrl', event.url)
         this.routeSubs(event)
         this.cancelTour()
         this.bindUrl(event.url.replace('/app/competencies/', ''))
       }
     })
+
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
+
   }
 
   ngOnInit() {
@@ -96,12 +100,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
        }, this.logoDisplayTime)
     }
 
-    // console.log('headerFooterConfigData',this.headerFooterConfigData)
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-          // Hide loading indicator
-          // console.log('event', event.url)
-          // console.log("activeRoute",localStorage.getItem("activeRoute"))
           if (localStorage.getItem('activeRoute')) {
             const route = localStorage.getItem('activeRoute')
             this.activeRoute = route ? route.toLowerCase().toString() : ''
