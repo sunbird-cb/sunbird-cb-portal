@@ -334,12 +334,11 @@ a.action-button {
   z-index: 1000;
   bottom: 0px;
   width: calc(100% - 32px);
-  display: none;
 }
 
-@media screen and (max-width: 1200x) {
+@media screen and (min-width: 1200px) {
   .mobile-enroll-div {
-    display: block;
+    display: none;
   }
 }
 

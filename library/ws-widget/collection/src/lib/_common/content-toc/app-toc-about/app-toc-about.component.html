@@ -1,4 +1,13 @@
-<div class="flex flex-col gap-10 my-4 px-4">
+<ng-template #competencyLabel>
+    <div class="mat-subheading-1 flex items-center gap-2">
+        Competencies
+        <mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color"
+            [matTooltipPosition]="'below'"
+            [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job. Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles. Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them. Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon>
+    </div>
+</ng-template>
+
+<div class="flex flex-col gap-10 my-4 px-4" [class.mt60]="sticky">
     <div class="earned-certificate-container flex flex-row" *ngIf="false">        
         <div class="ribbon"></div>
         <div class="earned-certificate">Certificate earned</div>
@@ -43,7 +52,7 @@
         </div>
     </ng-container>
 
-    <div class="flex flex-col" [class.mt60]="sticky">
+    <div class="flex flex-col">
         <ng-container *ngIf="skeletonLoader">
             <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
             <div class="flex flex-col gap-2 mt-4">
@@ -119,19 +128,13 @@
     <ng-container *ngIf="!skeletonLoader">
         <ng-container *ngIf="!strip?.loaderWidgets?.length || !competenciesObject">
             <div class="flex flex-col">
-                <div class="mat-subheading-1">
-                    Competencies 
-                    <mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color" [matTooltipPosition]="'below'" [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job. Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles. Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them. Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon>
-                </div>
+                <ng-container [ngTemplateOutlet]="competencyLabel"></ng-container>
                 No competencies found
             </div>
         </ng-container>
         <ng-container *ngIf="strip?.loaderWidgets?.length > 0">
             <div class="flex flex-col gap-3">
-                <div class="mat-subheading-1">
-                    Competencies
-                    <mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color" [matTooltipPosition]="'below'" [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job. Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles. Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them. Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon>
-                </div>
+                <ng-container [ngTemplateOutlet]="competencyLabel"></ng-container>
                 <div class="flex flex-row gap-3 sm:gap-4 mb-3">
                     <ng-container *ngFor="let item of competenciesObject" >
                         <div class="themes-button" [ngClass]="{'theme-activated': competencySelected === item.key}" (click)="handleShowCompetencies(item, 'selected')">{{ item.key }}</div>
