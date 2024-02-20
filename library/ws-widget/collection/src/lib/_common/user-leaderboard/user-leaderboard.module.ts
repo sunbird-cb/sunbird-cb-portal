@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { UserLeaderboardComponent } from './user-leaderboard.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MatDialogModule, MatIconModule } from '@angular/material'
+import { MatDialogModule, MatIconModule, MatTooltipModule } from '@angular/material'
 import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module'
 import { SlidersDynamicModule } from '../../sliders-dynamic/sliders-dynamic.module'
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core'
     PipeDurationTransformModule,
     WeeklyClapsModule,
     TranslateModule,
+    MatTooltipModule
   ],
   exports: [
     UserLeaderboardComponent,

@@ -32,7 +32,7 @@
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: space-between;
-      padding-top: 10px;
+      padding-top: 15px;
 
       .rank {
         width: 30%;
@@ -50,6 +50,9 @@
       }
       .podium-rank-content {
         padding: 20px 5px;
+      }
+      .rank1 {
+        padding-top: 25px;
       }
     }
 
@@ -69,11 +72,32 @@
 
       .crown-img {
         position: absolute;
-        left: 5px;
-        top: -10px;
+        left: -1px;
+        top: -21px;
 
       }
 
+    }
+    .change-rank {
+      margin-left: -1.5px;
+    }
+    .change-rank-icon {
+      margin-left: -5px;
+    }
+    .green {
+      color: green;
+    }
+    .red {
+      color: red;
+    }
+
+    .custom-line-height {
+      line-height: 1.4;
+    }
+
+    .info-icon {
+      font-size: 16px;
+      text-align: right;
     }
 
     .rank-user-name {
@@ -89,6 +113,7 @@
     .current-user {
       background-color: rgba(239, 149, 30, 0.16) !important;
       font-weight: 600;
+      padding-bottom: 5px!important
     }
 
     .user-info {
@@ -104,6 +129,7 @@
       }
       .user-note {
         width: 90%;
+        padding-left: 10px;
       }
 
     }
