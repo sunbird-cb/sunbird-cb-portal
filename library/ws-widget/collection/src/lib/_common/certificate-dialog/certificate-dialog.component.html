@@ -10,7 +10,7 @@
     </mat-card-content>
     <mat-card-actions class="flex flex-row-reverse">
         <!-- <ws-widget-svg-to-pdf></ws-widget-svg-to-pdf> -->
-        <a mat-button  [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent">
+        <a mat-button [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent" (click)="raiseIntreactTelemetry()">
             <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
             Download
         </a>

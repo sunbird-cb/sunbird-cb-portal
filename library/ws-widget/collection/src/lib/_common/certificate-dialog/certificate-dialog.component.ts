@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { jsPDF } from 'jspdf'
 
 @Component({
@@ -13,6 +14,7 @@ import { jsPDF } from 'jspdf'
 export class CertificateDialogComponent implements OnInit {
   url!: string
   constructor(
+    private events: EventService,
     public dialogRef: MatDialogRef<CertificateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -24,6 +26,7 @@ export class CertificateDialogComponent implements OnInit {
   }
 
   downloadCert() {
+    this.raiseIntreactTelemetry('svg')
     const a: any = document.createElement('a')
     a.href = this.data.cet
     a.download = 'Certificate'
@@ -32,7 +35,9 @@ export class CertificateDialogComponent implements OnInit {
     a.click()
     a.remove()
   }
+
   downloadCertPng() {
+    this.raiseIntreactTelemetry('png')
     const uriData = this.data.cet
     const img = new Image()
     img.src = uriData
@@ -56,6 +61,7 @@ export class CertificateDialogComponent implements OnInit {
     }
   }
   async downloadCertPdf() {
+    this.raiseIntreactTelemetry('pdf')
     const uriData = this.data.cet
     const img = new Image()
     img.src = uriData
@@ -79,4 +85,19 @@ export class CertificateDialogComponent implements OnInit {
       }
     }
   }
+
+  raiseIntreactTelemetry(action?: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'download-certificate',
+        subType: action && action,
+      },
+      {
+        id: this.data.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      }
+    )
+  }
+
 }
