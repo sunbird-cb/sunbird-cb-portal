@@ -334,6 +334,12 @@ a.action-button {
   z-index: 1000;
   bottom: 0px;
   width: calc(100% - 32px);
+
+  .action-button {
+    min-width: 320px;
+    max-width: 400px;
+    margin: auto;
+  }
 }
 
 @media screen and (min-width: 1200px) {
