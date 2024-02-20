@@ -428,7 +428,7 @@ export class WidgetContentService {
   async getResourseLink(content: any) {
     let urlData: any
     let enrolledCourseData: any = this.getEnrolledData(content.identifier)
-    if(enrolledCourseData) {
+    if (enrolledCourseData) {
       if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
         if (enrolledCourseData.completionPercentage  === 100) {
           return this.gotoTocPage(enrolledCourseData)
@@ -440,14 +440,14 @@ export class WidgetContentService {
           name: enrolledCourseData.content.name,
         }
         return this.getResourseDataWithData(enrolledCourseData,
-          enrolledCourseData.lastReadContentId,
-          enrolledCourseData.lrcProgressDetails.mimeType)
-      } else {
-        if(enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId) {
-          let doId = enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId
-          const responseData = await this.fetchProgramContent(doId).toPromise().then(async (res: any)=> {
-            if(res && res.result && res.result.content) {
-              let contentData : any = res.result.content
+                                            enrolledCourseData.lastReadContentId,
+                                            enrolledCourseData.lrcProgressDetails.mimeType)
+      }
+        if (enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId) {
+          const doId = enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId
+          const responseData = await this.fetchProgramContent(doId).toPromise().then(async (res: any) => {
+            if (res && res.result && res.result.content) {
+              const contentData: any = res.result.content
               enrolledCourseData  = {
                 ...enrolledCourseData,
                 identifier: enrolledCourseData.collectionId,
@@ -455,21 +455,20 @@ export class WidgetContentService {
                 name: enrolledCourseData.content.name,
               }
               urlData =  this.getResourseDataWithData(enrolledCourseData, contentData.identifier, contentData.mimeType)
-              if(urlData) {
+              if (urlData) {
                 return urlData
               }
             }
           })
-          return responseData? responseData : this.gotoTocPage(content)
-        }else {
-          return this.gotoTocPage(content)
+          return responseData ? responseData : this.gotoTocPage(content)
         }
-      }
-    } else {
-      return this.gotoTocPage(content)
+          return this.gotoTocPage(content)
+
     }
+      return this.gotoTocPage(content)
+
   }
-  
+
   getResourseDataWithData(content: any, resourseId: any, mimeType: any) {
     if (content) {
       const url = viewerRouteGenerator(

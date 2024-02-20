@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { FormsModule } from '@angular/forms'
-import { 
+import {
   MatIconModule,
   MatTabsModule,
   MatProgressBarModule,
@@ -73,7 +73,7 @@ import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-
     HorizontalScrollerV2Module,
     WidgetResolverModule,
     AttendanceCardModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   exports: [
     ContentTocComponent,

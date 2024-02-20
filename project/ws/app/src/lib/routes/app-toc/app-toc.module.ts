@@ -128,7 +128,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
 import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { TranslateModule } from '@ngx-translate/core'
-import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module';
+import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
 import { ShareTocModule } from './share-toc/share-toc.module'
 
 @NgModule({
@@ -159,7 +159,7 @@ import { ShareTocModule } from './share-toc/share-toc.module'
     AppTocSessionsComponent,
     AppTocSessionCardComponent,
     EnrollQuestionnaireComponent,
-    KarmaPointsPanelComponent
+    KarmaPointsPanelComponent,
   ],
   imports: [
     CommonModule,
@@ -245,7 +245,7 @@ import { ShareTocModule } from './share-toc/share-toc.module'
     ContentTocModule,
     NgCircleProgressModule.forRoot({}),
     TranslateModule,
-    ShareTocModule
+    ShareTocModule,
   ],
   providers: [
     AppTocResolverService,

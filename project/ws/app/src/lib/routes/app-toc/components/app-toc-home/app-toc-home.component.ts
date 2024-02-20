@@ -192,9 +192,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   scrolled = false
   pathSet = new Set()
-  canShare =false;
-  enableShare = false;  
-  rootOrgId:any;
+  canShare = false
+  enableShare = false
+  rootOrgId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -1637,7 +1637,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.events.raiseInteractTelemetry(
       {
         type: 'click',
-        subType: subType,
+        subType,
         id: this.content ? this.content.identifier : '',
       },
       {

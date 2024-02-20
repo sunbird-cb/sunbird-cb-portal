@@ -84,7 +84,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   activeMenu: any = ''
   backGroundTheme: any
   showHubs = true
-  viewerPage = false;
+  viewerPage = false
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -256,7 +256,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
         if (!(event.url.includes('/page/home')) && isMobile) {
           this.showHubs = false
-        } else {          
+        } else {
           if (event.url.includes('/public')) {
             this.showHubs = false
           } else {

@@ -67,9 +67,8 @@ export class AppTocSessionCardNewComponent implements OnInit {
   }
   get resourceLink(): { url: string; queryParams: { [key: string]: any } } {
 
-    
     if (this.content) {
-      let url = viewerRouteGenerator(
+      const url = viewerRouteGenerator(
         this.content.identifier,
         this.content.mimeType,
         this.rootId,

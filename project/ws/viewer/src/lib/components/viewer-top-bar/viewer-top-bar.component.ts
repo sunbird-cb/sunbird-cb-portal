@@ -20,7 +20,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
-  @Input() content:any;
+  @Input() content: any
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -53,9 +53,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   userId: any
   currentDataFromEnrollList: any
   isMobile = false
-  enableShare = false;
-  rootOrgId:any;
-  canShare = false;
+  enableShare = false
+  rootOrgId: any
+  canShare = false
   primaryCategory = NsContent.EPrimaryCategory
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
@@ -101,10 +101,10 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
       )
-      if(this.configSvc.userProfile) {
+      if (this.configSvc.userProfile) {
         this.rootOrgId = this.configSvc.userProfile.rootOrgId
       }
-      
+
     }
     //   this.route.data.subscribe((data: any) => {
     //     this.appIcon =
@@ -183,9 +183,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
-    
-    
-    
+
   }
 
   updateProgress(status: number, resourceId: any) {
@@ -356,7 +354,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     this.events.raiseInteractTelemetry(
       {
         type: 'click',
-        subType: subType,
+        subType,
         id: this.content ? this.content.identifier : '',
       },
       {

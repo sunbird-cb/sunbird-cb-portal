@@ -29,7 +29,7 @@ import { ShareTocModule } from '@ws/app/src/lib/routes/app-toc/share-toc/share-t
     MatProgressBarModule,
     ContentProgressModule,
     TranslateModule,
-    ShareTocModule
+    ShareTocModule,
   ],
   exports: [ViewerTopBarComponent],
   providers: [ValueService],
