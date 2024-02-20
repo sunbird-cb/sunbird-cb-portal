@@ -262,7 +262,14 @@ import { ShareTocModule } from './share-toc/share-toc.module'
     ActionService,
     MultilingualTranslationsService,
   ],
-  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent, AppTocHomeRootComponent, AppTocHomeComponent, ShareTocModule],
+  exports: [
+    AppTocDiscussionComponent,
+    AppTocSinglePageComponent,
+    AppTocBannerComponent,
+    AppTocHomeRootComponent,
+    AppTocHomeComponent,
+    ShareTocModule,
+  ],
   entryComponents: [
     AppTocDialogIntroVideoComponent,
     AppTocOverviewComponent,

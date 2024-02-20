@@ -99,7 +99,7 @@ export class ShareTocComponent implements OnInit {
     })
   }
 
-  translateLabels(label: string, type: any, subtype: any) {
+  translateLabels(label: string, type: any, subtype?: any) {
     return this.langtranslations.translateActualLabel(label, type, subtype)
   }
 

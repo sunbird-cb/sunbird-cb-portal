@@ -350,6 +350,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     this.enableShare = true
     this.raiseTelemetryForShare('shareContent')
   }
+
+  /* tslint:disable */
   raiseTelemetryForShare(subType: any) {
     this.events.raiseInteractTelemetry(
       {

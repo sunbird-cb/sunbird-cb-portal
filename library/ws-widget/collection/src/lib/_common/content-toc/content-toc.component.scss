@@ -1,3 +1,9 @@
+::ng-deep .content-tabs {
+    .mat-tab-body.mat-tab-body-active {
+        overflow-y: hidden;
+    }
+}
+
 ::ng-deep .sticky-mat-tabs {
     .mat-tab-header {
         top: 96px;

@@ -75,8 +75,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
-  @Input()  tocStructure: any
-  @Input() batchId: any
+  @Input() sticky = false
+  @Input() tocStructure: any
   @Input() pathSet: any
   @Input() config: any
   @Input() resumeData: any
