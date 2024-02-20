@@ -130,6 +130,10 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  get isEnrolled(): boolean {
+    return this.batchId ? true : false
+  }
+
   // private processCollectionForTree() {
   //     this.pathSet = new Set()
   // }
