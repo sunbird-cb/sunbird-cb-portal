@@ -84,13 +84,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   activeMenu: any = ''
   backGroundTheme: any
   showHubs = true
-<<<<<<< HEAD
-  viewerPage = false
-=======
   showBottomNav = true
   viewerPage = false
 
->>>>>>> 87f16514271297d51d36e2fceb0788a9e2480397
   constructor(
     private router: Router,
     private route: ActivatedRoute,
