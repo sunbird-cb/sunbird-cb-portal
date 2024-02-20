@@ -33,7 +33,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
 import { TranslateService } from '@ngx-translate/core'
-import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
@@ -170,7 +170,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     ).subscribe((res: any) => {
       if (res) {
         this.filteredUsers = []
-        //this.allUsers = []
+        // this.allUsers = []
         this.getUsersToShare(res)
       }
     })
@@ -1301,7 +1301,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
-      if(this.users.includes(value.trim())) {
+      if (this.users.includes(value.trim())) {
         this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
         return
       }
@@ -1318,7 +1318,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (el != null) {
           setTimeout(() => {
             el[0].scrollTop = el[0].scrollHeight
-          }, 200)
+          },         200)
         }
       } else {
         this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
@@ -1340,7 +1340,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
       return
     }
-    if(this.users.includes(event.option.value)) {
+    if (this.users.includes(event.option.value)) {
       this.openSnackbar(this.translateLabels('dulicateUser', 'contentSharing', ''))
       return
     }
@@ -1353,7 +1353,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (el != null) {
       setTimeout(() => {
         el[0].scrollTop = el[0].scrollHeight
-      }, 200)
+      },         200)
     }
   }
 

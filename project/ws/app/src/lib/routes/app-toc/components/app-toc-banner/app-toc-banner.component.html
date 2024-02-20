@@ -429,6 +429,7 @@
                                 {{user}}
                                 <mat-icon matChipRemove *ngIf="removable">close</mat-icon>
                             </mat-chip>
+                            <span class="to-placeholder">To:</span>
                             <input
                                 tabindex="-1"
                                 class="inputTextBox"
@@ -465,7 +466,7 @@
                         <button mat-stroked-button type="submit"
                             [ngClass]="{'disable-send-btn': users.length === 0 || users.length}"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
-                            [disabled]="userCtrl.value.length > 0 || users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
+                            [disabled]="userCtrl.value.length || users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
                             >
                             {{'contentSharing.send' | translate}} &nbsp; <mat-icon>send</mat-icon>
                         </button>

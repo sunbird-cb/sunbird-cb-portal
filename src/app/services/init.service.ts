@@ -142,17 +142,6 @@ export class InitService {
     //   'cbp',
     //   domSanitizer.bypassSecurityTrustResourceUrl('fusion-assets/icons/hubs.svg'),
     // )
-    // setLang
-    // this.translate.addLangs(['en', 'hi', 'ta'])
-    if (localStorage.getItem('websiteLanguage')) {
-      // this.translate.setDefaultLang('en')
-      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-      lang = lang.replace(/\"/g, '')
-      this.translate.use(lang)
-    } else {
-      this.translate.setDefaultLang('en')
-      localStorage.setItem('websiteLanguage', 'en')
-    }
   }
 
   get isAnonymousTelemetryRequired(): boolean {
@@ -464,6 +453,28 @@ export class InitService {
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
         this.configSvc.isActive = details.isActive
         this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
+
+        if (this.configSvc.unMappedUser) {
+          if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
+            const lang = this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang
+            this.translate.use(lang)
+            localStorage.setItem('websiteLanguage', lang)
+          } else {
+            if (localStorage.getItem('websiteLanguage')) {
+              // this.translate.setDefaultLang('en')
+              let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+              lang = lang.replace(/\"/g, '')
+              this.translate.use(lang)
+            }
+          }
+        } else if (localStorage.getItem('websiteLanguage')) {
+          let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+          lang = lang.replace(/\"/g, '')
+          this.translate.use(lang)
+        } else {
+          this.translate.setDefaultLang('en')
+          localStorage.setItem('websiteLanguage', 'en')
+        }
 
         // nps check
         if (localStorage.getItem('platformratingTime')) {

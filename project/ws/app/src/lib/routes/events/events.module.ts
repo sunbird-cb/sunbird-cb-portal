@@ -81,7 +81,7 @@ import { TranslateModule } from '@ngx-translate/core'
     BtnPageBackModule,
     WidgetResolverModule,
     MatTabsModule,
-    TranslateModule.forChild({}),
+    TranslateModule,
     HorizontalScrollerV2Module,
     ContentStripWithTabsModule,
   ],

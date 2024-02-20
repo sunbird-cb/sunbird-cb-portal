@@ -1202,6 +1202,10 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
   }
 
   translateLabels(label: string) {
+    if (label === 'Programs') {
+      const labeln = label.toLowerCase()
+      return this.langtranslations.translateLabelWithoutspace(labeln, 'contentstripmultiple', '')
+    }
     return this.langtranslations.translateLabelWithoutspace(label, 'contentstripmultiple', '')
   }
 }

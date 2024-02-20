@@ -5,7 +5,7 @@ import { Subscription, Observable, interval } from 'rxjs'
 import { startWith, map, debounceTime, distinctUntilChanged, pairwise } from 'rxjs/operators'
 import { MatSnackBar, MatChipInputEvent, DateAdapter, MAT_DATE_FORMATS, MatDialog, MatTabChangeEvent } from '@angular/material'
 import { AppDateAdapter, APP_DATE_FORMATS, changeformat } from '../../services/format-datepicker'
-import { ImageCropComponent, ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ImageCropComponent, ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { IMAGE_MAX_SIZE, PROFILE_IMAGE_SUPPORT_TYPES } from '@ws/author/src/lib/constants/upload'
 import { UserProfileService } from '../../services/user-profile.service'
 import { Router, ActivatedRoute } from '@angular/router'
@@ -144,6 +144,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isverifiedKBKeyExist!: boolean
   isverifiedKeyInAppv!: boolean
   isReqVKBuser = false
+  isSaveButtoDisable = false
+  isEhrmsId: any
+  ehrmsInfo: any
 
   constructor(
     private snackBar: MatSnackBar,
@@ -158,6 +161,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private eventSvc: EventService,
     private otpService: OtpService,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     private pipeImgUrl: PipeCertificateImageURL
   ) {
     if (localStorage.getItem('websiteLanguage')) {
@@ -165,6 +169,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+
     this.approvalConfig = this.route.snapshot.data.pageData.data
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
@@ -765,6 +778,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       // if (this.configSvc.userProfile) {
       this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
         (data: any) => {
+              // tslint:disable-next-line: max-line-length
+          if (data && data.profileDetails && data.profileDetails.additionalProperties && data.profileDetails.additionalProperties.externalSystem === 'DoPT eHRMS') {
+            this.isEhrmsId = data.profileDetails.additionalProperties.externalSystemId
+          }
 
           const userData = {
             ...data.profileDetails || _.get(this.configSvc.unMappedUser, 'profileDetails'),
@@ -1942,6 +1959,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
   public tabClicked(tabEvent: MatTabChangeEvent) {
+    // debugger
+    this.ehrmsInfo = tabEvent.tab.textLabel
+    if (tabEvent.tab.textLabel === 'e-HRMS details' || tabEvent.index === 2) {
+       this.isSaveButtoDisable = true
+    } else {
+      this.isSaveButtoDisable = false
+    }
     const data: WsEvents.ITelemetryTabData = {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
@@ -1950,6 +1974,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
       data,
     )
+
   }
   translateTo(menuName: string): string {
     // tslint:disable-next-line: prefer-template
