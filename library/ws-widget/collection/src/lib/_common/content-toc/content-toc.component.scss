@@ -1,8 +1,4 @@
 ::ng-deep .content-tabs {
-    border-radius: 16px 16px 0px 0px;
-    box-shadow: 0px -2px 9px rgba(0, 0, 0, 0.08);
-    background-color: rgba(255, 255, 255, 1);
-
     .mat-tab-body.mat-tab-body-active {
         overflow-y: hidden;
     }
@@ -25,5 +21,11 @@
             position: fixed;
             width: calc(100%);
         }
+    }
+
+    .content-tabs {
+        border-radius: 16px 16px 0px 0px;
+        box-shadow: 0px -2px 9px rgba(0, 0, 0, 0.08);
+        background-color: rgba(255, 255, 255, 1);
     }
 }
