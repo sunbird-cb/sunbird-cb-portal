@@ -155,25 +155,12 @@ $title-line-count: 3;
     margin-top: 24px;
 }
 
-.horizontal-strip {
-    flex-direction: row;
-    overflow-x: scroll;
-    width: 100%;
-    align-items: center;
-    text-align: center;
-}
-
-.horizontal-strip::-webkit-scrollbar {
-    display: none;
-}
-
 .earned-certificate-container {
     height: 135px;
     border: 1px solid rgb(27, 76, 161);
     border-radius: 8px;
     background-color: #fff;
     margin-top: 65px;
-    
  }
 
  .earned-certificate-container-background {

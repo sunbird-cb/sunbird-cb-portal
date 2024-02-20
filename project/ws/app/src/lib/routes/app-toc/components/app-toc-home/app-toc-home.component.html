@@ -222,6 +222,35 @@
   </ng-container>
 </ng-template>
 
+<ng-template #progressFunctionality>
+  <div class="flex flex-row gap-2">
+    <div class="flex-1">
+      <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-row gap-4 text-sm">
+            <div class="flex-1 text-xs">Overall Progress</div>
+            <div class="text-xs" *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</div>
+          </div>
+          <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
+            [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'"
+            [customClassName]="'content-progress'">
+          </ws-widget-content-progress>
+        </div>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="resumeData">
+      <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
+        <mat-icon>star_purple500</mat-icon>
+        <ng-container *ngIf="!userRating">
+          <div>Rate Now</div>
+        </ng-container>
+        <ng-container *ngIf="userRating">
+          <div>Edit Rating</div>
+        </ng-container>
+      </button>
+    </ng-container>
+  </div>
+</ng-template>
 
 <div class="toc-banner">
   <div class="flex flex-row gap-6 fixed-width">
@@ -297,6 +326,13 @@
 <div class="flex flex-row gap-6 fixed-width">
   <div class="toc-content">
     <div class="pb-4 lg:py-4">
+
+      <!-- Overall progress functionality -->
+      <div class="mobile-progress">
+        <ng-container [ngTemplateOutlet]="progressFunctionality"></ng-container>
+      </div>
+      <!-- Overall progress functionality -->
+
       <ws-widget-content-toc [content]="content" [pathSet]="pathSet" [tocStructure]="tocStructure" [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader" [changeTab]="changeTab"></ws-widget-content-toc>
     </div>
   </div>
@@ -401,31 +437,9 @@
               </div>
             </ng-container>
               
-            <div class="flex flex-row gap-2">
-              <div class="flex-1">
-                <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
-                  <div class="flex flex-col gap-2">
-                    <div class="flex flex-row gap-4 text-sm">
-                      <div class="flex-1">Overall Progress</div>
-                      <div *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</div>
-                    </div>
-                    <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'" [customClassName]="'content-progress'">
-                    </ws-widget-content-progress>
-                  </div>
-                </ng-container>
-              </div>
-              <ng-container *ngIf="resumeData">
-                <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
-                  <mat-icon>star_purple500</mat-icon>
-                  <ng-container *ngIf="!userRating">
-                    <div>Rate Now</div>
-                  </ng-container>
-                  <ng-container *ngIf="userRating">
-                    <div>Edit Rating</div>
-                  </ng-container>
-                </button>
-              </ng-container>
-            </div>
+            <!-- Overall progress functionality -->
+            <ng-container [ngTemplateOutlet]="progressFunctionality"></ng-container>
+            <!-- Overall progress functionality -->
             
             <div *ngIf="resumeData && !userRating">
               <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"

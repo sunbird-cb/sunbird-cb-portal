@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-10 mt-4">
+<div class="flex flex-col gap-10 my-4 px-4">
     <div class="earned-certificate-container flex flex-row" *ngIf="false">        
         <div class="ribbon"></div>
         <div class="earned-certificate">Certificate earned</div>
@@ -62,65 +62,7 @@
                 <div class="leading-4">By {{ content?.source }}</div>                
             </ng-container>
             <ng-container *ngIf="fromViewer || isMobile">
-                <div class="flex gap-2" [ngClass]="isMobile ? 'horizontal-strip' : 'flex-wrap'">
-                            
-                    <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.duration">
-                      <mat-icon class="timer-icon">timer</mat-icon>
-                      <div class="text-xs">{{ content?.duration | pipeDurationTransform: 'hms' }}</div>
-                    </div>
-      
-                    <ng-container *ngIf="content?.children?.length">
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.course > 0">
-                        <img src="/assets/icons/content/course.svg" width="20px" alt="pdf image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.course }} Course(s)</div>
-                      </div>
-        
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.learningModule > 0">
-                        <img src="/assets/icons/content/module.svg" width="24px" alt="module image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.learningModule }} Module(s)</div>
-                      </div>
-        
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.video > 0">
-                        <img src="/assets/icons/content/video.svg" width="20px" alt="video image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.video }} Video(s)</div>
-                      </div>
-                      
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.pdf > 0">
-                        <img src="/assets/icons/content/pdf.svg" width="20px" alt="pdf image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.pdf }} PDF's</div>
-                      </div>
-        
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.podcast > 0">
-                        <img src="/assets/icons/content/audio.svg" width="20px" alt="podcast image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.podcast }} Audio(s)</div>
-                      </div>
-      
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.webPage > 0">
-                        <mat-icon>content_copy</mat-icon>
-                        <div class="text-xs" i18n>{{ tocStructure?.webPage }} Web Page(s)</div>
-                      </div>
-      
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.interactivecontent > 0">
-                        <img src="/assets/icons/content/link.svg" width="20px" alt="interactive content image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.interactivecontent }} Interactive Content(s)</div>
-                      </div>
-        
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.finalTest > 0">
-                        <img src="/assets/icons/content/assessment.svg" width="20px" alt="assessment image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.finalTest }} Final assessment(s) </div>
-                      </div>
-      
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.practiceTest > 0">
-                        <img src="/assets/icons/content/assessment.svg" width="20px" alt="practice test image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.practiceTest }} Practice test(s) </div>
-                      </div>
-      
-                      <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.other > 0">
-                        <img src="/assets/icons/content/course.svg" width="20px" alt="other items image" />
-                        <div class="text-xs" i18n>{{ tocStructure?.other }} Other Item(s) </div>
-                      </div>
-                    </ng-container>
-                </div>
+                <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure" [isMobile]="isMobile" ></ws-widget-toc-kpi-values>
             </ng-container>
             <div class="mat-subheading-1 summary">Summary</div>
             <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
@@ -177,22 +119,18 @@
     <ng-container *ngIf="!skeletonLoader">
         <ng-container *ngIf="!strip?.loaderWidgets?.length || !competenciesObject">
             <div class="flex flex-col">
-                <div class="mat-subheading-1">Competencies 
-                    <span><mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color" [matTooltipPosition]="'below'" [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job.
-                        Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles.
-                        Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them.
-                        Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon></span>
+                <div class="mat-subheading-1">
+                    Competencies 
+                    <mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color" [matTooltipPosition]="'below'" [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job. Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles. Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them. Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon>
                 </div>
                 No competencies found
             </div>
         </ng-container>
         <ng-container *ngIf="strip?.loaderWidgets?.length > 0">
             <div class="flex flex-col gap-3">
-                <div class="mat-subheading-1">Competencies
-                    <span><mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color" [matTooltipPosition]="'below'" [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job.
-                        Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles.
-                        Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them.
-                        Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon></span>
+                <div class="mat-subheading-1">
+                    Competencies
+                    <mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color" [matTooltipPosition]="'below'" [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job. Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles. Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them. Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon>
                 </div>
                 <div class="flex flex-row gap-3 sm:gap-4 mb-3">
                     <ng-container *ngFor="let item of competenciesObject" >

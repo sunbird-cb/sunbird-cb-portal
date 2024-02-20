@@ -153,8 +153,6 @@
   display: flex;
   margin-left: 0;
   text-align: center;
-  // flex: 10;
-  // max-width: 486px;
   flex: 4;
   max-width: 286px;
   margin-right: 1rem;
@@ -179,12 +177,6 @@
     height: 52px;
     align-items: center;
   }
-
-  // .app-logo {
-  //   @include breakpoint-xs {
-  //     max-width: 100%;
-  //   }
-  // }
 
   .help-icon {
     height: 20px;
