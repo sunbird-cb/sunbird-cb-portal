@@ -77,7 +77,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   @Input() skeletonLoader = false
   @Input() sticky = false
   @Input() tocStructure: any
-  @Input() batchId: any
   @Input() pathSet: any
   @Input() config: any
   @Input() resumeData: any
