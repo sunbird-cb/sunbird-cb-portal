@@ -130,6 +130,7 @@ import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/ske
 import { TranslateModule } from '@ngx-translate/core'
 import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
 import { ShareTocModule } from './share-toc/share-toc.module'
+import { TocKpiValuesModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/toc-kpi-values/toc-kpi-values.module'
 
 @NgModule({
   declarations: [
@@ -246,6 +247,7 @@ import { ShareTocModule } from './share-toc/share-toc.module'
     NgCircleProgressModule.forRoot({}),
     TranslateModule,
     ShareTocModule,
+    TocKpiValuesModule,
   ],
   providers: [
     AppTocResolverService,
