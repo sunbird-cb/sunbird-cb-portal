@@ -87,16 +87,17 @@ export class ProfileKarmapointsComponent implements OnInit {
 
   getTitle(row: any) {
     if (row && row.operation_type === 'COURSE_COMPLETION') {
-      return 'Course Completion'
+      return this.translateLabels('Course Completion', 'profileKarmapoints', '')
     }
     if (row && row.operation_type === 'RATING') {
-      return 'Course Rating'
+      return this.translateLabels('Course Rating', 'profileKarmapoints', '')
     }
     if (row && row.operation_type === 'FIRST_LOGIN') {
-      return 'First Login'
+      return this.translateLabels('First Login', 'profileKarmapoints', '')
     }
     if (row && row.operation_type === 'FIRST_ENROLMENT') {
-      return 'First Enrollment'
+      // return 'First Enrollment'
+      return this.translateLabels('First Enrollment', 'profileKarmapoints', '')
     }
     return `${row ? row.operation_type.split('_').join(' ') : 'No Title'}`
   }
