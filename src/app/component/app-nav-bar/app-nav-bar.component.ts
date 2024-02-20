@@ -2,9 +2,10 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, MultilingualTranslationsService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, NsInstanceConfig, NsPage, WsEvents, UtilityService } from '@sunbird-cb/utils'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
+
 @Component({
   selector: 'ws-app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
@@ -13,9 +14,7 @@ import { TranslateService } from '@ngx-translate/core'
 export class AppNavBarComponent implements OnInit, OnChanges {
   @Input() mode: 'top' | 'bottom' = 'top'
   @Input() headerFooterConfigData: any
-  // @Input()
-  // @HostBinding('id')
-  // public id!: string
+  hideKPOnNav = false
   basicBtnAppsConfig: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig> = {
     widgetType: 'actionButton',
     widgetSubType: 'actionButtonApps',
@@ -62,7 +61,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private router: Router,
     private translate: TranslateService,
     private events: EventService,
-    private langtranslations: MultilingualTranslationsService
+    private langtranslations: MultilingualTranslationsService,
+    private utilityService: UtilityService
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -73,7 +73,6 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       if (event instanceof NavigationStart) {
         this.cancelTour()
       } else if (event instanceof NavigationEnd) {
-        localStorage.setItem('previousUrl', event.url)
         this.routeSubs(event)
         this.cancelTour()
         this.bindUrl(event.url.replace('/app/competencies/', ''))
@@ -106,7 +105,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             const route = localStorage.getItem('activeRoute')
             this.activeRoute = route ? route.toLowerCase().toString() : ''
           }
-
+          if (event.url.includes('/app/toc/do') && window.screen.availWidth < 768) {
+            this.hideKPOnNav = true
+          }
           if (event.url.includes('/page/home')) {
             this.activeRoute = 'home'
           } else if (event.url.includes('/page/explore')) {
@@ -333,6 +334,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       }
       // tslint: disable-next-line: whitespace
       )
+  }
+
+  handleNavigateBack(): void {
+    window.history.back()
   }
 
   public getItem(item: any) {

@@ -72,7 +72,7 @@
   max-width: $new-max-width;
   display: block;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 16px;
 
   // @include breakpoint-s {
   //   padding: 0 16px;
@@ -770,14 +770,14 @@ mat-divider {
   }
 }
 
-@media screen and (min-width:280px) and (max-width: 768px) {
-  .toc-banner {
-    width: 92%;
-    padding: 0 16px;
-  }
+// @media screen and (min-width:280px) and (max-width: 768px) {
+//   .toc-banner {
+//     width: 92%;
+//     padding: 0 16px;
+//   }
 
-  .toc-content {
-    width: 92%;
-    padding: 0 16px;
-  }
-}
+//   .toc-content {
+//     width: 92%;
+//     padding: 0 16px;
+//   }
+// }

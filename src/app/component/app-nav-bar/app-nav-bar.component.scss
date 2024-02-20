@@ -1,6 +1,10 @@
 @import 'ws-mixins';
 @import 'ws-vars';
 
+.hideForNav {
+  display: none !important;
+}
+
 .tourGuideBtn {
   padding: 10px 16px;
   display: flex;
@@ -350,25 +354,6 @@
     text-align: left;
     line-height: 20px;
     margin-bottom: 0;
-  }
-}
-
-// .hidden {
-//   display: none ;
-// }
-
-.arrow-back {
-  display: none !important;
-}
-
-@media screen and (max-width: 767px) {
-  .points-block {
-    display: none !important;
-  }
-
-  .arrow-back {
-    display: flex !important;
-    flex-direction: row;
   }
 }
 
