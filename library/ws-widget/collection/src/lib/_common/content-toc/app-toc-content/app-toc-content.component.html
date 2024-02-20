@@ -1,49 +1,50 @@
-<div class="py-6 content-container" id="contentContainer">
-    <div class="main-container flex flex-col gap-4">
-        <ng-container *ngIf="content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
-            <div class="flex gap-4 tab-list" >
-                <ng-container *ngFor="let type of typesOfContent">  
-                    <div class="tab-data" (click)="!type.disabled && selectedTabType = type.id" [ngClass]="{'active-tab': selectedTabType === type.id, 'disabled':type.disabled}">
-                        <span>{{type.name}}</span>
-                    </div>
-                </ng-container>
-            </div>
-        </ng-container>
-        <ng-container *ngIf="selectedTabType === 'content' && content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
-            <ng-container [ngTemplateOutlet]="contentBlock"></ng-container>
-        </ng-container>
-        <ng-container *ngIf="selectedTabType === 'session' && content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
-            <ws-widget-app-app-toc-sessions-new [batchData]="batchData" [pathSet]="pathSet" [rootId]="contextId" [rootContentType]="contextPath"  [batchId]="batchId" [config]="config"  [content]="content">
-            </ws-widget-app-app-toc-sessions-new>
-        </ng-container>
-        <ng-container *ngIf="content?.primaryCategory !== nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
-            <ng-container [ngTemplateOutlet]="contentBlock"></ng-container>
-        </ng-container>
+<div class="px-4">
+    <div class="py-6 content-container" id="contentContainer">
+        <div class="main-container flex flex-col gap-4">
+            <ng-container *ngIf="content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
+                <div class="flex gap-4 tab-list" >
+                    <ng-container *ngFor="let type of typesOfContent">  
+                        <div class="tab-data" (click)="!type.disabled && selectedTabType = type.id" [ngClass]="{'active-tab': selectedTabType === type.id, 'disabled':type.disabled}">
+                            <span>{{type.name}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="selectedTabType === 'content' && content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
+                <ng-container [ngTemplateOutlet]="contentBlock"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="selectedTabType === 'session' && content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
+                <ws-widget-app-app-toc-sessions-new [batchData]="batchData" [pathSet]="pathSet" [rootId]="contextId" [rootContentType]="contextPath"  [batchId]="batchId" [config]="config"  [content]="content">
+                </ws-widget-app-app-toc-sessions-new>
+            </ng-container>
+            <ng-container *ngIf="content?.primaryCategory !== nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
+                <ng-container [ngTemplateOutlet]="contentBlock"></ng-container>
+            </ng-container>
+        </div>
     </div>
-</div>
-<!-- {{pathSet|json}} -->
-<ng-template #contentBlock>
-    <ng-container *ngIf="!contentLoader">
-
-        <ng-container *ngIf="content?.children?.length; else noChildren">
-            <div class="content-card " *ngFor="let card of content?.children; trackBy: contentTrackBy; let i = index;" 
-            [ngClass]="{ 'content-active': pathSet && pathSet.has(card.identifier) && isEnrolled }">
-                <!-- {{card|json}} -->
-                <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [expandActive]="true" [rootId]="contextId" [batchId]="batchId"
-                [rootContentType]="contextPath" [content]="card" [index]="i+1" [pathSet]="pathSet"></ws-widget-app-toc-content-card-v2>
-            </div>
+    <!-- {{pathSet|json}} -->
+    <ng-template #contentBlock>
+        <ng-container *ngIf="!contentLoader">
+            <ng-container *ngIf="content?.children?.length; else noChildren">
+                <div class="content-card " *ngFor="let card of content?.children; trackBy: contentTrackBy; let i = index;" 
+                [ngClass]="{ 'content-active': pathSet && pathSet.has(card.identifier)  && isEnrolled}">
+                    <!-- {{card|json}} -->
+                    <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [expandActive]="true" [rootId]="contextId" [batchId]="batchId"
+                    [rootContentType]="contextPath" [content]="card" [index]="i+1" [pathSet]="pathSet"></ws-widget-app-toc-content-card-v2>
+                </div>
+            </ng-container>
+            <ng-template #noChildren>
+                <div *ngIf="!isPlayable"
+                    class="ws-mat-primary-default-text ws-mat-primary-lite-background px-6 py-8 font-normal text-base noChildren"
+                    i18n>
+                    The preview for this type of content is unavailable. Please click on Start button above to view.
+                </div>
+                <!-- <ng-container *ngIf="isPlayable" [wsResolverWidget]="contentPlayWidgetConfig"></ng-container> -->
+            </ng-template>
         </ng-container>
-        <ng-template #noChildren>
-            <div *ngIf="!isPlayable"
-                class="ws-mat-primary-default-text ws-mat-primary-lite-background px-6 py-8 font-normal text-base noChildren"
-                i18n>
-                The preview for this type of content is unavailable. Please click on Start button above to view.
-            </div>
-            <!-- <ng-container *ngIf="isPlayable" [wsResolverWidget]="contentPlayWidgetConfig"></ng-container> -->
-        </ng-template>
-    </ng-container>
-
-    <ng-container *ngIf="contentLoader">
-        <ws-widget-app-toc-content-card-v2-skeleton></ws-widget-app-toc-content-card-v2-skeleton>
-    </ng-container>
-</ng-template>
+    
+        <ng-container *ngIf="contentLoader">
+            <ws-widget-app-toc-content-card-v2-skeleton></ws-widget-app-toc-content-card-v2-skeleton>
+        </ng-container>
+    </ng-template>
+</div>

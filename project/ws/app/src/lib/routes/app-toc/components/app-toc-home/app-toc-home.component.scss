@@ -8,6 +8,10 @@
   background: linear-gradient(135deg, rgba(58, 131, 207, 1) 0%, rgba(27, 76, 161, 1) 100%);
   width: 100%;
 
+  .fixed-width {
+    padding: 0 16px;
+  }
+
   .banner-details {
     padding: 36px 0px;
 
@@ -72,19 +76,7 @@
   max-width: $new-max-width;
   display: block;
   margin: 0 auto;
-  padding: 0;
-
-  // @include breakpoint-s {
-  //   padding: 0 16px;
-  // }
-
-  // @include breakpoint-xs {
-  //   padding: 0 16px;
-  // }
-
-  // @include breakpoint-m {
-  //   padding: 0 8px !important;
-  // }
+  // padding: 0 16px;
 }
 
 .mat-subheading-1 {
@@ -342,12 +334,11 @@ a.action-button {
   z-index: 1000;
   bottom: 0px;
   width: calc(100% - 32px);
-  display: none;
 }
 
-@media screen and (max-width: 1200x) {
+@media screen and (min-width: 1200px) {
   .mobile-enroll-div {
-    display: block;
+    display: none;
   }
 }
 
@@ -377,6 +368,16 @@ a.action-button {
   /* Adjust the blur radius and shadow spread as needed */
   border-radius: inherit;
   z-index: -1;
+}
+
+.mobile-progress {
+  padding: 16px;
+}
+
+@media screen and (min-width:1200px) {
+  .mobile-progress {
+    display: none;
+  }
 }
 
 //////////////................... New TOC page css.................///////////////
@@ -767,17 +768,5 @@ mat-divider {
     background-color: #ef951e !important;
     color: rgba(255,255,255,1) !important;
     opacity: 1;
-  }
-}
-
-@media screen and (min-width:280px) and (max-width: 768px) {
-  .toc-banner {
-    width: 92%;
-    padding: 0 16px;
-  }
-
-  .toc-content {
-    width: 92%;
-    padding: 0 16px;
   }
 }
