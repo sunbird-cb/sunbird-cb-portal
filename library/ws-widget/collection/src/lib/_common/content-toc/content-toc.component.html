@@ -3,8 +3,10 @@
         <ws-widget-app-toc-about [fromViewer]="fromViewer" [pathSet]="pathSet" [content]="content" [tocStructure]="tocStructure" [config]="config"  [forPreview]="false" [sticky]="sticky" 
         [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader"></ws-widget-app-toc-about>
     </mat-tab>
-    <mat-tab label="Content" *ngIf="contentTabFlag">
-        <ws-widget-app-toc-content [batchId]="batchId" [pathSet]="pathSet" [content]="content" [tocStructure]="tocStructure" [config]="config"  [forPreview]="false"
-        [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader"></ws-widget-app-toc-content>
-    </mat-tab>
+    <ng-container *ngIf="content?.children?.length">
+        <mat-tab label="Content" *ngIf="contentTabFlag">
+            <ws-widget-app-toc-content [batchId]="batchId" [pathSet]="pathSet" [content]="content" [tocStructure]="tocStructure" [config]="config"  [forPreview]="false"
+            [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader"></ws-widget-app-toc-content>
+        </mat-tab>
+    </ng-container>
 </mat-tab-group>
