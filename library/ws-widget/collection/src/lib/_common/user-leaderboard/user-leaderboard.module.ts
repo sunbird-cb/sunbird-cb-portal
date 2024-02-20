@@ -8,6 +8,7 @@ import { SlidersDynamicModule } from '../../sliders-dynamic/sliders-dynamic.modu
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
 import { TranslateModule } from '@ngx-translate/core'
+import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
 
 @NgModule({
   declarations: [UserLeaderboardComponent],
@@ -22,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core'
     PipeDurationTransformModule,
     WeeklyClapsModule,
     TranslateModule,
-    MatTooltipModule
+    MatTooltipModule,
+    SkeletonLoaderModule,
   ],
   exports: [
     UserLeaderboardComponent,

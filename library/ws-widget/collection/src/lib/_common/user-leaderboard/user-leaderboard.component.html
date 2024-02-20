@@ -1,4 +1,15 @@
-<div class="user-leaderboard-wrapper">
+
+<div class="user-leaderboard-wrapper margin-bottom-m" [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'">
+  <div class="leaderboard-overlay" *ngIf="showOverlay">
+    <div class="content">
+        <div>
+          <img class="image" src="/assets/icons/Crown.svg">
+        </div>
+        <span>
+          Your dedication is showing! Congratulation on climbing from 26th to the 23rd rank in this month! This is fantastic jump of 3 places!
+        </span>
+    </div>
+  </div>
   <div class="podium-wrapper">
     <div class="podium-content">
       <div class="podium-title">
@@ -44,50 +55,96 @@
       </div>
     </div>
 
-  <div class="">
-    <img class="podium-img" src="/assets/icons/Podium.svg">
-  </div>
-
-  <div class="user-list-wrapper">
-    <div class="user">
-      <div class="flex">
-        <div class="user-rank">25</div>
-        <div class="user-img">
-          <div class="circle"><div class="initial">VK</div></div>
-        </div>
-        <div class="user-name">Venkata kandagaddala</div>
-        <div class="user-points ">567 points</div>
-      </div>
+    <div class="">
+      <img class="podium-img" src="/assets/icons/Podium.svg">
     </div>
-    <div class="user current-user">
-      <div class="flex">
-        <div class="user-rank">26</div>
-        <div class="user-img">
-          <div class="circle"><div class="initial">PX</div></div>
-        </div>
-        <div class="user-name">Saanvitha</div>
-        <div class="user-points">480 points</div>
-      </div>
-        <div class="user-info">
-          <div class="user-rank-change">
-            <div class="flex">
-              <div class="change-rank-icon green"><mat-icon>arrow_drop_up</mat-icon></div>
-              <div class="change-rank">5</div>
-            </div>
+
+    <div class="user-list-wrapper">
+      <div class="user">
+        <div class="flex">
+          <div class="user-rank">25</div>
+          <div class="user-img">
+            <div class="circle"><div class="initial">VK</div></div>
           </div>
-          <div class="user-note">You were in 26th position last month.</div>
+          <div class="user-name">Venkata kandagaddala</div>
+          <div class="user-points ">567 points</div>
         </div>
-    </div>
+      </div>
+      <div class="user current-user">
+        <div class="flex">
+          <div class="user-rank">26</div>
+          <div class="user-img">
+            <div class="circle"><div class="initial">PX</div></div>
+          </div>
+          <div class="user-name">Saanvitha</div>
+          <div class="user-points">480 points</div>
+        </div>
+          <div class="user-info">
+            <div class="user-rank-change">
+              <div class="flex">
+                <div class="change-rank-icon green"><mat-icon>arrow_drop_up</mat-icon></div>
+                <div class="change-rank">5</div>
+              </div>
+            </div>
+            <div class="user-note">You were in 26th position last month.</div>
+          </div>
+      </div>
 
-    <div class="user">
-      <div class="flex">
-        <div class="user-rank">27</div>
-        <div class="user-img">
-          <div class="circle"><div class="initial">YM</div></div>
+      <div class="user">
+        <div class="flex">
+          <div class="user-rank">27</div>
+          <div class="user-img">
+            <div class="circle"><div class="initial">YM</div></div>
+          </div>
+          <div class="user-name">Karthik</div>
+          <div class="user-points">260 points</div>
         </div>
-        <div class="user-name">Karthik</div>
-        <div class="user-points">260 points</div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- <div class="user-leaderboard-wrapper margin-bottom-m">
+  <div>
+    <div class="podium-wrapper">
+      <div class="podium-content-skelton">
+        <div class="podium-title">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+        </div>
+        <div class="podium">
+          <div class="rank rank-left">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'145px'"></ws-widget-skeleton-loader>
+          </div>
+          <div class="rank rank-center">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'145px'"></ws-widget-skeleton-loader>
+          </div>
+          <div class="rank rank-right">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'145px'"></ws-widget-skeleton-loader>
+          </div>
+        </div>
+        <div class="">
+          <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+        </div>
+        <div class="user-list-wrapper">
+          <div class="">
+            <div class="flex">
+              <div class="user-rank">
+                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="user-img">
+                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="user-name">
+                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="user-points">
+                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+

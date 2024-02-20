@@ -3,11 +3,11 @@
     (activity)="goToActivity($event)" [profileData]="homePageData.profileCard"
         [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
-<section class="collapsible" [@collapse]="collapsed" [ngClass]="{'padding-top-m':!collapsed}">
-    <ws-widget-user-leaderboardComponent></ws-widget-user-leaderboardComponent>
-</section>
 
-<section class="hidden md:block" style="position: relative;" [ngClass]="{'padding-top-m':!collapsed, 'margin-bottom-m': collapsed}">
+<section class="hidden md:block" style="position: relative;" [ngClass]="{'':!collapsed, 'margin-bottom-m': collapsed}">
+    <section class="collapsible" [@collapse]="collapsed" [ngClass]="{'padding-top-m':!collapsed}">
+        <ws-widget-user-leaderboard></ws-widget-user-leaderboard>
+    </section>
     <div class="margin-bottom-m" class="collapsible" [@collapseWeekly]="collapsed">
         <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
     </div>

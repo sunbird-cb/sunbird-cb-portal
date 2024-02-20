@@ -3,6 +3,7 @@
 @import 'ws-mixins';
 
 .user-leaderboard-wrapper {
+  position: relative;
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     opacity: 1;
@@ -11,6 +12,12 @@
     .podium-img {
       width: 100%;
       margin-top: -25px;
+    }
+
+    .podium-content-skelton {
+      padding: 16px;
+      border-top-right-radius: 16px;
+      border-top-left-radius: 16px;
     }
 
     .podium-content {
@@ -172,4 +179,45 @@
 
       }
    }
+}
+
+.reduce-opacity {
+  opacity: 0.7;
+}
+.default-opacity {
+  opacity: 1;
+}
+
+.leaderboard-overlay {
+    opacity: .9;
+    z-index: 200;
+    background: black;
+    width: 100%;
+    height: -webkit-fill-available;
+    position: absolute;
+    border-radius: 12px;
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      height: -webkit-fill-available;
+      padding: 0 25px;
+      flex-direction: column;
+      text-align: center;
+    }
+    .message {
+      padding: 0 25px;
+    }
+
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      background-color: white;
+      width: 50px;
+      border-radius: 50%;
+    }
 }
