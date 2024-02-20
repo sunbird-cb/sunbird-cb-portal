@@ -287,6 +287,10 @@ export class AppTocContentCardV2Component implements OnInit {
   get isEnabled(): boolean {
     return true
   }
+
+  get isEnrolled(): boolean {
+    return this.batchId ? true : false
+  }
   openCertificateDialog(certData: any) {
     const cet = certData
     this.dialog.open(CertificateDialogComponent, {

@@ -27,7 +27,7 @@
 
         <ng-container *ngIf="content?.children?.length; else noChildren">
             <div class="content-card " *ngFor="let card of content?.children; trackBy: contentTrackBy; let i = index;" 
-            [ngClass]="{ 'content-active': pathSet && pathSet.has(card.identifier) }">
+            [ngClass]="{ 'content-active': pathSet && pathSet.has(card.identifier) && isEnrolled }">
                 <!-- {{card|json}} -->
                 <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [expandActive]="true" [rootId]="contextId" [batchId]="batchId"
                 [rootContentType]="contextPath" [content]="card" [index]="i+1" [pathSet]="pathSet"></ws-widget-app-toc-content-card-v2>

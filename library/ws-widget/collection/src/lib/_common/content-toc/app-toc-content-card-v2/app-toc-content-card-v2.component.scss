@@ -70,7 +70,7 @@ span.optional-span {
 .resource-container {
   display: flex;
   align-items: center;
-  border-radius: 8px;
+  // border-radius: 8px;
   // margin-bottom: 8px;
 
   .resource {
@@ -150,7 +150,7 @@ span.optional-span {
 .resource-container {
   display: flex;
   align-items: center;
-  border-radius: 8px;
+  // border-radius: 8px;
   // background-color: #fff;
   // margin: $size-s 0;
 
@@ -270,7 +270,7 @@ span.optional-span {
 }
 
 .course + .child-wrapper {
-  padding-left: 16px;
+  padding-left: 10px;
   .module + .child-wrapper {
     padding-left: 0px;
   }
@@ -281,7 +281,7 @@ span.optional-span {
 }
 
 .module + .child-wrapper {
-  padding-left: 16px;
+  padding-left: 10px;
 }
 
 // .collection-wrapper.close.module {
