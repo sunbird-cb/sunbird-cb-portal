@@ -33,6 +33,8 @@ export class CourseCompletionDialogComponent implements OnInit {
     }
 
   ngOnInit() {
+    let app:any = document.getElementById('viewer-conatiner-backdrop');
+    app.style.filter = 'blur(5px)';
     if (typeof(this.data.courseName) !== 'undefined') {
       this.courseName = this.data.courseName
     } else {

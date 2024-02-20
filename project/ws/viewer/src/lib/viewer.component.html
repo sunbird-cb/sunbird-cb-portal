@@ -1,4 +1,4 @@
-<section *ngIf="isNotEmbed">
+<section *ngIf="isNotEmbed" id="viewer-conatiner-backdrop">
   <ng-container *ngIf="!isMobile">
     <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
       (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
@@ -144,6 +144,6 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </section>
-<div class="full-height-width-iframe" *ngIf="!isNotEmbed">
+<div class="full-height-width-iframe" *ngIf="!isNotEmbed" id="viewer-conatiner-backdrop">
   <router-outlet></router-outlet>
 </div>

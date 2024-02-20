@@ -5,20 +5,29 @@
               {{ resourceName }}
             </h1>
       </div>
+      
+      <ng-container>
       <div class="flex nexPrevContainer">
+        <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status === 2">
+          <div class="completed blue-color">
+            <img src="assets/icons/final-assessment/correct_arrow.svg"/><span>Completed  </span>
+          </div>
+          
+        </ng-container>
           <a mat-icon-button class="width-auto " [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
             accesskey="<">
             <mat-icon color="accent">navigate_before</mat-icon>
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">Previous</span>
           </a>
-          <ng-container *ngIf="contentMIMEType === 'application/pdf'">
+          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2">
           <a  mat-icon-button class="width-auto blue-rounded-btn" [routerLink]="nextResourceUrl"
-          [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
+          [queryParams]="nextResourceUrlParams?.queryParams"
           queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">Mark as Complete</span>
           </a>
           </ng-container>
+         
           <!-- [disabled]="!nextResourceUrl" -->
           <!-- {{nextResourceUrl}} -->
           <a mat-icon-button class="width-auto mr-10 " [routerLink]="nextResourceUrl"
@@ -31,7 +40,7 @@
             <mat-icon color="accent">navigate_next</mat-icon>
           </a>
           <!-- <button mat-icon-button class="width-auto mr-10" routerLink="/page/home" *ngIf="isTypeOfCollection && !nextResourceUrl" -->
-          <button mat-icon-button class="width-auto mr-10" (click)="finishDialog()"
+          <button mat-icon-button class="width-auto mr-10  margin-top-2" (click)="finishDialog()"
             *ngIf="isTypeOfCollection && !nextResourceUrl" accesskey=">">
             <span *ngIf="logo" class="finish">Finish</span>
           </button>
@@ -42,6 +51,7 @@
           
          
       </div>
+      </ng-container>
       <div>
         <a href="javascript:void(0)" mat-icon-button *ngIf="isTypeOfCollection" role="link" class="width-auto center-toggle"
         [ngClass]="{'xsmall': !logo}" (click)="toggleSideBar()" accesskey="M">
@@ -86,19 +96,25 @@
       </div>
       <ng-container *ngIf="contentMIMEType !== 'application/vnd.sunbird.questionset'">
         <div class="flex nexPrevContainerMobile">
+          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status === 2">
+            <div class="completed blue-color">
+            <img src="assets/icons/final-assessment/correct_arrow.svg"/><span>Completed  </span>  
+            </div>
+          </ng-container>
           <a mat-icon-button class="margin-left-16" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
             accesskey="<">
             <!-- <mat-icon color="accent">navigate_before</mat-icon> -->
             <span class="mat-body-2 font-bold-imp">Previous</span>
           </a>
-          <ng-container *ngIf="contentMIMEType === 'application/pdf'">
+          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2">
             <a  mat-icon-button class="margin-left-16 width-auto text-center blue-rounded-btn" [routerLink]="nextResourceUrl"
-            [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
+            [queryParams]="nextResourceUrlParams?.queryParams" 
             queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
               <span class="mat-body-2 font-bold-imp">Mark as Complete</span>
             </a>
           </ng-container>
+         
           <!-- <a  mat-icon-button class="margin-left-16 width-auto text-center blue-rounded-btn"  *ngIf="contentMIMEType === 'application/pdf'">
             <span class="mat-body-2 font-bold-imp">Mark as Complete</span>
           </a> -->

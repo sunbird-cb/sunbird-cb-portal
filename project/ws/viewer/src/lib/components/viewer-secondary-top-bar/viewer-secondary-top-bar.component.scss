@@ -86,3 +86,24 @@
 .blue-color {
     color: rgb(27, 76, 161);
 }
+
+.completed {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.25;
+    line-height: 20px;
+    font-family: 'Lato';
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.completed span {
+    margin-left: 8px;
+}
+
+.margin-top-2 {
+    margin-top: 2px;
+}
