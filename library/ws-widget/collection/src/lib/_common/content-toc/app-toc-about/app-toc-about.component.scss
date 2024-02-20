@@ -61,7 +61,7 @@
         background-color: #FFF;
         border-radius: 8px;
         border: 1px solid rgba(0, 0, 0, 0.16);
-        max-width: 360px;
+        max-width: 344px;
         width: 100%;
 
         .rating-start-value {
@@ -69,6 +69,12 @@
                 color: $colorOrange;
             }
         }
+    }
+}
+
+.horizontal-strip {
+    .comment-div {
+        min-width: 340px;
     }
 }
 
@@ -176,10 +182,10 @@ $title-line-count: 3;
     height: 100;
     width: 100%;
     opacity: 0.5;
-    
     background-position-y: -88px;
     background-position-x: 20px;
  }
+
  .earned-certificate {
     font-family: 'Montserrat';
     font-size: 20px;
@@ -223,4 +229,16 @@ $title-line-count: 3;
 
 .vertical-align-middle {
     vertical-align: middle;
+}
+
+.horizontal-strip {
+    flex-direction: row;
+    overflow-x: scroll;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+}
+
+.horizontal-strip::-webkit-scrollbar {
+    display: none;
 }

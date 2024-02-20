@@ -337,9 +337,10 @@ a.action-button {
 }
 
 @media screen and (min-width: 1200px) {
-  .mobile-enroll-div {
-    display: none;
+  .mobile-enroll-div, .mob-share {
+    display: none !important;
   }
+
 }
 
 .action-button::before {

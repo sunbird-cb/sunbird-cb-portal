@@ -81,6 +81,9 @@
   border: none;
   width: 100%;
   cursor: pointer;
+  min-width: 320px;
+  max-width: 400px;
+  margin: auto;
 }
 
 .period {
@@ -112,10 +115,6 @@
 .highlightFilter {
   background: rgba(0, 0, 0, 0.04) !important;
 }
-
-// .hidden {
-//   display: none !important;
-// }
 
 .modal-button {
   border-radius: 64px;
