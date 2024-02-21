@@ -33,7 +33,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
 import { TranslateService } from '@ngx-translate/core'
-import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { TimerService } from '../../services/timer.service'
 dayjs.extend(isSameOrBefore)
@@ -122,8 +122,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   selectable = true
   removable = true
   addOnBlur = true
-  separatorKeysCodes: number[] = [ENTER, COMMA]
-  userCtrl = new FormControl()
+  separatorKeysCodes: number[] = [ENTER]
+  userCtrl = new FormControl('')
   filteredUsers: any []| undefined
   users: any[] = []
   allUsers: any[] = []
@@ -1252,7 +1252,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         return
       }
       if (this.users.includes(value.trim())) {
-        this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
+        this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
         return
       }
       const ePattern = new RegExp(`^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
@@ -1263,12 +1263,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (input) {
           input.value = ''
         }
-        this.userCtrl.setValue(null)
+        this.userCtrl.setValue('')
         const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
         if (el != null) {
           setTimeout(() => {
             el[0].scrollTop = el[0].scrollHeight
-          }, 200)
+          },         200)
         }
       } else {
         this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
@@ -1291,19 +1291,19 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return
     }
     if (this.users.includes(event.option.value)) {
-      this.openSnackbar(this.translateLabels('dulicateusers', 'contentSharing', ''))
+      this.openSnackbar(this.translateLabels('dulicateUser', 'contentSharing', ''))
       return
     }
     this.users.push(event.option.value)
     if (this.userInput) {
       this.userInput.nativeElement.value = ''
     }
-    this.userCtrl.setValue(null)
+    this.userCtrl.setValue('')
     const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
     if (el != null) {
       setTimeout(() => {
         el[0].scrollTop = el[0].scrollHeight
-      }, 200)
+      },         200)
     }
   }
 
@@ -1362,7 +1362,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.filteredUsers = []
         this.allUsers = []
         this.enableShare = false
-        this.userCtrl.setValue(null)
+        this.userCtrl.setValue('')
       }, error => {
         // tslint:disable
         console.log(error)
@@ -1376,7 +1376,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.users = []
     this.filteredUsers = []
     this.allUsers = []
-    this.userCtrl.setValue(null)
+    this.userCtrl.setValue('')
     this.raiseTelemetry('shareClose')
   }
 

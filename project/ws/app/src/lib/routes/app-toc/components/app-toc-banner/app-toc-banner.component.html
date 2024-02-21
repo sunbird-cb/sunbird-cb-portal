@@ -300,7 +300,7 @@
                         <button mat-stroked-button type="submit"
                             [ngClass]="{'disable-send-btn': users.length === 0 || users.length}"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
-                            [disabled]="users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
+                            [disabled]="userCtrl.value.length || users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
                             >
                             {{'contentSharing.send' | translate}} &nbsp; <mat-icon>send</mat-icon>
                         </button>
