@@ -429,10 +429,10 @@ export class WidgetContentService {
     let urlData: any
     let enrolledCourseData: any = this.getEnrolledData(content.identifier)
     if (enrolledCourseData) {
+      if (enrolledCourseData.completionPercentage  === 100) {
+        return this.gotoTocPage(enrolledCourseData)
+      }
       if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
-        if (enrolledCourseData.completionPercentage  === 100) {
-          return this.gotoTocPage(enrolledCourseData)
-        }
         enrolledCourseData  = {
           ...enrolledCourseData,
           identifier: enrolledCourseData.collectionId,
