@@ -27,7 +27,7 @@ export class UserLeaderboardComponent implements OnInit {
     }, 5000)
 
     setTimeout(() => {
-      //this.showOverlay = false
+      this.showOverlay = false
     }, 15000)
   }
   translateLabels(label: string, type: any) {
