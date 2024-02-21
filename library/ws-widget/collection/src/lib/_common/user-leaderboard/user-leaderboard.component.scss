@@ -27,9 +27,12 @@
       border-top-left-radius: 16px;
     }
     .podium-title {
-      color: white;
-      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.95);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-style: normal;
       font-weight: 600;
+      line-height: normal;
       .month {
         color: #F3962F;
       }
@@ -43,7 +46,7 @@
 
       .rank {
         width: 30%;
-        height: 145px;
+        height: 130px;
         text-align: center;
         background-color: white;
         border-radius: 10px;
@@ -56,7 +59,7 @@
         margin-top: 20px;
       }
       .podium-rank-content {
-        padding: 20px 5px;
+        padding: 20px 16px;
       }
       .rank1 {
         padding-top: 25px;
@@ -64,8 +67,8 @@
     }
 
     .rank-user-img {
-      height: 29px;
-      width: 29px;
+      height: 32px;
+      width: 32px;
       border-radius: 50%;
       background-color: green;
       color: white;
@@ -98,9 +101,9 @@
       color: red;
     }
 
-    .custom-line-height {
-      line-height: 1.4;
-    }
+    // .custom-line-height {
+    //   line-height: 1.4;
+    // }
 
     .info-icon {
       font-size: 16px;
@@ -108,17 +111,25 @@
     }
 
     .rank-user-name {
+      font-family: Lato;
       font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .rank-user-points {
+      font-family: Montserrat;
+      font-size: 16px;
+      font-style: normal;
       font-weight: 600;
     }
 
 
    .user-list-wrapper {
       margin-top: -20px;
-    .current-user {
-      background-color: rgba(239, 149, 30, 0.16) !important;
+    .high-light {
       font-weight: 600;
       padding-bottom: 5px!important
     }
@@ -129,14 +140,19 @@
       flex-wrap: nowrap;
       justify-content: space-between;
       padding: 7px 0px 0px 0px;
-      font-weight: normal;
-      font-size: .8rem;
+      font-weight: 400;
+      font-family: Lato;
+      font-size: 10px;
+      font-style: normal;
       .rank-change {
         width: 10%;
       }
       .user-note {
         width: 90%;
         padding-left: 10px;
+        font-family: Lato;
+        font-size: 10px;
+        font-weight: 400;
       }
 
     }
@@ -145,9 +161,13 @@
         flex-wrap: nowrap;
         justify-content: space-between;
         padding: 16px;
+        color: rgba(0, 0, 0, 0.87);
+        font-family: Lato;
+        font-size: 14px;
+        font-style: normal;
         .user-rank {
           width: 10%;
-          font-weight: 600;
+          font-weight: 700;
         }
         .user-img {
           width: 13%;
@@ -161,8 +181,8 @@
 
         .circle {
           border-radius: 50%;
-          width: 29px;
-          height: 29px;
+          width: 32px;
+          height: 32px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -179,6 +199,10 @@
 
       }
    }
+}
+
+.current-user {
+  background-color: rgba(239, 149, 30, 0.16) !important;
 }
 
 .reduce-opacity {
@@ -201,11 +225,14 @@
       align-items: center;
       justify-content: center;
       color: white;
-      font-weight: 600;
       height: -webkit-fill-available;
       padding: 0 25px;
       flex-direction: column;
       text-align: center;
+      font-family: Lato;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
     }
     .message {
       padding: 0 25px;
@@ -215,9 +242,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 50px;
+      height: 30px;
       background-color: white;
-      width: 50px;
+      width: 30px;
       border-radius: 50%;
     }
 }
+

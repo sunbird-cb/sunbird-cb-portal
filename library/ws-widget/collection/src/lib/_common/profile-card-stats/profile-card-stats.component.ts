@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component'
+import { MatDialog } from '@angular/material'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
@@ -31,7 +33,8 @@ export class ProfileCardStatsComponent implements OnInit {
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe,
-              private langtranslations: MultilingualTranslationsService) { }
+              private langtranslations: MultilingualTranslationsService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile
@@ -140,5 +143,18 @@ export class ProfileCardStatsComponent implements OnInit {
   }
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateActualLabel(label, type, '')
+  }
+
+  openInfo(myDialog: any) {
+    const confirmDialog = this.dialog.open(InfoDialogComponent, {
+        width: '613px',
+        panelClass: 'custom-info-dialog',
+        backdropClass: 'info-dialog-backdrop',
+        data: {  template:  myDialog },
+      })
+      confirmDialog.afterClosed().subscribe((result: any) => {
+        if (result) {
+        }
+      })
   }
 }

@@ -426,6 +426,109 @@
   z-index: 9;
 }
 
+.weekly-caps-section {
+  .custom-border  {
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .title {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: "Lato-Regular";
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.25px;
+    line-height: 16px;
+  }
+  .my-rank {
+    font-weight: 600;
+  }
+  .align-center {
+    align-items: center;
+  }
+}
+
+.clap-info-wrapper {
+  .clap-info-center {
+      padding: 24px 68px;
+      background-color: rgb(255, 244, 236);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      .clap-ques {
+          opacity: 1;
+          color: rgba(27,76,161,1);
+          font-family: "Montserrat-SemiBold";
+          font-size: 1.25rem;
+          font-weight: 600;
+          font-style: normal;
+          letter-spacing: 0.12px;
+          text-align: center;
+          line-height: 28px;
+      }
+      .clap-ans {
+          opacity: 1;
+          color: rgba(0,0,0,0.87);
+          font-family: "Lato-Regular";
+          font-size: 14px;
+          font-weight: 400;
+          font-style: normal;
+          letter-spacing: 0.25px;
+          text-align: center;
+          line-height: 20px;
+      }
+  }
+  .clap-info-qus-list {
+      padding: 24px;
+      .img-clap-block {
+          background: rgb(255, 244, 236);
+          border-radius: 50%;
+          padding: 8px;
+          align-items: center;
+          display: flex;
+      }
+      .clap-qus-ans {
+          padding: 0 24px;
+          p {
+              margin: 0;
+              margin-bottom: 8px;
+          }
+          .clap-qus {
+              opacity: 1;
+              color: rgba(0,0,0,0.87);
+              font-family: "Montserrat-SemiBold";
+              font-size: 1rem;
+              font-weight: 600;
+              font-style: normal;
+              letter-spacing: 0.12px;
+              text-align: left;
+              line-height: 24px;
+          }
+          .clap-ans {
+              opacity: 1;
+              color: rgba(0,0,0,0.6);
+              font-family: "Lato-Regular";
+              font-size: 14px;
+              font-weight: 400;
+              font-style: normal;
+              letter-spacing: 0.25px;
+              text-align: left;
+              line-height: 20px;
+              .clap-highlight {
+                  color: rgba(27,76,161,1);
+              }
+          }
+      }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .clap-info-wrapper {
+      .clap-info-center {
+          padding: 16px;
+      }
+  }
+
+}
+
 
 @media screen and (max-width: 768px) {
   .mobile-backgroud-image {
