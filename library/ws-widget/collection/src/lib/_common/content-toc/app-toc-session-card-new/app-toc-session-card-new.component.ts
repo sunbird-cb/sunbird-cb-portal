@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations'
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { viewerRouteGenerator } from '../../../_services/viewer-route-util'
 
 @Component({
   selector: 'ws-widget-app-toc-session-card-new',
@@ -26,11 +27,12 @@ export class AppTocSessionCardNewComponent implements OnInit {
   @Input() batchData!: any
   @Input() config!: string
   @Input() index!: number
+  @Input() batchId!: string
   @Input() content: NsContent.IContent | null = null
+  @Input() pathSet!: any
   isEnabled = true
   isAllowed = true
   viewChildren = true
-  resourceLink: any
 
   constructor() { }
 
@@ -62,5 +64,23 @@ export class AppTocSessionCardNewComponent implements OnInit {
       return this.content.primaryCategory === NsContent.EPrimaryCategory.MODULE
     }
     return false
+  }
+  get resourceLink(): { url: string; queryParams: { [key: string]: any } } {
+
+    if (this.content) {
+      const url = viewerRouteGenerator(
+        this.content.identifier,
+        this.content.mimeType,
+        this.rootId,
+        this.rootContentType,
+        this.forPreview,
+        this.content.primaryCategory,
+        this.batchId
+      )
+      /* tslint:disable-next-line */
+      // console.log(this.content.identifier, '------', url,'=====> content card url link <========')
+      return url
+    }
+    return { url: '', queryParams: {} }
   }
 }

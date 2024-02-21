@@ -428,6 +428,8 @@ export namespace NsContent {
     EPrimaryCategory.COURSE,
     EPrimaryCategory.MODULE,
     EPrimaryCategory.PROGRAM,
+    EPrimaryCategory.CURATED_PROGRAM,
+    EPrimaryCategory.BLENDED_PROGRAM,
     EMiscPlayerSupportedCollectionTypes.PLAYLIST,
   ]
   export const KB_SUPPORTED_CONTENT_TYPES: EPrimaryCategory[] = [

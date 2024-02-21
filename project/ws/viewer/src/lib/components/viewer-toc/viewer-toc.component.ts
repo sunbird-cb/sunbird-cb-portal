@@ -22,6 +22,7 @@ import { of, Subscription } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 export interface IViewerTocCard {
   identifier: string
   viewerUrl: string
@@ -65,6 +66,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   @Input() forPreview = false
   @Input() contentData: any = {}
   @Input() batchData: any
+  @Input() tocStructure: any
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -77,6 +79,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private contentProgressSvc: ContentProgressService,
     private userSvc: WidgetUserService,
+    private tocSvc: AppTocService,
   ) {
     this.nestedTreeControl = new NestedTreeControl<IViewerTocCard>(this._getChildren)
     this.nestedDataSource = new MatTreeNestedDataSource()
@@ -165,6 +168,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.BLENDED_PROGRAM.toLowerCase()
         ) {
           this.collection = await this.getCollection(this.collectionId, this.collectionType)
+          // this.collection = _.get(this.hierarchyData, 'result.content')
         } else {
           this.isErrorOccurred = true
         }
@@ -197,11 +201,16 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     if (this.collection && this.batchId && this.configSvc.userProfile) {
       this.contentProgressSvc
         .getProgressHash(this.collection.identifier, this.batchId, this.configSvc.userProfile.userId)
-        .subscribe(progressHash => {
+        .subscribe((progressHash:  any) => {
           this.contentProgressHash = progressHash
-
+          this.updateProgressBasedOnHash(progressHash)
         })
     }
+  }
+
+  private updateProgressBasedOnHash(progressHash: any) {
+    this.tocSvc.mapCompletionPercentage(this.contentData, progressHash.result.contentList, true)
+    this.tocSvc.mapModuleDurationAndProgress(this.contentData, this.contentData)
   }
   // tslint:enable
   ngOnDestroy() {
@@ -242,9 +251,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.viewerDataSvc.updateNextPrevResource(Boolean(this.collection), prev, next)
       this.processCollectionForTree()
       this.expandThePath()
-      if (next && next.viewerUrl === '0') { // temp
+      // if (next && next.viewerUrl === '0') { // temp
         this.getContentProgressHash()
-      }
+      // }
     }
   }
   private async getCollection(
@@ -262,12 +271,13 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
               ).toPromise()
       }
       const contentData = content.result.content
+      this.collection = content.result.content
       this.contentSvc.currentMetaData = contentData
       this.collectionCard = this.createCollectionCard(contentData)
       const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
       this.isFetching = false
       return viewerTocCardContent
-    } catch (err) {
+    } catch (err: any) {
       switch (err && err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'

@@ -129,6 +129,8 @@ import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmap
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
+import { ShareTocModule } from './share-toc/share-toc.module'
+import { TocKpiValuesModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/toc-kpi-values/toc-kpi-values.module'
 
 @NgModule({
   declarations: [
@@ -244,6 +246,8 @@ import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content
     ContentTocModule,
     NgCircleProgressModule.forRoot({}),
     TranslateModule,
+    ShareTocModule,
+    TocKpiValuesModule,
   ],
   providers: [
     AppTocResolverService,
@@ -260,7 +264,14 @@ import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content
     ActionService,
     MultilingualTranslationsService,
   ],
-  exports: [AppTocDiscussionComponent, AppTocSinglePageComponent, AppTocBannerComponent, AppTocHomeRootComponent, AppTocHomeComponent],
+  exports: [
+    AppTocDiscussionComponent,
+    AppTocSinglePageComponent,
+    AppTocBannerComponent,
+    AppTocHomeRootComponent,
+    AppTocHomeComponent,
+    ShareTocModule,
+  ],
   entryComponents: [
     AppTocDialogIntroVideoComponent,
     AppTocOverviewComponent,

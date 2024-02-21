@@ -61,6 +61,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   hierarchyData: any
   enrolledCourseData: any
   batchData: any
+  tocStructure: any
+  hasTocStructure = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -127,6 +129,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (contentData && contentData.result && contentData.result.content) {
       this.hierarchyData = contentData.result.content
       this.manipulateHierarchyData()
+      this.resetAndFetchTocStructure()
     }
     if (this.collectionId && this.enrollmentList) {
       const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
@@ -255,5 +258,39 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   manipulateHierarchyData() {
     this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
+  }
+  resetAndFetchTocStructure() {
+    this.tocStructure = {
+      assessment: 0,
+      finalTest: 0,
+      course: 0,
+      handsOn: 0,
+      interactiveVideo: 0,
+      learningModule: 0,
+      other: 0,
+      pdf: 0,
+      survey: 0,
+      podcast: 0,
+      practiceTest: 0,
+      quiz: 0,
+      video: 0,
+      webModule: 0,
+      webPage: 0,
+      youtube: 0,
+      interactivecontent: 0,
+      offlineSession: 0,
+    }
+    if (this.hierarchyData) {
+      this.hasTocStructure = false
+      this.tocStructure.learningModule = this.hierarchyData.primaryCategory === NsContent.EPrimaryCategory.MODULE ? -1 : 0
+      this.tocStructure.course = this.hierarchyData.primaryCategory === NsContent.EPrimaryCategory.COURSE ? -1 : 0
+      this.tocStructure = this.tocSvc.getTocStructure(this.hierarchyData, this.tocStructure)
+      for (const progType in this.tocStructure) {
+        if (this.tocStructure[progType] > 0) {
+          this.hasTocStructure = true
+          break
+        }
+      }
+    }
   }
 }

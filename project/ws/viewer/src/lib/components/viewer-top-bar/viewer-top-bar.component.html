@@ -1,3 +1,4 @@
+<ng-container *ngIf="!isMobile">
 <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">
   <div class="flex flex-1">
     <ws-widget-btn-page-back-nav *ngIf="!isPreview && !needToHide" [widgetData]="{
@@ -24,7 +25,7 @@
       <img [src]="appIcon" alt="Application Logo" class="app-logo" />
     </a>
   </div>
-  <div class="flex">
+  <div class="flex" *ngIf="isTypeOfCollection">
     <div class="flex flex-1 flex-col  margin-right-l progress-container">
       <div class="flex flex-row justify-between w-full ws-mat-white-text">
         <div class="flex items-center mb-2">
@@ -58,5 +59,57 @@
         <span> Edit rating </span>
       </ng-container>
     </button>
+    <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
+      <mat-icon>share</mat-icon>
+      <span>Share</span>
+    </div>
   </div>
 </mat-toolbar>
+</ng-container>
+
+<ng-container *ngIf="isMobile">
+  <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">   
+    <div class="flex justify-around width-100">
+      <div class="flex flex-1 flex-col  margin-right-l progress-container">
+        <div class="flex flex-row justify-between w-full ws-mat-white-text">
+          <div class="flex items-center mb-2">
+            <span class="mat-body-2 mr-2">Items ({{currentDataFromEnrollList?.progress}}/{{currentDataFromEnrollList?.leafNodesCount}})</span>
+            <mat-icon class="cursor-pointer ws-mat-white-text infoIcon" [matTooltip]="'Progress is updated after few minute'">info_outline</mat-icon>
+          </div>
+  
+         <span class="mat-body-2  ws-mat-white-text"> {{currentDataFromEnrollList?.completionPercentage}}%</span>
+        </div>
+  
+         <ws-widget-content-progress
+           [contentId]="currentDataFromEnrollList?.identifier" [progress]="currentDataFromEnrollList?.completionPercentage" [progressType]="'percentage'" [customClassName]="'viewer-progress'">
+         </ws-widget-content-progress>
+      </div>
+      <div>
+        <button color="secondary" class="rate-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">
+          <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2">star</mat-icon>
+          <ng-container *ngIf="!userRating">
+            <span class="mr-1">Rate now</span>
+            <!-- <span class="lowercase">
+    
+              <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
+                {{content?.primaryCategory}}
+              </ng-container>
+              <ng-container *ngIf="content?.primaryCategory === primaryCategory.COURSE ||
+                content.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
+                course
+              </ng-container>
+            </span> -->
+          </ng-container>
+          <ng-container *ngIf="userRating">
+            <span> Edit rating </span>
+          </ng-container>
+        </button>
+      </div>     
+      <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
+        <mat-icon>share</mat-icon>
+      </div>
+    </div>
+  </mat-toolbar>
+</ng-container>
+
+<ws-app-share-toc *ngIf="enableShare" [rootOrgId]="rootOrgId" [content]="content" (resetEnableShare)="resetEnableShare($event)"></ws-app-share-toc>

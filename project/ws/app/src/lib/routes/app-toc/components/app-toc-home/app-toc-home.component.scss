@@ -8,6 +8,10 @@
   background: linear-gradient(135deg, rgba(58, 131, 207, 1) 0%, rgba(27, 76, 161, 1) 100%);
   width: 100%;
 
+  .fixed-width {
+    padding: 0 16px;
+  }
+
   .banner-details {
     padding: 36px 0px;
 
@@ -72,19 +76,7 @@
   max-width: $new-max-width;
   display: block;
   margin: 0 auto;
-  padding: 0;
-
-  @include breakpoint-s {
-    padding: 0 16px;
-  }
-
-  @include breakpoint-xs {
-    padding: 0 16px;
-  }
-
-  @include breakpoint-m {
-    padding: 0 8px !important;
-  }
+  // padding: 0 16px;
 }
 
 .mat-subheading-1 {
@@ -169,7 +161,7 @@
     position: fixed;
     z-index: 10;
     top: 132px;
-    max-width: 384px;
+    width: 384px;
     margin-bottom: 1rem;
   }
 
@@ -192,9 +184,14 @@
   }
 
   .kpi-values {
-    width: 60px;
+    width: 64px;
     padding: 8px;
     text-align: center;
+
+    .timer-icon {
+      color: $text-primary;
+      height: 20px;
+    }
   }
 }
 
@@ -322,12 +319,71 @@ a.action-button {
   color: $text-primary;
   font-size: 0.875rem;
   font-weight: bold;
-  border: none;
+  border: none !important;
 
   .mat-button-wrapper {
     display: flex;
     gap: 8px;
     align-items: center;
+  }
+}
+
+.mobile-enroll-div {
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  bottom: 0px;
+  width: calc(100% - 32px);
+
+  .action-button {
+    min-width: 320px;
+    max-width: 400px;
+    margin: auto;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .mobile-enroll-div, .mob-share {
+    display: none !important;
+  }
+
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: inherit;
+  filter: blur(10px);
+  /* Adjust the blur radius as needed */
+  z-index: -1;
+}
+
+.action-button::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  // box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 -4px -4px rgba(255, 255, 255, 0.6);
+  /* Adjust the blur radius and shadow spread as needed */
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.mobile-progress {
+  padding: 16px;
+}
+
+@media screen and (min-width:1200px) {
+  .mobile-progress {
+    display: none;
   }
 }
 

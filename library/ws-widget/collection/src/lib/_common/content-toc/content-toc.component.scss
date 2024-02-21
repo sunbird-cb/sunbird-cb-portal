@@ -1,3 +1,9 @@
+::ng-deep .content-tabs {
+    .mat-tab-body.mat-tab-body-active {
+        overflow-y: hidden;
+    }
+}
+
 ::ng-deep .sticky-mat-tabs {
     .mat-tab-header {
         top: 96px;
@@ -11,9 +17,15 @@
 @media screen and (max-width: 768px) {
     ::ng-deep .sticky-mat-tabs {
         .mat-tab-header {
-            top: 185px;
+            top: 120px;
             position: fixed;
-            width: calc(100% - 32px);
+            width: calc(100%);
         }
+    }
+
+    .content-tabs {
+        border-radius: 16px 16px 0px 0px;
+        box-shadow: 0px -2px 9px rgba(0, 0, 0, 0.08);
+        background-color: rgba(255, 255, 255, 1);
     }
 }

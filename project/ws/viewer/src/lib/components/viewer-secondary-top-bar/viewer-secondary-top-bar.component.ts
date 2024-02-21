@@ -52,6 +52,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   optionalLink = false
   isMobile = false
   handleBackFromPdfScormFullScreenFlag = false
+  toggleSideBarFlag = true
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -198,6 +199,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   }
 
   toggleSideBar() {
+    this.toggleSideBarFlag = !this.toggleSideBarFlag
     this.toggle.emit()
   }
   get needToHide(): boolean {

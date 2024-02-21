@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
+import { Component, Input, OnInit, Renderer2, SimpleChanges } from '@angular/core'
 import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
 import { NsAppToc } from '../models/app-toc.model'
 import { EventService } from '@sunbird-cb/utils/src/public-api'
@@ -61,6 +61,7 @@ export class AppTocContentCardV2Component implements OnInit {
   constructor(
     private events: EventService,
     private dialog: MatDialog,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
@@ -69,23 +70,24 @@ export class AppTocContentCardV2Component implements OnInit {
     //     this.defaultThumbnail = data.configData.data.logos.defaultContent
     //   }
     // )
-    
+    setTimeout(()=>{
+      this.scrollView()
+    },700)
   }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
       if (property === 'expandAll') {
         this.viewChildren = this.expandAll
       }
-      // if(property === 'pathSet') {
-      //   console.log('pathSet on changes -----', changes.pathSet.currentValue)
-      //   this.pathSet = changes.pathSet.currentValue
-      // }
+      if(property === 'pathSet') {
+        this.scrollView()
+      }
     }
   }
 
   check(content: any) {
     if(this.expandActive) {
-      content.viewChildren = this.pathSet.has(content.identifier) || content.viewChildren
+      content.viewChildren = this.pathSet && this.pathSet.has(content.identifier) || content.viewChildren
     }
     return content.viewChildren
   }
@@ -142,7 +144,7 @@ export class AppTocContentCardV2Component implements OnInit {
         this.batchId
       )
       /* tslint:disable-next-line */
-      // console.log(url,'=====> content card url link <========')
+      // console.log(this.content.identifier, '------', url,'=====> content card url link <========')
       return url
     }
     return { url: '', queryParams: {} }
@@ -285,6 +287,10 @@ export class AppTocContentCardV2Component implements OnInit {
   get isEnabled(): boolean {
     return true
   }
+
+  get isEnrolled(): boolean {
+    return this.batchId ? true : false
+  }
   openCertificateDialog(certData: any) {
     const cet = certData
     this.dialog.open(CertificateDialogComponent, {
@@ -293,5 +299,13 @@ export class AppTocContentCardV2Component implements OnInit {
       data: { cet },
       // panelClass: 'custom-dialog-container',
     })
+  }
+  scrollView(){
+    try {
+      const errorField = this.renderer.selectRootElement('.resource-active');
+      errorField.scrollIntoView();
+    } catch (err) {
+
+    }
   }
 }
