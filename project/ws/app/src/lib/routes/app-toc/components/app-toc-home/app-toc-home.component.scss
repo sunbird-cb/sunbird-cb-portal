@@ -3,6 +3,11 @@
 
 
 // New TOC page css...
+.source-text {
+  color: rgba($color: #FFF, $alpha: 0.7);
+}
+
+
 .toc-banner {
   background: rgb(58, 131, 207);
   background: linear-gradient(135deg, rgba(58, 131, 207, 1) 0%, rgba(27, 76, 161, 1) 100%);
@@ -126,7 +131,7 @@
       background-color: #000;
       border: 1px solid #FFF;
       border-radius: 20px;
-      padding: 8px 16px;
+      padding: 6px 16px;
       color: #FFF;
       cursor: pointer;
     }
@@ -316,7 +321,7 @@ a.action-button {
 }
 
 .rate-button {
-  color: $text-primary;
+  color: $text-primary !important;
   font-size: 0.875rem;
   font-weight: bold;
   border: none !important;
