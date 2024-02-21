@@ -1193,7 +1193,7 @@
                 </div>
               </ng-container>
               <div class="mt-5">
-                <button mat-raised-button type="button" (click)="addDegree()"
+                <button mat-raised-button type="button" (click)="addDegree()" matTooltip="{{'userProfile.addOtherQualification' | translate }}"
                   class="text-white margin-right-m btn-success">
                   <span class="text-white" i18n>{{'userProfile.addOtherQualification' | translate }}</span>
                 </button>
@@ -1276,7 +1276,7 @@
 
               <div class="mt-5">
                 <button mat-raised-button type="button" (click)="addPostDegree()"
-                  class="text-white margin-right-m btn-success">
+                  class="text-white margin-right-m btn-success" matTooltip="{{'userProfile.addOtherQualification' | translate }}">
                   <span class="text-white" i18n>{{'userProfile.addOtherQualification' | translate }}</span>
                 </button>
               </div>
@@ -1284,11 +1284,11 @@
           </div>
           <!-- </div> -->
         </mat-tab>
+        <!-- e-HRMS functionality block -->
         <mat-tab label="e-HRMS details" *ngIf="isEhrmsId">
           <ng-template mat-tab-label i18n>
             e-HRMS details
           </ng-template>
-           <!-- </div> -->
            <ws-app-ehrms [ehrmsData]="ehrmsInfo"></ws-app-ehrms>
         </mat-tab>
 

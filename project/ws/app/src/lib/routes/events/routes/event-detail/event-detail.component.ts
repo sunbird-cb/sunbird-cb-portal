@@ -9,6 +9,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import { EventService } from '../../services/events.service'
 import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 /* tslint:enable */
 
 @Component({
@@ -33,7 +34,8 @@ export class EventDetailComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private eventSvc: EventService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     // private discussService: DiscussService,
     // private snackBar: MatSnackBar,
   ) {
@@ -42,6 +44,13 @@ export class EventDetailComponent implements OnInit {
       const lang = localStorage.getItem('websiteLanguage')!
       this.translate.use(lang)
     }
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {

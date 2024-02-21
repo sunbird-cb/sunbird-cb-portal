@@ -22,6 +22,7 @@ import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 import { ITodayEvents } from '@ws/app/src/lib/routes/events/models/event'
+import { TranslateService } from '@ngx-translate/core'
 
 interface IStripUnitContentData {
   key: string
@@ -97,9 +98,16 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // private http: HttpClient,
     // private searchServSvc: SearchServService,
     private userSvc: WidgetUserService,
+    private translate: TranslateService,
     private langtranslations: MultilingualTranslationsService
   ) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {

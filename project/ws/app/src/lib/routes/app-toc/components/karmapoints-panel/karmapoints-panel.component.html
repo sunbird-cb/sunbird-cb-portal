@@ -24,7 +24,7 @@
 
 <button class="mat-caption karmapoints-panel karmapoints-panel-claim margin-top-m width-1-1"
   *ngIf="kpData && btnCategory === 'claim'" (click)="onClickOfClaim()">
-  <p class="margin-remove">{{kpData.textBeforeIcon}}
+  <p class="margin-remove">{{ translateLabels(kpData.textBeforeIcon, 'appKarmapointsPanel') }}
     <img src="/assets/icons/home/karma-badge.svg" alt="KarmaPoints">
     <span class="font-bold"> {{kpData.points}} {{translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }} </span>
     <span *ngIf="kpData.textAfterIcon">{{translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel')}}</span>
