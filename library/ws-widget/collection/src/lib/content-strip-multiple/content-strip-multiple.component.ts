@@ -255,21 +255,22 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       this.fetchDAKSHTACourses(strip, calculateParentStatus)
       this.fetchprarambhCourse(strip, calculateParentStatus)
       this.fetchCuratedCollections(strip, calculateParentStatus)
-      if (this.veifiedKarmayogi) {
-        this.fetchModeratedCourses(strip, calculateParentStatus)
-      }
+      this.fetchModeratedCourses(strip, calculateParentStatus)
+      // if (this.veifiedKarmayogi) {
+      //  this.fetchModeratedCourses(strip, calculateParentStatus)
+      // }
   }
 
   fetchModeratedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.moderatedCourses && Object.keys(strip.request.moderatedCourses).length) {
+
       const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
         request: {
-          secureSettings: true,
           query: '',
           filters: {
-              primaryCategory: [
-                  'Course',
-              ],
+            courseCategory: [NsContent.ECourseCategory.MODERATED_COURSE,
+              NsContent.ECourseCategory.MODERATED_PROGRAM, NsContent.ECourseCategory.MODERATED_ASSESSEMENT],
+            contentType: ['Course'],
               status: [
                   'Live',
               ],
@@ -288,7 +289,16 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         const showViewMore = Boolean(
           results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
         )
-
+        let contentList: any = []
+        if (results.result.content.length) {
+          if (this.veifiedKarmayogi) {
+            contentList = results.result.content
+          } else {
+            contentList = results.result.content.filter((ele: any) => {
+              return ele.secureSettings && !ele.secureSettings.isVerifiedKarmayogi
+            })
+          }
+        }
         const viewMoreUrl = showViewMore
             ? {
               path: '/app/globalsearch',
@@ -299,7 +309,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
 
             this.processStrip(
               strip,
-              this.transformContentsToWidgets(results.result.content, strip),
+              this.transformContentsToWidgets(contentList, strip),
               'done',
               calculateParentStatus,
               viewMoreUrl,
