@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { FormsModule } from '@angular/forms'
+import { HttpClient } from '@angular/common/http' 
 import {
   MatIconModule,
   MatTabsModule,
@@ -15,6 +16,8 @@ import {
 } from '@angular/material'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { NgCircleProgressModule } from 'ng-circle-progress'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
 
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { WidgetResolverModule } from '@sunbird-cb/resolver/src/public-api'
@@ -76,6 +79,14 @@ import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-
     AttendanceCardModule,
     MatTooltipModule,
     TocKpiValuesModule,
+    TranslateModule, 
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     ContentTocComponent,

@@ -1,16 +1,16 @@
 <ng-template #competencyLabel>
     <div class="mat-subheading-1 flex items-center gap-2">
-        Competencies
+        {{ 'apptocsinglepage.competencies' | translate }}
         <mat-icon class="cursor-pointer ws-mat-black60-text info-icon mat-icon notranslate material-icons mat-icon-no-color"
             [matTooltipPosition]="'below'"
-            [matTooltip]="'Competency: Set of demonstrable characteristics and skills that enable and improve the efficiency of performing a job. Behavioural competencies describe the key values and strengths that help an official perform effectively in a range of roles. Domain competencies are defined for a specific MDO (for example, the Ministry of Personnel or the Department of Biotechnology) but that does not mean that others will not need them. Functional competencies are common among many domains, cutting across MDOs, as well as roles and activities.'">info_outline</mat-icon>
+            matTooltip="{{ 'apptocsinglepage.competenciesTooltip' | translate }}">info_outline</mat-icon>
     </div>
 </ng-template>
 
 <div class="flex flex-col gap-10 my-4 px-4" [class.mt60]="sticky">
     <div class="earned-certificate-container flex flex-row" *ngIf="false">        
         <div class="ribbon"></div>
-        <div class="earned-certificate">Certificate earned</div>
+        <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
         <div class="earned-certificate-container-background"></div>
     </div>
 
@@ -21,7 +21,7 @@
                     <div class="flex underline"></div>
                 </div>
                 <div class="flex">
-                    <div class="timer-label">This batch starts in</div>
+                    <div class="timer-label">{{ 'apptocsinglepage.batchStartsIn' | translate }}</div>
                 </div>
                 <div class="flex-1">
                     <div class="flex underline"></div>
@@ -32,21 +32,21 @@
             <div class="flex flex-row gap-4 justify-center">
                 <div class="flex flex-row gap-1 items-center">
                     <div class="text-4xl leading-10 counter">{{ timer.days || 0 }}</div>
-                    <div class="counter-label">Days</div>
+                    <div class="counter-label">{{ 'apptocsinglepage.days' | translate }}</div>
                 </div>
                 <div class="flex items-center counter-label">
                     :
                 </div>
                 <div class="flex flex-row gap-1 items-center">
                     <div class="text-4xl leading-10 counter">{{ timer.min === 60 ? timer.hours + 1 : timer.hours }}</div>
-                    <div class="counter-label">Hours</div>
+                    <div class="counter-label">{{ 'apptocsinglepage.hours' | translate }}</div>
                 </div>
                 <div class="flex items-center counter-label">
                     :
                 </div>
                 <div class="flex flex-row gap-1 items-center">
                     <div class="text-4xl leading-10 counter">{{ timer.min === 60 ? 00 : timer.min }}</div>
-                    <div class="counter-label">Minutes</div>
+                    <div class="counter-label">{{ 'apptocsinglepage.minutes' | translate }}</div>
                 </div>
             </div>
         </div>
@@ -68,18 +68,18 @@
             <ng-container *ngIf="fromViewer">
                 <div class="text-xl leading-5 font-bold">{{ handleCapitalize(content?.name) }}
                 </div>
-                <div class="leading-4">By {{ content?.source }}</div>                
+                <div class="leading-4">{{ 'apptocsinglepage.by' | translate }}&nbsp;{{ content?.source }}</div>                
             </ng-container>
             <ng-container *ngIf="fromViewer || isMobile">
-                <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure" [isMobile]="isMobile" ></ws-widget-toc-kpi-values>
+                <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure" [isMobile]="isMobile"></ws-widget-toc-kpi-values>
             </ng-container>
-            <div class="mat-subheading-1 summary">Summary</div>
+            <div class="mat-subheading-1 summary">{{ 'apptocsinglepage.summary' | translate }}</div>
             <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
                 {{ handleCapitalize(content?.description) }}
                 <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.viewLess"
-                    (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;View less</span>
+                    (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</span>
             </div>
-            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.ellipsis" (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">View more</div>
+            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.ellipsis" (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">{{ 'apptocsinglepage.viewMore' | translate }}</div>
         </ng-container>
     </div>
 
@@ -97,13 +97,13 @@
             </div>
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
-            <div class="mat-subheading-1">Description</div>
+            <div class="mat-subheading-1">{{ 'apptocsinglepage.description' | translate }}</div>
             <div class="desc" [ngClass]="{'desc-ellipsis': description.ellipsis}" #descElem>
                 <span [innerHTML]="content?.instructions"></span>
                 <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="description.viewLess"
-                    (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;View less</span>
+                    (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</span>
             </div>
-            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="description.ellipsis" (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess" >View more</div>
+            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="description.ellipsis" (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">{{ 'apptocsinglepage.viewMore' | translate }}</div>
         </ng-container>
     </div>
 
@@ -129,7 +129,7 @@
         <ng-container *ngIf="!strip?.loaderWidgets?.length || !competenciesObject">
             <div class="flex flex-col">
                 <ng-container [ngTemplateOutlet]="competencyLabel"></ng-container>
-                No competencies found
+                {{ 'apptocsinglepage.noCompetencyFound' | translate }}
             </div>
         </ng-container>
         <ng-container *ngIf="strip?.loaderWidgets?.length > 0">
@@ -162,7 +162,7 @@
             </div>
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
-            <div class="mat-subheading-1">Tags</div>
+            <div class="mat-subheading-1">{{ 'userProfile.tags' | translate }}</div>
             <div class="flex flex-wrap gap-2" *ngIf="content?.keywords?.length">
                 <ng-container *ngFor="let tag of content?.keywords; let i = index">
                     <div class="text-xs" [ngClass]="{'hidden': (i > 8 && !viewMoreTags)}">{{ tag }}</div>
@@ -170,12 +170,12 @@
                         <span class="period"></span>
                     </div>
                 </ng-container>
-                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="content?.keywords?.length > 8 && !viewMoreTags" (click)="viewMoreTags = !viewMoreTags">View more</div>
+                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="content?.keywords?.length > 8 && !viewMoreTags" (click)="viewMoreTags = !viewMoreTags">{{ 'apptocsinglepage.viewMore' | translate }}</div>
                 <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="viewMoreTags"
-                 (click)="viewMoreTags = !viewMoreTags">View less</div>
+                 (click)="viewMoreTags = !viewMoreTags">{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>
             <div class="flex flex-wrap gap-2" *ngIf="!content?.keywords?.length">
-                No tags found
+                {{ 'userProfile.noTags' | translate }}
             </div>
         </ng-container>
     </div>
@@ -189,11 +189,11 @@
             <div class="flex-1 forum-content">
                 <div class="flex flex-col sm:flex-row gap-5 items-center">
                     <mat-icon>forum</mat-icon>
-                    <div class="suggestion-text">Do you have any questions, suggestions or, ideas in your mind? Post it.</div>
+                    <div class="suggestion-text">{{ 'apptocsinglepage.anySuggestions' | translate }}</div>
                 </div>
             </div>
             <div class="flex-none p-3">
-                <button [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" class="action-button">Start discussion</button>
+                <button [routerLink]="['/app/discussion-forum']" [queryParams]="{page: 'home'}" class="action-button">{{ 'discuss.startDiscuss' | translate }}</button>
             </div>
         </div>
     </ng-container>
@@ -220,7 +220,7 @@
         </ng-container>
 
         <ng-container *ngIf="!skeletonLoader">
-            <div class="text-base font-bold">Authors and curators</div>
+            <div class="text-base font-bold">{{ 'apptocsinglepage.authorsAndCurators' | translate }}</div>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
                     <div class="flex items-center justify-center">
@@ -230,7 +230,7 @@
                     </div>
                     <div class="flex flex-col gap-1 justify-center">
                         <div class="font-bold">{{ author?.name }}</div>
-                        <div class="text-xs leading-3">Author</div>
+                        <div class="text-xs leading-3">{{ 'apptocsinglepage.author' | translate }}</div>
                     </div>
                 </div>
     
@@ -242,7 +242,7 @@
                     </div>
                     <div class="flex flex-col gap-1 justify-center">
                         <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
-                        <div class="text-xs leading-3">Curator</div>
+                        <div class="text-xs leading-3">{{ 'apptocsinglepage.curator' | translate }}</div>
                     </div>
                 </div>
             </div>
@@ -255,13 +255,13 @@
     </ng-container>
     <ng-container *ngIf="!skeletonLoader">
         <div class="flex flex-col ratings-div gap-10" id="ratingsDiv">
-            <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed" ></ws-widget-rating-summary>
+            <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
     
             <div class="flex flex-col gap-3">
                 <div class="flex flex-row gap-4">
-                    <div class="flex-1 mat-subheading-1" id="reviewContainer">Top reviews</div>
+                    <div class="flex-1 mat-subheading-1" id="reviewContainer">{{ 'apptocsinglepage.topReviews' | translate }}</div>
                     <ng-container *ngIf="reviews && reviews?.length">
-                        <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()" >Show all</div>
+                        <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()">{{ 'msg.showAll' | translate }}</div>
                     </ng-container>
                 </div>
                 <ng-container *ngIf="reviews && reviews?.length">
@@ -291,7 +291,7 @@
                 </ng-container>
                 <div *ngIf="!reviews || !reviews?.length">
                     <div class="flex flex-col text-center items-center justify-center bg-white p-4 rounded-md">
-                        <div class="font-base font-bold">No reviews found!</div>
+                        <div class="font-base font-bold">{{ 'apptocsinglepage.noReviewsFound' | translate }}</div>
                     </div>
                 </div>
             </div>

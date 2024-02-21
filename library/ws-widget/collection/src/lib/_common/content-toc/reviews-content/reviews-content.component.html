@@ -9,7 +9,10 @@
     </div>
     <div class="flex flex-col p-6">
         <div class="flex flex-col gap-4">
-            <div class="font-base font-bold">{{ showFilterIndicator }} Reviews</div>
+            <div class="font-base font-bold">
+                <span *ngIf="showFilterIndicator === 'Top'">{{ 'mobileApp.mLearnCourseTopReviews' | translate }}</span>
+                <span *ngIf="showFilterIndicator !== 'Top'">{{ 'mobileApp.mLearnCourselatestReviews' | translate }}</span>
+            </div>
             <div class="flex flex-row gap-3">
                 <div class="flex-1">
                     <div class="flex flex-row search-div">
@@ -25,11 +28,11 @@
                     <mat-menu #filter="matMenu" xPosition="before">
                         <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'Latest'}"
                             (click)="handleReviewsFilter('Latest')">
-                            <span>Latest reviews</span>
+                            <span>{{ 'mobileApp.mLearnCourselatestReviews' | translate }}</span>
                         </button>
                         <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'Top'}"
                             (click)="handleReviewsFilter('Top')">
-                            <span>Top reviews</span>
+                            <span>{{ 'mobileApp.mLearnCourseTopReviews' | translate }}</span>
                         </button>
                     </mat-menu>
                 </div>

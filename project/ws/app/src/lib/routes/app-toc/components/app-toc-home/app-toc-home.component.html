@@ -271,7 +271,7 @@
               </div>
               <div class="flex items-center" *ngIf="cbPlanEndDate">
                 <div class="flex items-center due-tag text-xs leading-3">
-                  Due by -&nbsp;<span class="font-bold">{{ cbPlanEndDate | date: 'd MMM, y'}}</span>
+                  {{ 'common.dueBy' | translate }} - &nbsp;<span class="font-bold">{{ cbPlanEndDate | date: 'd MMM, y'}}</span>
                 </div>
               </div>
             </div>
@@ -290,7 +290,7 @@
           </ng-container>
           <ng-container *ngIf="!skeletonLoader">
             <div class="banner-text text-base sm:text-4xl leading-6 sm:leading-10 font-bold">{{ handleCapitalize(content?.name) }}</div>
-            <div class="text-sm sm:text-base source-text font-semibold">By {{ content?.source }}</div>
+            <div class="text-sm sm:text-base source-text font-semibold">{{ 'cardcontentv2.by' | translate }} {{ content?.source }}</div>
           </ng-container>
         </div>
         <div class="flex gap-4 items-center ">
@@ -322,7 +322,7 @@
             [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
         </ng-container>
         <ng-container *ngIf="!skeletonLoader && content?.sYS_INTERNAL_LAST_UPDATED_ON">
-          <div class="text-xs leading-4 source-text">(Last updated on {{ content?.sYS_INTERNAL_LAST_UPDATED_ON | date: 'MMM d, y' }})</div>
+          <div class="text-xs leading-4 source-text">({{ 'apptoc.lastUpdatedOn' | translate }} {{ content?.sYS_INTERNAL_LAST_UPDATED_ON | date: 'MMM d, y' }})</div>
         </ng-container>
       </div>
     </div>
@@ -366,7 +366,7 @@
             <div class="flex flex-col gap-1" *ngIf="scrolled">
               <div class="text-xl leading-6 text-white font-bold">{{ handleCapitalize(content?.name) }}
               </div>
-              <div class="text-sm source-text font-semibold">By {{ content?.source }}</div>
+              <div class="text-sm source-text font-semibold">{{ 'cardcontentv2.by' | translate }} {{ content?.source }}</div>
             </div>
           </div>
         </div>
@@ -514,7 +514,7 @@
 
         <ng-container *ngIf="!skeletonLoader">
           <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorDetails)?.length">
-            <div class="text-base font-bold">Authors</div>
+            <div class="text-base font-bold">{{ 'apptocsinglepage.authors' | translate }}</div>
             <div class="flex flex-row gap-4 items-center" *ngFor="let author of handleParseJsonData(content?.creatorDetails)">
               <div class="flex items-center justify-center">
                 <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
@@ -523,12 +523,12 @@
               </div>
               <div class="flex flex-col gap-1 justify-center">
                 <div class="font-bold">{{ author?.name }}</div>
-                <div class="text-xs leading-3">Author</div>
+                <div class="text-xs leading-3">{{ 'apptocsinglepage.author' | translate }}</div>
               </div>
             </div>
           </div>
           <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
-            <div class="text-base font-bold">Curators</div>
+            <div class="text-base font-bold">{{ 'apptocsinglepage.curators' | translate }}</div>
             <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
               <div class="flex items-center justify-center">
                 <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="author?.photo || ''"
@@ -537,7 +537,7 @@
               </div>
               <div class="flex flex-col gap-1 justify-center">
                 <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
-                <div class="text-xs leading-3">Curator</div>
+                <div class="text-xs leading-3">{{ 'apptocsinglepage.curator' | translate }}</div>
               </div>
             </div>
           </div>
