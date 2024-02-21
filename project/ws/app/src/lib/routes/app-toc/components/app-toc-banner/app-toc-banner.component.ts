@@ -1305,7 +1305,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
         return
       }
-      const ePattern = new RegExp(`^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
+      // tslint:disable-next-line: max-line-length
+      const ePattern = new RegExp(/^(?!.*\.\.)(?!.*\._)(?!.*\._\.)(?!.*\.\.$)(?!.*\.$)[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/)
       if (ePattern.test(value)) {
         if ((value || '').trim()) {
           this.users.push(value.trim())
