@@ -1,5 +1,5 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { MultilingualTranslationsService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils'
@@ -8,7 +8,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatSn
 import { AppTocService } from '../../services/app-toc.service'
 
 import {
-  UserAutocompleteService
+  UserAutocompleteService,
 } from '@sunbird-cb/collection'
 @Component({
   selector: 'ws-app-share-toc',
@@ -32,17 +32,17 @@ export class ShareTocComponent implements OnInit {
    maxEmailsLimit = 30
    showLoader = false
    @Input() rootOrgId: any
-   @Input() content:any
+   @Input() content: any
    @ViewChild('userInput', { static: false }) userInput: ElementRef<HTMLInputElement> | undefined
    @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete | undefined
-   @Output() resetEnableShare:any = new EventEmitter();
+   @Output() resetEnableShare: any = new EventEmitter()
   constructor(private userAutoComplete: UserAutocompleteService,
-    private langtranslations: MultilingualTranslationsService,
-    private translate: TranslateService,
-    private snackBar: MatSnackBar,
-    public configSvc: ConfigurationsService,
-    private tocSvc: AppTocService,
-    private events: EventService) { 
+              private langtranslations: MultilingualTranslationsService,
+              private translate: TranslateService,
+              private snackBar: MatSnackBar,
+              public configSvc: ConfigurationsService,
+              private tocSvc: AppTocService,
+              private events: EventService) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -99,7 +99,7 @@ export class ShareTocComponent implements OnInit {
     })
   }
 
-  translateLabels(label: string, type: any, subtype: any) {
+  translateLabels(label: string, type: any, subtype?: any) {
     return this.langtranslations.translateActualLabel(label, type, subtype)
   }
 
@@ -177,8 +177,8 @@ export class ShareTocComponent implements OnInit {
         courseName,
         coursePosterImageUrl,
         courseProvider,
+        primaryCategory,
         recipients: '',
-        primaryCategory
       },
     }
     const recipients: any = []
@@ -197,7 +197,7 @@ export class ShareTocComponent implements OnInit {
           this.openSnackbar(this.translateLabels('success', 'contentSharing', ''))
         }
         this.users = []
-        this.resetEnableShareFlag();
+        this.resetEnableShareFlag()
       }, error => {
         // tslint:disable
         console.log(error)

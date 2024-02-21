@@ -84,7 +84,9 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   activeMenu: any = ''
   backGroundTheme: any
   showHubs = true
-  viewerPage = false;
+  showBottomNav = true
+  viewerPage = false
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -256,7 +258,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
         if (!(event.url.includes('/page/home')) && isMobile) {
           this.showHubs = false
-        } else {          
+        } else {
           if (event.url.includes('/public')) {
             this.showHubs = false
           } else {
@@ -275,12 +277,14 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
+
         if (this.currentUrl.includes('/public/home')) {
           this.customHeight = true
 
         } else {
           this.customHeight = false
         }
+
         if (
           !!this.currentUrl.startsWith('/public/logout')
           || !!this.currentUrl.startsWith('/public/signup')
@@ -295,6 +299,10 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           this.showFooter = true
           this.showNavbar = true
           this.isNavBarRequired = true
+        }
+
+        if (!!this.currentUrl.startsWith('/app/toc/')) {
+          this.showBottomNav = false
         }
       }
 
@@ -377,12 +385,15 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
   ngAfterViewInit() {
     this.initAppUpdateCheck()
   }
+
   get navBarRequired(): boolean {
     return this.isNavBarRequired
   }
+
   get isShowNavbar(): boolean {
     return this.showNavbar
   }
+
   get isCustomHeight(): boolean {
     if (window.location.pathname.includes('/public/home')
     || window.location.pathname.includes('/public/faq')

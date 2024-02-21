@@ -20,8 +20,10 @@
           <ws-widget-player-brief [forPreview]="forPreview" [content]="content"></ws-widget-player-brief>
         </mat-tab>
       </mat-tab-group> -->
-      <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" [batchData]="batchData" (hidenav)="minimizeBar()">
-      </viewer-viewer-toc>
+      <ng-container *ngIf="isTypeOfCollection">
+        <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" [batchData]="batchData" (hidenav)="minimizeBar()">
+        </viewer-viewer-toc>
+      </ng-container>
     </mat-sidenav>
 
     <mat-sidenav-content #scrollableContent>
@@ -134,7 +136,7 @@
       </ng-container>
       <ng-container *ngIf="!isMobile">
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
-          <div class="pb-4 lg:py-4">
+          <div class="pb-4 lg:py-4 pl-4 pr-4">
             <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="hierarchyData" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
           </div>

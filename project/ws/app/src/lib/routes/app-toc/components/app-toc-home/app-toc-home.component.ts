@@ -185,6 +185,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   monthlyCapExceed = false
   isCompletedThisMonth = false
   @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
+  @ViewChild('bannerDetails', { static: true }) bannerElem!: ElementRef
   scrollLimit = 0
   rcElem = {
     offSetTop: 0,
@@ -192,9 +193,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   scrolled = false
   pathSet = new Set()
-  canShare =false;
-  enableShare = false;  
-  rootOrgId:any;
+  canShare = false
+  enableShare = false
+  rootOrgId: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -647,7 +648,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
-
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
       case NsAppToc.EWsTocErrorCode.API_FAILURE: {
@@ -776,6 +776,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     })
 
+    this.tocSvc.contentLoader.next(false)
   }
 
   getUserRating(fireUpdate: boolean) {
@@ -910,6 +911,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.fetchBatchDetails()
             }
             this.enrollBtnLoading = false
+            this.tocSvc.contentLoader.next(false)
           }
         }
         this.isCourseCompletedOnThisMonth()
@@ -1631,11 +1633,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.raiseTelemetryForShare('shareContent')
   }
 
+  /* tslint:disable */
   raiseTelemetryForShare(subType: any) {
     this.events.raiseInteractTelemetry(
       {
         type: 'click',
-        subType: subType,
+        subType,
         id: this.content ? this.content.identifier : '',
       },
       {

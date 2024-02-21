@@ -25,7 +25,7 @@
       <img [src]="appIcon" alt="Application Logo" class="app-logo" />
     </a>
   </div>
-  <div class="flex">
+  <div class="flex" *ngIf="isTypeOfCollection">
     <div class="flex flex-1 flex-col  margin-right-l progress-container">
       <div class="flex flex-row justify-between w-full ws-mat-white-text">
         <div class="flex items-center mb-2">
@@ -59,7 +59,7 @@
         <span> Edit rating </span>
       </ng-container>
     </button>
-    <div class="flex flex-row" (click)="onClickOfShare()" class="flex flex-row items-center justify-end gap-2 share-tag margin-left-l">
+    <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
       <mat-icon>share</mat-icon>
       <span>Share</span>
     </div>
@@ -105,7 +105,7 @@
           </ng-container>
         </button>
       </div>     
-      <div class="flex flex-row" (click)="onClickOfShare()" class="flex flex-row items-center justify-end gap-2 share-tag margin-left-l">
+      <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
         <mat-icon>share</mat-icon>
       </div>
     </div>

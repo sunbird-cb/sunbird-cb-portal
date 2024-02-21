@@ -69,20 +69,20 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private loadCheckService: LoadCheckService,
     private timerService: TimerService,
     private tocSvc: AppTocService,
-  ) { 
-    
+  ) {
+
   }
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
-  @Input()  tocStructure:any;
-  @Input() batchId:any;
-  @Input() pathSet:any;
-  @Input() config:any;
-  @Input() resumeData:any;
-  @Input() forPreview =false;
-  @Input() batchData:any
-  @Input() fromViewer = false;
+  @Input() sticky = false
+  @Input() tocStructure: any
+  @Input() pathSet: any
+  @Input() config: any
+  @Input() resumeData: any
+  @Input() forPreview = false
+  @Input() batchData: any
+  @Input() fromViewer = false
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
 
@@ -114,7 +114,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   competenciesObject: any = []
   private destroySubject$ = new Subject<any>()
   viewMoreTags = false
- 
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -147,7 +146,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   }
 
   timer: any = {}
-  isMobile = false;
+  isMobile = false
   ngOnInit() {
     if (window.innerWidth <= 1200) {
       this.isMobile = true
@@ -160,7 +159,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     }
   }
 
-
   ngAfterViewInit(): void {
     this.timerService.getTimerData()
     .pipe(takeUntil(this.destroySubject$))
@@ -169,7 +167,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     })
   }
 
-  ngOnChanges(changes: SimpleChanges): void {    
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.skeletonLoader && !changes.skeletonLoader.currentValue) {
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
@@ -204,7 +202,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         youtube: 0,
         interactivecontent: 0,
         offlineSession: 0,
-      };
+      }
       this.tocStructure.learningModule = this.content.primaryCategory === 'Course Unit' ? -1 : 0
       this.tocStructure.course = this.content.primaryCategory === 'Course' ? -1 : 0
       this.tocStructure = this.tocSvc.getTocStructure(this.content, this.tocStructure)

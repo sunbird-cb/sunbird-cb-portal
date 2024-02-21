@@ -431,15 +431,18 @@ export class WidgetContentService {
     if (enrolledCourseData) {
       if (enrolledCourseData.completionPercentage  === 100) {
         return this.gotoTocPage(enrolledCourseData)
-      }  if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
+      }
+      if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
         enrolledCourseData  = {
           ...enrolledCourseData,
           identifier: enrolledCourseData.collectionId,
           primaryCategory: enrolledCourseData.content.primaryCategory,
           name: enrolledCourseData.content.name,
         }
-        return this.getResourseDataWithData(enrolledCourseData, enrolledCourseData.lastReadContentId, enrolledCourseData.lrcProgressDetails.mimeType)
-      } else {
+        return this.getResourseDataWithData(enrolledCourseData,
+                                            enrolledCourseData.lastReadContentId,
+                                            enrolledCourseData.lrcProgressDetails.mimeType)
+      }
         if (enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId) {
           const doId = enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId
           const responseData = await this.fetchProgramContent(doId).toPromise().then(async (res: any) => {
@@ -461,13 +464,11 @@ export class WidgetContentService {
         }
           return this.gotoTocPage(content)
 
-
-      }
     }
       return this.gotoTocPage(content)
 
-
   }
+
   getResourseDataWithData(content: any, resourseId: any, mimeType: any) {
     if (content) {
       const url = viewerRouteGenerator(

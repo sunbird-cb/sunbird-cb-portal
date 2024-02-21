@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
 import { ShareTocComponent } from './share-toc/share-toc.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import {
   MatIconModule,
   MatButtonModule,
@@ -56,9 +56,9 @@ import {
     MatAutocompleteModule,
     TranslateModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 
   ],
-  exports: [ShareTocComponent]
+  exports: [ShareTocComponent],
 })
 export class ShareTocModule { }

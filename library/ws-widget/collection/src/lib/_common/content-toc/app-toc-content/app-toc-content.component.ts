@@ -33,6 +33,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   expandPartOf = false
   contextId!: string
   contextPath!: string
+  contentLoader = false
 
   typesOfContent: any
   selectedTabType: any = 'content'
@@ -70,6 +71,9 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
         this.initData(data)
       })
     }
+    this.tocSvc.contentLoader$.subscribe((val: any) => {
+      this.contentLoader = val
+    })
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
@@ -124,6 +128,10 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
         // this.getLastPlayedResource()
       }
     }
+  }
+
+  get isEnrolled(): boolean {
+    return this.batchId ? true : false
   }
 
   // private processCollectionForTree() {

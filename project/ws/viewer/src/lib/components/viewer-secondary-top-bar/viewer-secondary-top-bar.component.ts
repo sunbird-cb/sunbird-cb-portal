@@ -199,7 +199,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   }
 
   toggleSideBar() {
-    this.toggleSideBarFlag = !this.toggleSideBarFlag;
+    this.toggleSideBarFlag = !this.toggleSideBarFlag
     this.toggle.emit()
   }
   get needToHide(): boolean {
