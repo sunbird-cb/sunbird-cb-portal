@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { FormsModule } from '@angular/forms'
-import { HttpClient } from '@angular/common/http' 
+import { HttpClient } from '@angular/common/http'
 import {
   MatIconModule,
   MatTabsModule,
@@ -79,7 +79,7 @@ import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-
     AttendanceCardModule,
     MatTooltipModule,
     TocKpiValuesModule,
-    TranslateModule, 
+    TranslateModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
