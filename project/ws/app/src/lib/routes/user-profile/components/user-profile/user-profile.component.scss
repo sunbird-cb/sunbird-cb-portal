@@ -296,9 +296,12 @@ input[type=number] {
   .btn-success {
     background-color: rgb(48, 105, 51) !important;
     border-radius: 8px;
-    width: 240px;
+    width: 232px;
     box-shadow: none;
     margin-right: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &.btn-responsive {
       width: 100%;

@@ -209,7 +209,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   }
 
   private updateProgressBasedOnHash(progressHash: any) {
-    this.tocSvc.mapCompletionPercentage(this.contentData, progressHash.result.contentList, true)
+    this.tocSvc.mapCompletionPercentage(this.contentData, progressHash.result.contentList)
     this.tocSvc.mapModuleDurationAndProgress(this.contentData, this.contentData)
   }
   // tslint:enable
@@ -277,7 +277,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
       this.isFetching = false
       return viewerTocCardContent
-    } catch (err: any) {
+    } catch (err) {
       switch (err && err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'
