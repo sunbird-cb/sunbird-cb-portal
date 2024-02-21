@@ -7,52 +7,52 @@
     <ng-container *ngIf="content?.children?.length">
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.course > 0">
             <img src="/assets/icons/toc/course.svg" width="20px" alt="pdf image" />
-            <div class="text-xs" i18n>{{ tocStructure?.course }} Course(s)</div>
+            <div class="text-xs" i18n>{{ tocStructure?.course }} {{ 'apptocsinglepage.courses' | translate }}</div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.learningModule > 0">
             <img src="/assets/icons/toc/module.svg" width="24px" alt="module image" />
-            <div class="text-xs" i18n>{{ tocStructure?.learningModule }} Module(s)</div>
+            <div class="text-xs" i18n>{{ tocStructure?.learningModule }} {{ 'apptocsinglepage.modules' | translate }}</div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.video > 0">
             <img src="/assets/icons/toc/video.svg" width="20px" alt="video image" />
-            <div class="text-xs" i18n>{{ tocStructure?.video }} Video(s)</div>
+            <div class="text-xs" i18n>{{ tocStructure?.video }} {{ 'apptocsinglepage.videos' | translate }}</div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.pdf > 0">
             <img src="/assets/icons/toc/pdf.svg" width="20px" alt="pdf image" />
-            <div class="text-xs" i18n>{{ tocStructure?.pdf }} PDF's</div>
+            <div class="text-xs" i18n>{{ tocStructure?.pdf }} {{ 'apptocsinglepage.pdf' | translate }}</div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.podcast > 0">
             <img src="/assets/icons/toc/audio.svg" width="20px" alt="podcast image" />
-            <div class="text-xs" i18n>{{ tocStructure?.podcast }} Audio(s)</div>
+            <div class="text-xs" i18n>{{ tocStructure?.podcast }} {{ 'apptocsinglepage.audio' | translate }}</div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.webPage > 0">
             <img src="/assets/icons/toc/web.svg" width="20px" alt="web image" />
-            <div class="text-xs" i18n>{{ tocStructure?.webPage }} Web Page(s)</div>
+            <div class="text-xs" i18n>{{ tocStructure?.webPage }} {{ 'apptocsinglepage.webPages' | translate }}</div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.interactivecontent > 0">
             <img src="/assets/icons/toc/link.svg" width="20px" alt="interactive content image" />
-            <div class="text-xs" i18n>{{ tocStructure?.interactivecontent }} Interactive Content(s)</div>
+            <div class="text-xs" i18n>{{ tocStructure?.interactivecontent }} {{ 'apptocsinglepage.interactiveContent' | translate }}</div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.finalTest > 0">
             <img src="/assets/icons/toc/assessment.svg" width="20px" alt="assessment image" />
-            <div class="text-xs" i18n>{{ tocStructure?.finalTest }} Final assessment(s) </div>
+            <div class="text-xs" i18n>{{ tocStructure?.finalTest }} {{ 'apptocsinglepage.finalAssessment' | translate }} </div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.practiceTest > 0">
             <img src="/assets/icons/toc/assessment.svg" width="20px" alt="practice test image" />
-            <div class="text-xs" i18n>{{ tocStructure?.practiceTest }} Practice test(s) </div>
+            <div class="text-xs" i18n>{{ tocStructure?.practiceTest }} {{ 'apptocsinglepage.practiceTest' | translate }} </div>
         </div>
     
         <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.other > 0">
             <img src="/assets/icons/toc/course.svg" width="20px" alt="other items image" />
-            <div class="text-xs" i18n>{{ tocStructure?.other }} Other Item(s) </div>
+            <div class="text-xs" i18n>{{ tocStructure?.other }} {{ 'apptocsinglepage.otherItems' | translate }} </div>
         </div>
     </ng-container>
 </div>
