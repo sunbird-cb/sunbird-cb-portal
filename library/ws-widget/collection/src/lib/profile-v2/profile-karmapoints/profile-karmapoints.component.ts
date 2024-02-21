@@ -20,8 +20,8 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   public id = 'profile-karmapoints'
 
   constructor(private router: Router, private events: EventService,
-    private langtranslations: MultilingualTranslationsService,
-    private translate: TranslateService) {
+              private langtranslations: MultilingualTranslationsService,
+              private translate: TranslateService) {
     super()
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
