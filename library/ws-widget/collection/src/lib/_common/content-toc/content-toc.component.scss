@@ -1,4 +1,8 @@
 ::ng-deep .content-tabs {
+    .mat-tab-body-content {
+        overflow: hidden !important;
+    }
+
     .mat-tab-body.mat-tab-body-active {
         overflow-y: hidden;
     }

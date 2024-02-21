@@ -22,11 +22,9 @@
   </div>
 </ng-container>
 
-<button class="mat-caption karmapoints-panel karmapoints-panel-claim margin-top-m width-1-1"
-  *ngIf="kpData && btnCategory === 'claim'" (click)="onClickOfClaim()">
-  <p class="margin-remove">{{kpData.textBeforeIcon}}
-    <img src="/assets/icons/home/karma-badge.svg" alt="KarmaPoints">
-    <span class="font-bold"> {{kpData.points}} {{translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }} </span>
-    <span *ngIf="kpData.textAfterIcon">{{translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel')}}</span>
-  </p>
+<button class="claim-button" *ngIf="kpData && btnCategory === 'claim'" (click)="onClickOfClaim()">
+  <img src="/assets/icons/home/karma-badge.svg" width="28px" class="mr-2" alt="karma-points image" />
+  <div>{{ kpData.textBeforeIcon }}</div>
+  <div>{{ kpData.points }} {{ translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }}</div>
+  <div *ngIf="kpData?.textAfterIcon">{{ translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel') }}</div>
 </button>
