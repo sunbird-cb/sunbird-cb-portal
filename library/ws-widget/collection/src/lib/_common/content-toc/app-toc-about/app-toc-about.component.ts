@@ -18,6 +18,9 @@ import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.serv
 
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { Router } from '@angular/router';
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -69,6 +72,9 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private loadCheckService: LoadCheckService,
     private timerService: TimerService,
     private tocSvc: AppTocService,
+    private configService: ConfigurationsService,
+    private discussUtilitySvc: DiscussUtilsService,
+    private router: Router
   ) {
 
   }
@@ -85,7 +91,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   @Input() fromViewer = false
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
-
+  primaryCategory = NsContent.EPrimaryCategory
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
   summary = {
     ellipsis: false,
@@ -506,6 +512,49 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
       this.fetchRatingLookup()
     }
+  }
+
+  navigateToDiscussionHub() {
+    const config = {
+      menuOptions: [
+        {
+          route: 'all-discussions',
+          label: 'All discussions',
+          enable: true,
+        },
+        {
+          route: 'categories',
+          label: 'Categories',
+          enable: true,
+        },
+        {
+          route: 'tags',
+          label: 'Tags',
+          enable: true,
+        },
+        {
+          route: 'my-discussion',
+          label: 'Your discussion',
+          enable: true,
+        },
+        // {
+        //   route: 'leaderboard',
+        //   label: 'Leader Board',
+        //   enable: true,
+        // },
+      ],
+      userName: (this.configService.nodebbUserProfile && this.configService.nodebbUserProfile.username) || '',
+      context: {
+        id: 1,
+      },
+      categories: { result: [] },
+      routerSlug: '/app',
+      headerOptions: false,
+      bannerOption: true,
+    }
+    this.discussUtilitySvc.setDiscussionConfig(config)
+    localStorage.setItem('home', JSON.stringify(config))
+    this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
   ngOnDestroy(): void {

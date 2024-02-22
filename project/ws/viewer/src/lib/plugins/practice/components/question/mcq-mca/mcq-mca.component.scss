@@ -11,6 +11,19 @@
   height: auto;
   border-radius: 8px;
   background: rgb(245,245,245);
+  
+}
+
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+  width:380px !important;
+  min-height: 48px;
+  height: auto !important;
+  word-wrap: break-word;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+  padding:16px !important
 }
 
 .ws-mat-accent-border-active {
@@ -25,12 +38,20 @@
 .correct-answer {
   mat-list-option {
     border-color: #008000 !important;
+    background-color:rgb(219,236,220) !important;
+  }
+  .mat-pseudo-checkbox-checked {
+    background-color: rgb(29, 137, 35) !important;
   }
 }
 
 .incorrect-answer {
   mat-list-option {
     border-color: #f44336 !important;
+    background-color:rgb(248,223,220) !important;
+  }
+  .mat-pseudo-checkbox-checked {
+    background-color: #f44336 !important;
   }
 }
 

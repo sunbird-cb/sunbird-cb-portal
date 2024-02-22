@@ -22,7 +22,7 @@
               </ng-container>
             </ng-container>
             <ng-container *ngIf="content.completionPercentage === 100 || certData">
-              {{ resumeData ? "Start again" : "Start" }}
+              {{ resumeData ? "Start again" : "Start" }} 
             </ng-container>
           </a>
 
@@ -338,7 +338,6 @@
         <ng-container [ngTemplateOutlet]="progressFunctionality"></ng-container>
       </div>
       <!-- Overall progress functionality -->
-
       <ws-widget-content-toc [content]="content" [pathSet]="pathSet" [tocStructure]="tocStructure" [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader" [changeTab]="changeTab"></ws-widget-content-toc>
     </div>
   </div>
