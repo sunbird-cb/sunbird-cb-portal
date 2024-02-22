@@ -203,6 +203,7 @@ export class EventService {
 
  setEventListData(eventObj: any) {
   if (eventObj !== undefined) {
+    this.todaysEvents = []
     const data = eventObj
    // console.log('strip comp', data)
     Object.keys(data).forEach((index: any) => {
