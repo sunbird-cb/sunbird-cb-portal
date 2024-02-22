@@ -1,14 +1,14 @@
 <div class="filter-sidebar padding-m">
-    <p class="mat-subheading-2 margin-bottom-m font-bold-imp">Filter by</p>
+    <p class="mat-subheading-2 margin-bottom-m font-bold-imp">{{ 'competencydetails.filterBy' | translate }}</p>
     <form class="filter-form" [formGroup]="filterForm">
         <mat-selection-list id="filterControl" formControlName="filterControl" #filterControl>
             <ng-container *ngFor="let fs of filters">
                 <span class="filter_span_box" *ngIf="fs.name === 'competencyType'">
-                    <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">Type</p>
+                    <p class="mat-subheading-1 margin-bottom-xs font-bold-imp">{{ 'apptocsinglepage.type' | translate }}</p>
                     <ng-container *ngFor="let val of fs?.values">
                         <section class="mat-body-2 margin-bottom-xs text-capitalize" *ngIf="val?.name">
                             <mat-checkbox class="example-margin" (change)="updateUserFilters(val, fs.name)" [checked]="val.ischecked">
-                                <label for="{{val.name}}">{{val.name}}</label>
+                                <label for="{{val.name}}">{{translateLabels(val.name, 'competencyList')}}</label>
                             </mat-checkbox>
                         </section>
                         <!-- <section class="mat-body-2 margin-bottom-xs text-capitalize">
@@ -29,7 +29,7 @@
         <mat-selection-list id="competencyAreas" formControlName="competencyAreas" #competencyAreas> -->
 
                 <span class="filter_span_box seacrh_span_box" *ngIf="fs.name === 'competencyArea'">
-                    <p class="mat-subheading-1 font-bold-imp margin-remove">Competency area</p>
+                    <p class="mat-subheading-1 font-bold-imp margin-remove">{{ 'competencydetails.competencyArea' | translate }}</p>
                     <!-- <mat-form-field class="right_section_search_box">
                      
                       <mat-icon>search</mat-icon>
@@ -41,7 +41,7 @@
                         </mat-icon>
                         <!-- <mat-label>Search</mat-label> -->
                         <input type="search" #searchCompArea class="ml-2" i18-aria-label aria-label="Search"
-                            formControlName="searchCompArea" i18n-placeholder="search" [placeholder]="'Search'" matInput autocomplete="off"/>
+                            formControlName="searchCompArea" i18n-placeholder="search" [placeholder]="'common.search' | translate" matInput autocomplete="off"/>
                             
                             <!-- <input type="search" #searchInput class="ml-2" i18n-placeholder="search content"
                             [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput [formControl]="queryControl"

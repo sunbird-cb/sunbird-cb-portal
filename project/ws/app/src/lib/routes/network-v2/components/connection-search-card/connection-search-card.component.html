@@ -18,25 +18,25 @@
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
                 (click)="connetToUser()" *ngIf="!user?.requestSent && !user?.requestRecieved && !user?.connectionEstablished">
-                <span class="" i18n>Connect</span>
+                <span class="" i18n>{{'connectionPeopleCard.connect' | translate}}</span>
             </button>
             <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
                 (click)="connetToUser()" disabled *ngIf="user?.requestSent && !user?.connectionEstablished">
-                <span class="" i18n>Connection sent</span>
+                <span class="" i18n>{{'connectionPeopleCard.connectionSent' | translate}}</span>
             </button>
             <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
                 (click)="connetToUser()" disabled *ngIf="user?.requestRecieved && !user?.connectionEstablished">
-                <span class="" i18n>Connection received</span>
+                <span class="" i18n>{{'connectionPeopleCard.connectionReceived' | translate}}</span>
             </button>
             <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
                 (click)="connetToUser()" disabled *ngIf="user?.connectionEstablished">
-                <span class="" i18n>Connected</span>
+                <span class="" i18n>{{'connectionPeopleCard.connected' | translate}}</span>
             </button>
         </div>
     </div>
 </div>
 
 <input type="hidden" i18-value i18-aria-value aria-value="Connection sent"
-  value="Connection sent successfully!" #toastSuccess />
+  value="{{'connectionPeopleCard.connectionSentSuccessfully' | translate}}" #toastSuccess />
 <input type="hidden" i18-value i18-aria-value aria-value="Connection failed"
   value="Something went wrong, please try again later!" #toastError />
