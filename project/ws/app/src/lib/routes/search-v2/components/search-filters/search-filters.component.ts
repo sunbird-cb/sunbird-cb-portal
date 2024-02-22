@@ -112,7 +112,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
             if (fas.name === 'primaryCategory') {
-              if (fasv.name === fil.name) {
+              if (fasv.name === this.toCamelCase(fil.name)) {
                 fasv.ischecked = true
               }
             } else {
@@ -130,7 +130,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
             if (fas.name === 'primaryCategory') {
-              if (fasv.name === fil.name) {
+              if (fasv.name === this.toCamelCase(fil.name)) {
                 fasv.ischecked = true
               }
             } else {
@@ -235,6 +235,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           })
         }
       })
+      debugger
       this.appliedFilter.emit(this.myFilterArray)
     } else {
       this.userFilters.push(fil)
@@ -265,6 +266,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       }
 
       this.myFilterArray.push(reqfilter)
+      debugger
       this.appliedFilter.emit(this.myFilterArray)
     }
   }
@@ -273,8 +275,14 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   translateTo(menuName: string): string {
+    const name =  this.toCamelCase(menuName)
     // tslint:disable-next-line: prefer-template
-    const translationKey = 'searchfilters.' + menuName.replace(/\s/g, '')
+    const translationKey = 'searchfilters.' + name.replace(/\s/g, '')
     return this.translate.instant(translationKey)
+  }
+  toCamelCase(str: string) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index === 0 ? word.toLowerCase() : word.toUpperCase()
+    }).replace(/\s+/g, '')
   }
 }

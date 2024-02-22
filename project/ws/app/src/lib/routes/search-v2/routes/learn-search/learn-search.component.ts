@@ -20,19 +20,18 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   searchRequestObject = {
     request: {
       filters: {
-        contentType: [],
-        primaryCategory: [],
+        courseCategory: [],
         mimeType: [],
         source: [],
         mediaType: [],
+        contentType: ['Course'],
         status: ['Live'],
-        'competencies_v3.name': [],
         topics: [],
       },
       query: '',
       sort_by: { lastUpdatedOn: 'desc' },
       fields: [],
-      facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name', 'topics'],
+      facets: ['courseCategory', 'mimeType', 'source', 'competencies_v3.name', 'topics'],
       limit: 100,
       offset: 0,
       fuzzy: false,
@@ -119,6 +118,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         }
       }
     }
+    // this.getStartupData()
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -134,7 +134,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           this.removeFilter(fil)
         })
       }
-      this.getStartupData()
+      // this.getStartupData()
     }
   }
 
@@ -157,6 +157,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getStartupData() {
+debugger
     if (!this.paramFilters || this.paramFilters === 'undefined') {
       this.paramFilters = []
      }
@@ -198,7 +199,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
       if (this.userValue === 'moderatedCourses') {
         if (this.veifiedKarmayogi) {
-          this.searchApiCall(queryparam1)
+          // this.searchApiCall(queryparam1)
         }
       } else {
         // if (this.userValue === 'moderatedCourses') {
@@ -226,9 +227,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           },
         }
         if (this.veifiedKarmayogi) {
-          this.searchApiCall(queryparam1)
+          // this.searchApiCall(queryparam1)
         }
-        this.searchApiCall(queryparam2)
+        // this.searchApiCall(queryparam2)
       }
 
     }
@@ -264,7 +265,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     this.newQueryParam = queryparam
     this.searchResults = []
     this.totalResults = 0
-    this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+    this.searchSrvc.fetchSearchDataByCategory(queryparam).subscribe((response: any) => {
       if (response && response.result && response.result.count > 0) {
         response.result.content.forEach((data: any) => {
           this.searchResults.push(data)
@@ -285,16 +286,18 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   // }
 
   applyFilter(filter: any) {
+    debugger
     let isFilterCheccked = false
     let isModeratedFilterChecked = false
     if (filter && filter.length > 0) {
       this.myFilters = filter
       const queryparam = this.searchRequestObject
-      queryparam.request.filters.primaryCategory = []
+      queryparam.request.filters.courseCategory = []
       queryparam.request.filters.contentType = []
       queryparam.request.filters.mimeType = []
       queryparam.request.filters.source = []
       this.myFilters.forEach((mf: any) => {
+        debugger
         queryparam.request.query = this.param
         if (mf.mainType === 'contentType') {
           // const indx = this.contentType.filter((x: any) => x === mf.name)
@@ -307,19 +310,19 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           if (indx.length === 0) {
             if (mf.name !== 'moderated courses') {
               this.primaryCategoryType.push(mf.name)
-              queryparam.request.filters.primaryCategory = this.primaryCategoryType
+              queryparam.request.filters.courseCategory = this.primaryCategoryType
             }
           }
-          queryparam.request.filters.primaryCategory = this.primaryCategoryType
+          queryparam.request.filters.courseCategory = this.primaryCategoryType
         } else if (mf.mainType === 'primaryCategory') {
           const indx = this.primaryCategoryType.filter((x: any) => x === mf.name && mf.name !== 'moderated courses')
           if (indx.length === 0) {
             if (mf.name !== 'moderated courses') {
               this.primaryCategoryType.push(mf.name)
-              queryparam.request.filters.primaryCategory = this.primaryCategoryType
+              queryparam.request.filters.courseCategory = this.primaryCategoryType
             }
           }
-          queryparam.request.filters.primaryCategory = this.primaryCategoryType
+          queryparam.request.filters.courseCategory = this.primaryCategoryType
         } else if (mf.mainType === 'mimeType') {
           if (mf.name === 'Image') {
             this.mimeType.push('image/jpeg')
@@ -348,7 +351,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
           queryparam.request.filters.mediaType = this.mediaType
         } else if (mf.mainType === 'competencies_v3.name') {
           this.competencNames = (mf.values)
-          queryparam.request.filters['competencies_v3.name'] = mf.values
+          // queryparam.request.filters['competencies_v3.name'] = mf.values
         } else if (mf.mainType === 'topics') {
           this.competencNames = (mf.values)
           queryparam.request.filters['topics'] = mf.values
@@ -370,12 +373,12 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
 
       if (isModeratedFilterChecked) {
         this.primaryCategoryType.push('Course')
-        queryparam.request.filters.primaryCategory = this.primaryCategoryType
-      } else if (queryparam.request.filters.primaryCategory.length === 0 && !isModeratedFilterChecked) {
+        queryparam.request.filters.courseCategory = this.primaryCategoryType
+      } else if (queryparam.request.filters.courseCategory.length === 0 && !isModeratedFilterChecked) {
         this.primaryCategoryType.push('Course')
         this.primaryCategoryType.push('Program')
         this.primaryCategoryType.push('Standalone Assessment')
-        queryparam.request.filters.primaryCategory = this.primaryCategoryType
+        queryparam.request.filters.courseCategory = this.primaryCategoryType
       }
 
       if (this.param && this.param !== 'moderatedCourses') {
@@ -389,29 +392,13 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.newQueryParam = queryparam
 
       if (isModeratedFilterChecked) {
-        const param = {
-              request: {
-              secureSettings: true,
-              query: this.param,
-                filters: {
-                  primaryCategory: [
-                    'Course',
-
-                  ],
-                  status: ['Live'],
-                },
-                sort_by: { lastUpdatedOn: 'desc' },
-                facets: ['mimeType'],
-                limit: 20,
-
-              },
-            }
-            this.fetchSearchDataFun(param)
+        const param = { 'request': { 'query': '', 'filters': { 'courseCategory': ['Moderated Course', 'Moderated Assessment', 'Moderated Program'], 'contentType': ['Course'], 'status': ['Live'] }, 'sort_by': { 'lastUpdatedOn': 'desc' }, 'facets': ['mimeType'], 'limit': 20 } }
+            // this.fetchSearchDataFun(param)
       }
 
-      if (isFilterCheccked) {
+      // if (isFilterCheccked) {
         this.fetchSearchDataFun(queryparam)
-      }
+      // }
     } else {
       this.myFilters = filter
       this.getSearchedData()
@@ -419,7 +406,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   fetchSearchDataFun(data: any) {
-    this.searchSrvc.fetchSearchData(data).subscribe((response: any) => {
+    this.searchSrvc.fetchSearchDataByCategory(data).subscribe((response: any) => {
       response.result.content.forEach((res: any) => {
         this.searchResults.push(res)
       })
@@ -468,7 +455,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     if (this.page <= this.totalpages && this.searchResults.length < this.totalResults) {
       const queryparam = this.newQueryParam
       queryparam.request.offset += 100
-      this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
+      this.searchSrvc.fetchSearchDataByCategory(queryparam).subscribe((response: any) => {
         const array2 = response.result.content
         this.searchResults = this.searchResults.concat(array2)
       })
