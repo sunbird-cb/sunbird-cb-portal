@@ -457,7 +457,7 @@
                                 <ws-widget-card-rating-comment [review]="authReplies[c.userId]" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
                             </ng-container>
                         </div>
-                        <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                        <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center spinner-border">
                             <mat-spinner [diameter]="30"></mat-spinner>
                         </div>
                         <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false)?.length <=0
