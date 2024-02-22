@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { GbSearchService } from '../../services/gb-search.service'
-import { ConfigurationsService, EventService, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, ValueService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -74,7 +74,8 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     private events: EventService,
     private activated: ActivatedRoute,
     private valueSvc: ValueService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -479,6 +480,9 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     if (this.defaultSideNavBarOpenedSubscription) {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
+  }
 
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

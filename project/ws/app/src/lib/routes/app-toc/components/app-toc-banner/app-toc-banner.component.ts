@@ -1464,4 +1464,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   translateLabels(label: string, type: any, subtype: any) {
     return this.langtranslations.translateActualLabel(label, type, subtype)
   }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
 }

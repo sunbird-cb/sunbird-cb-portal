@@ -45,15 +45,15 @@
                         <div class="flex flex-row gap-5">
                             <div class="flex flex-row gap-2">
                                 <mat-icon>swap_vert</mat-icon>
-                                <div class="text-xs">{{ (data?.upvotes + data?.downvotes) || 0 }} Votes</div>
+                                <div class="text-xs">{{ (data?.upvotes + data?.downvotes) || 0 }} {{ 'discuss.discussionVotes' | translate }}</div>
                             </div>
                             <div class="flex flex-row gap-2" *ngIf="trend" >
                                 <mat-icon>visibility</mat-icon>
-                                <div class="text-xs">{{ data?.viewcount || 0 }} Views</div>
+                                <div class="text-xs">{{ data?.viewcount || 0 }} {{ 'discuss.discussionViews' | translate }}</div>
                             </div>
                             <div class="flex flex-row gap-2">
                                 <mat-icon>chat_bubble</mat-icon>
-                                <div class="text-xs">{{ (( (data?.topic?.postcount || data?.postcount) || 1) -1) }} Comments
+                                <div class="text-xs">{{ (( (data?.topic?.postcount || data?.postcount) || 1) -1) }} {{ 'discuss.comments' | translate }}
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
         <ng-container *ngIf="discussion.error">
             <div class="flex flex-col items-center gap-3 p-5">
                 <mat-icon class="no-data-found">report_off</mat-icon>
-                <div class="mat-subheading-1">No data found!</div>
+                <div class="mat-subheading-1">{{ 'home.noDataFound' | translate }}</div>
                 <div class="text-center">Unable to fetch discussion info due to some error.</div>
             </div>
         </ng-container>
