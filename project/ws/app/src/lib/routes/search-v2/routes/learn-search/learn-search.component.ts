@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { TranslateService } from '@ngx-translate/core'
+import { NsContent } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
   selector: 'ws-app-learn-search',
@@ -118,7 +119,10 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         }
       }
     }
-    // this.getStartupData()
+    if (this.param) {
+      this.getStartupData()
+
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -129,12 +133,12 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       this.statedata = { param: this.param, path: 'Search' }
       this.searchResults = []
       this.totalResults = 0
+      this.searchFreeTest()
       if (this.myFilters && this.myFilters.length > 0) {
         this.myFilters.forEach((fil: any) => {
           this.removeFilter(fil)
         })
       }
-      // this.getStartupData()
     }
   }
 
@@ -157,7 +161,6 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getStartupData() {
-debugger
     if (!this.paramFilters || this.paramFilters === 'undefined') {
       this.paramFilters = []
      }
@@ -170,124 +173,33 @@ debugger
        })
        this.applyFilter(this.paramFilters)
      } else {
-      this.getSearchedData()
+      this.searchFreeTest()
     }
   }
 
-  getSearchedData() {
-    if (this.myFilters.length === 0 && this.paramFilters.length === 0) {
-      // let param = ''
-      // if (this.userValue === 'moderatedCourses') {
-      //   param = ''
-      // }
-
-      const queryparam1 = {
-        request: {
-          secureSettings: true,
-          query: this.param,
-          filters: {
-            primaryCategory: ['Course'],
-            status: ['Live'],
-          },
-          sort_by: { lastUpdatedOn: 'desc' },
-          facets: ['mimeType'],
-          limit: 20,
-        },
-      }
-
-      let queryparam2
-
-      if (this.userValue === 'moderatedCourses') {
-        if (this.veifiedKarmayogi) {
-          // this.searchApiCall(queryparam1)
-        }
-      } else {
-        // if (this.userValue === 'moderatedCourses') {
-        //   param = ''
-        // }
-        queryparam2 = {
-          request: {
-            filters: {
-              primaryCategory: [
-                'Course',
-                'Program',
-                'Standalone Assessment',
-                'Blended Program',
-                'Curated Program',
-              ],
-              status: ['Live'],
-            },
-            query: this.param,
-            sort_by: { lastUpdatedOn: '' },
-            fields: [],
-            facets: ['primaryCategory', 'mimeType', 'source'],
-            limit: 100,
-            offset: 0,
-            fuzzy: false,
+  searchFreeTest() {
+    if ((this.myFilters && this.myFilters.length === 0) && (this.paramFilters && this.paramFilters.length === 0)) {
+      const emptyParam = {
+        'request': {
+          'query': this.param ? this.param : '',
+          'filters': {
+            'courseCategory': [],
+            'contentType': ['Course'],
+            'status': ['Live'] },
+            'sort_by': { 'lastUpdatedOn': 'desc' },
+            'facets': ['mimeType'],
+            'limit': 100,
+            'offset': 0,
           },
         }
-        if (this.veifiedKarmayogi) {
-          // this.searchApiCall(queryparam1)
-        }
-        // this.searchApiCall(queryparam2)
-      }
+        // this.newQueryParam = emptyParam
+        this.fetchSearchDataFun(emptyParam)
 
     }
-    // if ((this.paramFilters && this.paramFilters.length > 0) || (this.myFilters && this.myFilters.length > 0)) {
-    // queryparam.request.filters = this.paramFilters
-    //   if (this.paramFilters.contentType) {
-    //     const pf = {
-    //       mainType:  'primaryCategory',
-    //       name: this.paramFilters.primaryCategory[0].toLowerCase(),
-    //       count: '',
-    //       ischecked: true,
-    //     }
-    //     this.paramFilters = pf
-    //     this.searchSrvc.addFilter(pf)
-    //     this.myFilters.push(pf)
-    //   }
-    // }
-    // this.paramFilters.forEach((pf: any) => {
-    //   const indx = this.myFilters.filter((x: any) => x.name === pf.name)
-    //   if (indx.length === 0) {
-    //     this.myFilters.push(pf)
-    //   }
-    // })
-    // this.searchSrvc.fetchSearchData(queryparam).subscribe((response: any) => {
-    // this.facets = response.result.facets
-    // if (response) { }
-    // this.applyFilter(this.paramFilters)
-    // })
-    // }
   }
-
-  searchApiCall(queryparam: any) {
-    this.newQueryParam = queryparam
-    this.searchResults = []
-    this.totalResults = 0
-    this.searchSrvc.fetchSearchDataByCategory(queryparam).subscribe((response: any) => {
-      if (response && response.result && response.result.count > 0) {
-        response.result.content.forEach((data: any) => {
-          this.searchResults.push(data)
-        })
-      }
-      this.totalResults = this.totalResults + response.result.count
-      // this.facets = response.result.facets
-      this.paramFilters = []
-      this.totalpages = Math.ceil(this.totalResults / 100)
-      this.facetsData.push(response.result.facets)
-      this.getFacets(this.facetsData)
-    })
-
-  }
-
-  // viewContent(content: any) {
-  // this.router.navigate([`/app/toc/${content.identifier}/overview?primaryCategory=/${content.primaryCategory}`])
-  // }
 
   applyFilter(filter: any) {
-    debugger
-    let isFilterCheccked = false
+    // let isFilterCheccked = false
     let isModeratedFilterChecked = false
     if (filter && filter.length > 0) {
       this.myFilters = filter
@@ -297,15 +209,8 @@ debugger
       queryparam.request.filters.mimeType = []
       queryparam.request.filters.source = []
       this.myFilters.forEach((mf: any) => {
-        debugger
         queryparam.request.query = this.param
         if (mf.mainType === 'contentType') {
-          // const indx = this.contentType.filter((x: any) => x === mf.name)
-          // if (indx.length === 0) {
-          //   this.contentType.push(mf.name)
-          //   queryparam.request.filters.contentType = this.contentType
-          // }
-          // queryparam.request.filters.contentType = this.contentType
           const indx = this.primaryCategoryType.filter((x: any) => x === mf.name && mf.name !== 'moderated courses')
           if (indx.length === 0) {
             if (mf.name !== 'moderated courses') {
@@ -359,17 +264,10 @@ debugger
         if (mf.name === 'moderated courses') {
           isModeratedFilterChecked = true
         }
-        if (mf.name !== 'moderated courses') {
-          isFilterCheccked = true
-        }
+        // if (mf.name !== 'moderated courses') {
+        //   isFilterCheccked = true
+        // }
       })
-
-      // if (queryparam.request.filters.contentType.length === 0) {
-        // this.contentType.push('Course')
-        // this.contentType.push('Resource')
-        // this.contentType.push('Program')
-        // queryparam.request.filters.contentType = this.contentType
-      // }
 
       if (isModeratedFilterChecked) {
         this.primaryCategoryType.push('Course')
@@ -389,28 +287,76 @@ debugger
       // this.facets = []
       this.searchResults = []
       this.totalResults = 0
-      this.newQueryParam = queryparam
+      // this.newQueryParam = queryparam
 
-      if (isModeratedFilterChecked) {
-        const param = { 'request': { 'query': '', 'filters': { 'courseCategory': ['Moderated Course', 'Moderated Assessment', 'Moderated Program'], 'contentType': ['Course'], 'status': ['Live'] }, 'sort_by': { 'lastUpdatedOn': 'desc' }, 'facets': ['mimeType'], 'limit': 20 } }
-            // this.fetchSearchDataFun(param)
+      if (this.param) {
+        queryparam.request.query = this.param
       }
-
-      // if (isFilterCheccked) {
-        this.fetchSearchDataFun(queryparam)
-      // }
+      this.fetchSearchDataFun(queryparam)
     } else {
       this.myFilters = filter
-      this.getSearchedData()
+      this.searchFreeTest()
     }
   }
 
   fetchSearchDataFun(data: any) {
+    data.request['fields'] = [
+      'name',
+      'appIcon',
+      'instructions',
+      'description',
+      'purpose',
+      'mimeType',
+      'gradeLevel',
+      'identifier',
+      'medium',
+      'pkgVersion',
+      'board',
+      'subject',
+      'resourceType',
+      'primaryCategory',
+      'contentType',
+      'channel',
+      'organisation',
+      'trackable',
+      'license',
+      'posterImage',
+      'idealScreenSize',
+      'learningMode',
+      'creatorLogo',
+      'duration',
+      'version',
+      'programDuration',
+      'avgRating',
+      'courseCategory',
+      'secureSettings',
+    ]
+    this.newQueryParam = data
+    let modifiedDataCount = 0
     this.searchSrvc.fetchSearchDataByCategory(data).subscribe((response: any) => {
-      response.result.content.forEach((res: any) => {
-        this.searchResults.push(res)
-      })
-      this.totalResults = response.result.count + this.totalResults
+      if (response && response.result && response.result.count) {
+        response.result.content.forEach((res: any) => {
+          if (res.courseCategory === NsContent.ECourseCategory.MODERATED_COURSE ||
+            res.courseCategory === NsContent.ECourseCategory.MODERATED_ASSESSEMENT ||
+            res.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
+              if (this.veifiedKarmayogi) {
+                this.searchResults.push(res)
+                modifiedDataCount = modifiedDataCount + 1
+              } else {
+                if (!(res.secureSettings && res.secureSettings.isVerifiedKarmayogi)) {
+                  this.searchResults.push(res)
+                  modifiedDataCount = modifiedDataCount + 1
+                }
+              }
+            } else {
+              this.searchResults.push(res)
+              modifiedDataCount = modifiedDataCount + 1
+            }
+        })
+
+      }
+      const totalCountLocal = response.result.count !== modifiedDataCount ? modifiedDataCount : response.result.count
+      this.totalResults = totalCountLocal + this.totalResults
       // this.facets = response.result.facets
       this.primaryCategoryType = []
       this.contentType = []

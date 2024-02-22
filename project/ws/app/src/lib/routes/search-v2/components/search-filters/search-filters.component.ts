@@ -200,7 +200,6 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   getFilterName(fil: any) {
     return this.userFilters.filter((x: any) => x.name === fil.name)
   }
-
   modifyUserFilters(fil: any, mainparentType: any) {
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
@@ -211,7 +210,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           },         500)
         }
 
-        if (fs.name === this.translateTo(fil.name)) {
+        if (fs.name === this.toCamelCase(fil.name)) {
           this.userFilters.splice(index, 1)
         }
       })
@@ -224,7 +223,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
             const name = fasv.name.toLowerCase()
-            if (name === this.translateTo(fil.name)) {
+            if (name === this.toCamelCase(fil.name).toLowerCase()) {
               fasv.ischecked = false
             }
 
@@ -235,7 +234,6 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           })
         }
       })
-      debugger
       this.appliedFilter.emit(this.myFilterArray)
     } else {
       this.userFilters.push(fil)
@@ -266,7 +264,6 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       }
 
       this.myFilterArray.push(reqfilter)
-      debugger
       this.appliedFilter.emit(this.myFilterArray)
     }
   }
@@ -281,7 +278,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     return this.translate.instant(translationKey)
   }
   toCamelCase(str: string) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g,  (word, index) => {
       return index === 0 ? word.toLowerCase() : word.toUpperCase()
     }).replace(/\s+/g, '')
   }
