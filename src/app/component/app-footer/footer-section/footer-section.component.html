@@ -80,7 +80,7 @@
                     <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
                         <ng-container *ngIf="(portal.isPublic || isAllowed(portal.id)) && portal.name !== 'Frac Dictionary'">
                             <li><a class="footer_sub_text mat-body" [attr.href]="portal.uriPath"
-                                    target="_blank">{{ translateLabels(portal.name, 'common')}} </a>
+                                    target="_blank">{{ translateLabelsWithSpace(portal.name, 'common')}} </a>
                             </li>
                         </ng-container>
                     </ng-container>
