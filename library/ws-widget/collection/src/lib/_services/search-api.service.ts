@@ -10,6 +10,7 @@ const API_END_POINTS = {
   SOCIAL_VIEW_SEARCH_RESULT: `${PROTECTED_SLAG_V8}/social/post/search`,
   SEARCH_AUTO_COMPLETE: `/apis/proxies/v8/sunbirdigot/read`,
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
+  SEARCH_V4: `/apis/proxies/v8/sunbirdigot/v4/search`,
 }
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,45 @@ export class SearchApiService {
 
   getSearchV6Results(body: any): Observable<any> {
     return this.http.post<any>(API_END_POINTS.SEARCH_V6, body).pipe(map((res: any) => {
+      const tempArray = Array()
+      if (res.result.facets.length > 0) {
+        res.result.facets.forEach((ele: { name: any; values: { name: any; count: any }[] }) => {
+          const temp: any = {
+            displayName: '',
+            type: '',
+            content: [],
+          }
+
+          temp.displayName = ele.name
+          temp.type = ele.name
+          if (ele.values.length > 0) {
+            ele.values.forEach((subEle: { name: any; count: any }) => {
+              temp.content.push({
+                displayName: subEle.name,
+                type: subEle.name,
+                count: subEle.count,
+                id: '',
+              })
+            })
+          }
+          tempArray.push(temp)
+        })
+      }
+      res.filters = tempArray
+      for (const filter of res.filters) {
+        if (filter.type === 'catalogPaths') {
+          if (filter.content.length === 1) {
+            filter.content = filter.content[0].children || []
+          }
+          break
+        }
+      }
+      return res
+    }))
+  }
+
+  getSearchV4Results(body: any): Observable<any> {
+    return this.http.post<any>(API_END_POINTS.SEARCH_V4, body).pipe(map((res: any) => {
       const tempArray = Array()
       if (res.result.facets.length > 0) {
         res.result.facets.forEach((ele: { name: any; values: { name: any; count: any }[] }) => {

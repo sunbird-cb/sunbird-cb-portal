@@ -33,7 +33,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
 import { TranslateService } from '@ngx-translate/core'
-import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { TimerService } from '../../services/timer.service'
 dayjs.extend(isSameOrBefore)
@@ -122,8 +122,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   selectable = true
   removable = true
   addOnBlur = true
-  separatorKeysCodes: number[] = [ENTER, COMMA]
-  userCtrl = new FormControl()
+  separatorKeysCodes: number[] = [ENTER]
+  userCtrl = new FormControl('')
   filteredUsers: any []| undefined
   users: any[] = []
   allUsers: any[] = []
@@ -171,9 +171,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       debounceTime(200),
       distinctUntilChanged()
     ).subscribe((res: any) => {
-      this.filteredUsers = []
-      this.allUsers = []
       if (res) {
+        this.filteredUsers = []
+        // this.allUsers = []
         this.getUsersToShare(res)
       }
     })
@@ -274,7 +274,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     }
 
-    if (this.content && (
+    if (this.content && this.content.courseCategory !== 'Moderated Course' && (
       this.content.primaryCategory === this.primaryCategory.COURSE ||
       this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
       this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
@@ -294,21 +294,25 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       if (data.result && data.result.response) {
         this.apiResponse = data.result.response.content
         let name = ''
+        let pEmail = ''
         this.apiResponse.forEach((apiData: any) => {
           apiData.firstName.split(' ').forEach((d: any) => {
             name = name + d.substr(0, 1).toUpperCase()
           })
-          this.allUsers.push(
-            {
-              maskedEmail: apiData.maskedEmail,
-              id: apiData.identifier,
-              name: apiData.firstName,
-              iconText: name,
-              email: (
-                apiData.profileDetails && apiData.profileDetails.personalDetails) ?
-                apiData.profileDetails.personalDetails.primaryEmail : '',
+          if (apiData.profileDetails && apiData.profileDetails.personalDetails) {
+            pEmail = apiData.profileDetails.personalDetails.primaryEmail
+            if (!this.allUsers.filter(user => user.email.toLowerCase().includes(pEmail.toLowerCase())).length) {
+              this.allUsers.push(
+                {
+                  maskedEmail: apiData.maskedEmail,
+                  id: apiData.identifier,
+                  name: apiData.firstName,
+                  iconText: name,
+                  email: pEmail,
+                }
+              )
             }
-          )
+          }
         })
         this.showLoader = false
       }
@@ -1247,7 +1251,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
-      const ePattern = new RegExp(`^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`)
+      if (this.users.includes(value.trim())) {
+        this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
+        return
+      }
+      // tslint:disable-next-line: max-line-length
+      const ePattern = new RegExp(/^(?!.*\.\.)(?!.*\._)(?!.*\._\.)(?!.*\.\.$)(?!.*\.$)[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/)
       if (ePattern.test(value)) {
         if ((value || '').trim()) {
           this.users.push(value.trim())
@@ -1255,7 +1264,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (input) {
           input.value = ''
         }
-        this.userCtrl.setValue(null)
+        this.userCtrl.setValue('')
+        const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+        if (el != null) {
+          setTimeout(() => {
+            el[0].scrollTop = el[0].scrollHeight
+          },         200)
+        }
       } else {
         this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
         return
@@ -1276,17 +1291,27 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
       return
     }
+    if (this.users.includes(event.option.value)) {
+      this.openSnackbar(this.translateLabels('dulicateUser', 'contentSharing', ''))
+      return
+    }
     this.users.push(event.option.value)
     if (this.userInput) {
       this.userInput.nativeElement.value = ''
     }
-    this.userCtrl.setValue(null)
+    this.userCtrl.setValue('')
+    const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+    if (el != null) {
+      setTimeout(() => {
+        el[0].scrollTop = el[0].scrollHeight
+      },         200)
+    }
   }
 
   filterSharedUsers(value: string): string[] {
     if (value) {
       const filterValue = value.toLowerCase()
-      return this.allUsers.filter(user => user.name.toLowerCase().indexOf(filterValue) === 0)
+      return this.allUsers.filter(user => user.name.toLowerCase().includes(filterValue))
     }
     return []
   }
@@ -1296,13 +1321,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     let courseName = ''
     let coursePosterImageUrl = ''
     let courseProvider = ''
+    let primaryCategory = ''
     if (this.configSvc.userProfile) {
       courseProvider = this.configSvc.userProfile.rootOrgName || ''
     }
     if (this.content) {
         courseId = this.content.identifier,
         courseName = this.content.name,
-        coursePosterImageUrl = this.content.posterImage || ''
+        coursePosterImageUrl = this.content.posterImage || '',
+        primaryCategory = this.content.primaryCategory
     }
     const obj = {
       request: {
@@ -1310,17 +1337,21 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         courseName,
         coursePosterImageUrl,
         courseProvider,
+        primaryCategory,
         recipients: '',
       },
     }
     const recipients: any = []
     this.users.forEach((selectedUser: any) => {
-      const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
-      if (selectedUserObj.length) {
-        recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
-      } else {
+      if (selectedUser.includes('@') && selectedUser.includes('.')) {
         recipients.push({ email: selectedUser })
+      } else {
+        const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
+        if (selectedUserObj.length) {
+          recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
+        }
       }
+
     })
     if (recipients.length) {
       obj.request.recipients = recipients
@@ -1329,7 +1360,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           this.openSnackbar(this.translateLabels('success', 'contentSharing', ''))
         }
         this.users = []
+        this.filteredUsers = []
+        this.allUsers = []
         this.enableShare = false
+        this.userCtrl.setValue('')
       }, error => {
         // tslint:disable
         console.log(error)
@@ -1342,7 +1376,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.enableShare = false
     this.users = []
     this.filteredUsers = []
-    this.userCtrl.setValue(null)
+    this.allUsers = []
+    this.userCtrl.setValue('')
     this.raiseTelemetry('shareClose')
   }
 
@@ -1350,7 +1385,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const textArea = document.createElement('textarea')
     textArea.value = window.location.href
     document.body.appendChild(textArea)
-    textArea.focus()
+    //textArea.focus()
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)

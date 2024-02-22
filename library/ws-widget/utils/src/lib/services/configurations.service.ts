@@ -77,6 +77,8 @@ export class ConfigurationsService {
   updatePlatformRating = new BehaviorSubject({ bottom: '120px' })
   updatePlatformRatingObservable$ = this.updatePlatformRating.asObservable()
 
+  languageTranslationFlag = new Subject()
+
   // Preference Related Values
   activeThemeObject: NsInstanceConfig.ITheme | null = null
   activeFontObject: NsInstanceConfig.IFontSize | null = null
@@ -110,7 +112,6 @@ export class ConfigurationsService {
 
   changeNavBarFullView = new Subject()
   openExploreMenuForMWeb = new Subject()
-  languageTranslationFlag = new Subject()
   updateGlobalProfile(state: boolean) {
     this.updateProfile.next(state)
   }

@@ -385,6 +385,17 @@ export namespace NsContent {
     CHANNEL = 'Channel',
   }
 
+  export enum ECourseCategory {
+    INVITE_ONLY_PROGRAM = 'Invite-Only Program',
+    MODERATED_PROGRAM = 'Moderated Program',
+    BLENDED_PROGRAM = 'Blended Program',
+    CURATED_PROGRAM = 'Curated Program',
+    COURSE = 'Course',
+    MODERATED_COURSE = 'Moderated Course',
+    STANDALONE_ASSESSMENT = 'Standalone Assessment',
+    MODERATED_ASSESSEMENT = 'Moderated Assessment',
+  }
+
   export enum WFBlendedProgramStatus {
     INITIATE = 'INITIATE',
     SEND_FOR_MDO_APPROVAL = 'SEND_FOR_MDO_APPROVAL',

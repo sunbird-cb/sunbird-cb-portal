@@ -4,7 +4,7 @@
 
 ws-app-search-input-home .autocomplete-form {
   // width: 486px;
-  width: 430px;
+  width: 288px;
   font-size: 0.75em;
   display: block;
   margin: auto;
@@ -20,12 +20,10 @@ ws-app-search-input-home .autocomplete-form {
   }
 
   .search-home {
-    // background: #00A9F4 0% 0% no-repeat padding-box;
-    // background: #00A9F4 0% 0% no-repeat padding-box;
     border-radius: 0px 4px 4px 0px;
     padding: 8px;
-    margin-left: 16px;
-    margin-top: 15px;
+    margin-left: 8px;
+    margin-top: 24px;
   }
 
   .mat-form-field-appearance-legacy .mat-form-field-wrapper {
@@ -114,9 +112,15 @@ ws-app-search-input-home .search .mat-form-field-wrapper {
   padding-bottom: 1.85em;
 
   .mat-form-field-infix {
-    border-top-width: 5px !important;
-    margin-left: 8px;
+    border-top-width: 0 !important;
+    margin-left: 2px;
     vertical-align: middle;
+    max-width: 76%;
+    height: 26px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4 !important;
   }
 }
 

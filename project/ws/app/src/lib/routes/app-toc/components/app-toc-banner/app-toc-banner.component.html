@@ -240,6 +240,7 @@
   <div *ngIf="showLoader" class="text-center my-2 loader">
     <mat-spinner class="inline-block"></mat-spinner>
   </div>
+  <div class="cursor-pointer close-share-dialog"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
   <div class="share-modal">
     <div class="karmasahayogi-icon"><img alt="karmasahayogi-icon" src="/assets/icons/KarmaSahayogi.svg"></div>
     <div  class="content-div">
@@ -249,23 +250,23 @@
             <div class="mb-2">
                 <h2 class="mat-headline margin-remove-bottom ws-mat-black-text">{{'contentSharing.header' | translate}}</h2>
             </div>
-            <div class="cursor-pointer"><mat-icon (click)="onClose()" class="close-icon">close</mat-icon></div>
           </section>
           <form [formGroup]="shareForm">
             <div class="mat-body-2">
                 <div class="md-5">
                     <mat-form-field appearance="outline" class="w-full">
-                        <mat-chip-list #chipList aria-label="Fruit selection" appearance="outline">
+                        <mat-chip-list #chipList aria-label="user selection" appearance="outline">
                             <mat-chip
                                 *ngFor="let user of users"
                                 [selectable]="selectable"
                                 [removable]="removable"
                                 (removed)="remove(user)">
                                 {{user}}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                <mat-icon matChipRemove *ngIf="removable">close</mat-icon>
                             </mat-chip>
                             <input
                                 tabindex="-1"
+                                class="inputTextBox"
                                 placeholder="{{users.length === 0 ? translateLabels('placehoderText', 'contentSharing') : ''}}"
                                 #userInput
                                 formControlName="review"
@@ -284,23 +285,24 @@
                                     </div>
                                     <div>
                                         <div>{{user.name}}</div>
-                                        <div class="emailText">{{user.email}}</div>
+                                        <div class="emailText">{{user.maskedEmail}}</div>
                                     </div>
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-hint align="start">{{'contentSharing.note' | translate}}</mat-hint>
-                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingCharacter' | translate}}</mat-hint>
+                        <mat-hint align="start" class="left-over-emails">{{'contentSharing.note' | translate}}</mat-hint>
+                        <mat-hint align="end" class="left-over-emails">{{ users.length }} /{{maxEmailsLimit}} {{'contentSharing.remaingEmails' | translate}}</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="flex mt-5">
                     <div class="flex flex-1 flex-end">
                         <span class="copy-link-btn cursor-pointer" (click)="copyToClipboard()">{{'contentSharing.copyLink' | translate}} &nbsp;&nbsp;<mat-icon >link</mat-icon></span>
                         <button mat-stroked-button type="submit"
+                            [ngClass]="{'disable-send-btn': users.length === 0 || users.length}"
                             class="text-white ws-mat-primary-background flex-auto-display send-btn"
-                            [disabled]="users.length === 0 || users.length === maxEmailsLimit" (click)="submitSharing()"
+                            [disabled]="userCtrl.value.length || users.length === 0 || users.length > maxEmailsLimit" (click)="submitSharing()"
                             >
-                            {{'contentSharing.send' | translate}}<mat-icon >play_arrow</mat-icon>
+                            {{'contentSharing.send' | translate}} &nbsp; <mat-icon>send</mat-icon>
                         </button>
                     </div>
                 </div>

@@ -223,13 +223,10 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
                   subThemeMapping[v5Obj.competencyTheme].push(v5Obj.competencySubTheme)
                 }
               })
-              // for (const key in subThemeMapping) {
-              //   this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
-              // }
-              if (subThemeMapping.length) {
-                subThemeMapping.forEach((key: any) => {
+              for (const key in subThemeMapping) {
+                if (subThemeMapping.hasOwnProperty(key)) {
                   this.certificateMappedObject[key].subThemes.push(subThemeMapping[key])
-                })
+                }
               }
             }
           })

@@ -18,7 +18,7 @@
         <div class="flex flex-col gap-2">
             <ng-container *ngFor="let rating of ratingSummary?.breakDown?.slice().reverse()">
                 <div class="flex flex-row gap-4 items-center">
-                    <div class="flex-none font-bold">{{rating.key}} {{'ratingsummary.star' | translate}}</div>
+                    <div class="flex-none font-bold">{{ rating.key }} {{ 'ratingsummary.star' | translate }}</div>
                     <div class="flex items-center rating-progress">
                         <mat-progress-bar [mode]="'determinate'" [matTooltip]="rating?.percent + ' %'"
                             [value]="rating?.percent" class="rating-bar"

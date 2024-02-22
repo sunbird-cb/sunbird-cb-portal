@@ -61,10 +61,13 @@ export namespace NSSearch {
 
   export interface ISearchV6RequestV3 {
     request: {
-      secureSettings: boolean,
+      secureSettings?: boolean,
       filters: {
-        primaryCategory: string[]
+        primaryCategory?: string[]
+        courseCategory?: string[]
+        contentType?: string[]
         status: string[]
+        organisation?: any
       },
       query: string,
       sort_by: { lastUpdatedOn: string },

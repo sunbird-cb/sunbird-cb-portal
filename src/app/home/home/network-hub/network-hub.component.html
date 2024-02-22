@@ -40,10 +40,10 @@
                                             <div
                                                 class="flex flex-row gap-2 ws-mat-default-text font-semibold px-4 py-2 rounded-full mat-body-2 connect-button cursor-pointer text-lg mt-2 items-center" (click)="handleConnect(recommend)" *ngIf="!recommend.connecting">
                                                 <mat-icon class="ws-mat-default-text">person_add</mat-icon>
-                                                {{ 'home.connect' | translate }}
+                                                <span class="textwrap">{{ 'home.connect' | translate }}</span>
                                             </div>
                                             <div class="flex flex-row gap-2 ws-mat-default-text font-semibold px-8 py-2 rounded-full connect-button cursor-pointer text-lg mt-2 mat-body-2" *ngIf="recommend.connecting">
-                                                {{ 'home.connecting' | translate }}
+                                                <span class="textwrap">{{ 'home.connecting' | translate }}</span>
                                             </div>
                                         </div>
                                     </div>

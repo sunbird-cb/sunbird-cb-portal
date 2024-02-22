@@ -44,8 +44,8 @@ export class KarmaPointsPanelComponent implements OnInit {
     return helText
   }
 
-  translateLabels(label: string, type: any, subtype: any) {
-    return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 
 }

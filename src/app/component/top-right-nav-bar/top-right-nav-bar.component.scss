@@ -26,6 +26,11 @@
     text-align: center;
     font-size: 14px;
     height: 32px;
+    max-width: 124px;
+    height: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .download-app-chip span {
@@ -49,7 +54,7 @@
   }
   .custom-lang {
     font: 400 14px/21px Lato;
-    width: 124px;
+    width: 126px;
     padding: 0 !important;
     position: relative;
   }
@@ -62,8 +67,12 @@
   }
   img {
     position: absolute;
-    left: 4%;
+    left: 6%;
     top: -4px;
+  }
+
+  ::ng-deep.mat-select-arrow{
+    margin: 0 14px 0 4px !important;
   }
 
   .checkmark::before {
@@ -83,6 +92,12 @@
     position: absolute;
     left: 0;
   }
+}
+
+::ng-deep.mat-select-panel {
+  margin-top: 3em !important;
+  margin-left: -1em !important;
+  max-height: 505px !important;
 }
 
 .tooltip {

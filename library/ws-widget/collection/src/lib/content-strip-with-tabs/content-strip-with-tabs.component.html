@@ -98,8 +98,8 @@
                       <ng-container *ngIf="tab?.value === 'inprogress'; else msgTemp">
                         <div class="w-full flex flex-col items-center justify-center">
                           <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.svg">
-                          <div class="mat-subheading-1 text-center info-content">Get ready for your next learning adventure -
-                            <a class="click-here" [routerLink]="'/page/learn'">Click here</a> to enroll in your next course now!</div>
+                          <div class="mat-subheading-1 text-center info-content">{{ 'contentstripmultiple.getReadyForLearningAdventure' | translate }} -
+                            <a class="click-here" [routerLink]="'/page/learn'">{{ 'contentstripmultiple.clickHere' | translate }}</a> {{ 'contentstripmultiple.toEnrollNextCourse' | translate }}</div>
                         </div>
                       </ng-container>
                       <ng-template #msgTemp>
