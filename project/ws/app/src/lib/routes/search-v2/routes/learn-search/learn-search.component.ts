@@ -343,7 +343,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
                 this.searchResults.push(res)
                 modifiedDataCount = modifiedDataCount + 1
               } else {
-                if (!(res.secureSettings && res.secureSettings.isVerifiedKarmayogi)) {
+                if (res.secureSettings && res.secureSettings.isVerifiedKarmayogi === 'No') {
                   this.searchResults.push(res)
                   modifiedDataCount = modifiedDataCount + 1
                 }

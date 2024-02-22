@@ -295,7 +295,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             contentList = results.result.content
           } else {
             contentList = results.result.content.filter((ele: any) => {
-              return ele.secureSettings && !ele.secureSettings.isVerifiedKarmayogi
+              return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
             })
           }
         }
