@@ -290,7 +290,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
         )
         let contentList: any = []
-        if (results.result.content.length) {
+        if (results && results.result && results.result.content && results.result.content.length) {
           if (this.veifiedKarmayogi) {
             contentList = results.result.content
           } else {

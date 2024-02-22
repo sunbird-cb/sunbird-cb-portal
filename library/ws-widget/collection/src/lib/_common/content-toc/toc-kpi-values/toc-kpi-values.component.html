@@ -1,5 +1,5 @@
 <div class="flex gap-2" [ngClass]="isMobile ? 'horizontal-strip' : 'flex-wrap'">
-    <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.duration">
+    <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.duration > 0">
         <img src="/assets/icons/toc/timer.svg" width="20px" alt="web image" />
         <div class="text-xs">{{ content?.duration | pipeDurationTransform: 'hms' }}</div>
     </div>

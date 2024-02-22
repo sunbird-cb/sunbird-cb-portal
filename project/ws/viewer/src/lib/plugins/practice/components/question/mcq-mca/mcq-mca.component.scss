@@ -38,12 +38,20 @@
 .correct-answer {
   mat-list-option {
     border-color: #008000 !important;
+    background-color:rgb(219,236,220) !important;
+  }
+  .mat-pseudo-checkbox-checked {
+    background-color: rgb(29, 137, 35) !important;
   }
 }
 
 .incorrect-answer {
   mat-list-option {
     border-color: #f44336 !important;
+    background-color:rgb(248,223,220) !important;
+  }
+  .mat-pseudo-checkbox-checked {
+    background-color: #f44336 !important;
   }
 }
 

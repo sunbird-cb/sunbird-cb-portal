@@ -29,30 +29,64 @@
     margin: 5px;
     padding: 8px;
     width:380px;
-    background: #F5F5F5 !important;
+    background: #F5F5F5;
     word-wrap: break-word;
 }
 
 
-.correct-answer {
-    border-color: rgb(29, 137, 35) !important;
-    background-color:rgb(219,236,220) !important;
-}
+// .correct-answer {
+//     border-color: rgb(29, 137, 35) !important;
+//     background-color:rgb(219,236,220) !important;
+// }
 
 
 
-.incorrect-answer {
-    border-color: rgb(209, 57, 36) !important;
-    background-color:rgb(248,223,220) !important;
-}
+// .incorrect-answer {
+//     border-color: rgb(209, 57, 36) !important;
+//     background-color:rgb(248,223,220) !important;
+// }
 
 .padding-s {
     // padding:15px !important;
 }
 
-.ws-mat-accent-border-active {
+.quiz-radio-button  .ws-mat-accent-border-active{
     border: 1px solid #1b4ca1;
     background: rgba(0, 116, 182, 0.05) !important;
+}
+
+.correct-answer-sca {
+    border-color: rgb(29, 137, 35) !important;
+    background-color:rgb(219,236,220) !important;
+    .mat-pseudo-checkbox-checked {
+        background-color: rgb(29, 137, 35) !important;
+    }
+    .mat-radio-container {
+        .mat-radio-inner-circle {
+          background-color: rgb(29, 137, 35) !important;
+        }
+
+        .mat-radio-outer-circle {
+          border-color: rgb(29, 137, 35) !important;
+        }
+      }
+}
+
+.incorrect-answer-sca {
+   border-color: rgb(209, 57, 36) !important;
+    background-color:rgb(248,223,220) !important;
+    .mat-pseudo-checkbox-checked {
+        background-color: rgb(209, 57, 36) !important;
+    }
+    .mat-radio-container {
+        .mat-radio-inner-circle {
+          background-color: rgb(209, 57, 36) !important;
+        }
+
+        .mat-radio-outer-circle {
+          border-color: rgb(209, 57, 36) !important;
+        }
+      }
 }
 
 @media only screen and (max-width: 600px) {
