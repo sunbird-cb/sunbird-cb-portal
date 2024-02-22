@@ -208,7 +208,6 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (this.error && this.error.errorType === this.errorType.previewUnAuthorised) {
       }
     })
-
   }
 
   ngAfterViewChecked() {

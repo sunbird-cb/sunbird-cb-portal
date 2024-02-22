@@ -34,7 +34,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataSubscription = this.route.data.subscribe(data => {
-      console.log('data.pageData.data', data);
       if (data && data.pageData) {
         if(data && data.content && data.content.data && data.content.data.identifier) {
           let identifier =  data.content.data.identifier;
@@ -49,7 +48,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   checkForAssessmentSubmitAlready(identifier:any) {
     this.quizSvc.canAttend(identifier).subscribe(response => {
-      console.log('response', response);
       if (response && response.attemptsMade > 0) {         
         this.quizSvc.checkAlreadySubmitAssessment.next(true);
       }
