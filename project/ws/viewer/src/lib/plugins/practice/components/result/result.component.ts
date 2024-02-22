@@ -55,4 +55,11 @@ export class ResultComponent implements OnChanges {
     this.activeQuestionSet = activeQuestionSet
     this.selectedQuestionData = data
   }
+
+  updateProgress(value:any) {
+    const progress:any = document.querySelector('.circular-progress')
+    progress.style.setProperty('--percentage', `${value * 3.6}deg`)
+    progress.style.setProperty('--passPercentage', value)
+    progress.innerText = `${value}%`
+  }
 }

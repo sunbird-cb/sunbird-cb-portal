@@ -150,7 +150,7 @@
                 </div>
             </div>
            
-            <div class="timer">
+            <div class="timer" *ngIf="quizJson?.timeLimit">
               <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
                   <ng-container [ngTemplateOutlet]="timer"></ng-container>
                 </span>
@@ -221,8 +221,13 @@
                   <img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/>
                 </div>
                 <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
-                  isQuestionAttempted(question?.questionId))">
-                  <mat-chip-list class="question-flag"><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
+                  isQuestionAttempted(question?.questionId))">                  
+                  <mat-chip-list class="question-flag">
+                    <mat-chip class="orange-small">
+                      <ng-container *ngIf="!isQuestionAttempted(question?.questionId)">{{ i + 1 }}</ng-container>
+                      <ng-container *ngIf="isQuestionAttempted(question?.questionId)"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></ng-container>
+                    </mat-chip>
+                  </mat-chip-list>
                 </div>
                 <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
@@ -234,7 +239,7 @@
             </div>
           </div>
         </div>
-        <div class="final-submit" (click)="proceedToSubmit()">
+        <div class="final-submit" *ngIf="(currentQuestionIndex + 1) === totalQCount" (click)="proceedToSubmit()">
            <div class="final-submit-cta">
               <img src="assets/icons/final-assessment/correct_arrow.svg"> <span class="cta-label">Finish assessment</span>
            </div>
@@ -357,7 +362,7 @@
               </div>
             </div>
           </div>
-          <div class="timer">
+          <div class="timer" *ngIf="quizJson?.timeLimit">
             <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
                 <ng-container [ngTemplateOutlet]="timer"></ng-container>
               </span>
@@ -460,7 +465,13 @@
                     </div>
                     <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId))">
-                      <mat-chip-list class="question-flag"><mat-chip class="orange-small"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></mat-chip></mat-chip-list>
+                      <mat-chip-list class="question-flag">
+                        <mat-chip class="orange-small">
+                          <ng-container *ngIf="!isQuestionAttempted(question?.questionId)">{{ i + 1 }}</ng-container>
+                          <ng-container *ngIf="isQuestionAttempted(question?.questionId)"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></ng-container>
+                        </mat-chip>
+                      </mat-chip-list>
+                      
                     </div>
                     <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
@@ -687,7 +698,7 @@
             <p> <ws-widget-skeleton-loader [width]="'85px'" [height]="'24px'"
               [bindingClass]="'flex h-16'"></ws-widget-skeleton-loader></p>
           </h3>
-          <div class="timer">
+          <div class="timer" *ngIf="quizJson?.timeLimit">
             <p> <ws-widget-skeleton-loader [width]="'102px'" [height]="'32px'"
               [bindingClass]="'flex h-16'"></ws-widget-skeleton-loader></p>
           </div>
@@ -767,7 +778,7 @@
               [bindingClass]="'flex h-16'"></ws-widget-skeleton-loader>
             </span>
           </div>
-          <div class="timer">
+          <div class="timer" *ngIf="quizJson?.timeLimit">
             <span class="subheading-back">
               <ws-widget-skeleton-loader [width]="'120px'" [height]="'28px'"
               [bindingClass]="'flex h-16'"></ws-widget-skeleton-loader>
