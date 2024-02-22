@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSPractice } from './practice.model'
-import { BehaviorSubject, Observable, of } from 'rxjs'
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs'
 import { map, retry } from 'rxjs/operators'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -28,6 +28,7 @@ export class PracticeService {
   currentSection: BehaviorSubject<Partial<NSPractice.IPaperSection>> = new BehaviorSubject<Partial<NSPractice.IPaperSection>>({})
   // questionAnswerHashV2:BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   displayCorrectAnswer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  checkAlreadySubmitAssessment = new Subject();
   constructor(
     private http: HttpClient,
   ) { }
@@ -211,6 +212,8 @@ export class PracticeService {
       attemptsAllowed: 1,
     })
   }
+
+
   shCorrectAnswer(val: boolean) {
     this.displayCorrectAnswer.next(val)
   }

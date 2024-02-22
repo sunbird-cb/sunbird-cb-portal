@@ -1,4 +1,4 @@
-<section *ngIf="isNotEmbed">
+<section *ngIf="isNotEmbed" id="viewer-conatiner-backdrop">
   <ng-container *ngIf="!isMobile">
     <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
       (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
@@ -129,7 +129,7 @@
         </div>
         <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <div class="pb-4 lg:py-4">
-            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="hierarchyData" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
           </div>
         </div>
@@ -137,7 +137,7 @@
       <ng-container *ngIf="!isMobile">
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
           <div class="pb-4 lg:py-4 pl-4 pr-4">
-            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="hierarchyData" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
           </div>
         </div>
@@ -146,6 +146,6 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </section>
-<div class="full-height-width-iframe" *ngIf="!isNotEmbed">
+<div class="full-height-width-iframe" *ngIf="!isNotEmbed" id="viewer-conatiner-backdrop">
   <router-outlet></router-outlet>
 </div>

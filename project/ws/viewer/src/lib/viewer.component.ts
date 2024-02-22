@@ -63,6 +63,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   batchData: any
   tocStructure: any
   hasTocStructure = false
+  viewerAboutContentData:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,

@@ -33,6 +33,10 @@ export class CourseCompletionDialogComponent implements OnInit {
     }
 
   ngOnInit() {
+    let app:any = document.getElementById('viewer-conatiner-backdrop');
+    if(app) {
+      app.style.filter = 'blur(5px)';
+    }    
     if (typeof(this.data.courseName) !== 'undefined') {
       this.courseName = this.data.courseName
     } else {
@@ -76,20 +80,22 @@ export class CourseCompletionDialogComponent implements OnInit {
       rating: index + 1 ,
       comment: null,
     }
-    this.events.raiseInteractTelemetry(
-      {
-        type: 'rating',
-        subType: 'content',
-        id: this.data.content.identifier || '',
-      },
-      {
-        id: this.data.content.identifier || '',
-        rating: this.userRating.rating,
-      },
-      {
-      pageIdExt: 'rating-popup',
-      module: WsEvents.EnumTelemetrymodules.FEEDBACK,
-    })
+    if(this.data && this.data.content) {
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'rating',
+          subType: 'content',
+          id: this.data.content.identifier || '',
+        },
+        {
+          id: this.data.content.identifier || '',
+          rating: this.userRating.rating,
+        },
+        {
+        pageIdExt: 'rating-popup',
+        module: WsEvents.EnumTelemetrymodules.FEEDBACK,
+      })
+    }    
   }
 
   translateLabels(label: string, type: any) {

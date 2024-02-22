@@ -79,3 +79,11 @@
 .rating-icon {
  font-size: 40px;
 }
+
+::ng-deep .rating-button.mat-icon-button{
+  margin:0 8px !important;   
+}
+
+#app-bg {
+  filter: blur(10px)
+}

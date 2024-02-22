@@ -20,6 +20,7 @@ export class ViewerUtilService {
   downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
   authoringBase = '/apis/authContent/'
   markAsCompleteSubject = new Subject()
+  autoPlayNextVideo = new Subject()
   constructor(
     private http: HttpClient,
     private configservice: ConfigurationsService,

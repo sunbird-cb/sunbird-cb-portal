@@ -157,7 +157,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         this.currentPage.setValue(this.totalPages)
         if (this.identifier) {
           this.saveContinueLearning(this.identifier)
-          this.fireRealTimeProgress(this.identifier)
+          this.fireRealTimeProgress(this.identifier)          
         }
       }
     })

@@ -53,6 +53,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   isMobile = false
   handleBackFromPdfScormFullScreenFlag = false
   toggleSideBarFlag = true
+  pdfContentProgressData:any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -87,6 +88,18 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
     this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
       this.handleBackFromPdfScormFullScreenFlag = data
+    })
+
+    this.pdfScormDataService.handlePdfMarkComplete.subscribe((contentData:any)=>{
+      this.pdfContentProgressData = contentData;
+    })
+
+    this.viewerSvc.autoPlayNextVideo.subscribe((autoPlayVideoData:any) => {
+      if(autoPlayVideoData) {
+        if(this.isTypeOfCollection && this.nextResourceUrl && this.nextResourceUrlParams && this.nextResourceUrlParams.queryParams) {
+          this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams});
+        }
+      }
     })
 
     if (window.location.href.includes('/channel/')) {
@@ -280,15 +293,17 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
                   },
                 })
                 dialogRef.afterClosed().subscribe(result => {
+                  let app:any = document.getElementById('viewer-conatiner-backdrop');
+                  app.style.filter = 'blur(0px)';
                   if (result === true) {
-                    this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                    this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
                   }
                 })
               } else {
-                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
               }
             } else {
-              this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+              this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
             }
           })
       }
@@ -299,5 +314,9 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   markAsComplete() {
     this.viewerSvc.markAsCompleteSubject.next(true)
+    if(!this.nextResourceUrl) {      
+      this.pdfContentProgressData['status'] = 2
+      this.finishDialog()
+    }
   }
 }
