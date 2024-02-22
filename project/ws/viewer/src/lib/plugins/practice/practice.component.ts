@@ -538,7 +538,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return questions.length
   }
   get noOfQuestions(): number {
-    console.log('this.quizJson', this.quizJson)
     if (this.quizJson.maxQuestions) {
       return this.quizJson.maxQuestions
     }
