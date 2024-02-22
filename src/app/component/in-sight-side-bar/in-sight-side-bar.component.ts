@@ -60,8 +60,10 @@ export class InsightSideBarComponent implements OnInit {
     error: false
   };
   pendingRequestData:any = []
-  pendingRequestSkeleton = true;
-  
+  pendingRequestSkeleton = true
+  showCreds = false
+  credMessage = "View my credentials"
+
   constructor(
     private homePageSvc:HomePageService,
     private configSvc:ConfigurationsService,
@@ -165,7 +167,7 @@ export class InsightSideBarComponent implements OnInit {
   getPendingRequestData() {
     this.homePageSvc.getRecentRequests().subscribe(
       (res: any) => {
-        
+
         this.pendingRequestSkeleton = false;
         this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
@@ -190,7 +192,7 @@ export class InsightSideBarComponent implements OnInit {
   expandCollapse(event:any) {
     this.collapsed = event
   }
-  
+
   goToActivity(_e: any) {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`);
   }
@@ -251,6 +253,15 @@ export class InsightSideBarComponent implements OnInit {
         module: WsEvents.EnumTelemetrymodules.HOME
       }
     )
+  }
+
+  toggleCreds() {
+    if (this.showCreds) {
+      this.credMessage = "Hide my credentials"
+    } else {
+      this.credMessage = "View my credentials"
+    }
+    this.showCreds = !this.showCreds
   }
 }
 
