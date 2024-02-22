@@ -169,6 +169,13 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.isXsmall = isXSmall
     })
+
+    this.quizSvc.checkAlreadySubmitAssessment.subscribe((result)=>{
+      if(result) {
+        this.isSubmitted = true;
+        this.viewState = 'answer' || 'review';
+      }
+    })
   }
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHander(e: any) {

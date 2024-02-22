@@ -52,6 +52,8 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   public id = 'v-player'
   private player: videoJs.Player | null = null
   private dispose: (() => void) | null = null
+  videoEnd = false;
+  video:any;
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
@@ -61,7 +63,31 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     super()
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+  //   this.video=document.getElementById("videoTag");
+  //   document.addEventListener("keydown",(e:any)=>{
+  //     if(e.keyCode==37){       //left arrow
+  //         this.backward()
+  //     }else if(e.keyCode==39){ //right arrow
+  //         this.forward()
+  //     }
+  //   }
+  // )
+
+ 
+  }
+
+  // forward=()=>{
+  //   this.skip(15);
+  // }
+  
+  // backward=()=>{
+  //    this.skip(-15);
+  // }
+  
+  // skip(time:any) {
+  //   this.video.currentTime=this.video.currentTime+time;
+  // }
 
   async ngAfterViewInit() {
     this.widgetData = {
@@ -77,7 +103,47 @@ export class PlayerVideoComponent extends WidgetBaseComponent
         this.initializeVPlayer()
       }
     }
+    let videoTag:any =   document.getElementsByTagName('video')[0];
+    if(videoTag) {
+      videoTag.onended = ()=> {
+        this.videoEnd = true  
+        let videoTag:any = document.getElementById('videoTag') || document.getElementById('realvideoTag');
+        let autoPlayVideo:any = document.getElementById('auto-play-video');
+        if(videoTag) {
+          if(autoPlayVideo) {
+            autoPlayVideo.style.opacity = '0.8';
+          }
+          videoTag.style.filter = 'blur(2px)';
+          
+        }      
+        var counter =1;
+        
+          setInterval(()=>{
+            if(counter <= 30) {                
+                this.updateProgress(counter)
+            }
+            if(counter > 30) {
+              if(videoTag) {
+                videoTag.style.filter = 'blur(0px)';
+              } 
+              if(autoPlayVideo) {
+                autoPlayVideo.style.opacity = '1';
+              }
+            this.viewerSvc.autoPlayNextVideo.next(true);
+            }
+            counter = counter+1;
+          },1000)
+        
+      }
+    }
   }
+
+  updateProgress(value:any) {
+    const progress:any = document.querySelector('.circular-progress')
+    progress.style.setProperty('--percentage', `${value * 12}deg`)
+    // progress.innerText = `${value}%`
+  }
+
   ngOnDestroy() {
     if (this.player) {
       this.player.dispose()
@@ -87,6 +153,20 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
   }
   private initializeVPlayer() {
+    // alert()
+    // let playerInstance:any = this.player;
+    // if(playerInstance) {
+    //   var skipBehindButton = playerInstance.controlBar.addChild("button");
+    //   var skipBehindButtonDom = skipBehindButton.el();
+    //   skipBehindButtonDom.innerHTML = "30<<";
+    //   skipBehindButton.addClass("buttonClass");
+          
+    //   // skipBehindButtonDom.onclick = function(){
+    //   //     skipS3MV(-30);
+    //   // }  
+    //   console.log("playerInstance.controlBar",playerInstance.controlBar);
+    // }
+   
     const dispatcher: telemetryEventDispatcherFunction = event => {
       if (this.widgetData.identifier) {
         this.eventSvc.dispatchEvent(event)
@@ -276,5 +356,17 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
 
     this.widgetData.subtitles = content.subTitles
+  }
+
+  closeAutoPlay() {
+    this.videoEnd = false;
+    let videoTag:any = document.getElementById('videoTag') || document.getElementById('realvideoTag') ;
+    if(videoTag) {
+      videoTag.style.filter = 'blur(0px)';
+    } 
+    let autoPlayVideo:any = document.getElementById('auto-play-video');
+    if(autoPlayVideo) {
+      autoPlayVideo.style.opacity = '1';
+    }
   }
 }

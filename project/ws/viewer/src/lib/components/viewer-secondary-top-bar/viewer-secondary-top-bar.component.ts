@@ -94,6 +94,14 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
       this.pdfContentProgressData = contentData;
     })
 
+    this.viewerSvc.autoPlayNextVideo.subscribe((autoPlayVideoData:any) => {
+      if(autoPlayVideoData) {
+        if(this.isTypeOfCollection && this.nextResourceUrl && this.nextResourceUrlParams && this.nextResourceUrlParams.queryParams) {
+          this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams});
+        }
+      }
+    })
+
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
     }
@@ -288,14 +296,14 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
                   let app:any = document.getElementById('viewer-conatiner-backdrop');
                   app.style.filter = 'blur(0px)';
                   if (result === true) {
-                    this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                    this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
                   }
                 })
               } else {
-                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
               }
             } else {
-              this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+              this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
             }
           })
       }
@@ -306,9 +314,9 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   markAsComplete() {
     this.viewerSvc.markAsCompleteSubject.next(true)
-    // if(this.isTypeOfCollection && !this.nextResourceUrl) {
-    //   // this.finishDialog()
-    //   this.pdfContentProgressData['status'] = 2
-    // }
+    if(!this.nextResourceUrl) {      
+      this.pdfContentProgressData['status'] = 2
+      this.finishDialog()
+    }
   }
 }

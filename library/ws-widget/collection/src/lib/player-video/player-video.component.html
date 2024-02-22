@@ -1,10 +1,9 @@
-<video crossorigin="Anonymous" #videoTag *ngIf="widgetData?.isVideojs"
+<video crossorigin="Anonymous" id="videoTag" #videoTag *ngIf="widgetData?.isVideojs"
   class="video-js vjs-default-skin vjs-big-play-centered">
 
   <source [src]="widgetData.url" />
   <source [src]="widgetData.url" type="video/mp4" />
   <source [src]="widgetData.url" type="application/x-mpegURL" />
-
   <!-- <track kind="captions"
     src="/apis/authContent/content-store/igot/dopt/Public/lex_auth_013114377081208832249/assets/sample1600885058308.vtt"
     srclang="en" label="English" default> -->
@@ -12,7 +11,7 @@
     default>
 </video>
 
-<video crossorigin="Anonymous" [poster]="widgetData?.posterImage | pipePublicURL" #realvideoTag class="video-js"
+<video crossorigin="Anonymous" id="realvideoTag"  [poster]="widgetData?.posterImage | pipePublicURL" #realvideoTag class="video-js"
   *ngIf="!widgetData?.isVideojs" controls>
   <source [src]="widgetData.url" type="video/mp4" />
   <source [src]="widgetData.url" type="application/x-mpegURL" />
@@ -22,3 +21,19 @@
   <track kind="captions" *ngIf="widgetData.subtitles" [src]="widgetData?.subtitles[0]?.url" srclang="en" label="English"
     default>
 </video>
+
+<div class="auto-play-video" id="auto-play-video" *ngIf="videoEnd">
+  <div class="up-next">
+    <div>Up &nbsp; Next</div>
+  </div>
+  <div class="circular-progress-container">
+    <div class="circular-progress">
+      <div class="play_arrow">
+        <mat-icon>play_arrow</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="cancel-auto-progress" (click)="closeAutoPlay()">
+    <span>Cancel</span>
+  </div>
+</div>

@@ -20,7 +20,7 @@
             <mat-icon color="accent">navigate_before</mat-icon>
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">Previous</span>
           </a>
-          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2">
+          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2 && batchId ">
           <a  mat-icon-button class="width-auto blue-rounded-btn" [routerLink]="nextResourceUrl"
           [queryParams]="nextResourceUrlParams?.queryParams"
           queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
@@ -107,7 +107,7 @@
             <!-- <mat-icon color="accent">navigate_before</mat-icon> -->
             <span class="mat-body-2 font-bold-imp">Previous</span>
           </a>
-          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2">
+          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2  && batchId">
             <a  mat-icon-button class="margin-left-16 width-auto text-center blue-rounded-btn" [routerLink]="nextResourceUrl"
             [queryParams]="nextResourceUrlParams?.queryParams" 
             queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
