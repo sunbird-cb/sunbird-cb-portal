@@ -411,8 +411,8 @@ $nav-height: 40px;
 }
 
 ::ng-deep .question-flag .mat-standard-chip {
-  height: 28px !important;
-  width:44px !important;
+  height: 32px !important;
+  width:48px !important;
 }
 
 ::ng-deep .timer .mat-standard-chip {
@@ -447,7 +447,7 @@ $nav-height: 40px;
   right: 0;
   height: 100%;
   box-shadow: 0px 5px 5px 0px rgb(0,0,0,0.16);
-  margin-top: 0px;
+  margin-top: -20px;
 }
 
 .subheading-back {
@@ -716,3 +716,6 @@ $nav-height: 40px;
   padding-left: 8px;
 }
 
+::ng-deep .mat-chip-list-wrapper .mat-standard-chip, .mat-chip-list-wrapper input.mat-input-element {
+  margin:0 !important
+}

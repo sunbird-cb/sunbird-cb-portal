@@ -2,10 +2,10 @@
     <div *ngFor="let option of question?.options">
         <!-- =={{option?.isCorrect}}=={{showAns}} -->
         <mat-radio-button disableRipple  #btn class="flex flex-1 padding-s quiz-radio-button margin-top-s b-r" [ngClass]="{
-    'correct-answer':
+    'correct-answer-sca':
       (showAns && option?.isCorrect && isSelected(option)) ||
       (showAns && option?.isCorrect),
-    'incorrect-answer': showAns && !option?.isCorrect && isSelected(option),
+    'incorrect-answer-sca': showAns && !option?.isCorrect && isSelected(option),
     'ws-mat-accent-border': !(btn.checked),
     'ws-mat-accent-border-active ': (btn.checked)
   }" [value]="option.optionId" (change)="updateParent(option.optionId)" [checked]="isSelected(option)">

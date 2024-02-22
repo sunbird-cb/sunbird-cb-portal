@@ -143,6 +143,11 @@
                     style="fill:none;stroke-width:8px"
                     />
             </svg>
+            <!-- <div class="circular-progress-container">
+              <div class="circular-progress">
+                {{updateProgress(percentage)}}
+              </div>
+            </div> -->
             <div style="position:relative; top: -60px; left: 0px;">
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
                 <div class="level-text">{{levelText || 'Failed'}}</div>
@@ -155,7 +160,7 @@
           <div class="stats-label">
             <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
             <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
-            <div class="ml-2"> Time Questions: </div>
+            <div class="ml-2"> Total Questions: </div>
           </div>
           <div class="stats-label">
             <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->

@@ -18,11 +18,15 @@ export class AppTocSessionsNewComponent implements OnInit {
   @Input() pathSet!: any
   sessionList: any = []
   sessionListMap: any = {}
-
+  sessionType:any = [];
   constructor() { }
 
   ngOnInit() {
 
+    
+  }
+
+  getBatchHashMap() {
     if (this.batchData) {
       // tslint:disable-next-line:max-line-length
       if (this.batchData.content[0] && this.batchData.content[0].batchAttributes && this.batchData.content[0].batchAttributes.sessionDetails_v2 && this.batchData.content[0].batchAttributes.sessionDetails_v2.length > 0) {
@@ -39,9 +43,14 @@ export class AppTocSessionsNewComponent implements OnInit {
         })
         this.sessionListMap = {}
         this.sessionList.forEach((ele: any) => {
+          if(ele && !(ele.sessionType && this.sessionType.includes(ele.sessionType.toLowerCase()))) {
+            this.sessionType.push(ele.sessionType.toLowerCase());
+          }
+          
           this.sessionListMap[ele.sessionId] = ele
         })
       }
     }
+    return this.sessionListMap;
   }
 }
