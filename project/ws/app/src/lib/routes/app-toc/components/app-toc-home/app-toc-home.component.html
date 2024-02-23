@@ -360,7 +360,7 @@ TODO: edit option while preview Mode
             <span class="certificate-text block">{{'apptochome.issuePersistsMailus' | translate}} <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
           </ng-container>
           <ng-container *ngIf="certData">
-            <a class="certificate_box" (click)="openCertificateDialog()">
+            <a class="certificate_box" (click)="openCertificateDialog(); raiseCertIntreactTelemetry()">
                 <img [src]="certData| pipeSafeSanitizer: 'url'" class="certificate_banner" />
                 <div class="certificate_overlay"></div>
                 <!-- <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p> -->
