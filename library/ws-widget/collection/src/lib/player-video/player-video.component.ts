@@ -360,7 +360,6 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   closeAutoPlay() {
     this.videoEnd = false
     const videoTag: any = document.getElementById('videoTag') || document.getElementById('realvideoTag')
-
     if (videoTag) {
       videoTag.style.filter = 'blur(0px)'
     }
