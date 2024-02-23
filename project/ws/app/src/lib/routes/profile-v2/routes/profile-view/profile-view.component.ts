@@ -88,6 +88,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   certificatesData: any
   showCreds = false
   credMessage = "View my credentials"
+  assessmentsData: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -177,6 +178,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
     })
     this.getPendingRequestData()
+    this.getAssessmentData()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
     },                                1000)
@@ -475,6 +477,22 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     document.execCommand('copy')
     document.body.removeChild(textArea)
     this.openSnackbar('copied')
+  }
+
+  getAssessmentData(){
+    this.homeSvc.getAssessmentinfo().subscribe(
+      (res: any) => {
+        if (res && res.result && res.result.response) {
+          this.assessmentsData = res.result.response
+        }
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          // tslint:disable-next-line
+          console.log(error)
+        }
+      }
+    )
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

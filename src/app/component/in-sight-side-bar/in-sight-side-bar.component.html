@@ -4,22 +4,24 @@
         [insightsData]="insightsData" [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
 </div>
 <section class="hidden md:block" style="position: relative;" [ngClass]="{'padding-top-m':!collapsed, 'margin-bottom-m': collapsed}">
-    <div class="margin-bottom-m" class="collapsible" [@collapseWeekly]="collapsed">
+    <div class="collapsible" [@collapseWeekly]="collapsed" [ngClass]="{'margin-bottom-m': !collapsed}">
         <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
     </div>
 
-    <div class="margin-bottom-m" class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'padding-top-m padding-bottom-m': !collapsed}">
+    <div *ngIf="assessmentsData" class="margin-bottom-m" class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'padding-bottom-m': !collapsed}">
         <div class="assessments-wrapper">
             <div class="assessments-info-wrapper">
                 <div class="flex justify-between">
                     <div class="flex flex-col">
                         <div class="flex flex-between flex-middle">
                             <p class="flex-align-start upcoming-assessment-title flex flex-middle margin-remove">Upcoming Assessment
-                                <img class="margin-left-s cursor-pointer" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
+                                <img class="margin-left-s cursor-pointer" width="20px" height="20px"
+                                    src="assets/icons/home/help_icon.svg" #tooltip="matTooltip" [matTooltipClass]="'below'"
+                                    matTooltip="View your Credentials and take your Assessment.">
                             </p>
                         </div>
                         <button
-                            class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer my-4 tracking-wide"
+                            class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer mt-4 mb-2 tracking-wide"
                             [routerLink]="['/app/discussion-forum']" >START</button>
                     </div>
                     <div class="flex justify-center system-icon">
@@ -40,21 +42,47 @@
                     <div class="flex flex-middle" style="padding: 5px 0px;">
                         <span class="pr-5 font-semibold">Username</span>
                         <div class="flex flex-middle copy-items">
-                            <span class="pr-2 custom-width">Venkat</span>
+                            <span class="pr-2 custom-width">{{assessmentsData.userName}}</span>
                             <span class=""><mat-icon class="cursor-pointer copy-icon" (click)="copyToClipboard('Venkat')">content_copy</mat-icon></span>
                         </div>
                     </div>
                     <div class="flex flex-middle" style="padding: 5px 0px;">
                         <span class="pr-6 font-semibold">Password</span>
                         <div class="flex flex-middle copy-items">
-                            <span class="pr-2  custom-width">Test@1234</span>
+                            <span class="pr-2  custom-width">{{assessmentsData.password}}</span>
                             <span class=""><mat-icon class="cursor-pointer copy-icon" (click)="copyToClipboard('Test@1234')">content_copy</mat-icon></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <!-- <div class="assessments-wrapper" *ngIf="myAssessmentsDataLoading">
+            <div class="assessments-info-wrapper">
+                <div class="flex justify-between">
+                    <div class="flex flex-col">
+                        <div class="flex flex-between flex-middle">
+                            <p class="flex-align-start upcoming-assessment-title flex flex-middle margin-remove">
+                                <ws-widget-skeleton-loader [width]="'180px'" [height]="'16px'"></ws-widget-skeleton-loader>
+                            </p>
+                        </div>
+                        <ws-widget-skeleton-loader [width]="'180px'" [height]="'80px'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex justify-center system-icon">
+                        <ws-widget-skeleton-loader [width]="'100px'" [height]="'60px'"></ws-widget-skeleton-loader>
+                    </div>
+                </div>
+            </div>
+            <div class="cred-container">
+                <div class="flex flex-middle flex-between">
+                    <div class="flex flex-middle">
+                        <ws-widget-skeleton-loader [width]="'150px'" [height]="'16px'"></ws-widget-skeleton-loader>
+                    </div>
+                    <div class="flex">
+                        <ws-widget-skeleton-loader [width]="'20px'" [height]="'16px'"></ws-widget-skeleton-loader>
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </div>
     <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'':!collapsed}" *ngIf="!discussion?.error">
         <div class="flex flex-col discussion-card " >

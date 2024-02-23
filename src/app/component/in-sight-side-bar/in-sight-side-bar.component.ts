@@ -64,6 +64,7 @@ export class InsightSideBarComponent implements OnInit {
   pendingRequestSkeleton = true
   showCreds = false
   credMessage = "View my credentials"
+  assessmentsData: any
 
   constructor(
     private homePageSvc:HomePageService,
@@ -80,9 +81,10 @@ export class InsightSideBarComponent implements OnInit {
       this.homePageData = this.activatedRoute.snapshot.data.pageData.data
     }
     this.getInsights()
-    this.getPendingRequestData();
+    this.getPendingRequestData()
     this.noDataValue = noData
-    this.getDiscussionsData();
+    this.getDiscussionsData()
+    this.getAssessmentData()
   }
 
   getInsights() {
@@ -150,6 +152,22 @@ export class InsightSideBarComponent implements OnInit {
     this.clapsDataLoading = false
   }
 
+  getAssessmentData(){
+    this.homePageSvc.getAssessmentinfo().subscribe(
+      (res: any) => {
+        if (res && res.result && res.result.response) {
+          this.assessmentsData = res.result.response
+        }
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          // tslint:disable-next-line
+          console.log(error)
+        }
+      }
+    )
+  }
+
   getDiscussionsData(): void {
     this.discussion.loadSkeleton = true;
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
@@ -163,7 +181,7 @@ export class InsightSideBarComponent implements OnInit {
           this.discussion.error = true;
         }
       }
-    );
+    )
   }
 
   getPendingRequestData() {
