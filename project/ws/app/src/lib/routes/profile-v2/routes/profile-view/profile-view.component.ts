@@ -178,7 +178,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
     })
     this.getPendingRequestData()
-    this.getAssessmentData()
+    // this.getAssessmentData()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
     },                                1000)

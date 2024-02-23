@@ -84,7 +84,7 @@ export class InsightSideBarComponent implements OnInit {
     this.getPendingRequestData()
     this.noDataValue = noData
     this.getDiscussionsData()
-    this.getAssessmentData()
+    //this.getAssessmentData()
   }
 
   getInsights() {
