@@ -5,8 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { TranslateService } from '@ngx-translate/core'
-import { WidgetContentService } from '@sunbird-cb/collection/src/public-api'
-import { NsContent } from '@sunbird-cb/collection/src/public-api'
+import { WidgetContentService, NsContent } from '@sunbird-cb/collection/src/public-api'
 
 @Component({
   selector: 'ws-app-learn-search',
