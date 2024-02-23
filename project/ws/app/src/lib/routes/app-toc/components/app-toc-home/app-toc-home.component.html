@@ -415,14 +415,19 @@
           <ng-container *ngIf="!skeletonLoader">
             <!-- <ng-container *ngIf="content?.isInIntranet && showIntranetMsg"> -->
               <div class="flex flex-col gap-4" *ngIf="content?.completionStatus === 2 || certData">
-                <div class="pending-certificate" *ngIf="!certData">
-                  <div>{{'apptochome.certificationTakesTime' | translate }}</div>
-                  <div>{{'apptochome.issuePersistsMailus' | translate }} mission.karmayogi@gov.in</div>
+                <div class="certificate_box" *ngIf="!certData">
+                  <img src="/assets/icons/toc/no-certificate.svg" class="certificate_banner" alt="No certificate image" />
+                  <div class="flex items-center certificate_overlay">
+                    <div class="flex flex-col text-center gap-1 p-4 text-white">
+                      <div>{{'apptochome.certificationTakesTime' | translate }}</div>
+                      <div>{{'apptochome.issuePersistsMailus' | translate }} mission.karmayogi@gov.in</div>
+                    </div>
+                  </div>
                 </div>
                 <ng-container *ngIf="certData">
                   <a class="certificate_box" (click)="openCertificateDialog()">
                     <img [src]="certData | pipeSafeSanitizer: 'url'" class="certificate_banner" />
-                    <div class="flex items-center certificate_overlay">
+                    <div class="flex items-center certificate_overlay cursor-pointer">
                       <div class="flex flex-col text-center gap-1 p-4">
                         <div class="font-bold text-white">{{ 'apptochome.congratulations' | translate }}</div>
                         <div class="text-white">{{ 'apptochome.certificateCompletionReady' | translate }}</div>
