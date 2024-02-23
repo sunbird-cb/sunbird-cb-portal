@@ -198,7 +198,11 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   getFilterName(fil: any) {
-    return this.userFilters.filter((x: any) => x.name === fil.name)
+    return this.userFilters.filter((x: any) => {
+      const selectedName = x.name  ===  fil.name ? fil.name :
+      x.name  === this.toString(fil.name).toLowerCase() ? this.toString(fil.name).toLowerCase() : this.toCamelCase(fil.name)
+      return x.name === selectedName
+    })
   }
   modifyUserFilters(fil: any, mainparentType: any) {
     const indx = this.getFilterName(fil)
@@ -209,8 +213,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             this.router.navigate(['/app/globalsearch'] , { queryParams: { q: '' } })
           },         500)
         }
-
-        if (fs.name === this.toCamelCase(fil.name)) {
+        const selectedName = fs.name ===  fil.name ? fil.name : fs.name  === this.toString(fil.name).toLowerCase()
+        ? this.toString(fil.name).toLowerCase() : this.toCamelCase(fil.name)
+        if (fs.name === selectedName) {
           this.userFilters.splice(index, 1)
         }
       })
@@ -222,8 +227,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       this.filteroptions.forEach((fas: any) => {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
-            const name = fasv.name.toLowerCase()
-            if (name === this.toCamelCase(fil.name).toLowerCase()) {
+            const name = fasv.name
+            const verifiedName = name === fil.name ? fil.name : this.toCamelCase(fil.name)
+            if (name === verifiedName) {
               fasv.ischecked = false
             }
 
@@ -249,8 +255,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       this.filteroptions.forEach((fas: any) => {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
-            const name = fasv.name.toLowerCase()
-            if (name.toLowerCase() === this.translateTo(fil.name)) {
+            const name = fasv.name
+            const verifiedName = name === fil.name ? fil.name : this.translateTo(fil.name)
+            if (name === verifiedName) {
               fasv.ischecked = true
             }
           })
@@ -281,5 +288,10 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g,  (word, index) => {
       return index === 0 ? word.toLowerCase() : word.toUpperCase()
     }).replace(/\s+/g, '')
+  }
+  toString(str: any) {
+    const result = str.replace(/([A-Z])/g, ' $1')
+    const finalResult = result.charAt(0).toUpperCase() + result.slice(1)
+    return finalResult
   }
 }

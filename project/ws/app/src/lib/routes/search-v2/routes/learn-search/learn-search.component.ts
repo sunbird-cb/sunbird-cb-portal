@@ -119,28 +119,52 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         }
       }
     }
-    if (this.param) {
-      this.getStartupData()
+    // if (this.param) {
+    //   this.getStartupData()
 
-    }
+    // }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails) {
       this.veifiedKarmayogi = this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi
     }
+    // for (const prop in changes) {
     if (changes.param.currentValue !== changes.param.previousValue) {
       this.statedata = { param: this.param, path: 'Search' }
       this.searchResults = []
       this.totalResults = 0
-      this.searchFreeTest()
+
       if (this.myFilters && this.myFilters.length > 0) {
-        this.myFilters.forEach((fil: any) => {
-          this.removeFilter(fil)
-        })
+        // this.myFilters.forEach((fil: any) => {
+        //   this.removeFilter(fil)
+        // })
+        this.applyFilter(this.myFilters)
+        // this.formCourseCategory()
+      } else {
+        this.searchFreeTest()
+
       }
-    }
+      // if(changes.param.previousValue) {
+        // this.searchFreeTest()
+      // }
+    // }
   }
+  }
+
+  // ngOnChanges(props: SimpleChanges) {
+  //   for (const prop in props) {
+  //     if (prop === 'hierarchyMapData') {
+  //       if(_.isEmpty(props['hierarchyMapData'].currentValue)){
+  //         this.loadingOverallPRogress = true
+  //       } else {
+  //         const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+  //         this.activatedRoute.snapshot.queryParams.collectionId : ''
+  //         this.ComputeCompletedNodesAndPercent(collectionId)
+  //       }
+  //     }
+  //   }
+  // }
 
   getFacets(facets: any) {
     facets.forEach((item: any) => {
@@ -171,30 +195,31 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
            this.myFilters.push(pf)
          }
        })
-       this.applyFilter(this.paramFilters)
+      //  this.applyFilter(this.paramFilters)
      } else {
       this.searchFreeTest()
     }
   }
 
   searchFreeTest() {
-    if ((this.myFilters && this.myFilters.length === 0) && (this.paramFilters && this.paramFilters.length === 0)) {
-      const emptyParam = {
-        'request': {
-          'query': this.param ? this.param : '',
-          'filters': {
-            'courseCategory': [],
-            'contentType': ['Course'],
-            'status': ['Live'] },
-            'sort_by': { 'lastUpdatedOn': 'desc' },
-            'facets': ['mimeType'],
-            'limit': 100,
-            'offset': 0,
-          },
-        }
+    const emptyParam = {
+      'request': {
+        'query': this.param ? this.param : '',
+        'filters': {
+          'courseCategory': [],
+          'contentType': ['Course'],
+          'status': ['Live'] },
+          'sort_by': { 'lastUpdatedOn': 'desc' },
+          'facets': ['mimeType'],
+          'limit': 100,
+          'offset': 0,
+        },
+      }
+    if (((this.myFilters && this.myFilters.length === 0) &&
+    (typeof this.paramFilters === 'undefined') || (this.paramFilters && this.paramFilters.length === 0))) {
+
         // this.newQueryParam = emptyParam
         this.fetchSearchDataFun(emptyParam)
-
     }
   }
 
@@ -213,17 +238,16 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
         if (mf.mainType === 'contentType') {
           const indx = this.primaryCategoryType.filter((x: any) => x === mf.name && mf.name !== 'moderated courses')
           if (indx.length === 0) {
-            if (mf.name !== 'moderated courses') {
-              this.primaryCategoryType.push(mf.name)
+
+              this.primaryCategoryType.push(mf.name === 'Program' ? NsContent.ECourseCategory.INVITE_ONLY_PROGRAM : mf.name)
               queryparam.request.filters.courseCategory = this.primaryCategoryType
-            }
           }
           queryparam.request.filters.courseCategory = this.primaryCategoryType
         } else if (mf.mainType === 'primaryCategory') {
           const indx = this.primaryCategoryType.filter((x: any) => x === mf.name && mf.name !== 'moderated courses')
           if (indx.length === 0) {
             if (mf.name !== 'moderated courses') {
-              this.primaryCategoryType.push(mf.name)
+              this.primaryCategoryType.push(mf.name === 'Program' ? NsContent.ECourseCategory.INVITE_ONLY_PROGRAM : mf.name)
               queryparam.request.filters.courseCategory = this.primaryCategoryType
             }
           }
@@ -353,10 +377,8 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
               modifiedDataCount = modifiedDataCount + 1
             }
         })
-
       }
-      const totalCountLocal = response.result.count !== modifiedDataCount ? modifiedDataCount : response.result.count
-      this.totalResults = totalCountLocal + this.totalResults
+      this.totalResults = response.result.count
       // this.facets = response.result.facets
       this.primaryCategoryType = []
       this.contentType = []
