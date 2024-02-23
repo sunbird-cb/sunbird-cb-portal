@@ -5,6 +5,7 @@ import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { MatSnackBar } from '@angular/material';
 
 const DEFAULT_WEEKLY_DURATION = 300;
 const DEFAULT_DISCUSS_DURATION = 600;
@@ -70,6 +71,7 @@ export class InsightSideBarComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
+    private snackBar: MatSnackBar,
     private events: EventService) { }
 
   ngOnInit() {
@@ -256,12 +258,30 @@ export class InsightSideBarComponent implements OnInit {
   }
 
   toggleCreds() {
+    this.showCreds = !this.showCreds
     if (this.showCreds) {
       this.credMessage = "Hide my credentials"
     } else {
       this.credMessage = "View my credentials"
     }
-    this.showCreds = !this.showCreds
+  }
+
+  copyToClipboard(text: string) {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    //textArea.focus()
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    this.openSnackbar('copied')
+    this.raiseTelemetry('copyToClipboard')
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }
 

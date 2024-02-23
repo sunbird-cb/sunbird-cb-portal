@@ -239,6 +239,47 @@
                 [isLoading]="insightsDataLoading"></ws-widget-weekly-claps>
             </div>
 
+            <div class="margin-top-m margin-bottom-m">
+              <div class="assessments-info-wrapper">
+                  <div class="flex flex-between flex-middle">
+                      <p class="flex-align-start upcoming-assessment-title flex flex-middle margin-remove">Upcoming Assessment
+                          <img class="margin-left-s cursor-pointer" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
+                      </p>
+                  </div>
+                  <div class="flex flex-col items-center gap-4 p-5">
+                      <button
+                          class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide"
+                          [routerLink]="['/app/discussion-forum']" >START</button>
+                  </div>
+              </div>
+              <div class="cred-container">
+                  <div class="flex flex-middle flex-between">
+                      <div class="flex flex-middle">
+                          <span class="cred-title">{{ credMessage }}</span>
+                      </div>
+                      <div class="flex">
+                          <mat-icon class="ws-mat-default-text cursor-pointer" (click)="toggleCreds()">chevron_right</mat-icon>
+                      </div>
+                  </div>
+                  <div class="my-credentials p-3" *ngIf="showCreds">
+                      <div class="flex flex-middle" style="padding: 5px 0px;">
+                          <span class="pr-5 font-semibold">Username</span>
+                          <div class="flex flex-middle copy-items">
+                              <span class="pr-2 custom-width">Venkat</span>
+                              <span class=""><mat-icon class="cursor-pointer copy-icon" (click)="copyToClipboard('Venkat')">content_copy</mat-icon></span>
+                          </div>
+                      </div>
+                      <div class="flex flex-middle" style="padding: 5px 0px;">
+                          <span class="pr-5 font-semibold">Password</span>
+                          <div class="flex flex-middle copy-items">
+                              <span class="pr-2  custom-width">Test@1234</span>
+                              <span class=""><mat-icon class="cursor-pointer copy-icon" (click)="copyToClipboard('Test@1234')">content_copy</mat-icon></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
             <div class="flex flex-col margin-bottom-m mt-3 gap-3 discussion-card ">
               <div class="flex flex-row gap-3 items-center mat-subheading-1 mb-0">
                 <div class="flex flex-grow">My Discussions</div>

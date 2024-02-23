@@ -54,13 +54,7 @@
 }
 
 .cred-container {
-    border-radius: 12px;
-    border: 1px solid rgba(0,0,0,.08);
-    opacity: 1;
-    background: #dce0e4;
-    padding: 24px 16px 8px;
-    position: relative;
-    top: -20px;
+    padding: 10px 16px;
 }
 .cred-title {
     opacity: 1;
@@ -82,4 +76,26 @@
     padding: 5px 10px;
     width: 100%;
     border-radius: 7px;
+}
+.custom-width {
+    width: 84%;
+}
+
+.assessments-wrapper {
+    border-radius: 12px;
+   // border: 1px solid rgba(0,0,0,.08);
+    background: #dce0e4;
+    //padding: 24px 16px 8px;
+}
+.my-credentials {
+    font-family: "Lato-Regular";
+    font-size: .9rem;
+}
+
+.system-icon {
+    align-items: center;
+}
+.custom-size {
+    font-size: 60px;
+    width: 60px;
 }

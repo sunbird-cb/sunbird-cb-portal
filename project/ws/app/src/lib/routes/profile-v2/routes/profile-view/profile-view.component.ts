@@ -86,6 +86,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     loadSkeleton: false,
   }
   certificatesData: any
+  showCreds = false
+  credMessage = "View my credentials"
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -453,5 +455,32 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.defaultSideNavBarOpenedSubscription) {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
+  }
+
+  toggleCreds() {
+    this.showCreds = !this.showCreds
+    if (this.showCreds) {
+      this.credMessage = "Hide my credentials"
+    } else {
+      this.credMessage = "View my credentials"
+    }
+  }
+
+  copyToClipboard(text: string) {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    //textArea.focus()
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    this.openSnackbar('copied')
+    this.raiseTelemetry('copyToClipboard')
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }
