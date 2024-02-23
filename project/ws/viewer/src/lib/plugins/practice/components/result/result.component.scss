@@ -285,6 +285,8 @@
     border-top-right-radius: 16px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     margin: 24px;
+    overflow: hidden;
+    overflow-y: auto;
     background-color: #fff;
     .small-screen {
     @include breakpoint-xs {

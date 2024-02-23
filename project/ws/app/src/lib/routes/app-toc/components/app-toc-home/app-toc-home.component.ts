@@ -810,6 +810,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   private getUserEnrollmentList() {
     this.enrollBtnLoading = true
+    this.tocSvc.contentLoader.next(true)
     this.userSvc.resetTime('enrollmentService')
     // tslint:disable-next-line
     if (this.content && this.content.identifier && this.content.primaryCategory !== this.primaryCategory.COURSE &&
@@ -860,10 +861,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               })
               this.generateResumeDataLinkNew()
               this.enrollBtnLoading = false
+              // this.tocSvc.contentLoader.next(false)
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
               this.content['completionPercentage'] = enrolledCourse.completionPercentage
               this.enrollBtnLoading = false
+              // this.tocSvc.contentLoader.next(false)
             }
             this.batchData = {
               content: [enrolledCourse.batch],
@@ -1077,6 +1080,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getContinueLearningData(contentId: string, batchId?: string) {
+    this.tocSvc.contentLoader.next(true)
     this.resumeData = null
     let userId
     if (this.configSvc.userProfile) {
@@ -1139,7 +1143,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         },
       )
     }
-
   }
 
   generateResumeDataLinkNew() {
