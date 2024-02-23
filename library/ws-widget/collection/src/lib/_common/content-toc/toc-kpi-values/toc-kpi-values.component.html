@@ -54,5 +54,26 @@
             <img src="/assets/icons/toc/course.svg" width="20px" alt="other items image" />
             <div class="text-xs" i18n>{{ tocStructure?.other }} {{ 'apptochome.otherItems' | translate }} </div>
         </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2">
+            <img src="/assets/icons/toc/free.svg" width="20px" alt="free course image" />
+            <div class="text-xs" *ngIf="!content?.exclusiveContent" i18n>{{ 'apptochome.free' | translate }} </div>
+            <div class="text-xs" *ngIf="content?.exclusiveContent" i18n>{{ 'apptochome.paidContent' | translate }} </div>
+        </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="showInstructorLedMsg">
+            <img src="/assets/icons/toc/instructor-led.svg" width="20px" alt="instructor led image" />
+            <div class="text-xs" i18n>{{ 'apptocsinglepage.instructorLed' | translate }} </div>
+        </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.learningMode">
+            <img src="/assets/icons/toc/self-learning.svg" width="20px" alt="free course image" />
+            <div class="text-xs" i18n>{{ 'apptocsinglepage.selfLearning' | translate }} </div>
+        </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.license">
+            <img src="/assets/icons/toc/key.svg" width="20px" alt="free course image" />
+            <div class="text-xs" i18n>{{ content?.license }} </div>
+        </div>
     </ng-container>
 </div>
