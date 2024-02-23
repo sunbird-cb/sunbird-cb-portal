@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations'
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { viewerRouteGenerator } from '../../../_services/viewer-route-util'
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
 @Component({
   selector: 'ws-widget-app-toc-session-card-new',
   templateUrl: './app-toc-session-card-new.component.html',
@@ -30,24 +30,24 @@ export class AppTocSessionCardNewComponent implements OnInit {
   @Input() batchId!: string
   @Input() content: NsContent.IContent | null = null
   @Input() pathSet!: any
-  @Input() sessionType:any
+  @Input() sessionType: any
   isEnabled = true
   isAllowed = true
   viewChildren = true
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   redirectToPage() {
-    if(this.isAllowed && !this.forPreview && this.isEnabled && this.batchData && this.batchData.enrolled) {
-      this.router.navigate([this.resourceLink.url], { queryParams: this.resourceLink.queryParams});
+    if (this.isAllowed && !this.forPreview && this.isEnabled && this.batchData && this.batchData.enrolled) {
+      this.router.navigate([this.resourceLink.url], { queryParams: this.resourceLink.queryParams })
     }
 
     // [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
     //       [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null"
-    
+
   }
   raiseTelemetry() { }
   public progressColor(): string {

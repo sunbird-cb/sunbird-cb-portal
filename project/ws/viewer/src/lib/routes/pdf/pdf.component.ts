@@ -237,7 +237,7 @@ export class PdfComponent implements OnInit, OnDestroy {
             for (const content of data.result.contentList) {
               if (content.contentId === pdfId && content.progressdetails && content.progressdetails.current) {
                 this.widgetResolverPdfData.widgetData.resumePage = Number(content.progressdetails.current.pop())
-                this.pdfScormDataService.handlePdfMarkComplete.next(content);
+                this.pdfScormDataService.handlePdfMarkComplete.next(content)
               }
             }
           }
