@@ -433,10 +433,7 @@ span.profile-badge {
 }
 
 .assessments-info-wrapper {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 12px;
   border: 1px solid rgba(0,0,0, 0.08);
   opacity: 1;
   background-color: rgba(255,255,255, 1);
@@ -456,14 +453,7 @@ span.profile-badge {
 }
 
 .cred-container {
-  opacity: 1;
-  background: #dce0e4;
   padding: 10px 16px;
-  position: relative;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
 }
 .cred-title {
   opacity: 1;
@@ -488,4 +478,23 @@ span.profile-badge {
 }
 .custom-width {
   width: 84%;
+}
+
+.assessments-wrapper {
+  border-radius: 12px;
+  background: #dce0e4;
+}
+.my-credentials {
+  font-family: "Lato-Regular";
+  font-size: .9rem;
+}
+
+.system-icon {
+  align-items: center;
+}
+.custom-size {
+  font-size: 60px;
+  width: 60px;
+  color: #000000 !important;
+  height: 60px;
 }

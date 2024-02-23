@@ -475,11 +475,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     document.execCommand('copy')
     document.body.removeChild(textArea)
     this.openSnackbar('copied')
-    this.raiseTelemetry('copyToClipboard')
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
-    this.snackBar.open(primaryMsg, 'X', {
+    this.matSnackBar.open(primaryMsg, 'X', {
       duration,
     })
   }
