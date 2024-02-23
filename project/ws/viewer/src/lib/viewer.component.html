@@ -1,10 +1,10 @@
 <section *ngIf="isNotEmbed" id="viewer-conatiner-backdrop">
   <ng-container *ngIf="!isMobile">
     <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
-      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [hierarchyMapData]="tocSvc?.hashmap">
     </viewer-viewer-top-bar>
     <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
-      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+      (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [hierarchyMapData]="tocSvc?.hashmap">
     </viewer-viewer-top-bar>
   </ng-container>
 
@@ -21,9 +21,10 @@
         </mat-tab>
       </mat-tab-group> -->
       <ng-container *ngIf="isTypeOfCollection">
-        <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" [batchData]="batchData" (hidenav)="minimizeBar()">
+        <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" 
+        [batchData]="batchData" (hidenav)="minimizeBar()"  [hierarchyMapData]="tocSvc?.hashmap">
         </viewer-viewer-toc>
-      </ng-container>
+      </ng-container> 
     </mat-sidenav>
 
     <mat-sidenav-content #scrollableContent>
@@ -130,7 +131,7 @@
         <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <div class="pb-4 lg:py-4">
             <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
-            [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
+            [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap"></ws-widget-content-toc>
           </div>
         </div>
       </ng-container>
@@ -138,7 +139,7 @@
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
           <div class="pb-4 lg:py-4 pl-4 pr-4">
             <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
-            [resumeData]="resumeData" [batchData]="batchData"></ws-widget-content-toc>
+            [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap"></ws-widget-content-toc>
           </div>
         </div>
       </ng-container>

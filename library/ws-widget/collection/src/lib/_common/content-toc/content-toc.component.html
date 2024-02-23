@@ -6,7 +6,7 @@
     <ng-container *ngIf="content?.children?.length">
         <mat-tab label="Content" *ngIf="contentTabFlag">
             <ws-widget-app-toc-content [batchId]="batchId" [pathSet]="pathSet" [content]="content" [tocStructure]="tocStructure" [config]="config"  [forPreview]="false"
-            [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader"></ws-widget-app-toc-content>
+            [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader" [hierarchyMapData]="hierarchyMapData"></ws-widget-app-toc-content>
         </mat-tab>
     </ng-container>
 </mat-tab-group>

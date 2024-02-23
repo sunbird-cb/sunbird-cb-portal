@@ -64,6 +64,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   tocStructure: any
   hasTocStructure = false
   viewerAboutContentData: any
+  hierarchyMapData: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -79,7 +80,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
     public pdfScormDataService: PdfScormDataService,
     private translate: TranslateService,
-    private tocSvc: AppTocService
+    public tocSvc: AppTocService
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
@@ -259,6 +260,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   manipulateHierarchyData() {
     this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
+    // this.hierarchyMapData = this.tocSvc.callHirarchyProgressHashmap(this.hierarchyData)
   }
   resetAndFetchTocStructure() {
     this.tocStructure = {

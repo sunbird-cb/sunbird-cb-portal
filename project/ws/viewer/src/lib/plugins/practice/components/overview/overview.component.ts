@@ -33,7 +33,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
-    private quizSvc: PracticeService) { }
+    private quizSvc: PracticeService
+  ) { }
 
   ngOnInit() {
     this.dataSubscription = this.route.data.subscribe(data => {

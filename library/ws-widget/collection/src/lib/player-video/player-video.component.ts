@@ -106,14 +106,13 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     if (videoTag) {
       videoTag.onended = () => {
         this.videoEnd = true
-        /* tslint:disable-next-line */
-        const videoTag: any = document.getElementById('videoTag') || document.getElementById('realvideoTag')
+        const videoTagElement: any = document.getElementById('videoTag') || document.getElementById('realvideoTag')
         const autoPlayVideo: any = document.getElementById('auto-play-video')
-        if (videoTag) {
+        if (videoTagElement) {
           if (autoPlayVideo) {
             autoPlayVideo.style.opacity = '0.8'
           }
-          videoTag.style.filter = 'blur(2px)'
+          videoTagElement.style.filter = 'blur(2px)'
 
         }
         let counter = 1

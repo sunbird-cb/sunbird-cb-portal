@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { Observable, of, EMPTY } from 'rxjs'
+import { Observable, of, EMPTY, BehaviorSubject } from 'rxjs'
 import { catchError, retry, map, shareReplay } from 'rxjs/operators'
 import { NsContentStripMultiple } from '../content-strip-multiple/content-strip-multiple.model'
 import { NsContent } from './widget-content.model'
@@ -69,7 +69,8 @@ export class WidgetContentService {
   currentMetaData!: NsContent.IContent
   currentContentReadMetaData!: NsContent.IContent
   currentBatchEnrollmentList!: NsContent.ICourse[]
-
+  programChildCourseResumeData = new BehaviorSubject<any>({})
+  programChildCourseResumeData$ = this.programChildCourseResumeData.asObservable()
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
@@ -232,9 +233,13 @@ export class WidgetContentService {
 
   fetchContentHistoryV2(req: NsContent.IContinueLearningDataReq): Observable<NsContent.IContinueLearningData> {
     req.request.fields = ['progressdetails']
-    return this.http.post<NsContent.IContinueLearningData>(
+    const data = this.http.post<NsContent.IContinueLearningData>(
       `${API_END_POINTS.CONTENT_HISTORYV2}/${req.request.courseId}`, req
     )
+    data.subscribe((subscribeData: any) => {
+          this.programChildCourseResumeData.next({ resumeData: subscribeData.result.contentList, courseId: req.request.courseId })
+        })
+    return data
   }
 
   async continueLearning(id: string, collectionId?: string, collectionType?: string): Promise<any> {
