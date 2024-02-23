@@ -992,7 +992,7 @@
           </ul>
         </div>
           <div *ngIf="widgetData?.content?.batch?.endDate">
-            <p>Deadline - {{widgetData.content.batch?.endDate | date: "d MMM yyyy"}}</p>
+            <p>{{'cardcontentv2.deadline' | translate}} - {{widgetData.content.batch?.endDate | date: "d MMM yyyy"}}</p>
           </div>
           <div class="tags" *ngIf="widgetData.content.keywords && widgetData.content.keywords.length > 0">
             <ul class="mat-caption margin-remove-top padding-remove tag_list">
@@ -1375,7 +1375,7 @@
               {{ widgetData.content.description | pipeHtmlTagRemoval }}
             </div>
             <div class="mat-body-2  mb-5" *ngIf="widgetData?.content?.batch?.endDate">
-              Deadline : {{ widgetData?.content?.batch?.endDate | date: "d MMM yyyy" }}
+              {{'cardcontentv2.deadline' | translate}}: {{ widgetData?.content?.batch?.endDate | date: "d MMM yyyy" }}
             </div>
           </a>
           <div class="mt-4 mb-2 flex justify-between items-center absolute bottom-0 left-0 right-0 px-3 py-2">
@@ -1587,6 +1587,6 @@
   <div class="cbp-mark left-0 border-top-radius">
     <p *ngIf="data.cbpData.planDuration === acbpConstants?.UPCOMING"  class="cbp-warning">{{data.cbpData.endDate | date: 'd MMM, y'}}</p>
     <p *ngIf="data.cbpData.planDuration === acbpConstants?.SUCCESS"  class="cbp-success">{{data.cbpData.endDate | date: 'd MMM, y'}}</p>
-    <p *ngIf="data.cbpData.planDuration === acbpConstants?.OVERDUE" class="cbp-danger">Over due </p>
+    <p *ngIf="data.cbpData.planDuration === acbpConstants?.OVERDUE" class="cbp-danger">{{'cardcontentv2.overDue' | translate}}</p>
   </div>
 </ng-template>

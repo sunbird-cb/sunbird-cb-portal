@@ -7,6 +7,7 @@ import { NSBrowseCompetency } from '../../models/competencies.model'
 import _ from 'lodash'
 // tslint:enable
 import { LocalDataService } from '../../services/localService'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-competency-filters',
@@ -41,6 +42,7 @@ export class CompetencyFiltersComponent implements OnInit, OnDestroy {
   ]
   constructor(
     private browseCompServ: BrowseCompetencyService,
+    private langtranslations: MultilingualTranslationsService,
     private localDataService: LocalDataService,
   ) { }
 
@@ -141,4 +143,7 @@ export class CompetencyFiltersComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
 }
