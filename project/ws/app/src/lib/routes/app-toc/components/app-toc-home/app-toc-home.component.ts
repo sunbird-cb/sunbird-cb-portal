@@ -131,6 +131,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   elementPosition: any
   batchSubscription: Subscription | null = null
   batchDataSubscription: Subscription | null = null
+  resumeDataSubscription: Subscription | null = null
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   batchControl = new FormControl('', Validators.required)
   contentProgress = 0
@@ -227,7 +228,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private router: Router,
     private contentSvc: WidgetContentService,
     private userSvc: WidgetUserService,
-    private tocSvc: AppTocService,
+    public tocSvc: AppTocService,
     private loggerSvc: LoggerService,
     private configSvc: ConfigurationsService,
     private domSanitizer: DomSanitizer,
@@ -853,35 +854,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionStatus = enrolledCourse.status || 0
             if (this.contentReadData && this.contentReadData.cumulativeTracking) {
               this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
-              this.tocSvc.resumeData.subscribe((res: any) => {
+              this.resumeDataSubscription = this.tocSvc.resumeData.subscribe((res: any) => {
                 this.resumeData = res
                 this.getLastPlayedResource()
               })
-              if (this.resumeData && this.content) {
-                let resumeDataV2: any
-
-                if (this.content.completionPercentage === 100) {
-                  resumeDataV2 = this.getResumeDataFromList('start')
-                } else {
-                  resumeDataV2 = this.getResumeDataFromList()
-                }
-                if (!resumeDataV2.mimeType) {
-                  resumeDataV2.mimeType = this.tocSvc.getMimeType(this.content, resumeDataV2.identifier)
-                }
-                this.resumeDataLink = viewerRouteGenerator(
-                  resumeDataV2.identifier,
-                  resumeDataV2.mimeType,
-                  this.isResource ? undefined : this.content.identifier,
-                  this.isResource ? undefined : this.content.contentType,
-                  this.forPreview,
-                  'Learning Resource',
-                  this.getBatchId(),
-                  this.content.name,
-                )
-                this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
-                /* tslint:disable-next-line */
-                console.log(this.resumeDataLink,'=====> home resum data link <========')
-              }
+              this.generateResumeDataLinkNew()
               this.enrollBtnLoading = false
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
@@ -917,12 +894,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }  else {
               this.fetchBatchDetails()
             }
+            this.tocSvc.callHirarchyProgressHashmap(this.content)
             this.enrollBtnLoading = false
-            this.tocSvc.contentLoader.next(false)
+            // this.tocSvc.contentLoader.next(false)
           }
         }
         this.isCourseCompletedOnThisMonth()
-        this.getLastPlayedResource()
+        // console.log('calling ---------------- =========')
+        // this.getLastPlayedResource()
       },
       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
@@ -1113,7 +1092,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         fields: ['progressdetails'],
       },
     }
-
     if (this.content && this.content.primaryCategory !== NsContent.EPrimaryCategory.RESOURCE) {
       this.contentSvc.fetchContentHistoryV2(req).subscribe(
         data => {
@@ -1143,11 +1121,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 })
               }
             }
+            this.generateResumeDataLinkNew()
             this.tocSvc.updateResumaData(this.resumeData)
-            this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
+            // this.tocSvc.mapModuleDurationAndProgress(this.content, this.content)
             this.getLastPlayedResource()
+            this.tocSvc.mapCompletionPercentage(this.content, this.resumeData)
+            this.tocSvc.callHirarchyProgressHashmap(this.content)
+            this.tocSvc.contentLoader.next(false)
           } else {
             this.resumeData = null
+            this.tocSvc.callHirarchyProgressHashmap(this.content)
+            this.tocSvc.contentLoader.next(false)
           }
         },
         (error: any) => {
@@ -1156,6 +1140,34 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       )
     }
 
+  }
+
+  generateResumeDataLinkNew() {
+    if (this.resumeData && this.content) {
+      let resumeDataV2: any
+
+      if (this.content.completionPercentage === 100) {
+        resumeDataV2 = this.getResumeDataFromList('start')
+      } else {
+        resumeDataV2 = this.getResumeDataFromList()
+      }
+      if (!resumeDataV2.mimeType) {
+        resumeDataV2.mimeType = this.tocSvc.getMimeType(this.content, resumeDataV2.identifier)
+      }
+      this.resumeDataLink = viewerRouteGenerator(
+        resumeDataV2.identifier,
+        resumeDataV2.mimeType,
+        this.isResource ? undefined : this.content.identifier,
+        this.isResource ? undefined : this.content.contentType,
+        this.forPreview,
+        'Learning Resource',
+        this.getBatchId(),
+        this.content.name,
+      )
+      this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
+      /* tslint:disable-next-line */
+      console.log(this.resumeDataLink,'=====> home resum data link <========')
+    }
   }
 
   scrollToTop() {
@@ -1263,15 +1275,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getResumeDataFromList(type?: string) {
+    const resumeCopy = [...this.resumeData]
     if (!type) {
       // tslint:disable-next-line:max-line-length
-      const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+      const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
       return {
         identifier: lastItem.contentId,
         mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
       }
     }
-    const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
+    const firstItem = resumeCopy && resumeCopy.length && resumeCopy[0]
     return {
       identifier: firstItem.contentId,
       mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
@@ -1679,6 +1692,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.selectedBatchSubscription) {
       this.selectedBatchSubscription.unsubscribe()
+    }
+    if (this.resumeDataSubscription) {
+      this.resumeDataSubscription.unsubscribe()
     }
   }
 }

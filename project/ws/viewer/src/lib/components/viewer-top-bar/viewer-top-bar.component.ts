@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
@@ -10,20 +10,28 @@ import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
+/* tslint:disable*/
+import _ from 'lodash'
+
 @Component({
   selector: 'viewer-viewer-top-bar',
   templateUrl: './viewer-top-bar.component.html',
   styleUrls: ['./viewer-top-bar.component.scss'],
 })
-export class ViewerTopBarComponent implements OnInit, OnDestroy {
+export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() frameReference: any
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
   @Input() content: any
+  @Input() hierarchyMapData: any = {}
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
+  overallProgress = 0
+  overallLeafNodes = 0
+  completedCount = 0
+  loadingOverallPRogress: boolean = false
   appIcon: SafeUrl | null = null
   isTypeOfCollection = false
   courseName = ''
@@ -186,6 +194,20 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
 
   }
 
+  ngOnChanges(props: SimpleChanges) {
+    for (const prop in props) {
+      if (prop === 'hierarchyMapData') {
+        if(_.isEmpty(props['hierarchyMapData'].currentValue)){
+          this.loadingOverallPRogress = true
+        } else {
+          const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+          this.activatedRoute.snapshot.queryParams.collectionId : ''
+          this.ComputeCompletedNodesAndPercent(collectionId)
+        }
+      }
+    }
+  }
+
   updateProgress(status: number, resourceId: any) {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
       this.activatedRoute.snapshot.queryParams.collectionId : ''
@@ -194,6 +216,20 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       this.activatedRoute.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
+  }
+
+  ComputeCompletedNodesAndPercent(identifier: string) {
+    if(this.hierarchyMapData  && this.hierarchyMapData[identifier]) {
+      // tslint:disable
+      const completedItems = _.filter(this.hierarchyMapData[identifier].leafNodes, r => this.hierarchyMapData[r].completionStatus === 2 || this.hierarchyMapData[r].completionPercentage === 100)
+      this.completedCount = completedItems.length
+      this.overallLeafNodes = _.toInteger(_.get(this.hierarchyMapData[identifier], 'leafNodesCount')) || 1
+      // tslint:disable
+      this.hierarchyMapData[identifier]['completionPercentage'] = Number(((completedItems.length / this.overallLeafNodes) * 100).toFixed())
+      this.hierarchyMapData[identifier]['completionStatus'] = (this.hierarchyMapData[identifier].completionPercentage >= 100) ? 2 : 1
+      this.overallProgress = this.hierarchyMapData[identifier]['completionPercentage']
+    }
+    this.loadingOverallPRogress = false
   }
 
   ngOnDestroy() {

@@ -14,6 +14,7 @@ import { ValueService } from '@sunbird-cb/utils'
 import { CourseCompletionDialogModule } from '../course-completion-dialog/course-completion-dialog.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { ShareTocModule } from '@ws/app/src/lib/routes/app-toc/share-toc/share-toc.module'
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 @NgModule({
   declarations: [ViewerTopBarComponent],
   imports: [
@@ -30,6 +31,7 @@ import { ShareTocModule } from '@ws/app/src/lib/routes/app-toc/share-toc/share-t
     ContentProgressModule,
     TranslateModule,
     ShareTocModule,
+    SkeletonLoaderModule,
   ],
   exports: [ViewerTopBarComponent],
   providers: [ValueService],

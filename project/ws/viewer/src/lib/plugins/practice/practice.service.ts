@@ -28,7 +28,7 @@ export class PracticeService {
   currentSection: BehaviorSubject<Partial<NSPractice.IPaperSection>> = new BehaviorSubject<Partial<NSPractice.IPaperSection>>({})
   // questionAnswerHashV2:BehaviorSubject<NSPractice.IQAnswer> = new BehaviorSubject<NSPractice.IQAnswer>({})
   displayCorrectAnswer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  checkAlreadySubmitAssessment = new Subject();
+  checkAlreadySubmitAssessment = new Subject()
   constructor(
     private http: HttpClient,
   ) { }
@@ -212,7 +212,6 @@ export class PracticeService {
       attemptsAllowed: 1,
     })
   }
-
 
   shCorrectAnswer(val: boolean) {
     this.displayCorrectAnswer.next(val)

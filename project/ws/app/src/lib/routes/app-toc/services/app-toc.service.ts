@@ -58,6 +58,7 @@ export class AppTocService {
 
   public contentLoader = new BehaviorSubject(false)
   contentLoader$ = this.contentLoader.asObservable()
+  public hashmap: any = {}
 
   constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) { }
 
@@ -608,7 +609,6 @@ export class AppTocService {
 
           }
         }
-
       }
       if (content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
         // this.mapCompletionPercentage(content, this.resumeData)
@@ -640,11 +640,15 @@ export class AppTocService {
       // const parentContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
       // if (!parentContent.completionPercentage) {
         content.completionPercentage = Math.floor((totalCount / leafnodeCount) * 100)
+        content.completionStatus = content.completionPercentage <= 100 ? 1 : 2
       // // } else {
       //   content.completionPercentage = parentContent.completionPercentage
       // // }
       // })
-      this.mapModuleDurationAndProgress(content, content)
+      // this.mapModuleDurationAndProgress(content, content)
+      this.callHirarchyProgressHashmap(content)
+      this.contentLoader.next(false)
+    } else {
       this.contentLoader.next(false)
     }
   }
@@ -680,7 +684,6 @@ export class AppTocService {
   }
 
   public mapModuleDurationAndProgress(content: NsContent.IContent | null, parent: NsContent.IContent | null) {
-    this.contentLoader.next(true)
     if (content && content.children) {
       if (content.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
         // content.children.map((item: NsContent.IContent)=> {
@@ -699,7 +702,48 @@ export class AppTocService {
           this.mapModuleDurationAndProgress(item, parent)
         }
       })
-      this.contentLoader.next(false)
+    }
+  }
+
+  public createHirarchyProgressHashmap(hierarchyData: NsContent.IContent) {
+    if (hierarchyData && hierarchyData.children) {
+      hierarchyData.children.forEach((child: NsContent.IContent) => {
+        if (child && child.children) {
+          this.createHirarchyProgressHashmap(child)
+        }
+        let localMap = {}
+        localMap = {
+          parent: child.parent,
+          identifier: child.identifier,
+          leafNodesCount: child.leafNodesCount || null,
+          leafNodes: child.leafNodes || [],
+          completionPercentage: child.completionPercentage,
+          completionStatus: child.completionStatus,
+          progress: child.progress,
+          primaryCategory: child.primaryCategory,
+          duration: child.duration || 0,
+          expectedDuration: child.expectedDuration || 0,
+        }
+        this.hashmap[child.identifier] = localMap
+      })
+    }
+  }
+
+  public callHirarchyProgressHashmap(hierarchyData: NsContent.IContent | null) {
+    if (hierarchyData) {
+      this.hashmap[hierarchyData.identifier] = {
+        parent: hierarchyData.parent,
+        identifier: hierarchyData.identifier,
+        leafNodesCount: hierarchyData.leafNodesCount || null,
+        leafNodes: hierarchyData.leafNodes || [],
+        completionPercentage: hierarchyData.completionPercentage,
+        completionStatus: hierarchyData.completionStatus,
+        progress: hierarchyData.progress,
+        primaryCategory: hierarchyData.primaryCategory,
+        expectedDuration: hierarchyData.expectedDuration || 0,
+      }
+      this.createHirarchyProgressHashmap(hierarchyData)
+      this.hashmap =  { ...this.hashmap }
     }
   }
 

@@ -31,7 +31,7 @@ export class PdfComponent implements OnInit {
   isRestricted = false
   playPdfContentFlag = true
   isMobile = false
-  pdfContentProgressData:any;
+  pdfContentProgressData: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
@@ -49,9 +49,9 @@ export class PdfComponent implements OnInit {
       this.isRestricted =
         !this.configSvc.restrictedFeatures.has('disscussionForum')
     }
-    this.pdfScormDataService.handlePdfMarkComplete.subscribe((contentData:any)=>{
-      this.pdfContentProgressData = contentData;
-      if(contentData && contentData.status === 2) {
+    this.pdfScormDataService.handlePdfMarkComplete.subscribe((contentData: any) => {
+      this.pdfContentProgressData = contentData
+      if (contentData && contentData.status === 2) {
         this.playPdfContentFlag = true
       }
     })

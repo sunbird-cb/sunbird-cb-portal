@@ -18,12 +18,11 @@ export class AppTocSessionsNewComponent implements OnInit {
   @Input() pathSet!: any
   sessionList: any = []
   sessionListMap: any = {}
-  sessionType:any = [];
+  sessionType: any = []
   constructor() { }
 
   ngOnInit() {
 
-    
   }
 
   getBatchHashMap() {
@@ -43,14 +42,14 @@ export class AppTocSessionsNewComponent implements OnInit {
         })
         this.sessionListMap = {}
         this.sessionList.forEach((ele: any) => {
-          if(ele && !(ele.sessionType && this.sessionType.includes(ele.sessionType.toLowerCase()))) {
-            this.sessionType.push(ele.sessionType.toLowerCase());
+          if (ele && !(ele.sessionType && this.sessionType.includes(ele.sessionType.toLowerCase()))) {
+            this.sessionType.push(ele.sessionType.toLowerCase())
           }
-          
+
           this.sessionListMap[ele.sessionId] = ele
         })
       }
     }
-    return this.sessionListMap;
+    return this.sessionListMap
   }
 }

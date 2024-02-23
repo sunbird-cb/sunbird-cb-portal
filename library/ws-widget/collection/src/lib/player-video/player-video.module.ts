@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material'
   imports: [
     CommonModule,
     PipePublicURLModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports: [PlayerVideoComponent],
   entryComponents: [PlayerVideoComponent],
