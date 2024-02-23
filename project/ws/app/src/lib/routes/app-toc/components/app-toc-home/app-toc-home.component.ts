@@ -94,6 +94,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   tocConfig: any = null
   primaryCategory = NsContent.EPrimaryCategory
+  courseCategory = NsContent.ECourseCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
   askAuthorEnabled = true
   trainingLHubEnabled = false
@@ -973,13 +974,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.enrollBtnLoading = true
     this.userSvc.resetTime('enrollmentService')
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
-      this.autoEnrollCuratedProgram()
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM)
+    } else if (this.content && this.content.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM)
     } else {
       this.autoAssignEnroll()
     }
   }
 
-  public autoEnrollCuratedProgram() {
+  public autoEnrollCuratedProgram(programType: any) {
     if (this.content && this.content.identifier) {
       let userId = ''
       if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
@@ -993,7 +996,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           batchId: this.contentReadData && this.contentReadData.batches[0].batchId,
         },
       }
-      this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
+      this.contentSvc.autoAssignCuratedBatchApi(req, programType).subscribe(
         (data: NsContent.IBatchListResponse) => {
           if (data) {
             setTimeout(() => {
@@ -1625,6 +1628,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       })
   }
   translateLabels(label: string, type: any) {
+    console.log(this.langtranslations.translateLabel(label, type, ''), 'label', label, 'type', type)
     return this.langtranslations.translateLabel(label, type, '')
   }
 }
