@@ -14,18 +14,18 @@
                         <div class="flex flex-col sm:flex-row flex-wrap">
                             <ng-container *ngIf="isModule && isEnrolled">
                                 <ng-container
-                                    *ngIf="!forPreview && content?.identifier && content?.completionPercentage ; else elseBlock">
+                                    *ngIf="!forPreview && content?.identifier && getCompletionPercentage(content?.identifier) ; else elseBlock">
     
-                                    <ng-container *ngIf="content?.completionStatus == 2">
+                                    <ng-container *ngIf="getCompletionStatus(content.identifier) == 2">
                                         <div class="completed mr-2">
                                             <div>
                                                 <mat-icon class="completed-icon" [color]="blue">check_circle</mat-icon>
                                             </div>
                                         </div>
                                     </ng-container>
-                                    <ng-container *ngIf="content?.completionStatus < 2">
+                                    <ng-container *ngIf="getCompletionStatus(content?.identifier) < 2">
                                         <circle-progress class="flex items-center progress mr-1"
-                                            [percent]="content?.completionPercentage" [radius]="10" [outerStrokeWidth]="2"
+                                            [percent]="getCompletionPercentage(content?.identifier)" [radius]="10" [outerStrokeWidth]="2"
                                             [innerStrokeWidth]="2" [space]="-2" [outerStrokeColor]="progressColor2()"
                                             [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true"
                                             [animationDuration]="250" [showTitle]="false" [showUnits]="false"
@@ -77,7 +77,7 @@
                                 class="time-icon icon-color">video_library</mat-icon>
                             <img *ngIf="isModule" alt="Module" class="time-icon"
                                 src="/assets/icons/content/grey/module.svg">
-                            <div class="text-xs">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</div>
+                            <div class="text-xs">{{ (hierarchyMapData[content?.identifier]?.duration || 120)| pipeDurationTransform: 'hms' }}</div>
 
                             <ng-container *ngIf="content?.moduleCount">
                                 <div class="flex items-center">
@@ -98,16 +98,16 @@
                     <!-- For course progress to be shown -->
                     <ng-container *ngIf="isEnrolled">
                         <ng-container
-                            *ngIf="!forPreview && content?.identifier && content?.completionPercentage && content.primaryCategory === 'Course'">
-                            <ng-container *ngIf="content?.completionStatus == 2">
+                            *ngIf="!forPreview && content?.identifier && getCompletionPercentage(content?.identifier) && content.primaryCategory === 'Course'">
+                            <ng-container *ngIf="getCompletionStatus(content?.identifier) == 2">
                                 <div class="mt-2 flex flex-1 flex-col  progress-container">
                                     <div class="flex flex-row justify-end w-full ">
                                         <span class="mat-body-2  ">
-                                            {{content?.completionPercentage}}%</span>
+                                            {{getCompletionPercentage(content?.identifier)}}%</span>
                                     </div>
     
                                     <ws-widget-content-progress [contentId]="content?.progress"
-                                        [progress]="content?.completionPercentage" [progressType]="'percentage'"
+                                        [progress]="getCompletionPercentage(content?.identifier)" [progressType]="'percentage'"
                                         [customClassName]="'viewer-progress'">
                                     </ws-widget-content-progress>
                                 </div>
@@ -122,16 +122,15 @@
                                     [outerStrokeLinecap]="'butt'">
                                 </circle-progress> -->
                             </ng-container>
-                            <ng-container *ngIf="content?.completionStatus < 2">
-    
+                            <ng-container *ngIf="getCompletionStatus(content?.identifier) < 2">
                                 <div class="mt-2 flex flex-1 flex-col  progress-container">
                                     <div class="flex flex-row justify-end w-full ws-mat-black-text">
                                         <span class="mat-body-2  ws-mat-black-text">
-                                            {{content?.completionPercentage}}%</span>
+                                            {{getCompletionPercentage(content?.identifier)}}%</span>
                                     </div>
     
                                     <ws-widget-content-progress [contentId]="content?.progress"
-                                        [progress]="content?.completionPercentage" [progressType]="'percentage'"
+                                        [progress]="getCompletionPercentage(content?.identifier)" [progressType]="'percentage'"
                                         [customClassName]="'viewer-progress'">
                                     </ws-widget-content-progress>
                                 </div>
@@ -156,6 +155,7 @@
             <div class="children-container padding-left-s" [ngClass]="{'module': isModule, '': !isModule}">
                 <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
                     [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1" [pathSet]="pathSet"
+                    [hierarchyMapData]="hierarchyMapData"
                     *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
                     [ngClass]="{'moduleCard': checkIsModule(child), 'resourceCard': !checkIsModule(child), 'first': isFirst}">
                 </ws-widget-app-toc-content-card-v2>
@@ -171,17 +171,17 @@
                 </button> -->
                 <ng-container *ngIf="isEnrolled">
                     <ng-container
-                        *ngIf="!forPreview &&  content?.identifier && content?.completionPercentage ; else elseBlock">
+                        *ngIf="!forPreview &&  content?.identifier && getCompletionPercentage(content?.identifier) ; else elseBlock">
     
-                        <ng-container *ngIf="content?.completionStatus == 2">
+                        <ng-container *ngIf="getCompletionStatus(content?.identifier) == 2">
                             <div class="completed">
                                 <div>
                                     <mat-icon class="completed-icon" [color]="blue">check_circle</mat-icon>
                                 </div>
                             </div>
                         </ng-container>
-                        <ng-container *ngIf="content?.completionStatus < 2">
-                            <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage"
+                        <ng-container *ngIf="getCompletionStatus(content?.identifier) < 2">
+                            <circle-progress class="flex items-center progress" [percent]="getCompletionPercentage(content?.identifier)"
                                 [radius]="10" [outerStrokeWidth]="2" [innerStrokeWidth]="2" [space]="-2"
                                 [outerStrokeColor]="progressColor2()" [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'"
                                 [animation]="true" [animationDuration]="250" [showTitle]="false" [showUnits]="false"
@@ -248,8 +248,8 @@
                             *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
                         <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
                             alt="offline sessions"
-                            *ngIf="content.mimeType === 'application/offline' || content?.mimeType === 'application/survey'">
-                        <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms'
+                            *ngIf="content.mimeType === 'application/offline'">
+                        <span class="ws-mat-black60-text">{{ (content?.duration|| hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform: 'hms'
                             }}</span>
                     </div>
                 </div>

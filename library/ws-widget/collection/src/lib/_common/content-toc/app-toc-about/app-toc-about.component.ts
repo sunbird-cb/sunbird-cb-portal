@@ -20,7 +20,7 @@ import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 

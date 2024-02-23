@@ -22,7 +22,7 @@ import { of, Subscription } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
-import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+// import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 export interface IViewerTocCard {
   identifier: string
   viewerUrl: string
@@ -67,6 +67,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   @Input() contentData: any = {}
   @Input() batchData: any
   @Input() tocStructure: any
+  @Input() hierarchyMapData: any = {}
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -79,7 +80,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private contentProgressSvc: ContentProgressService,
     private userSvc: WidgetUserService,
-    private tocSvc: AppTocService,
+    // private tocSvc: AppTocService,
   ) {
     this.nestedTreeControl = new NestedTreeControl<IViewerTocCard>(this._getChildren)
     this.nestedDataSource = new MatTreeNestedDataSource()
@@ -203,15 +204,40 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
         .getProgressHash(this.collection.identifier, this.batchId, this.configSvc.userProfile.userId)
         .subscribe((progressHash:  any) => {
           this.contentProgressHash = progressHash
-          this.updateProgressBasedOnHash(progressHash)
+          if(this.collection && this.collection.identifier) {
+            // this.updateProgressBasedOnHash(progressHash)
+          }
         })
     }
   }
 
-  private updateProgressBasedOnHash(progressHash: any) {
-    this.tocSvc.mapCompletionPercentage(this.contentData, progressHash.result.contentList)
-    this.tocSvc.mapModuleDurationAndProgress(this.contentData, this.contentData)
-  }
+  // private updateProgressBasedOnHash(progressHash: any) {
+  //     if(
+  //       this.contentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM ||
+  //       this.contentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
+  //       this.contentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM
+  //     ) {
+  //       this.contentSvc.programChildCourseResumeData$.subscribe((data) => {
+  //         console.log('updateProgressBasedOnHash data', data)
+  //         if(data) {
+  //           this.contentData.children && this.contentData.children.forEach((item: any)=>{
+  //             if(
+  //               item.primaryCategory === NsContent.EPrimaryCategory.COURSE && 
+  //               item.identifier === data.courseId
+  //             ){
+  //               this.tocSvc.mapCompletionPercentage(item, data.resumeData)
+  //               this.tocSvc.mapModuleDurationAndProgress(item, item)
+  //             }
+  //           })
+  //         }
+  //       })
+  //       // this.tocSvc.mapCompletionPercentageProgram(this.contentData, this.enrollmentList.courses)
+  //     } else {
+  //       this.tocSvc.mapCompletionPercentage(this.contentData, progressHash.result.contentList)
+  //       this.tocSvc.mapModuleDurationAndProgress(this.contentData, this.contentData)
+  //     }
+  // }
+
   // tslint:enable
   ngOnDestroy() {
     if (this.paramSubscription) {

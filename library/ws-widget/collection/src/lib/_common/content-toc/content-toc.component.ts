@@ -27,6 +27,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() tocStructure: any = {}
   @Input() pathSet: any
   @Input() fromViewer = false
+  @Input() hierarchyMapData: any = {}
   @ViewChild('stickyMenu', { static: false }) tabElement!: MatTabGroup
   sticky = false
   menuPosition: any

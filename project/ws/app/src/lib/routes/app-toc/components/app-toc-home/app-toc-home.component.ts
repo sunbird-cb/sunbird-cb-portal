@@ -1275,7 +1275,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   private getResumeDataFromList(type?: string) {
-    let resumeCopy = [...this.resumeData]
+    const resumeCopy = [...this.resumeData]
     if (!type) {
       // tslint:disable-next-line:max-line-length
       const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
