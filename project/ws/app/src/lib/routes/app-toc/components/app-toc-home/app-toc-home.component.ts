@@ -1628,7 +1628,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       })
   }
   translateLabels(label: string, type: any) {
-    console.log(this.langtranslations.translateLabel(label, type, ''), 'label', label, 'type', type)
     return this.langtranslations.translateLabel(label, type, '')
   }
 }
