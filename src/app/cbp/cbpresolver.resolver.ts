@@ -9,7 +9,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class CbpResolverService implements Resolve<Observable<any>> {
 
-    constructor(private http:HttpClient) { }
+    constructor(private http: HttpClient) { }
     resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> {
         return this.http.get(`/assets/configurations/page/cbp.json`).pipe(
             map(data => ({ data, error: null })),

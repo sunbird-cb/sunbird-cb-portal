@@ -2,7 +2,7 @@
     <div class="flex-1">
         <div class="flex flex-row search-div">
             <mat-icon (click)="handleFocus()" class="cursor-pointer">search</mat-icon>
-            <input #searchInput type="text" class="search-input flex" placeholder="Search" />
+            <input #searchInput type="text" class="search-input flex" placeholder="{{'competencyList.search' | translate }}"/>
             <ng-container *ngIf="clearIcon" >
                 <mat-icon (click)="handleClear()" class="cursor-pointer">close</mat-icon>
             </ng-container>

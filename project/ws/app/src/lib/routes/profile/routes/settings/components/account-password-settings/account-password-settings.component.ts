@@ -3,6 +3,7 @@ import { NsSettings } from '../../settings.model'
 import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
 import { SettingsService } from '../../settings.service'
 import { MatSnackBar } from '@angular/material'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-account-password-settings',
@@ -19,7 +20,14 @@ export class AccountPasswordSettingsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private settingsSvc: SettingsService,
     private configSvc: ConfigurationsService,
-  ) { }
+    private translate: TranslateService,
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+  }
 
   ngOnInit() {
     this.userRoles = this.configSvc.userRoles || new Set()

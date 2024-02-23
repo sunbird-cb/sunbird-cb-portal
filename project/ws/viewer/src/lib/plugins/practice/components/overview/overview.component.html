@@ -42,7 +42,7 @@
 <div class="flex auto-w ws-mat-primary-lite-background-important box-height">
   <div class="flex flex-1 max-w small-screen">
       <div class="flex flex-1 flex-column flex-center center banner-text">
-          <span class="mat-title mat-body-2 ws-mat-black60-text padding-s attempt-text text-block">Now, it’s time for a quick assessment.</span>
+          <span class="mat-title mat-body-2 ws-mat-black60-text padding-s attempt-text text-block">{{ 'practiceoverview.itsTimeForAssesment' | translate }}</span>
       </div>
     <img class="flex-1 exam_image" [src]="staticImage" alt="exam image" />
   </div>
@@ -51,10 +51,9 @@
       <span class="mat-headline margin-bottom-xl">{{learningObjective | pipeLimitTo: 300 }}</span>
       <a *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" mat-button (click)="overviewed('start')"
         [class.spinner]="loading" [disabled]="loading" class="ws-mat-primary-background text-white m-w padding-xs">
-        <span class="padding-xs" i18n>Start assessment now</span>
+        <span class="padding-xs" i18n>{{ 'practiceoverview.startAssesmentNow' | translate }}</span>
       </a>
-      <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">You have exceeded the
-        maximum allowed attempt</mat-hint>
+      <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">{{ 'practiceoverview.youExceededAttempt' | translate }}</mat-hint>
       <!-- <div class="flex flex-1">
         <div class="flex">
           <mat-hint class="mat-title">Hint: </mat-hint>
@@ -67,7 +66,7 @@
       </div> -->
 
       <div class="flex margin-top-xl flex-column">
-        <span class="mat-subheading-2 ws-mat-black60-text">Summary</span>
+        <span class="mat-subheading-2 ws-mat-black60-text">{{ 'practiceoverview.summary' | translate }}</span>
         <ng-container [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
                   icon: '/assets/icons/content/assessment.svg',
                   isSVG: true,
@@ -116,7 +115,7 @@
                 }"></ng-container> -->
       </div>
       <div class="flex flex-1 flex-column margin-top-xl">
-        <span class="mat-subheading-2 ws-mat-black60-text">Points to note</span>
+        <span class="mat-subheading-2 ws-mat-black60-text">{{ 'practiceoverview.pointsToNote' | translate }}</span>
         <div class="flex flex-column">
           <ng-container *ngFor="let c of points" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
                   icon: c.icon,
@@ -131,7 +130,7 @@
 <ng-template #detail let-icon="icon" let-text="text">
   <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
     <mat-icon>{{icon}}</mat-icon>
-    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+    <span class="mat-body-2 margin-left-xs">{{ translateLabels(text, 'practiceoverview')}}</span>
   </mat-card>
 </ng-template>
 

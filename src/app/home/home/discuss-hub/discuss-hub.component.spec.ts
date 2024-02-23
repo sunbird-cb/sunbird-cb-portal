@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DiscussHubComponent } from './discuss-hub.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { DiscussHubComponent } from './discuss-hub.component'
 
 describe('DiscussHubComponent', () => {
-  let component: DiscussHubComponent;
-  let fixture: ComponentFixture<DiscussHubComponent>;
+  let component: DiscussHubComponent
+  let fixture: ComponentFixture<DiscussHubComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiscussHubComponent ]
+      declarations: [DiscussHubComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DiscussHubComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(DiscussHubComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

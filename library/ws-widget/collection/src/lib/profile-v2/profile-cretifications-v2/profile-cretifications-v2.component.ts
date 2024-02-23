@@ -7,6 +7,7 @@ import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog
 import { IProCert } from './profile-cretifications-v2.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-widget-profile-cretifications-v2',
   templateUrl: './profile-cretifications-v2.component.html',
@@ -33,8 +34,14 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
     private tocSvc: AppTocService,
     private configSvc: ConfigurationsService,
     private events: EventService,
+    private translate: TranslateService
   ) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit(): void {
@@ -50,9 +57,10 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
     let dat
     if (date) {
 
-      dat = `Issued on ${moment(date).format('MMM YYYY')}`
+      dat = `${this.translateTabName('Issued on')} ${moment(date).format('MMM YYYY')}`
     } else {
-      dat = 'Certificate Not issued '
+      // dat = 'Certificate Not issued '
+      dat = this.translateTabName('certificateNotIssued')
     }
     return dat
   }
@@ -110,7 +118,6 @@ if (data.length > 0) {
     })
 
   }
-
   raiseIntreactTelemetry() {
     this.events.raiseInteractTelemetry(
       {
@@ -122,5 +129,10 @@ if (data.length > 0) {
         id: this.certId,   // id of the certificate
         type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
       })
+  }
+  translateTabName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'profileCretificationsV2.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 }

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
@@ -11,6 +11,7 @@ import { NsCardContent } from './card-content-v2.model'
 import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
+import { TranslateService } from '@ngx-translate/core'
 // import { Router } from '@angular/router'
 
 @Component({
@@ -41,16 +42,26 @@ export class CardContentV2Component extends WidgetBaseComponent
   prefChangeSubscription: Subscription | null = null
   sourceLogos: NsInstanceConfig.ISourceLogo[] | undefined
 
-  isIntranetAllowedSettings = false 
+  isIntranetAllowedSettings = false
   constructor(
     private dialog: MatDialog,
     private events: EventService,
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
+    private langtranslations: MultilingualTranslationsService,
     private certificateService: CertificateService,
+    private translate: TranslateService,
+
   ) {
     super()
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {
@@ -84,7 +95,6 @@ export class CardContentV2Component extends WidgetBaseComponent
           contentName: this.widgetData.content.name,
           contentType: this.widgetData.content.contentType,
           primaryCategory: this.widgetData.content.primaryCategory,
-  
         }
       }
       this.modifySensibleContentRating()
@@ -227,7 +237,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   }
 
   private modifySensibleContentRating() {
-    if (this.widgetData.content) 
+    if (this.widgetData.content)
     if(this.widgetData.content.averageRating &&
       typeof this.widgetData.content.averageRating !== 'number'){
       // tslint:disable-next-line: ter-computed-property-spacing
@@ -379,6 +389,11 @@ export class CardContentV2Component extends WidgetBaseComponent
       this.downloadCertificateLoading = false
     }
   }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
+  }
+
   getCbPlanData() {
     let cbpList: any={}
     if (localStorage.getItem('cbpData')) {
@@ -388,7 +403,7 @@ export class CardContentV2Component extends WidgetBaseComponent
           cbpList[data.identifier] = data
         })
       }
-      this.cbPlanMapData = cbpList 
+      this.cbPlanMapData = cbpList
       // this.karmaPointLoading = false
       clearInterval(this.cbPlanInterval)
     }

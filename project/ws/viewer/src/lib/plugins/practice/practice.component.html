@@ -47,7 +47,7 @@
     </nav>
     <mat-sidenav-container class="sidenav-container" autosize>
       <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
-        <h2 *ngIf="isXsmall && !isSubmitted" class="mat-title margin-top-s text-center" i18n>Questions</h2>
+        <h2 *ngIf="isXsmall && !isSubmitted" class="mat-title margin-top-s text-center" i18n>{{ 'practiceoverview.questions' | translate }}</h2>
         <div *ngIf="isXsmall && !isSubmitted" class="flex flex-wrapped margin-right-s margin-left-s">
           <div class="col" *ngFor="let question of secQuestions; let i = index">
             <div (click)="scroll(i + 1)" [ngClass]="{
@@ -110,7 +110,7 @@
                   *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
                   <button class="text-white ws-mat-primary-background margin-xs quest_btn" mat-raised-button
                     (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
-                    Next Section
+                    {{ 'practiceoverview.nextSection' | translate }}
                   </button>
                 </ng-container>
 
@@ -120,13 +120,13 @@
                   <ng-container *ngIf="isXsmall">
                     <mat-icon>arrow_forward</mat-icon>
                   </ng-container>
-                  <ng-container *ngIf="!isXsmall">NEXT QUESTION</ng-container>
+                  <ng-container *ngIf="!isXsmall">{{ 'practiceoverview.nextQuestion' | translate }}</ng-container>
                 </a>
                 &nbsp;&nbsp;
                 <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn" mat-button
                   (click)="getNextQuestion(currentQuestionIndex - 1)">
                   <mat-icon class="margin-right-s">arrow_back</mat-icon>
-                  <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
+                  <ng-container *ngIf="!isXsmall">{{ 'practiceoverview.previous' | translate }}</ng-container>
                 </a>
                 <!-- <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
                   <button *ngIf="!isSubmitted" class="text-white ws-mat-primary-background margin-xs m-auto"
@@ -165,7 +165,7 @@
                 *ngIf="ePrimaryCategory.PRACTICE_RESOURCE === primaryCategory && ((currentQuestionIndex+1) <= totalQCount)">
                 <button *ngIf="!showAnswer" class="text-white ws-mat-primary-background margin-xs quest_btn"
                   mat-raised-button (click)="checkAns(currentQuestionIndex + 1)" i18n="button quiz correct answer">
-                  Check Answer
+                  {{ 'practiceoverview.checkAnswer' | translate }}
                 </button>
               </ng-container>
               <div class="flex flex-1 flex-row-reverse margin-right-m butto_box end">
@@ -173,7 +173,7 @@
                   *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
                   <button class="text-white ws-mat-primary-background margin-xs quest_btn" mat-raised-button
                     (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
-                    Next Section
+                    {{ 'practiceoverview.nextSection' | translate }}
                   </button>
                 </ng-container>
 
@@ -183,13 +183,13 @@
                   <ng-container *ngIf="isXsmall">
                     <mat-icon>arrow_forward</mat-icon>
                   </ng-container>
-                  <ng-container *ngIf="!isXsmall">NEXT QUESTION</ng-container>
+                  <ng-container *ngIf="!isXsmall">{{ 'practiceoverview.nextQuestion' | translate }}</ng-container>
                 </a>
                 &nbsp;&nbsp;
                 <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn" mat-button
                   (click)="getNextQuestion(currentQuestionIndex - 1)">
                   <mat-icon class="margin-right-s">arrow_back</mat-icon>
-                  <ng-container *ngIf="!isXsmall">PREVIOUS</ng-container>
+                  <ng-container *ngIf="!isXsmall">{{ 'practiceoverview.previous' | translate }}</ng-container>
                 </a>
                 <!-- <ng-container *ngIf="((currentQuestionIndex+1) === totalQCount) && allSecAttempted.full">
                 <button *ngIf="!isSubmitted" class="text-white ws-mat-primary-background margin-xs m-auto"
@@ -208,19 +208,19 @@
             <div class="flex flex-1 flex-column margin-top-l margin-left-xs bottom_box margin-bottom-xs">
               <div class="flex flex-start margin-left-m  cen">
                 <mat-icon class="flex margin-top-xs margin-bottom-xs">warning</mat-icon>
-                <span class="flex mat-body-2 padding-xs font-weight-700" i18n>Instructions </span>
+                <span class="flex mat-body-2 padding-xs font-weight-700" i18n>{{ 'practiceoverview.instructions' | translate }}</span>
                 <span class="flex mat-body-2 font-weight-700" i18n>:</span>
                 <!-- <span class="flex mat-body-2 padding-xs" i18n>{{selectedSection.additionalInstructions}}</span> -->
                 <span [innerHtml]="formate(selectedSection.additionalInstructions)"></span>
               </div>
               <div class="flex flex-start margin-left-m  cen">
                 <mat-icon class="flex margin-top-xs margin-bottom-xs">info_outline</mat-icon>
-                <span class="flex mat-body-2 padding-xs" i18n>Attempt all questions to finish assessment</span>
+                <span class="flex mat-body-2 padding-xs" i18n>{{ 'practiceoverview.attemptAllQuestions' | translate }}</span>
               </div>
               <div class="flex flex-1 flex-center margin-top-l">
                 <button class="text-white ws-mat-primary-background" mat-raised-button i18n="button quiz submit"
                   (click)="proceedToSubmit()">
-                  Finish assessment
+                  {{ 'practiceoverview.finishAssessment' | translate }}
                 </button>
               </div>
             </div>
@@ -314,10 +314,10 @@
                 (click)="startSection(section)">
                 <div class="flex flex-1 flex-column">
                   <span class="flex mat-subheading-1 text-truncate ">{{section.name || 'Section'}}</span>
-                  <span class="flex mat-body-2">Percentage to pass - <ng-container>
+                  <span class="flex mat-body-2">{{ 'practiceoverview.percentageToPass' | translate }} - <ng-container>
                       {{section.minimumPassPercentage}}
                     </ng-container></span>
-                  <span class="flex mat-body-2">Total questions - <ng-container>{{section?.maxQuestions ||
+                  <span class="flex mat-body-2">{{ 'practiceoverview.totalQuestions' | translate }} - <ng-container>{{section?.maxQuestions ||
                       '0'}}
                     </ng-container></span>
                   <!-- <span class="flex mat-body-2 text-justify">{{section.additionalInstructions || 'Description'}}</span> -->
@@ -373,19 +373,19 @@
     <div class="flex flex-end indicator_box">
       <span class="flex">
         <div class="sbox complete"></div>
-        Completed
+        {{ 'practiceoverview.completed' | translate }}
       </span>
       <span class="flex">
         <div class="sbox incomplete"></div>
-        Incomplete
+        {{ 'practiceoverview.incomplete' | translate }}
       </span>
       <span class="flex">
         <div class="sbox not-started"></div>
-        Not Started
+        {{ 'practiceoverview.notStarted' | translate }}
       </span>
       <span class="flex">
         <div class="sbox selected"></div>
-        Selected
+        {{ 'practiceoverview.selected' | translate }}
       </span>
     </div>
   </div>

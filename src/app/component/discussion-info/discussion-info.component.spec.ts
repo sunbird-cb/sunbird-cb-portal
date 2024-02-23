@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DiscussionInfoComponent } from './discussion-info.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { DiscussionInfoComponent } from './discussion-info.component'
 
 describe('DiscussionInfoComponent', () => {
-  let component: DiscussionInfoComponent;
-  let fixture: ComponentFixture<DiscussionInfoComponent>;
+  let component: DiscussionInfoComponent
+  let fixture: ComponentFixture<DiscussionInfoComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiscussionInfoComponent ]
+      declarations: [DiscussionInfoComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DiscussionInfoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(DiscussionInfoComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

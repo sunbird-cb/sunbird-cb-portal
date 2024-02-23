@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { MultilingualTranslationsService, NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { ActivatedRoute } from '@angular/router'
 
@@ -29,7 +29,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   isretakeAllowed = false
   dataSubscription: any
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private langtranslations: MultilingualTranslationsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.dataSubscription = this.route.data.subscribe(data => {
@@ -48,5 +48,9 @@ export class OverviewComponent implements OnInit, OnDestroy {
   overviewed(event: NSPractice.TUserSelectionType) {
     this.loading = true
     this.userSelection.emit(event)
+  }
+  
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

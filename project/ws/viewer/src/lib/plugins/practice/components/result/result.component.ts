@@ -21,8 +21,7 @@ export class ResultComponent implements OnChanges {
   questionTYP = NsContent.EPrimaryCategory
   selectedQuestionData: any
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnChanges() {
   }

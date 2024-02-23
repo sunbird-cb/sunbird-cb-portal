@@ -5,21 +5,21 @@
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="pastEvent">
           <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="isSpvEvent">
             <a class="flex-1"  [href]="getLink()" target="_blank" (click)="raiseTelemetry('view-recording')">
-              <span i18n>View recording</span>
+              <span i18n>{{ 'eventDetailsRightCard.viewRecording' | translate }}</span>
             </a>
           </p>
           <p mat-button class="flex-1 margin-top-xs margin-bottom-xs" *ngIf="!isSpvEvent">
-            <span i18n>Event is completed</span>
+            <span i18n>{{ 'eventDetailsRightCard.eventIsCompleted' | translate }}</span>
           </p>
         </div>
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="currentEvent">
           <a mat-button class="flex-1" href="{{eventData?.registrationLink}}" target="_blank" (click)="raiseTelemetry('join-event')">
-            <span i18n>Join event</span>
+            <span i18n>{{ 'eventDetailsRightCard.joinEvent":' | translate }}</span>
           </a>
         </div>
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="futureEvent">
           <p mat-button class="flex-1  margin-top-xs margin-bottom-xs">
-            <span i18n>Event is yet to start</span>
+            <span i18n>{{ 'eventDetailsRightCard.eventIsYetToStart' | translate }}</span>
           </p>
         </div>
       </ng-container>
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="margin-top-m">
-        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Event Type</span>
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">{{ 'eventDetailsRightCard.eventType' | translate }}</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
             <span class="flex-wrap mat-body-2" role="link" tabindex="0">
               {{eventData?.resourceType}}
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="margin-top-m">
-        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Hosted By</span>
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">{{ 'eventDetailsRightCard.hostedBy' | translate }}</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
             <span class="flex-wrap mat-body-2" role="link" tabindex="0">
               {{eventData?.owner}}

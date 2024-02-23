@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+// tslint:disable
 import _ from 'lodash'
 // tslint:enable
 
 const API_END_POINTS = {
   GET_PROVIDERS: 'apis/proxies/v8/searchBy/provider',
-  GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search'
+  GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search',
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppCbpPlansService {
 

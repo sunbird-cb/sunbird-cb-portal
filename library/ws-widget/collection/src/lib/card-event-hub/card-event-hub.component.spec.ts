@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CardEventHubComponent } from './card-event-hub.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { CardEventHubComponent } from './card-event-hub.component'
 
 describe('CardEventHubComponent', () => {
-  let component: CardEventHubComponent;
-  let fixture: ComponentFixture<CardEventHubComponent>;
+  let component: CardEventHubComponent
+  let fixture: ComponentFixture<CardEventHubComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CardEventHubComponent ]
+      declarations: [CardEventHubComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CardEventHubComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CardEventHubComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

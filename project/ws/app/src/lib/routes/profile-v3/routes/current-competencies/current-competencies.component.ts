@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
 import { CompLocalService } from '../../services/comp.service'
 import { FormControl } from '@angular/forms'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-current-competencies',
@@ -36,11 +37,17 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
     private activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private compLocalService: CompLocalService,
+    private translate: TranslateService
   ) {
     if (this.currentCompSubscription) {
       this.currentCompSubscription.unsubscribe()
     }
     this.loadCompetencies()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {

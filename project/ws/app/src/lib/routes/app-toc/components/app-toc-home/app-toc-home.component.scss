@@ -415,6 +415,10 @@ p.certificate_text {
   border: 1px solid rgba(0,0,0,0.16);
   border-radius: 4px;
   padding: 0 15px;
+  width: 100%;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 
   .mat-icon{
     margin-right: 6px;

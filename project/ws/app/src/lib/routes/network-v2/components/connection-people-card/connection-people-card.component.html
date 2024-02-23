@@ -36,17 +36,16 @@
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()" *ngIf="!user?.requestSent">
-                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>Connect</span>
+                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>{{'connectionPeopleCard.connect' | translate}}</span>
             </button>
             <button mat-stroked-button color="accent" type="button" class=" mat-accent-border flex-auto-display minwid"
                 disabled *ngIf="user?.requestSent">
-                <span class="" i18n>Connection sent</span>
+                <span class="" i18n>{{'connectionPeopleCard.connectionSent' | translate}}</span>
             </button>
         </div>
     </div>
 </div>
 
-<input type="hidden" i18-value i18-aria-value aria-value="Connection sent" value="Connection sent successfully!"
-    #toastSuccess />
+<input type="hidden" i18-value i18-aria-value aria-value="Connection sent" value="{{'connectionPeopleCard.connectionSentSuccessfully' | translate}}" #toastSuccess />
 <input type="hidden" i18-value i18-aria-value aria-value="Connection failed"
     value="Something went wrong, please try again later!" #toastError />

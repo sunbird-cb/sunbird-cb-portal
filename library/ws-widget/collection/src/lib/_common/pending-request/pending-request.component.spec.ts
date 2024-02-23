@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PendingRequestComponent } from './pending-request.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { PendingRequestComponent } from './pending-request.component'
 
 describe('PendingRequestComponent', () => {
-  let component: PendingRequestComponent;
-  let fixture: ComponentFixture<PendingRequestComponent>;
+  let component: PendingRequestComponent
+  let fixture: ComponentFixture<PendingRequestComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PendingRequestComponent ]
+      declarations: [PendingRequestComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PendingRequestComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PendingRequestComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

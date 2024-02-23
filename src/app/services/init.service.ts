@@ -30,6 +30,7 @@ import { Subscription } from 'rxjs'
 import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 import { NPSGridService } from '@sunbird-cb/collection/src/lib/grid-layout/nps-grid.service'
 import moment from 'moment'
+import { TranslateService } from '@ngx-translate/core'
 // import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
@@ -80,6 +81,7 @@ export class InitService {
     private userPreference: UserPreferenceService,
     private http: HttpClient,
     private npsSvc: NPSGridService,
+    private translate: TranslateService,
     // private widgetContentSvc: WidgetContentService,
 
     @Inject(APP_BASE_HREF) private baseHref: string,
@@ -421,6 +423,7 @@ export class InitService {
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
             userRoles: _.get(profileV2, 'userRoles') || [],
+            webPortalLang: _.get(profileV2, 'additionalProperties.webPortalLang') || '',
           }
 
           if (!this.configSvc.nodebbUserProfile) {
@@ -450,6 +453,33 @@ export class InitService {
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
         this.configSvc.isActive = details.isActive
         this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
+
+        if (this.configSvc.unMappedUser) {
+          if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails
+            && this.configSvc.unMappedUser.profileDetails.additionalProperties
+            && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
+            const lang = this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang
+            this.translate.use(lang)
+            localStorage.setItem('websiteLanguage', lang)
+          } else {
+            if (localStorage.getItem('websiteLanguage')) {
+              // this.translate.setDefaultLang('en')
+              let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+              lang = lang.replace(/\"/g, '')
+              this.translate.use(lang)
+            } else {
+              this.translate.setDefaultLang('en')
+              localStorage.setItem('websiteLanguage', 'en')
+            }
+          }
+        } else if (localStorage.getItem('websiteLanguage')) {
+          let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+          lang = lang.replace(/\"/g, '')
+          this.translate.use(lang)
+        } else {
+          this.translate.setDefaultLang('en')
+          localStorage.setItem('websiteLanguage', 'en')
+        }
 
         // nps check
         if (localStorage.getItem('platformratingTime')) {
@@ -546,6 +576,7 @@ export class InitService {
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
             userRoles: _.get(profileV2, 'userRoles') || [],
+            webPortalLang: _.get(profileV2, 'additionalProperties.webPortalLang') || '',
           }
 
           if (!this.configSvc.nodebbUserProfile) {

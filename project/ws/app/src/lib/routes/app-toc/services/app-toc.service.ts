@@ -33,6 +33,7 @@ const API_END_POINTS = {
     `${PROXY_SLAG_V8}/action/content/v3/read/${contentId}`,
   CERT_DOWNLOAD: (certId: any) => `${PROTECTED_SLAG_V8}/cohorts/course/batch/cert/download/${certId}`,
   SERVER_DATE: 'apis/public/v8/systemDate',
+  SHARE_CONTENT: '/apis/proxies/v8/user/v1/content/recommend',
 }
 
 @Injectable()
@@ -663,5 +664,9 @@ export class AppTocService {
   getServerDate() {
     return this.http.get<{ result: NsAppToc.IPostAssessment[] }>(
       API_END_POINTS.SERVER_DATE)
+  }
+
+  shareContent(reqBody: any) {
+    return this.http.post<any>(`${API_END_POINTS.SHARE_CONTENT}`, reqBody)
   }
 }

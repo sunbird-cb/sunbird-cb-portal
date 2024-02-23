@@ -17,23 +17,23 @@
 
   <mat-card-title class="px-5 pb-5">
       <!-- <span i18n>Congratulations for completing the {{this.courseName}}</span> -->
-      <span i18n>Congratulations!</span>
+      <span i18n>{{ translateLabels('congratulations', 'coursecompletiondialog') }}</span>
   </mat-card-title>
   <mat-card-content class="px-5">
     <!-- <span>You have completed the course successfully. Please check back in some time to view your
       certificate of completion.</span> -->
-    <span>Your certificate of completion will be available shortly.</span>
+    <span>{{ 'coursecompletiondialog.yourCertificateAvailableShortly' | translate }}</span>
   </mat-card-content>
 
   <mat-card-content class="px-5">
     <!-- <span>Please take a moment to <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>rate this course</b></span> and tell us about your experience.</span> -->
-    <span>We would love to hear about your experience, so please take a moment to <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>rate the course</b></span> and share your thoughts with us.</span>
+    <span>{{ 'coursecompletiondialog.wouldLoveHearExperience' | translate }} <span class="ws-mat-default-text cursor-pointer" (click)="openRatingDialog()" i18n><b>{{ 'coursecompletiondialog.rateTheCourse' | translate }}</b></span> {{ 'coursecompletiondialog.shareYourThoughts' | translate }}</span>
   </mat-card-content>
   <mat-divider inset></mat-divider>
   <mat-card-actions class="flex flex-row-reverse">
     <button mat-button  type="button"
     class="ws-mat-accent-border-active mat-accent .blue-border" [mat-dialog-close]="true" i18n>
-      Close
+    {{ 'coursecompletiondialog.close' | translate }}
     </button> 
   </mat-card-actions>
 </mat-card>
