@@ -880,7 +880,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 )
                 this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
                 /* tslint:disable-next-line */
-                console.log(this.resumeDataLink,'=====> home resum data link <========')
+                console.log(this.resumeDataLink,'=====> home resume data link <========')
               }
               this.enrollBtnLoading = false
             } else {

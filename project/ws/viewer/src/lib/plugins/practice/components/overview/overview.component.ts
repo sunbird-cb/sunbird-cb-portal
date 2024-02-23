@@ -30,26 +30,29 @@ export class OverviewComponent implements OnInit, OnDestroy {
   isretakeAllowed = false
   dataSubscription: any
 
-  constructor(private route: ActivatedRoute, public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService, private quizSvc: PracticeService,) { }
+  constructor(
+    private route: ActivatedRoute,
+    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
+    private quizSvc: PracticeService) { }
 
   ngOnInit() {
     this.dataSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {
-        if(data && data.content && data.content.data && data.content.data.identifier) {
-          let identifier =  data.content.data.identifier;
-          if(identifier) {
+        if (data && data.content && data.content.data && data.content.data.identifier) {
+          const identifier =  data.content.data.identifier
+          if (identifier) {
             this.checkForAssessmentSubmitAlready(identifier)
-          } 
-        }        
+          }
+        }
         this.isretakeAllowed = data.pageData.data.isretakeAllowed
       }
     })
   }
 
-  checkForAssessmentSubmitAlready(identifier:any) {
+  checkForAssessmentSubmitAlready(identifier: any) {
     this.quizSvc.canAttend(identifier).subscribe(response => {
-      if (response && response.attemptsMade > 0) {         
-        this.quizSvc.checkAlreadySubmitAssessment.next(true);
+      if (response && response.attemptsMade > 0) {
+        this.quizSvc.checkAlreadySubmitAssessment.next(true)
       }
     })
   }

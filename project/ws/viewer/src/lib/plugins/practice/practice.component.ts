@@ -170,10 +170,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.isXsmall = isXSmall
     })
 
-    this.quizSvc.checkAlreadySubmitAssessment.subscribe((result)=>{
-      if(result) {
-        this.isSubmitted = true;
-        this.viewState = 'answer' || 'review';
+    this.quizSvc.checkAlreadySubmitAssessment.subscribe(result => {
+      if (result) {
+        this.isSubmitted = true
+        this.viewState = 'answer' || 'review'
       }
     })
   }
