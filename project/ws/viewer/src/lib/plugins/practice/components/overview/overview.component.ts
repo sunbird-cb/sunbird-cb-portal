@@ -49,7 +49,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.loading = true
     this.userSelection.emit(event)
   }
-  
+
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
