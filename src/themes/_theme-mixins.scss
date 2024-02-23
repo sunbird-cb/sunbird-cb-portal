@@ -281,35 +281,35 @@
     }
   } @else {
     .mat-radio-button {
-      background-color: transparent !important;
+      background-color: transparent;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorPrimaryDark !important;
+          background-color: $colorPrimaryDark;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorPrimaryDark !important;
+          border-color: $colorPrimaryDark;
         }
       }
     }
 
     .mat-radio-checked {
-      background-color: rgba(0, 116, 182, 0.05) !important;
+      background-color: rgba(0, 116, 182, 0.05) ;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorAccent !important;
+          background-color: $colorAccent ;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorAccent !important;
+          border-color: $colorAccent ;
         }
       }
     }
 
     .mat-pseudo-checkbox-checked {
-      background-color: $colorAccent !important;
+      background-color: $colorAccent ;
     }
 
     .mat-progress-spinner circle,
