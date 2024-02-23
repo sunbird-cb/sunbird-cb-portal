@@ -2,7 +2,7 @@
   <ng-container *ngIf="!isMobile">
     <div class="flex flex-1">
           <h1 *ngIf="logo" class="width-expand  text-truncate">
-              {{ resourceName }}
+              {{ resourceName }} {{nextResourceUrl}}
             </h1>
       </div>
       
@@ -16,7 +16,7 @@
         </ng-container>
           <a mat-icon-button class="width-auto " [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
-            accesskey="<">
+            accesskey="<" (click)="checkForPrevOfflineOnlineSession()">
             <mat-icon color="accent">navigate_before</mat-icon>
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">Previous</span>
           </a>
@@ -32,7 +32,7 @@
           <!-- {{nextResourceUrl}} -->
           <a mat-icon-button class="width-auto mr-10 " [routerLink]="nextResourceUrl"
             [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
-            queryParamsHandling="" accesskey=">">
+            queryParamsHandling="" accesskey=">" (click)="checkForNextOfflineOnlineSession()">
             <!-- <span *ngIf="optionalLink"></span>  -->
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">{{ optionalLink ? 'Skip' : 'Next' }} </span> 
             
