@@ -57,7 +57,7 @@
                 <mat-card class="learn-card margin-bottom-m padding-remove position-relative"
                     *ngFor="let content of searchResults" (click)="raiseTelemetry(content)">
                     <!-- <div class="imageholder float-left">
-                        <img mat-card-image class="margin-remove" [src]="content.posterImage | pipePublicURL"
+                        <img mat-card-image class="margin-remove" [src]="content?.posterImage | pipePublicURL"
                             [wsUtilsDefaultThumbnail]="defaultThumbnail" alt="">
                     </div> -->
                     <div *ngIf="content?.posterImage" class="imageholder float-left">
@@ -72,86 +72,86 @@
                       </ng-template>
                     </div>
                     <mat-card-content>
-                        <!-- <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content.contentType === 'Course'">
+                        <!-- <p class="mat-caption margin-bottom-xxs ws-mat-black60-text" *ngIf="content?.contentType === 'Course'">
                             <img src="/assets/icons/content/course.svg" alt="Course" class="contenticon"> COURSE
                         </p>
-                        <p class="mat-caption margin-bottom-xxs" *ngIf="content.contentType === 'Module'">
+                        <p class="mat-caption margin-bottom-xxs" *ngIf="content?.contentType === 'Module'">
                             <img src="/assets/icons/content/module.svg" class="contenticon" alt="Module"> MODULE
                         </p> -->
                         <p class="mat-caption ws-mat-black60-text margin-bottom-xxs text-uppercase"
-                            *ngIf="content.contentType === 'Resource' || content.contentType === 'Course' || content.contentType === 'Module'">
+                            *ngIf="content?.contentType === 'Resource' || content?.contentType === 'Course' || content?.contentType === 'Module'">
 
-                            <!-- <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content.mimeType === 'audio/mpeg'">  -->
+                            <!-- <img src="/assets/icons/content/audio.svg" class="contenticon" alt="Audio"  *ngIf="content?.mimeType === 'audio/mpeg'">  -->
                             <mat-icon
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
-                                *ngIf="content.mimeType === 'audio/mpeg'">mic</mat-icon>
+                                *ngIf="content?.mimeType === 'audio/mpeg'">mic</mat-icon>
 
-                            <!-- <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content.mimeType === 'application/json' || content.mimeType === 'application/quiz'">  -->
+                            <!-- <img src="/assets/icons/content/assessment.svg" class="contenticon" alt="Assessment"  *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz'">  -->
                             <mat-icon
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
-                                *ngIf="content.mimeType === 'application/json' || content.mimeType === 'application/quiz'">
+                                *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz'">
                                 assessment</mat-icon>
-                            <!-- <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content.mimeType === 'application/pdf'">  -->
+                            <!-- <img src="/assets/icons/content/pdf.svg" alt="PDF" class="contenticon" *ngIf="content?.mimeType === 'application/pdf'">  -->
                             <mat-icon
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
-                                *ngIf="content.mimeType === 'application/pdf'">picture_as_pdf</mat-icon>
+                                *ngIf="content?.mimeType === 'application/pdf'">picture_as_pdf</mat-icon>
 
-                            <!-- <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube' || content.mimeType === 'application/x-mpegURL'">  -->
+                            <!-- <img src="/assets/icons/content/video.svg" alt="Video" class="contenticon"  *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' || content?.mimeType === 'application/x-mpegURL'">  -->
                             <mat-icon
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
-                                *ngIf="content.mimeType === 'video/mp4' || content.mimeType === 'video/x-youtube' || content.mimeType === 'application/x-mpegURL'">
+                                *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' || content?.mimeType === 'application/x-mpegURL'">
                                 videocam</mat-icon>
 
-                            <!-- <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'"> -->
+                            <!-- <img src="/assets/icons/content/collection.svg" class="contenticon" alt="Course"  *ngIf="content?.mimeType === 'application/vnd.ekstep.content-collection'"> -->
                             <mat-icon
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
-                                *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection'">video_library
+                                *ngIf="content?.mimeType === 'application/vnd.ekstep.content-collection'">video_library
                             </mat-icon>
 
-                            <!-- <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'application/vnd.ekstep.ecml-archive' || content.mimeType === 'text/x-url'"> -->
+                            <!-- <img src="/assets/icons/content/link.svg" class="contenticon" alt="HTML"  *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'application/vnd.ekstep.ecml-archive' || content?.mimeType === 'text/x-url'"> -->
                             <mat-icon
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
-                                *ngIf="content.mimeType === 'application/vnd.ekstep.html-archive' || content.mimeType === 'application/vnd.ekstep.ecml-archive' || content.mimeType === 'text/x-url'">
+                                *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'application/vnd.ekstep.ecml-archive' || content?.mimeType === 'text/x-url'">
                                 attachment</mat-icon>
 
-                            <!-- <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'"> -->
+                            <!-- <img src="/assets/icons/content/image.svg" class="contenticon" alt="Module"  *ngIf="content?.mimeType === 'image/jpeg' || content?.mimeType === 'image/png'"> -->
                             <mat-icon
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
-                                *ngIf="content.mimeType === 'image/jpeg' || content.mimeType === 'image/png'">image
+                                *ngIf="content?.mimeType === 'image/jpeg' || content?.mimeType === 'image/png'">image
                             </mat-icon>
                             <!-- {{content.primaryCategory || content.contentType}} -->
                             {{ translateLabels(content.primaryCategory || content.contentType, 'searchfilters') }}
                         </p>
 
-                        <!-- <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title" (click)="navigateToToc(param, content.identifier, content.primaryCategory)"> -->
+                        <!-- <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title" (click)="navigateToToc(param, content?.identifier, content?.primaryCategory)"> -->
                         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
-                            <a [routerLink]="['/app/toc/',content.identifier,'overview']"
-                                [queryParams]="{primaryCategory: content.primaryCategory}"
-                                [state]="statedata">{{content.name}}</a>
+                            <a [routerLink]="['/app/toc/',content?.identifier,'overview']"
+                                [queryParams]="{primaryCategory: content?.primaryCategory}"
+                                [state]="statedata">{{content?.name}}</a>
                         </p>
                         <!-- <p class="mat-body-2 margin-bottom-s"></p> -->
                         <div class="bottomsection">
-                            <p class="mat-body-2 margin-bottom-xxs" *ngIf="content.creator">{{'learnsearch.by' | translate}} {{content.creator}}</p>
+                            <p class="mat-body-2 margin-bottom-xxs" *ngIf="content?.creator">{{'learnsearch.by' | translate}} {{content?.creator}}</p>
                             <p class="mat-body-2 margin-bottom-xxs" *ngIf="content?.organisation?.length">{{'learnsearch.by' | translate}} {{content?.organisation[0]}}</p>
                             <div class="contentdata margin-bottom-xm">
                                 <ul
                                     class="mat-body-2 margin-remove-top margin-bottom-xs padding-remove ws-mat-black60-text">
                                     <!-- <li>Health social science</li> -->
-                                    <li *ngIf="content.lastUpdatedOn">
+                                    <li *ngIf="content?.lastUpdatedOn">
                                         <!-- <img src="/assets/icons/content/separator.svg">   -->
-                                        {{ content.lastUpdatedOn | date: 'dd-MMM-yyyy' }}
+                                        {{ content?.lastUpdatedOn | date: 'dd-MMM-yyyy' }}
                                     </li>
-                                    <li *ngIf="content.duration">
-                                        <img src="/assets/icons/content/separator.svg"> {{ content.duration |
+                                    <li *ngIf="content?.duration">
+                                        <img src="/assets/icons/content/separator.svg"> {{ content?.duration |
                                         pipeDurationTransform: 'hms' }}
                                     </li>
                                     <!-- <li><img src="/assets/icons/content/separator.svg">  Ratings</li> -->
                                 </ul>
                             </div>
-                            <div class="tags" *ngIf="content.keywords && content.keywords.length > 0">
+                            <div class="tags" *ngIf="content?.keywords && content?.keywords.length > 0">
                                 <ul
                                     class="mat-caption margin-remove-top margin-bottom-s padding-remove display-inline-block">
-                                    <li *ngFor="let tag of content.keywords">{{tag}}</li>
+                                    <li *ngFor="let tag of content?.keywords">{{tag}}</li>
                                 </ul>
                                 <!-- <p class="display-inline-block ws-mat-black60-text actionbtns">
                                     <mat-icon class="margin-right-s">more_vert_outlined</mat-icon>
