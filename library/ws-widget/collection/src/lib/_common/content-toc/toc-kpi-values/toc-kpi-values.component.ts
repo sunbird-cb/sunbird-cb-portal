@@ -12,6 +12,7 @@ export class TocKpiValuesComponent implements OnInit {
   @Input() tocStructure: any
   @Input() content: NsContent.IContent | null = null
   @Input() isMobile = false
+  @Input() showInstructorLedMsg = false
 
   constructor() { }
 

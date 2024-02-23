@@ -232,10 +232,10 @@
 <ng-template #progressFunctionality>
   <div class="flex flex-row gap-4">
     <div class="flex-1">
-      <ng-container *ngIf="content?.completionStatus < 2 && isBatchInProgress && !certData">
+      <ng-container *ngIf="content?.completionStatus <= 2 && isBatchInProgress">
         <div class="flex flex-col gap-2">
           <div class="flex flex-row gap-4 text-sm">
-            <div class="flex-1 text-xs">Overall Progress</div>
+            <div class="flex-1 text-xs">{{ 'apptocsinglepage.overallProgress' | translate }}</div>
             <div class="text-xs" *ngIf="content?.completionPercentage > 0"> {{ content?.completionPercentage }} %</div>
           </div>
           <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
@@ -249,10 +249,10 @@
       <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
         <mat-icon>star_purple500</mat-icon>
         <ng-container *ngIf="!userRating">
-          <div>Rate Now</div>
+          <div>{{ 'apptocsinglepage.rateNow' | translate }}</div>
         </ng-container>
         <ng-container *ngIf="userRating">
-          <div>Edit Rating</div>
+          <div>{{ 'apptocsinglepage.editRating' | translate }}</div>
         </ng-container>
       </button>
     </ng-container>
@@ -413,21 +413,24 @@
           </ng-container>
 
           <ng-container *ngIf="!skeletonLoader">
-
-            <ng-container *ngIf="content?.isInIntranet && showIntranetMsg">
+            <!-- <ng-container *ngIf="content?.isInIntranet && showIntranetMsg"> -->
               <div class="flex flex-col gap-4" *ngIf="content?.completionStatus === 2 || certData">
-                <div class="pending-certificate" *ngIf="!certData">
-                  <div>Kindly be patient. The certificate generation normally takes up to 24 hours,
-                    however, it might take longer sometimes.</div>
-                  <div>If the issue persists, please mail us at mission.karmayogi@gov.in</div>
+                <div class="certificate_box" *ngIf="!certData">
+                  <img src="/assets/icons/toc/no-certificate.svg" class="certificate_banner" alt="No certificate image" />
+                  <div class="flex items-center certificate_overlay">
+                    <div class="flex flex-col text-center gap-1 p-4 text-white">
+                      <div>{{'apptochome.certificationTakesTime' | translate }}</div>
+                      <div>{{'apptochome.issuePersistsMailus' | translate }} mission.karmayogi@gov.in</div>
+                    </div>
+                  </div>
                 </div>
                 <ng-container *ngIf="certData">
                   <a class="certificate_box" (click)="openCertificateDialog()">
                     <img [src]="certData | pipeSafeSanitizer: 'url'" class="certificate_banner" />
-                    <div class="flex items-center certificate_overlay">
+                    <div class="flex items-center certificate_overlay cursor-pointer">
                       <div class="flex flex-col text-center gap-1 p-4">
-                        <div class="font-bold text-white">Congratulations!</div>
-                        <div class="text-white">Your certificate of completion is ready for you to download.</div>
+                        <div class="font-bold text-white">{{ 'apptochome.congratulations' | translate }}</div>
+                        <div class="text-white">{{ 'apptochome.certificateCompletionReady' | translate }}</div>
                       </div>
                     </div>
                   </a>
@@ -450,7 +453,7 @@
                 <a href="{{ cscmsUrl }}" target="_blank" class="flex action-button justify-center">
                   Apply for physical training</a>
               </div>
-            </ng-container>
+            <!-- </ng-container> -->
 
             <!-- Overall progress functionality -->
             <ng-container [ngTemplateOutlet]="progressFunctionality"></ng-container>
@@ -501,7 +504,7 @@
           </ng-container>
 
           <ng-container *ngIf="!skeletonLoader">
-            <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure"></ws-widget-toc-kpi-values>
+            <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure" [showInstructorLedMsg]="showInstructorLedMsg"></ws-widget-toc-kpi-values>
           </ng-container>
         </div>
       </div>
@@ -826,8 +829,11 @@
       <p class="mt-5 mb-5 info-msg" *ngIf="content?.isInIntranet && showIntranetMsg">
         <div *ngIf="content?.completionStatus == 2 || certData"  class="margin-bottom-xs">
           <ng-container *ngIf="!certData">
+            content?.isInIntranet = {{ content?.isInIntranet }}
             <span class="certificate-text block">{{'apptochome.certificationTakesTime' | translate}}</span>
-            <span class="certificate-text block">{{'apptochome.issuePersistsMailus' | translate}} <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
+            <span class="certificate-text block">{{'apptochome.issuePersistsMailus' | translate}} 
+              <a>mission[dot]karmayogi[at]gov[dot]in</a>
+            </span>
           </ng-container>
           <ng-container *ngIf="certData">
             <a class="certificate_box" (click)="openCertificateDialog()">
