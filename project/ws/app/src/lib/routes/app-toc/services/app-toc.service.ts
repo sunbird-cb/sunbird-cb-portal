@@ -508,7 +508,7 @@ export class AppTocService {
   async mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any) {
     this.contentLoader.next(true)
     let totalCount = 0
-    
+
     let leafnodeCount = 0
     let completedLeafNodes: any = []
     let firstUncompleteCourse: any = ''

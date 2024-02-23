@@ -70,7 +70,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.userSelection.emit(event)
     this.viewerHeaderSideBarToggleService.visibilityStatus.next(false)
   }
-  
+
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
