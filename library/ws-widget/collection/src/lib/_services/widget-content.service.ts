@@ -34,6 +34,7 @@ const API_END_POINTS = {
   COURSE_BATCH: `/apis/proxies/v8/course/v1/batch/read`,
   AUTO_ASSIGN_BATCH: `/apis/protected/v8/cohorts/user/autoenrollment/`,
   AUTO_ASSIGN_CURATED_BATCH: `/apis/proxies/v8/curatedprogram/v1/enrol`,
+  AUTO_ASSIGN_OPEN_PROGRAM: `/apis/proxies/v8/openprogram/v1/enrol`,
   USER_CONTINUE_LEARNING: `${PROTECTED_SLAG_V8}/user/history/continue`,
   CONTENT_RATING: `${PROTECTED_SLAG_V8}/user/rating`,
   COLLECTION_HIERARCHY: (type: string, id: string) =>
@@ -177,8 +178,10 @@ export class WidgetContentService {
       )
   }
 
-  autoAssignCuratedBatchApi(request: any): Observable<NsContent.IBatchListResponse> {
-    return this.http.post<NsContent.IBatchListResponse>(`${API_END_POINTS.AUTO_ASSIGN_CURATED_BATCH}`, request)
+  autoAssignCuratedBatchApi(request: any, programType: any): Observable<NsContent.IBatchListResponse> {
+    const url = programType === NsContent.ECourseCategory.MODERATED_PROGRAM ?
+    API_END_POINTS.AUTO_ASSIGN_OPEN_PROGRAM : API_END_POINTS.AUTO_ASSIGN_CURATED_BATCH
+    return this.http.post<NsContent.IBatchListResponse>(`${url}`, request)
       .pipe(
         retry(1),
         map(

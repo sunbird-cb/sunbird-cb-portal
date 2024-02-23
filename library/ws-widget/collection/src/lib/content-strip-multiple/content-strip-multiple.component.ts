@@ -285,7 +285,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         },
       }
 
-      this.searchApiService.getSearchV6Results(moderatedCoursesRequestBody).subscribe(results => {
+      this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
         const showViewMore = Boolean(
           results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
         )
@@ -295,7 +295,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
             contentList = results.result.content
           } else {
             contentList = results.result.content.filter((ele: any) => {
-              return ele.secureSettings && !ele.secureSettings.isVerifiedKarmayogi
+              return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
             })
           }
         }

@@ -455,7 +455,9 @@ export class InitService {
         this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
 
         if (this.configSvc.unMappedUser) {
-          if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
+          if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails
+            && this.configSvc.unMappedUser.profileDetails.additionalProperties
+            && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
             const lang = this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang
             this.translate.use(lang)
             localStorage.setItem('websiteLanguage', lang)
@@ -465,6 +467,9 @@ export class InitService {
               let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
               lang = lang.replace(/\"/g, '')
               this.translate.use(lang)
+            } else {
+              this.translate.setDefaultLang('en')
+              localStorage.setItem('websiteLanguage', 'en')
             }
           }
         } else if (localStorage.getItem('websiteLanguage')) {

@@ -8,7 +8,7 @@ import { MatTabChangeEvent, MatSnackBar } from '@angular/material'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 // Project files and components
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { WidgetUserService } from '@sunbird-cb/collection/src/public-api'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -128,6 +128,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
     private configService: ConfigurationsService,
     private router: Router,
     private matSnackBar: MatSnackBar,
+    private langtranslations: MultilingualTranslationsService,
     private translate: TranslateService,
     @Inject(DOCUMENT) private document: Document
   ) {
@@ -402,5 +403,9 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroySubject$.unsubscribe()
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

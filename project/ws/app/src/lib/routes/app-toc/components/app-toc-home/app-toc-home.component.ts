@@ -112,6 +112,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
   tocConfig: any = null
   primaryCategory = NsContent.EPrimaryCategory
+  courseCategory = NsContent.ECourseCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
   askAuthorEnabled = true
   trainingLHubEnabled = false
@@ -197,6 +198,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   canShare = false
   enableShare = false
   rootOrgId: any
+  certId: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -471,7 +473,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.cbPlanEndDate = cbp[0].endDate
         const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
         const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
-        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
+        this.cbPlanDuration = daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
         if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
           this.isAcbpCourse = true
@@ -522,7 +524,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       {
         pageIdExt: 'btn-acbp-claim',
         module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
-    })
+      })
   }
 
   onClickOfClaim(event: any) {
@@ -539,7 +541,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.isClaimed = true
       this.openSnackbar('Karma points are successfully claimed.')
       this.getUserEnrollmentList()
-    },                                                  (error: any) => {
+    },
+                                                        (error: any) => {
       // tslint:disable:no-console
       console.log(error)
       this.openSnackbar('something went wrong.')
@@ -894,7 +897,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               if (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
                 this.fetchBatchDetails()
               }
-            }  else {
+            } else {
               this.fetchBatchDetails()
             }
             this.tocSvc.callHirarchyProgressHashmap(this.content)
@@ -927,12 +930,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           const latestWF = _.maxBy(data.result.data[0].wfInfo, (el: any) => {
             return new Date(el.lastUpdatedOn).getTime()
           })
-           /* tslint:disable-next-line */
+          // latestWF.currentStatus = this.WFBlendedProgramStatus.REJECTED
+          /* tslint:disable-next-line */
           this.batchData!.workFlow = {
-              wfInitiated : true,
-              /* tslint:disable-next-line */
-              batch: this.batchData && this.batchData.content && this.batchData.content.find((e: any) => e.batchId === latestWF.applicationId),
-              wfItem: latestWF,
+            wfInitiated: true,
+            /* tslint:disable-next-line */
+            batch: this.batchData && this.batchData.content && this.batchData.content.find((e: any) => e.batchId === latestWF.applicationId),
+            wfItem: latestWF,
           }
           this.tocSvc.setWFData(this.batchData)
         }
@@ -964,9 +968,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   downloadCert(certIdArr: any) {
     if (certIdArr.length) {
-      const certId = certIdArr[0].identifier
-
-      this.contentSvc.downloadCert(certId).subscribe(response => {
+      // const certId = certIdArr[0].identifier
+      this.contentSvc.downloadCert(this.certId).subscribe(response => {
         this.certData = response.result.printUri
       })
     }
@@ -976,7 +979,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const cet = this.certData
     this.dialog.open(CertificateDialogComponent, {
       width: '1200px',
-      data: { cet },
+      data: { cet, certId: this.certId },
     })
   }
 
@@ -985,13 +988,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.changeTab = !this.changeTab
     this.userSvc.resetTime('enrollmentService')
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
-      this.autoEnrollCuratedProgram()
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM)
+    } else if (this.content && this.content.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM)
     } else {
       this.autoAssignEnroll()
     }
   }
 
-  public autoEnrollCuratedProgram() {
+  public autoEnrollCuratedProgram(programType: any) {
     if (this.content && this.content.identifier) {
       let userId = ''
       if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
@@ -1005,7 +1010,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           batchId: this.contentReadData && this.contentReadData.batches[0].batchId,
         },
       }
-      this.contentSvc.autoAssignCuratedBatchApi(req).subscribe(
+      this.contentSvc.autoAssignCuratedBatchApi(req, programType).subscribe(
         (data: NsContent.IBatchListResponse) => {
           if (data) {
             setTimeout(() => {
@@ -1336,7 +1341,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       )
 
       /* tslint:disable-next-line */
-      console.log(this.firstResourceLink,'=====> home first data link <========')
+      console.log(this.firstResourceLink, '=====> home first data link <========')
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
         this.updateProgress(2, firstPlayableContent.identifier)
       }
@@ -1516,7 +1521,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   updateProgress(status: number, resourceId: any) {
     const collectionId = this.route.snapshot.params.id ?
-    this.route.snapshot.params.id : ''
+      this.route.snapshot.params.id : ''
     const batchId = this.route.snapshot.queryParams.batchId ?
       this.route.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
@@ -1596,7 +1601,21 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
+  raiseCertIntreactTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'view-certificate',
+        subType: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      },
+      {
+        id: this.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      })
+  }
+  
   translateLabels(label: string, type: any) {
+    console.log(this.langtranslations.translateLabel(label, type, ''), 'label', label, 'type', type)
     return this.langtranslations.translateLabel(label, type, '')
   }
 

@@ -1981,6 +1981,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const translationKey = 'userProfile.' + menuName.replace(/\s/g, '')
     return this.translate.instant(translationKey)
   }
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
   dialogReqHelp(type: string) {
     const mob = this.createUserForm.controls['mobile'].value
     const primaryEmail = this.createUserForm.controls['primaryEmail'].value

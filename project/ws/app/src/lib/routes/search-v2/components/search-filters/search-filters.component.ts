@@ -21,6 +21,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   filteroptions: any = []
   userFilters: any = []
   myFilterArray: any = []
+  multiplePrimaryCategory: any = []
+  onLoad = true
   private subscription: Subscription = new Subscription
   queryParams: any
 
@@ -104,15 +106,32 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       this.queryParams = queryParams
       if (queryParams.has('f')) {
         const sfilters = JSON.parse(queryParams.get('f') || '{}')
-        const fil = {
-          name: sfilters.primaryCategory[0].toLowerCase(),
-          count: '',
-          ischecked: true,
+        let fil: any
+        this.multiplePrimaryCategory = []
+        if (sfilters.primaryCategory.length > 1 && this.onLoad) {
+          this.onLoad = false
+          sfilters.primaryCategory.forEach((item: any) => {
+            if (!this.multiplePrimaryCategory.some((r: any) => item.toLowerCase().includes(r.name))) {
+              this.multiplePrimaryCategory.push({
+              name: item.toLowerCase(),
+              count: '',
+              ischecked: true,
+            })
+
+            }
+
+          })
         }
+          fil = {
+            name: sfilters.primaryCategory[0].toLowerCase(),
+            count: '',
+            ischecked: true,
+          }
+
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
             if (fas.name === 'primaryCategory') {
-              if (fasv.name === fil.name) {
+              if (fasv.name === this.toCamelCase(fil.name)) {
                 fasv.ischecked = true
               }
             } else {
@@ -120,7 +139,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             }
           })
         })
-        this.modifyUserFilters(fil, 'primaryCategory')
+        if (this.queryParams && this.queryParams.params.q === '') {
+          this.modifyUserFilters(fil, 'primaryCategory')
+        }
       } else {
         const fil = {
           name: '',
@@ -130,7 +151,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
             if (fas.name === 'primaryCategory') {
-              if (fasv.name === fil.name) {
+              if (fasv.name === this.toCamelCase(fil.name)) {
                 fasv.ischecked = true
               }
             } else {
@@ -198,9 +219,12 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   getFilterName(fil: any) {
-    return this.userFilters.filter((x: any) => x.name === fil.name)
+    return this.userFilters.filter((x: any) => {
+        const selectedName = x.name  ===  fil.name ? fil.name :
+        x.name  === this.toString(fil.name).toLowerCase() ? this.toString(fil.name).toLowerCase() : this.toCamelCase(fil.name)
+        return x.name === selectedName
+    })
   }
-
   modifyUserFilters(fil: any, mainparentType: any) {
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
@@ -210,21 +234,26 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             this.router.navigate(['/app/globalsearch'] , { queryParams: { q: '' } })
           },         500)
         }
-
-        if (fs.name === this.translateTo(fil.name)) {
+        const selectedName = fs.name ===  fil.name ? fil.name : fs.name  === this.toString(fil.name).toLowerCase()
+        ? this.toString(fil.name).toLowerCase() : this.toCamelCase(fil.name)
+        if (fs.name === selectedName) {
           this.userFilters.splice(index, 1)
         }
       })
       this.myFilterArray.forEach((fs: any, index: number) => {
-        if (fs.name === this.translateTo(fil.name)) {
+        const nameVerify = fs.name === this.translateTo(fil.name) ? this.translateTo(fil.name) :
+        this.translateTo(fil.name).toLowerCase()
+
+        if (fs.name === nameVerify) {
           this.myFilterArray.splice(index, 1)
         }
       })
       this.filteroptions.forEach((fas: any) => {
         if (fas.name === mainparentType) {
           fas.values.forEach((fasv: any) => {
-            const name = fasv.name.toLowerCase()
-            if (name === this.translateTo(fil.name)) {
+            const name = fasv.name
+            const verifiedName = name === fil.name ? fil.name : this.toCamelCase(fil.name)
+            if (name === verifiedName) {
               fasv.ischecked = false
             }
 
@@ -237,35 +266,59 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       })
       this.appliedFilter.emit(this.myFilterArray)
     } else {
-      this.userFilters.push(fil)
-
-      const reqfilter = {
-        mainType: mainparentType,
-        name: this.translateTo(fil.name),
-        count: fil.count,
-        ischecked: true,
-        qParam : '',
-      }
-
-      this.filteroptions.forEach((fas: any) => {
-        if (fas.name === mainparentType) {
-          fas.values.forEach((fasv: any) => {
-            const name = fasv.name.toLowerCase()
-            if (name.toLowerCase() === this.translateTo(fil.name)) {
-              fasv.ischecked = true
+      if (fil.name === 'moderated course' && this.multiplePrimaryCategory.length > 1) {
+        this.userFilters = [...this.multiplePrimaryCategory]
+        this.multiplePrimaryCategory.forEach((item: any) => {
+          item['mainType'] = mainparentType,
+          this.filteroptions.forEach((fas: any) => {
+            if (fas.name === mainparentType) {
+              fas.values.forEach((fasv: any) => {
+                const name = fasv.name
+                const verifiedName = name === item.name ? item.name : name === this.translateTo(item.name) ?
+                this.translateTo(item.name) : this.toCamelCase(item.name)
+                if (name === verifiedName) {
+                  fasv.ischecked = true
+                }
+              })
             }
           })
-        }
-      })
+        })
 
-      if (reqfilter.name === 'moderated courses' && reqfilter.ischecked) {
-        reqfilter.qParam = 't'
+        this.myFilterArray = [...this.multiplePrimaryCategory]
+        this.appliedFilter.emit(this.myFilterArray)
       } else {
-        reqfilter.qParam = ''
-      }
+        this.userFilters.push(fil)
 
-      this.myFilterArray.push(reqfilter)
-      this.appliedFilter.emit(this.myFilterArray)
+        const reqfilter = {
+          mainType: mainparentType,
+          name: this.translateTo(fil.name),
+          count: fil.count,
+          ischecked: true,
+          qParam : '',
+        }
+
+        this.filteroptions.forEach((fas: any) => {
+          if (fas.name === mainparentType) {
+            fas.values.forEach((fasv: any) => {
+              const name = fasv.name
+              const verifiedName = name === fil.name ? fil.name : this.translateTo(fil.name)
+              if (name === verifiedName) {
+                fasv.ischecked = true
+              }
+            })
+          }
+        })
+
+        if (reqfilter.name === 'moderated courses' && reqfilter.ischecked) {
+          reqfilter.qParam = 't'
+        } else {
+          reqfilter.qParam = ''
+        }
+
+        this.myFilterArray.push(reqfilter)
+        this.appliedFilter.emit(this.myFilterArray)
+
+      }
     }
   }
   getText(val: string) {
@@ -273,8 +326,19 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   }
 
   translateTo(menuName: string): string {
+    const name =  this.toCamelCase(menuName)
     // tslint:disable-next-line: prefer-template
-    const translationKey = 'searchfilters.' + menuName.replace(/\s/g, '')
+    const translationKey = 'searchfilters.' + name.replace(/\s/g, '')
     return this.translate.instant(translationKey)
+  }
+  toCamelCase(str: string) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g,  (word, index) => {
+      return index === 0 ? word.toLowerCase() : word.toUpperCase()
+    }).replace(/\s+/g, '')
+  }
+  toString(str: any) {
+    const result = str.replace(/([A-Z])/g, ' $1')
+    const finalResult = result.charAt(0).toUpperCase() + result.slice(1)
+    return finalResult
   }
 }

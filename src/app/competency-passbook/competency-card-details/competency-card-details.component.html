@@ -62,7 +62,7 @@
                             <div class="flex flex-row">
                                 <div class="flex-1">
                                     <div class="text-base font-semibold cursor-pointer" (click)="handleNavigate(eachCert)" >{{ eachCert?.courseName }}</div>
-                                    <div class="text-xs font-light" *ngIf="eachCert?.identifier" >Issued on {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
+                                    <div class="text-xs font-light" *ngIf="eachCert?.identifier" >{{'competencyList.issued' | translate }} {{ eachCert?.lastIssuedOn | date: 'MMM y' }}</div>
                                 </div>
                                 <div class="flex justify-center">
                                     <ng-container *ngIf="eachCert?.loading">
@@ -102,11 +102,10 @@
                                 </div>
                             </ng-container>
                             <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="themeDetails.courseSubThemes[i]?.length > 2 && !eachCert.viewMore" (click)="handleViewMore(eachCert)">
-                                View more
+                                {{'competencyCardDetails.viewMore' | translate}}
                             </div>
                             <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="eachCert?.viewMore"
-                                (click)="handleViewMore(eachCert, 'less')">
-                                View less
+                                (click)="handleViewMore(eachCert, 'less')">{{'competencyCardDetails.viewLess' | translate}}
                             </div>
                         </div>
                     </ng-container>
