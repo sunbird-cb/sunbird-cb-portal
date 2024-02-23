@@ -12,7 +12,7 @@
     <br>
   </div>
   <div class=" right_container flex flex-col py-8">
-    <div class="langdiv">
+    <div class="langdiv" *ngIf="isMultiLangEnabled">
       <mat-form-field class="custom-lang float-right margin-right-xl">
         <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
         <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
