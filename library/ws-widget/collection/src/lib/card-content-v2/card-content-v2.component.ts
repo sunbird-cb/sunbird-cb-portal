@@ -368,6 +368,16 @@ export class CardContentV2Component extends WidgetBaseComponent
 
   openComment() { }
   downloadCertificate(certificateData: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'view-certificate',
+        subType: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      },
+      {
+        id: certificateData.issuedCertificates[0].identifier,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      })
     if(certificateData.issuedCertificates.length > 0) {
       this.downloadCertificateLoading = true
       let certData: any = certificateData.issuedCertificates[0]

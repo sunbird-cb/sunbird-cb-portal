@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { Router } from '@angular/router'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { jsPDF } from 'jspdf'
 
 @Component({
@@ -27,6 +28,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private events: EventService,
     // private sanitizer: DomSanitizer,
     // private contentSvc: WidgetContentService,
     public dialogRef: MatDialogRef<ProfileCertificateDialogComponent>,
@@ -69,6 +71,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
   }
 
   downloadCert() {
+    this.raiseIntreactTelemetry('download', 'svg')
     const a: any = document.createElement('a')
     a.href = this.data.cet
     a.download = 'Certificate'
@@ -81,6 +84,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
 
   }
   downloadCertPng() {
+    this.raiseIntreactTelemetry('download', 'png')
     const uriData = this.data.cet
     const img = new Image()
     img.src = uriData
@@ -103,7 +107,9 @@ export class ProfileCertificateDialogComponent implements OnInit {
       }
     }
   }
+
   async downloadCertPdf() {
+    this.raiseIntreactTelemetry('download', 'pdf')
     const uriData = this.data.cet
     const img = new Image()
     img.src = uriData
@@ -127,8 +133,23 @@ export class ProfileCertificateDialogComponent implements OnInit {
       }
     }
   }
+
   shareCert() {
+    this.raiseIntreactTelemetry('share')
     return window.open(this.navUrl, '_blank')
   }
 
+  raiseIntreactTelemetry(type?: string, action?: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${type}-${WsEvents.EnumInteractSubTypes.CERTIFICATE}`,
+        subType: action && action,
+      },
+      {
+        id: this.data.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      }
+    )
+  }
 }

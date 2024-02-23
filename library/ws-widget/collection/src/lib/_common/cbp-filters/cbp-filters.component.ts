@@ -379,4 +379,8 @@ export class CbpFiltersComponent implements OnInit {
 		this.filterEmpty = true
 		return true
 	}
+
+	translateLabels(label: string, type: any) {
+		return this.langtranslations.translateLabel(label, type, '')
+	}
 }

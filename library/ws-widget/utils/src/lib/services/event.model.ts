@@ -64,7 +64,7 @@ export namespace WsEvents {
     Impression = 'Impression',
     Chatbot = 'Chatbot',
     GetStarted = 'Get Started',
-    PlatformRating = 'Platform Rating',
+    PlatformRating = 'PlatformRating',
   }
 
   export interface ITelemetryPageContext {
@@ -220,5 +220,6 @@ export namespace WsEvents {
     HOME_PAGE_STRIP_TABS = 'home-page-strip-tabs',
     HUB_MENU = 'hub-menu',
     PORTAL_NUDGE = 'portal_nudge',
+    CERTIFICATE = 'certificate',
   }
 }

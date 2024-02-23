@@ -27,10 +27,10 @@
                         </div>
                     </ng-container>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="obj?.subTheme?.length > 2 && !obj?.viewMore" (click)="handleViewMore(obj)" >
-                        View more
+                        {{'competencyList.viewMore' | translate }}
                     </div>
                     <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="obj?.viewMore" (click)="handleViewMore(obj, 'less')">
-                        View less
+                        {{'competencyList.viewLess' | translate }}
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
 
 <ng-template #rightContainer>
     <mat-tab-group (selectedTabChange)="handleTabChange($event)">
-        <mat-tab label="All">
+        <mat-tab label="{{translateLabels('All', 'competencyList')}}">
             <div class="flex flex-col">
                 <div class="py-4">
                     <ws-competency-search (searchValue)="handleSearch($event, 'All')" (enableFilter)="handleFilter($event)"></ws-competency-search>
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="{{ TYPE_CONST.behavioral.capsValue }}">
+        <mat-tab label="{{ translateLabels(TYPE_CONST.behavioral.capsValue, 'competencyList') }}">
             <div class="flex flex-col">
                 <div class="py-4">
                     <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.behavioral.capsValue)" (enableFilter)="handleFilter($event)"></ws-competency-search>
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="{{ TYPE_CONST.functional.capsValue }}">
+        <mat-tab label="{{ translateLabels(TYPE_CONST.functional.capsValue, 'competencyList') }}">
             <div class="flex flex-col">
                 <div class="py-4">
                     <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.functional.capsValue)" (enableFilter)="handleFilter($event)"></ws-competency-search>
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="{{ TYPE_CONST.domain.capsValue }}">
+        <mat-tab label="{{ translateLabels(TYPE_CONST.domain.capsValue, 'competencyList') }}">
             <div class="flex flex-col">
                 <div class="py-4">
                     <ws-competency-search (searchValue)="handleSearch($event, TYPE_CONST.domain.capsValue)" (enableFilter)="handleFilter($event)"></ws-competency-search>
@@ -220,7 +220,7 @@
                     <div class="flex flex-row items-center">
                         <div class="flex-1">
                             <div class="flex flex-col justify-center">
-                                <div class="text-sm">{{ elem.label }}</div>
+                                <div class="text-sm">{{ translateLabels(elem.label, 'competencyList') }}</div>
                                 <ng-container *ngIf="competency.skeletonLoading">
                                     <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                         [height]="'28px'"></ws-widget-skeleton-loader>

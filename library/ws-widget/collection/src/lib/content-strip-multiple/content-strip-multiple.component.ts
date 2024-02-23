@@ -285,19 +285,19 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         },
       }
 
-      this.searchApiService.getSearchV6Results(moderatedCoursesRequestBody).subscribe(results => {
+      this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
         const showViewMore = Boolean(
           results.result.content && results.result.content.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
         )
         let contentList: any = []
         if (results && results.result && results.result.content && results.result.content.length) {
-          if (this.veifiedKarmayogi) {
+          // if (this.veifiedKarmayogi) {
             contentList = results.result.content
-          } else {
-            contentList = results.result.content.filter((ele: any) => {
-              return ele.secureSettings && !ele.secureSettings.isVerifiedKarmayogi
-            })
-          }
+          // } else {
+          //   contentList = results.result.content.filter((ele: any) => {
+          //     return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
+          //   })
+          // }
         }
         const viewMoreUrl = showViewMore
             ? {

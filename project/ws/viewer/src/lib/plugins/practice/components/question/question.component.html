@@ -4,8 +4,8 @@
     <div class="flex flex-row width-100 justify-between">
       <div>
         <p class="margin-bottom-m">
-          <ng-container i18n="question number label"><span class="subheading-1">Question</span></ng-container><span class="question-number">&nbsp;{{ questionNumber }}&nbsp;</span>
-          <ng-container i18n="question number of total questions"><span class="question-number">of</span></ng-container>
+          <ng-container i18n="question number label"><span class="subheading-1">{{ 'practiceoverview.question' | translate }}</span></ng-container><span class="question-number">&nbsp;{{ questionNumber }}&nbsp;</span>
+          <ng-container i18n="question number of total questions"><span class="question-number">{{ 'practiceoverview.of' | translate }}</span></ng-container>
           <span class="question-number">&nbsp;{{ total }}</span>
         </p>
       </div>
@@ -23,7 +23,6 @@
               <img class="hw-24" src="assets/icons/final-assessment/view.svg"/>
             </div>
           </div>
-
         </ng-container>        
         <div class=" flex flex-row align-center justify-around rounded-flag ml-10" *ngIf="!isMobile" [ngClass]="!isQuestionMarked() ? 'rounded-flag-disable': 'rounded-flag'">
           <div>
@@ -77,17 +76,17 @@
             numConnections &&
             matchHintDisplay.length !== 0
           " style="display: flex;flex-direction: column;">
-              <p i18n="option explanation label">Explanation</p>
+              <p i18n="option explanation label">{{ 'practiceoverview.explanation' | translate }}</p>
               <table mat-table [dataSource]="matchHintDisplay" class="mat-elevation-z8">
                 <ng-container matColumnDef="text">
                   <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Option">
-                    Option
+                    {{ 'practiceoverview.option' | translate }}
                   </th>
                   <td mat-cell *matCellDef="let element">{{ element.text }}</td>
                 </ng-container>
                 <ng-container matColumnDef="hint">
                   <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Hint">
-                    Hint
+                    {{ 'practiceoverview.hint' | translate }}
                   </th>
                   <td mat-cell *matCellDef="let element" [innerHTML]="element.hint"></td>
                 </ng-container>
@@ -115,8 +114,8 @@
     <div class="flex flex-1- flex-column respo_inner">
       <div [ngClass]="{'flex-middle flex-center' : question?.questionType === 'mtf'}" class="flex">
         <h3 class="mat-subheading-2 ws-mat-black60-text margin-bottom-m">
-          <ng-container i18n="question number label">Question &nbsp;</ng-container>{{ questionNumber }}
-          <ng-container i18n="question number of total questions">of</ng-container>
+          <ng-container i18n="question number label">{{ 'practiceoverview.question' | translate }} &nbsp;</ng-container>{{ questionNumber }}
+          <ng-container i18n="question number of total questions">{{ 'practiceoverview.of' | translate }}</ng-container>
           {{ total }}
         </h3>
       </div>

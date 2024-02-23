@@ -41,31 +41,31 @@
             <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
             <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Passed'}}</span>
             <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
-            <span class="mat-body-2 ws-mat-black60-text"> score</span>
-            <span class="mat-body-2 text-block">Hurray!</span>
-            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">You have aced the assessment, with flying colours.</span>
+            <span class="mat-body-2 ws-mat-black60-text"> {{ 'quizresult.score' | translate }}</span>
+            <span class="mat-body-2 text-block">{{ 'quizresult.hurray' | translate }}</span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">{{ 'quizresult.passMsg1' | translate }}</span>
           </div>
 
           <div *ngIf="isPassed && percentage < 100" class="msg-box">
             <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m ">check_circle</mat-icon>
             <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Passed'}}</span>
             <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%
-              <span class="mat-body-2 ws-mat-black60-text"> score</span>
+              <span class="mat-body-2 ws-mat-black60-text"> {{ 'quizresult.score' | translate }}</span>
             </span>
-            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">Congratulations on successfully passing the assessment. Good job!</span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">{{ 'quizresult.passMsg2' | translate }}</span>
           </div>
 
           <div *ngIf="!isPassed" class="msg-box">
             <mat-icon class="ws-mat-red-text msg-icon transform15 margin-top-m">highlight_off</mat-icon>
             <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Failed'}}</span>
             <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
-            <span class="mat-body-2 ws-mat-black60-text"> score</span>
-            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">You have the opportunity to try again and do better next time. Keep going!</span>
+            <span class="mat-body-2 ws-mat-black60-text"> {{ 'quizresult.score' | translate }}</span>
+            <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">{{ 'quizresult.passMsg3' | translate }}</span>
           </div>
         </ng-container>
         <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
           <mat-icon class="ws-mat-green-2-text transform15 margin-top-m">check_box</mat-icon>
-          <span class="ws-mat-black60-text margin-top-s padding-s attempt-text">{{'Well done, Keep learning!'}}</span>
+          <span class="ws-mat-black60-text margin-top-s padding-s attempt-text">{{ 'Well done, Keep learning!'}}</span>
         </ng-container>
       </div>
     </div>
@@ -75,17 +75,18 @@
     <div class="flex flex-1 flex-column flex-wrap margin-top-m">
       <!-- <ng-container *ngIf="!(quizResponse)">
         <div class="flex flex-1 flex-center text-center flex-middle">
-          <span class="mat-heading" i18n>Be patient please, while we calculate your result!</span>
+          <span class="mat-heading" i18n>{{ 'quizresult.bePatienWhileWeCalculate' | translate }}</span>
           <mat-spinner></mat-spinner>
         </div>
       </ng-container> -->
       <ng-container *ngIf="quizResponse && quizResponse?.isInProgress">
         <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
-          <span class="mat-heading" i18n>Assessment has been submitted successfully. Please check back after some time for the result</span>
+          <!-- <span class="mat-heading" i18n>We are not able to fetch the result</span> -->
+          <span class="mat-heading" i18n>{{ 'quizresult.submittedSucessfull' | translate }}</span>
         </div>
         <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
           <button mat-button  class="ws-mat-primary-background text-white m-w padding-xs" (click)="retryResult()">
-            <mat-icon>refresh</mat-icon> Retry</button>
+            <mat-icon>refresh</mat-icon> {{ 'quizresult.retry' | translate }}</button>
         </div>
       </ng-container>
       <ng-container *ngIf="checkRes()">
@@ -96,7 +97,7 @@
           <span class="mat-heading" i18n>{{quizResponse}}</span>
         </div>
         <div class="flex flex-row flex-center text-center flex-middle margin-top-m padding-left-l">
-          <span class="mat-heading" i18n>Please contact system admin</span>
+          <span class="mat-heading" i18n>{{ 'quizresult.pleaseContactSystemAdmin' | translate }}</span>
         </div>
       </ng-container>
       <ng-container>  
@@ -219,7 +220,7 @@
       *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
       <div class="flex flex-1 flex-center">
         <a mat-button (click)="action('retake')" class="width-1-1 text-white ws-mat-primary-background retake">
-          Retake assessment
+          {{ 'quizresult.retakeAssessment' | translate }}
         </a>
       </div>
     </ng-container> -->
@@ -235,7 +236,7 @@
                     <mat-expansion-panel-header class="question-header">
                       <mat-panel-title class="mr-0">
                         <mat-panel-description class="panel-description">
-                          <p>Question {{i+1}}</p>
+                          <p>{{ 'practiceoverview.question' | translate }} {{i+1}}</p>
                           <mat-icon *ngIf="!example.expanded">add</mat-icon>
                           <mat-icon *ngIf="example.expanded">remove</mat-icon>
                         </mat-panel-description>

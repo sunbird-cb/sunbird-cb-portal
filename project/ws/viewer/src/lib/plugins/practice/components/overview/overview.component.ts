@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { MultilingualTranslationsService, NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerHeaderSideBarToggleService } from './../../../../viewer-header-side-bar-toggle.service'
@@ -33,7 +33,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
-    private quizSvc: PracticeService
+    private quizSvc: PracticeService,
+    private langtranslations: MultilingualTranslationsService,
   ) { }
 
   ngOnInit() {
@@ -68,5 +69,9 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.loading = true
     this.userSelection.emit(event)
     this.viewerHeaderSideBarToggleService.visibilityStatus.next(false)
+  }
+  
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

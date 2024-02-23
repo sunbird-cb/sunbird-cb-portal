@@ -1,5 +1,4 @@
 <mat-card class="no-shadow flex flex-1">
-
   <mat-card-content>
     <div #images>
       <img [src]="url | pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image" />
@@ -51,7 +50,7 @@
         >
         Download
       </a> -->
-      <a mat-button [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent">
+      <a mat-button [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent" (click)="raiseIntreactTelemetry('download')">
         <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
         Download
       </a>
@@ -61,7 +60,12 @@
       </a>
     </div>
   </div>
+  
+  <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+  </button>
 </mat-card>
+
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)='downloadCertPdf()'>
     <mat-icon>picture_as_pdf</mat-icon>
