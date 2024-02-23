@@ -60,14 +60,14 @@ const routes: Routes = [
         path: 'discussion',
         component: AppTocDiscussionComponent,
       },
-      {
-        path: 'single-page-view',
-        component: AppTocSinglePageRootComponent,
-        data: {
-          pageId: 'overview',
-          module: 'Learn',
-        },
-      },
+      // {
+      //   path: 'single-page-view',
+      //   component: AppTocSinglePageRootComponent,
+      //   data: {
+      //     pageId: 'overview',
+      //     module: 'Learn',
+      //   },
+      // },
       {
         path: 'certification',
         loadChildren: () =>
