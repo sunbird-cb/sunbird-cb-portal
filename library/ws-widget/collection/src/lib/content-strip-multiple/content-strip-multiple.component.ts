@@ -291,13 +291,13 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         )
         let contentList: any = []
         if (results && results.result && results.result.content && results.result.content.length) {
-          // if (this.veifiedKarmayogi) {
+          if (this.veifiedKarmayogi) {
             contentList = results.result.content
-          // } else {
-          //   contentList = results.result.content.filter((ele: any) => {
-          //     return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
-          //   })
-          // }
+          } else {
+            contentList = results.result.content.filter((ele: any) => {
+              return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
+            })
+          }
         }
         const viewMoreUrl = showViewMore
             ? {
