@@ -18,7 +18,7 @@
             </p>
         </span> -->
 
-        <span class="attach_links" *ngIf="resource.additionalProperties && resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length">
+        <span class="attach_links" *ngIf="resource?.additionalProperties?.krFiles?.length">
             <p class="mat-body-2">
                 <span *ngFor="let item of resource.additionalProperties.krFiles | slice:0:1; index as i">
                     <div class="flex justify-start">
