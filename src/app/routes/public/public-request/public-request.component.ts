@@ -546,6 +546,7 @@ export class PublicRequestComponent implements OnInit {
 
   getHeaderFooterConfiguration() {
     const baseUrl = this.configSvc.sitePath
+    // tslint:disable-next-line: prefer-template
     return this.http.get(baseUrl + '/page/home.json').pipe(
       map(data => ({ data, error: null })),
       catchError(err => of({ data: null, error: err })),
