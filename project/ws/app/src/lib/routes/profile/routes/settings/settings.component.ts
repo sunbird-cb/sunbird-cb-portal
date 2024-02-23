@@ -314,7 +314,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   getHeaderFooterConfiguration() {
-    let baseUrl = this.configSvc.sitePath
+    const baseUrl = this.configSvc.sitePath
     // tslint:disable-next-line: prefer-template
     return this.http.get(baseUrl + '/page/home.json').pipe(
       map(data => ({ data, error: null })),
