@@ -172,6 +172,7 @@ export class AppTocService {
         )
       }
     } else {
+      this.contentLoader.next(false)
       if (data.error) {
         errorCode = NsAppToc.EWsTocErrorCode.API_FAILURE
       } else {
@@ -195,6 +196,8 @@ export class AppTocService {
           this.mapCompletionPercentage(child, dataResult)
         }
       })
+    } else {
+      this.contentLoader.next(false)
     }
   }
 
@@ -503,7 +506,9 @@ export class AppTocService {
   }
 
   async mapCompletionPercentageProgram(content: NsContent.IContent | null,  enrolmentList: any) {
+    this.contentLoader.next(true)
     let totalCount = 0
+    
     let leafnodeCount = 0
     let completedLeafNodes: any = []
     let firstUncompleteCourse: any = ''
@@ -577,6 +582,7 @@ export class AppTocService {
                 return progressdata
               })
             }
+            this.contentLoader.next(false)
           }
         } else {
           if (content.primaryCategory !== NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
@@ -603,6 +609,7 @@ export class AppTocService {
                   this.updateResumaData(inprogressDataCheck)
                   this.mapCompletionPercentage(content, data.result.contentList)
                 }
+                this.contentLoader.next(false)
                 return progressdata
               })
             }
@@ -634,6 +641,7 @@ export class AppTocService {
             this.updateResumaData(inprogressDataCheck)
             this.mapCompletionPercentage(content, data.result.contentList)
           }
+          this.contentLoader.next(false)
           return progressdata
         })
       }

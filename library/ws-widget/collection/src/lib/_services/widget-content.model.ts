@@ -441,6 +441,7 @@ export namespace NsContent {
     EPrimaryCategory.PROGRAM,
     EPrimaryCategory.CURATED_PROGRAM,
     EPrimaryCategory.BLENDED_PROGRAM,
+    EPrimaryCategory.STANDALONE_ASSESSMENT,
     EMiscPlayerSupportedCollectionTypes.PLAYLIST,
   ]
   export const KB_SUPPORTED_CONTENT_TYPES: EPrimaryCategory[] = [
