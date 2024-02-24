@@ -87,7 +87,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   certificatesData: any
   showCreds = false
-  credMessage = "View my credentials"
+  credMessage = 'View my credentials'
   assessmentsData: any
 
   @HostListener('window:scroll', ['$event'])
@@ -462,9 +462,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   toggleCreds() {
     this.showCreds = !this.showCreds
     if (this.showCreds) {
-      this.credMessage = "Hide my credentials"
+      this.credMessage = 'Hide my credentials'
     } else {
-      this.credMessage = "View my credentials"
+      this.credMessage = 'View my credentials'
     }
   }
 
@@ -472,14 +472,14 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     const textArea = document.createElement('textarea')
     textArea.value = text
     document.body.appendChild(textArea)
-    //textArea.focus()
+    // textArea.focus()
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
     this.openSnackbar('copied')
   }
 
-  getAssessmentData(){
+  getAssessmentData() {
     this.homeSvc.getAssessmentinfo().subscribe(
       (res: any) => {
         if (res && res.result && res.result.response) {

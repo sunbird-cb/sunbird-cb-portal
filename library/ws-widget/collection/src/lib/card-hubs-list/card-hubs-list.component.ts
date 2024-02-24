@@ -55,6 +55,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   public id = `hub_${Math.random()}`
   public activeRoute = ''
   public showDashboardIcon = true
+  isHubEnable!: boolean
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
   constructor(
@@ -72,8 +73,9 @@ export class CardHubsListComponent extends WidgetBaseComponent
   inactiveHubList!: NsInstanceConfig.IHubs[]
   ngOnInit() {
     this.router.events.subscribe((event: any) => {
-
       if (event instanceof NavigationEnd) {
+          // certificate link check
+          this.isHubEnable = (event.url.includes('/certs') || event.url.includes('/public/certs')) ? false : true
           // Hide loading indicator
           // console.log('event', event)
           if (event.url === '/' || event.url.includes('/page/home')) {
