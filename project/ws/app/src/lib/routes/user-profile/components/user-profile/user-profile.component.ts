@@ -228,9 +228,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.fetchMeta()
   }
   ngOnInit() {
-    // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
-    //   console.log('ngOnInit - value', value);
-    // })
     this.verifiedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.verifiedKarmayogi
     this.rejectedKarmayogiMsg = USER_PROFILE_MSG_CONFIG.rejectedKarmayogiMsg
     const approvalData = _.compact(_.map(this.approvalConfig, (v, k) => {
@@ -753,15 +750,28 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }
 
           this.getUserDetails(userdata)
-        }, err => {
+        },
+        (err: any) => {
           if (err) { this.openSnackbar('Something went wrong, please try again later!') }
         }
       )
+    } else {
+      if (this.configSvc.userProfile) {
+        const tempData = this.configSvc.userProfile
+        this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
+        this.createUserForm.patchValue({
+          firstname: tempData.firstName,
+          // surname: tempData.lastName,
+          primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
+          orgName: tempData.rootOrgName,
+
+        })
+      }
     }
   }
 
   getUserDetails(data: any) {
-    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
+      // if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.id) {
       // if (this.configSvc.userProfile) {
       // this.userProfileSvc.getUserdetailsFromRegistry(this.configSvc.unMappedUser.id).subscribe(
       // (data: any) => {
@@ -807,19 +817,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
       // this.handleFormData(data[0])
       // },
-    } else {
-      if (this.configSvc.userProfile) {
-        const tempData = this.configSvc.userProfile
-        this.userProfileData = _.get(this.configSvc, 'unMappedUser.profileDetails')
-        this.createUserForm.patchValue({
-          firstname: tempData.firstName,
-          // surname: tempData.lastName,
-          primaryEmail: _.get(this.configSvc.unMappedUser, 'profileDetails.personalDetails.primaryEmail') || tempData.email,
-          orgName: tempData.rootOrgName,
-
-        })
-      }
-    }
+    // }
   }
 
   private populateOrganisationDetails(data: any) {
