@@ -54,6 +54,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   janDataEnable:boolean = true
   // defaultLogo: false
   animationDuration: number | undefined
+  isHubEnable!: boolean
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -69,8 +70,10 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     }
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
+        this.isHubEnable = (event.url.includes('/certs') || event.url.includes('/public/certs')) ? false : true;
         this.cancelTour()
       } else if (event instanceof NavigationEnd) {
+        this.isHubEnable = (event.url.includes('/certs') || event.url.includes('/public/certs')) ? false : true;
         this.routeSubs(event)
         this.cancelTour()
         this.bindUrl(event.url.replace('/app/competencies/', ''))
