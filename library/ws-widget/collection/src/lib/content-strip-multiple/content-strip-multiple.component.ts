@@ -1216,6 +1216,9 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
       const labeln = label.toLowerCase()
       return this.langtranslations.translateLabelWithoutspace(labeln, 'contentstripmultiple', '')
     }
+    if(label === 'Based on your interests') {      
+      return this.langtranslations.translateLabelWithoutspace('basedOnYourInterests', 'contentstripmultiple', '')
+    }
     return this.langtranslations.translateLabelWithoutspace(label, 'contentstripmultiple', '')
   }
 }
