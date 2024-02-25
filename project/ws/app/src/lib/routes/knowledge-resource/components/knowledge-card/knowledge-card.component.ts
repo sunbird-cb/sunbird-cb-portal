@@ -7,8 +7,6 @@ import { environment } from 'src/environments/environment'
   selector: 'ws-app-knowledge-card',
   templateUrl: './knowledge-card.component.html',
   styleUrls: ['./knowledge-card.component.scss'],
-  // tslint:disable-next-line
-  host: { class: 'flex flex-1 knowledge_card_full w-full' },
 })
 export class KnowledgeCardComponent implements OnInit {
   environment: any

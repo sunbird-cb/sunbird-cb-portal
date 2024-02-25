@@ -5,6 +5,7 @@ import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { MatSnackBar } from '@angular/material';
 
 const DEFAULT_WEEKLY_DURATION = 300;
 const DEFAULT_DISCUSS_DURATION = 600;
@@ -60,14 +61,18 @@ export class InsightSideBarComponent implements OnInit {
     error: false
   };
   pendingRequestData:any = []
-  pendingRequestSkeleton = true;
-  
+  pendingRequestSkeleton = true
+  showCreds = false
+  credMessage = "View my credentials"
+  assessmentsData: any
+
   constructor(
     private homePageSvc:HomePageService,
     private configSvc:ConfigurationsService,
     private activatedRoute: ActivatedRoute,
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
+    private snackBar: MatSnackBar,
     private events: EventService) { }
 
   ngOnInit() {
@@ -76,9 +81,10 @@ export class InsightSideBarComponent implements OnInit {
       this.homePageData = this.activatedRoute.snapshot.data.pageData.data
     }
     this.getInsights()
-    this.getPendingRequestData();
+    this.getPendingRequestData()
     this.noDataValue = noData
-    this.getDiscussionsData();
+    this.getDiscussionsData()
+    //this.getAssessmentData()
   }
 
   getInsights() {
@@ -146,6 +152,22 @@ export class InsightSideBarComponent implements OnInit {
     this.clapsDataLoading = false
   }
 
+  getAssessmentData(){
+    this.homePageSvc.getAssessmentinfo().subscribe(
+      (res: any) => {
+        if (res && res.result && res.result.response) {
+          this.assessmentsData = res.result.response
+        }
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          // tslint:disable-next-line
+          console.log(error)
+        }
+      }
+    )
+  }
+
   getDiscussionsData(): void {
     this.discussion.loadSkeleton = true;
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
@@ -159,13 +181,13 @@ export class InsightSideBarComponent implements OnInit {
           this.discussion.error = true;
         }
       }
-    );
+    )
   }
 
   getPendingRequestData() {
     this.homePageSvc.getRecentRequests().subscribe(
       (res: any) => {
-        
+
         this.pendingRequestSkeleton = false;
         this.pendingRequestData = res.result.data && res.result.data.map((elem: any) => {
           elem.fullName = elem.fullName.charAt(0).toUpperCase() + elem.fullName.slice(1)
@@ -190,7 +212,7 @@ export class InsightSideBarComponent implements OnInit {
   expandCollapse(event:any) {
     this.collapsed = event
   }
-  
+
   goToActivity(_e: any) {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`);
   }
@@ -251,6 +273,33 @@ export class InsightSideBarComponent implements OnInit {
         module: WsEvents.EnumTelemetrymodules.HOME
       }
     )
+  }
+
+  toggleCreds() {
+    this.showCreds = !this.showCreds
+    if (this.showCreds) {
+      this.credMessage = "Hide my credentials"
+    } else {
+      this.credMessage = "View my credentials"
+    }
+  }
+
+  copyToClipboard(text: string) {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    //textArea.focus()
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    this.openSnackbar('copied')
+    this.raiseTelemetry('copyToClipboard')
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }
 

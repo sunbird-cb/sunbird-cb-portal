@@ -500,7 +500,7 @@
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other Languages Known label|Label which explains the user to enter Other Languages Known"
                       i18n-aria-label aria-label="Other Languages Known label">
-                      Other Languages Known
+                      Other Known Languages
                     </p>
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <mat-chip-list #chipList title="chip input for selecting languages">
@@ -517,7 +517,7 @@
                           maxlength="30" />
                       </mat-chip-list>
                       <mat-error [hidden]="false" i18n="Other Languages Known is mandatory">
-                        Other Languages Known is mandatory
+                        Other Known Languages is mandatory
                       </mat-error>
                       <!-- <input matInput type="text" placeholder="known Languages" i18n-placeholder="known Languages" formControlName="knownLanguages"
     [matAutocomplete]="knownLanguagesAuto" i18n-aria-label aria-label="known Languages" #knownLanguages /> -->
@@ -770,7 +770,7 @@
                     [ngClass]="{ disable: !isAllowed('orgNameOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
-                      Other
+                      Other Organisation Name
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #orgNameOther formControlName="orgNameOther" i18n-placeholder
@@ -813,7 +813,7 @@
                     [ngClass]="{ disable: !isAllowed('industryOther') }">
                     <p class=" margin-remove-bottom form-label"
                       i18n="Other label|Label which explains the user to enter Other">
-                      Other
+                      Other Industry
                     </p>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input matInput #industryOther formControlName="industryOther" i18n-placeholder

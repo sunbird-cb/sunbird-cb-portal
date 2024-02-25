@@ -10,7 +10,7 @@
         <ng-container [@enterAnimation]="visible">
           <div *ngFor="let hub of hubsList" class="flex items-center nav-menu">
             <ng-container *ngIf="(hub.hubname == 'Discuss' && hub.active)">
-              <a [id]="hub.hubname" class="simple-hubs-link" i18n-aria-label role="menuitem" (click)="navigate(hub.hubname)">
+              <a [id]="hub.hubname" class="simple-hubs-link" i18n-aria-label role="menuitem" (click)="navigate(hub.hubname); trackTelemetry(hub.hubname)">
                 <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'"> {{hub.hubname}}</span>
               </a>
@@ -207,7 +207,7 @@
 
 <ng-template #userIndividualNew let-hubs="hubs">
   <ng-container *ngIf="hubs.hubname == 'Discuss' && !hubs.active">
-    <a [id]="hubs.hubname" class="mobile flex flex-wrap mb-4" (click)="toggleVisibility(); navigate()" role="menuitem" i18n-aria-label>
+    <a [id]="hubs.hubname" class="mobile flex flex-wrap mb-4" (click)="toggleVisibility(); navigate(); trackTelemetry(hubs.hubname)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}} -->
         <!-- <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
@@ -223,7 +223,7 @@
   </ng-container>
 
   <ng-container *ngIf="hubs.hubname != 'Discuss' && !hubs.active">
-    <a class="flex flex-wrap mb-4 mobile" [id]="hubs.hubname" (click)="toggleVisibility();" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
+    <a class="flex flex-wrap mb-4 mobile" [id]="hubs.hubname" (click)="toggleVisibility(); trackTelemetry(hubs.hubname)" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}}
         <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->

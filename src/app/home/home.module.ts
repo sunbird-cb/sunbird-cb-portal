@@ -31,6 +31,7 @@ import { DiscussHubComponent } from './home/discuss-hub/discuss-hub.component';
 import { NetworkHubComponent } from './home/network-hub/network-hub.component';
 import { HomePageService } from '../services/home-page.service';
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module';
+import { MatTooltipModule } from '@angular/material';
 
 @NgModule({
   declarations: [HomeComponent, FeedListComponent, InsightSideBarComponent, PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent, HomeOtherPortalComponent, HomeContainerComponent, DiscussHubComponent, NetworkHubComponent],
@@ -40,7 +41,7 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
     HomeRoutingModule,
     GridLayoutModule,
     SlidersModule,
-    DiscussStripMultipleModule, 
+    DiscussStripMultipleModule,
     NetworkStripMultipleModule,
     ContentStripWithTabsModule,
     MatCardModule,
@@ -55,7 +56,8 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
     SkeletonLoaderModule,
     PipeRelativeTimeModule,
     AvatarPhotoModule,
-    PendingRequestModule
+    PendingRequestModule,
+    MatTooltipModule
   ],
   exports: [
     HeaderModule,

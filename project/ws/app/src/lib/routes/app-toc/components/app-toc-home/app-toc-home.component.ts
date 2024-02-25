@@ -165,6 +165,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isClaimed = false
   monthlyCapExceed = false
   isCompletedThisMonth = false
+  certId: any
+
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -370,7 +372,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.cbPlanEndDate = cbp[0].endDate
         const sDate = dayjs(this.serverDate).format('YYYY-MM-DD')
         const daysCount = dayjs(this.cbPlanEndDate).diff(this.serverDate, 'day')
-        this.cbPlanDuration =  daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
+        this.cbPlanDuration = daysCount < 0 ? NsCardContent.ACBPConst.OVERDUE : daysCount > 29
           ? NsCardContent.ACBPConst.SUCCESS : NsCardContent.ACBPConst.UPCOMING
         if (acbp && this.cbPlanEndDate && acbp === 'cbPlan') {
           this.isAcbpCourse = true
@@ -423,7 +425,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       {
         pageIdExt: 'btn-acbp-claim',
         module: WsEvents.EnumTelemetrymodules.KARMAPOINTS,
-    })
+      })
   }
 
   onClickOfClaim(event: any) {
@@ -440,7 +442,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.isClaimed = true
       this.openSnackbar('Karma points are successfully claimed.')
       this.getUserEnrollmentList()
-    },                                                  (error: any) => {
+    },
+                                                        (error: any) => {
       // tslint:disable:no-console
       console.log(error)
       this.openSnackbar('something went wrong.')
@@ -791,7 +794,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 )
                 this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
                 /* tslint:disable-next-line */
-                console.log(this.resumeDataLink,'=====> home resum data link <========')
+                console.log(this.resumeDataLink, '=====> home resum data link <========')
               }
               this.enrollBtnLoading = false
             } else {
@@ -825,7 +828,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 this.fetchBatchDetails()
                 // this.fetchUserWFForBlended()
               }
-            }  else {
+            } else {
               this.fetchBatchDetails()
             }
             this.enrollBtnLoading = false
@@ -846,7 +849,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       serviceName: 'blendedprogram',
       limit: 100,
       offset: 0,
-  }
+    }
     this.contentSvc.fetchBlendedUserWF(req).then(
       (data: any) => {
         if (data && data.result && data.result.data.length) {
@@ -854,12 +857,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             return new Date(el.lastUpdatedOn).getTime()
           })
           // latestWF.currentStatus = this.WFBlendedProgramStatus.REJECTED
-           /* tslint:disable-next-line */
+          /* tslint:disable-next-line */
           this.batchData!.workFlow = {
-              wfInitiated : true,
-              /* tslint:disable-next-line */
-              batch: this.batchData && this.batchData.content && this.batchData.content.find((e: any) => e.batchId === latestWF.applicationId),
-              wfItem: latestWF,
+            wfInitiated: true,
+            /* tslint:disable-next-line */
+            batch: this.batchData && this.batchData.content && this.batchData.content.find((e: any) => e.batchId === latestWF.applicationId),
+            wfItem: latestWF,
           }
           this.tocSvc.setWFData(this.batchData)
         }
@@ -922,9 +925,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   downloadCert(certidArr: any) {
     if (certidArr.length > 0) {
-      const certId = certidArr[0].identifier
+      this.certId = certidArr[0].identifier
 
-      this.contentSvc.downloadCert(certId).subscribe(response => {
+      this.contentSvc.downloadCert(this.certId).subscribe(response => {
         this.certData = response.result.printUri
         // var win = window.open();
         // win.document.write('<iframe src="' + url  +
@@ -948,7 +951,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.dialog.open(CertificateDialogComponent, {
       // height: '400px',
       width: '1300px',
-      data: { cet },
+      data: { cet, certId: this.certId },
       // panelClass: 'custom-dialog-container',
     })
   }
@@ -1385,7 +1388,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       )
 
       /* tslint:disable-next-line */
-      console.log(this.firstResourceLink,'=====> home first data link <========')
+      console.log(this.firstResourceLink, '=====> home first data link <========')
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
         this.updateProgress(2, firstPlayableContent.identifier)
       }
@@ -1560,7 +1563,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   updateProgress(status: number, resourceId: any) {
     const collectionId = this.route.snapshot.params.id ?
-    this.route.snapshot.params.id : ''
+      this.route.snapshot.params.id : ''
     const batchId = this.route.snapshot.queryParams.batchId ?
       this.route.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
@@ -1594,5 +1597,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     },                                    (_err: any) => {
       this.tocSvc.changeServerDate(new Date().getTime())
     })
+  }
+
+  raiseCertIntreactTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'view-certificate',
+        subType: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      },
+      {
+        id: this.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      })
   }
 }

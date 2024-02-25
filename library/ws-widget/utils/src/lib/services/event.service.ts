@@ -11,6 +11,7 @@ import moment from 'moment'
 })
 export class EventService {
   todaysEvents: any = []
+  
   private eventsSubject = new Subject<WsEvents.IWsEvents<any>>()
   public events$ = this.eventsSubject.asObservable()
 
@@ -202,6 +203,7 @@ export class EventService {
 
  setEventListData(eventObj: any) {
   if (eventObj !== undefined) {
+    this.todaysEvents = []
     const data = eventObj
    // console.log('strip comp', data)
     Object.keys(data).forEach((index: any) => {
