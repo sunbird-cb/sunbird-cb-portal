@@ -15,13 +15,14 @@ import {
   UtilityService,
   MultilingualTranslationsService,
 } from '@sunbird-cb/utils'
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { BtnSettingsService } from '@sunbird-cb/collection'
 import { FormControl } from '@angular/forms'
-import { Subscription } from 'rxjs'
+import { Subscription, of } from 'rxjs'
 import { Router, ActivatedRoute } from '@angular/router'
 import { MatSnackBar, MatSelectChange, MatTabChangeEvent } from '@angular/material'
 import { TranslateService } from '@ngx-translate/core'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'ws-app-settings',
@@ -59,6 +60,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
   // showProfileSettings = false
   selectedLanguage = 'en'
   multiLang: any = []
+  isMultiLangEnabled: any
+  defaultLang = [
+    {
+      value: 'English',
+      key: 'en',
+      checked : true,
+    },
+  ]
 
   constructor(
     // todo mobile settings removed
@@ -71,6 +80,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private utilitySvc: UtilityService,
     private langtranslations: MultilingualTranslationsService,
     private translate: TranslateService,
+    private http: HttpClient,
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -86,6 +96,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.translate.use(lang)
         this.selectedLanguage = lang
       }
+    })
+
+    this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
+      const topnavconfig = sectionData.data.topRightNavConfig
+      topnavconfig.forEach((item: any) => {
+        if (item.section === 'language') {
+          this.isMultiLangEnabled = item.active
+        }
+      })
     })
   }
 
@@ -291,6 +310,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
       true,
       this.selectedLanguage,
       this.configSvc.unMappedUser ? this.configSvc.unMappedUser.id : ''
+    )
+  }
+
+  getHeaderFooterConfiguration() {
+    const baseUrl = this.configSvc.sitePath
+    // tslint:disable-next-line: prefer-template
+    return this.http.get(baseUrl + '/page/home.json').pipe(
+      map(data => ({ data, error: null })),
+      catchError(err => of({ data: null, error: err })),
     )
   }
 }

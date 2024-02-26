@@ -1,4 +1,4 @@
-<mat-card class="base-layout container-balanced" role="navigation">
+<mat-card class="base-layout container-balanced" role="navigation" *ngIf="isHubEnable">
   <mat-card-content>
     <div class="flex flex-1 flex-column" role="presentation">
       <div class="flex flex-1 secondary-nav" role="menubar">
@@ -201,7 +201,7 @@
   </mat-card-content>
 </mat-card>
 
-<ng-template #userIndividualNew let-hubs="hubs">
+<ng-template #userIndividualNew let-hubs="hubs" *ngIf="isHubEnable">
   <ng-container *ngIf="hubs.hubname == 'Discuss' && !hubs.active">
     <a [id]="hubs.hubname" class="mobile flex flex-wrap mb-4" (click)="toggleVisibility(); navigate(); trackTelemetry(hubs.hubname)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
