@@ -84,13 +84,14 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
   dialogRef: any
   displayLoader = false
   disableLoadMore = false
-  lookupLimit = 3
   lookupLoading: Boolean = true
   lastLookUp: any
   ratingLookup: any
   reviewPage = 1
-  ratingViewCount = 7
-  reviewDefaultLimit = 6
+  reviewDefaultLimit = 2
+  ratingViewCount = 3
+  lookupLimit = 3
+  ratingViewCountDefault = 3
   competenciesObject: any = {}
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
@@ -239,6 +240,8 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
             this.ratingSummary = res.result.response
           }
 
+          // Hide loader for MatDialog...
+          if (this.dialogRef) { this.dialogRef.componentInstance.displayLoader = false }
           this.ratingSummaryProcessed = this.processRatingSummary()
         },
         (err: any) => {
@@ -403,6 +406,7 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
       }
       ratingSummaryPr.latest50Reviews = modifiedReviews
       this.topRatingReviews = modifiedReviews
+      this.reviewDataService.setReviewData(this.topRatingReviews)
     }
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
@@ -436,8 +440,15 @@ export class AppTocAboutComponent implements OnInit, AfterViewInit, OnChanges, O
       this.loadMore(_value)
     })
 
-    this.dialogRef.componentInstance.loadLatestReviews.subscribe((_value: boolean) => {
-      this.fetchRatingLookup()
+    this.dialogRef.componentInstance.loadLatestReviews.subscribe((_value: string) => {
+      this.dialogRef.componentInstance.displayLoader = true
+      this.reviewPage = 1
+
+      if (_value === 'Latest') {
+        this.fetchRatingLookup()
+      } else {
+        this.fetchRatingSummary()
+      }
     })
   }
 

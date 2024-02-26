@@ -84,7 +84,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   handleReviewsFilter(str: string): void {
     this.showFilterIndicator = str
-    this.loadLatestReviews.emit(true)
+    this.loadLatestReviews.emit(str)
   }
 
   handleLoadMore(): void {
