@@ -60,10 +60,17 @@ export class ProfileCardStatsComponent implements OnInit {
         this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
         this.republicDayData['textColor'] = defaultData['textColor']
         let userName = this.userInfo.firstName
-        if (userName.length > 18) {
-          userName = `${this.userInfo.firstName.slice(0, 18)}...`
+        if(userName) {
+          let userNameFW = userName.split(" ");  
+          if(userNameFW && userNameFW[0].length >= 2) {
+            userName = `${userNameFW[0]}`
+          }    
+          if (userName.length > 18) {
+            userName = `${this.userInfo.firstName.slice(0, 18)}...`
+          }
+          this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
         }
-        this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
+        
         this.showrepublicBanner = true
         setTimeout(() => {
           this.showrepublicBanner = false
@@ -74,11 +81,22 @@ export class ProfileCardStatsComponent implements OnInit {
           this.republicDayData['backgroupImage'] = data.backgroupImage
           this.republicDayData['info'] = data['info'][rand]
           this.republicDayData['centerImage'] = data['centerImage'][rand]
+          // let userName = this.userInfo.firstName
+          // if (userName.length > 18) {
+          //   userName = `${this.userInfo.firstName.slice(0, 18)}...`
+          // }
+          // this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
           let userName = this.userInfo.firstName
-          if (userName.length > 18) {
-            userName = `${this.userInfo.firstName.slice(0, 18)}...`
+          if(userName) {
+            let userNameFW = userName.split(" ");  
+            if(userNameFW && userNameFW[0].length >= 2) {
+              userName = `${userNameFW[0]}`
+            }    
+            if (userName.length > 18) {
+              userName = `${this.userInfo.firstName.slice(0, 18)}...`
+            }
+            this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
           }
-          this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
           this.republicDayData['textColor'] = data['textColor']
           this.showrepublicBanner = true
         }
