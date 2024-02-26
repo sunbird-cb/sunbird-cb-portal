@@ -162,6 +162,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       lang = lang.replace(/\"/g, '')
       this.selectedLanguage = lang
       this.translate.use(lang)
+    } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
     }
 
     let userData: any = {}

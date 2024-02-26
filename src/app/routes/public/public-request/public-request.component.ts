@@ -134,6 +134,9 @@ export class PublicRequestComponent implements OnInit {
       lang = lang.replace(/\"/g, '')
       this.selectedLanguage = lang
       this.translate.use(lang)
+    } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
     }
     this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
       const topnavconfig = sectionData.data.topRightNavConfig

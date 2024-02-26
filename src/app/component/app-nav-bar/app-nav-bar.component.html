@@ -179,9 +179,9 @@
 </ng-template>
 <ng-template #karmaBadge>
   <div class="flex flex-middle points-block">
-    <img (click)="viewKarmapoints()" src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
+    <img (click)="viewKarmapoints()" src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo cursor-pointer" />
     <div class="margin-left-xs">
-      <p class="karma-lbl flex ">
+      <p class="karma-lbl flex">
         {{ 'appnavbar.karmaPoints' | translate }}<img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button
         matTooltip="{{ 'appnavbar.karmaPointsToolTip' | translate }}"
         [matTooltipPosition]="'below'"  (click)="tooltip.show()"
