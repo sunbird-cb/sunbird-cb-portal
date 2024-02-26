@@ -62,7 +62,7 @@ export class ProfileCardStatsComponent implements OnInit {
         let userName = this.userInfo.firstName
         if(userName) {
           let userNameFW = userName.split(" ");
-          if(userNameFW && userNameFW[0] && userNameFW[0].length >= 2) {
+          if(userNameFW && userName.length && userNameFW[0] && userNameFW[0].length >= 2) {
             userName = `${userNameFW[0]}`
           }
           if (userName.length > 18) {
@@ -89,7 +89,7 @@ export class ProfileCardStatsComponent implements OnInit {
           let userName = this.userInfo.firstName
           if(userName) {
             let userNameFW = userName.split(" ");
-            if(userNameFW && userNameFW[0] && userNameFW[0].length >= 2) {
+            if(userNameFW && userName.length && userNameFW[0] && userNameFW[0].length >= 2) {
               userName = `${userNameFW[0]}`
             }
             if (userName.length > 18) {
