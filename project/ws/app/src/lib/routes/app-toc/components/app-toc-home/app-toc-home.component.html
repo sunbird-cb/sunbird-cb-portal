@@ -424,6 +424,7 @@
                     </div>
                   </div>
                 </div>
+                
                 <ng-container *ngIf="certData">
                   <a class="certificate_box" (click)="openCertificateDialog()">
                     <img [src]="certData | pipeSafeSanitizer: 'url'" class="certificate_banner" />
