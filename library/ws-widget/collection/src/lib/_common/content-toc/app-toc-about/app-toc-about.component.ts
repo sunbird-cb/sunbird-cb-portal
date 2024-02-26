@@ -15,6 +15,7 @@ import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
 import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
+import { ReviewComponentDataService } from '../content-services/review-component-data.service'
 
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
@@ -74,7 +75,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private tocSvc: AppTocService,
     private configService: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router
+    private router: Router,
+    private reviewDataService: ReviewComponentDataService
   ) {
 
   }
@@ -105,18 +107,19 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   ratingSummary: any
   authReplies: any
   ratingSummaryProcessed: any
-  ratingReviews: any[] = []
-  reviews: any[] = []
+  topRatingReviews: any[] = []
+  latestReviews: any[] = []
   dialogRef: any
   displayLoader = false
   disableLoadMore = false
-  lookupLimit = 3
   lookupLoading: Boolean = true
   lastLookUp: any
   ratingLookup: any
   reviewPage = 1
-  ratingViewCount = 3
   reviewDefaultLimit = 2
+  ratingViewCount = 3
+  lookupLimit = 3
+  ratingViewCountDefault = 3
   competenciesObject: any = []
   private destroySubject$ = new Subject<any>()
   viewMoreTags = false
@@ -310,8 +313,9 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
             this.ratingSummary = res.result.response
           }
 
+          // Hide loader for MatDialog...
+          if (this.dialogRef) { this.dialogRef.componentInstance.displayLoader = false }
           this.ratingSummaryProcessed = this.processRatingSummary()
-          this.fetchRatingLookup()
         },
         (err: any) => {
           this.loggerService.error('USER RATING FETCH ERROR >', err)
@@ -370,24 +374,30 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       } else {
         this.disableLoadMore = false
       }
+
       this.lastLookUp = response[response.length - 1]
-      this.ratingReviews = this.ratingLookup
+      // this.ratingReviews = this.ratingLookup
+      this.latestReviews = this.ratingLookup
       this.authReplies = []
-      this.authReplies = _.keyBy(this.ratingReviews, 'userId')
-      const userIds = _.map(this.ratingReviews, 'userId')
+      this.authReplies = _.keyBy(this.latestReviews, 'userId')
+      const userIds = _.map(this.latestReviews, 'userId')
       if (this.content && userIds) {
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
-      this.ratingReviews = this.ratingReviews.slice()
+
+      if (this.latestReviews) {
+        this.latestReviews = this.latestReviews.slice()
+        this.reviewDataService.setReviewData(this.latestReviews)
+      }
     }
   }
 
   getAuthorReply(identifier: string, primaryCategory: NsContent.EPrimaryCategory, userIds: any[]) {
     const request = {
       request: {
-          activityId: identifier,
-          activityType: primaryCategory,
-          userId: userIds,
+        activityId: identifier,
+        activityType: primaryCategory,
+        userId: userIds,
       },
     }
 
@@ -403,7 +413,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
           })
         }
 
-        this.reviews = Object.values(this.authReplies)
+        // this.reviews = Object.values(this.authReplies)
+        this.latestReviews = Object.values(this.authReplies)
         return this.authReplies
       },
       (err: any) => {
@@ -470,7 +481,9 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
       ratingSummaryPr.latest50Reviews = modifiedReviews
-      this.ratingReviews = modifiedReviews
+      // this.ratingReviews = modifiedReviews
+      this.topRatingReviews = modifiedReviews
+      this.reviewDataService.setReviewData(this.topRatingReviews)
     }
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
@@ -492,7 +505,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   handleOpenReviewModal(): void {
     this.dialogRef = this.dialog.open(ReviewsContentComponent, {
       width: '400px',
-      data: { ratings: this.ratingSummaryProcessed, reviews: this.authReplies },
+      data: { ratings: this.ratingSummaryProcessed, reviews: this.authReplies, latestReviews: this.ratingLookup },
       panelClass: 'ratings-modal-box',
       disableClose: true,
     })
@@ -500,17 +513,33 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     this.dialogRef.afterClosed().subscribe((_result: any) => {
     })
 
-    this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: any) => {
-      this.loadMore()
+    this.dialogRef.componentInstance.initiateLoadMore.subscribe((_value: string) => {
+      this.loadMore(_value)
+    })
+
+    this.dialogRef.componentInstance.loadLatestReviews.subscribe((_value: string) => {
+      this.dialogRef.componentInstance.displayLoader = true
+      this.reviewPage = 1
+
+      if (_value === 'Latest') {
+        this.fetchRatingLookup()
+      } else {
+        this.fetchRatingSummary()
+      }
     })
   }
 
-  loadMore() {
+  loadMore(selectedReview: string) {
     if (!this.disableLoadMore) {
       this.lookupLoading = true
       this.reviewPage = this.reviewPage + 1
       this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
-      this.fetchRatingLookup()
+      // this.fetchRatingLookup()
+      if (selectedReview === 'Latest') {
+        this.fetchRatingLookup()
+      } else {
+        this.fetchRatingSummary()
+      }
     }
   }
 
@@ -537,11 +566,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
           label: 'Your discussion',
           enable: true,
         },
-        // {
-        //   route: 'leaderboard',
-        //   label: 'Leader Board',
-        //   enable: true,
-        // },
       ],
       userName: (this.configService.nodebbUserProfile && this.configService.nodebbUserProfile.username) || '',
       context: {

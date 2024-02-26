@@ -259,13 +259,13 @@
             <div class="flex flex-col gap-3">
                 <div class="flex flex-row gap-4">
                     <div class="flex-1 mat-subheading-1" id="reviewContainer">{{ 'apptocsinglepage.topReviews' | translate }}</div>
-                    <ng-container *ngIf="reviews && reviews?.length">
+                    <ng-container *ngIf="topRatingReviews && topRatingReviews?.length">
                         <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()">{{ 'msg.showAll' | translate }}</div>
                     </ng-container>
                 </div>
-                <ng-container *ngIf="reviews && reviews?.length">
+                <ng-container *ngIf="topRatingReviews && topRatingReviews?.length">
                     <div class="flex gap-5" [ngClass]="isMobile ? 'horizontal-strip' : 'flex-wrap'">
-                        <div class="comment-div" *ngFor="let eachReview of reviews; let i = index">
+                        <div class="comment-div" *ngFor="let eachReview of topRatingReviews | slice:0:4; let i = index">
                             <div class="p-4 flex flex-col gap-6">
                                 <div class="flex flex-row gap-4">
                                     <div class="flex-1">
@@ -276,19 +276,19 @@
                                         <div>{{ eachReview?.rating }}</div>
                                     </div>
                                 </div>
-                                <div class="flex flex-row gap-2 items-center">
+                                <div class="flex flex-row gap-2 items-center text-sm">
                                     <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''" [name]="eachReview?.firstName"></ws-widget-avatar-photo>
-                                    <div>{{ handleCapitalize(eachReview?.firstName) }}</div>
+                                    <div>{{ handleCapitalize(eachReview?.firstName.toLowerCase()) }}</div>
                                     <div class="flex items-center">
                                         <span class="period"></span>
                                     </div>
-                                    <div>{{ eachReview?.updatedon | pipeRelativeTime }}</div>
+                                    <div>{{ eachReview?.date | pipeRelativeTime }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </ng-container>
-                <div *ngIf="!reviews || !reviews?.length">
+                <div *ngIf="!topRatingReviews || !topRatingReviews?.length">
                     <div class="flex flex-col text-center items-center justify-center bg-white p-4 rounded-md">
                         <div class="font-base font-bold">{{ 'apptocsinglepage.noReviewsFound' | translate }}</div>
                     </div>
