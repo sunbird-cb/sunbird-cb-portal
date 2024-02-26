@@ -108,6 +108,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   authReplies: any
   ratingSummaryProcessed: any
   topRatingReviews: any[] = []
+  ratingReviews: any[] = []
   latestReviews: any[] = []
   dialogRef: any
   displayLoader = false
@@ -147,15 +148,12 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       viewMoreText: 'Show all',
       queryParams: '',
     },
-    // loaderConfig: {
-    //   cardSubType: 'card-portrait-click-skeleton',
-    // },
     tabs: [],
     filters: [],
   }
-
   timer: any = {}
   isMobile = false
+
   ngOnInit() {
     if (window.innerWidth <= 1200) {
       this.isMobile = true
@@ -337,7 +335,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
       this.ratingService.getRatingLookup(req).subscribe(
         (res: any) => {
-          if (this.dialogRef) {   // To disable the loader in the modal.
+          // To disable the loader in the modal.
+          if (this.dialogRef) {   
             this.dialogRef.componentInstance.displayLoader = false
           }
 
@@ -376,8 +375,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       }
 
       this.lastLookUp = response[response.length - 1]
-      // this.ratingReviews = this.ratingLookup
-      this.latestReviews = this.ratingLookup
+      this.ratingReviews = this.ratingLookup
       this.authReplies = []
       this.authReplies = _.keyBy(this.latestReviews, 'userId')
       const userIds = _.map(this.latestReviews, 'userId')
@@ -385,9 +383,9 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
 
-      if (this.latestReviews) {
-        this.latestReviews = this.latestReviews.slice()
-        this.reviewDataService.setReviewData(this.latestReviews)
+      if (this.ratingReviews) {
+        this.ratingReviews = this.ratingReviews.slice()
+        this.reviewDataService.setReviewData(this.ratingReviews)
       }
     }
   }
@@ -413,7 +411,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
           })
         }
 
-        // this.reviews = Object.values(this.authReplies)
         this.latestReviews = Object.values(this.authReplies)
         return this.authReplies
       },
@@ -481,9 +478,9 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
       ratingSummaryPr.latest50Reviews = modifiedReviews
-      // this.ratingReviews = modifiedReviews
+      this.ratingReviews = modifiedReviews
       this.topRatingReviews = modifiedReviews
-      this.reviewDataService.setReviewData(this.topRatingReviews)
+      this.reviewDataService.setReviewData(this.ratingReviews)
     }
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
@@ -519,12 +516,18 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
     this.dialogRef.componentInstance.loadLatestReviews.subscribe((_value: string) => {
       this.dialogRef.componentInstance.displayLoader = true
+      this.ratingViewCount = this.ratingViewCountDefault
+      this.lastLookUp = ''
+      this.ratingReviews = []
       this.reviewPage = 1
-
-      if (_value === 'Latest') {
-        this.fetchRatingLookup()
-      } else {
-        this.fetchRatingSummary()
+      this.disableLoadMore = false
+      this.ratingLookup = []
+      if (!this.forPreview) {
+        if (_value === 'Latest') {
+          this.fetchRatingLookup()
+        } else {
+          this.fetchRatingSummary()
+        }
       }
     })
   }
@@ -534,11 +537,17 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       this.lookupLoading = true
       this.reviewPage = this.reviewPage + 1
       this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
-      // this.fetchRatingLookup()
       if (selectedReview === 'Latest') {
+        this.reviewPage = this.reviewPage + 1
+        this.ratingViewCount = this.reviewPage * this.reviewDefaultLimit
         this.fetchRatingLookup()
       } else {
-        this.fetchRatingSummary()
+        if ((this.reviewPage * this.ratingViewCount) > this.ratingReviews.length) {
+          this.disableLoadMore = true
+          this.dialogRef.componentInstance.displayLoader = false
+        }
+        this.reviewPage = this.reviewPage + 1
+        this.ratingViewCount = this.reviewPage * this.ratingViewCount
       }
     }
   }
