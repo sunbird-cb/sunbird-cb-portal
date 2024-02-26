@@ -41,7 +41,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   prefChangeSubscription: Subscription | null = null
   sourceLogos: NsInstanceConfig.ISourceLogo[] | undefined
 
-  isIntranetAllowedSettings = false 
+  isIntranetAllowedSettings = false
   constructor(
     private dialog: MatDialog,
     private events: EventService,
@@ -84,7 +84,7 @@ export class CardContentV2Component extends WidgetBaseComponent
           contentName: this.widgetData.content.name,
           contentType: this.widgetData.content.contentType,
           primaryCategory: this.widgetData.content.primaryCategory,
-  
+
         }
       }
       this.modifySensibleContentRating()
@@ -227,7 +227,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   }
 
   private modifySensibleContentRating() {
-    if (this.widgetData.content) 
+    if (this.widgetData.content)
     if(this.widgetData.content.averageRating &&
       typeof this.widgetData.content.averageRating !== 'number'){
       // tslint:disable-next-line: ter-computed-property-spacing
@@ -372,7 +372,7 @@ export class CardContentV2Component extends WidgetBaseComponent
         const cet = res.result.printUri
         this.dialog.open(CertificateDialogComponent, {
           width: '1300px',
-          data: { cet },
+          data: { cet, certId: certData.identifier },
         })
       })
     } else {
@@ -388,7 +388,7 @@ export class CardContentV2Component extends WidgetBaseComponent
           cbpList[data.identifier] = data
         })
       }
-      this.cbPlanMapData = cbpList 
+      this.cbPlanMapData = cbpList
       // this.karmaPointLoading = false
       clearInterval(this.cbPlanInterval)
     }

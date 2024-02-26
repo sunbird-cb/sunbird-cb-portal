@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { Router } from '@angular/router'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { jsPDF } from 'jspdf'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-widget-app-profile-certificate-dialog',
@@ -61,7 +62,8 @@ export class ProfileCertificateDialogComponent implements OnInit {
     //   `${this.data.cet}`)
     // searchParams.set('url', a);
     // console.log(a);
-    this.navUrl = `https://www.linkedin.com/shareArticle?title=I%20earned%20a%20certficiation&url=${this.data.value.content.appIcon}`
+    // tslint:disable-next-line: max-line-length
+    this.navUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${environment.contentHost}/apis/public/v8/cert/download/${this.data.certId}`
     // this.navUrl =  url
     // console.log("navurl", this.navUrl)
   }
