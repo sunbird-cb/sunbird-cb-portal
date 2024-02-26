@@ -41,7 +41,7 @@
     </div>
 
     <div class="flex flex-col gap-5">
-        <div class="text-base font-semibold">Associated Certificates 
+        <div class="text-base font-semibold">Associated Certificates
             <span *ngIf="certificateData?.length">({{ certificateData?.length }})</span>
         </div>
 
@@ -70,6 +70,7 @@
                                     </ng-container>
                                     <ng-container *ngIf="!eachCert?.loading && !eachCert.error && eachCert?.identifier">
                                         <mat-icon class="icon cursor-pointer" (click)="handleDownloadCertificatePDF(eachCert?.printURI)" >arrow_downward</mat-icon>
+                                        <mat-icon class="icon cursor-pointer share-icon" (click)="shareCertificate(eachCert?.identifier)">share</mat-icon>
                                     </ng-container>
                                 </div>
                             </div>
