@@ -454,6 +454,7 @@ export class InitService {
         this.configSvc.isActive = details.isActive
         this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
 
+        // lang selection
         if (this.configSvc.unMappedUser) {
           if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails
             && this.configSvc.unMappedUser.profileDetails.additionalProperties
@@ -463,7 +464,6 @@ export class InitService {
             localStorage.setItem('websiteLanguage', lang)
           } else {
             if (localStorage.getItem('websiteLanguage')) {
-              // this.translate.setDefaultLang('en')
               let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
               lang = lang.replace(/\"/g, '')
               this.translate.use(lang)

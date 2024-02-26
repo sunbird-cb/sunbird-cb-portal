@@ -1,5 +1,4 @@
 <div class="provider_right_main_block flex flex-1 flex-col">
-
     <p class="mat-title margin-top-s margin-bottom-m">{{provider}}</p>
 
     <!--============= explore_popular_topic ===================-->
@@ -11,8 +10,6 @@
             Explore popular topics cards here
         </div>
     </div> -->
-
-
     <!--============= top_cbp_section ===================-->
     <!-- <div class="top_cbp_section flex flex-col">
         <div class="flex flex-col top_head_block">
@@ -23,8 +20,6 @@
         </div>
 
     </div> -->
-
-
     <div class="all_cbp_box">
         <div class="top_search_box">
             <form [formGroup]="searchForm" class="w-full flex flex-1 justify-between">
@@ -52,10 +47,7 @@
                                     <mat-option [value]="'desc'">{{ 'providerallcbp.descending' | translate }} ( Z - A )</mat-option>
                                 </mat-select>
                             </mat-form-field>
-
                         </div>
-
-
                     </div>
                 </div>
             </form>
@@ -63,7 +55,7 @@
 
         <mat-sidenav-container>
             <mat-sidenav-content class="custom-sidecontent">
-                <p class="mat-title margin-bottom-xs">{{ 'providerallcbp.allCBPs' | translate}}</p>
+                <p class="mat-title margin-bottom-xs">{{ 'providerallcbp.allCbps' | translate }}</p>
                 <p class="mat-body-2 ws-mat-black60-text">{{totalCount || 0}} {{ 'providerallcbp.fromProvider' | translate}}</p>
 
                 <div class="">
@@ -86,5 +78,4 @@
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>
-
 </div>
