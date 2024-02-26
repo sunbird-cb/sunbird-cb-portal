@@ -61,16 +61,16 @@ export class ProfileCardStatsComponent implements OnInit {
         this.republicDayData['textColor'] = defaultData['textColor']
         let userName = this.userInfo.firstName
         if(userName) {
-          let userNameFW = userName.split(" ");  
+          let userNameFW = userName.split(" ");
           if(userNameFW && userNameFW[0].length >= 2) {
             userName = `${userNameFW[0]}`
-          }    
+          }
           if (userName.length > 18) {
             userName = `${this.userInfo.firstName.slice(0, 18)}...`
           }
           this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
         }
-        
+
         this.showrepublicBanner = true
         setTimeout(() => {
           this.showrepublicBanner = false
@@ -88,14 +88,14 @@ export class ProfileCardStatsComponent implements OnInit {
           // this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
           let userName = this.userInfo.firstName
           if(userName) {
-            let userNameFW = userName.split(" ");  
+            let userNameFW = userName.split(" ");
             if(userNameFW && userNameFW[0].length >= 2) {
               userName = `${userNameFW[0]}`
-            }    
+            }
             if (userName.length > 18) {
               userName = `${this.userInfo.firstName.slice(0, 18)}...`
             }
-            this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
+            this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
           }
           this.republicDayData['textColor'] = data['textColor']
           this.showrepublicBanner = true
