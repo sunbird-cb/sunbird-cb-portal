@@ -8,9 +8,9 @@
   min-height: 400px;
   // min-height: calc(100vh - 160px);
 
-  // @media (max-width:1024px) {
-  //   padding:0px 8px;
-  // }
+  @media (max-width:1024px) {
+    padding:0px 8px;
+  }
 }
 
 .container-balanced-banner {

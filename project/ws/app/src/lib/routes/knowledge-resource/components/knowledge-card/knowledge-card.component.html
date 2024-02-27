@@ -1,6 +1,10 @@
 <mat-card  class="w-full kr-card padding-zero" role="contentinfo" tabindex="0">
     <div class="imgboxdiv">
-        <img alt="Karmayogi Bharat" class="event-card-image image-border" src="/assets/icons/Events_default.png">
+        <img alt="Karmayogi Bharat"
+            class="event-card-image image-border"
+            [src]="getImage()"
+            onerror="this.src='/assets/icons/Events_default.png'"
+        >
     </div>
     <div class="p-3">
 
