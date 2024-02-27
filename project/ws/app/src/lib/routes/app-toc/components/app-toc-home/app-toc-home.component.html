@@ -673,7 +673,7 @@
               </ng-container>
             </ng-container>
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
-              <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM === content?.courseCategory && content?.batches;else noBatches">
+              <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM === content?.courseCategory && content?.batches && !batchData?.enrolled">
                 <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE  && !enrollBtnLoading">
                   <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
@@ -688,9 +688,9 @@
                   </ng-container>
               </ng-container>
               </ng-container>
-              <ng-template #noBatches>
+              <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM === content?.courseCategory && !content?.batches && !batchData?.enrolled && !enrollBtnLoading">
                 No Batches
-              </ng-template>
+              </ng-container>
                <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM !== content?.courseCategory">
                     <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) &&
                   content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">

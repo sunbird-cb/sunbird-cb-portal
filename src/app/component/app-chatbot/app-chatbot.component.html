@@ -1,5 +1,5 @@
 <div  class="fixed-width flex flex-wrap">
-  <div  class="chatbot-icon-container" [ngStyle]="(configSvc.updatePlatformRatingObservable$ | async)" *ngIf="showIcon" (mouseover)="expanded = true" (mouseleave)="expanded = false" (click)="iconClick('start')">
+  <div  class="chatbot-icon-container" [ngStyle]="(configSvc.updatePlatformRatingObservable$ | async)" *ngIf="showIcon && isHubEnable" (mouseover)="expanded = true" (mouseleave)="expanded = false" (click)="iconClick('start')">
       <div  class="chatbot-icon flex" [ngClass]="{'chatbot-icon-expanded': expanded}">
         <img alt="chatbot-icon" src="/assets/icons/launch-icon.svg"/>
         <div class="expand-text">FAQ Chatbot</div>
