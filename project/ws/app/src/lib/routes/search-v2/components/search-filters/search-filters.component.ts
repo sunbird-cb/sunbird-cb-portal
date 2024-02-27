@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-app-search-filters',
@@ -30,6 +31,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     private searchSrvc: GbSearchService,
     private activated: ActivatedRoute,
     private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     private router: Router) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -321,8 +323,12 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       }
     }
   }
-  getText(val: string) {
-    return this.translateTo(_.startCase(val || ''))
+  // getText(val: string) {
+  //   return this.translateTo(_.startCase(val || ''))
+  // }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
   translateTo(menuName: string): string {

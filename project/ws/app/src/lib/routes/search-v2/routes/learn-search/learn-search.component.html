@@ -119,8 +119,8 @@
                                 class="mat-icon ws-mat-default-text margin-right-xs notranslate material-icons mat-icon-no-color"
                                 *ngIf="content?.mimeType === 'image/jpeg' || content?.mimeType === 'image/png'">image
                             </mat-icon>
-                            {{content.primaryCategory || content.contentType}}
-                            <!-- {{ translateLabels(content.primaryCategory || content.contentType, 'searchfilters') }} -->
+                            <!-- {{content.primaryCategory || content.contentType}} -->
+                            {{ translateLabels(content.primaryCategory || content.contentType, 'searchfilters') }}
                         </p>
 
                         <!-- <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title" (click)="navigateToToc(param, content?.identifier, content?.primaryCategory)"> -->

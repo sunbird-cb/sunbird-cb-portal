@@ -32,12 +32,12 @@
                             </mat-checkbox>
                             <ng-container *ngIf="options.name !== 'moderatedCourses'">
                                 <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
-                                    <label for="options.name">{{translateTo(options.name)}}</label>
+                                    <label for="{{options.name}}">{{ translateLabels(options.name, 'searchfilters') }}</label>
                                 </mat-checkbox>
                             </ng-container>
                             <ng-container *ngIf="karmayogiBadge && options.name === 'moderatedCourses'">
                                 <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
-                                    <label for="options.name">{{translateTo(options.name)}}</label>
+                                    <label for="{{options.name}}">{{ translateLabels(options.name, 'searchfilters') }}</label>
                                 </mat-checkbox>
                             </ng-container>
                         </span>

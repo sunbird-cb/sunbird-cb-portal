@@ -37,7 +37,9 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of primaryCategoryList">
-                            <mat-checkbox #checkboxes disableRipple [checked]= "ctype?.checked" class="example-margin" (change)="getFilterType($event, ctype,'primaryCategory')">{{ctype?.name}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple [checked]= "ctype?.checked" class="example-margin" (change)="getFilterType($event, ctype,'primaryCategory')">
+                                <!-- {{ctype?.name}} --> {{ translateLabel(ctype?.name, 'searchfilters') }}
+                            </mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -54,7 +56,9 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of contentStatus">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin"  [checked]= "ctype?.checked" (change)="getFilterType($event, ctype,'status')">{{ctype?.name}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin"  [checked]= "ctype?.checked" (change)="getFilterType($event, ctype,'status')">
+                                <!-- {{ctype?.name}} --> {{ translateLabel(ctype?.name, 'apptoccontentcard') }}
+                            </mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -93,7 +97,9 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of competencyTypeList">
-                        <mat-checkbox #checkboxes disableRipple [checked]= "ctype?.checked" class="example-margin" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
+                        <mat-checkbox #checkboxes disableRipple [checked]= "ctype?.checked" class="example-margin" (change)="getCompetencyTheme($event, ctype)">
+                            <!-- {{ctype?.name}} --> {{ translateLabel(ctype?.name, 'competencyList') }}
+                        </mat-checkbox>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
