@@ -1,57 +1,56 @@
-<mat-card  class="padding-m mat-card margin-bottom-s w-full" role="contentinfo" tabindex="0">
-    <div class="flex flex-row">
-        <div class="flex flex-1">
-            <p class="mat-body-2 ws-mat-black60-text">
-                <span class="mdo_name margin-right-s" i18n>{{ resource?.source}}</span>
-            </p>
-        </div>
+<mat-card  class="w-full kr-card padding-zero" role="contentinfo" tabindex="0">
+    <div class="imgboxdiv">
+        <img alt="Karmayogi Bharat" class="event-card-image image-border" src="/assets/icons/Events_default.png">
+    </div>
+    <div class="p-3">
 
-        <div class="flex flex-4 justify-items-end">
-            <a *ngIf="resource.bookmark===true; else noBookmarker" (click)="addBookmark(resource)" class="linkBtn">
-                <mat-icon class="material-icons-outlined ws-mat-default-text"> bookmark</mat-icon>
-            </a>
-            <ng-template #noBookmarker>
-                <a (click)="addBookmark(resource)" class="linkBtn">
-                    <mat-icon class="material-icons-outlined"> bookmark_border</mat-icon>
-                </a>
-            </ng-template>
-        </div>
+        <mat-card-title>
+            <div class="mat-h4" i18n role="heading">{{ resource?.name }}</div>
+        </mat-card-title>
+
+        <p class="mat-body-2 ws-mat-black60-text margin-bottom-s whitespace-pre-line description" i18n>
+            {{ resource?.description }}
+        </p>
+
+        <!-- <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.pdf || resource.totalFiles.pdf >0">
+            <p class="mat-body-2" i18n>  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">
+                {{ resource?.totalFiles?.pdf }}
+            </p>
+        </span> -->
+
+
+        <span class="attach_links" *ngIf="resource?.additionalProperties?.krFiles?.length">
+            <p class="mat-body-2">
+                <span *ngFor="let item of resource?.additionalProperties?.krFiles | slice:0:1; index as i">
+                    <div class="flex justify-start">
+                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
+                        <a [href]="getUrl(item.url, item.name)" target="_blank" class="download-link">{{getName(item.name)}}</a>
+                    </div>
+                </span>
+            </p>
+        </span>
+        <span class="attach_links" *ngIf="!resource?.additionalProperties?.krFiles?.length && resource?.additionalProperties?.URL?.length">
+            <p class="mat-body-2">
+                <span *ngFor="let item of resource?.additionalProperties?.URL | slice:0:1; index as i">
+                    <div class="flex justify-start">
+                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
+                        <a [href]="item.value" target="_blank" class="download-link">{{item.name}}</a>
+                    </div>
+                </span>
+            </p>
+        </span>
+        <!-- <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.images>0" >
+            <p class="mat-body-2" i18n>
+                <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>
+                {{ resource?.totalFiles?.images }}
+            </p>
+        </span> -->
+        <!-- <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.doc>0">
+            <p class="mat-body-2" i18n>
+                <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>
+                {{ resource?.totalFiles?.doc }}
+            </p>
+        </span> -->
     </div>
 
-    <mat-card-title>
-        <a class="mat-h4" i18n role="heading" [routerLink]="['/app/knowledge-resource/all', resource?.id, resource?.type]">{{ resource?.name }}</a>
-    </mat-card-title>
-
-    <mat-card-subtitle>
-        <p class="mat-body-2 ws-mat-black60-text" i18n>{{ resource?.id }}</p>
-    </mat-card-subtitle>
-
-    <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.pdf || resource.totalFiles.pdf >0">
-        <p class="mat-body-2" i18n>  <img src="assets/icons/pdf.svg" class="pdfIcon margin-right-xs">
-            {{ resource?.totalFiles?.pdf }}
-        </p>
-    </span>
-
-    <span class="attach_links margin-right-m" *ngIf="resource.additionalProperties.krFiles && resource.additionalProperties.krFiles.length > 0">
-        <p class="mat-body-2" i18n>
-            <span *ngFor="let item of resource.additionalProperties.krFiles; index as i">
-                <div class="flex justify-start">
-                    <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
-                    <a [href]="getUrl(item.url, item.name)" target="_blank" class="download-link margin-right-m">{{getName(item.name)}}</a>
-                </div>
-            </span>
-        </p>
-    </span>
-    <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.images>0" >
-        <p class="mat-body-2" i18n>
-            <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">image</mat-icon>
-            {{ resource?.totalFiles?.images }}
-        </p>
-    </span>
-    <span class="attach_links margin-right-m" *ngIf="resource.totalFiles.doc>0">
-        <p class="mat-body-2" i18n>
-            <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">description</mat-icon>
-            {{ resource?.totalFiles?.doc }}
-        </p>
-    </span>
 </mat-card>

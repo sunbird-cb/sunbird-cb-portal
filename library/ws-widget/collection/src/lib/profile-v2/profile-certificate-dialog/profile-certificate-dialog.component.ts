@@ -64,8 +64,7 @@ export class ProfileCertificateDialogComponent implements OnInit {
     //   `${this.data.cet}`)
     // searchParams.set('url', a);
     // console.log(a);
-    // this.navUrl = `https://www.linkedin.com/shareArticle?title=I%20earned%20a%20certficiation&url=${this.data.value.content.appIcon}`
-    // this.navUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${environment.contentHost}%2Fapis%2Fpublic%2Fv8%2Fcert%2Fdownload%2F${this.data.certId}`
+    // tslint:disable-next-line: max-line-length
     this.navUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${environment.contentHost}/apis/public/v8/cert/download/${this.data.certId}`
     // this.navUrl =  url
     // console.log("navurl", this.navUrl)
