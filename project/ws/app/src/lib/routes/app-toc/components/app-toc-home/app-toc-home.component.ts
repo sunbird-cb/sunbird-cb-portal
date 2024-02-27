@@ -968,8 +968,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   downloadCert(certIdArr: any) {
     if (certIdArr.length) {
-      // const certId = certIdArr[0].identifier
-      this.contentSvc.downloadCert(this.certId).subscribe(response => {
+      const certId = certIdArr[0].identifier
+      this.certId = certId
+
+      this.contentSvc.downloadCert(certId).subscribe(response => {
         this.certData = response.result.printUri
       })
     }
@@ -1560,7 +1562,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   handleCapitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return str && str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   public handleParseJsonData(s: string) {
@@ -1696,6 +1698,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   resetEnableShare() {
     this.enableShare = false
+  }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
   ngOnDestroy() {
