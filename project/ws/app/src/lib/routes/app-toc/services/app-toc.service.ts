@@ -666,7 +666,7 @@ export class AppTocService {
       // this.mapModuleDurationAndProgress(content, content)
       this.callHirarchyProgressHashmap(content)
       this.contentLoader.next(false)
-    } 
+    }
   }
   checkCompletedLeafnodes(leafNodes: any, completedCount: any) {
     if (completedCount.length > 0) {
