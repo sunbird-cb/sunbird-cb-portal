@@ -5,7 +5,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { Subscription } from 'rxjs'
-import { NsAppToc } from '../models/app-toc.model'
+// import { NsAppToc } from '../models/app-toc.model'
 
 @Component({
   selector: 'ws-widget-app-toc-content',
@@ -26,7 +26,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   isPlayable = false
   contentPlayWidgetConfig: NsWidgetResolver.IRenderConfigWithTypedData<any> | null = null
   defaultThumbnail = ''
-  errorCode: NsAppToc.EWsTocErrorCode | null = null
+  // errorCode: NsAppToc.EWsTocErrorCode | null = null
   private routeSubscription: Subscription | null = null
   private routeQuerySubscription: Subscription | null = null
   contentParents: NsContent.IContentMinimal[] = []
@@ -111,10 +111,11 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private initData(data: Data) {
-    const initData = this.tocSvc.initData(data, true)
+  private initData(_data: Data) {
+    // not required init now because new implementation of  hashmap already has mapped the completion percent
+    // const initData = this.tocSvc.initData(data, true)
     // this.content = initData.content
-    this.errorCode = initData.errorCode
+    // this.errorCode = initData.errorCode
     if (this.content) {
       if (!this.contextId || !this.contextPath) {
         this.contextId = this.content.identifier
