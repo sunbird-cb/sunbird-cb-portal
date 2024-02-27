@@ -150,11 +150,12 @@ export class ViewerUtilService {
       this.http
         .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
         .subscribe(noop, noop)
-      if (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2) {
-        this.tocSvc.hashmap[contentId]['completionPercentage'] = req.request.contents[0].completionPercentage
-        this.tocSvc.hashmap[contentId]['completionStatus'] = req.request.contents[0].status
-        this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
-      }
+        if (this.tocSvc.hashmap[contentId] && 
+          (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2)) {
+          this.tocSvc.hashmap[contentId]['completionPercentage'] = req.request.contents[0].completionPercentage
+          this.tocSvc.hashmap[contentId]['completionStatus'] = req.request.contents[0].status
+          this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
+        }
     } else {
       req = {}
       // do nothing
@@ -210,6 +211,7 @@ export class ViewerUtilService {
               status: status || 2,
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
+              completionPercentage: status===2 ? 100 : 0
             },
           ],
         },
@@ -219,7 +221,8 @@ export class ViewerUtilService {
         .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
         .subscribe(noop, noop)
       if (this.tocSvc.hashmap && this.tocSvc.hashmap[contentId] && req.request.contents[0]) {
-        if (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2) {
+        if (this.tocSvc.hashmap[contentId] && 
+          (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2)) {
           this.tocSvc.hashmap[contentId]['completionPercentage'] = req.request.contents[0].completionPercentage
           this.tocSvc.hashmap[contentId]['completionStatus'] = req.request.contents[0].status
           this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
