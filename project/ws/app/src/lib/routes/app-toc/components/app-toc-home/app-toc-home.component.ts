@@ -239,7 +239,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private dialog: MatDialog,
     private mobileAppsSvc: MobileAppsService,
     private utilitySvc: UtilityService,
-    // private progressSvc: ContentProgressService,
     private actionSVC: ActionService,
     private viewerSvc: ViewerUtilService,
     private ratingSvc: RatingService,
@@ -248,7 +247,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private langtranslations: MultilingualTranslationsService,
     private events: EventService,
     private matSnackBar: MatSnackBar,
-    private loadCheckService: LoadCheckService
+    private loadCheckService: LoadCheckService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -1698,6 +1697,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   resetEnableShare() {
     this.enableShare = false
+  }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
   ngOnDestroy() {

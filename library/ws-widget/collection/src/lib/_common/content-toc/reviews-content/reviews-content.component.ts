@@ -55,7 +55,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
         this.clearIcon = (text.length) ? true : false
 
         if (text) {
-          this.reviews = Object.values(this.data.reviews).filter((_obj: any) => {
+          this.reviews = Object.values(this.reviews).filter((_obj: any) => {
             return _obj.review.toLowerCase().includes(text.toLowerCase()) || _obj.firstName.toLowerCase().includes(text.toLowerCase())
           })
         } else {

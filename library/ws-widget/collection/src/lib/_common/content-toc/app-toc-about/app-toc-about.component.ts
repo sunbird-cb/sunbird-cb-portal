@@ -336,7 +336,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       this.ratingService.getRatingLookup(req).subscribe(
         (res: any) => {
           // To disable the loader in the modal.
-          if (this.dialogRef) {   
+          if (this.dialogRef) {
             this.dialogRef.componentInstance.displayLoader = false
           }
 

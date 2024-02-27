@@ -274,7 +274,7 @@
             <div class="flex flex-row gap-2">
               <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
                 <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-                <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
+                <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
               </div>
               <div class="flex items-center" *ngIf="cbPlanEndDate">
                 <div class="flex items-center due-tag text-xs leading-3">
@@ -318,8 +318,8 @@
             </div>
             <div class="flex items-center" *ngIf="content?.additionalTags?.length">
               <div class="most-enrolled-chip text-xs leading-3">
-                <span *ngIf="content?.additionalTags?.includes('mostTrending')">Most Trending</span>
-                <span *ngIf="content?.additionalTags?.includes('mostEnrolled')">Most Enrolled</span>
+                <span *ngIf="content?.additionalTags?.includes('mostTrending')">{{ 'cardcontentv2.mostTrending' | translate }}</span>
+                <span *ngIf="content?.additionalTags?.includes('mostEnrolled')">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
               </div>
             </div>
           </ng-container>
@@ -353,7 +353,7 @@
   </div>
 
   <div class="right-container">
-    <div class="shadow-md right-content" #rightContainer>
+    <div class="right-content" #rightContainer>
       <ng-container *ngIf="skeletonLoader">
         <ws-widget-skeleton-loader [width]="'384px'" [height]="'224px'"
           [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
@@ -365,11 +365,11 @@
             <div class="flex items-center gap-4 justify-between" [ngClass]="{'justify-between': scrolled, 'justify-end': !scrolled}">
               <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2" *ngIf="scrolled">
                 <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-                <div class="text-xs font-bold text-white leading-3">{{ handleCapitalize(content?.primaryCategory) }}</div>
+                <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
               </div>
               <div (click)="onClickOfShare()" class="flex flex-row items-center justify-end gap-2 share-tag" *ngIf="canShare">
                 <mat-icon>share</mat-icon>
-                <div>Share</div>
+                <div>{{ 'apptocsinglepage.share' | translate }}</div>
               </div>
             </div>
             <div class="flex flex-col gap-1" *ngIf="scrolled">
@@ -386,15 +386,15 @@
           <div class="flex flex-row gap-3 justify-around">
             <div class="batch-info">
               <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || 'NA' }}</div>
-              <div class="batch-label">Batch size</div>
+              <div class="batch-label">{{ 'apptoc.batchSize' | translate }}</div>
             </div>
             <div class="batch-info">
               <div class="font-base font-bold">{{ selectedBatchData?.userCount?.totalApplied || 'NA' }}</div>
-              <div class="batch-label">Total applied</div>
+              <div class="batch-label">{{ 'apptoc.totalApplied' | translate }}</div>
             </div>
             <div class="batch-info">
               <div class="font-base font-bold">{{ selectedBatchData?.userCount?.enrolled || 'NA' }}</div>
-              <div class="batch-label">Total enrolled</div>
+              <div class="batch-label">{{ 'apptoc.totalEnrolled' | translate }}</div>
             </div>
           </div>
 
@@ -1215,45 +1215,4 @@
   </div>
 </ng-container>
 
-<!-- <ng-template #tocError>
-  <div [wsResolverWidget]="errorWidgetData"></div>
-</ng-template>
-
-<mat-menu #actionMenu="matMenu">
-  <div mat-menu-item>
-    <ng-container *ngIf="content" [ngTemplateOutlet]="actions"></ng-container>
-  </div>
-</mat-menu>
-
-<ng-template #actions>
-  <a i18n-aria-label aria-label="Take Action" mat-icon-button *ngIf="reviewButton"
-    [routerLink]="['/author/editor/' + content?.identifier]">
-    <mat-icon>publish</mat-icon>
-  </a>
-  <ws-widget-btn-content-download id="prevfordownload" [forPreview]="forPreview" [widgetData]="
-        content
-          | pipePartialContent
-            : ['identifier', 'contentType', 'resourceType', 'mimeType', 'downloadUrl', 'isExternal',
-                    'artifactUrl']
-      "></ws-widget-btn-content-download>
-  <ws-widget-btn-content-share id="prevforshare" [forPreview]="forPreview" [widgetData]="content">
-  </ws-widget-btn-content-share>
-  <ws-widget-btn-kb [forPreview]="forPreview" id="prev" [contentId]="content?.identifier" [contentName]="content?.name"
-    [contentType]="content?.contentType" [status]="content?.status">
-  </ws-widget-btn-kb>
-  <ws-widget-btn-goals [forPreview]="forPreview" id="goalsforprev" *ngIf="isGoalsEnabled && btnGoalsConfig"
-    [widgetData]="btnGoalsConfig">
-  </ws-widget-btn-goals>
-  <ws-widget-btn-playlist [forPreview]="forPreview" id="playlistforprev" *ngIf="btnPlaylistConfig"
-    [widgetData]="btnPlaylistConfig">
-  </ws-widget-btn-playlist>
-  <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview" id="feedbackforprev"
-    [widgetData]="content | pipePartialContent: ['identifier', 'name']">
-  </ws-widget-btn-content-feedback-v2>
-</ng-template>
-<ng-template #authView i18n>{{'apptochome.view' | translate}}</ng-template>
-
-<button mat-fab color="accent" [ngClass]="{'show-scroll': showScroll}" (click)="scrollToTop()" class="scroll-to-top">
-  <mat-icon color="primary">keyboard_arrow_up</mat-icon>
-</button> -->
 <ws-app-share-toc *ngIf="enableShare" [rootOrgId]="rootOrgId" [content]="content" (resetEnableShare)="resetEnableShare($event)"></ws-app-share-toc>
