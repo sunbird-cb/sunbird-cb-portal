@@ -355,8 +355,9 @@ export class AppTocContentCardV2Component implements OnInit {
   }
   scrollView(){
     try {
-      const errorField = this.renderer.selectRootElement('.resource-active');
-      errorField.scrollIntoView();
+      const errorField = this.renderer.selectRootElement('.resource-container .resource-active');
+      // errorField.scrollIntoView();
+      errorField.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     } catch (err) {
 
     }

@@ -163,7 +163,8 @@
         </div>
     </ng-container>
     <div *ngIf="isResource" class="resource-container" [ngClass]="pathSet?.has(content?.identifier) && isEnrolled ? 'content-active-resource': 'content-not-active-resource'">
-        <div class="resource flex  sm:flex-row flex-start width-expand w-100 sm:pr-4 sm:w-auto" [ngClass]="{'content-active': pathSet?.has(content.identifier) && isEnrolled}">
+        <div class="resource flex  sm:flex-row flex-start width-expand w-100 sm:pr-4 sm:w-auto" 
+        [ngClass]="{'activeResource': pathSet?.has(content?.identifier) && isEnrolled}">
             <div class="flex flex-wrap items-start justify-start sm:justify-end">
                 <!-- <button *ngIf="!forPreview && content?.artifactUrl && !isXSmall && isAllowed && isEnabled" type="button"
                     mat-icon-button class="" [matMenuTriggerFor]="buttonMenu">
@@ -249,7 +250,7 @@
                         <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
                             alt="offline sessions"
                             *ngIf="content.mimeType === 'application/offline'">
-                        <span class="ws-mat-black60-text">{{ (content?.duration|| hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform: 'hms'
+                        <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration|| hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform: 'hms'
                             }}</span>
                     </div>
                 </div>

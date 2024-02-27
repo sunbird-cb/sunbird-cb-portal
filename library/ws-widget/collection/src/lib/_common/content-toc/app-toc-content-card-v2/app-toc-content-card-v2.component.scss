@@ -190,7 +190,7 @@ span.optional-span {
     & .customicon .mat-icon {
       color: #fff;
     }
-
+    
   }
 }
 
@@ -200,6 +200,31 @@ span.optional-span {
   &.font-bold{
     font-weight: 600;
   }
+}
+
+.activeResource {
+  background-color: #1a4ca1;
+  color: #fff;
+  padding-left: 32px !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+
+  .text-active {
+    color: #fff;
+  
+    &.font-bold{
+      font-weight: 600;
+    }
+  }
+
+  .resourceDuration {
+    color: #fff;
+  }
+
+  .completed-icon {
+    color: #fff;
+  }
+
 }
 
 
@@ -238,7 +263,7 @@ span.optional-span {
     // margin-right: 8px;
 
     .resource {
-      padding: 0;
+      padding: 4px;
     }
 
     // background-color: #fff;
@@ -484,15 +509,16 @@ span.optional-span {
   padding: 8px;
 }
 
+.content-active.module {
+  padding-left:24px !important;
+
+}
+
 .content-active.resource {
-  padding-left:48px !important;
+  padding-left:32px !important;
 
 }
 
 .content-not-active-resource {
-  padding-left:48px !important;
-}
-
-.content-active-resource {
-  background-color: blue;
+  padding-left:32px !important;
 }
