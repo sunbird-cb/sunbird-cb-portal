@@ -216,14 +216,14 @@ export class PublicRequestComponent implements OnInit {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
   resendOTP() {
@@ -233,8 +233,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-
-          alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -242,7 +241,7 @@ export class PublicRequestComponent implements OnInit {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
 
@@ -251,7 +250,7 @@ export class PublicRequestComponent implements OnInit {
     const mob = this.requestForm.get('mobile')
     if (otp && otp.value) {
       if (otp && otp.value.length < 4) {
-        this.snackBar.open('Please enter a valid OTP.')
+        this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
@@ -268,7 +267,7 @@ export class PublicRequestComponent implements OnInit {
         })
       }
     } else {
-      this.snackBar.open('Please enter a valid OTP.')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
     }
   }
 
@@ -325,14 +324,14 @@ export class PublicRequestComponent implements OnInit {
     if (email && email.value && email.valid) {
       this.requestSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your email address (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -343,7 +342,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
           this.disableEmailVerifyBtn = false
-          alert('An OTP has been sent to your email address (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
@@ -351,7 +350,7 @@ export class PublicRequestComponent implements OnInit {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -430,7 +429,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -461,7 +460,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -491,7 +490,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -543,8 +542,12 @@ export class PublicRequestComponent implements OnInit {
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 
-  translateLabels(label: string, type: any) {
+  translateLabel(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
   }
 
   getHeaderFooterConfiguration() {
