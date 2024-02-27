@@ -205,6 +205,9 @@ span.optional-span {
 .activeResource {
   background-color: #1a4ca1;
   color: #fff;
+  padding-left: 32px !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 
   .text-active {
     color: #fff;
@@ -227,7 +230,7 @@ span.optional-span {
 
 .child-wrapper {
   .collection-wrapper {
-    padding: 1rem 1rem 1rem 0;
+    // padding: 1rem 1rem 1rem 0;
   }
 }
 
@@ -292,18 +295,18 @@ span.optional-span {
 }
 
 .course + .child-wrapper {
-  padding-left: 10px;
+  // padding-left: 10px;
   .module + .child-wrapper {
-    padding-left: 0px;
+    // padding-left: 0px;
   }
 }
 
 .moduleCard + .child-wrapper {
-  padding-left: 0 !important;
+  // padding-left: 0 !important;
 }
 
 .module + .child-wrapper {
-  padding-left: 10px;
+  // padding-left: 10px;
 }
 
 // .collection-wrapper.close.module {
@@ -504,4 +507,18 @@ span.optional-span {
   border: 1.5px solid rgba(0,116,182, 1);
   opacity: 1;
   padding: 8px;
+}
+
+.content-active.module {
+  padding-left:24px !important;
+
+}
+
+.content-active.resource {
+  padding-left:32px !important;
+
+}
+
+.content-not-active-resource {
+  padding-left:32px !important;
 }

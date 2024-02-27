@@ -142,7 +142,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         // for updating the progress hashmap, for instant progress to be shown
         if (this.tocSvc.hashmap && this.tocSvc.hashmap[htmlContent.identifier]) {
           // tslint:disable-next-line: max-length
-          if (this.tocSvc.hashmap[htmlContent.identifier] && (!this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] || this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] < 2)) {
+          if (this.tocSvc.hashmap[htmlContent.identifier]
+            && (!this.tocSvc.hashmap[htmlContent.identifier]['completionStatus']
+            || this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] < 2)) {
             this.tocSvc.hashmap[htmlContent.identifier]['completionPercentage'] = req.completionPercentage
             this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] = req.status
             this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
