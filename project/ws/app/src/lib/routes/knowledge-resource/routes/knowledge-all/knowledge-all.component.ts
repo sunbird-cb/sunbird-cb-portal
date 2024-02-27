@@ -13,7 +13,7 @@ import _ from 'lodash'
   templateUrl: './knowledge-all.component.html',
   styleUrls: ['./knowledge-all.component.scss'],
   // tslint:disable-next-line
-  host: { class: 'flex flex-1 mt-6 mb-6 knowledge_right py-4' },
+  host: { class: 'flex flex-1 mt-6 mb-6 knowledge_right' },
 })
 export class KnowledgeAllComponent implements OnInit, OnDestroy {
 
