@@ -77,7 +77,7 @@
                         <div class="flex flex-1 flex-row category-item" >
                             <mat-radio-group aria-label="Select an option">
                                 <ng-container *ngFor="let ctype of timeDuration">
-                                    <mat-radio-button #checkboxes class="py-2"  (change)="timeDurationFilter(ctype,'timeDuration')" [checked]="ctype.checked" [value]="ctype">{{ctype?.name}}</mat-radio-button><br>
+                                    <mat-radio-button #checkboxes class="py-2"  (change)="timeDurationFilter(ctype,'timeDuration')" [checked]="ctype.checked" [value]="ctype">{{ translateLabel(ctype?.name, 'searchfilters') }}</mat-radio-button><br>
                                 </ng-container>
                             </mat-radio-group>
                         </div>
