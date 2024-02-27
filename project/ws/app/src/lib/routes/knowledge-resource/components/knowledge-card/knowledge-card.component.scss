@@ -47,5 +47,9 @@
 }
 
 .download-link {
-   font-size: 1rem;
+    font-size: 1rem;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
