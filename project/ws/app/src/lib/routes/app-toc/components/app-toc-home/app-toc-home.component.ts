@@ -1561,7 +1561,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   handleCapitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return str && str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   public handleParseJsonData(s: string) {
