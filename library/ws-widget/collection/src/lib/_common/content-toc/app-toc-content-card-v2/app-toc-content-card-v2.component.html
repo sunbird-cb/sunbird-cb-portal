@@ -140,7 +140,7 @@
 
                     <div class="see-all-container">
                         <a href="javascript:void(0)" role="button" (click)="content.viewChildren = !content.viewChildren; expandActive = false"
-                            class="padding-left-s see-all-btn tab custom-chevron customicon" mat-button>
+                            class="see-all-btn tab custom-chevron customicon" mat-button>
                             <mat-icon *ngIf="!content.viewChildren && !isModule">keyboard_arrow_down</mat-icon>
                             <mat-icon *ngIf="content.viewChildren && !isModule">keyboard_arrow_up</mat-icon>
                             <mat-icon *ngIf="!content.viewChildren && isModule">add</mat-icon>
@@ -152,7 +152,7 @@
         </div>
         <div class="child-wrapper  " [ngClass]="{'open': content.viewChildren, 'close': !content.viewChildren}" *ngIf="content.viewChildren"
             [@panelInOut]>
-            <div class="children-container padding-left-s" [ngClass]="{'module': isModule, '': !isModule}">
+            <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">
                 <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
                     [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1" [pathSet]="pathSet"
                     [hierarchyMapData]="hierarchyMapData"
@@ -162,8 +162,8 @@
             </div>
         </div>
     </ng-container>
-    <div *ngIf="isResource" class="resource-container">
-        <div class="resource flex  sm:flex-row flex-start width-expand w-100 sm:pr-4 sm:w-auto">
+    <div *ngIf="isResource" class="resource-container" [ngClass]="pathSet?.has(content?.identifier) && isEnrolled ? 'content-active-resource': 'content-not-active-resource'">
+        <div class="resource flex  sm:flex-row flex-start width-expand w-100 sm:pr-4 sm:w-auto" [ngClass]="{'content-active': pathSet?.has(content.identifier) && isEnrolled}">
             <div class="flex flex-wrap items-start justify-start sm:justify-end">
                 <!-- <button *ngIf="!forPreview && content?.artifactUrl && !isXSmall && isAllowed && isEnabled" type="button"
                     mat-icon-button class="" [matMenuTriggerFor]="buttonMenu">
