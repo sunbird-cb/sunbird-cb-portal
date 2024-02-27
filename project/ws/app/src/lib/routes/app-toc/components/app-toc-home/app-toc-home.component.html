@@ -187,9 +187,9 @@ TODO: edit option while preview Mode
                 </ng-container>
               </ng-container>
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || contentReadData?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
-              <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory && contentReadData?.batches && !batchData?.enrolled">
-                <ng-container *ngIf="content?.primaryCategory !== primaryCategory.RESOURCE  && !enrollBtnLoading">
+            <ng-container *ngIf="(content?.primaryCategory === primaryCategory.PROGRAM) || (contentReadData?.primaryCategory === primaryCategory?.MANDATORY_COURSE_GOAL)">
+              <ng-container *ngIf="(courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory) && (contentReadData?.batches && !batchData?.enrolled)">
+                <ng-container *ngIf="(content?.primaryCategory !== primaryCategory.RESOURCE)  && !enrollBtnLoading">
                   <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                       {{'apptochome.enroll' | translate}}
@@ -203,7 +203,7 @@ TODO: edit option while preview Mode
                   </ng-container>
               </ng-container>
               </ng-container>
-              <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory && !contentReadData?.batches && !batchData?.enrolled && !enrollBtnLoading">
+              <ng-container *ngIf="(courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory) && !contentReadData?.batches && !batchData?.enrolled && !enrollBtnLoading">
                 No Batches
               </ng-container>
                <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM !== contentReadData?.courseCategory">
