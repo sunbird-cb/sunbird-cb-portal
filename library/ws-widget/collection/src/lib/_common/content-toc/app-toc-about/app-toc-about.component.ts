@@ -501,7 +501,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   handleCapitalize(str: string, type?: string): string {
     let returnValue = ''
     if (str && type === 'name') {
-      returnValue = str.split(' ').map((_str) => {
+      returnValue = str.split(' ').map(_str => {
         return _str.charAt(0).toUpperCase() + _str.slice(1)
       }).join(' ')
     } else {

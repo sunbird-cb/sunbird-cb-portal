@@ -81,7 +81,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
   handleCapitalize(str: string, type?: string): string {
     let returnValue = ''
     if (str && type === 'name') {
-      returnValue = str.split(' ').map((_str) => {
+      returnValue = str.split(' ').map(_str => {
         return _str.charAt(0).toUpperCase() + _str.slice(1)
       }).join(' ')
     } else {
