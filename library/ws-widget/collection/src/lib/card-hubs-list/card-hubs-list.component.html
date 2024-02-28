@@ -9,14 +9,14 @@
         </a> -->
         <ng-container [@enterAnimation]="visible">
           <div *ngFor="let hub of hubsList" class="flex items-center nav-menu">
-            <ng-container *ngIf="(hub.hubname == 'Discuss' && hub.active)">
+            <ng-container *ngIf="(hub.hubname == 'discuss' && hub.active)">
               <a [id]="hub.hubname" class="simple-hubs-link" i18n-aria-label role="menuitem" (click)="navigate(hub.hubname); trackTelemetry(hub.hubname)">
                 <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'"> {{ translateLabels(hub.hubname, 'common') }}</span>
               </a>
             </ng-container>
-            <ng-container *ngIf="hub.hubname != 'Discuss' && hub.active">
-              <a class="simple-hubs-link" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path" (click)="trackTelemetry(hub.hubname)"
+            <ng-container *ngIf="hub.hubname != 'discuss' && hub.active">
+              <a class="simple-hubs-link" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"  (click)="trackTelemetry(hub.hubname)"
                 [attr.accesskey]="hub.accessKey" [ngClass]="{'gyaan-icon': hub.hubname === 'Gyaan Karmayogi'}">
                 <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'">  {{ translateLabels(hub.hubname, 'common') }}</span>

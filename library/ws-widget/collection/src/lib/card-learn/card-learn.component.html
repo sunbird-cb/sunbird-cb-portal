@@ -37,8 +37,8 @@
           {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
-      <button *ngIf="i>=1 && btn.name !== 'Moderated courses'" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
-        [routerLink]="(btn.route)">
+      <button *ngIf="i>=1 && btn.name !== 'Moderated content'" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+        [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}
         </mat-icon>
@@ -46,8 +46,8 @@
           {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
-      <button *ngIf="i>=1 && btn.name === 'Moderated courses' && showModeratedCourseTab" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
-        [routerLink]="(btn.route)" [queryParams]="{t: 'moderatedCourses'}">
+      <button *ngIf="i>=1 && btn.name === 'Moderated content' && showModeratedCourseTab" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+        [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}
         </mat-icon>
@@ -56,7 +56,6 @@
         </span>
       </button>
     </ng-container>
-
   </mat-card-actions>
 
   <!-- </mat-card> -->

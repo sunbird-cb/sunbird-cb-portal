@@ -2,7 +2,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
-import { NSSearch } from '@sunbird-cb/collection'
+import { NSSearch, NsContent } from '@sunbird-cb/collection'
 import { SearchApiService } from '../_services/search-api.service'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -125,12 +125,11 @@ export class CardLearnComponent extends WidgetBaseComponent
   callModeratedFunc() {
     const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
       request: {
-        secureSettings: true,
         query: '',
         filters: {
-            primaryCategory: [
-                'Course',
-            ],
+          courseCategory: [NsContent.ECourseCategory.MODERATED_COURSE,
+            NsContent.ECourseCategory.MODERATED_PROGRAM, NsContent.ECourseCategory.MODERATED_ASSESSEMENT],
+          contentType: ['Course'],
             status: [
                 'Live',
             ],
@@ -145,7 +144,7 @@ export class CardLearnComponent extends WidgetBaseComponent
       },
     }
 
-    this.searchApiService.getSearchV6Results(moderatedCoursesRequestBody).subscribe(results => {
+    this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
       this.showModeratedCourseTab = Boolean(results.result.content && results.result.content.length > 0)
     })
   }
