@@ -45,14 +45,14 @@ $text-primary: #1B4CA1;
         --mask: radial-gradient(16px at 16px 100%, #0000 98%, #000) -16px;
         -webkit-mask: var(--mask);
         mask: var(--mask);
-    
+
         .icon {
             width: 28px;
             height: 28px;
             font-size: 28px;
             color: $text-primary;
         }
-    
+
         .img-div {
             width: 280px;
             height: 160px;
@@ -72,7 +72,7 @@ $text-primary: #1B4CA1;
             margin-bottom: 0px !important;
         }
     }
-    
+
     .chips-card {
         border-top: 1px dashed rgba($color: #000000, $alpha: 0.16);
         padding: 16px;
@@ -88,6 +88,12 @@ $text-primary: #1B4CA1;
     background-color: #FFF;
     width: 100%;
     border: 1px solid rgba($color: #000000, $alpha: 0.16);
+}
+
+.share-icon {
+    font-size: 23px !important;
+    padding-left: 4px;
+    padding-top: 2px;
 }
 
 @media screen and (max-width: 768px) {

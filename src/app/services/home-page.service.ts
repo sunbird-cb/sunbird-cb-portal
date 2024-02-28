@@ -10,6 +10,7 @@ const API_END_POINTS = {
   UPDATE_CONNECTION: `apis/protected/v8/connections/v2/update/connection`,
   CONN_REQUESTED: `apis/protected/v8/connections/v2/connections/requests/received`,
   TRENDING_DISCUSSION: `apis/proxies/v8/discussion/popular`,
+  ASSESSMENT_DATA: `apis/proxies/v8/wheebox/read`,
 }
 
 @Injectable({
@@ -47,5 +48,9 @@ export class HomePageService {
 
   getTrendingDiscussions(): Observable<any> {
     return this.http.get(API_END_POINTS.TRENDING_DISCUSSION)
+  }
+
+  getAssessmentinfo(): Observable<any> {
+    return this.http.get(API_END_POINTS.ASSESSMENT_DATA)
   }
 }
