@@ -86,13 +86,13 @@
         *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
         <ng-container
           *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) && content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
-          <span class="mat-subheading-1" i18n>{{ 'apptochome.youAreNotInvited' | translate }}</span>
+          <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.youAreNotInvited' | translate }}</span>
         </ng-container>
         <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
-          <span class="mat-subheading-1" i18n>{{ 'apptochome.noActiveBatches' | translate }}</span>
+          <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.noActiveBatches' | translate }}</span>
         </ng-container>
         <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
-          <span class="mat-subheading-1" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!!.</span>
+          <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!!.</span>
         </ng-container>
         <ng-container *ngIf="isBatchInProgress &&
                       ( actionBtnStatus === 'grant' &&
@@ -691,13 +691,13 @@
                <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM !== content?.courseCategory">
                     <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) &&
                   content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
-                    <span class="mat-subheading-1" i18n>{{'apptochome.youAreNotInvited' | translate}}</span>
+                    <div class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.youAreNotInvited' | translate }}</div>
                   </ng-container>
                   <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
-                    <span class="mat-subheading-1" i18n>{{'apptochome.noActiveBatches' | translate}}</span>
+                    <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.noActiveBatches' | translate }}</span>
                   </ng-container>
                   <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
-                    <span class="mat-subheading-1" i18n>{{'apptochome.batchWillStart' | translate}} {{getStartDate}}!!.</span>
+                    <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{ getStartDate }}!!.</span>
                   </ng-container>
               </ng-container>
               <ng-container *ngIf="

@@ -498,8 +498,16 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     return ratingSummaryPr
   }
 
-  handleCapitalize(str: string): string {
-    return str && str.charAt(0).toUpperCase() + str.slice(1)
+  handleCapitalize(str: string, type?: string): string {
+    let returnValue = ''
+    if (str && type === 'name') {
+      returnValue = str.split(' ').map((_str) => {
+        return _str.charAt(0).toUpperCase() + _str.slice(1)
+      }).join(' ')
+    } else {
+      returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    return returnValue
   }
 
   handleOpenReviewModal(): void {

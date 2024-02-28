@@ -66,6 +66,12 @@
   }
 }
 
+.text-info-div {
+  padding: 8px;
+  background-color: #FFF;
+  border-radius: 64px;
+}
+
 .tag-div {
   border: 1px solid $colorOrange;
   background-color: rgba($color: #000000, $alpha: 0.5);
@@ -168,8 +174,7 @@
     top: 132px;
     width: 384px;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.5),
-      0 -1px 2px -2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.5), 0 -4px 4px -2px rgba(0, 0, 0, 0.5)
   }
 
   .border-bottom {
@@ -254,6 +259,31 @@
 @media screen and (max-width: 1200px) {
   .right-container {
     display: none;
+  }
+
+  .action-button::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: inherit;
+    filter: blur(10px);
+    z-index: -1;
+  }
+
+  .action-button::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    box-shadow: 0 0 -4px -4px rgba(255, 255, 255, 0.6);
+    border-radius: inherit;
+    z-index: -1;
   }
 }
 
@@ -344,36 +374,8 @@ a.action-button {
   .mobile-enroll-div, .mob-share {
     display: none !important;
   }
-
 }
 
-.action-button::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: inherit;
-  filter: blur(10px);
-  /* Adjust the blur radius as needed */
-  z-index: -1;
-}
-
-.action-button::after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  // box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 -4px -4px rgba(255, 255, 255, 0.6);
-  /* Adjust the blur radius and shadow spread as needed */
-  border-radius: inherit;
-  z-index: -1;
-}
 
 .mobile-progress {
   padding: 16px;
