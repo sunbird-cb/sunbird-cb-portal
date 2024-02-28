@@ -175,6 +175,21 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/gyaan-karmayogi',
+    loadChildren: () =>
+      import('./routes/route-gyaan-karmayogi.module').then(u => u.RouteGyaanKarmayogiModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'knowledge-resource',
+      pageId: 'app/knowledge-resource',
+      module: 'Knowledge Resources',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/organisation',
     loadChildren: () =>
       import('./routes/route-organization.module').then(u => u.RouteOrganizationModule),
