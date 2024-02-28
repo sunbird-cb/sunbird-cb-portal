@@ -851,7 +851,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
-            this.checkModuleWiseData()
+            this.tocSvc.checkModuleWiseData(this.content)
             this.currentCourseBatchId = enrolledCourse.batchId
             this.downloadCert(enrolledCourse.issuedCertificates)
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
@@ -888,7 +888,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 })
             }
           } else {
-            this.checkModuleWiseData()
+            this.tocSvc.checkModuleWiseData(this.content)
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
@@ -1621,25 +1621,25 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return this.langtranslations.translateLabel(label, type, '')
   }
 
-  checkModuleWiseData() {
-    if (this.content && this.content.children) {
-      this.content.children.forEach((ele: any) => {
-        if (ele.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-          let moduleResourseCount = 0
-          let offlineResourseCount = 0
-          ele.children.forEach((childEle: any) => {
-            if (childEle.primaryCategory !== NsContent.EPrimaryCategory.OFFLINE_SESSION) {
-              moduleResourseCount = moduleResourseCount + 1
-            } else {
-              offlineResourseCount = offlineResourseCount + 1
-            }
-          })
-          ele['moduleResourseCount'] = moduleResourseCount
-          ele['offlineResourseCount'] = offlineResourseCount
-        }
-      })
-    }
-  }
+  // checkModuleWiseData() {
+  //   if (this.content && this.content.children) {
+  //     this.content.children.forEach((ele: any) => {
+  //       if (ele.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+  //         let moduleResourseCount = 0
+  //         let offlineResourseCount = 0
+  //         ele.children.forEach((childEle: any) => {
+  //           if (childEle.primaryCategory !== NsContent.EPrimaryCategory.OFFLINE_SESSION) {
+  //             moduleResourseCount = moduleResourseCount + 1
+  //           } else {
+  //             offlineResourseCount = offlineResourseCount + 1
+  //           }
+  //         })
+  //         ele['moduleResourseCount'] = moduleResourseCount
+  //         ele['offlineResourseCount'] = offlineResourseCount
+  //       }
+  //     })
+  //   }
+  // }
 
   getLastPlayedResource() {
     let firstPlayableContent
