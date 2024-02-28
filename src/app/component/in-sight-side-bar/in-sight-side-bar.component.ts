@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { TranslateService } from '@ngx-translate/core'
+import { MatSnackBar } from '@angular/material'
 
 const DEFAULT_WEEKLY_DURATION = 300
 const DEFAULT_DISCUSS_DURATION = 600
@@ -69,6 +70,10 @@ export class InsightSideBarComponent implements OnInit {
   }
   pendingRequestData: any = []
   pendingRequestSkeleton = true
+  showCreds = false
+  credMessage = 'View my credentials'
+  assessmentsData: any
+
   constructor(
     private homePageSvc: HomePageService,
     private configSvc: ConfigurationsService,
@@ -76,6 +81,7 @@ export class InsightSideBarComponent implements OnInit {
     private discussUtilitySvc: DiscussUtilsService,
     private translate: TranslateService,
     private events: EventService,
+    private snackBar: MatSnackBar,
     private router: Router) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -93,6 +99,7 @@ export class InsightSideBarComponent implements OnInit {
     this.getPendingRequestData()
     this.noDataValue = noData
     this.getDiscussionsData()
+    // this.getAssessmentData()
   }
 
   getInsights() {
@@ -162,6 +169,22 @@ export class InsightSideBarComponent implements OnInit {
     this.clapsDataLoading = false
   }
 
+  getAssessmentData() {
+    this.homePageSvc.getAssessmentinfo().subscribe(
+      (res: any) => {
+        if (res && res.result && res.result.response) {
+          this.assessmentsData = res.result.response
+        }
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          // tslint:disable-next-line
+          console.log(error)
+        }
+      }
+    )
+  }
+
   getDiscussionsData(): void {
     this.discussion.loadSkeleton = true
     this.homePageSvc.getDiscussionsData(this.userData.userName).subscribe(
@@ -208,9 +231,8 @@ export class InsightSideBarComponent implements OnInit {
 
   expandCollapse(event: any) {
     this.collapsed = event
-    // tslint:disable-next-line: whitespace
   }
-  // tslint:disable-next-line: whitespace
+
   goToActivity(_e: any) {
     this.router.navigateByUrl(`app/person-profile/me?tab=1`)
   }
@@ -271,5 +293,32 @@ export class InsightSideBarComponent implements OnInit {
         module: WsEvents.EnumTelemetrymodules.HOME,
       }
     )
+  }
+
+  toggleCreds() {
+    this.showCreds = !this.showCreds
+    if (this.showCreds) {
+      this.credMessage = 'Hide my credentials'
+    } else {
+      this.credMessage = 'View my credentials'
+    }
+  }
+
+  copyToClipboard(text: string) {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    // textArea.focus()
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    this.openSnackbar('copied')
+    this.raiseTelemetry('copyToClipboard')
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }

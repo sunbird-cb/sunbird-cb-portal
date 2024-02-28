@@ -5,8 +5,8 @@
 .container-balanced {
   @extend %page-center;
   height: auto;
-  // min-height: 400px;
-  min-height: calc(100vh - 160px);
+  min-height: 400px;
+  // min-height: calc(100vh - 160px);
 
   @media (max-width:1024px) {
     padding:0px 8px;
@@ -27,7 +27,7 @@
   flex: 5;
 }
 .marbot{
-  margin-bottom: 250px;
+  margin-bottom: 50px;
 }
 
 .border-0 {
@@ -57,6 +57,10 @@
 
 .margin-top-0 {
   margin-top: 0px;
+}
+
+::ng-deep .banner-image-solo {
+  max-height: 288px;
 }
 
 
