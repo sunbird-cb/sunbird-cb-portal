@@ -25,6 +25,7 @@ export class KarmaPointsPanelComponent implements OnInit {
   @Input() btnCategory = ''
   @Input() pCategory = ''
   @Output() clickClaimKarmaPoints = new EventEmitter<string>()
+  @Input() condition: any
   kpData: any
 
   karmaPointsSlider: any
@@ -36,6 +37,7 @@ export class KarmaPointsPanelComponent implements OnInit {
       }
     })
     this.constructNudgeData()
+    // console.log('condition - ', this.condition)
   }
 
   onClickOfClaim() {
