@@ -386,7 +386,7 @@ export class CardContentV2Component extends WidgetBaseComponent
         const cet = res.result.printUri
         this.dialog.open(CertificateDialogComponent, {
           width: '1300px',
-          data: { cet },
+          data: { cet, certId: certData.identifier },
         })
       })
     } else {
@@ -396,6 +396,10 @@ export class CardContentV2Component extends WidgetBaseComponent
 
   translateLabels(label: string, type: any, subtype: any) {
     return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
+  }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
   getCbPlanData() {

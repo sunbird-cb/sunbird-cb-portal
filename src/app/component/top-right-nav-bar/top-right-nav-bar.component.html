@@ -20,7 +20,7 @@
         <li matTooltipClass="right-nav-tooltip" matTooltip="{{ translateLabels('font', 'toprightnavbar')}}" *ngIf="item.type === 'fontButton' && rnc.section === 'font-setting' && rnc.active  && item?.forPreview">
             <ws-font-setting></ws-font-setting>
         </li>
-        <li *ngIf="item.type === 'langSelect' && rnc.section === 'language' && rnc.active" class="langdiv">
+        <li *ngIf="item.type === 'langSelect' && rnc.section === 'language' && rnc.active && isMultiLangEnabled" class="langdiv">
             <mat-form-field class="custom-lang">
                 <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
                 <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">

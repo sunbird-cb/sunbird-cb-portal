@@ -27,13 +27,13 @@
   </div>
   <div class="flex" *ngIf="isTypeOfCollection">
     <div class="flex flex-1 flex-col  margin-right-l progress-container" *ngIf="collectionId && hierarchyMapData && !loadingOverallPRogress">
-      <div class="flex flex-row justify-between w-full ws-mat-white-text" >
+      <div class="flex flex-row justify-between w-ful" >
         <div class="flex items-center mb-2">
           <span class="mat-body-2 mr-2">Items ({{completedCount}}/{{overallLeafNodes}})</span>
-          <mat-icon class="cursor-pointer ws-mat-white-text infoIcon" [matTooltip]="'Progress is updated after few minute'">info_outline</mat-icon>
+          <mat-icon class="cursor-pointe infoIcon" [matTooltip]="'Progress is updated after few minute'">info_outline</mat-icon>
         </div>
 
-       <span class="mat-body-2  ws-mat-white-text"> {{overallProgress}}%</span>
+       <span class="mat-body-2"> {{overallProgress}}%</span>
       </div>
        <ws-widget-content-progress
          [contentId]="currentDataFromEnrollList?.identifier" [progress]="overallProgress" [progressType]="'percentage'" [customClassName]="'viewer-progress'">
@@ -56,10 +56,10 @@
         <ws-widget-skeleton-loader [width]="'100%'" [height]="'4px'"  [bindingClass]="'rounded mb-2'"></ws-widget-skeleton-loader>
       </div>
     </ng-container>
-    <button color="secondary" class="rate-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">
-      <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2">star</mat-icon>
+    <div color="secondary" class="flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">
+      <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2 blue-color">star</mat-icon>
       <ng-container *ngIf="!userRating">
-        <span class="mr-1">Rate now</span>
+        <span class="mr-1 blue-color">Rate Now</span>
         <!-- <span class="lowercase">
 
           <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
@@ -74,10 +74,10 @@
       <ng-container *ngIf="userRating">
         <span> Edit rating </span>
       </ng-container>
-    </button>
+    </div>
     <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
-      <mat-icon>share</mat-icon>
-      <span>Share</span>
+      <mat-icon class="blue-color">share</mat-icon>
+      <span class="blue-color">Share</span>
     </div>
   </div>
 </mat-toolbar>

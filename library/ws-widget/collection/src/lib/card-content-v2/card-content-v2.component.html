@@ -777,7 +777,7 @@
                 <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
               </ng-container>
               <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}Most trending</span>
+                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}</span>
               </ng-container>
             </div>
           </div>
@@ -963,7 +963,8 @@
         <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'">
           image
         </mat-icon>
-        {{widgetData.content.primaryCategory || widgetData.content.contentType}}
+        {{ translateLabel(widgetData.content.primaryCategory || widgetData.content.contentType, 'searchfilters') }}
+        <!-- {{widgetData.content.primaryCategory || widgetData.content.contentType}} -->
       </p>
       <div class="flex main_title_box">
         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
@@ -1054,7 +1055,8 @@
               image
             </mat-icon>
             <span class="ws-mat-black60-text font-normal mat-caption ">
-              {{widgetData.content.primaryCategory || widgetData.content.contentType}}
+              <!-- {{widgetData.content.primaryCategory || widgetData.content.contentType}} -->
+              {{ translateLabel(widgetData.content.primaryCategory || widgetData.content.contentType, 'searchfilters') }}
             </span>
           </ng-container>
         </div>
@@ -1542,10 +1544,10 @@
               <span>{{widgetData.content.avgRating}}</span>
             </div>
             <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostEnrolled')">
-              <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+              <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
             </ng-container>
             <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-              <span class="most-enrolled-text margin-left-xs">Most trending</span>
+              <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}</span>
             </ng-container>
           </div>
         </div>

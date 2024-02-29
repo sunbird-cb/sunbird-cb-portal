@@ -10,6 +10,8 @@ import { takeUntil } from 'rxjs/operators'
 import { CompetencyPassbookService } from '../competency-passbook.service'
 import { TranslateService } from '@ngx-translate/core'
 import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { environment } from 'src/environments/environment'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-competency-card-details',
@@ -33,6 +35,7 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     private cpService: CompetencyPassbookService,
     private translate: TranslateService,
     private langtranslations: MultilingualTranslationsService,
+    private events: EventService,
   ) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
@@ -44,7 +47,6 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     this.isMobile = (window.innerWidth < 768) ? true : false
     this.actRouter.queryParams.subscribe((params: any) => {
       this.params = params
-      // tslint: disable-next-line: whitespace
     })
     // tslint: disable-next-line: whitespace
     if (localStorage.getItem('details_page') !== 'undefined') {
@@ -108,6 +110,12 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  shareCertificate(certId: any) {
+    this.raiseShareIntreactTelemetry(certId, 'share')
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${environment.contentHost}/apis/public/v8/cert/download/${certId}`
+    return window.open(url, '_blank')
+  }
+
   handleNavigate(courseObj: any): void {
     this.router.navigateByUrl(`app/toc/${courseObj.contentId}/overview?batchId=${courseObj.batchId}`)
   }
@@ -118,6 +126,20 @@ export class CompetencyCardDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroySubject$.unsubscribe()
+  }
+
+  raiseShareIntreactTelemetry(certId?: string, type?: string, action?: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${type}-${WsEvents.EnumInteractSubTypes.CERTIFICATE}`,
+        subType: action && action,
+      },
+      {
+        id: certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      }
+    )
   }
 
 }
