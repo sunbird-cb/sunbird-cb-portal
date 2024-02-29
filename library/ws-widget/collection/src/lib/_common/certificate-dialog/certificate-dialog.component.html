@@ -3,21 +3,21 @@
         <mat-icon class="close-icon" color="warn">close</mat-icon>
     </button>
     <!-- <mat-card-title>
-     
+
     </mat-card-title> -->
     <mat-card-content class="certificate-img-content">
         <img #certificate [src]="url| pipeSafeSanitizer: 'url'" alt="Certificate" role="image" class="certificate-banner-image">
     </mat-card-content>
     <mat-card-actions class="flex flex-row-reverse">
         <!-- <ws-widget-svg-to-pdf></ws-widget-svg-to-pdf> -->
+        <a mat-button (click)="shareCert()" class="ws-mat-accent-border-active mat-accent">
+            <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">share</mat-icon>
+            Share
+        </a>
         <a mat-button [matMenuTriggerFor]="menu" class="ws-mat-accent-border-active mat-accent" (click)="raiseIntreactTelemetry()">
             <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
             {{'certificatedialog.download' | translate}}
         </a>
-        <!-- <a mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu" class="ws-mat-accent-border-active mat-accent">
-            <mat-icon class="mat-icon material-icons-outlined download_icon margin-right-xs">cloud_download</mat-icon>
-            Download
-         </a> -->
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)='downloadCertPdf()'>
                 <mat-icon>picture_as_pdf</mat-icon>

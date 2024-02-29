@@ -35,6 +35,7 @@ import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pen
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { HttpLoaderFactory } from '../app.module'
 import { HttpClient } from '@angular/common/http'
+import { MatTooltipModule } from '@angular/material'
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { HttpClient } from '@angular/common/http'
         deps: [HttpClient],
       },
     }),
+    MatTooltipModule,
   ],
   exports: [
     HeaderModule,

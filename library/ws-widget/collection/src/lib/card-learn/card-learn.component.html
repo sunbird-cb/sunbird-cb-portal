@@ -37,7 +37,7 @@
           {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
-      <button *ngIf="i>=1 && btn.name !== 'Moderated content'" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+      <button *ngIf="i>=1 && btn.name !== 'Moderated contents'" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
         [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}
@@ -46,7 +46,7 @@
           {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
-      <button *ngIf="i>=1 && btn.name === 'Moderated content' && showModeratedCourseTab" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+      <button *ngIf="i>=1 && btn.name === 'Moderated contents' && showModeratedCourseTab" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
         [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}

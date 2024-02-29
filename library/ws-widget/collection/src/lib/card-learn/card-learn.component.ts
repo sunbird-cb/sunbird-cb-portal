@@ -114,11 +114,11 @@ export class CardLearnComponent extends WidgetBaseComponent
       //   this.snackBar.open('Failed to load activities', 'X')
       // })
     }
-    if (this.configSvc && this.configSvc.unMappedUser &&
-        this.configSvc.unMappedUser.profileDetails &&
-        this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+    // if (this.configSvc && this.configSvc.unMappedUser &&
+    //     this.configSvc.unMappedUser.profileDetails &&
+    //     this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
       this.callModeratedFunc()
-    }
+    // }
 
   }
 
@@ -145,7 +145,19 @@ export class CardLearnComponent extends WidgetBaseComponent
     }
 
     this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
-      this.showModeratedCourseTab = Boolean(results.result.content && results.result.content.length > 0)
+      let contentList = []
+      if (results.result.content.length) {
+        if (this.configSvc && this.configSvc.unMappedUser &&
+               this.configSvc.unMappedUser.profileDetails &&
+               this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+          contentList = results.result.content
+        } else {
+          contentList = results.result.content.filter((ele: any) => {
+            return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
+          })
+        }
+      }
+      this.showModeratedCourseTab = Boolean(contentList.length > 0)
     })
   }
 
