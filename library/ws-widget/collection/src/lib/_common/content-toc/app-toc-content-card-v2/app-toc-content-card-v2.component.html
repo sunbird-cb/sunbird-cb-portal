@@ -75,32 +75,65 @@
                         </p>
                         <span class="content-type optional-span" *ngIf="content?.optionalReading">optional </span>
                     </div>
-                    <div class="resicons ws-mat-black60-text">
-                        <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs"
-                            *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||
-                  content?.mimeType ==='application/x-mpegURL'">
-                        <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs"
-                            *ngIf="content?.mimeType === 'audio/mpeg'">
-                        <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs"
-                            *ngIf="content?.mimeType === 'application/pdf'">
-                        <!-- <img src="/assets/icons/content/grey/resource.svg" alt="Survey" class="float-left margin-right-xs"
-                *ngIf="content?.mimeType === 'application/survey'"> -->
-                        <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent"
-                            class="float-left margin-right-xs"
-                            *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
-                        <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment"
-                            class="float-left margin-right-xs"
-                            *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz' || content?.mimeType === 'application/vnd.sunbird.questionset'">
-                        <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
-                            *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
-                        <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
-                            *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
-                        <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
-                            alt="offline sessions"
-                            *ngIf="content.mimeType === 'application/offline'">
-                        <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration|| hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform: 'hms'
-                            }}</span>
-                    </div>
+                    <!-- for default grey icons -->
+                    <ng-container *ngIf="!pathSet?.has(content?.identifier) || !isEnrolled">
+                        <div class="resicons ws-mat-black60-text">
+                            <img src="/assets/icons/content/grey/video.svg" alt="Video" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||
+                      content?.mimeType ==='application/x-mpegURL'">
+                            <img src="/assets/icons/content/grey/audio.svg" alt="Audio" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'audio/mpeg'">
+                            <img src="/assets/icons/content/grey/pdf.svg" alt="PDF" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'application/pdf'">
+                            <!-- <img src="/assets/icons/content/grey/resource.svg" alt="Survey" class="float-left margin-right-xs"
+                    *ngIf="content?.mimeType === 'application/survey'"> -->
+                            <img src="/assets/icons/content/grey/link.svg" alt="InteractiveContent"
+                                class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
+                            <img src="/assets/icons/content/grey/assessment.svg" alt="Assessment"
+                                class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz' || content?.mimeType === 'application/vnd.sunbird.questionset'">
+                            <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
+                            <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
+                                *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
+                            <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
+                                alt="offline sessions"
+                                *ngIf="content.mimeType === 'application/offline'">
+                            <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration|| hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform: 'hms'
+                                }}</span>
+                        </div>
+                    </ng-container>
+
+                    <!-- for white icons when content highlighted -->
+                    <ng-container *ngIf="pathSet?.has(content?.identifier) && isEnrolled">
+                        <div class="resicons ws-mat-white-text">
+                            <img src="/assets/icons/content/white/video.svg" alt="Video" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'video/mp4' || content?.mimeType === 'video/x-youtube' ||
+                      content?.mimeType ==='application/x-mpegURL'">
+                            <img src="/assets/icons/content/white/audio.svg" alt="Audio" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'audio/mpeg'">
+                            <img src="/assets/icons/content/white/pdf.svg" alt="PDF" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'application/pdf'">
+                            <!-- <img src="/assets/icons/content/white/resource.svg" alt="Survey" class="float-left margin-right-xs"
+                    *ngIf="content?.mimeType === 'application/survey'"> -->
+                            <img src="/assets/icons/content/white/link.svg" alt="InteractiveContent"
+                                class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'application/vnd.ekstep.html-archive' || content?.mimeType === 'text/x-url'">
+                            <img src="/assets/icons/content/white/assessment.svg" alt="Assessment"
+                                class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'application/json' || content?.mimeType === 'application/quiz' || content?.mimeType === 'application/vnd.sunbird.questionset'">
+                            <img src="/assets/icons/content/grey/image.svg" alt="Image" class="float-left margin-right-xs"
+                                *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
+                            <img src="/assets/icons/content/white/content_copy.svg" class="contenticon" alt="Course"
+                                *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
+                            <img src="/assets/icons/content/white/module.svg" class="float-left margin-right-xs"
+                                alt="offline sessions"
+                                *ngIf="content.mimeType === 'application/offline'">
+                            <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration|| hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform: 'hms'
+                                }}</span>
+                        </div>
+                    </ng-container>
                 </div>
             </a>
         </div>
