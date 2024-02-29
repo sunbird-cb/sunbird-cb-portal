@@ -61,8 +61,8 @@
         </div> -->
         <ng-container *ngFor="let item of footerSectionConfig">
             <div *ngIf="item?.active" class="flex flex-col justify-start nav-footer-item nav" (click)="onClick($event)">
-                <h4 class="footer_heading mat-subheading-1 margin-bottom-m" *ngIf="item?.sectionHeading !== 'Related Links'">{{ translateLabels(item?.sectionHeading, 'footer') }}</h4>
-                <h4 class="footer_heading mat-subheading-1 margin-bottom-m" *ngIf="item?.sectionHeading === 'Related Links' && environment.portals.length">{{ translateLabels(item?.sectionHeading, 'footer') }}</h4>
+                <h4 class="footer_heading mat-subheading-1 margin-bottom-m" *ngIf="translateLabels(item?.sectionHeading, 'footer') !== 'Related Links'">{{ translateLabels(item?.sectionHeading, 'footer') }}</h4>
+                <h4 class="footer_heading mat-subheading-1 margin-bottom-m" *ngIf="translateLabels(item?.sectionHeading, 'footer') === 'Related Links' && environment.portals.length">{{ translateLabels(item?.sectionHeading, 'footer') }}</h4>
                 <ul *ngIf="item?.slug === 'hub'">
                     <ng-container *ngFor="let hub of (hubsList || [])">
                         <li>

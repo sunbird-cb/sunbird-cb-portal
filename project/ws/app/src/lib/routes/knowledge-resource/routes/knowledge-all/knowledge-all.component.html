@@ -1,5 +1,5 @@
 <div class="flex width-expand flex-col">
-    <div class="flex flex-1 mb-4 search">
+    <div class="flex flex-1 search">
 
         <form class="flex-1">
           <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary" >
@@ -12,12 +12,12 @@
 
       <div class="flex flex-col">
         <!-- <a *ngFor="let resource of allResources" [routerLink]="['/app/knowledge-resource/all', resource.id]"> -->
-        <div *ngIf="allResources; else nodata" >
-          <a *ngFor="let resource of allResources | filter : searchText">
+        <div *ngIf="allResources; else nodata" class="flex space-btwn flex-direction" style="flex-wrap: wrap;">
+          <div *ngFor="let resource of allResources | filter : searchText" class="knowledge_card">
             <ws-app-knowledge-card [resource]="resource" (resourceBookmarkEvent)="refresh()">
 
             </ws-app-knowledge-card>
-          </a>
+          </div>
         </div>
 
         <ng-template #nodata>
