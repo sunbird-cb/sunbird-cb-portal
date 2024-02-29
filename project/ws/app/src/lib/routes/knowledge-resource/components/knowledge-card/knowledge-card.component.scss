@@ -53,3 +53,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.fixed-title {
+    height: 47px;
+}
+
+@media screen and (max-width: 768px) {
+    .fixed-title {
+        height: auto;
+    }
+}
