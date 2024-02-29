@@ -812,7 +812,6 @@ export class AppTocService {
           ele['moduleResourseCount'] = moduleResourseCount
           ele['offlineResourseCount'] = offlineResourseCount
         } else {
-          debugger
           if (ele.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
             this.checkModuleWiseData(ele)
           }
