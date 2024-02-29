@@ -1,7 +1,7 @@
 <ng-template #enrollFunctionality>
   <ng-container *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
     <div [hidden]="isResource && !content?.artifactUrl?.length" class="flex flex-col gap-4 text-center">
-      <!-- COurse block -->
+      <!-- Course block -->
       <ng-container *ngIf="content?.primaryCategory !== primaryCategory.PROGRAM
                     && content?.primaryCategory !== primaryCategory.CURATED_PROGRAM
                     && content?.primaryCategory !== primaryCategory.STANDALONE_ASSESSMENT &&
@@ -468,8 +468,6 @@
             </div>
 
             <ng-container [ngTemplateOutlet]="enrollFunctionality"></ng-container>
-
-            <ws-app-karmapoints-panel></ws-app-karmapoints-panel>
           </ng-container>
 
           <ng-container *ngIf="skeletonLoader">
