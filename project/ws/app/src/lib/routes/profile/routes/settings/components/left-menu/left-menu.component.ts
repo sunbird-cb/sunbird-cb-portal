@@ -4,7 +4,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Router } from '@angular/router'
 /* tslint:disable*/
 import _ from 'lodash'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-left-menu',
@@ -22,15 +22,10 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
   ) {
-
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
-
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 

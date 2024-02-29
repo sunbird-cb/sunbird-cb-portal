@@ -44,6 +44,7 @@ export class TopRightNavBarComponent implements OnInit {
   multiLang: any = []
   zohoHtml: any
   zohoUrl: any = '/assets/static-data/zoho-code.html'
+  isMultiLangEnabled: any
 
   constructor(public dialog: MatDialog, public homePageService: HomePageService,
               private configSvc: ConfigurationsService,
@@ -71,6 +72,7 @@ export class TopRightNavBarComponent implements OnInit {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
       this.multiLang = instanceConfig.webistelanguages
+      this.isMultiLangEnabled = instanceConfig.isMultilingualEnabled
     }
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig
     this.homePageService.closeDialogPop.subscribe((data: any) => {
