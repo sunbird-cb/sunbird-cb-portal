@@ -398,6 +398,10 @@ export class CardContentV2Component extends WidgetBaseComponent
     return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
   }
 
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
+
   getCbPlanData() {
     let cbpList: any={}
     if (localStorage.getItem('cbpData')) {
