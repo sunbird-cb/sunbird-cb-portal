@@ -5,6 +5,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 // tslint:disable-next-line
 import _ from 'lodash'
 
+import { ReviewComponentDataService } from '../content-services/review-component-data.service'
+
 @Component({
   selector: 'ws-widget-reviews-content',
   templateUrl: './reviews-content.component.html',
@@ -15,6 +17,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>
   @Output() initiateLoadMore = new EventEmitter()
+  @Output() loadLatestReviews = new EventEmitter()
   clearIcon = false
   disableLoadMore = false
   reviews: any[] = []
@@ -23,8 +26,13 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dialogRef: MatDialogRef<ReviewsContentComponent>,
+    private reviewDataService: ReviewComponentDataService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {
+    this.reviewDataService.getReviewData().subscribe((_review: any) => {
+      this.reviews = _review
+    })
+  }
 
   ngOnInit() {
     this.reviews = Object.values(this.data.reviews)
@@ -47,7 +55,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
         this.clearIcon = (text.length) ? true : false
 
         if (text) {
-          this.reviews = Object.values(this.data.reviews).filter((_obj: any) => {
+          this.reviews = Object.values(this.reviews).filter((_obj: any) => {
             return _obj.review.toLowerCase().includes(text.toLowerCase()) || _obj.firstName.toLowerCase().includes(text.toLowerCase())
           })
         } else {
@@ -76,10 +84,11 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
   handleReviewsFilter(str: string): void {
     this.showFilterIndicator = str
+    this.loadLatestReviews.emit(str)
   }
 
   handleLoadMore(): void {
     this.displayLoader = true
-    this.initiateLoadMore.emit(true)
+    this.initiateLoadMore.emit(this.showFilterIndicator)
   }
 }

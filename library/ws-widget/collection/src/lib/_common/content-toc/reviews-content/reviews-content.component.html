@@ -10,8 +10,8 @@
     <div class="flex flex-col p-6">
         <div class="flex flex-col gap-4">
             <div class="font-base font-bold">
-                <span *ngIf="showFilterIndicator === 'Top'">{{ 'mobileApp.mLearnCourseTopReviews' | translate }}</span>
-                <span *ngIf="showFilterIndicator !== 'Top'">{{ 'mobileApp.mLearnCourselatestReviews' | translate }}</span>
+                <span *ngIf="showFilterIndicator === 'Top'">{{ 'apptocsinglepage.topReviews' | translate }}</span>
+                <span *ngIf="showFilterIndicator !== 'Top'">{{ 'apptocsinglepage.latestReviews' | translate }}</span>
             </div>
             <div class="flex flex-row gap-3">
                 <div class="flex-1">
@@ -28,11 +28,11 @@
                     <mat-menu #filter="matMenu" xPosition="before">
                         <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'Latest'}"
                             (click)="handleReviewsFilter('Latest')">
-                            <span>{{ 'mobileApp.mLearnCourselatestReviews' | translate }}</span>
+                            <span>{{ 'apptocsinglepage.latestReviews' | translate }}</span>
                         </button>
                         <button mat-menu-item class="px-3" [ngClass]="{'highlightFilter': showFilterIndicator === 'Top'}"
                             (click)="handleReviewsFilter('Top')">
-                            <span>{{ 'mobileApp.mLearnCourseTopReviews' | translate }}</span>
+                            <span>{{ 'apptocsinglepage.topReviews' | translate }}</span>
                         </button>
                     </mat-menu>
                 </div>

@@ -25,6 +25,7 @@ export namespace NsInstanceConfig {
     defaultThemeClass: string
     defaultLocale: string
     disablePidCheck?: boolean
+    isMultilingualEnabled?: boolean
     fontSizes: IFontSize[]
     isContentDownloadAvailable: boolean
     indexHtmlMeta: IIndexHtmlMeta

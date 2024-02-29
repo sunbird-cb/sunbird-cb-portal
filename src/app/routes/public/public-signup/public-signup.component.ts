@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core'
-import { Subscription, Observable, interval, of } from 'rxjs'
+import { Subscription, Observable, interval } from 'rxjs'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
 import { SignupService } from './signup.service'
 import { LoggerService, ConfigurationsService, NsInstanceConfig, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
-import { startWith, map, pairwise, catchError } from 'rxjs/operators'
+import { startWith, map, pairwise } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { ReCaptchaV3Service } from 'ng-recaptcha'
@@ -14,7 +14,6 @@ import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
 import { TranslateService } from '@ngx-translate/core'
-import { HttpClient } from '@angular/common/http'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -145,7 +144,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private signupSvc: SignupService,
     private loggerSvc: LoggerService,
     private configSvc: ConfigurationsService,
-    private http: HttpClient,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -194,15 +192,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       organisation: new FormControl('', [Validators.required]),
       // recaptchaReactive: new FormControl(null, [Validators.required]),
     })
-
-    this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
-      const topnavconfig = sectionData.data.topRightNavConfig
-      topnavconfig.forEach((item: any) => {
-        if (item.section === 'language') {
-          this.isMultiLangEnabled = item.active
-        }
-      })
-    })
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
   }
 
   ngOnInit() {
@@ -766,15 +758,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.selectedLanguage = event
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
-  }
-
-  getHeaderFooterConfiguration() {
-    const baseUrl = this.configSvc.sitePath
-    // tslint:disable-next-line: prefer-template
-    return this.http.get(baseUrl + '/page/home.json').pipe(
-      map(data => ({ data, error: null })),
-      catchError(err => of({ data: null, error: err })),
-    )
   }
 
   translateLabels(label: string, type: any) {

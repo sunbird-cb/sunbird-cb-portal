@@ -5,8 +5,8 @@ import { MatDialog, MatSnackBar } from '@angular/material'
 import { environment } from 'src/environments/environment'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
-import { Subscription, Observable, interval, of } from 'rxjs'
-import { catchError, map, pairwise, startWith } from 'rxjs/operators'
+import { Subscription, Observable, interval } from 'rxjs'
+import { map, pairwise, startWith } from 'rxjs/operators'
 import { SignupService } from '../public-signup/signup.service'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
@@ -14,7 +14,6 @@ import { v4 as uuid } from 'uuid'
 import { Location } from '@angular/common'
 import { TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
-import { HttpClient } from '@angular/common/http'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -82,7 +81,6 @@ export class PublicRequestComponent implements OnInit {
               private requestSvc: RequestService,
               private _location: Location,
               private configSvc: ConfigurationsService,
-              private http: HttpClient,
               private langtranslations: MultilingualTranslationsService,
               private translate: TranslateService) {
     const navigation = this.router.getCurrentNavigation()
@@ -138,14 +136,9 @@ export class PublicRequestComponent implements OnInit {
       this.translate.setDefaultLang('en')
       localStorage.setItem('websiteLanguage', 'en')
     }
-    this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
-      const topnavconfig = sectionData.data.topRightNavConfig
-      topnavconfig.forEach((item: any) => {
-        if (item.section === 'language') {
-          this.isMultiLangEnabled = item.active
-        }
-      })
-    })
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
    }
 
   ngOnInit() {
@@ -548,14 +541,5 @@ export class PublicRequestComponent implements OnInit {
 
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateActualLabel(label, type, '')
-  }
-
-  getHeaderFooterConfiguration() {
-    const baseUrl = this.configSvc.sitePath
-    // tslint:disable-next-line: prefer-template
-    return this.http.get(baseUrl + '/page/home.json').pipe(
-      map(data => ({ data, error: null })),
-      catchError(err => of({ data: null, error: err })),
-    )
   }
 }

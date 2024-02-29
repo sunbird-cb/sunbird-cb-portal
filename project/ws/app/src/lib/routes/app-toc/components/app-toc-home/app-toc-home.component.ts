@@ -851,7 +851,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
-            this.checkModuleWiseData()
+            this.tocSvc.checkModuleWiseData(this.content)
             this.currentCourseBatchId = enrolledCourse.batchId
             this.downloadCert(enrolledCourse.issuedCertificates)
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
@@ -888,7 +888,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                 })
             }
           } else {
-            this.checkModuleWiseData()
+            this.tocSvc.checkModuleWiseData(this.content)
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
@@ -968,8 +968,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   downloadCert(certIdArr: any) {
     if (certIdArr.length) {
-      // const certId = certIdArr[0].identifier
-      this.contentSvc.downloadCert(this.certId).subscribe(response => {
+      const certId = certIdArr[0].identifier
+      this.certId = certId
+
+      this.contentSvc.downloadCert(certId).subscribe(response => {
         this.certData = response.result.printUri
       })
     }
@@ -1560,7 +1562,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   handleCapitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return str && str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   public handleParseJsonData(s: string) {
@@ -1619,25 +1621,25 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return this.langtranslations.translateLabel(label, type, '')
   }
 
-  checkModuleWiseData() {
-    if (this.content && this.content.children) {
-      this.content.children.forEach((ele: any) => {
-        if (ele.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
-          let moduleResourseCount = 0
-          let offlineResourseCount = 0
-          ele.children.forEach((childEle: any) => {
-            if (childEle.primaryCategory !== NsContent.EPrimaryCategory.OFFLINE_SESSION) {
-              moduleResourseCount = moduleResourseCount + 1
-            } else {
-              offlineResourseCount = offlineResourseCount + 1
-            }
-          })
-          ele['moduleResourseCount'] = moduleResourseCount
-          ele['offlineResourseCount'] = offlineResourseCount
-        }
-      })
-    }
-  }
+  // checkModuleWiseData() {
+  //   if (this.content && this.content.children) {
+  //     this.content.children.forEach((ele: any) => {
+  //       if (ele.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+  //         let moduleResourseCount = 0
+  //         let offlineResourseCount = 0
+  //         ele.children.forEach((childEle: any) => {
+  //           if (childEle.primaryCategory !== NsContent.EPrimaryCategory.OFFLINE_SESSION) {
+  //             moduleResourseCount = moduleResourseCount + 1
+  //           } else {
+  //             offlineResourseCount = offlineResourseCount + 1
+  //           }
+  //         })
+  //         ele['moduleResourseCount'] = moduleResourseCount
+  //         ele['offlineResourseCount'] = offlineResourseCount
+  //       }
+  //     })
+  //   }
+  // }
 
   getLastPlayedResource() {
     let firstPlayableContent
@@ -1696,6 +1698,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   resetEnableShare() {
     this.enableShare = false
+  }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
   ngOnDestroy() {

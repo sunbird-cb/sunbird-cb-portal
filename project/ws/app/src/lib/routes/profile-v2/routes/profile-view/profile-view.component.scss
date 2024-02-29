@@ -431,3 +431,70 @@ span.profile-badge {
   right: 16px;
   top: 16px;
 }
+
+.assessments-info-wrapper {
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0, 0.08);
+  opacity: 1;
+  background-color: rgba(255,255,255, 1);
+  padding: 16px;
+
+  .upcoming-assessment-title {
+      opacity: 1;
+      color: rgba(0, 0, 0, 0.87);
+      font-family: "Montserrat-SemiBold";
+      font-size: 1rem;
+      font-weight: 600;
+      font-style: normal;
+      letter-spacing: 0.12px;
+      text-align: left;
+      line-height: 24px
+  }
+}
+
+.cred-container {
+  padding: 10px 16px;
+}
+.cred-title {
+  opacity: 1;
+  color: #1b4ca1;
+  font-family: Lato-Regular;
+  font-size: .825rem;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: .25px;
+  text-align: center;
+  line-height: 20px;
+}
+.copy-icon {
+  font-size: 16px!important;
+}
+
+.copy-items {
+  background-color: #a29d9d45;
+  padding: 5px 10px;
+  width: 100%;
+  border-radius: 7px;
+}
+.custom-width {
+  width: 84%;
+}
+
+.assessments-wrapper {
+  border-radius: 12px;
+  background: #dce0e4;
+}
+.my-credentials {
+  font-family: "Lato-Regular";
+  font-size: .9rem;
+}
+
+.system-icon {
+  align-items: center;
+}
+.custom-size {
+  font-size: 60px;
+  width: 60px;
+  color: #000000 !important;
+  height: 60px;
+}

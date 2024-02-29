@@ -386,7 +386,7 @@ export class CardContentV2Component extends WidgetBaseComponent
         const cet = res.result.printUri
         this.dialog.open(CertificateDialogComponent, {
           width: '1300px',
-          data: { cet },
+          data: { cet, certId: certData.identifier },
         })
       })
     } else {

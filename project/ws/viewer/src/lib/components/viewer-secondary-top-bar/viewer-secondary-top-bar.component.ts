@@ -319,4 +319,23 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
       this.finishDialog()
     }
   }
+
+  checkForNextOfflineOnlineSession() {
+    let nextUrl:any = this.nextResourceUrl;    
+    if((nextUrl.includes('offline-session')) || 
+    (nextUrl.includes('online-session'))      
+    ) {
+      this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams })
+    } 
+  }
+
+  checkForPrevOfflineOnlineSession() {
+    let prevUrl:any = this.prevResourceUrl;    
+    if((prevUrl.includes('offline-session')) || 
+    (prevUrl.includes('online-session')) 
+     
+    ) {
+      this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
+    }
+  }
 }

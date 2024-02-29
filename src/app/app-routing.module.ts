@@ -99,41 +99,41 @@ const routes: Routes = [
   //   loadChildren: () => import('./routes/route-admin.module').then(u => u.RouteAdminModule),
   //   canActivate: [GeneralGuard],
   // },
-  {
-    path: 'app/careers',
-    loadChildren: () =>
-      import('./routes/route-careers.module').then(u => u.RouteCareerHubModule),
-    canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'career',
-      pageId: 'app/careers',
-      module: 'Careers',
-    },
-    resolve: {
-      pageData: PageResolve,
-    },
-  },
+  // {
+  //   path: 'app/careers',
+  //   loadChildren: () =>
+  //     import('./routes/route-careers.module').then(u => u.RouteCareerHubModule),
+  //   canActivate: [GeneralGuard],
+  //   data: {
+  //     pageType: 'feature',
+  //     pageKey: 'career',
+  //     pageId: 'app/careers',
+  //     module: 'Careers',
+  //   },
+  //   resolve: {
+  //     pageData: PageResolve,
+  //   },
+  // },
   // {
   //   path: 'app/channels',
   //   loadChildren: () => import('./routes/route-channels.module').then(u => u.RouteChannelsModule),
   //   canActivate: [GeneralGuard],
   // },
-  {
-    path: 'app/competencies',
-    loadChildren: () =>
-      import('./routes/route-competencie.module').then(u => u.RouteCompetenciesModule),
-    canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'competencie',
-      pageId: 'app/competencies',
-      module: 'Competency',
-    },
-    resolve: {
-      pageData: PageResolve,
-    },
-  },
+  // {
+  //   path: 'app/competencies',
+  //   loadChildren: () =>
+  //     import('./routes/route-competencie.module').then(u => u.RouteCompetenciesModule),
+  //   canActivate: [GeneralGuard],
+  //   data: {
+  //     pageType: 'feature',
+  //     pageKey: 'competencie',
+  //     pageId: 'app/competencies',
+  //     module: 'Competency',
+  //   },
+  //   resolve: {
+  //     pageData: PageResolve,
+  //   },
+  // },
   {
     path: 'app/content-assignment',
     loadChildren: () =>
