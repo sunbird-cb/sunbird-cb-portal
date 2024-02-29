@@ -199,7 +199,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   enableShare = false
   rootOrgId: any
   certId: any
-  
+
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
