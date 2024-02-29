@@ -1,6 +1,6 @@
 <ng-container *ngIf="fullMenuDispaly">
 
-  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top' && isHubEnable"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile-height" [ngClass]="{'mobile': isHubEnable}">
     <div class="fix-ww" id="root-tool-bar" *ngIf="isHubEnable">
