@@ -1,48 +1,14 @@
 <ng-container *ngIf="content">
-    <ng-container *ngIf="isCollection">
-       <ng-container  *ngIf="isModule">
-          <div class="collection-wrapper  flex flex-col position-relative" 
-             [ngClass]="{'open': viewChildren, 'close': !viewChildren, 'course':!isModule, ' module': isModule}">
-             <div class="card-collection w-auto sm:w-100 padding-right-xl">
-                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto" >
-                   <div class="text-truncate1" [ngClass]="{'cursor-pointer': !isEnabled}"
-                   (click)="viewChildren = !viewChildren">
-                   <div class="flex flex-col sm:flex-row flex-wrap">
-                        <span *ngFor="let sType of sessionType">
-                           <span class="margin-right-s" [ngClass]="sType ==='offline' ? 'offline':'online'"> {{sType | titlecase}}</span>
-                        </span>
-                        
-                        
-                    </div>
-                   <div class="flex flex-col sm:flex-row flex-wrap mt-2">
-                      <p class="margin-remove text-truncate1 mat-body-1 flex-auto font-bold">
-                         {{index}}. {{ content?.name }}
-                      </p>
-                   </div>
-                </div>
-                <div class="see-all-container">
-                   <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
-                      class="margin-left-m see-all-btn tab custom-chevron customicon" mat-button>
-                      <mat-icon *ngIf="!viewChildren && !isModule">keyboard_arrow_down</mat-icon>
-                      <mat-icon *ngIf="viewChildren && !isModule">keyboard_arrow_up</mat-icon>
-                      <mat-icon *ngIf="!viewChildren && isModule">arrow_drop_down</mat-icon>
-                      <mat-icon *ngIf="viewChildren && isModule">arrow_drop_up</mat-icon>
-                   </a>
-                </div>
-             </div>
-          </div>
-          </div>
-       </ng-container>
-       <div class="child-wrapper  " [ngClass]="{'open': viewChildren, 'close': !viewChildren}" *ngIf="viewChildren"
-       [@panelInOut]>
-            <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">
-                <ws-widget-app-toc-session-card-new [forPreview]="forPreview"  [pathSet]="pathSet"  [content]="child" [index]="j+1" [expandAll]="expandAll" [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [batchData]="batchData" [config]="config"
-                [sessionType]="sessionType"
-                [session]="session" *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
-                [ngClass]="{'moduleCard': true, 'first': isFirst}"></ws-widget-app-toc-session-card-new>
-            </div>
-       </div>
-    </ng-container>
+   <ng-container *ngIf="isCollection && !isModule">
+      <ng-container [ngTemplateOutlet]="collectionTemplate">
+      </ng-container>
+  </ng-container>
+  <ng-container *ngIf="isCollection && isModule">
+      <ng-container  *ngIf="content?.offlineResourseCount">
+          <ng-container [ngTemplateOutlet]="collectionTemplate">
+          </ng-container>
+      </ng-container>
+  </ng-container>
     <div *ngIf="isResource" class="resource-container mt-4">
        <div class="resource flex  sm:flex-col flex-start width-expand w-100  sm:w-auto">
           <a class="w-full" [class.disabled]="(forPreview || !isEnabled) ? true : null"
@@ -77,3 +43,50 @@
     </div>
     </div>
  </ng-container>
+
+ <ng-template #collectionTemplate>
+   <ng-container *ngIf="isCollection">
+      <ng-container  *ngIf="isModule">
+         <div class="collection-wrapper  flex flex-col position-relative" 
+            [ngClass]="{'open': viewChildren, 'close': !viewChildren, 'course':!isModule, ' module': isModule}">
+            <div class="card-collection w-auto sm:w-100 padding-right-xl">
+               <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto" >
+                  <div class="text-truncate1" [ngClass]="{'cursor-pointer': !isEnabled}"
+                  (click)="viewChildren = !viewChildren">
+                  <div class="flex flex-col sm:flex-row flex-wrap">
+                       <span *ngFor="let sType of sessionType">
+                          <span class="margin-right-s" [ngClass]="sType ==='offline' ? 'offline':'online'"> {{sType | titlecase}}</span>
+                       </span>
+                       
+                       
+                   </div>
+                  <div class="flex flex-col sm:flex-row flex-wrap mt-2">
+                     <p class="margin-remove text-truncate1 mat-body-1 flex-auto font-bold">
+                        {{index}}. {{ content?.name }}
+                     </p>
+                  </div>
+               </div>
+               <div class="see-all-container">
+                  <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
+                     class="margin-left-m see-all-btn tab custom-chevron customicon" mat-button>
+                     <mat-icon *ngIf="!viewChildren && !isModule">keyboard_arrow_down</mat-icon>
+                     <mat-icon *ngIf="viewChildren && !isModule">keyboard_arrow_up</mat-icon>
+                     <mat-icon *ngIf="!viewChildren && isModule">arrow_drop_down</mat-icon>
+                     <mat-icon *ngIf="viewChildren && isModule">arrow_drop_up</mat-icon>
+                  </a>
+               </div>
+            </div>
+         </div>
+         </div>
+      </ng-container>
+      <div class="child-wrapper  " [ngClass]="{'open': viewChildren, 'close': !viewChildren}" *ngIf="viewChildren"
+      [@panelInOut]>
+           <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">
+               <ws-widget-app-toc-session-card-new [forPreview]="forPreview"  [pathSet]="pathSet"  [content]="child" [index]="j+1" [expandAll]="expandAll" [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [batchData]="batchData" [config]="config"
+               [sessionType]="sessionType"
+               [session]="session" *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
+               [ngClass]="{'moduleCard': true, 'first': isFirst}"></ws-widget-app-toc-session-card-new>
+           </div>
+      </div>
+   </ng-container>
+ </ng-template>

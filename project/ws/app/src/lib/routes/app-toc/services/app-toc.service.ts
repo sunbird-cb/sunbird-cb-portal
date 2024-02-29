@@ -665,6 +665,7 @@ export class AppTocService {
       // })
       // this.mapModuleDurationAndProgress(content, content)
       this.callHirarchyProgressHashmap(content)
+      this.checkModuleWiseData(content)
       this.contentLoader.next(false)
     }
   }
@@ -794,5 +795,29 @@ export class AppTocService {
 
   shareContent(reqBody: any) {
     return this.http.post<any>(`${API_END_POINTS.SHARE_CONTENT}`, reqBody)
+  }
+  checkModuleWiseData(content: any) {
+    if (content && content.children) {
+      content.children.forEach((ele: any) => {
+        if (ele.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          let moduleResourseCount = 0
+          let offlineResourseCount = 0
+          ele.children.forEach((childEle: any) => {
+            if (childEle.primaryCategory !== NsContent.EPrimaryCategory.OFFLINE_SESSION) {
+              moduleResourseCount = moduleResourseCount + 1
+            } else {
+              offlineResourseCount = offlineResourseCount + 1
+            }
+          })
+          ele['moduleResourseCount'] = moduleResourseCount
+          ele['offlineResourseCount'] = offlineResourseCount
+        } else {
+          debugger
+          if (ele.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+            this.checkModuleWiseData(ele)
+          }
+        }
+      })
+    }
   }
 }

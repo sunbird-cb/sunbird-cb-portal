@@ -454,6 +454,8 @@ export class InitService {
         this.configSvc.isActive = details.isActive
         this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
 
+        // this.translate.setDefaultLang('en')
+        // localStorage.setItem('websiteLanguage', 'en')
         // lang selection
         if (this.configSvc.unMappedUser) {
           if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails

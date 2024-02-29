@@ -19,8 +19,11 @@
   flex: 1;
   height: 56px;
 }
-.mobile {
+.mobile-height {
   height: 56px !important;
+}
+
+.mobile {
   border-bottom: 1px solid #ccc;
   box-shadow: none !important;
 }
