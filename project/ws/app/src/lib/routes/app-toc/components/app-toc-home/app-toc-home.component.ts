@@ -199,6 +199,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   enableShare = false
   rootOrgId: any
   certId: any
+  karmaPointsArr = [{
+    btnType: '',
+    data: [],
+    pCategory: [],
+  }, {
+    btnType: '',
+    data: [],
+    pCategory: [],
+  }]
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -1561,8 +1570,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
   }
 
-  handleCapitalize(str: string): string {
-    return str && str.charAt(0).toUpperCase() + str.slice(1)
+  handleCapitalize(str: string, type?: string): string {
+    let returnValue = ''
+    if (str && type === 'name') {
+      returnValue = str.split(' ').map(_str => {
+        return _str.charAt(0).toUpperCase() + _str.slice(1)
+      }).join(' ')
+    } else {
+      returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    return returnValue
   }
 
   public handleParseJsonData(s: string) {

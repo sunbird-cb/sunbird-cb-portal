@@ -1,4 +1,6 @@
-<ng-container *ngIf="kpData && btnCategory !== 'claim' && pCategory === ''">
+<ws-widget-sliders-dynamic [widgetData]="karmaPointsSlider"></ws-widget-sliders-dynamic>
+
+<!-- <ng-container *ngIf="kpData && btnCategory !== 'claim' && pCategory === ''">
   <div class="flex flex-row items-center gap-2 slider-div">
     <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
     <div class="flex flex-wrap gap-1 text-xs">
@@ -8,9 +10,9 @@
     </div>
     <mat-icon class="cursor-pointer ws-mat-black60-text info-icon" width="20px" [matTooltip]="translateLabels(kpData.toolTipText, 'appKarmapointsPanel')" *ngIf="kpData.toolTipText">info_outline</mat-icon>
   </div>
-</ng-container>
+</ng-container> -->
 
-<ng-container  *ngIf="kpData && btnCategory !== 'claim' && pCategory !== ''">
+<!-- <ng-container  *ngIf="kpData && btnCategory !== 'claim' && pCategory !== ''">
   <div class="flex flex-row items-center gap-2 slider-div">
     <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
     <div class="flex flex-wrap gap-1 text-xs">
@@ -20,7 +22,7 @@
     </div>
     <mat-icon class="cursor-pointer ws-mat-black60-text info-icon" width="20px" [matTooltip]="translateLabels(kpData.toolTipText, 'appKarmapointsPanel')" *ngIf="kpData.toolTipText">info_outline</mat-icon>
   </div>
-</ng-container>
+</ng-container> -->
 
 <button class="claim-button" *ngIf="kpData && btnCategory === 'claim'" (click)="onClickOfClaim()">
   <img src="/assets/icons/home/karma-badge.svg" width="28px" class="mr-2" alt="karma-points image" />

@@ -77,9 +77,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private reviewDataService: ReviewComponentDataService
-  ) {
-
-  }
+  ) { }
 
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false

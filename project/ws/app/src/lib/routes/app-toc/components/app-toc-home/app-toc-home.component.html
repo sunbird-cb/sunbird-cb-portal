@@ -244,6 +244,7 @@
         </div>
       </ng-container>
     </div>
+    
     <ng-container *ngIf="resumeData">
       <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
         <mat-icon>star_purple500</mat-icon>
@@ -467,6 +468,8 @@
             </div>
 
             <ng-container [ngTemplateOutlet]="enrollFunctionality"></ng-container>
+
+            <ws-app-karmapoints-panel></ws-app-karmapoints-panel>
           </ng-container>
 
           <ng-container *ngIf="skeletonLoader">
@@ -531,7 +534,7 @@
                 </ws-widget-avatar-photo>
               </div>
               <div class="flex flex-col gap-1 justify-center">
-                <div class="font-bold">{{ author?.name }}</div>
+                <div class="font-bold">{{ handleCapitalize(author?.name, 'name') }}</div>
                 <div class="text-xs leading-3">{{ 'apptocsinglepage.author' | translate }}</div>
               </div>
             </div>
@@ -545,7 +548,7 @@
                 </ws-widget-avatar-photo>
               </div>
               <div class="flex flex-col gap-1 justify-center">
-                <div class="font-bold">{{ handleCapitalize(creator?.name) }}</div>
+                <div class="font-bold">{{ handleCapitalize(creator?.name, 'name') }}</div>
                 <div class="text-xs leading-3">{{ 'apptocsinglepage.curator' | translate }}</div>
               </div>
             </div>
