@@ -78,8 +78,16 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
     this.reviews = Object.values(this.data.reviews)
   }
 
-  handleCapitalize(str: string): string {
-    return str && str.charAt(0).toUpperCase() + str.slice(1)
+  handleCapitalize(str: string, type?: string): string {
+    let returnValue = ''
+    if (str && type === 'name') {
+      returnValue = str.split(' ').map(_str => {
+        return _str.charAt(0).toUpperCase() + _str.slice(1)
+      }).join(' ')
+    } else {
+      returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    return returnValue
   }
 
   handleReviewsFilter(str: string): void {

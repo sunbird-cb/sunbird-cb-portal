@@ -1,5 +1,4 @@
-<div class="banner-container" (swipeleft)="slideTo(currentIndex + 1)" [ngClass]="widgetData.cardClass" (swiperight)="slideTo(currentIndex - 1)" [ngStyle]="{'min-height': widgetData.height}"
-  *ngIf="widgetData?.sliderData?.length > 0">
+<div class="banner-container" (swipeleft)="slideTo(currentIndex + 1)" [ngClass]="widgetData.cardClass" (swiperight)="slideTo(currentIndex - 1)" [ngStyle]="{'min-height': widgetData.height}" *ngIf="widgetData?.sliderData?.length > 0">
   <ng-container *ngIf="widgetData.type === 'image'">
     <a (click)="raiseTelemetry(widgetData.sliderData[currentIndex].redirectUrl)"
     [routerLink]=" !isOpenInNewTab ? widgetData.sliderData[currentIndex].redirectUrl : './'" class="banner-overlay"
@@ -9,36 +8,48 @@
       </div>
     </a>
   </ng-container>
+
   <ng-container *ngIf="widgetData.type === 'data'">
     <div class="banner WidgetInstanceId flex margin-bottom-xs" *ngFor="let slide of widgetData.sliderData; let i = index" [hidden]="i !== currentIndex">
       <div class="banner-data flex margin-right-m ">
-        {{widgetData.sliderData[currentIndex].title}}
+        {{ widgetData.sliderData[currentIndex].title }}
       </div>
-        <div class="flex data-analysis flex-middle" [ngClass]="widgetData.sliderData[currentIndex].colorData" *ngIf="widgetData.sliderData[currentIndex].data">
-            <mat-icon class="icon-stats">{{widgetData.sliderData[currentIndex].icon}}</mat-icon>
-            <p class="margin-remove text-no-wrap">{{widgetData.sliderData[currentIndex].data}}</p>
-        </div>
+      <div class="flex data-analysis flex-middle" [ngClass]="widgetData.sliderData[currentIndex].colorData" *ngIf="widgetData.sliderData[currentIndex].data">
+        <mat-icon class="icon-stats">{{ widgetData.sliderData[currentIndex].icon }}</mat-icon>
+        <p class="margin-remove text-no-wrap">{{ widgetData.sliderData[currentIndex].data }}</p>
+      </div>
     </div>
   </ng-container>
+
+  <ng-container *ngIf="widgetData.type === 'karma-points'">
+    <div class="flex flex-row items-center gap-2 mb-4" *ngFor="let slide of widgetData.sliderData; let i = index" [hidden]="i !== currentIndex">
+      <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
+      <div class="flex flex-wrap gap-1 text-sm">
+        <div *ngIf="slide?.textBeforeIcon">{{ slide?.textBeforeIcon }}</div>
+        <div *ngIf="slide?.points" class="font-bold">{{ slide?.points }} points</div>
+        <div *ngIf="slide?.textAfterIcon">{{ slide?.textAfterIcon }}</div>
+      </div>
+    </div>
+  </ng-container>
+
   <ng-container>
-    <div class="banner-meta" >
+    <div class="banner-meta">
       <ng-container *ngIf="widgetData.type === 'image'">
         <a [routerLink]=" !isOpenInNewTab ? widgetData.sliderData[currentIndex].redirectUrl : './'" class="banner-title text-truncate"
         *ngIf="widgetData.sliderData[currentIndex].title" [title]="widgetData.sliderData[currentIndex].title">
           {{ widgetData.sliderData[currentIndex].title }}
         </a>
       </ng-container>
+
       <div class="dots-container" *ngIf="widgetData.sliderData?.length > 1">
-        <span class="dot" [ngClass]="{ active: j === currentIndex, 'dot-active': j === currentIndex, 'dot-grey': j !== currentIndex }" *ngFor="let slide of widgetData.sliderData; let j = index"
-          (click)="slideTo(j)"></span>
+        <span class="dot" [ngClass]="{ active: j === currentIndex, 'dot-active': j === currentIndex, 'dot-grey': j !== currentIndex }" *ngFor="let slide of widgetData.sliderData; let j = index" (click)="slideTo(j)"></span>
       </div>
     </div>
   </ng-container>
+
   <ng-container *ngIf="widgetData.iconsDisplay">
     <a *ngIf="widgetData.sliderData?.length > 1" role="button" class="prev" (click)="slideTo(currentIndex - 1)">&#10094;</a>
     <a *ngIf="widgetData.sliderData?.length > 1" role="button" class="next" (click)="slideTo(currentIndex + 1)">&#10095;</a>
   </ng-container>
+
 </div>
-<!-- <div class="banner-container-solo" *ngIf="widgetData?.sliderData?.length == 1">
-  <img i18n-alt alt="Page Banner" width="100%" height="100%" [src]="widgetData.sliderData[0].banners" wsUtilsImageResponsive class="banner-image-solo" />
-</div> -->
