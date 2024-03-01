@@ -70,6 +70,7 @@
                                     </ng-container>
                                     <ng-container *ngIf="!eachCert?.loading && !eachCert.error && eachCert?.identifier">
                                         <mat-icon class="icon cursor-pointer" (click)="handleDownloadCertificatePDF(eachCert?.printURI)" >arrow_downward</mat-icon>
+                                        <mat-icon class="icon cursor-pointer share-icon" (click)="shareCertificate(eachCert?.identifier)">share</mat-icon>
                                     </ng-container>
                                 </div>
                             </div>

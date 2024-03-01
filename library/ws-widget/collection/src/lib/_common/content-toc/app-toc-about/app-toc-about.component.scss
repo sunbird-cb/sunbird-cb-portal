@@ -5,13 +5,19 @@
     margin-top: 60px;
 }
 
+.mat-body p,
+.mat-body-1 p,
+.mat-typography p {
+    margin: 0px !important;
+}
+
 .info-icon {
     width: 16px;
     height: 16px;
     font-size: 16px;
 }
 
-::ng-deep .desc {
+.desc {
     .mat-body p {
         margin: 0px !important;
     }
@@ -255,4 +261,10 @@ $title-line-count: 3;
 
 .horizontal-strip::-webkit-scrollbar {
     display: none;
+}
+
+@media screen and (min-width: 1200px) {
+    .authors-curators {
+        display: none !important;
+    }
 }
