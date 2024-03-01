@@ -17,8 +17,8 @@
           <a mat-icon-button class="width-auto " [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
             accesskey="<" (click)="checkForPrevOfflineOnlineSession()">
-            <mat-icon color="accent">navigate_before</mat-icon>
-            <span *ngIf="logo" class="mat-body-2 font-bold-imp">Previous</span>
+            <mat-icon class="blue-color vertical-middle">navigate_before</mat-icon>
+            <span class=" vertical-middle" *ngIf="logo" class="mat-body-2 font-bold-imp">Previous</span>
           </a>
           <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2 && batchId ">
           <a  mat-icon-button class="width-auto blue-rounded-btn" [routerLink]="nextResourceUrl"
@@ -37,12 +37,12 @@
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">{{ optionalLink ? 'Skip' : 'Next' }} </span> 
             
             <!-- {{ optionalLink }} -->
-            <mat-icon color="accent">navigate_next</mat-icon>
+            <mat-icon class="blue-color vertical-middle">navigate_next</mat-icon>
           </a>
           <!-- <button mat-icon-button class="width-auto mr-10" routerLink="/page/home" *ngIf="isTypeOfCollection && !nextResourceUrl" -->
-          <button mat-icon-button class="width-auto mr-10  margin-top-2" (click)="finishDialog()"
+          <button mat-icon-button class="width-auto mr-10" (click)="finishDialog()"
             *ngIf="isTypeOfCollection && !nextResourceUrl" accesskey=">">
-            <span *ngIf="logo" class="finish">Finish</span>
+            <span  *ngIf="logo" class="finish  vertical-middle">Finish</span>
           </button>
           <!-- <a mat-icon-button> -->
           <!-- <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"

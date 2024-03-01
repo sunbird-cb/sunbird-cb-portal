@@ -101,10 +101,10 @@
          </ws-widget-content-progress>
       </div>
       <div>
-        <button color="secondary" class="rate-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">
-          <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2">star</mat-icon>
+        <div color="secondary" class="flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">
+          <mat-icon class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2 blue-color">star</mat-icon>
           <ng-container *ngIf="!userRating">
-            <span class="mr-1">Rate now</span>
+            <span class="mr-1 blue-color">Rate now</span>
             <!-- <span class="lowercase">
     
               <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
@@ -119,10 +119,10 @@
           <ng-container *ngIf="userRating">
             <span> Edit rating </span>
           </ng-container>
-        </button>
+        </div>
       </div>     
       <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
-        <mat-icon>share</mat-icon>
+        <mat-icon class="blue-color">share</mat-icon>
       </div>
     </div>
   </mat-toolbar>
