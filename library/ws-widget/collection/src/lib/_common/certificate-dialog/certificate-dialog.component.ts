@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { jsPDF } from 'jspdf'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-widget-certificate-dialog',
@@ -13,6 +14,7 @@ import { jsPDF } from 'jspdf'
 })
 export class CertificateDialogComponent implements OnInit {
   url!: string
+  navUrl = ''
   constructor(
     private events: EventService,
     public dialogRef: MatDialogRef<CertificateDialogComponent>,
@@ -23,6 +25,8 @@ export class CertificateDialogComponent implements OnInit {
 
   ngOnInit() {
     this.url = this.data.cet
+    // tslint:disable-next-line:max-line-length
+    this.navUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${environment.contentHost}/apis/public/v8/cert/download/${this.data.certId}`
   }
 
   downloadCert() {
@@ -84,6 +88,25 @@ export class CertificateDialogComponent implements OnInit {
         pdf.save('Certificate.pdf')
       }
     }
+  }
+
+  shareCert() {
+    this.raiseShareIntreactTelemetry('share')
+    return window.open(this.navUrl, '_blank')
+  }
+
+  raiseShareIntreactTelemetry(type?: string, action?: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${type}-${WsEvents.EnumInteractSubTypes.CERTIFICATE}`,
+        subType: action && action,
+      },
+      {
+        id: this.data.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      }
+    )
   }
 
   raiseIntreactTelemetry(action?: string) {

@@ -95,4 +95,12 @@ itemCount(items: NSKnowledgeResource.IUrl[]) {
   }
   return name
  }
+
+ getImage() {
+    if (this.resource && this.resource.name) {
+      const name = this.resource.name.split(' ').join('')
+      return `/assets/instances/eagle/banners/hubs/knowledgeresource/thumbnails/${name}.png`
+    }
+    return ''
+ }
 }

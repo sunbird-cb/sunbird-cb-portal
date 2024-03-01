@@ -1,11 +1,15 @@
 <mat-card  class="w-full kr-card padding-zero" role="contentinfo" tabindex="0">
     <div class="imgboxdiv">
-        <img alt="Karmayogi Bharat" class="event-card-image image-border" src="/assets/icons/Events_default.png">
+        <img alt="Karmayogi Bharat"
+            class="event-card-image image-border"
+            [src]="getImage()"
+            onerror="this.src='/assets/icons/Events_default.png'"
+        >
     </div>
     <div class="p-3">
 
         <mat-card-title>
-            <div class="mat-h4" i18n role="heading">{{ resource?.name }}</div>
+            <div class="mat-h4 fixed-title" i18n role="heading">{{ resource?.name }}</div>
         </mat-card-title>
 
         <p class="mat-body-2 ws-mat-black60-text margin-bottom-s whitespace-pre-line description" i18n>
@@ -18,12 +22,23 @@
             </p>
         </span> -->
 
+
         <span class="attach_links" *ngIf="resource?.additionalProperties?.krFiles?.length">
             <p class="mat-body-2">
                 <span *ngFor="let item of resource?.additionalProperties?.krFiles | slice:0:1; index as i">
                     <div class="flex justify-start">
                         <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
                         <a [href]="getUrl(item.url, item.name)" target="_blank" class="download-link">{{getName(item.name)}}</a>
+                    </div>
+                </span>
+            </p>
+        </span>
+        <span class="attach_links" *ngIf="!resource?.additionalProperties?.krFiles?.length && resource?.additionalProperties?.URL?.length">
+            <p class="mat-body-2">
+                <span *ngFor="let item of resource?.additionalProperties?.URL | slice:0:1; index as i">
+                    <div class="flex justify-start">
+                        <mat-icon class="material-icons-outlined align-bottom ws-mat-default-text margin-right-xs">link</mat-icon>
+                        <a [href]="item.value" target="_blank" class="download-link">{{item.name}}</a>
                     </div>
                 </span>
             </p>
