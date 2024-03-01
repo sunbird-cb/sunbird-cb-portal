@@ -811,7 +811,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
   }
 
-  private getUserEnrollmentList() {
+   private getUserEnrollmentList() {
     this.enrollBtnLoading = true
     this.tocSvc.contentLoader.next(true)
     this.userSvc.resetTime('enrollmentService')
@@ -833,8 +833,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       userId = this.configSvc.userProfile.userId || ''
     }
 
-    this.userSvc.fetchUserBatchList(userId).subscribe(
-      (result: any) => {
+    this.userSvc.fetchUserBatchList(userId).toPromise().then(
+       async (result: any) => {
         const courses: NsContent.ICourse[] = result && result.courses
         this.userEnrollmentList = courses
         let enrolledCourse: NsContent.ICourse | undefined
@@ -851,19 +851,29 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
+            this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe( (res: any) => {
+              if(res) {
+                this.resumeData   =  res
+                this.getLastPlayedResource()
+                this.generateResumeDataLinkNew()
+              }
+            })
             this.tocSvc.checkModuleWiseData(this.content)
             this.currentCourseBatchId = enrolledCourse.batchId
             this.downloadCert(enrolledCourse.issuedCertificates)
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
             if (this.contentReadData && this.contentReadData.cumulativeTracking) {
-              this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
-              this.resumeDataSubscription = this.tocSvc.resumeData.subscribe((res: any) => {
-                this.resumeData = res
-                this.getLastPlayedResource()
-              })
-              this.generateResumeDataLinkNew()
-              this.enrollBtnLoading = false
+               await this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
+               this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe( (res: any) => {
+                if(res) {
+                  this.resumeData   =  res
+                  this.getLastPlayedResource()
+                  this.generateResumeDataLinkNew()
+                }
+                })
+              
+                this.enrollBtnLoading = false
               // this.tocSvc.contentLoader.next(false)
             } else {
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
@@ -1155,7 +1165,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   generateResumeDataLinkNew() {
     if (this.resumeData && this.content) {
       let resumeDataV2: any
-
       if (this.content.completionPercentage === 100) {
         resumeDataV2 = this.getResumeDataFromList('start')
       } else {
