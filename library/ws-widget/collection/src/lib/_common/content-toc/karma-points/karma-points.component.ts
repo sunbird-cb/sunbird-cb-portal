@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 
 import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
@@ -6,7 +6,7 @@ import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-ap
 @Component({
   selector: 'ws-widget-karma-points',
   templateUrl: './karma-points.component.html',
-  styleUrls: ['./karma-points.component.scss']
+  styleUrls: ['./karma-points.component.scss'],
 })
 
 export class KarmaPointsComponent implements OnInit, OnChanges {
@@ -21,7 +21,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
       this.translate.use(lang)
     }
   }
-  
+
   @Input() btntype: any
   @Input() data: any = []
   @Input() btnCategory = ''
@@ -40,7 +40,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
     this.condition = changes.condition.currentValue
 
     if (!this.condition.isPostAssessment && (this.condition.content && this.condition.content.hasOwnProperty('completionPercentage')
-     && !this.condition.content.completionPercentage 
+     && !this.condition.content.completionPercentage
      || (this.condition.content && this.condition.content.completionPercentage < 100))
       && !this.condition.certData) {
         // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {

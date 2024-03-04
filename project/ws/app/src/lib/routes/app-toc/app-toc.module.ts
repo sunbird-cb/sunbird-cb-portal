@@ -250,7 +250,7 @@ import { AppTocSinglePageDirective } from './routes/app-toc-single-page/app-toc-
     TranslateModule,
     ShareTocModule,
     TocKpiValuesModule,
-    KarmaPointsModule
+    KarmaPointsModule,
   ],
   providers: [
     AppTocResolverService,

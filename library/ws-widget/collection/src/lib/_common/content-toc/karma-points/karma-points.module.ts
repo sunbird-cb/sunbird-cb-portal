@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SlidersDynamicModule } from '../../../sliders-dynamic/sliders-dynamic.module';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { SlidersDynamicModule } from '../../../sliders-dynamic/sliders-dynamic.module'
 
-import { KarmaPointsComponent } from './karma-points.component';
+import { KarmaPointsComponent } from './karma-points.component'
 
 @NgModule({
   declarations: [KarmaPointsComponent],
   imports: [
     CommonModule,
-    SlidersDynamicModule
+    SlidersDynamicModule,
   ],
   exports: [
-    KarmaPointsComponent
-  ]
+    KarmaPointsComponent,
+  ],
 })
 export class KarmaPointsModule { }
