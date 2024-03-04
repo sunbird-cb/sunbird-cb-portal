@@ -1,8 +1,9 @@
 @import "ws-mixins";
 
 ::ng-deep .theme-igot.day-mode .viewer-top.mat-toolbar.mat-primary {
-  background: rgba(27, 33, 51, 1);
-  color: #fff !important;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.87) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
 }
 
 ::ng-deep .theme-igot.day-mode .viewer-top-secondary.mat-toolbar.mat-primary {
@@ -95,4 +96,8 @@
 
 .mat-icon-button {
   width: 50px !important;
+}
+
+.blue-color {
+  color: rgb(27, 76, 161);
 }

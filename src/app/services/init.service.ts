@@ -262,6 +262,38 @@ export class InitService {
     // Apply the settings using settingsService
     this.settingsSvc.initializePrefChanges(environment.production)
     this.userPreference.initialize()
+
+    // lang selection
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      if (this.configSvc.unMappedUser) {
+        if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails
+          && this.configSvc.unMappedUser.profileDetails.additionalProperties
+          && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
+          const lang = this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang
+          this.translate.use(lang)
+          localStorage.setItem('websiteLanguage', lang)
+        } else {
+          if (localStorage.getItem('websiteLanguage')) {
+            let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+            lang = lang.replace(/\"/g, '')
+            this.translate.use(lang)
+          } else {
+            this.translate.setDefaultLang('en')
+            localStorage.setItem('websiteLanguage', 'en')
+          }
+        }
+      } else if (localStorage.getItem('websiteLanguage')) {
+        let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+        lang = lang.replace(/\"/g, '')
+        this.translate.use(lang)
+      } else {
+        this.translate.setDefaultLang('en')
+        localStorage.setItem('websiteLanguage', 'en')
+      }
+    } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
+    }
   }
   // private reloadAccordingToLocale() {
   //   if (window.location.origin.indexOf('http://localhost:') > -1) {
@@ -453,35 +485,6 @@ export class InitService {
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
         this.configSvc.isActive = details.isActive
         this.configSvc.welcomeTabs = await this.fetchWelcomeConfig()
-
-        // this.translate.setDefaultLang('en')
-        // localStorage.setItem('websiteLanguage', 'en')
-        // lang selection
-        if (this.configSvc.unMappedUser) {
-          if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails
-            && this.configSvc.unMappedUser.profileDetails.additionalProperties
-            && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
-            const lang = this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang
-            this.translate.use(lang)
-            localStorage.setItem('websiteLanguage', lang)
-          } else {
-            if (localStorage.getItem('websiteLanguage')) {
-              let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-              lang = lang.replace(/\"/g, '')
-              this.translate.use(lang)
-            } else {
-              this.translate.setDefaultLang('en')
-              localStorage.setItem('websiteLanguage', 'en')
-            }
-          }
-        } else if (localStorage.getItem('websiteLanguage')) {
-          let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
-          lang = lang.replace(/\"/g, '')
-          this.translate.use(lang)
-        } else {
-          this.translate.setDefaultLang('en')
-          localStorage.setItem('websiteLanguage', 'en')
-        }
 
         // nps check
         if (localStorage.getItem('platformratingTime')) {
