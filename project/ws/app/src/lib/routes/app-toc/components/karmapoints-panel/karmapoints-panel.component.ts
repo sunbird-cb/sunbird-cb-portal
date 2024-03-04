@@ -10,7 +10,7 @@ import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-ap
 })
 
 export class KarmaPointsPanelComponent implements OnInit, OnChanges {
-  kpArray: any[] = [];
+  kpArray: any[] = []
   constructor(
     private translate: TranslateService,
     private langTranslations: MultilingualTranslationsService
@@ -38,8 +38,8 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.condition = changes.condition.currentValue
 
-    if (!this.condition.isPostAssessment && 
-      (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100) 
+    if (!this.condition.isPostAssessment &&
+      (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)
       && !this.condition.certData) {
         if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
           this.getKPData('ACBP')
@@ -72,31 +72,31 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
       this.getKPData('Take Assessment')
     }
 
-    if (this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE  
+    if (this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE
       && !this.condition.enrollBtnLoading) {
       if (this.condition.isAcbpCourse) {
         this.getKPData('ACBP')
       }
 
-      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed && 
+      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed &&
         this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
         this.getKPData('Enroll')
       }
     }
 
-    if ((this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE)  
+    if ((this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE)
     && !this.condition.enrollBtnLoading) {
       if (this.condition.isAcbpCourse) {
         this.getKPData('ACBP')
       }
 
-      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed 
+      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed
         && this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
         this.getKPData('Enroll')
       }
     }
 
-    if (!this.condition.isPostAssessment && 
+    if (!this.condition.isPostAssessment &&
       (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
         if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
           this.getKPData('ACBP')
@@ -110,7 +110,7 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
     if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100)) {
       if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
         this.getKPData('ACBP CLAIM')
-        this.btnCategory = 'claim' 
+        this.btnCategory = 'claim'
       }
 
       if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
@@ -140,8 +140,8 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
       }
     }
 
-    // if (this.condition.isPostAssessment && 
-    //   (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100) 
+    // if (this.condition.isPostAssessment &&
+    //   (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)
     //   && !this.condition.certData) {
     //   if (this.condition.isAcbpClaim) {
     //     this.getKPData('ACBP')
@@ -170,12 +170,12 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
     //   this.getKPData('ACBP')
     // }
 
-    // if (!this.condition.isAcbpCourse 
+    // if (!this.condition.isAcbpCourse
     //   && !this.condition.monthlyCapExceed && this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
     //   this.getKPData('Enroll')
     // }
 
-    // if (!this.condition.isPostAssessment && 
+    // if (!this.condition.isPostAssessment &&
     //   (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
     //   if (this.condition.isAcbpClaim) {
     //     this.getKPData('ACBP')
@@ -261,7 +261,7 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
     return helText
   }
 
-  translateLabels(label: string, type: any) {    
+  translateLabels(label: string, type: any) {
     return this.langTranslations.translateLabelWithoutspace(label, type, '')
   }
 

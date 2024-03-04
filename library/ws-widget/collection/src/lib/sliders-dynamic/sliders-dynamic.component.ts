@@ -101,7 +101,7 @@ export class SlidersDynamicComponent extends WidgetBaseComponent
     })
   }
 
-  translateLabels(label: string, type: any) {    
+  translateLabels(label: string, type: any) {
     return this.langTranslations.translateLabelWithoutspace(label, type, '')
   }
 }

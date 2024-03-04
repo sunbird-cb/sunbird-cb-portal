@@ -26,7 +26,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     NavigationModule,
     ImageResponsiveModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   exports: [SlidersDynamicComponent],
   entryComponents: [SlidersDynamicComponent],
