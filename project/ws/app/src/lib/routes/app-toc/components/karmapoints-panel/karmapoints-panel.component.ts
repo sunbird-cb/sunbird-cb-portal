@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 
 import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
@@ -8,8 +8,9 @@ import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-ap
   templateUrl: './karmapoints-panel.component.html',
   styleUrls: ['./karmapoints-panel.component.scss'],
 })
-export class KarmaPointsPanelComponent implements OnInit {
 
+export class KarmaPointsPanelComponent implements OnInit, OnChanges {
+  kpArray: any[] = [];
   constructor(
     private translate: TranslateService,
     private langTranslations: MultilingualTranslationsService
@@ -24,25 +25,205 @@ export class KarmaPointsPanelComponent implements OnInit {
   @Input() data: any = []
   @Input() btnCategory = ''
   @Input() pCategory = ''
-  @Output() clickClaimKarmaPoints = new EventEmitter<string>()
   @Input() condition: any
+  @Output() clickClaimKarmaPoints = new EventEmitter<string>()
   kpData: any
 
   karmaPointsSlider: any
 
   ngOnInit() {
+    this.constructNudgeData()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.condition = changes.condition.currentValue
+
+    if (!this.condition.isPostAssessment && 
+      (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100) 
+      && !this.condition.certData) {
+        if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
+          this.getKPData('ACBP')
+        }
+        if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+          this.getKPData('Resume')
+        }
+    }
+
+    if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100 || this.condition.certData)) {
+      if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
+        this.getKPData('ACBP CLAIM')
+        this.btnCategory = 'claim'
+      }
+
+      if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
+        this.getKPData('ACBP COMPLETED')
+      }
+
+      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
+        this.getKPData('Start again')
+      }
+
+      if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
+        this.getKPData('Start again')
+      }
+    }
+
+    if (this.condition.isPostAssessment && this.condition.showTakeAssessment && this.condition.showTakeAssessment.post_assessment) {
+      this.getKPData('Take Assessment')
+    }
+
+    if (this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE  
+      && !this.condition.enrollBtnLoading) {
+      if (this.condition.isAcbpCourse) {
+        this.getKPData('ACBP')
+      }
+
+      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed && 
+        this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
+        this.getKPData('Enroll')
+      }
+    }
+
+    if ((this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE)  
+    && !this.condition.enrollBtnLoading) {
+      if (this.condition.isAcbpCourse) {
+        this.getKPData('ACBP')
+      }
+
+      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed 
+        && this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
+        this.getKPData('Enroll')
+      }
+    }
+
+    if (!this.condition.isPostAssessment && 
+      (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
+        if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
+          this.getKPData('ACBP')
+        }
+
+        if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+          this.getKPData('Resume')
+        }
+      }
+
+    if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100)) {
+      if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
+        this.getKPData('ACBP CLAIM')
+        this.btnCategory = 'claim' 
+      }
+
+      if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
+        this.getKPData('ACBP COMPLETED')
+      }
+
+      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
+        this.getKPData('Start again')
+      }
+
+      if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
+        this.getKPData('Start again')
+      }
+    }
+
+    if (this.condition.isPostAssessment && this.condition.showTakeAssessment && this.condition.showTakeAssessment.post_assessment) {
+      this.getKPData('Take Assessment')
+    }
+
+    if (this.condition.resumeData) {
+      if (!this.condition.userRating) {
+        this.getKPData('Rate this course')
+      }
+
+      if (this.condition.userRating) {
+        this.getKPData('Edit rating')
+      }
+    }
+
+    // if (this.condition.isPostAssessment && 
+    //   (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100) 
+    //   && !this.condition.certData) {
+    //   if (this.condition.isAcbpClaim) {
+    //     this.getKPData('ACBP')
+    //   }
+    //   if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+    //     this.getKPData('Resume')
+    //   }
+    // }
+
+    // if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100 || this.condition.certData)) {
+    //   if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
+    //     this.getKPData('ACBP CLAIM')
+    //   }
+    //   if (!this.condition.isAcbpCourse) {
+    //     if (!this.condition.monthlyCapExceed || (this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth)) {
+    //       this.getKPData('Start again')
+    //     }
+    //   }
+    // }
+
+    // if (this.condition.isPostAssessment && this.condition.showTakeAssessment && this.condition.showTakeAssessment.post_assessment) {
+    //   this.getKPData('Take Assessment')
+    // }
+
+    // if (this.condition.isAcbpCourse) {
+    //   this.getKPData('ACBP')
+    // }
+
+    // if (!this.condition.isAcbpCourse 
+    //   && !this.condition.monthlyCapExceed && this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
+    //   this.getKPData('Enroll')
+    // }
+
+    // if (!this.condition.isPostAssessment && 
+    //   (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
+    //   if (this.condition.isAcbpClaim) {
+    //     this.getKPData('ACBP')
+    //   }
+    //   if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+    //     this.getKPData('Resume')
+    //   }
+    // }
+
+    // if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100)) {
+    //   if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
+    //     this.getKPData('ACBP CLAIM')
+    //   }
+    //   if (!this.condition.isAcbpCourse) {
+    //     if (!this.condition.monthlyCapExceed || (this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth)) {
+    //       this.getKPData('Start again')
+    //     }
+    //   }
+    // }
+
+    // if (this.condition.resumeData) {
+    //   if (!this.condition.userRating) {
+    //     this.getKPData('Rate this course')
+    //   } else {
+    //     this.getKPData('Edit rating')
+    //   }
+    // }
+
+    // if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100 || this.condition.certData)) {
+    //   this.btnCategory = 'claim'
+    // }
+  }
+
+  getKPData(btnType: string): void {
     this.data.forEach((item: any) => {
-      if (item.displayButton === this.btntype) {
-          this.kpData = item
+      if (item.displayButton === btnType) {
+        this.kpData = item
+        if (this.kpArray.findIndex((_obj: any) => _obj.displayButton ===  item.displayButton) === -1) {
+          this.kpArray.push(this.kpData)
+        }
       }
     })
-    this.constructNudgeData()
-    // console.log('condition - ', this.condition)
   }
 
   onClickOfClaim() {
     this.clickClaimKarmaPoints.emit('claim')
   }
+
   constructNudgeData() {
     const nudgeData: any = {
       type: 'karma-points',
@@ -56,20 +237,20 @@ export class KarmaPointsPanelComponent implements OnInit {
       'dot-active': 'dot-active',
     }
 
-    nudgeData.sliderData = [{
-      textBeforeIcon: 'Earn',
-      points: '10',
-      textAfterIcon: 'by completing this course',
-    }, {
-      textBeforeIcon: 'Earn',
-      points: '15',
-      textAfterIcon: 'by completing this course',
-    }, {
-      textBeforeIcon: 'Earn',
-      points: '20',
-      textAfterIcon: 'by completing this course',
-    }]
-
+    // nudgeData.sliderData = [{
+    //   textBeforeIcon: 'Earn',
+    //   points: '10',
+    //   textAfterIcon: 'by completing this course',
+    // }, {
+    //   textBeforeIcon: 'Earn',
+    //   points: '15',
+    //   textAfterIcon: 'by completing this course',
+    // }, {
+    //   textBeforeIcon: 'Earn',
+    //   points: '20',
+    //   textAfterIcon: 'by completing this course',
+    // }]
+    nudgeData.sliderData = this.kpArray
     this.karmaPointsSlider = nudgeData
   }
 
@@ -80,7 +261,7 @@ export class KarmaPointsPanelComponent implements OnInit {
     return helText
   }
 
-  translateLabels(label: string, type: any) {
+  translateLabels(label: string, type: any) {    
     return this.langTranslations.translateLabelWithoutspace(label, type, '')
   }
 

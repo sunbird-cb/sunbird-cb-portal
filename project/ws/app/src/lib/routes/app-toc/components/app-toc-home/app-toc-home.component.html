@@ -1,7 +1,7 @@
 <ng-template #enrollFunctionality>
-  <ws-app-karmapoints-panel [btntype]="'ACBP CLAIM'"
-    [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating}"
-    [data]="kparray" [btnCategory]="'claim'" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+  <ws-app-karmapoints-panel [btntype]=""
+    [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}"
+    [data]="kparray" [btnCategory]="" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
   <ng-container *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
     <div [hidden]="isResource && !content?.artifactUrl?.length" class="flex flex-col gap-4 text-center">
       <!-- COurse block -->
@@ -460,10 +460,10 @@
             <ng-container [ngTemplateOutlet]="progressFunctionality"></ng-container>
             <!-- Overall progress functionality -->
 
-            <!-- <div *ngIf="resumeData && !userRating">
-              <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
-                [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
-            </div> -->
+            <!-- <div *ngIf="resumeData && !userRating"> -->
+              <!-- <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
+                [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel> -->
+            <!-- </div> -->
 
             <!-- <div *ngIf="resumeData && userRating">
               <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"
