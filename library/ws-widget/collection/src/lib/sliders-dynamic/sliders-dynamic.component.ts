@@ -43,7 +43,7 @@ export class SlidersDynamicComponent extends WidgetBaseComponent
         }
       } catch (e) {
       } finally {
-        this.slideInterval = interval(100000).subscribe(() => {
+        this.slideInterval = interval(8000).subscribe(() => {
           if (this.currentIndex === this.widgetData.sliderData.length - 1) {
             this.currentIndex = 0
           } else {

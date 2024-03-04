@@ -38,13 +38,22 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.condition = changes.condition.currentValue
 
-    if (!this.condition.isPostAssessment &&
-      (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)
+    if (!this.condition.isPostAssessment && (this.condition.content.hasOwnProperty('completionPercentage') && 
+      !this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)
       && !this.condition.certData) {
-        if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
+        // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
+        //   this.getKPData('ACBP')
+        // }
+
+        if (this.condition.isAcbpClaim) {
           this.getKPData('ACBP')
         }
-        if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+
+        // if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+        //   this.getKPData('Resume')
+        // }
+        
+        if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
           this.getKPData('Resume')
         }
     }
@@ -55,9 +64,9 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
         this.btnCategory = 'claim'
       }
 
-      if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
-        this.getKPData('ACBP COMPLETED')
-      }
+      // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
+      //   this.getKPData('ACBP COMPLETED')
+      // }
 
       if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
         this.getKPData('Start again')
@@ -72,7 +81,7 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
       this.getKPData('Take Assessment')
     }
 
-    if (this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE
+    if ((this.condition.content && this.condition.content.primaryCategory) !== this.condition.primaryCategory.RESOURCE
       && !this.condition.enrollBtnLoading) {
       if (this.condition.isAcbpCourse) {
         this.getKPData('ACBP')
@@ -84,25 +93,21 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
       }
     }
 
-    if ((this.condition.content && this.condition.content.primaryCategory !== this.condition.primaryCategory.RESOURCE)
-    && !this.condition.enrollBtnLoading) {
-      if (this.condition.isAcbpCourse) {
-        this.getKPData('ACBP')
-      }
+    if (!this.condition.isPostAssessment && (this.condition.content.hasOwnProperty('completionPercentage') &&
+      !this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
+        // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
+        //   this.getKPData('ACBP')
+        // }
 
-      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed
-        && this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
-        this.getKPData('Enroll')
-      }
-    }
-
-    if (!this.condition.isPostAssessment &&
-      (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
-        if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
+        if (this.condition.isAcbpClaim) {
           this.getKPData('ACBP')
         }
 
-        if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+        // if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+        //   this.getKPData('Resume')
+        // }
+
+        if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
           this.getKPData('Resume')
         }
       }
@@ -113,9 +118,9 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
         this.btnCategory = 'claim'
       }
 
-      if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
-        this.getKPData('ACBP COMPLETED')
-      }
+      // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
+      //   this.getKPData('ACBP COMPLETED')
+      // }
 
       if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
         this.getKPData('Start again')
@@ -139,74 +144,6 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
         this.getKPData('Edit rating')
       }
     }
-
-    // if (this.condition.isPostAssessment &&
-    //   (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)
-    //   && !this.condition.certData) {
-    //   if (this.condition.isAcbpClaim) {
-    //     this.getKPData('ACBP')
-    //   }
-    //   if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
-    //     this.getKPData('Resume')
-    //   }
-    // }
-
-    // if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100 || this.condition.certData)) {
-    //   if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
-    //     this.getKPData('ACBP CLAIM')
-    //   }
-    //   if (!this.condition.isAcbpCourse) {
-    //     if (!this.condition.monthlyCapExceed || (this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth)) {
-    //       this.getKPData('Start again')
-    //     }
-    //   }
-    // }
-
-    // if (this.condition.isPostAssessment && this.condition.showTakeAssessment && this.condition.showTakeAssessment.post_assessment) {
-    //   this.getKPData('Take Assessment')
-    // }
-
-    // if (this.condition.isAcbpCourse) {
-    //   this.getKPData('ACBP')
-    // }
-
-    // if (!this.condition.isAcbpCourse
-    //   && !this.condition.monthlyCapExceed && this.condition.userEnrollmentList && !this.condition.userEnrollmentList.length) {
-    //   this.getKPData('Enroll')
-    // }
-
-    // if (!this.condition.isPostAssessment &&
-    //   (!this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
-    //   if (this.condition.isAcbpClaim) {
-    //     this.getKPData('ACBP')
-    //   }
-    //   if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
-    //     this.getKPData('Resume')
-    //   }
-    // }
-
-    // if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100)) {
-    //   if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
-    //     this.getKPData('ACBP CLAIM')
-    //   }
-    //   if (!this.condition.isAcbpCourse) {
-    //     if (!this.condition.monthlyCapExceed || (this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth)) {
-    //       this.getKPData('Start again')
-    //     }
-    //   }
-    // }
-
-    // if (this.condition.resumeData) {
-    //   if (!this.condition.userRating) {
-    //     this.getKPData('Rate this course')
-    //   } else {
-    //     this.getKPData('Edit rating')
-    //   }
-    // }
-
-    // if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100 || this.condition.certData)) {
-    //   this.btnCategory = 'claim'
-    // }
   }
 
   getKPData(btnType: string): void {
@@ -237,19 +174,6 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
       'dot-active': 'dot-active',
     }
 
-    // nudgeData.sliderData = [{
-    //   textBeforeIcon: 'Earn',
-    //   points: '10',
-    //   textAfterIcon: 'by completing this course',
-    // }, {
-    //   textBeforeIcon: 'Earn',
-    //   points: '15',
-    //   textAfterIcon: 'by completing this course',
-    // }, {
-    //   textBeforeIcon: 'Earn',
-    //   points: '20',
-    //   textAfterIcon: 'by completing this course',
-    // }]
     nudgeData.sliderData = this.kpArray
     this.karmaPointsSlider = nudgeData
   }

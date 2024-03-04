@@ -1,7 +1,4 @@
 <ng-template #enrollFunctionality>
-  <ws-app-karmapoints-panel [btntype]=""
-    [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}"
-    [data]="kparray" [btnCategory]="" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
   <ng-container *ngIf="actionBtnStatus !== 'wait' && content?.status !== 'Deleted' && content?.status !== 'Expired'">
     <div [hidden]="isResource && !content?.artifactUrl?.length" class="flex flex-col gap-4 text-center">
       <!-- COurse block -->
@@ -242,7 +239,7 @@
           </div>
           <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview"
             [contentId]="content?.identifier" [progress]="content?.completionPercentage" [progressType]="'percentage'"
-            [customClassName]="'content-progress'">
+            [customClassName]="'content-progress'" >
           </ws-widget-content-progress>
         </div>
       </ng-container>
@@ -351,7 +348,7 @@
 
       <ws-widget-content-toc [content]="content" [pathSet]="pathSet" [tocStructure]="tocStructure" 
       [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader" 
-      [changeTab]="changeTab" [hierarchyMapData]="tocSvc?.hashmap"></ws-widget-content-toc>
+      [changeTab]="changeTab" [hierarchyMapData]="tocSvc?.hashmap" [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}" [kparray]="kparray"></ws-widget-content-toc>
     </div>
   </div>
 
@@ -472,7 +469,11 @@
 
             <ng-container [ngTemplateOutlet]="enrollFunctionality"></ng-container>
 
-            <!-- <ws-app-karmapoints-panel></ws-app-karmapoints-panel> -->
+            <div class="karma-points-div">
+              <ws-app-karmapoints-panel [btntype]=""
+                [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}"
+                [data]="kparray" [btnCategory]="" (clickClaimKarmaPoints)="onClickOfClaim($event)"></ws-app-karmapoints-panel>
+            </div>
           </ng-container>
 
           <ng-container *ngIf="skeletonLoader">
