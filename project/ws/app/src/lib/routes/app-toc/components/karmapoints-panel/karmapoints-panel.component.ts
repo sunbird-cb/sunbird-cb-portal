@@ -38,7 +38,7 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.condition = changes.condition.currentValue
 
-    if (!this.condition.isPostAssessment && (this.condition.content.hasOwnProperty('completionPercentage') && 
+    if (!this.condition.isPostAssessment && (this.condition.content.hasOwnProperty('completionPercentage') &&
       !this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)
       && !this.condition.certData) {
         // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
@@ -52,7 +52,7 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
         // if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
         //   this.getKPData('Resume')
         // }
-        
+
         if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
           this.getKPData('Resume')
         }
