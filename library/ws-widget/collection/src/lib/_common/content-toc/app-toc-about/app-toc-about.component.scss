@@ -193,9 +193,9 @@ $title-line-count: 3;
     border-radius: 8px;
     background-color: #fff;
     margin-top: 65px;
- }
+}
 
- .earned-certificate-container-background {
+.earned-certificate-container-background {
     background-image: url('/assets/icons/tour-complete.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -204,9 +204,9 @@ $title-line-count: 3;
     opacity: 0.5;
     background-position-y: -88px;
     background-position-x: 20px;
- }
+}
 
- .earned-certificate {
+.earned-certificate {
     font-family: 'Montserrat';
     font-size: 20px;
     letter-spacing: 0.12;
@@ -217,8 +217,7 @@ $title-line-count: 3;
     width: 40%;
     padding-top: 16px;
     padding-left: 16px;
- }
-
+}
 
 .ribbon {
     position: absolute;
@@ -244,7 +243,6 @@ $title-line-count: 3;
     border-bottom-color: transparent;
     border-style: solid;
     box-sizing: border-box;
-
 }
 
 .vertical-align-middle {
@@ -263,8 +261,16 @@ $title-line-count: 3;
     display: none;
 }
 
+.mobile-karma-points {
+    max-width: 360px;
+}
+
 @media screen and (min-width: 1200px) {
     .authors-curators {
         display: none !important;
+    }
+
+    .mobile-karma-points {
+        display: none;    
     }
 }

@@ -28,6 +28,7 @@ import { RatingSummaryModule } from '../rating-summary/rating-summary.module'
 import { ContentProgressModule } from '../content-progress/content-progress.module'
 import { CardCompetencyModule } from '../../card-competency/card-competency.module'
 import { TocKpiValuesModule } from './toc-kpi-values/toc-kpi-values.module'
+import { KarmaPointsModule } from './karma-points/karma-points.module'
 
 import { ContentTocComponent } from './content-toc.component'
 import { AppTocAboutComponent } from './app-toc-about/app-toc-about.component'
@@ -79,6 +80,7 @@ import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-
     AttendanceCardModule,
     MatTooltipModule,
     TocKpiValuesModule,
+    KarmaPointsModule,
     TranslateModule,
     TranslateModule.forRoot({
       loader: {

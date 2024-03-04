@@ -1,15 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'
 
 import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
-  selector: 'ws-app-karmapoints-panel',
-  templateUrl: './karmapoints-panel.component.html',
-  styleUrls: ['./karmapoints-panel.component.scss'],
+  selector: 'ws-widget-karma-points',
+  templateUrl: './karma-points.component.html',
+  styleUrls: ['./karma-points.component.scss']
 })
 
-export class KarmaPointsPanelComponent implements OnInit, OnChanges {
+export class KarmaPointsComponent implements OnInit, OnChanges {
   kpArray: any[] = []
   constructor(
     private translate: TranslateService,
@@ -21,6 +21,7 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
       this.translate.use(lang)
     }
   }
+  
   @Input() btntype: any
   @Input() data: any = []
   @Input() btnCategory = ''
@@ -38,8 +39,9 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.condition = changes.condition.currentValue
 
-    if (!this.condition.isPostAssessment && (this.condition.content.hasOwnProperty('completionPercentage') &&
-      !this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)
+    if (!this.condition.isPostAssessment && (this.condition.content && this.condition.content.hasOwnProperty('completionPercentage')
+     && !this.condition.content.completionPercentage 
+     || (this.condition.content && this.condition.content.completionPercentage < 100))
       && !this.condition.certData) {
         // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
         //   this.getKPData('ACBP')
@@ -58,7 +60,8 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
         }
     }
 
-    if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100 || this.condition.certData)) {
+    if (!this.condition.isPostAssessment && ((this.condition.content && this.condition.content.completionPercentage === 100)
+      || this.condition.certData)) {
       if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
         this.getKPData('ACBP CLAIM')
         this.btnCategory = 'claim'
@@ -93,8 +96,9 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
       }
     }
 
-    if (!this.condition.isPostAssessment && (this.condition.content.hasOwnProperty('completionPercentage') &&
-      !this.condition.content.completionPercentage || this.condition.content.completionPercentage < 100)) {
+    if (!this.condition.isPostAssessment && (this.condition.content && this.condition.content.hasOwnProperty('completionPercentage')
+    && !this.condition.content.completionPercentage
+    || (this.condition.content && this.condition.content.completionPercentage < 100))) {
         // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
         //   this.getKPData('ACBP')
         // }
@@ -112,7 +116,7 @@ export class KarmaPointsPanelComponent implements OnInit, OnChanges {
         }
       }
 
-    if (!this.condition.isPostAssessment && (this.condition.content.completionPercentage === 100)) {
+    if (!this.condition.isPostAssessment && (this.condition.content && this.condition.content.completionPercentage === 100)) {
       if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
         this.getKPData('ACBP CLAIM')
         this.btnCategory = 'claim'

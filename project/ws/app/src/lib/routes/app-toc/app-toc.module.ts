@@ -89,7 +89,7 @@ import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content
 import { ConnectionNameModule } from '@sunbird-cb/collection/src/lib/_common/connection-name/connection-name.module'
 import { CertificateDialogModule } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.module'
 import { ConfirmDialogModule } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.module'
-import { SlidersDynamicModule } from '@sunbird-cb/collection/src/lib/sliders-dynamic/sliders-dynamic.module'
+import { KarmaPointsModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/karma-points/karma-points.module'
 
 // Components
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'
@@ -113,7 +113,6 @@ import { AllDiscussionWidgetComponent } from '../discuss/widget/all-discussion-w
 import { AppTocSessionsComponent } from './components/app-toc-sessions/app-toc-sessions.component'
 import { AppTocSessionCardComponent } from './components/app-toc-session-card/app-toc-session-card.component'
 import { EnrollQuestionnaireComponent } from './components/enroll-questionnaire/enroll-questionnaire.component'
-import { KarmaPointsPanelComponent } from './components/karmapoints-panel/karmapoints-panel.component'
 import { TagWidgetComponent } from '../discuss/widget/tag-widget/tag-widget.component'
 
 // Services
@@ -164,7 +163,6 @@ import { AppTocSinglePageDirective } from './routes/app-toc-single-page/app-toc-
     AppTocSessionsComponent,
     AppTocSessionCardComponent,
     EnrollQuestionnaireComponent,
-    KarmaPointsPanelComponent,
   ],
   imports: [
     CommonModule,
@@ -252,7 +250,7 @@ import { AppTocSinglePageDirective } from './routes/app-toc-single-page/app-toc-
     TranslateModule,
     ShareTocModule,
     TocKpiValuesModule,
-    SlidersDynamicModule,
+    KarmaPointsModule
   ],
   providers: [
     AppTocResolverService,
