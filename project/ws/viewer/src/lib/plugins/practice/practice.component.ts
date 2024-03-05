@@ -115,7 +115,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   questionAttemptedCount = 0
   expandFalse = true
   showOverlay = false
-  showToolTip = false;
+  showToolTip = false
   constructor(
     private events: EventService,
     public dialog: MatDialog,
