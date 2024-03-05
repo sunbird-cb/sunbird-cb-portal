@@ -479,9 +479,16 @@ export class AppTocService {
   }
 
   fetchGetContentData(contentId: string) {
-    return this.http.get<{ result: any }>(
-      API_END_POINTS.GET_CONTENT(contentId),
-    )
+    let url = ''
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      return this.http.get<{ result: any }>(
+        API_END_POINTS.GET_CONTENT(contentId),
+      )
+    } else {
+      url = `/api/content/v1/read/${contentId}`
+      return this.http.get<{ result: any }>(url)
+    }
   }
 
   fetchContentParent(contentId: string, data: NsAppToc.IContentParentReq, forPreview = false) {
