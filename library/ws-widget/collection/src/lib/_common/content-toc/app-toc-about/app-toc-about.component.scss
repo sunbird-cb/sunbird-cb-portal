@@ -5,6 +5,10 @@
     margin-top: 60px;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .mat-body p,
 .mat-body-1 p,
 .mat-typography p {
@@ -139,6 +143,7 @@ $title-line-count: 3;
 .desc-ellipsis {
     @extend .text-ellipsis;
     min-height: $title-line-count * 24px;
+    word-break: break-word;
 }
 
 ::ng-deep .ratings-modal-box {
