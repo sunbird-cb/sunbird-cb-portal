@@ -3,6 +3,7 @@ import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils
 // import { ChatbotService } from './chatbot.service'
 import { RootService } from './../root/root.service'
 import { environment } from 'src/environments/environment'
+import { NavigationEnd, Router } from '@angular/router'
 
 @Component({
   selector: 'ws-app-chatbot',
@@ -52,13 +53,22 @@ export class AppChatbotComponent implements OnInit, AfterViewChecked {
   }
   // tslint: enable
   @ViewChild('scrollMe', { static: false }) private myScrollContainer: ElementRef | undefined
+  isHubEnable!: boolean
+
   constructor(
     private configSvc: ConfigurationsService,
     private eventSvc: EventService,
     private renderer: Renderer2,
-    private chatbotService: RootService) { }
+    private chatbotService: RootService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        //certificate link check
+        this.isHubEnable = (event.url.includes('/certs') || event.url.includes('/public/certs')) ? false : true;
+      }
+    })
     this.userInfo = this.configSvc && this.configSvc.userProfile
     this.checkForApiCalls()
     this.enableScroll()

@@ -14,9 +14,15 @@
       </div>
 
       <div class="flex">
-        <div class="flex-wrapped">
+        <div class="flex-wrapped" *ngIf="isMultiLangEnabled">
           <mat-radio-group aria-label="Select an option" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
             <mat-radio-button *ngFor="let lang of multiLang" [value]="lang.key">{{lang.value}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="flex-wrapped" *ngIf="!isMultiLangEnabled">
+          <mat-radio-group aria-label="Select an option" [ngModel]="selectedLanguage">
+            <mat-radio-button *ngFor="let lang of defaultLang" [value]="lang.key" [checked]="lang.checked">{{lang.value}}</mat-radio-button>
           </mat-radio-group>
         </div>
       </div>
@@ -202,7 +208,7 @@
 
               </span> <br />
               <img src="/assets/images/profile/theme.svg" class="theme-img" alt="Photo of a Shiba Inu">
-        <div class="col-md-4 mt-10">
+        <div class="col-md-4 mt-10 margin-bottom-l">
           <span class="comming-soon">
             <mat-icon>info</mat-icon>{{ 'settings.supportThemes' | translate }}
           </span> 

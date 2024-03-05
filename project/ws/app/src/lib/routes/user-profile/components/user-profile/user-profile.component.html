@@ -352,7 +352,7 @@
                             {{'userProfile.groupMandatory' | translate }}
                           </mat-error>
                         </mat-form-field>
-                        <span class="txt txt-review" *ngIf="!isAllowed('group')">{{inReview}}</span>
+                        <span class="txt txt-review" *ngIf="!isAllowed('group')">{{translateLabels(inReview, 'userProfile')}}</span>
                       </div>
 
                       <div class="input-wrapper margin-top-s">
@@ -379,7 +379,7 @@
 
                             </mat-select>
                           </mat-form-field>
-                          <span class="txt" *ngIf="!isAllowed('designation')">{{inReview}}</span>
+                          <span class="txt" *ngIf="!isAllowed('designation')">{{translateLabels(inReview, 'userProfile')}}</span>
 
                         </div>
                         <a class="pos-hint help-request ws-mat-black60-text" id="org-field"><span
@@ -451,7 +451,7 @@
                           </div>
                         </div>
                         <div class="flex flex-end" [ngClass]="{ disable: !isAllowed('verifiedKarmayogi') }">
-                          <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi') && isReqVKBuser">{{inReview}}</span>
+                          <span class="txt" *ngIf="!isAllowed('verifiedKarmayogi') && isReqVKBuser">{{translateLabels(inReview, 'userProfile')}}</span>
                         </div>
                       </div>
 
@@ -575,7 +575,7 @@
                         aria-label="Postal Address textarea input"></textarea>
                       <!-- <input matInput #residenceAddress formControlName="residenceAddress" i18n-placeholder
       placeholder="Enter Postal Address Here" [required]="true" /> -->
-                      <mat-hint align="end">{{ residenceAddress.value.length }} /200 characters</mat-hint>
+                      <mat-hint align="end">{{ residenceAddress.value.length }} / 200 {{'userProfile.characters' | translate }}</mat-hint>
                       <!-- <mat-error [hidden]="false" i18n="Postal address error |Explains Postal address is required"
                         *ngIf="createUserForm?.controls['residenceAddress'].errors?.required" i18n-aria-label
                         aria-label="Postal address error |Explains Postal address is required">
@@ -606,7 +606,7 @@
                         </mat-error>
                       </mat-form-field>
                       <br>
-                      <span class="txt" *ngIf="!isAllowed('doj')">{{inReview}}</span>
+                      <span class="txt" *ngIf="!isAllowed('doj')">{{translateLabels(inReview, 'userProfile')}}</span>
                     </div>
                   </div>
 
@@ -736,7 +736,7 @@
                     [disabled]="!isAllowed('organisationType')">
                   <label for="nonGovtOrg">{{'userProfile.nonGovernmentOrganisation' | translate }}</label>
                   <br>
-                  <span class="txt" *ngIf="!isAllowed('organisationType')">{{inReview}}</span>
+                  <span class="txt" *ngIf="!isAllowed('organisationType')">{{translateLabels(inReview, 'userProfile')}}</span>
                 </div>
 
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
@@ -762,7 +762,7 @@
 
                       </mat-select>
                     </mat-form-field>
-                    <span class="txt" *ngIf="!isAllowed('name')">{{inReview}}</span>
+                    <span class="txt" *ngIf="!isAllowed('name')">{{translateLabels(inReview, 'userProfile')}}</span>
                   </div>
                   <div class="item1" *ngIf="orgNameSelect.value === 'Other' || showOrgnameOther"
                     [ngClass]="{ disable: !isAllowed('orgNameOther') }">
@@ -778,7 +778,7 @@
                         {{'userProfile.otherOrganisationNameMandatory' | translate }}
                       </mat-error>
                     </mat-form-field>
-                    <span class="txt" *ngIf="!isAllowed('orgNameOther')">{{inReview}}</span>
+                    <span class="txt" *ngIf="!isAllowed('orgNameOther')">{{translateLabels(inReview, 'userProfile')}}</span>
                   </div>
                 </div>
 
@@ -805,7 +805,7 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <span class="txt" *ngIf="!isAllowed('industry')">{{inReview}}</span>
+                    <span class="txt" *ngIf="!isAllowed('industry')">{{translateLabels(inReview, 'userProfile')}}</span>
                   </div>
                   <div class="item1" *ngIf="industrySelect.value === 'Other' || showIndustryOther"
                     [ngClass]="{ disable: !isAllowed('industryOther') }">
@@ -821,7 +821,7 @@
                         {{'userProfile.otherIndustryName' | translate }}
                       </mat-error>
                     </mat-form-field>
-                    <span class="txt" *ngIf="!isAllowed('industryOther')">{{inReview}}</span>
+                    <span class="txt" *ngIf="!isAllowed('industryOther')">{{translateLabels(inReview, 'userProfile')}}</span>
                   </div>
                 </div>
                 <div class="flex flex-1 flex-wrap section-input margin-top-m">
@@ -844,7 +844,7 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <span class="txt" *ngIf="!isAllowed('location')">{{inReview}}</span>
+                    <span class="txt" *ngIf="!isAllowed('location')">{{translateLabels(inReview, 'userProfile')}}</span>
 
                   </div>
                 </div>
@@ -860,13 +860,13 @@
                         [matAutosizeMinRows]="4" maxlength="500" formControlName="orgDesc"
                         placeholder="{{'userProfile.orgDescriptionPlaceholder' | translate }}" i18n-placeholder #orgDesc
                         [attr.disabled]="!isAllowed('description')"></textarea>
-                      <mat-hint align="end">{{ orgDesc.value.length }} /500 characters</mat-hint>
+                      <mat-hint align="end">{{ orgDesc.value.length }} / 500 {{'userProfile.characters' | translate }}</mat-hint>
                       <mat-error i18n>
                         {{'userProfile.descriptionLength' | translate }}
                       </mat-error>
                     </mat-form-field>
                     <br>
-                    <span class="txt" *ngIf="!isAllowed('description')">{{inReview}}</span>
+                    <span class="txt" *ngIf="!isAllowed('description')">{{translateLabels(inReview, 'userProfile')}}</span>
                   </div>
                 </div>
                 <p class="heading mt-10">{{'userProfile.otherDetailsGovernmentEmployees' | translate }}</p>
@@ -989,7 +989,7 @@
                       <input id="officePostalAddress" matInput #otherDetailsOfficeAddress
                         formControlName="otherDetailsOfficeAddress" maxlength="200" i18n-placeholder
                         placeholder="{{'userProfile.officePostalAddressPlaceholder' | translate }}" />
-                      <mat-hint align="end">{{ otherDetailsOfficeAddress.value.length }} /200 {{'userProfile.characters' | translate }}</mat-hint>
+                      <mat-hint align="end">{{ otherDetailsOfficeAddress.value.length }} / 200 {{'userProfile.characters' | translate }}</mat-hint>
                       <mat-error i18n>
                         {{'userProfile.officePostalAddressLength' | translate }}
                       </mat-error>
@@ -1057,7 +1057,7 @@
               <span class="mat-subheading-1 heading-details">{{'userProfile.academics' | translate }}</span>
             </div>
             <div class="w-full profile-cols-full bg-grey">
-              <p class="heading">{{'userProfile.10th' | translate }}</p>
+              <p class="heading">{{'userProfile.tenth' | translate }}</p>
               <div class="flex flex-wrap section-input">
                 <div class="item">
                   <label for="schoolName10" class=" margin-remove-bottom form-label"
@@ -1088,7 +1088,7 @@
               </div>
             </div>
             <div class="w-full profile-cols-full bg-grey">
-              <p class="heading">{{'userProfile.12th' | translate }}</p>
+              <p class="heading">{{'userProfile.twelveth' | translate }}</p>
               <div class="flex flex-wrap section-input">
                 <div class="item">
                   <label for="schoolName" class=" margin-remove-bottom form-label"
@@ -1193,7 +1193,7 @@
                 </div>
               </ng-container>
               <div class="mt-5">
-                <button mat-raised-button type="button" (click)="addDegree()"
+                <button mat-raised-button type="button" (click)="addDegree()" matTooltip="{{'userProfile.addOtherQualification' | translate }}"
                   class="text-white margin-right-m btn-success">
                   <span class="text-white" i18n>{{'userProfile.addOtherQualification' | translate }}</span>
                 </button>
@@ -1276,7 +1276,7 @@
 
               <div class="mt-5">
                 <button mat-raised-button type="button" (click)="addPostDegree()"
-                  class="text-white margin-right-m btn-success">
+                  class="text-white margin-right-m btn-success" matTooltip="{{'userProfile.addOtherQualification' | translate }}">
                   <span class="text-white" i18n>{{'userProfile.addOtherQualification' | translate }}</span>
                 </button>
               </div>

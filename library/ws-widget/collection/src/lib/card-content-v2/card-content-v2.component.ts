@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig, MultilingualTranslationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig, MultilingualTranslationsService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
@@ -364,6 +364,16 @@ export class CardContentV2Component extends WidgetBaseComponent
 
   openComment() { }
   downloadCertificate(certificateData: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'view-certificate',
+        subType: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      },
+      {
+        id: certificateData.issuedCertificates[0].identifier,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      })
     if(certificateData.issuedCertificates.length > 0) {
       this.downloadCertificateLoading = true
       let certData: any = certificateData.issuedCertificates[0]
@@ -372,7 +382,7 @@ export class CardContentV2Component extends WidgetBaseComponent
         const cet = res.result.printUri
         this.dialog.open(CertificateDialogComponent, {
           width: '1300px',
-          data: { cet },
+          data: { cet, certId: certData.identifier },
         })
       })
     } else {

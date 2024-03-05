@@ -274,17 +274,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     }
 
-    if (this.content && this.content.courseCategory !== 'Moderated Course' && (
-      this.content.primaryCategory === this.primaryCategory.COURSE ||
-      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
-      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
-      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
-      ) {
-        this.canShare = true
-        if (this.configSvc.userProfile) {
-          this.rootOrgId = this.configSvc.userProfile.rootOrgId
-          // this.getUsersToShare('')
-        }
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+        // this.getUsersToShare('')
+      }
     }
   }
 
@@ -1305,7 +1305,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
         return
       }
-      const ePattern = new RegExp(`^[A-Za-z0-9_%+-]+(?:\.[A-Za-z0-9_%+-]+)*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
+      // tslint:disable-next-line: max-line-length
+      const ePattern = new RegExp(/^(?!.*\.\.)(?!.*\._)(?!.*\._\.)(?!.*\.\.$)(?!.*\.$)[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/)
       if (ePattern.test(value)) {
         if ((value || '').trim()) {
           this.users.push(value.trim())
@@ -1318,7 +1319,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (el != null) {
           setTimeout(() => {
             el[0].scrollTop = el[0].scrollHeight
-          }, 200)
+          },         200)
         }
       } else {
         this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
@@ -1353,7 +1354,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (el != null) {
       setTimeout(() => {
         el[0].scrollTop = el[0].scrollHeight
-      }, 200)
+      },         200)
     }
   }
 
@@ -1462,5 +1463,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   translateLabels(label: string, type: any, subtype: any) {
     return this.langtranslations.translateActualLabel(label, type, subtype)
+  }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

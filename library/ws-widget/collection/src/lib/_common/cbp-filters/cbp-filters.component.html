@@ -32,7 +32,7 @@
                             </mat-expansion-panel-header>
                             <div class="flex flex-row category-item" *ngFor="let ctype of primaryCategoryList">
                                 <mat-checkbox #checkboxes disableRipple [checked]="ctype?.checked" class="example-margin"
-                                    (change)="handleGetFilterType($event, ctype, 'primaryCategory')">{{ctype?.name}}</mat-checkbox>
+                                    (change)="handleGetFilterType($event, ctype, 'primaryCategory')">{{ translateLabels(ctype?.name, 'competencyList') }}</mat-checkbox>
                             </div>
                         </mat-expansion-panel>
                     </mat-accordion>
@@ -48,7 +48,7 @@
                             </mat-expansion-panel-header>
                             <div class="flex flex-row category-item" *ngFor="let ctype of contentStatus">
                                 <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="ctype?.checked"
-                                    (change)="handleGetFilterType($event, ctype, 'status')">{{ctype?.name}}</mat-checkbox>
+                                    (change)="handleGetFilterType($event, ctype, 'status')">{{ translateLabels(ctype?.name, 'competencyList') }}</mat-checkbox>
                             </div>
                         </mat-expansion-panel>
                     </mat-accordion>
@@ -65,7 +65,7 @@
                             <div class="flex flex-row">
                                 <mat-radio-group aria-label="Select an option">
                                     <ng-container *ngFor="let ctype of timeDuration">
-                                        <mat-radio-button class="category-item" (change)="timeDurationFilter(ctype,'timeDuration')" [checked]="ctype.checked" [value]="ctype">{{ctype?.name}}</mat-radio-button>
+                                        <mat-radio-button class="category-item" (change)="timeDurationFilter(ctype,'timeDuration')" [checked]="ctype.checked" [value]="ctype">{{ translateLabels(ctype?.name, 'competencyList') }}</mat-radio-button>
                                         <br>
                                     </ng-container>
                                 </mat-radio-group>
@@ -85,7 +85,7 @@
                         </mat-expansion-panel-header>
                         <div class="flex flex-row category-item" *ngFor="let ctype of competencyTypeList">
                             <mat-checkbox #checkboxes disableRipple [checked]="ctype?.checked" class="example-margin"
-                                (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
+                                (change)="getCompetencyTheme($event, ctype)">{{ translateLabels(ctype?.name, 'competencyList') }}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>

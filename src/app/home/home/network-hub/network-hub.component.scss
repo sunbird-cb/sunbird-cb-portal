@@ -87,9 +87,5 @@ $title-line-count: 1;
 }
 
 .textwrap {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 64px;
-    display: inline-flex;
-  }
+    word-break: break-word;
+}

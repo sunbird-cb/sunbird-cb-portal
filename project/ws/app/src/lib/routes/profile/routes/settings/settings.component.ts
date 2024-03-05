@@ -59,6 +59,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
   // showProfileSettings = false
   selectedLanguage = 'en'
   multiLang: any = []
+  isMultiLangEnabled: any
+  defaultLang = [
+    {
+      value: 'English',
+      key: 'en',
+      checked : true,
+    },
+  ]
 
   constructor(
     // todo mobile settings removed
@@ -87,6 +95,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.selectedLanguage = lang
       }
     })
+
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
   }
 
   ngOnInit() {

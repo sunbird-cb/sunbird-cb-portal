@@ -1,9 +1,9 @@
 <ng-container *ngIf="fullMenuDispaly">
 
-  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top'"
+  <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top' && isHubEnable"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
-    class="mat-elevation-z3 custom mobile">
-    <div class="fix-ww" id="root-tool-bar">
+    class="mat-elevation-z3 custom mobile-height" [ngClass]="{'mobile': isHubEnable}">
+    <div class="fix-ww" id="root-tool-bar" *ngIf="isHubEnable">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim  items-center hidden md:flex" role="link" title="Home"
           i18n-aria-title i18n-aria-label>
@@ -179,9 +179,9 @@
 </ng-template>
 <ng-template #karmaBadge>
   <div class="flex flex-middle points-block">
-    <img (click)="viewKarmapoints()" src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo" />
+    <img (click)="viewKarmapoints()" src="/assets/icons/home/karma-badge.svg" width="32px" height="32px" alt="Application Logo" class="app-logo cursor-pointer" />
     <div class="margin-left-xs">
-      <p class="karma-lbl flex ">
+      <p class="karma-lbl flex">
         {{ 'appnavbar.karmaPoints' | translate }}<img #tooltip="matTooltip" [matTooltipClass]="'below'" width="13.33px" height="13.33px" mat-raised-button
         matTooltip="{{ 'appnavbar.karmaPointsToolTip' | translate }}"
         [matTooltipPosition]="'below'"  (click)="tooltip.show()"

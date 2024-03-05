@@ -9,7 +9,7 @@
           <div *ngIf="republicDayData.backgroupImage"><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
           <div class="flex flex-col aligncenter">
             <div class="greet-text" [ngStyle]="{color: republicDayData.textColor}">
-              {{translateLabels(republicDayData.greet, 'profileNudge')}} {{userName}}!
+              {{translateLabels(republicDayData.greet, 'profileNudge')}}, {{userName}}!
             </div>
             <div class="center-image">
               <img *ngIf="republicDayData.centerImage" [src]="republicDayData.centerImage">
@@ -27,7 +27,7 @@
             </div>
             <div class="mobile-info">
               <div class="mobile-greet" [ngStyle]="{color: republicDayData.textColor}">
-                {{translateLabels(republicDayData.greet, 'profileNudge')}} {{userName}}!
+                {{translateLabels(republicDayData.greet, 'profileNudge')}}, {{userName}}!
               </div>
               <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">
                 {{translateLabels(republicDayData.info, 'profileNudge')}}

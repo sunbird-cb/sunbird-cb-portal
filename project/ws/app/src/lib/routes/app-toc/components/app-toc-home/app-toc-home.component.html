@@ -123,7 +123,7 @@ TODO: edit option while preview Mode
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="content.completionPercentage === 100 || certData">
-                    {{resumeData? translateLabels('startAgain', 'apptochome') : translateLabels('start', 'apptochome')}}
+                    {{resumeData? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome')}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
@@ -187,16 +187,36 @@ TODO: edit option while preview Mode
                 </ng-container>
               </ng-container>
             </ng-container>
-            <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
-              <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) &&
-              content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
-                <span class="mat-subheading-1" i18n>{{'apptochome.youAreNotInvited' | translate}}</span>
+            <ng-container *ngIf="(content?.primaryCategory === primaryCategory.PROGRAM) || (contentReadData?.primaryCategory === primaryCategory?.MANDATORY_COURSE_GOAL)">
+              <ng-container *ngIf="(courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory) && (contentReadData?.batches && !batchData?.enrolled)">
+                <ng-container *ngIf="(content?.primaryCategory !== primaryCategory.RESOURCE)  && !enrollBtnLoading">
+                  <a class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white" (click)="autoBatchAssign()">
+                    <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                      {{'apptochome.enroll' | translate}}
+                    </ng-container>
+                  </a>
+                  <ng-container *ngIf="isAcbpCourse">
+                    <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </ng-container>
+                  <ng-container *ngIf="!isAcbpCourse && !monthlyCapExceed && userEnrollmentList && !userEnrollmentList.length">
+                   <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
+                  </ng-container>
               </ng-container>
-              <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
-                <span class="mat-subheading-1" i18n>{{'apptochome.noActiveBatches' | translate}}</span>
               </ng-container>
-              <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
-                <span class="mat-subheading-1" i18n>{{'apptochome.batchWillStart' | translate}} {{getStartDate}}!!.</span>
+              <ng-container *ngIf="(courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory) && !contentReadData?.batches && !batchData?.enrolled && !enrollBtnLoading">
+                No Batches
+              </ng-container>
+               <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM !== contentReadData?.courseCategory">
+                    <ng-container *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) &&
+                  content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
+                    <span class="mat-subheading-1" i18n>{{'apptochome.youAreNotInvited' | translate}}</span>
+                  </ng-container>
+                  <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
+                    <span class="mat-subheading-1" i18n>{{'apptochome.noActiveBatches' | translate}}</span>
+                  </ng-container>
+                  <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
+                    <span class="mat-subheading-1" i18n>{{'apptochome.batchWillStart' | translate}} {{getStartDate}}!!.</span>
+                  </ng-container>
               </ng-container>
               <!-- <ng-container *ngIf="!this.content['batches'] || this.content['batches']?.length <= 0">
                 <span class="mat-subheading-1" i18n> No Active Batches!.</span>
@@ -217,11 +237,11 @@ TODO: edit option while preview Mode
                   </ng-container> -->
                   <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                      {{resumeData && (content.completionPercentage < 100 && content.completionPercentage > 0)? "Resume" : "Start"}}
+                      {{resumeData && (content.completionPercentage < 100 && content.completionPercentage > 0) ? translateLabels('resume', 'apptochome') : translateLabels('start', 'apptochome')}}
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="content.completionPercentage === 100">
-                    {{resumeData || content.completionPercentage === 100? "Start again" : "Start"}}
+                    {{resumeData || content.completionPercentage === 100 ? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome')}}
                   </ng-container>
                 </a>
                 <a *ngIf="isPostAssessment && showTakeAssessment?.post_assessment" [routerLink]="firstResourceLink?.url"
@@ -267,11 +287,11 @@ TODO: edit option while preview Mode
                 class="mat-button mat-button-base resumeButton custom-button width-1-1 text-white">
                 <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
                   <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                    {{resumeData && (content.completionPercentage < 100 && content.completionPercentage > 0) ? "Resume" : "Start"}}
+                    {{resumeData && (content.completionPercentage < 100 && content.completionPercentage > 0) ? translateLabels('resume', 'apptochome') : translateLabels('start', 'apptochome')}}
                   </ng-container>
                 </ng-container>
                 <ng-container *ngIf="content.completionPercentage === 100">
-                  {{resumeData || content.completionPercentage === 100? "Start again" : "Start"}}
+                  {{resumeData || content.completionPercentage === 100? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome')}}
                 </ng-container>
               </a>
             </ng-container>
@@ -317,11 +337,11 @@ TODO: edit option while preview Mode
 
                   <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
                     <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                      {{resumeData && (content.completionPercentage < 100 && content.completionPercentage > 0) ? "Resume" : "Start"}}
+                      {{resumeData && (content.completionPercentage < 100 && content.completionPercentage > 0) ? translateLabels('resume', 'apptochome') : translateLabels('start', 'apptochome')}}
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="content.completionPercentage === 100 || certData">
-                    {{resumeData || content.completionPercentage === 100 ? "Start again" : "Start"}}
+                    {{resumeData || content.completionPercentage === 100 ? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome')}}
                   </ng-container>
                 </a>
                 </ng-container>
@@ -360,7 +380,7 @@ TODO: edit option while preview Mode
             <span class="certificate-text block">{{'apptochome.issuePersistsMailus' | translate}} <a>mission[dot]karmayogi[at]gov[dot]in</a></span>
           </ng-container>
           <ng-container *ngIf="certData">
-            <a class="certificate_box" (click)="openCertificateDialog()">
+            <a class="certificate_box" (click)="openCertificateDialog(); raiseCertIntreactTelemetry()">
                 <img [src]="certData| pipeSafeSanitizer: 'url'" class="certificate_banner" />
                 <div class="certificate_overlay"></div>
                 <!-- <p class="certificate_text mat-body-2 font-weight-bold text-center margin-bottom-xs">Completion certificate</p> -->

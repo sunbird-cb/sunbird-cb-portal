@@ -340,14 +340,14 @@
                 *ngIf="content?.competencies_v5 && competencies.length">
                 <div class="fluid-width contacts-container mb-10">
                     <div class="fixed-width flex flex-col flex-wrap">
-                        <h2 class="mat-toolbar contacts-head">Competencies</h2>
+                        <h2 class="mat-toolbar contacts-head">{{'apptocsinglepage.competencies' | translate}}</h2>
                     </div>
                     <div>
                         <table class="compt-table width-1-1 text-left">
                             <tr>
-                                <th class="padding-xs ws-mat-black60-text mat-body-1">Sub theme</th>
-                                <th class="padding-xs ws-mat-black60-text mat-body-1">Theme</th>
-                                <th class="padding-xs ws-mat-black60-text mat-body-1">Area</th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">{{'apptocsinglepage.subTheme' | translate}}</th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">{{'apptocsinglepage.theme' | translate}} </th>
+                                <th class="padding-xs ws-mat-black60-text mat-body-1">{{'apptocsinglepage.area' | translate}}</th>
                             </tr>
                             <tr *ngFor="let comp of competencies">
                                 <td class="padding-xs mat-body-1">{{comp.competencySubTheme}}</td>
@@ -456,12 +456,12 @@
                                 <ws-widget-card-rating-comment [review]="authReplies[c.userId]" [contentid]="content?.identifier"></ws-widget-card-rating-comment>
                             </ng-container>
                         </div>
-                        <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                        <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center spinner-border">
                             <mat-spinner [diameter]="30"></mat-spinner>
                         </div>
                         <h4 *ngIf="(ratingReviews | pipeFilterV3:{ 'firstName': searchKey.value, 'review': searchKey.value } : false)?.length <=0
                         && (displayLoader  === false)" class="w-full text-left ws-mat-black60-text ">
-                            No reviews found!
+                        {{'apptocsinglepage.noReviewsFound' | translate}}
                          </h4>
                     </div>
                 </div>

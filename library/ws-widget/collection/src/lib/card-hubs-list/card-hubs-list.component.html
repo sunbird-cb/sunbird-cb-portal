@@ -1,4 +1,4 @@
-<mat-card class="base-layout container-balanced" role="navigation">
+<mat-card class="base-layout container-balanced" role="navigation" *ngIf="isHubEnable">
   <mat-card-content>
     <div class="flex flex-1 flex-column" role="presentation">
       <div class="flex flex-1 secondary-nav" role="menubar">
@@ -9,16 +9,16 @@
         </a> -->
         <ng-container [@enterAnimation]="visible">
           <div *ngFor="let hub of hubsList" class="flex items-center nav-menu">
-            <ng-container *ngIf="(hub.hubname == 'Discuss' && hub.active)">
-              <a [id]="hub.hubname" class="simple-hubs-link" i18n-aria-label role="menuitem" (click)="navigate(hub.hubname)">
+            <ng-container *ngIf="(hub.hubname == 'discuss' && hub.active)">
+              <a [id]="hub.hubname" class="simple-hubs-link" i18n-aria-label role="menuitem" (click)="navigate(hub.hubname); trackTelemetry(hub.hubname)">
                 <img  [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'"> {{ translateLabels(hub.hubname, 'common') }}</span>
               </a>
             </ng-container>
-            <ng-container *ngIf="hub.hubname != 'Discuss' && hub.active">
-              <a class="simple-hubs-link" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path" (click)="trackTelemetry(hub.hubname)"
+            <ng-container *ngIf="hub.hubname != 'discuss' && hub.active">
+              <a class="simple-hubs-link" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"  (click)="trackTelemetry(hub.hubname)"
                 [attr.accesskey]="hub.accessKey" [ngClass]="{'gyaan-icon': hub.hubname === 'Gyaan Karmayogi'}">
-                <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" /> 
+                <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'">  {{ translateLabels(hub.hubname, 'common') }}</span>
               </a>
             </ng-container>
@@ -28,10 +28,10 @@
 
             <!-- <mat-icon class="margin-right-xs ws-mat-primary-text">more_horiz</mat-icon> -->
             <span class="margin-auto ws-mat-primary-text flex">{{ 'cardshublist.more' | translate }}
-              <img class="more-drop-down" *ngIf="!visible" src="assets/icons/top-nav/expand.svg"/> 
-              <img class="more-drop-down" *ngIf="visible" src="assets/icons/top-nav/collapse.svg"/> 
+              <img class="more-drop-down" *ngIf="!visible" src="assets/icons/top-nav/expand.svg"/>
+              <img class="more-drop-down" *ngIf="visible" src="assets/icons/top-nav/collapse.svg"/>
             </span>
-            
+
           </a>
         </ng-container>
       </div>
@@ -58,18 +58,7 @@
           <h4 class="mat-h4 nav_sub_heading">{{ 'cardshublist.doMore' | translate }}</h4>
         </div>
         <div class="flex flex-1">
-          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/competencies']"
-              (click)="trackTelemetry('Competency')">
-              <div class="icon ws-mat-primary-tags">
-                <img class="m-auto mat-icon" src="/assets/icons/hubs/extension.svg">
-              </div>
-              <div class="width-expand padding-left-xs cursor-pointer">
-                <div class="margin-0 mat-subheading-2">{{ 'cardshublist.competency' | translate }}</div>
-                <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.identifyYourCompetency' | translate }}
-                </div>
-              </div>
-            </a>
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">            
 
             <a  *ngIf="showDashboardIcon" class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()"
               (click)="trackTelemetry('Dashboard')" [routerLink]="['/app/my-dashboard']">
@@ -83,7 +72,7 @@
               </div>
             </a>
 
-            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" 
+            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()"
               (click)="trackTelemetry('Settings')" [routerLink]="['/app/profile/settings']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
@@ -106,7 +95,7 @@
             </a> -->
           </div>
         </div>
-        
+
         <div class="flex flex-1 margin-xs" *ngIf="environment.portals.length">
           <h4 class="mat-h4 margin-bottom-remove nav_sub_heading">{{ 'cardshublist.quickLinks' | translate }}</h4>
         </div>
@@ -114,7 +103,7 @@
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2 mobile-div">
             <ng-container *ngFor="let portal of environment.portals | orderBy: 'sr'">
               <ng-container *ngIf="(portal.isPublic || isAllowed(portal.id)) && portal.name !== 'Frac Dictionary'">
-                <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" 
+                <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()"
                   (click)="trackTelemetry(portal.name)" [attr.href]="portal.uriPath" target="_blank">
                   <div class="icon ws-mat-primary-tags">
                     <!-- <mat-icon class="m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
@@ -179,7 +168,7 @@
         </div>
         <div class="flex flex-1 disable-div">
           <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2 mobile-div">
-            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" 
+            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()"
               (click)="trackTelemetry('Career')" [routerLink]="['/app/careers/home']">
               <div class="icon ws-mat-primary-tags">
                 <img class="m-auto mat-icon" src="/assets/icons/hubs/work.svg">
@@ -189,8 +178,20 @@
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.exploreOpportunities' | translate }}</div>
               </div>
             </a>
+            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/competencies']"
+              (click)="trackTelemetry('Competency')">
+              <div class="icon ws-mat-primary-tags">
+                <img class="m-auto mat-icon" src="/assets/icons/hubs/extension.svg">
+              </div>
+              <div class="width-expand padding-left-xs cursor-pointer">
+                <div class="margin-0 mat-subheading-2">{{ 'cardshublist.competency' | translate }}</div>
+                <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.identifyYourCompetency' | translate }}
+                </div>
+              </div>
+            </a>
           </div>
         </div>
+       
 
         <div class="text-center">
           <mat-spinner [strokeWidth]="3" *ngIf="hubsList.length === 0" [diameter]="40" class="display-inline-block">
@@ -201,9 +202,9 @@
   </mat-card-content>
 </mat-card>
 
-<ng-template #userIndividualNew let-hubs="hubs">
+<ng-template #userIndividualNew let-hubs="hubs" *ngIf="isHubEnable">
   <ng-container *ngIf="hubs.hubname == 'Discuss' && !hubs.active">
-    <a [id]="hubs.hubname" class="mobile flex flex-wrap mb-4" (click)="toggleVisibility(); navigate()" role="menuitem" i18n-aria-label>
+    <a [id]="hubs.hubname" class="mobile flex flex-wrap mb-4" (click)="toggleVisibility(); navigate(); trackTelemetry(hubs.hubname)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}} -->
         <!-- <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->
@@ -219,7 +220,7 @@
   </ng-container>
 
   <ng-container *ngIf="hubs.hubname != 'Discuss' && !hubs.active">
-    <a class="flex flex-wrap mb-4 mobile" [id]="hubs.hubname" (click)="toggleVisibility();" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
+    <a class="flex flex-wrap mb-4 mobile" [id]="hubs.hubname" (click)="toggleVisibility(); trackTelemetry(hubs.hubname)" [routerLink]="(hubs.path)" role="menuitem" i18n-aria-label>
       <div class="icon ws-mat-primary-tags">
         <!-- {{hubs.icon | json}}
         <mat-icon class="mat-icon1">{{hubs.icon}}</mat-icon> -->

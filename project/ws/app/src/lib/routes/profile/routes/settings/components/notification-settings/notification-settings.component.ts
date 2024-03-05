@@ -3,7 +3,7 @@ import { NsSettings } from '../../settings.model'
 import { TFetchStatus } from '@sunbird-cb/utils'
 import { SettingsService } from '../../settings.service'
 import { MatSnackBar } from '@angular/material'
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:disable*/
 import _ from 'lodash'
 
@@ -32,11 +32,7 @@ export class NotificationSettingsComponent implements OnInit {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
       let lang = localStorage.getItem('websiteLanguage')!
-
       this.translate.use(lang)
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        console.log('onLangChange', event);
-      });
     }
   }
 

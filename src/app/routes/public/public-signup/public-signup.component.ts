@@ -138,6 +138,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
   selectedLanguage = 'en'
   multiLang: any = []
+  isMultiLangEnabled: any
 
   constructor(
     private signupSvc: SignupService,
@@ -159,6 +160,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       lang = lang.replace(/\"/g, '')
       this.selectedLanguage = lang
       this.translate.use(lang)
+    } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
     }
 
     let userData: any = {}
@@ -188,6 +192,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       organisation: new FormControl('', [Validators.required]),
       // recaptchaReactive: new FormControl(null, [Validators.required]),
     })
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
   }
 
   ngOnInit() {

@@ -25,7 +25,7 @@
               <span *ngIf="title.title && title.url && title.url === 'none'" i18n-aria-label i18n-aria-title
                 i18n="page title: {{title.title}}" class="flex margin-left-xs m-auto">
                 <mat-icon class="ws-mat-default-text icon-margin m-t-b" *ngIf="title.icon">{{title.icon}}</mat-icon>
-                <span class="m-t-b mat-body-2 font-bold-imp ws-mat-black60-text">{{ translateLabels(title.title, 'btnpageback') }}</span>
+                <span class="m-t-b mat-body-2 font-bold-imp ws-mat-black60-text">{{title.title}}</span>
               </span>
               <a class="flex m-auto ws-mat-default-text" i18n-aria-label *ngIf="title.url && title.url !== 'none'"
                 [routerLink]="title.url" [queryParams]="title.queryParams" role="menuitem" i18n-aria-label [routerLink]="title.path"

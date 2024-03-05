@@ -71,6 +71,7 @@ export class PublicRequestComponent implements OnInit {
   userform: any
   selectedLanguage = 'en'
   multiLang: any = []
+  isMultiLangEnabled: any
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -131,6 +132,12 @@ export class PublicRequestComponent implements OnInit {
       lang = lang.replace(/\"/g, '')
       this.selectedLanguage = lang
       this.translate.use(lang)
+    } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
+    }
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
     }
    }
 
