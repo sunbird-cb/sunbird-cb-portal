@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { ConfigurationsService, EventService, LoggerService, TFetchStatus } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
-import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
+import { SCORMAdapterService, scormLMSStatus } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */
 import _ from 'lodash'
 import { environment } from 'src/environments/environment';
@@ -35,6 +35,8 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   progress = 100
   progressThreshold = 70
+  public scormLMSStatus = scormLMSStatus
+  playScormContentFlag = scormLMSStatus.LMSWating
   realTimeProgressRequest = {
     content_type: 'Resource',
     primaryCategory: NsContent.EPrimaryCategory.RESOURCE,
@@ -90,6 +92,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         this.timer = timer(1000, 1000)
         // subscribing to a observable returns a subscription object
         this.sub = this.timer.subscribe((t: any) => this.tickerFunc(t))
+        this.scormAdapterService.scormInitialized$.subscribe(value => {
+          this.playScormContentFlag = value
+        })
       }
     }
   }
@@ -451,6 +456,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         if (data.target) {
           this.pageFetchStatus = 'done'
           this.showIsLoadingMessage = false
+          if (!this.store.getItem('Initialized') && this.playScormContentFlag === scormLMSStatus.LMSWating) {
+            this.playScormContentFlag = scormLMSStatus.LMSNegative
+          }
         }
       })
     }
