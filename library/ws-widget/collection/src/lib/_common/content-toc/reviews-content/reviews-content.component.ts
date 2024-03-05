@@ -35,7 +35,9 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.reviews = Object.values(this.data.reviews)
+    if (this.data && this.data.reviews) {
+      this.reviews = Object.values(this.data.reviews)
+    }
   }
 
   ngAfterViewInit(): void {
