@@ -24,11 +24,14 @@
   <ng-container *ngIf="widgetData.type === 'karma-points'">
     <div class="flex flex-row items-center gap-2 mb-4" *ngFor="let slide of widgetData.sliderData; let i = index" [hidden]="i !== currentIndex">
       <img src="/assets/icons/home/karma-badge.svg" width="28px" alt="karma-points image" />
-      <div class="flex flex-wrap gap-1 text-sm">
-        <div *ngIf="slide?.textBeforeIcon">{{ slide?.textBeforeIcon }}</div>
-        <div *ngIf="slide?.points" class="font-bold">{{ slide?.points }} points</div>
-        <div *ngIf="slide?.textAfterIcon">{{ slide?.textAfterIcon }}</div>
+      <div class="text-xs">
+        <span *ngIf="slide?.textBeforeIcon">{{ translateLabels(slide?.textBeforeIcon, 'appKarmapointsPanel') }}</span>&nbsp;
+        <span *ngIf="slide?.points" class="font-bold">{{ slide?.points }} {{ translateLabels(slide?.textAfterPoints,
+        'appKarmapointsPanel') }}</span>&nbsp;
+        <span *ngIf="slide?.textAfterIcon">{{ translateLabels(slide?.textAfterIcon, 'appKarmapointsPanel') }}</span>&nbsp;
       </div>
+      <mat-icon class="cursor-pointer ws-mat-black60-text info-icon" [matTooltip]="translateLabels(slide?.toolTipText, 'appKarmapointsPanel')"
+        *ngIf="slide?.toolTipText">info_outline</mat-icon>
     </div>
   </ng-container>
 

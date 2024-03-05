@@ -79,6 +79,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private reviewDataService: ReviewComponentDataService
   ) { }
 
+  @Input() condition: any
+  @Input() kparray: any
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
   @Input() sticky = false

@@ -178,6 +178,11 @@
         </ng-container>
     </div>
 
+    <div class="mobile-karma-points">
+        <ws-widget-karma-points [btnCategory]="" [condition]="condition" (clickClaimKarmaPoints)="onClickOfClaim($event)" [data]="kparray">
+        </ws-widget-karma-points>
+    </div>
+
     <ng-container *ngIf="skeletonLoader">
         <ws-widget-skeleton-loader [width]="'100%'" [height]="'72px'"
             [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
