@@ -38,40 +38,48 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col reviews" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150" [infiniteScrollContainer]="'.reviews'" [fromRoot]="true" [scrollWindow]="false" (scrolled)="handleLoadMore()">
-            <ng-container *ngFor="let eachReview of reviews; let i = index">
-                <div class="flex flex-row gap-3 p-4">
-                    <div class="flex-1">
-                        <div class="flex flex-col gap-4">
-                            <div class="flex flex-row gap-2">
-                                <div class="flex-1">
-                                    <div class="flex text-sm">{{ handleCapitalize(eachReview?.review, 'comment') }}</div>
-                                </div>
-                                <div class="flex flex-row gap-1 rating-start-value">
-                                    <mat-icon>star</mat-icon>
-                                    <div class="text-sm">{{ eachReview?.rating }}</div>
-                                </div>
-                            </div>
-                            <div class="flex flex-row gap-2 items-center">
-                                <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''" [name]="eachReview?.firstName"></ws-widget-avatar-photo>
-                                <div class="flex flex-wrap">
-                                    <div class="text-sm">{{ handleCapitalize(eachReview?.firstName.toLowerCase(), 'name') }}</div>
-                                    <div class="flex items-center mx-2">
-                                        <span class="period"></span>
+        <ng-container *ngIf="!reviews || !reviews.length">
+            <div class="flex justify-center items-center no-reviews-found text-lg">
+                <div class="p-4">
+                    No reviews found!
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="reviews?.length">
+            <div class="flex flex-col reviews" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="150" [infiniteScrollContainer]="'.reviews'" [fromRoot]="true" [scrollWindow]="false" (scrolled)="handleLoadMore()">
+                <ng-container *ngFor="let eachReview of reviews; let i = index">
+                    <div class="flex flex-row gap-3 p-4">
+                        <div class="flex-1">
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-row gap-2">
+                                    <div class="flex-1">
+                                        <div class="flex text-sm">{{ handleCapitalize(eachReview?.review, 'comment') }}</div>
                                     </div>
-                                    <div class="text-sm">{{ eachReview?.updatedon | pipeRelativeTime }}</div>
+                                    <div class="flex flex-row gap-1 rating-start-value">
+                                        <mat-icon>star</mat-icon>
+                                        <div class="text-sm">{{ eachReview?.rating }}</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row gap-2 items-center">
+                                    <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''" [name]="eachReview?.firstName"></ws-widget-avatar-photo>
+                                    <div class="flex flex-wrap">
+                                        <div class="text-sm">{{ handleCapitalize(eachReview?.firstName.toLowerCase(), 'name') }}</div>
+                                        <div class="flex items-center mx-2">
+                                            <span class="period"></span>
+                                        </div>
+                                        <div class="text-sm">{{ eachReview?.updatedon | pipeRelativeTime }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="separator" *ngIf="reviews.length > (i + 1)" ></div>
+                </ng-container>
+                <div *ngIf="displayLoader" class="flex items-center justify-center mt-6">
+                    <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
-                <div class="separator" *ngIf="reviews.length > (i + 1)" ></div>
-            </ng-container>
-            <div *ngIf="displayLoader" class="flex items-center justify-center mt-6">
-                <mat-spinner [diameter]="30"></mat-spinner>
             </div>
-        </div>
+        </ng-container>
     </div>
     
 </div>
