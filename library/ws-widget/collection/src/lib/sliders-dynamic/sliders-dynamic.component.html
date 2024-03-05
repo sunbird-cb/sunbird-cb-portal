@@ -28,7 +28,7 @@
         <span *ngIf="slide?.textBeforeIcon">{{ translateLabels(slide?.textBeforeIcon, 'appKarmapointsPanel') }}</span>&nbsp;
         <span *ngIf="slide?.points" class="font-bold">{{ slide?.points }} {{ translateLabels(slide?.textAfterPoints,
         'appKarmapointsPanel') }}</span>&nbsp;
-        <span *ngIf="slide?.textAfterIcon">{{ translateLabels(slide?.textAfterIcon, 'appKarmapointsPanel') }}</span>&nbsp;
+        <span *ngIf="slide?.textAfterIcon">{{ translateLabels(slide?.textAfterIcon, 'appKarmapointsPanel') }}</span>
       </div>
       <mat-icon class="cursor-pointer ws-mat-black60-text info-icon" [matTooltip]="translateLabels(slide?.toolTipText, 'appKarmapointsPanel')"
         *ngIf="slide?.toolTipText">info_outline</mat-icon>
