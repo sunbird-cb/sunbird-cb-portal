@@ -143,6 +143,7 @@ $title-line-count: 3;
 .desc-ellipsis {
     @extend .text-ellipsis;
     min-height: $title-line-count * 24px;
+    word-break: break-word;
 }
 
 ::ng-deep .ratings-modal-box {
