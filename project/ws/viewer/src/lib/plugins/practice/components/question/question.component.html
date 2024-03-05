@@ -13,20 +13,20 @@
         <ng-container *ngIf="ePrimaryCategory.PRACTICE_RESOURCE === primaryCategory && ((questionNumber) <= totalQCount)">
           <div *ngIf="!isMobile"  class="cursor-pointer" [ngClass]="showAnswer ? 'rounded-flag':'rounded-flag-disable'">
             <div class="flex" (click)="checkAns(questionNumber)">
-              <span>Show Answer</span>
-              <img *ngIf="showAnswer" class="ml-2" src="assets/icons/final-assessment/view.svg"/>
-              <img *ngIf="!showAnswer" class="ml-2" src="assets/icons/final-assessment/gray-eye.svg"/>
+              <span>{{ 'playerbrief.showAnswer' | translate }}</span>
+              
             </div>
           </div>
           <div *ngIf="isMobile"  class="cursor-pointer">
             <div class="flex" (click)="checkAns(questionNumber)">
-              <img class="hw-24" src="assets/icons/final-assessment/view.svg"/>
+              <img *ngIf="showAnswer" class="hw-24" src="assets/icons/final-assessment/view.svg"/>
+              <img *ngIf="!showAnswer" class="hw-24" src="assets/icons/final-assessment/gray-eye.svg"/>
             </div>
           </div>
         </ng-container>        
         <div class=" flex flex-row align-center justify-around rounded-flag ml-10" *ngIf="!isMobile" [ngClass]="!isQuestionMarked() ? 'rounded-flag-disable': 'rounded-flag'">
           <div>
-            <span>Flag</span>
+            <span>{{ 'playerbrief.flag' | translate }}</span>
           </div>
           <div>
             <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">

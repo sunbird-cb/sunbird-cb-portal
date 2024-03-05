@@ -15,9 +15,14 @@
         <ng-container>
         <div class="quest_btn">
           <a mat-button (click)="action('retake')">
-            Try Again
+            {{ 'playerbrief.tryAgain' | translate }}
           </a>
         </div>
+        <!-- <div class="quest_btn-blue">
+          <a mat-button (click)="action('retake')">
+            {{ 'playerbrief.finish' | translate }}
+          </a>
+        </div> -->
         </ng-container> 
         <!-- <ng-container
         *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
@@ -104,7 +109,7 @@
         <div *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
           <div class="flex flex-col justify-center align-center success-message-result">
               <div><img src="assets/icons/final-assessment/practice-assessment-badge.svg"></div>
-              <div class="mat-subheading-2">Well done, Keep learning!</div>
+              <div class="mat-subheading-2">{{'quizresult.passMdg4' | translate}}</div>
           </div>
         </div>
         <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory" class="flex flex-col justify-center align-center success-message-result">
@@ -120,7 +125,7 @@
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
                 <div class="level-text">{{levelText || 'Passed'}}</div>
             </div>
-            <div class="mat-subheading-2 message">You have aced the assessment, with flying colours.</div>
+            <div class="mat-subheading-2 message">{{'quizresult.passMsg1' | translate}}</div>
           </ng-container>
           <ng-container *ngIf="isPassed && percentage < 100">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
@@ -134,7 +139,7 @@
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
                 <div class="level-text">{{levelText || 'Passed'}}</div>
             </div>
-            <div class="mat-subheading-2 message">Congratulations on successfully passing the assessment. Good job!</div>
+            <div class="mat-subheading-2 message">{{'quizresult.passMsg2' | translate}}</div>
           </ng-container>
           <ng-container *ngIf="!isPassed">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
@@ -153,7 +158,7 @@
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
                 <div class="level-text">{{levelText || 'Failed'}}</div>
             </div>
-            <div class="mat-subheading-2 message">You have the opportunity to try again and do better next time. Keep going!</div>
+            <div class="mat-subheading-2 message">{{'playerbrief.tryAgainMessage' | translate}}</div>
           </ng-container>
         </div>     
         <mat-card class="result_box_time_container">
@@ -161,11 +166,11 @@
           <div class="stats-label">
             <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
             <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
-            <div class="ml-2"> Total Questions: </div>
+            <div class="ml-2"> {{'playerbrief.totalQuestions' | translate}}: </div>
           </div>
           <div class="stats-label">
             <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
-            <div class="ml-2">{{quizResponse?.total}} questions</div>
+            <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
           </div>
         </div>
       </mat-card> 
