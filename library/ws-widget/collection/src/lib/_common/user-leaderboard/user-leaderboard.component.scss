@@ -46,7 +46,7 @@
 
       .rank {
         width: 30%;
-        height: 130px;
+        height: 135px;
         text-align: center;
         background-color: white;
         border-radius: 10px;
@@ -67,11 +67,6 @@
     }
 
     .rank-user-img {
-      height: 32px;
-      width: 32px;
-      border-radius: 50%;
-      background-color: green;
-      color: white;
       font-weight: 600;
       font-size: 12px;
       margin: auto;
@@ -82,14 +77,15 @@
 
       .crown-img {
         position: absolute;
-        left: -1px;
-        top: -21px;
+        left: 20px;
+        top: -23px;
 
       }
 
     }
     .change-rank {
       margin-left: -1.5px;
+      font-size: 10px;
     }
     .change-rank-icon {
       margin-left: -5px;
@@ -173,10 +169,13 @@
           width: 13%;
         }
         .user-name {
-          width: 52%;
+          width: 57%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
         .user-points {
-          width: 25%;
+          width: 20%;
         }
 
         .circle {
@@ -196,10 +195,40 @@
           letter-spacing: 0.2625px;
         }
 
+        ::ng-deep .circle-l-xs .initials {
+          font-weight: 600;
+        }
+
+        .podium-rank-changes {
+          justify-content: center;
+        }
+
 
       }
    }
+
+   .karmapoints-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 5px
+    }
+
+    ::ng-deep .circle-l-xs {
+      width: 32px;
+      height: 32px;
+    }
+
+    .user-center {
+      align-items: center;
+    }
+
+    .user-points {
+      align-items: center;
+    }
+
 }
+
+
 
 .current-user {
   background-color: rgba(239, 149, 30, 0.16) !important;
@@ -243,9 +272,18 @@
       align-items: center;
       justify-content: center;
       height: 30px;
-      background-color: white;
       width: 30px;
-      border-radius: 50%;
     }
+
+    .animation-image {
+      width: 60px;
+      height: 60px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
 }
 

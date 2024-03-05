@@ -25,6 +25,7 @@ import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
     TranslateModule,
     MatTooltipModule,
     SkeletonLoaderModule,
+    AvatarPhotoModule,
   ],
   exports: [
     UserLeaderboardComponent,

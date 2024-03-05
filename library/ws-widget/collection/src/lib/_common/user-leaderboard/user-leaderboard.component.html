@@ -2,7 +2,7 @@
 <div class="user-leaderboard-wrapper margin-bottom-m" [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'">
   <div class="leaderboard-overlay" *ngIf="showOverlay">
     <div class="content">
-        <div>
+        <div class="animation-image">
           <img class="image" src="/assets/icons/leaderboard.svg">
         </div>
         <span>
@@ -27,9 +27,11 @@
         <div class="rank rank-left">
           <div class="podium-rank-content">
             <div class="rank-user-img">
-              <span>VK</span>
+              <ws-widget-avatar-photo
+                [name]="'Suresh Sellamuthu'" [photoUrl]="" size="l-xs">
+              </ws-widget-avatar-photo>
             </div>
-            <div class="rank-user-name">Karthik vk</div>
+            <div class="rank-user-name">Suresh Sellamuthu</div>
             <div class="rank-user-points">900</div>
           </div>
         </div>
@@ -37,18 +39,26 @@
           <div class="podium-rank-content rank1">
             <div class="rank-user-img">
               <img class="crown-img" src="/assets/icons/Crown.svg">
-              <span>YM</span>
+              <ws-widget-avatar-photo
+                [name]="'Anuradha United'" [photoUrl]="" size="l-xs">
+              </ws-widget-avatar-photo>
             </div>
-          <div class="rank-user-name">Saanvitha Kandagaddala</div>
+          <div class="rank-user-name">Anuradha United States of America</div>
           <div class="rank-user-points">1004</div>
+          <div class="flex podium-rank-change">
+            <div class="change-rank-icon green"><mat-icon>arrow_drop_up</mat-icon></div>
+            <div class="change-rank">5</div>
+          </div>
           </div>
         </div>
         <div class="rank rank-right">
           <div class="podium-rank-content">
             <div class="rank-user-img">
-              <span>RG</span>
+              <ws-widget-avatar-photo
+                [name]="'Test User'" [photoUrl]="" size="l-xs">
+              </ws-widget-avatar-photo>
             </div>
-          <div class="rank-user-name">Pandu</div>
+          <div class="rank-user-name">Test User</div>
           <div class="rank-user-points">567</div>
           </div>
         </div>
@@ -61,23 +71,29 @@
 
     <div class="user-list-wrapper">
       <div class="user">
-        <div class="flex">
+        <div class="flex user-center">
           <div class="user-rank">25</div>
           <div class="user-img">
-            <div class="circle"><div class="initial">VK</div></div>
+            <ws-widget-avatar-photo
+              [name]="'Venkata Kandagaddala'" [photoUrl]="" size="l-xs">
+            </ws-widget-avatar-photo>
           </div>
-          <div class="user-name">Venkata kandagaddala</div>
-          <div class="user-points ">180 points</div>
+          <div class="user-name">Venkata subbiah kandagaddala</div>
+          <div class="user-points flex">
+            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">180</div>
         </div>
       </div>
       <div class="user current-user high-light">
-        <div class="flex">
+        <div class="flex user-center">
           <div class="user-rank">26</div>
           <div class="user-img">
-            <div class="circle"><div class="initial">PX</div></div>
+            <ws-widget-avatar-photo
+              [name]="'Saanvitha Kandagaddala'" [photoUrl]="" size="l-xs">
+            </ws-widget-avatar-photo>
           </div>
-          <div class="user-name">Saanvitha</div>
-          <div class="user-points">170 points</div>
+          <div class="user-name">Saanvitha Kandagaddala</div>
+          <div class="user-points flex">
+            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">170</div>
         </div>
           <div class="user-info">
             <div class="user-rank-change">
@@ -91,13 +107,16 @@
       </div>
 
       <div class="user">
-        <div class="flex">
+        <div class="flex user-center">
           <div class="user-rank">27</div>
           <div class="user-img">
-            <div class="circle"><div class="initial">YM</div></div>
+            <ws-widget-avatar-photo
+              [name]="'venkat Yalmanchi'" [photoUrl]="" size="l-xs">
+            </ws-widget-avatar-photo>
           </div>
-          <div class="user-name">Karthik</div>
-          <div class="user-points">148 points</div>
+          <div class="user-name">Karthik Yalmanchi</div>
+          <div class="user-points flex">
+            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">148</div>
         </div>
       </div>
     </div>
