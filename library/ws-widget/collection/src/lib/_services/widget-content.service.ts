@@ -123,7 +123,7 @@ export class WidgetContentService {
     //   .pipe(retry(1))
     return this.http
       .get<NsContent.IContent>(url)
-      .pipe()
+      .pipe(shareReplay(1))
     // if (apiData && apiData.result) {
     //   return apiData.result.content
     // }
