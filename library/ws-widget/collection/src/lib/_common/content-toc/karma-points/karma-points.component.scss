@@ -1,0 +1,22 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+
+.claim-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
+    color: white ! important;
+    border-radius: 64px;
+    padding: 8px 0;
+    background-color: #EF951E;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    width: 100%;
+    font-size: 14px;
+    margin: auto;
+    max-width: 344px;
+}

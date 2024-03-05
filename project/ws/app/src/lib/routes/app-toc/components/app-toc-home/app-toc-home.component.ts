@@ -856,8 +856,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
-            this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe( (res: any) => {
-              if(res) {
+            this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe((res: any) => {
+              if (res) {
                 this.resumeData   =  res
                 this.getLastPlayedResource()
                 this.generateResumeDataLinkNew()
@@ -870,14 +870,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionStatus = enrolledCourse.status || 0
             if (this.contentReadData && this.contentReadData.cumulativeTracking) {
                await this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
-               this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe( (res: any) => {
-                if(res) {
+               this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe((res: any) => {
+                if (res) {
                   this.resumeData   =  res
                   this.getLastPlayedResource()
                   this.generateResumeDataLinkNew()
                 }
                 })
-              
+
                 this.enrollBtnLoading = false
               // this.tocSvc.contentLoader.next(false)
             } else {
@@ -924,7 +924,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         // console.log('calling ---------------- =========')
         // this.getLastPlayedResource()
       },
-      (error: any) => {
+       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
       },
     )
