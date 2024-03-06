@@ -29,6 +29,8 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() fromViewer = false
   @Input() hierarchyMapData: any = {}
   @ViewChild('stickyMenu', { static: false }) tabElement!: MatTabGroup
+  @Input() condition: any
+  @Input() kparray: any
   sticky = false
   menuPosition: any
   isMobile = false

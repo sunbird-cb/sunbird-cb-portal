@@ -11,7 +11,7 @@
     {{ 'practiceoverview.markedMsg' | translate }}
   </ng-container>
 </mat-dialog-content>
-<mat-dialog-actions class="flex-row-reverse">
-  <button mat-button mat-dialog-close i18n>{{ 'dialogconfirm.no' | translate }}</button>
-  <button mat-button [mat-dialog-close]="true" i18n>{{ 'dialogconfirm.yes' | translate }}</button>
+<mat-dialog-actions class="flex-row">
+  <button class="secondary-blue-border-btn" mat-button mat-dialog-close i18n>{{ 'dialogconfirm.no' | translate }}</button>
+  <button class="primary-blue-btn" mat-button [mat-dialog-close]="true" i18n>{{ 'dialogconfirm.yes' | translate }}</button>
 </mat-dialog-actions>

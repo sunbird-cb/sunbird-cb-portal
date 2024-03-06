@@ -79,6 +79,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private reviewDataService: ReviewComponentDataService
   ) { }
 
+  @Input() condition: any
+  @Input() kparray: any
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
   @Input() sticky = false
@@ -478,11 +480,13 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       if (this.content) {
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
+
       ratingSummaryPr.latest50Reviews = modifiedReviews
       this.ratingReviews = modifiedReviews
       this.topRatingReviews = modifiedReviews
-      this.reviewDataService.setReviewData(this.ratingReviews)
     }
+    // To pass data to the review content
+    this.reviewDataService.setReviewData(this.ratingReviews)
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
       ratingSummaryPr.avgRating =

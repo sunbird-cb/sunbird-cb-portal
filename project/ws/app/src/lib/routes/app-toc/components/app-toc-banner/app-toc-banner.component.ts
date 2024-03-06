@@ -203,9 +203,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
 
       if (this.content && this.content.identifier) {
-        this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
-          this.contentReadData = res.result.content
-        })
+        // this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
+        //   this.contentReadData = res.result.content
+        // })
       }
     })
 
