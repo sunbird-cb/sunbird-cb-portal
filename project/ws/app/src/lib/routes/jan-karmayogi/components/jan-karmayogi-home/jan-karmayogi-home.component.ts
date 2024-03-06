@@ -66,6 +66,8 @@ export class JanKarmayogiHomeComponent implements OnInit {
     this.janSvc.getSearchResults(request).subscribe((res: any) => {
       if (res && res.result && res.result.content.length) {
         this.contentList = this.transformContentsToWidgets(res.result.content, this.pageData.janStip)
+      } else {
+        this.contentList = this.transformContentsToWidgets([], this.pageData.janStip)
       }
     })
   }
