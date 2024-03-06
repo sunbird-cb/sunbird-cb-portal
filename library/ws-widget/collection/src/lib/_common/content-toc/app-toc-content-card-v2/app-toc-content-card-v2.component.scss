@@ -75,6 +75,7 @@ span.optional-span {
 
   .resource {
     padding: 16px;
+    padding-left: 0;
   }
 
   .card-thumbnail {
@@ -263,7 +264,7 @@ span.optional-span {
     // margin-right: 8px;
 
     .resource {
-      padding: 4px;
+      padding: 0;
     }
 
     // background-color: #fff;
@@ -279,6 +280,9 @@ span.optional-span {
 // for giving top margin to last level, first child resource
 :nth-child(1 of .resourceCard) .resource{
   margin-top: 16px !important;
+}
+:nth-child(1 of .resourceCard) .activeResource{
+  margin-top: 0 !important;
 }
 
 
@@ -509,9 +513,11 @@ span.optional-span {
   padding: 8px;
 }
 
-.content-active.module {
+.children-container .content-active.module {
   padding-left:24px !important;
-
+}
+.children-container .collection-wrapper.module {
+  padding-left:24px !important;
 }
 
 .content-active.resource {
