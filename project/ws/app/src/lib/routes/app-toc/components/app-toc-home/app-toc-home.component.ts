@@ -350,7 +350,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getKarmapointsLimit() {
-    if(!this.forPreview) {
+    if (!this.forPreview) {
       this.contentSvc.userKarmaPoints().subscribe((res: any) => {
         if (res && res.kpList) {
           const info = res.kpList.addinfo
@@ -716,7 +716,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getUserRating(fireUpdate: boolean) {
-    if(!this.forPreview) {
+    if (!this.forPreview) {
       if (this.configSvc.userProfile) {
         this.userId = this.configSvc.userProfile.userId || ''
       }
