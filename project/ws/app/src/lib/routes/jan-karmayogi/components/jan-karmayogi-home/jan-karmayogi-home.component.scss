@@ -1,0 +1,19 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  min-height: 400px;
+  // min-height: calc(100vh - 160px);
+
+  @media (max-width:1024px) {
+    padding:0px 8px;
+  }
+}
+
+.container-balanced-banner {
+  @extend %page-center;
+  height: auto;
+}
