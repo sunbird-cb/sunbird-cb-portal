@@ -54,7 +54,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   isMobile = false
   handleBackFromPdfScormFullScreenFlag = false
   toggleSideBarFlag = true
-  pdfContentProgressData: any = {status:1}
+  pdfContentProgressData: any = { status: 1 }
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,

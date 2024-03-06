@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core'
     CourseCompletionDialogModule,
     MatProgressBarModule,
     ContentProgressModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [ViewerSecondaryTopBarComponent],
   providers: [ValueService],

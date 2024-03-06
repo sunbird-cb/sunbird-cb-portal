@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NsContent, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { MatAccordion } from '@angular/material/expansion'
-import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 @Component({
   selector: 'viewer-result',
   templateUrl: './result.component.html',
