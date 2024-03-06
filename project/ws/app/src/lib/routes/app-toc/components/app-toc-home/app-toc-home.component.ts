@@ -275,7 +275,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     this.handleClaimService.getClaimData().subscribe((_eventData: any) => {
       this.onClickOfClaim(_eventData)
-    });
+    })
   }
 
   ngOnInit() {

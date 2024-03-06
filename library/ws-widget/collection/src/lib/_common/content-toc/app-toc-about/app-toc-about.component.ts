@@ -612,7 +612,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
   handleClickOfClaim(event: any): void {
     this.handleClaimService.setClaimData(event)
-  } 
+  }
 
   ngOnDestroy(): void {
     this.destroySubject$.unsubscribe()
