@@ -16,6 +16,7 @@ import { LoggerService } from '@sunbird-cb/utils/src/public-api'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
 import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
 import { ReviewComponentDataService } from '../content-services/review-component-data.service'
+import { HandleClaimService } from '../content-services/handle-claim.service'
 
 import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
@@ -76,7 +77,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private configService: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
-    private reviewDataService: ReviewComponentDataService
+    private reviewDataService: ReviewComponentDataService,
+    private handleClaimService: HandleClaimService
   ) { }
 
   @Input() condition: any
@@ -606,6 +608,10 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     this.discussUtilitySvc.setDiscussionConfig(config)
     localStorage.setItem('home', JSON.stringify(config))
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
+  }
+
+  handleClickOfClaim(event: any): void {
+    this.handleClaimService.setClaimData(event)
   }
 
   ngOnDestroy(): void {
