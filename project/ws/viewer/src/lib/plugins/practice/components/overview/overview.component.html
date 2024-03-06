@@ -63,6 +63,7 @@
   </div>
   <div class="flex flex-1 blank_box"></div>
 </div> -->
+
 <div class="flex flex-col ws-mat-primary-lite-background-important box-height">
   <div class="assessment-container">
   <div class="assessment-stats-count">
@@ -70,7 +71,7 @@
       <div class="flex flex-row">
         <div class="flex flex-col stats-label">
             <div><img src="assets/icons/final-assessment/assessment.svg"></div>
-            <div>{{noOfQuestions}} questions</div>
+            <div>{{noOfQuestions}} {{ 'playerbrief.questions' | translate }}</div>
         </div>
         <div class="flex flex-col margin-left-64 stats-label" *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory">
           <div><img src="assets/icons/final-assessment/timer.svg"></div>
@@ -79,10 +80,9 @@
       </div>
       <div class="start-assessment-cta hidden md:block">
         <button *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" [class.spinner]="loading" [disabled]="loading" (click)="overviewed('start')" class="bg-blue-800 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide">
-          <span class="padding-xs" i18n>Start assessment</span>
+          <span class="padding-xs" i18n>{{'playerbrief.startAssessment' | translate}}</span>
         </button>
-        <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">You have exceeded the
-            maximum allowed attempt</mat-hint>
+        <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">{{'playerbrief.maxAllowedRetake' | translate}}</mat-hint>
       </div>
     
     </div>
@@ -96,11 +96,11 @@
      <ul>
       <li>
         <img src="assets/icons/final-assessment/star_empty.svg">
-        <span class="summary-list-label">Unlimited retakes are allowed</span>
+        <span class="summary-list-label">{{ 'playerbrief.startAssessmentSummary1' | translate }}</span>
       </li>
-      <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">If the given time is runs out answer will be autosubmitted</span></li>
-      <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">Skipped questions can be attempted again before submitting</span></li>
-      <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">No negative marking</span></li>
+      <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">{{ 'playerbrief.startAssessmentSummary2' | translate }}</span></li>
+      <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">{{ 'playerbrief.startAssessmentSummary3' | translate }}</span></li>
+      <li><img src="assets/icons/final-assessment/star_empty.svg"><span class="summary-list-label">{{ 'playerbrief.startAssessmentSummary4' | translate }}</span></li>
      </ul>
     </div>
   </div>
@@ -109,10 +109,9 @@
 </div>
 <div class="start-assessment-cta block md:hidden">
   <button *ngIf="canAttempt?.attemptsMade < canAttempt?.attemptsAllowed" [class.spinner]="loading" [disabled]="loading" (click)="overviewed('start')" class="bg-blue-800 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide">
-    <span class="padding-xs" i18n>Start assessment</span>
+    <span class="padding-xs" i18n>{{'playerbrief.startAssessment' | translate}}</span>
   </button>
-  <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">You have exceeded the
-      maximum allowed attempt</mat-hint>
+  <mat-hint class="mat-title" *ngIf="canAttempt?.attemptsMade >= canAttempt?.attemptsAllowed">{{'playerbrief.maxAllowedRetake' | translate}}</mat-hint>
 </div>
 
 <ng-template #detail let-icon="icon" let-text="text">
