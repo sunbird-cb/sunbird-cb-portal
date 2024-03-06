@@ -306,7 +306,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
-        if(data && data.content && data.content.data && data.content.data.identifier) {
+        if (data && data.content && data.content.data && data.content.data.identifier) {
           this.courseID = data.content.data.identifier
           this.skeletonLoader = true
           this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
@@ -338,10 +338,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             })
           }
           this.initData(data)
-        }        
+        }
       })
       // this.route.data.subscribe(data => {
-       
+
       // })
     }
 
@@ -560,11 +560,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    if(this.rcElement) {
+    if (this.rcElement) {
       this.rcElem.BottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
       this.rcElem.offSetTop = this.rcElement.nativeElement.offsetTop
     }
-    
+
   }
 
   handleBreadcrumbs() {
@@ -1588,16 +1588,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   handleCapitalize(str: string, type?: string): string {
     let returnValue = ''
-    if(str) {
+    if (str) {
       if (type === 'name') {
         returnValue = str.split(' ').map(_str => {
           return _str.charAt(0).toUpperCase() + _str.slice(1)
         }).join(' ')
       } else {
-        
+
         returnValue = str.charAt(0).toUpperCase() + str.slice(1)
       }
-    }    
+    }
     return returnValue
   }
 
