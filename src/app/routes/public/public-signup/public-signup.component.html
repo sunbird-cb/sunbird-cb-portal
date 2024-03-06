@@ -30,6 +30,11 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <div class="zoho-form-box">
+      <a  (click)="getZohoForm()" class="help-icon" id="help-icon">
+        <img  src="/assets/icons/top-nav/help_icon.svg">
+      </a>
+    </div>
     <div class="right_inner_container profile-box">
       <div class="flex">
         <div class="flex items-center mr-5">
@@ -44,6 +49,7 @@
         <h1 class="mat-h1 margin-remove inline-block ng-star-inserted">
           {{ 'publicsignup.register' | translate }}
         </h1>
+       
       </div>
       <form [formGroup]="registrationForm">
         <div class="margin-top-l new-mobile">
