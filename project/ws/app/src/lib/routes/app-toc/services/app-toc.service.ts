@@ -485,10 +485,10 @@ export class AppTocService {
       return this.http.get<{ result: any }>(
         API_END_POINTS.GET_CONTENT(contentId),
       )
-    } 
+    }
       url = `/api/content/v1/read/${contentId}`
       return this.http.get<{ result: any }>(url)
-    
+
   }
 
   fetchContentParent(contentId: string, data: NsAppToc.IContentParentReq, forPreview = false) {
