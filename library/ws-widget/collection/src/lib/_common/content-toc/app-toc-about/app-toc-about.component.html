@@ -163,12 +163,12 @@
             <div class="mat-subheading-1">{{ 'userProfile.tags' | translate }}</div>
             <div class="flex flex-wrap gap-2" *ngIf="content?.keywords?.length">
                 <ng-container *ngFor="let tag of content?.keywords; let i = index">
-                    <div class="text-xs" [ngClass]="{'hidden': (i > 8 && !viewMoreTags)}">{{ handleCapitalize(tag) }}</div>
-                    <div class="flex items-center" [ngClass]="{'hidden': (i > 8 && !viewMoreTags)}" *ngIf="content?.keywords?.length > (i + 1)">
+                    <div class="text-xs" [ngClass]="{'hidden': (i > 18 && !viewMoreTags)}">{{ handleCapitalize(tag) }}</div>
+                    <div class="flex items-center" [ngClass]="{'hidden': (i > 18 && !viewMoreTags)}" *ngIf="content?.keywords?.length > (i + 1)">
                         <span class="period"></span>
                     </div>
                 </ng-container>
-                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="content?.keywords?.length > 8 && !viewMoreTags" (click)="viewMoreTags = !viewMoreTags">{{ 'apptocsinglepage.viewMore' | translate }}</div>
+                <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="content?.keywords?.length > 18 && !viewMoreTags" (click)="viewMoreTags = !viewMoreTags">{{ 'apptocsinglepage.viewMore' | translate }}</div>
                 <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="viewMoreTags"
                  (click)="viewMoreTags = !viewMoreTags">{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>
@@ -176,6 +176,11 @@
                 {{ 'userProfile.noTags' | translate }}
             </div>
         </ng-container>
+    </div>
+
+    <div class="mobile-karma-points">
+        <ws-widget-karma-points [btnCategory]="" [condition]="condition" (clickClaimKarmaPoints)="handleClickOfClaim($event)" [data]="kparray">
+        </ws-widget-karma-points>
     </div>
 
     <ng-container *ngIf="skeletonLoader">
@@ -258,7 +263,7 @@
             <div class="flex flex-col gap-3">
                 <div class="flex flex-row gap-4">
                     <div class="flex-1 mat-subheading-1" id="reviewContainer">{{ 'apptocsinglepage.topReviews' | translate }}</div>
-                    <ng-container *ngIf="topRatingReviews && topRatingReviews?.length">
+                    <ng-container *ngIf="ratingSummaryProcessed?.avgRating">
                         <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()">{{ 'msg.showAll' | translate }}</div>
                     </ng-container>
                 </div>

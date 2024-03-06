@@ -66,17 +66,17 @@
             <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
               class="text-white ws-mat-primary-background margin-xs quest_btn" mat-button
               (click)="getNextQuestion(currentQuestionIndex + 1)">
-              <ng-container *ngIf="!isXsmall">Next</ng-container>
+              <ng-container *ngIf="!isXsmall">{{ 'playerbrief.next' | translate }}</ng-container>
             </a>
             &nbsp;&nbsp;
             <a *ngIf="(currentQuestionIndex + 1) === totalQCount"
               class="text-white ws-mat-primary-background margin-xs quest_btn" mat-button (click)="proceedToSubmit()">
-              <ng-container *ngIf="!isXsmall">Submit</ng-container>
+              <ng-container *ngIf="!isXsmall">{{ 'playerbrief.submit' | translate }}</ng-container>
             </a>
             &nbsp;&nbsp;
             <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn prev" mat-button
               (click)="getNextQuestion(currentQuestionIndex - 1)">
-              <ng-container *ngIf="!isXsmall">Previous</ng-container>
+              <ng-container *ngIf="!isXsmall">{{ 'playerbrief.previous' | translate }}</ng-container>
             </a>
 
             <!-- <button class="text-white ws-mat-primary-background" mat-raised-button i18n="button quiz submit"
@@ -135,7 +135,7 @@
             <div class="flex flex-row">
                 <div>
                   <p class="mat-subheading-1">
-                    {{ 'practiceoverview.questions' | translate }}
+                    {{ 'playerbrief.questions' | translate }}
                   </p>
                 </div>
                 <div class="question-info">
@@ -143,9 +143,9 @@
                 </div>
                 <div class="info-hover">
                   <div class="info-tooltip-container">
-                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>Answered</span></div>
-                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>Not Answered</span></div>
-                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>Flagged</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{ 'playerbrief.answered' | translate }}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{ 'playerbrief.notAnswered' | translate }}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{ 'playerbrief.flagged' | translate }}</span></div>
                   </div>
                 </div>
             </div>
@@ -162,11 +162,11 @@
             <div class="flex flex-row justify-around">
               <div class="flex flex-col align-center">
                 <div class="ques-count">{{totalQCount - questionAttemptedCount}}</div>
-                <div class="stats-label">Not answered</div>
+                <div class="stats-label">{{ 'playerbrief.notAnswered' | translate }}</div>
               </div>
               <div class="flex flex-col align-center">
                 <div class="ques-count">{{questionAttemptedCount ? questionAttemptedCount  : 0}}</div>
-                <div class="stats-label">Answered</div>
+                <div class="stats-label">{{ 'playerbrief.answered' | translate }}</div>
               </div>
               <!-- <div class="flex flex-col align-center">
                 <div class="ques-count">{{markedQuestions.size}}</div>
@@ -351,16 +351,7 @@
           </div>
           <div class="no-border flex cursor-pointer back_button">
             <span class="subheading-back">{{resourceName}}</span>
-            <div class="question-info">
-              <img src="assets/icons/final-assessment/question_info.svg"/>
-            </div>
-            <div class="info-hover">
-              <div class="info-tooltip-container">
-                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>Answered</span></div>
-                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>Not Answered</span></div>
-                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>Flagged</span></div>
-              </div>
-            </div>
+            
           </div>
           <div class="timer" *ngIf="quizJson?.timeLimit">
             <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
@@ -389,7 +380,18 @@
                 </div>
               </div>
               <div class="seperate-text">
-                <span>Questions</span>
+                <span>Questions</span><span><img (click)="showToolTip=!showToolTip" class="question-info" src="assets/icons/final-assessment/question_info.svg"/></span>
+                <!-- <div class="question-info">
+                  <img src="assets/icons/final-assessment/question_info.svg"/>
+                </div>
+               
+              </div> -->
+              <div class="info-hover" *ngIf="showToolTip">
+                <div class="info-tooltip-container">
+                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>Answered</span></div>
+                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>Not Answered</span></div>
+                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>Flagged</span></div>
+                </div>
               </div>
               
           </div>

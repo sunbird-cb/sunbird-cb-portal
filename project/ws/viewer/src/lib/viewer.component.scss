@@ -118,6 +118,9 @@
   .viewer-sidenav-container {
     height: calc(100vh);
   }
+  ::ng-deep .mat-sidenav  {
+    display: none !important;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -134,6 +137,7 @@
 //   background-color: rgb(27, 76, 161);
 //   border-radius: 180px;
 // }
+
 
 ::ng-deep .mat-drawer.mat-drawer-side{
   z-index: 0 !important;

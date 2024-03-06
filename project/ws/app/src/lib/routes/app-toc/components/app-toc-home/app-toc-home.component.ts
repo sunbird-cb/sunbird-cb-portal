@@ -30,6 +30,7 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import { HandleClaimService } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-services/handle-claim.service'
 import dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -248,7 +249,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private langtranslations: MultilingualTranslationsService,
     private events: EventService,
     private matSnackBar: MatSnackBar,
-    private loadCheckService: LoadCheckService
+    private loadCheckService: LoadCheckService,
+    private handleClaimService: HandleClaimService
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -269,6 +271,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const contentDiv = document.getElementById('contentContainer') as any
         this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
       }
+    })
+
+    this.handleClaimService.getClaimData().subscribe((_eventData: any) => {
+      this.onClickOfClaim(_eventData)
     })
   }
 
@@ -435,14 +441,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getKarmapointsLimit() {
-    this.contentSvc.userKarmaPoints().subscribe((res: any) => {
-      if (res && res.kpList) {
-        const info = res.kpList.addinfo
-        if (info) {
-          this.monthlyCapExceed = JSON.parse(info).claimedNonACBPCourseKarmaQuota >= 4
+    if (!this.forPreview) {
+      this.contentSvc.userKarmaPoints().subscribe((res: any) => {
+        if (res && res.kpList) {
+          const info = res.kpList.addinfo
+          if (info) {
+            this.monthlyCapExceed = JSON.parse(info).claimedNonACBPCourseKarmaQuota >= 4
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   isCourseCompletedOnThisMonth() {
@@ -541,8 +549,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.isClaimed = true
       this.openSnackbar('Karma points are successfully claimed.')
       this.getUserEnrollmentList()
-    },
-                                                        (error: any) => {
+    },                                                  (error: any) => {
       // tslint:disable:no-console
       console.log(error)
       this.openSnackbar('something went wrong.')
@@ -791,24 +798,27 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getUserRating(fireUpdate: boolean) {
-    if (this.configSvc.userProfile) {
-      this.userId = this.configSvc.userProfile.userId || ''
-    }
-    if (this.content && this.content.identifier && this.content.primaryCategory) {
-      this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
-        (res: any) => {
-          if (res && res.result && res.result.response) {
-            this.userRating = res.result.response
-            if (fireUpdate) {
-              this.tocSvc.changeUpdateReviews(true)
+    if (!this.forPreview) {
+      if (this.configSvc.userProfile) {
+        this.userId = this.configSvc.userProfile.userId || ''
+      }
+      if (this.content && this.content.identifier && this.content.primaryCategory) {
+        this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
+          (res: any) => {
+            if (res && res.result && res.result.response) {
+              this.userRating = res.result.response
+              if (fireUpdate) {
+                this.tocSvc.changeUpdateReviews(true)
+              }
             }
+          },
+          (err: any) => {
+            this.loggerSvc.error('USER RATING FETCH ERROR >', err)
           }
-        },
-        (err: any) => {
-          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
-        }
-      )
+        )
+      }
     }
+
   }
 
    private getUserEnrollmentList() {
@@ -851,8 +861,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
           // If current course is present in the list of user enrolled course
           if (enrolledCourse && enrolledCourse.batchId) {
-            this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe( (res: any) => {
-              if(res) {
+            this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe((res: any) => {
+              if (res) {
                 this.resumeData   =  res
                 this.getLastPlayedResource()
                 this.generateResumeDataLinkNew()
@@ -865,14 +875,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.content.completionStatus = enrolledCourse.status || 0
             if (this.contentReadData && this.contentReadData.cumulativeTracking) {
                await this.tocSvc.mapCompletionPercentageProgram(this.content, this.userEnrollmentList)
-               this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe( (res: any) => {
-                if(res) {
+               this.resumeDataSubscription =  this.tocSvc.resumeData.subscribe((res: any) => {
+                if (res) {
                   this.resumeData   =  res
                   this.getLastPlayedResource()
                   this.generateResumeDataLinkNew()
                 }
                 })
-              
+
                 this.enrollBtnLoading = false
               // this.tocSvc.contentLoader.next(false)
             } else {
@@ -919,7 +929,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         // console.log('calling ---------------- =========')
         // this.getLastPlayedResource()
       },
-      (error: any) => {
+       (error: any) => {
         this.loggerSvc.error('CONTENT HISTORY FETCH ERROR >', error)
       },
     )
