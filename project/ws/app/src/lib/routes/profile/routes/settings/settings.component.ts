@@ -141,7 +141,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.chosenLanguage = this.appLanguage
       this.fonts.sort((a, b) => a.scale - b.scale)
 
-      this.multiLang = instanceConfig.webistelanguages
+      this.multiLang = instanceConfig.websitelanguages
       // console.log('multilang', this.multiLang)
 
       this.allowedLangCode = instanceConfig.locals.reduce(

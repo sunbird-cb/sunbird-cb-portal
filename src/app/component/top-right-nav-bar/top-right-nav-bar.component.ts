@@ -70,7 +70,7 @@ export class TopRightNavBarComponent implements OnInit {
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.multiLang = instanceConfig.webistelanguages
+      this.multiLang = instanceConfig.websitelanguages
       this.isMultiLangEnabled = instanceConfig.isMultilingualEnabled
     }
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig
