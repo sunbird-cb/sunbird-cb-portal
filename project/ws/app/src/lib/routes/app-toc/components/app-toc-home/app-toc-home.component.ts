@@ -30,6 +30,7 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import { HandleClaimService } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-services/handle-claim.service'
 import dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -248,7 +249,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private langtranslations: MultilingualTranslationsService,
     private events: EventService,
     private matSnackBar: MatSnackBar,
-    private loadCheckService: LoadCheckService
+    private loadCheckService: LoadCheckService,
+    private handleClaimService: HandleClaimService
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -270,6 +272,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
       }
     })
+
+    this.handleClaimService.getClaimData().subscribe((_eventData: any) => {
+      this.onClickOfClaim(_eventData)
+    });
   }
 
   ngOnInit() {
