@@ -25,6 +25,61 @@
 
 }
 
+.circular-progress-container {
+  position: absolute;
+  top:50%;
+  left:50%;
+  color: #ccc;
+}
+
+.circular-progress {
+  display: flex;
+  width: 56px;
+  height: 56px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  background: 
+    linear-gradient(#000, #000) content-box no-repeat,
+    conic-gradient(transparent var(--percentage, 0), gray var(--percentage, 0)) border-box,
+    conic-gradient(white 120deg, white 120deg 240deg, white 240deg) border-box;
+  --percentage: 0deg;
+}
+
+.up-next {
+  position: absolute;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    top: 43%;
+    left: 49.5%;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.12px;
+  
+}
+
+.cancel-auto-progress {
+  position: absolute;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    top: 65%;
+    left: 50.5%;
+    cursor: pointer;
+    font-family: 'Lato';
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.25px;
+}
+
 
 // .wrapper {
 //   position:relative;

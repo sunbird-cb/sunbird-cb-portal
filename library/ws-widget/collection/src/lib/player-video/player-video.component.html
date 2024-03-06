@@ -1,4 +1,4 @@
-<video crossorigin="Anonymous" id="videoTag" #videoTag *ngIf="widgetData?.isVideojs"
+<video  autoplay="true" muted="muted" crossorigin="Anonymous" id="videoTag" #videoTag *ngIf="widgetData?.isVideojs"
   class="video-js vjs-default-skin vjs-big-play-centered">
 
   <source [src]="widgetData.url" />
@@ -11,7 +11,7 @@
     default>
 </video>
 
-<video crossorigin="Anonymous" id="realvideoTag"  [poster]="widgetData?.posterImage | pipePublicURL" #realvideoTag class="video-js"
+<video autoplay="true" muted="muted" crossorigin="Anonymous" id="realvideoTag"  [poster]="widgetData?.posterImage | pipePublicURL" #realvideoTag class="video-js"
   *ngIf="!widgetData?.isVideojs" controls>
   <source [src]="widgetData.url" type="video/mp4" />
   <source [src]="widgetData.url" type="application/x-mpegURL" />

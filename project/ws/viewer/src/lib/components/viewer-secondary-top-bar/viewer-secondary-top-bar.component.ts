@@ -10,6 +10,7 @@ import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 import { PdfScormDataService } from '../../pdf-scorm-data-service'
+
 @Component({
   selector: 'viewer-viewer-secondary-top-bar',
   templateUrl: './viewer-secondary-top-bar.component.html',
@@ -53,7 +54,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   isMobile = false
   handleBackFromPdfScormFullScreenFlag = false
   toggleSideBarFlag = true
-  pdfContentProgressData: any
+  pdfContentProgressData: any = {status:1}
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
