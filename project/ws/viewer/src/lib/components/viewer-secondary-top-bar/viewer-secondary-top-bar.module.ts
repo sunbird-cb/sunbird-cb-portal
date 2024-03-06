@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router'
 import { ValueService } from '@sunbird-cb/utils'
 import { CourseCompletionDialogModule } from '../course-completion-dialog/course-completion-dialog.module'
 import { ViewerSecondaryTopBarComponent } from './viewer-secondary-top-bar.component'
-
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [ViewerSecondaryTopBarComponent],
   imports: [
@@ -27,6 +27,7 @@ import { ViewerSecondaryTopBarComponent } from './viewer-secondary-top-bar.compo
     CourseCompletionDialogModule,
     MatProgressBarModule,
     ContentProgressModule,
+    TranslateModule,
   ],
   exports: [ViewerSecondaryTopBarComponent],
   providers: [ValueService],

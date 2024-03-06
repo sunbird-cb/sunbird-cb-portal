@@ -17,9 +17,10 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
-  autoplay: false,
+  autoplay: true,
   preload: 'auto',
   fluid: false,
+  muted: true,
   techOrder: ['html5'],
   playbackRates: [0.75, 0.85, 1, 1.25, 2, 3],
   poster: '',

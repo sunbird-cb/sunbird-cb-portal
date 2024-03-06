@@ -188,7 +188,7 @@
                 isSVG: false,
                 imgIcon: 'correct_arrow',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] +' questions correct answered',
+                text: _parts[_result] + ' '+translateLabels(' questionCorrectAnswered', 'playerbrief'),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']}
@@ -199,7 +199,7 @@
                 isSVG: false,
                 imgIcon: 'blue-cross',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] + ' questions wrong answered',
+                text: _parts[_result] + ' '+translateLabels(' questionWrongAnswered', 'playerbrief'),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']
@@ -209,7 +209,7 @@
                 isSVG: false,
                 imgIcon: 'blue-question',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] + ' unanswered',
+                text: _parts[_result] +' '+translateLabels(' questionUnAnswered', 'playerbrief'),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']
