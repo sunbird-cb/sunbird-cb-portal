@@ -30,6 +30,7 @@ import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
+import { HandleClaimService } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-services/handle-claim.service'
 import dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -248,7 +249,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private langtranslations: MultilingualTranslationsService,
     private events: EventService,
     private matSnackBar: MatSnackBar,
-    private loadCheckService: LoadCheckService
+    private loadCheckService: LoadCheckService,
+    private handleClaimService: HandleClaimService
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -269,6 +271,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const contentDiv = document.getElementById('contentContainer') as any
         this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
       }
+    })
+
+    this.handleClaimService.getClaimData().subscribe((_eventData: any) => {
+      this.onClickOfClaim(_eventData)
     })
   }
 
@@ -300,40 +306,43 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     if (this.route) {
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
-        this.courseID = data.content.data.identifier
-        this.skeletonLoader = true
-        this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
-          this.contentReadData = res.result.content
-          this.skeletonLoader = false
-        },                                                                      (error: HttpErrorResponse) => {
-          if (!error.ok) {
+        if (data && data.content && data.content.data && data.content.data.identifier) {
+          this.courseID = data.content.data.identifier
+          this.skeletonLoader = true
+          this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
+            this.contentReadData = res.result.content
             this.skeletonLoader = false
-            this.matSnackBar.open('Unable to fetch content data, due to some error!')
-          }
-        })
-        this.initialrouteData = data
-        this.banners = data.pageData.data.banners
-        this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
-        this.tocSvc.showDescription = data.pageData.data.showDescription || false
-        this.tocConfig = data.pageData.data
-        this.kparray = this.tocConfig.karmaPoints
-        this.initData(data)
-      })
-      this.route.data.subscribe(data => {
-        this.tocConfig = data.pageData.data
-        this.kparray = this.tocConfig.karmaPoints
-        if (this.content && this.isPostAssessment) {
-          this.tocSvc.fetchPostAssessmentStatus(this.content.identifier).subscribe(res => {
-            const assessmentData = res.result
-            for (const o of assessmentData) {
-              if (o.contentId === (this.content && this.content.identifier)) {
-                this.showTakeAssessment = o
-                break
-              }
+          },                                                                      (error: HttpErrorResponse) => {
+            if (!error.ok) {
+              this.skeletonLoader = false
+              this.matSnackBar.open('Unable to fetch content data, due to some error!')
             }
           })
+          this.initialrouteData = data
+          this.banners = data.pageData.data.banners
+          this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
+          this.tocSvc.showDescription = data.pageData.data.showDescription || false
+          this.tocConfig = data.pageData.data
+          this.kparray = this.tocConfig.karmaPoints
+          this.tocConfig = data.pageData.data
+          this.kparray = this.tocConfig.karmaPoints
+          if (this.content && this.isPostAssessment) {
+            this.tocSvc.fetchPostAssessmentStatus(this.content.identifier).subscribe(res => {
+              const assessmentData = res.result
+              for (const o of assessmentData) {
+                if (o.contentId === (this.content && this.content.identifier)) {
+                  this.showTakeAssessment = o
+                  break
+                }
+              }
+            })
+          }
+          this.initData(data)
         }
       })
+      // this.route.data.subscribe(data => {
+
+      // })
     }
 
     this.currentFragment = 'overview'
@@ -551,8 +560,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    this.rcElem.BottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
-    this.rcElem.offSetTop = this.rcElement.nativeElement.offsetTop
+    if (this.rcElement) {
+      this.rcElem.BottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
+      this.rcElem.offSetTop = this.rcElement.nativeElement.offsetTop
+    }
+
   }
 
   handleBreadcrumbs() {
@@ -1576,12 +1588,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   handleCapitalize(str: string, type?: string): string {
     let returnValue = ''
-    if (str && type === 'name') {
-      returnValue = str.split(' ').map(_str => {
-        return _str.charAt(0).toUpperCase() + _str.slice(1)
-      }).join(' ')
-    } else {
-      returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+    if (str) {
+      if (type === 'name') {
+        returnValue = str.split(' ').map(_str => {
+          return _str.charAt(0).toUpperCase() + _str.slice(1)
+        }).join(' ')
+      } else {
+
+        returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+      }
     }
     return returnValue
   }
@@ -1722,7 +1737,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   translateLabel(label: string, type: any) {
-    return this.langtranslations.translateLabel(label, type, '')
+    if(label && type) {
+      return this.langtranslations.translateLabel(label, type, '')
+    }    
   }
 
   ngOnDestroy() {

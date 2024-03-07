@@ -541,7 +541,9 @@ export class AppTocService {
             completedLeafNodes = [...completedLeafNodes, ...parentChild.leafNodes]
             if (foundContent.issuedCertificates.length > 0) {
               const certId: any = foundContent.issuedCertificates[0].identifier
-              const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {})
+              const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
+                this.contentLoader.next(false)
+              })
               parentChild.issuedCertificatesSVG = certData.result.printUri
               this.contentLoader.next(false)
             }

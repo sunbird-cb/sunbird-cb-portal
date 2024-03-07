@@ -1,6 +1,6 @@
 <ws-widget-sliders-dynamic [widgetData]="karmaPointsSlider"></ws-widget-sliders-dynamic>
 
-<ng-container *ngIf="!condition?.isPostAssessment && (condition?.content?.completionPercentage === 100 || certData)">
+<ng-container *ngIf="!condition?.isPostAssessment && (condition?.content?.completionPercentage === 100 || condition?.certData)">
     <ng-container *ngIf="condition?.isAcbpCourse && condition?.isAcbpClaim && !condition?.isClaimed">
         <button class="claim-button" (click)="onClickOfClaim()" *ngIf="btnCategory === 'claim'">
             <img src="/assets/icons/home/karma-badge.svg" width="28px" class="mr-2" alt="karma-points image" />
