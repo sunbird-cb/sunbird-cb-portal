@@ -853,7 +853,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     setTimeout(() => {
       this.showOverlay = false
       this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
-    }, 5000)
+    },         5000)
     this.isSubmitted = true
     this.ngOnDestroy()
     if (!this.quizJson.isAssessment) {

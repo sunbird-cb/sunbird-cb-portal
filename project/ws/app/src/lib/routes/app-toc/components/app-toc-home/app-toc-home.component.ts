@@ -1063,7 +1063,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             content: data.content,
             enrolled: true,
           }
-          let batchId = this.getBatchId()
+          const batchId = this.getBatchId()
           if (batchId) {
             // this.createCertTemplate(this.getBatchId(), this.content.identifier)
 
@@ -1081,9 +1081,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       )
     }
   }
-  
+
   navigateToPlayerPage(batchId: string) {
-    if(this.content) {
+    if (this.content) {
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
         let primaryCategory
         if (this.content.secureSettings !== undefined) {
@@ -1100,7 +1100,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory,
         batchId,
       )
-      this.router.navigate([`${this.firstResourceLink.url}`], { queryParams: { ...this.firstResourceLink.queryParams} }) 
+      this.router.navigate([`${this.firstResourceLink.url}`], { queryParams: { ...this.firstResourceLink.queryParams } })
     }
   }
 
