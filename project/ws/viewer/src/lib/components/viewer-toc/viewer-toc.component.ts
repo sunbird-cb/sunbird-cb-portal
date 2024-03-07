@@ -133,8 +133,13 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       const logo = this.configSvc.instanceConfig.logos.defaultContent || ''
       this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
     }
+    
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      this.getEnrollmentList()
+    }
 
-    this.getEnrollmentList()
+    
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId')
       this.collectionType = params.get('collectionType') || 'course'
