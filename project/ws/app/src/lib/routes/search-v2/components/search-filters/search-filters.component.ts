@@ -115,23 +115,22 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           sfilters.primaryCategory.forEach((item: any) => {
             if (!this.multiplePrimaryCategory.some((r: any) => item.toLowerCase().includes(r.name))) {
               this.multiplePrimaryCategory.push({
-              name: item.toLowerCase(),
-              count: '',
-              ischecked: true,
-            })
-
+                name: item,
+                displayName: item,
+                count: '',
+                ischecked: true,
+              })
             }
-
           })
         }
-          fil = {
-            name: sfilters.primaryCategory[0].toLowerCase(),
-            count: '',
-            ischecked: true,
-          }
-
+        fil = {
+          name: sfilters.primaryCategory[0].toLowerCase(),
+          count: '',
+          ischecked: true,
+        }
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
+            fasv.displayName = fasv.name
             if (fas.name === 'primaryCategory') {
               if (fasv.name === this.toCamelCase(fil.name)) {
                 fasv.ischecked = true
@@ -152,6 +151,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         }
         this.filteroptions.forEach((fas: any) => {
           fas.values.forEach((fasv: any) => {
+            fasv.displayName = fasv.name
             if (fas.name === 'primaryCategory') {
               if (fasv.name === this.toCamelCase(fil.name)) {
                 fasv.ischecked = true
@@ -161,6 +161,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             }
           })
         })
+        
         if (fil.name && fil.count) {
           const reqfilter = {
             mainType: 'primaryCategory',
@@ -195,6 +196,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     this.subscription = this.searchSrvc.notifyObservable$.subscribe((res: any) => {
       const fil = {
         name: res.name,
+        displayName: res.displayName,
         count: res.count,
         ischecked: false,
       }
@@ -231,22 +233,21 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     const indx = this.getFilterName(fil)
     if (indx.length > 0) {
       this.userFilters.forEach((fs: any, index: number) => {
-        if (fs.name === this.translateTo(fil.name) && this.queryParams.has('t')) {
+        if (fs.name === fil.name && this.queryParams.has('t')) {
           setTimeout(() => {
             this.router.navigate(['/app/globalsearch'] , { queryParams: { q: '' } })
           },         500)
         }
-        const selectedName = fs.name ===  fil.name ? fil.name : fs.name  === this.toString(fil.name).toLowerCase()
-        ? this.toString(fil.name).toLowerCase() : this.toCamelCase(fil.name)
-        if (fs.name === selectedName) {
+        // const selectedName = fs.name ===  fil.name ? fil.name : fs.name  === this.toString(fil.name).toLowerCase()
+        // ? this.toString(fil.name).toLowerCase() : this.toCamelCase(fil.name)
+        if (fs.name === fil.name) {
           this.userFilters.splice(index, 1)
         }
       })
       this.myFilterArray.forEach((fs: any, index: number) => {
-        const nameVerify = fs.name === this.translateTo(fil.name) ? this.translateTo(fil.name) :
-        this.translateTo(fil.name).toLowerCase()
-
-        if (fs.name === nameVerify) {
+        // const nameVerify = fs.name === this.translateTo(fil.name) ? this.translateTo(fil.name) :
+        // this.translateTo(fil.name).toLowerCase()
+        if (fs.name === fil.name) {
           this.myFilterArray.splice(index, 1)
         }
       })
@@ -276,8 +277,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             if (fas.name === mainparentType) {
               fas.values.forEach((fasv: any) => {
                 const name = fasv.name
-                const verifiedName = name === item.name ? item.name : name === this.translateTo(item.name) ?
-                this.translateTo(item.name) : this.toCamelCase(item.name)
+                const verifiedName = name === fil.name ? fil.name : this.toCamelCase(fil.name)
+                // const verifiedName = name === item.name ? item.name : name === this.translateTo(item.name) ?
+                // this.translateTo(item.name) : this.toCamelCase(item.name)  
                 if (name === verifiedName) {
                   fasv.ischecked = true
                 }
@@ -293,7 +295,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
 
         const reqfilter = {
           mainType: mainparentType,
-          name: this.translateTo(fil.name),
+          name: fil.name,
+          displayName: fil.name,
           count: fil.count,
           ischecked: true,
           qParam : '',
@@ -303,7 +306,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
           if (fas.name === mainparentType) {
             fas.values.forEach((fasv: any) => {
               const name = fasv.name
-              const verifiedName = name === fil.name ? fil.name : this.translateTo(fil.name)
+              // const verifiedName = name === fil.name ? fil.name : this.translateTo(fil.name)
+              const verifiedName = name === fil.name ? fil.name : this.toCamelCase(fil.name)
               if (name === verifiedName) {
                 fasv.ischecked = true
               }
@@ -330,12 +334,15 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
+  translateActualLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
+  }
 
   translateTo(menuName: string): string {
-    const name =  this.toCamelCase(menuName)
+    return this.toCamelCase(menuName)
     // tslint:disable-next-line: prefer-template
-    const translationKey = 'searchfilters.' + name.replace(/\s/g, '')
-    return this.translate.instant(translationKey)
+    // const translationKey = 'searchfilters.' + name.replace(/\s/g, '')
+    // return this.translate.instant(translationKey)
   }
   toCamelCase(str: string) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g,  (word, index) => {
