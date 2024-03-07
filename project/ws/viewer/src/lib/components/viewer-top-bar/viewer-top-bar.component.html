@@ -29,8 +29,8 @@
     <div class="flex flex-1 flex-col  margin-right-l progress-container" *ngIf="collectionId && hierarchyMapData && !loadingOverallPRogress">
       <div class="flex flex-row justify-between w-ful" >
         <div class="flex items-center mb-2">
-          <span class="mat-body-2 mr-2">Items ({{completedCount}}/{{overallLeafNodes}})</span>
-          <mat-icon class="cursor-pointe infoIcon" [matTooltip]="'Progress is updated after few minute'">info_outline</mat-icon>
+          <span class="mat-body-2 mr-2">{{'playerbrief.items' | translate}} ({{completedCount}}/{{overallLeafNodes}})</span>
+          <mat-icon class="cursor-pointe infoIcon" matTooltip="{{'playerbrief.topProgress' | translate}}">info_outline</mat-icon>
         </div>
 
        <span class="mat-body-2"> {{overallProgress}}%</span>
@@ -89,8 +89,8 @@
       <div class="flex flex-1 flex-col  margin-right-l progress-container">
         <div class="flex flex-row justify-between w-full ws-mat-white-text">
           <div class="flex items-center mb-2">
-            <span class="mat-body-2 mr-2">Items ({{currentDataFromEnrollList?.progress}}/{{currentDataFromEnrollList?.leafNodesCount}})</span>
-            <mat-icon class="cursor-pointer ws-mat-white-text infoIcon" [matTooltip]="'Progress is updated after few minute'">info_outline</mat-icon>
+            <span class="mat-body-2 mr-2">{{'playerbrief.items' | translate}} ({{currentDataFromEnrollList?.progress}}/{{currentDataFromEnrollList?.leafNodesCount}})</span>
+            <mat-icon class="cursor-pointer ws-mat-white-text infoIcon" matTooltip="{{'playerbrief.topProgress' | translate}}">info_outline</mat-icon>
           </div>
   
          <span class="mat-body-2  ws-mat-white-text"> {{currentDataFromEnrollList?.completionPercentage}}%</span>
