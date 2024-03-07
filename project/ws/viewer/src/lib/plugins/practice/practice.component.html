@@ -4,6 +4,18 @@
   (userSelection)="getSections($event)">
 </viewer-overview>
 
+<div class="calculate-overlay" *ngIf="showOverlay"> 
+  <div class="overlay">
+    <div>      
+        <mat-spinner [diameter]="150" ></mat-spinner>
+    </div>
+    <div>
+      <span class="mat-heading" i18n>{{'playerbrief.calculateResult' | translate}}</span>
+    </div>
+  </div>
+   
+</div>
+
 <!-- Desktop -->
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial' && !isMobile && fetchingQuestionsStatus === 'done'">
   <!-- <div class="flex flex-column quiz_inner_container"> -->
@@ -1067,14 +1079,3 @@
   </div>
 </ng-template>
 
-<div class="calculate-overlay" *ngIf="showOverlay"> 
-  <div class="overlay">
-    <div>      
-        <mat-spinner [diameter]="150" ></mat-spinner>
-    </div>
-    <div>
-      <span class="mat-heading" i18n>{{'playerbrief.calculateResult' | translate}}</span>
-    </div>
-  </div>
-   
-</div>

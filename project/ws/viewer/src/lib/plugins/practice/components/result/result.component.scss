@@ -579,4 +579,12 @@
       conic-gradient(transparent var(--percentage, 0), gray var(--percentage, 0)) border-box,
       conic-gradient(var(--passPercentage) 120deg, var(--passPercentage) 120deg 240deg, var(--passPercentage) 240deg) border-box;
     --percentage: 0deg;
-  }
+}
+
+.questionPanel {
+    height: auto !important;
+}
+
+.question-header {
+    min-height: 32px !important;
+}
