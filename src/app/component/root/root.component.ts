@@ -266,6 +266,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           || !!this.currentUrl.startsWith('/public/welcome')
           || !!this.currentUrl.startsWith('/viewer/')
           || !!this.currentUrl.startsWith('/public/request')
+          || !!this.currentUrl.startsWith('/public/toc')
         ) {
           this.showFooter = false
           this.showNavbar = false
