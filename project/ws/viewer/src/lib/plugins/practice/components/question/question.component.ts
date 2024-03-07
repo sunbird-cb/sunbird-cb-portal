@@ -129,7 +129,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  checkAns(quesIdx: number) {    
+  checkAns(quesIdx: number) {
     if (!this.itemSelectedList) {
       this.openSnackbar('Please give your answer before showing the answer')
     } else {
@@ -138,12 +138,12 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
         this.practiceSvc.shCorrectAnswer(true)
       }
     }
-    
+
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
-    let config = new MatSnackBarConfig();
-    config.panelClass = ['show-answer-alert-class'];
+    const config = new MatSnackBarConfig()
+    config.panelClass = ['show-answer-alert-class']
     config.duration = duration
     this.snackBar.open(primaryMsg, '', config)
   }
