@@ -45,7 +45,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 import moment from 'moment'
 
-import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
+// import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import { environment } from 'src/environments/environment'
 
 export enum ErrorType {
@@ -168,7 +168,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   breadcrumbs: any
   historyData: any
   courseCompleteState = 2
-  certData: any
   userId: any
   userRating: any
   dakshtaName = environment.dakshtaName
@@ -998,17 +997,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.certId = certId
 
       this.contentSvc.downloadCert(certId).subscribe(response => {
-        this.certData = response.result.printUri
+        if (this.content) {
+          this.content['certificateObj'] = {
+            certData: response.result.printUri,
+            certId: this.certId,
+          }
+        }
       })
     }
-  }
-
-  openCertificateDialog() {
-    const cet = this.certData
-    this.dialog.open(CertificateDialogComponent, {
-      width: '1200px',
-      data: { cet, certId: this.certId },
-    })
   }
 
   public handleAutoBatchAssign() {
