@@ -412,12 +412,10 @@ export class WidgetContentService {
       return this.http.get<NsContent.IContent[]>(
         API_END_POINTS.CONTENT_READ(contentId),
       )
-    } else {
-      url = `/api/content/v1/read/${contentId}`
-      return this.http.get<NsContent.IContent[]>(url)
     }
-      
-    //return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
+    url = `/api/content/v1/read/${contentId}`
+    return this.http.get<NsContent.IContent[]>(url)
+    // return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
   }
 
   getCourseKarmaPoints(request: any) {

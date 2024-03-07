@@ -21,8 +21,8 @@ export class AppEnrollmentResolverService
         if (this.configSvc.userProfile) {
           userId = this.configSvc.userProfile.userId || ''
         }
-        if(window.location.href.includes('/public/') || window.location.href.includes('&preview=true')) {
-            return of({ error: null, data: null }) 
+        if (window.location.href.includes('/public/') || window.location.href.includes('&preview=true')) {
+            return of({ error: null, data: null })
         }
         return  this.userSvc.fetchUserBatchList(userId).pipe(
             map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
