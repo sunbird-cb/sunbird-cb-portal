@@ -8,7 +8,7 @@
     <section class="collapsible" [@collapse]="collapsed" [ngClass]="{'padding-top-m':!collapsed}">
         <ws-widget-user-leaderboard></ws-widget-user-leaderboard>
     </section>
-    <div class="margin-bottom-m" class="collapsible" [@collapseWeekly]="collapsed">
+    <div class="collapsible" [@collapseWeekly]="collapsed" [ngClass]="{'margin-bottom-m margin-top-m':!collapsed}">
         <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
     </div>
 

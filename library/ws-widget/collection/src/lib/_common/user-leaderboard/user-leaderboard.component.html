@@ -1,5 +1,5 @@
 
-<div class="user-leaderboard-wrapper margin-bottom-m" [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'">
+<div class="user-leaderboard-wrapper" [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'">
   <div class="leaderboard-overlay" *ngIf="showOverlay">
     <div class="content">
         <div class="animation-image">
@@ -36,11 +36,11 @@
           </div>
         </div>
         <div class="rank rank-center">
-          <div class="podium-rank-content rank1">
+          <div class="podium-rank-content current-user rank1">
             <div class="rank-user-img">
               <img class="crown-img" src="/assets/icons/Crown.svg">
               <ws-widget-avatar-photo
-                [name]="'Anuradha United'" [photoUrl]="" size="l-xs">
+                [name]="'Anuradha United'" [photoUrl]="" size="l-xs" class="first-rank">
               </ws-widget-avatar-photo>
             </div>
           <div class="rank-user-name">Anuradha United States of America</div>
@@ -71,8 +71,8 @@
 
     <div class="user-list-wrapper">
       <div class="user">
-        <div class="flex user-center">
-          <div class="user-rank">25</div>
+        <div class="flex user-center medium">
+          <div class="user-rank">2508</div>
           <div class="user-img">
             <ws-widget-avatar-photo
               [name]="'Venkata Kandagaddala'" [photoUrl]="" size="l-xs">
@@ -84,8 +84,8 @@
         </div>
       </div>
       <div class="user current-user high-light">
-        <div class="flex user-center">
-          <div class="user-rank">26</div>
+        <div class="flex user-center large">
+          <div class="user-rank">123456</div>
           <div class="user-img">
             <ws-widget-avatar-photo
               [name]="'Saanvitha Kandagaddala'" [photoUrl]="" size="l-xs">
@@ -99,7 +99,7 @@
             <div class="user-rank-change">
               <div class="flex">
                 <div class="change-rank-icon green"><mat-icon>arrow_drop_up</mat-icon></div>
-                <div class="change-rank">5</div>
+                <div class="change-rank">123456</div>
               </div>
             </div>
             <div class="user-note">You were in 29th position last month.</div>

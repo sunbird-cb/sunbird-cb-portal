@@ -62,8 +62,12 @@
         padding: 20px 16px;
       }
       .rank1 {
-        padding-top: 25px;
+        padding-top: 2px!important;
       }
+    }
+
+    .first-rank {
+      margin-top: -10px;
     }
 
     .rank-user-img {
@@ -74,11 +78,10 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      flex-direction: column;
 
       .crown-img {
-        position: absolute;
-        left: 20px;
-        top: -23px;
+        z-index: 10;
 
       }
 
@@ -113,13 +116,17 @@
       font-weight: 400;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      max-height: 37px;
+      line-height: 17px;
+      min-height: 20px;
+      height: fit-content;
     }
     .rank-user-points {
       font-family: Montserrat;
       font-size: 16px;
       font-style: normal;
       font-weight: 600;
+      line-height: 19px;
     }
 
 
@@ -178,6 +185,26 @@
           width: 20%;
         }
 
+        .medium {
+          .user-rank {
+            width: 12%;
+          }
+         .user-name {
+            width: 53.5%;
+          }
+        }
+
+        .large {
+          .user-rank {
+            width: 16%;
+          }
+         .user-name {
+            width: 51%;
+          }
+        }
+
+
+
         .circle {
           border-radius: 50%;
           width: 32px;
@@ -198,12 +225,6 @@
         ::ng-deep .circle-l-xs .initials {
           font-weight: 600;
         }
-
-        .podium-rank-changes {
-          justify-content: center;
-        }
-
-
       }
    }
 
@@ -224,6 +245,10 @@
 
     .user-points {
       align-items: center;
+    }
+
+    .podium-rank-change {
+      justify-content: center;
     }
 
 }
