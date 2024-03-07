@@ -6,8 +6,7 @@ const API_ENDPOINTS = {
     ReSendOtp: '/apis/proxies/v8/otp/v1/generate',
     VerifyOtp: '/apis/proxies/v8/otp/v1/verify',
     sendEmailOtp: '/apis/proxies/v8/otp/v3/generate',
-    reSendEmailOtp: '/apis/proxies/v8/otp/v3/generate',
-    VerifyEmailOtp: '/apis/proxies/v8/otp/v3/validate',
+    VerifyEmailOtp: '/apis/proxies/v8/otp/v3/verify',
 }
 
 @Injectable()
@@ -52,8 +51,8 @@ export class OtpService {
             request: {
                 type: 'email',
                 key: `${email}`,
-                contextType: "extPatch",
-                context: ["profileDetails.personalDetails.primaryEmail"]
+                contextType: 'extPatch',
+                context: ['profileDetails.personalDetails.primaryEmail'],
             },
         }
         return this.http.post(API_ENDPOINTS.sendEmailOtp, reqObj)
@@ -64,17 +63,17 @@ export class OtpService {
             request: {
                 type: 'email',
                 key: `${email}`,
-                contextType: "extPatch",
-                context: ["profileDetails.personalDetails.primaryEmail"]
+                contextType: 'extPatch',
+                context: ['profileDetails.personalDetails.primaryEmail'],
             },
         }
-        return this.http.post(API_ENDPOINTS.reSendEmailOtp, reqObj)
+        return this.http.post(API_ENDPOINTS.sendEmailOtp, reqObj)
     }
 
-    verifyEmailOTP(otp: number, email: number) {
+    verifyEmailOTP(otp: any, email: number) {
         const reqObj = {
             request: {
-                otp,
+                otp: otp.toString(),
                 type: 'email',
                 key: `${email}`,
             },

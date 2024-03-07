@@ -195,9 +195,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.fetchRejectedFields()
 
     this.updatePrimaryEmail = new FormControl('',
-      [Validators.required,
+                                              [Validators.required,
         Validators.email,
-        Validators.pattern(this.emailRegix)
+        Validators.pattern(this.emailRegix),
       ]
     )
     this.emailOtp = new FormControl('')
@@ -281,6 +281,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.init()
     this.checkIfMobileNoChanged()
     this.onPhoneChange()
+    this.onEmailChange()
     // this.onGroupChange()
   }
 
@@ -1067,6 +1068,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.isMobileVerified = false
             this.otpSend = false
             this.disableVerifyBtn = false
+          }
+        })
+    }
+  }
+  onEmailChange() {
+    const ctrl = this.updatePrimaryEmail
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isOtpSent = false
+            this.disableVerifyEmailBtn = false
+            this.emailOtp.setValue('')
           }
         })
     }
@@ -2035,18 +2051,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   sendOtpToEmail () {
     const emailId = this.updatePrimaryEmail.value
-    if (emailId) {
-      this.otpService.sendEmailOtp(emailId).subscribe(() => {
-        this.isOtpSent = true
-        this.updatePrimaryEmail.disable()
-        alert('An OTP has been sent to your email')
-        this.startEmailOtpCountDown()
-        // tslint:disable-next-line: align
-      }, (error: any) => {
-        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
-      })
+    const primaryEmail = this.createUserForm.controls['primaryEmail'].value
+    if (emailId === primaryEmail) {
+      this.snackBar.open('Existing email id and updating email id are same')
     } else {
-      this.snackBar.open('Please enter a valid email')
+      if (emailId) {
+        this.otpService.sendEmailOtp(emailId).subscribe(() => {
+          this.isOtpSent = true
+          this.disableVerifyEmailBtn = false
+          // this.updatePrimaryEmail.disable()
+          alert('An OTP has been sent to your email')
+          this.startEmailOtpCountDown()
+          // tslint:disable-next-line: align
+        }, (error: any) => {
+          this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+        })
+      } else {
+        this.snackBar.open('Please enter a valid email')
+      }
     }
   }
 
@@ -2081,7 +2103,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (emailId) {
       this.otpService.reSendEmailOtp(emailId).subscribe(() => {
         this.isOtpSent = true
-        this.updatePrimaryEmail.disable()
+        this.disableVerifyEmailBtn = false
+        // this.updatePrimaryEmail.disable()
         alert('An OTP has been sent to your email')
         this.startEmailOtpCountDown()
         // tslint:disable-next-line: align
@@ -2095,32 +2118,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   submitEmailOtp(emailOtp: FormControl) {
     const email = this.updatePrimaryEmail.value
-    console.log(email)
-    console.log(emailOtp)
     if (emailOtp.value) {
       this.otpService.verifyEmailOTP(emailOtp.value, email).subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.emailOtpVerified = true
-          const reqUpdates = {
-            request: {
-              userId: this.configSvc.unMappedUser.id,
-              profileDetails: {
-                personalDetails: {
+          if (res && res.result && res.result.contextToken) {
+            const reqUpdates = {
+              request: {
+                'userId': this.configSvc.unMappedUser.id,
+                'contextToken': res.result.contextToken,
+                'profileDetails': {
+                  'personalDetails': {
+                      'primaryEmail': email,
+                  },
                 },
               },
-            },
-          }
-          this.userProfileSvc.editProfileDetails(reqUpdates).subscribe((updateRes: any) => {
-
-            if (updateRes) {
-              this.isMobileVerified = true
             }
-            // tslint:disable-next-line:align
-          }, (error: any) => {
+            this.userProfileSvc.updatePrimaryEmailDetails(reqUpdates).subscribe((_updateRes: any) => {
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                this.router.navigate(['app/user-profile/details'])
+              })
+              // tslint:disable-next-line:align
+            }, (error: any) => {
 
-            this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+              this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+            })
           }
-          )
+
         }
         // tslint:disable-next-line: align
       }, (error: any) => {

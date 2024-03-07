@@ -400,6 +400,7 @@
                               {{'userProfile.cancel' | translate }}
                             </button>
                             <button *ngIf="otpEmailSend" mat-raised-button type="button" (click)="submitEmailOtp(emailOtp)"
+                            [disabled]="updatePrimaryEmail.errors  || disableVerifyEmailBtn"
                               class="ws-mat-primary-background flex-auto-display mat-stroked-button mat-button-base verfy-email-otp">
                               <a class="text-white" i18n>
                                 {{'userProfile.submit' | translate }}
