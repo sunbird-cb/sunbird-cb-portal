@@ -339,9 +339,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           this.initData(data)
         }
       })
-      // this.route.data.subscribe(data => {
-
-      // })
     }
 
     this.currentFragment = 'overview'
@@ -465,6 +462,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
         const currentMonth = moment(now, 'YYYY-MM-DD').month()
         this.isCompletedThisMonth = completedMonth === currentMonth
+        this.content['completedOn'] = courseData.completedOn
       }
     }
   }
