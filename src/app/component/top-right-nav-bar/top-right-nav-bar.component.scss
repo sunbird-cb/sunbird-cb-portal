@@ -1,7 +1,7 @@
 .right-side-nav-items {
-    display: inline-block;
-    margin: 12px 0;
-    padding-left: 1em !important;
+  display: inline-block;
+  margin: 12px 0;
+  padding-left: 1em !important;
 }
 
 ::ng-deep .right-nav-tooltip {
@@ -14,27 +14,27 @@
 }
 
 .right-side-nav-items li {
-    display: inline-block;
-    cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .download-app-chip {
-    border-radius: 63px;
-    background: #F3962F;
-    color: #fff;
-    min-width: 99px;
-    text-align: center;
-    font-size: 14px;
-    height: 32px;
-    max-width: 124px;
-    height: 32px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  border-radius: 64px;
+  background: #F3962F;
+  color: #fff;
+  min-width: 99px;
+  text-align: center;
+  font-size: 14px;
+  height: 32px;
+  max-width: 124px;
+  height: 32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .download-app-chip span {
-    padding: 8px 16px;
+  padding: 8px 16px;
 }
 
 
@@ -45,6 +45,7 @@
 .help-icon img{
   vertical-align: middle;
 }
+
 .langdiv {
   .mat-focused:not(.mat-form-field-invalid) .mat-form-field-infix::after {
     color: rgba(0, 0, 0, 0.54) !important;
@@ -52,19 +53,23 @@
     right: 8%;
     margin-top: -2.5px;
   }
+
   .custom-lang {
     font: 400 14px/21px Lato;
     width: 126px;
     padding: 0 !important;
     position: relative;
   }
+
   ::ng-deep.mat-form-field-infix {
     padding: 0 0 0.6em 2.5em !important;
   }
+
   ::ng-deep.mat-form-field-flex {
     border: 1px solid rgba(0, 0, 0, 0.16) !important;
     border-radius: 16px !important;
   }
+
   img {
     position: absolute;
     left: 6%;
@@ -94,10 +99,10 @@
   }
 }
 
-::ng-deep.mat-select-panel {
-  margin-top: 3em !important;
-  margin-left: -1em !important;
-  max-height: 505px !important;
+::ng-deep .custom-langselect {
+  margin-top: 1.75em !important;
+  margin-left: -1.25em !important;
+  max-height: 504px !important;
 }
 
 .tooltip {
@@ -123,48 +128,29 @@
   visibility: visible;
 }
 
-
 @media only screen and (max-width: 768px) {
-    .help-icon {
-      height: 20px;
-      width: 20px;
-      margin-top: 6px;
-    }
-
-    .download-app-chip {
-      display: none !important;
-    }
-    .download-app-chip-top-header {
-      border-radius: 63px;
-      background: #F3962F;
-      color: #fff;
-      min-width: 129px;
-      text-align: center;
-      padding: 6px 16px;
-      list-style: none;
-    }
-
-    .right-side-nav-items {
-        display: inline-block;
-        margin: 5px 0;
-        // margin: 7px -7px;
-    }
-    
+  .help-icon {
+    height: 20px;
+    width: 20px;
+    margin-top: 6px;
   }
 
-// .karmapoints {
-//   img {
-//     margin-right: 4px;
-//     vertical-align: top;
-//     width: 28px;
-//   }
+  .download-app-chip {
+    display: none !important;
+  }
 
-//   .text{
-//     font: 700 10px/12px Lato
-//   }
+  .download-app-chip-top-header {
+    border-radius: 63px;
+    background: #F3962F;
+    color: #fff;
+    min-width: 129px;
+    text-align: center;
+    padding: 6px 16px;
+    list-style: none;
+  }
 
-//   .points{
-//     color: rgb(27, 76, 161);
-//     font-weight: 700 !important;
-//   }
-// }
+  .right-side-nav-items {
+    display: inline-block;
+    margin: 4px 0;
+  } 
+}

@@ -107,7 +107,7 @@
         && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED))
         && batchData?.content?.length">
         <mat-form-field appearance="outline" class="w-full batch-form-field">
-          <mat-select #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)" class="batch-dropdown">
+          <mat-select #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)"  panelClass="batch-dropdown">
             <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
             [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
               <div class="flex flex-row items-center gap-2 h-10">
