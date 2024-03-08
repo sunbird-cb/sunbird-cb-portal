@@ -1,65 +1,103 @@
 
-<div class="user-leaderboard-wrapper" [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'">
+<div class="user-leaderboard-wrapper" [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'" *ngIf="!loading && rank1">
   <div class="leaderboard-overlay" *ngIf="showOverlay">
     <div class="content">
+        <img class="gif-image" src="/assets/icons/leaderboard_animation.gif" height="200" width="200">
         <div class="animation-image">
           <img class="image" src="/assets/icons/leaderboard.svg">
         </div>
-        <span>
-          Your dedication to learning is impressive! Congratulations on reaching the 26th rank this month, which is 3rd levels higher than your previous ranking.
-        </span>
+        <span> {{overLayText}} </span>
     </div>
   </div>
   <div class="podium-wrapper">
     <div class="podium-content">
       <div class="podium-title">
         <div class="flex justify-between">
-          <div class="">Top Karmayogis in your department:
-            <span class="month">February</span>
+          <div class="">{{'learnerLeaderboard.title' | translate}}
+            <span class="month">{{monthName}}</span>
           </div>
           <div>
             <mat-icon class="cursor-pointer info-icon"
-              matTooltip="The learner leaderboard is calculated based on the Karma Points earned in a month and updated on the 1st of every month.">info_outline</mat-icon>
+              matTooltip="{{'learnerLeaderboard.toolTip' | translate}}">info_outline</mat-icon>
           </div>
         </div>
       </div>
       <div class="podium">
         <div class="rank rank-left">
-          <div class="podium-rank-content">
+          <div class="podium-rank-content" *ngIf="rank2" [ngClass]="{'current-user': currentUserId === rank2.userId}">
             <div class="rank-user-img">
               <ws-widget-avatar-photo
-                [name]="'Suresh Sellamuthu'" [photoUrl]="" size="l-xs">
+                [name]="rank2.fullname" [photoUrl]="rank2.profile_image" size="l-xs">
               </ws-widget-avatar-photo>
             </div>
-            <div class="rank-user-name">Suresh Sellamuthu</div>
-            <div class="rank-user-points">900</div>
+            <div class="rank-user-name">{{rank2.fullname}}</div>
+            <div class="rank-user-points">{{rank2.total_points ? rank2.total_points : 0}}</div>
+            <div class="flex podium-rank-change" *ngIf="currentUserId === rank2.userId && rank2.rank !== rank2.previous_rank">
+              <ng-container *ngIf="rank2.rank > rank2.previous_rank">
+                <div class="change-rank-icon green">
+                  <mat-icon>arrow_drop_up</mat-icon>
+                </div>
+                <div class="change-rank green">{{rank2.rank - rank2.previous_rank}}</div>
+              </ng-container>
+              <ng-container *ngIf="rank2.rank < rank2.previous_rank">
+                <div class="change-rank-icon red">
+                  <mat-icon>arrow_drop_up</mat-icon>
+                </div>
+                <div class="change-rank red">{{rank2.previous_rank - rank2.rank}}</div>
+              </ng-container>
+            </div>
           </div>
         </div>
+
         <div class="rank rank-center">
-          <div class="podium-rank-content current-user rank1">
+          <div class="podium-rank-content rank1" *ngIf="rank1" [ngClass]="{'current-user': currentUserId === rank1.userId}">
             <div class="rank-user-img">
               <img class="crown-img" src="/assets/icons/Crown.svg">
               <ws-widget-avatar-photo
-                [name]="'Anuradha United'" [photoUrl]="" size="l-xs" class="first-rank">
+                [name]="rank1.fullname" [photoUrl]="rank1.profile_image" size="l-xs" class="first-rank">
               </ws-widget-avatar-photo>
             </div>
-          <div class="rank-user-name">Anuradha United States of America</div>
-          <div class="rank-user-points">1004</div>
-          <div class="flex podium-rank-change">
-            <div class="change-rank-icon green"><mat-icon>arrow_drop_up</mat-icon></div>
-            <div class="change-rank">5</div>
+          <div class="rank-user-name">{{rank1.fullname}}</div>
+          <div class="rank-user-points">{{rank1.total_points ? rank1.total_points : 0}}</div>
+          <div class="flex podium-rank-change" *ngIf="currentUserId === rank1.userId && rank1.rank !== rank1.previous_rank">
+            <ng-container *ngIf="rank1.rank > rank1.previous_rank">
+              <div class="change-rank-icon green">
+                <mat-icon>arrow_drop_up</mat-icon>
+              </div>
+              <div class="change-rank green">{{rank1.rank - rank1.previous_rank}}</div>
+            </ng-container>
+            <ng-container *ngIf="rank1.rank < rank1.previous_rank">
+              <div class="change-rank-icon red">
+                <mat-icon>arrow_drop_up</mat-icon>
+              </div>
+              <div class="change-rank red">{{rank1.previous_rank - rank1.rank}}</div>
+            </ng-container>
           </div>
           </div>
         </div>
         <div class="rank rank-right">
-          <div class="podium-rank-content">
+          <div class="podium-rank-content" *ngIf="rank3" [ngClass]="{'current-user': currentUserId === rank3.userId}">
             <div class="rank-user-img">
               <ws-widget-avatar-photo
-                [name]="'Test User'" [photoUrl]="" size="l-xs">
+                [name]="rank3.fullname" [photoUrl]="rank3.profile_image" size="l-xs">
               </ws-widget-avatar-photo>
             </div>
-          <div class="rank-user-name">Test User</div>
-          <div class="rank-user-points">567</div>
+          <div class="rank-user-name">{{rank3.fullname}}</div>
+          <div class="rank-user-points">{{rank3.total_points ? rank3.total_points : 0}}</div>
+          <div class="flex podium-rank-change"  *ngIf="currentUserId === rank3.userId && rank3.rank !== rank3.previous_rank">
+            <ng-container *ngIf="rank3.rank > rank3.previous_rank">
+              <div class="change-rank-icon green">
+                <mat-icon>arrow_drop_up</mat-icon>
+              </div>
+              <div class="change-rank green">{{rank3.rank - rank3.previous_rank}}</div>
+            </ng-container>
+            <ng-container *ngIf="rank3.rank < rank3.previous_rank">
+              <div class="change-rank-icon red">
+                <mat-icon>arrow_drop_up</mat-icon>
+              </div>
+              <div class="change-rank red">{{rank3.previous_rank - rank3.rank}}</div>
+            </ng-container>
+          </div>
           </div>
         </div>
       </div>
@@ -70,60 +108,53 @@
     </div>
 
     <div class="user-list-wrapper">
-      <div class="user">
-        <div class="flex user-center medium">
-          <div class="user-rank">2508</div>
+
+      <div class="user" [ngClass]="{'current-user high-light': currentUserId === otherUser.userId, 'exta-bottom-radius': i === (otherUsers.length - 1)}"
+        *ngFor="let otherUser of otherUsers; let i = index">
+        <div class="flex user-center medium" >
+          <div class="user-rank">{{otherUser.rank}}</div>
           <div class="user-img">
             <ws-widget-avatar-photo
-              [name]="'Venkata Kandagaddala'" [photoUrl]="" size="l-xs">
+              [name]="otherUser.fullname" [photoUrl]="otherUser.profile_image" size="l-xs">
             </ws-widget-avatar-photo>
           </div>
-          <div class="user-name">Venkata subbiah kandagaddala</div>
+          <div class="user-name">{{otherUser.fullname}}</div>
           <div class="user-points flex">
-            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">180</div>
-        </div>
-      </div>
-      <div class="user current-user high-light">
-        <div class="flex user-center large">
-          <div class="user-rank">123456</div>
-          <div class="user-img">
-            <ws-widget-avatar-photo
-              [name]="'Saanvitha Kandagaddala'" [photoUrl]="" size="l-xs">
-            </ws-widget-avatar-photo>
+            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+            {{otherUser.total_points ? otherUser.total_points : 0}}
           </div>
-          <div class="user-name">Saanvitha Kandagaddala</div>
-          <div class="user-points flex">
-            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">170</div>
         </div>
+        <ng-container *ngIf="currentUserId === otherUser.userId && otherUser.rank !== otherUser.previous_rank">
           <div class="user-info">
             <div class="user-rank-change">
-              <div class="flex">
-                <div class="change-rank-icon green"><mat-icon>arrow_drop_up</mat-icon></div>
-                <div class="change-rank">123456</div>
-              </div>
+              <ng-container *ngIf="otherUser.rank > otherUser.previous_rank">
+                <div class="flex green">
+                  <div class="change-rank-icon">
+                    <mat-icon>arrow_drop_up</mat-icon></div>
+                  <div class="change-rank">{{otherUser.rank - otherUser.previous_rank}}</div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="otherUser.rank < otherUser.previous_rank">
+                <div class="flex red">
+                  <div class="change-rank-icon">
+                    <mat-icon>arrow_drop_down</mat-icon></div>
+                  <div class="change-rank">{{otherUser.previous_rank - otherUser.rank}}</div>
+                </div>
+              </ng-container>
             </div>
-            <div class="user-note">You were in 29th position last month.</div>
+            <div class="user-note">
+              {{'learnerLeaderboard.yourAreIn' | translate}}
+              {{getRankOrdinal(otherUser.previous_rank)}}
+              {{'learnerLeaderboard.positionMastMonth' | translate}}
+            </div>
           </div>
-      </div>
-
-      <div class="user">
-        <div class="flex user-center">
-          <div class="user-rank">27</div>
-          <div class="user-img">
-            <ws-widget-avatar-photo
-              [name]="'venkat Yalmanchi'" [photoUrl]="" size="l-xs">
-            </ws-widget-avatar-photo>
-          </div>
-          <div class="user-name">Karthik Yalmanchi</div>
-          <div class="user-points flex">
-            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">148</div>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>
 </div>
 
-<!-- <div class="user-leaderboard-wrapper margin-bottom-m">
+<div class="user-leaderboard-wrapper" *ngIf="loading">
   <div>
     <div class="podium-wrapper">
       <div class="podium-content-skelton">
@@ -141,29 +172,22 @@
             <ws-widget-skeleton-loader [width]="'100%'" [height]="'145px'"></ws-widget-skeleton-loader>
           </div>
         </div>
-        <div class="">
-          <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+        <div style="margin-top: 25px;">
+          <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
         </div>
         <div class="user-list-wrapper">
-          <div class="">
-            <div class="flex">
-              <div class="user-rank">
-                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
-              </div>
-              <div class="user-img">
-                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
-              </div>
-              <div class="user-name">
-                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
-              </div>
-              <div class="user-points">
-                <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
-              </div>
-            </div>
+          <div style="margin-top: 25px;">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
+          </div>
+          <div style="margin-top: 5px;">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
+          </div>
+          <div style="margin-top: 5px;">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div> -->
+</div>
 

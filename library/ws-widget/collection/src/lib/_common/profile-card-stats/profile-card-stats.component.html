@@ -70,7 +70,7 @@
 
             <hr class="divider margin-remove-top">
 
-              <div class="flex weekly-caps-section">
+              <div class="flex weekly-caps-section" *ngIf="currentUserRank">
                 <div class="flex flex-1 flex-column justify-center custom-border">
                   <div class="flex justify-center padding-bottom-xs">
                     <p class="flex-align-start weekly-title flex flex-middle margin-remove title">
@@ -79,7 +79,7 @@
                   </div>
                   <div class="flex justify-center align-center">
                     <img class="margin-right-s cursor-pointer" width="30" height="30" src="/assets/icons/leaderboard.svg" >
-                    <span class="my-rank">26th Rank</span>
+                    <span class="my-rank">{{getRankOrdinal(currentUserRank.rank)}} {{ 'learnerLeaderboard.rank' | translate }}</span>
                   </div>
                 </div>
 
@@ -97,10 +97,10 @@
                   </p>
                   </div>
                 </div>
-
               </div>
-
-              <!-- <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps> -->
+              <ng-container *ngIf="!currentUserRank">
+                <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
+              </ng-container>
             </div>
         </div>
         </div>

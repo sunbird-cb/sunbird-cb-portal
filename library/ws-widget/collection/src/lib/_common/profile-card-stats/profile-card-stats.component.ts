@@ -4,6 +4,7 @@ import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
 import { InfoDialogComponent } from '../info-dialog/info-dialog.component'
 import { MatDialog } from '@angular/material'
+import { HomePageService } from 'src/app/services/home-page.service'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
@@ -30,14 +31,18 @@ export class ProfileCardStatsComponent implements OnInit {
   interval = 0
   profileDelay = 0
   userName = ''
+  currentUserRank: any
+  currentUserId: any
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe,
               private langtranslations: MultilingualTranslationsService,
+              private homePageSvc: HomePageService,
               private dialog: MatDialog) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile
+    this.currentUserId = this.configSvc.unMappedUser.id
     if (this.userInfo) {
       this.userName = this.userInfo.firstName
       if (this.userName.length > 18) {
@@ -64,6 +69,20 @@ export class ProfileCardStatsComponent implements OnInit {
     setTimeout(() => {
         this.showrepublicBanner = false
       },       ((1000 * timeInterval) + pDelayTime))
+
+      this.homePageSvc.getLearnerLeaderboard().subscribe((res: any) => {
+        if (res && res.result && res.result.result) {
+          this.currentUserRank = res.result.result.find((rankDetails: any) => rankDetails.userId === this.currentUserId)
+        }
+      })
+
+  }
+
+  getRankOrdinal(rank: number) {
+    if (rank === 0) return '0th'
+    const suffixes = ['th', 'st', 'nd', 'rd']
+    const v = rank % 100
+    return rank + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
   }
 
   getTimelyNudge() {

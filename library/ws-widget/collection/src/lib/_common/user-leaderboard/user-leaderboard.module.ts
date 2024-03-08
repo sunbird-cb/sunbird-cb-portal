@@ -9,6 +9,7 @@ import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
+import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service'
 
 @NgModule({
   declarations: [UserLeaderboardComponent],
@@ -30,6 +31,7 @@ import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
   exports: [
     UserLeaderboardComponent,
   ],
+  providers: [UserProfileService],
   entryComponents: [UserLeaderboardComponent],
 })
 export class UserLeaderboardModule { }
