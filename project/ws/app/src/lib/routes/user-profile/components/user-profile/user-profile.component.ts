@@ -148,6 +148,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isEhrmsId: any
   ehrmsInfo: any
 
+  otpEmailSend = true
+  showUpdateEmail = false
+  isOtpSent = false
+  emailRegix = `^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`
+  updatePrimaryEmail: FormControl
+  emailOtp: FormControl
+  emailTimerSubscription: Subscription | null = null
+  emailTimeLeftforOTP = 0
+  disableVerifyEmailBtn = false
+  emailOtpVerified = false
+
   constructor(
     private snackBar: MatSnackBar,
     private userProfileSvc: UserProfileService,
@@ -182,6 +193,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.fetchPendingFields()
     this.fetchRejectedFields()
+
+    this.updatePrimaryEmail = new FormControl('',
+                                              [Validators.required,
+        Validators.email,
+        Validators.pattern(this.emailRegix),
+      ]
+    )
+    this.emailOtp = new FormControl('')
 
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -262,6 +281,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.init()
     this.checkIfMobileNoChanged()
     this.onPhoneChange()
+    this.onEmailChange()
     // this.onGroupChange()
   }
 
@@ -1048,6 +1068,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.isMobileVerified = false
             this.otpSend = false
             this.disableVerifyBtn = false
+          }
+        })
+    }
+  }
+  onEmailChange() {
+    const ctrl = this.updatePrimaryEmail
+    if (ctrl) {
+      ctrl
+        .valueChanges
+        .pipe(startWith(null), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          if (!(prev == null && next)) {
+            this.isOtpSent = false
+            this.disableVerifyEmailBtn = false
+            this.emailOtp.setValue('')
           }
         })
     }
@@ -1996,5 +2031,128 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     })
     dialogRef.afterClosed().subscribe(() => {
     })
+  }
+
+  cancleEmailUpdate () {
+    this.showUpdateEmail = false
+    this.isOtpSent = false
+    this.updatePrimaryEmail.enable()
+    this.updatePrimaryEmail.setValue(null)
+    this.updatePrimaryEmail.markAsUntouched()
+    this.updatePrimaryEmail.markAsPristine()
+    this.emailOtp.setValue(null)
+    this.emailOtp.markAsUntouched()
+    this.emailOtp.markAsPristine()
+  }
+
+  onClickshowUpdateEmail () {
+    this.showUpdateEmail = true
+  }
+
+  sendOtpToEmail () {
+    const emailId = this.updatePrimaryEmail.value
+    const primaryEmail = this.createUserForm.controls['primaryEmail'].value
+    if (emailId === primaryEmail) {
+      this.snackBar.open('Existing email id and updating email id are same')
+    } else {
+      if (emailId) {
+        this.otpService.sendEmailOtp(emailId).subscribe(() => {
+          this.isOtpSent = true
+          this.disableVerifyEmailBtn = false
+          // this.updatePrimaryEmail.disable()
+          alert('An OTP has been sent to your email')
+          this.startEmailOtpCountDown()
+          // tslint:disable-next-line: align
+        }, (error: any) => {
+          this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+        })
+      } else {
+        this.snackBar.open('Please enter a valid email')
+      }
+    }
+  }
+
+  startEmailOtpCountDown () {
+    const startTime = Date.now()
+    this.emailTimeLeftforOTP = this.OTP_TIMER
+    // && this.primaryCategory !== this.ePrimaryCategory.PRACTICE_RESOURCE
+    if (this.OTP_TIMER > 0
+    ) {
+      this.emailTimerSubscription = interval(1000)
+        .pipe(
+          map(
+            () =>
+              startTime + this.OTP_TIMER - Date.now(),
+          ),
+        )
+        .subscribe(_timeRemaining => {
+          this.emailTimeLeftforOTP -= 1
+          if (this.emailTimeLeftforOTP < 0) {
+            this.emailTimeLeftforOTP = 0
+            if (this.emailTimerSubscription) {
+              this.emailTimerSubscription.unsubscribe()
+            }
+            // this.submitQuiz()
+          }
+        })
+    }
+  }
+
+  resendOtpToEmail() {
+    const emailId = this.updatePrimaryEmail.value
+    if (emailId) {
+      this.otpService.reSendEmailOtp(emailId).subscribe(() => {
+        this.isOtpSent = true
+        this.disableVerifyEmailBtn = false
+        // this.updatePrimaryEmail.disable()
+        alert('An OTP has been sent to your email')
+        this.startEmailOtpCountDown()
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+      })
+    } else {
+      this.snackBar.open('Please enter a valid email')
+    }
+  }
+
+  submitEmailOtp(emailOtp: FormControl) {
+    const email = this.updatePrimaryEmail.value
+    if (emailOtp.value) {
+      this.otpService.verifyEmailOTP(emailOtp.value, email).subscribe((res: any) => {
+        if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
+          this.emailOtpVerified = true
+          if (res && res.result && res.result.contextToken) {
+            const reqUpdates = {
+              request: {
+                'userId': this.configSvc.unMappedUser.id,
+                'contextToken': res.result.contextToken,
+                'profileDetails': {
+                  'personalDetails': {
+                      'primaryEmail': email,
+                  },
+                },
+              },
+            }
+            this.userProfileSvc.updatePrimaryEmailDetails(reqUpdates).subscribe((_updateRes: any) => {
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                this.router.navigate(['app/user-profile/details'])
+              })
+              // tslint:disable-next-line:align
+            }, (error: any) => {
+
+              this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+            })
+          }
+
+        }
+        // tslint:disable-next-line: align
+      }, (error: any) => {
+        this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
+        if (error.error && error.error.result) {
+          this.disableVerifyEmailBtn = error.error.result.remainingAttempt === 0 ? true : false
+        }
+      })
+    }
   }
 }

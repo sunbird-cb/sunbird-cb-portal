@@ -296,7 +296,7 @@
                         </div>
                       </div>
 
-                      <div class="input-wrapper margin-top-s">
+                      <div class="input-wrapper margin-top-s relative-position">
                         <label for="primaryEmail" class=" margin-remove-bottom form-label required"
                           i18n="Primary Email label|Label which explains the user to enter Primary Email"
                           i18n-aria-label aria-label="Primary Email label">
@@ -324,6 +324,88 @@
                                 {{'userProfile.officialEmail' | translate }}
                               </label>
                             </mat-checkbox>
+                          </div>
+                        </div>
+                        <div class="update-primary-email" (click)="onClickshowUpdateEmail()">
+                          {{'userProfile.updatePrimaryEmail' | translate }}
+                        </div>
+                      </div>
+                      <div class="m-auto update-primary-email-section" *ngIf="showUpdateEmail">
+                        <div class="verify-email">
+                          <h3>{{'userProfile.updatePrimaryEmail' | translate }}</h3>
+                          <div class="input-wrapper margin-top-s">
+                            <label for="primaryEmail" class=" margin-remove-bottom form-label required"
+                              i18n="Primary Email label|Label which explains the user to enter Primary Email"
+                              i18n-aria-label aria-label="Primary Email label">
+                              {{'userProfile.EnterNewEmail' | translate }}
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs no-pb">
+                              <input type="email" matInput
+                                placeholder="{{'userProfile.typeHere' | translate }}" [formControl]="updatePrimaryEmail" i18n-aria-label
+                                aria-label="Enter new email readonly input" maxlength="320">
+                              <mat-error class="custom-error" [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
+                                *ngIf="(updatePrimaryEmail.dirty || updatePrimaryEmail.touched) && updatePrimaryEmail.errors?.required" i18n-aria-label
+                                aria-label="Please enter your email">
+                                {{'userProfile.pleaseEnterEmail' | translate }}
+                              </mat-error>
+                              <mat-error [hidden]="false" class="custom-error"
+                                *ngIf="(updatePrimaryEmail.dirty || updatePrimaryEmail.touched) && updatePrimaryEmail.errors?.pattern"
+                                i18n-aria-label aria-label="Please enter a valid email">
+                                {{'userProfile.enterValidEmail' | translate }}
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="flex margin-top-l align-items" *ngIf="!isOtpSent">
+                            <button mat-raised-button type="button" (click)="cancleEmailUpdate()"
+                              class="cancel-btn flex-auto-display mat-stroked-button mat-button-base" [disabled]="createUserForm?.updatePrimaryEmail?.invalid">
+                              {{'userProfile.cancel' | translate }}
+                            </button>
+                            <button
+                              *ngIf="otpEmailSend"
+                              mat-raised-button type="button"
+                              [disabled]="updatePrimaryEmail.errors"
+                              (click)="sendOtpToEmail()"
+                              class="ws-mat-primary-background flex-auto-display mat-stroked-button send-otp-btn">
+                              <a class="text-white" i18n>
+                                {{'userProfile.sendOTP' | translate }}
+                              </a>
+                            </button>
+                          </div>
+                          <div class="margin-top-l relative-position" *ngIf="isOtpSent">
+                            <div class="input-wrapper margin-top-s">
+                              <label for="enter OTP" class=" margin-remove-bottom form-label required"
+                                i18n="Primary Email label|Label which explains the user to enter Primary Email"
+                                i18n-aria-label aria-label="Primary Email label">
+                                {{'userProfile.enterOTP' | translate }}
+                              </label>
+                              <mat-form-field appearance="outline" class="margin-top-xs no-pb">
+                                <input type="number" matInput
+                                  placeholder="{{'userProfile.enterOTP' | translate }}"
+                                  [formControl]="emailOtp" i18n-aria-label aria-label="OTP input"
+                                  [disabled]="disableVerifyEmailBtn"
+                                  onKeyPress="if(this.value.length === 8) return false;">
+                                <mat-hint *ngIf="emailTimeLeftforOTP > 0" class="custom-error">
+                                  <span>{{'userProfile.resendOTPafter' | translate }} {{emailTimeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
+                                </mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="re-send" *ngIf="emailTimeLeftforOTP <= 0" (click)="resendOtpToEmail()">
+                              {{'userProfile.resend' | translate }}
+                            </div>
+                          </div>
+
+                          <div class="flex margin-top-l align-items" *ngIf="isOtpSent">
+                            <button mat-raised-button type="button" (click)="cancleEmailUpdate()"
+                              class="cancel-btn flex-auto-display mat-stroked-button mat-button-base" [disabled]="createUserForm?.updatePrimaryEmail?.invalid">
+                              {{'userProfile.cancel' | translate }}
+                            </button>
+                            <button *ngIf="otpEmailSend" mat-raised-button type="button" (click)="submitEmailOtp(emailOtp)"
+                            [disabled]="updatePrimaryEmail.errors  || disableVerifyEmailBtn"
+                              class="ws-mat-primary-background flex-auto-display mat-stroked-button mat-button-base verfy-email-otp">
+                              <a class="text-white" i18n>
+                                {{'userProfile.submit' | translate }}
+                              </a>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -1382,7 +1464,8 @@
           <mat-spinner [diameter]="30"></mat-spinner>
         </div>
         <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-          class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid || !isMobileVerified">
+          class="text-white btn-success btn-responsive"
+          [disabled]="createUserForm?.invalid || !isMobileVerified || showUpdateEmail">
           <span class="text-white" i18n>
             {{'userProfile.saveDetails' | translate }}
           </span>

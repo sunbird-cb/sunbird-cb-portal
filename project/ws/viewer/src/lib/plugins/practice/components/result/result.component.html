@@ -13,7 +13,7 @@
         </div>
         </ng-container>  -->
         <ng-container>
-        <div class="quest_btn">
+        <div class="quest_btn" *ngIf="quizResponse">
           <a mat-button (click)="action('retake')">
             {{ 'playerbrief.tryAgain' | translate }}
           </a>
@@ -112,7 +112,7 @@
               <div class="mat-subheading-2">{{'quizresult.passMdg4' | translate}}</div>
           </div>
         </div>
-        <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory" class="flex flex-col justify-center align-center success-message-result">
+        <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory && quizResponse" class="flex flex-col justify-center align-center success-message-result">
           <ng-container *ngIf="isPassed && percentage === 100">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
               
@@ -141,7 +141,7 @@
             </div>
             <div class="mat-subheading-2 message">{{'quizresult.passMsg2' | translate}}</div>
           </ng-container>
-          <ng-container *ngIf="!isPassed">
+          <ng-container *ngIf="!isPassed  && quizResponse">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
               
               <path  class="progress-red-clr" d="M55,90
@@ -161,19 +161,19 @@
             <div class="mat-subheading-2 message">{{'playerbrief.tryAgainMessage' | translate}}</div>
           </ng-container>
         </div>     
-        <mat-card class="result_box_time_container">
-        <div class="flex flex-row justify-between response_box">        
-          <div class="stats-label">
-            <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
-            <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
-            <div class="ml-2"> {{'playerbrief.totalQuestions' | translate}}: </div>
+        <mat-card class="result_box_time_container" *ngIf="quizResponse">
+          <div class="flex flex-row justify-between response_box">        
+            <div class="stats-label">
+              <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
+              <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
+              <div class="ml-2"> {{'playerbrief.totalQuestions' | translate}}: </div>
+            </div>
+            <div class="stats-label">
+              <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
+              <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
+            </div>
           </div>
-          <div class="stats-label">
-            <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
-            <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
-          </div>
-        </div>
-      </mat-card> 
+        </mat-card> 
         <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
           <mat-card *ngIf="_parts" class="result_box">
             <mat-card-title class="section-title">
