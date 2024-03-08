@@ -1,5 +1,6 @@
 
-<div class="user-leaderboard-wrapper" [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'" *ngIf="!loading && rank1">
+<div class="user-leaderboard-wrapper"
+  [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'" *ngIf="!loading && rank1">
   <div class="leaderboard-overlay" *ngIf="showOverlay">
     <div class="content">
         <img class="gif-image" src="/assets/icons/leaderboard_animation.gif" height="200" width="200">
@@ -24,7 +25,8 @@
       </div>
       <div class="podium">
         <div class="rank rank-left">
-          <div class="podium-rank-content" *ngIf="rank2" [ngClass]="{'current-user': currentUserId === rank2.userId}">
+          <div class="podium-rank-content"
+            *ngIf="rank2" [ngClass]="{'current-user': currentUserId === rank2.userId}">
             <div class="rank-user-img">
               <ws-widget-avatar-photo
                 [name]="rank2.fullname" [photoUrl]="rank2.profile_image" size="l-xs">
@@ -32,7 +34,8 @@
             </div>
             <div class="rank-user-name">{{rank2.fullname}}</div>
             <div class="rank-user-points">{{rank2.total_points ? rank2.total_points : 0}}</div>
-            <div class="flex podium-rank-change" *ngIf="currentUserId === rank2.userId && rank2.rank !== rank2.previous_rank">
+            <div class="flex podium-rank-change"
+              *ngIf="currentUserId === rank2.userId && rank2.rank !== rank2.previous_rank">
               <ng-container *ngIf="rank2.rank > rank2.previous_rank">
                 <div class="change-rank-icon green">
                   <mat-icon>arrow_drop_up</mat-icon>
@@ -50,7 +53,8 @@
         </div>
 
         <div class="rank rank-center">
-          <div class="podium-rank-content rank1" *ngIf="rank1" [ngClass]="{'current-user': currentUserId === rank1.userId}">
+          <div class="podium-rank-content rank1"
+            *ngIf="rank1" [ngClass]="{'current-user': currentUserId === rank1.userId}">
             <div class="rank-user-img">
               <img class="crown-img" src="/assets/icons/Crown.svg">
               <ws-widget-avatar-photo
@@ -59,7 +63,8 @@
             </div>
           <div class="rank-user-name">{{rank1.fullname}}</div>
           <div class="rank-user-points">{{rank1.total_points ? rank1.total_points : 0}}</div>
-          <div class="flex podium-rank-change" *ngIf="currentUserId === rank1.userId && rank1.rank !== rank1.previous_rank">
+          <div class="flex podium-rank-change"
+            *ngIf="currentUserId === rank1.userId && rank1.rank !== rank1.previous_rank">
             <ng-container *ngIf="rank1.rank > rank1.previous_rank">
               <div class="change-rank-icon green">
                 <mat-icon>arrow_drop_up</mat-icon>
@@ -76,7 +81,8 @@
           </div>
         </div>
         <div class="rank rank-right">
-          <div class="podium-rank-content" *ngIf="rank3" [ngClass]="{'current-user': currentUserId === rank3.userId}">
+          <div class="podium-rank-content"
+            *ngIf="rank3" [ngClass]="{'current-user': currentUserId === rank3.userId}">
             <div class="rank-user-img">
               <ws-widget-avatar-photo
                 [name]="rank3.fullname" [photoUrl]="rank3.profile_image" size="l-xs">
@@ -84,7 +90,8 @@
             </div>
           <div class="rank-user-name">{{rank3.fullname}}</div>
           <div class="rank-user-points">{{rank3.total_points ? rank3.total_points : 0}}</div>
-          <div class="flex podium-rank-change"  *ngIf="currentUserId === rank3.userId && rank3.rank !== rank3.previous_rank">
+          <div class="flex podium-rank-change"
+            *ngIf="currentUserId === rank3.userId && rank3.rank !== rank3.previous_rank">
             <ng-container *ngIf="rank3.rank > rank3.previous_rank">
               <div class="change-rank-icon green">
                 <mat-icon>arrow_drop_up</mat-icon>
@@ -109,9 +116,14 @@
 
     <div class="user-list-wrapper">
 
-      <div class="user" [ngClass]="{'current-user high-light': currentUserId === otherUser.userId, 'exta-bottom-radius': i === (otherUsers.length - 1)}"
+      <div class="user"
+        [ngClass]="{'current-user high-light': currentUserId === otherUser.userId,
+          'exta-bottom-radius': i === (otherUsers.length - 1),
+          'reduce-padding': currentUserId === otherUser.userId && otherUser.rank !== otherUser.previous_rank}"
         *ngFor="let otherUser of otherUsers; let i = index">
-        <div class="flex user-center medium" >
+        <div class="flex user-center"
+          [ngClass]="{'medium': (maxLength >= 3 && maxLength < 5),
+          'large': maxLength >= 5}">
           <div class="user-rank">{{otherUser.rank}}</div>
           <div class="user-img">
             <ws-widget-avatar-photo

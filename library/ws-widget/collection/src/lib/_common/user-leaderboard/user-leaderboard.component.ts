@@ -28,11 +28,11 @@ export class UserLeaderboardComponent implements OnInit {
   overLayText: string = ''
   monthName: string = ''
   currentUserProfile: any
+  rankLengthsArray = []
+  maxLength = 2
   constructor(private configSvc: ConfigurationsService,
               private homePageSvc: HomePageService,
               private userProfileSvc: UserProfileService,
-              //private router: Router,
-              //private pipDuration: PipeDurationTransformPipe,
               private langtranslations: MultilingualTranslationsService) { }
 
   ngOnInit() {
@@ -50,6 +50,8 @@ export class UserLeaderboardComponent implements OnInit {
         this.rank2 = this.ApiResponse[1]
         this.rank3 = this.ApiResponse[2]
         this.otherUsers = this.ApiResponse.slice(3, 6)
+        this.rankLengthsArray = this.otherUsers.map((obj: any) => obj.rank.toString().length)
+        this.maxLength = Math.max(...this.rankLengthsArray)
         if (this.currentUserRank) {
           this.monthName = moment().month(Number(this.currentUserRank.month) - 1).format('MMMM')
         }

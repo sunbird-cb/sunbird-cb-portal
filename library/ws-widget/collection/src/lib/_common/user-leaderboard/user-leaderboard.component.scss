@@ -134,7 +134,9 @@
       margin-top: -20px;
     .high-light {
       font-weight: 600;
-      padding-bottom: 5px!important
+    }
+    .reduce-padding {
+      padding-bottom: 5px!important;
     }
 
     .user-info {
@@ -176,13 +178,13 @@
           width: 13%;
         }
         .user-name {
-          width: 57%;
+          width: 55%;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
         }
         .user-points {
-          width: 20%;
+          width: 22%;
         }
 
         .medium {
@@ -190,7 +192,7 @@
             width: 12%;
           }
          .user-name {
-            width: 53.5%;
+            width: 53%;
           }
         }
 
@@ -199,7 +201,7 @@
             width: 16%;
           }
          .user-name {
-            width: 51%;
+            width: 50%;
           }
         }
 
