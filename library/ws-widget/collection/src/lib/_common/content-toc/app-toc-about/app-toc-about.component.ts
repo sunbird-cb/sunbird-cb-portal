@@ -153,9 +153,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       viewMoreText: 'Show all',
       queryParams: '',
     },
-    // loaderConfig: {
-    //   cardSubType: 'card-portrait-click-skeleton',
-    // },
     tabs: [],
     filters: [],
   }

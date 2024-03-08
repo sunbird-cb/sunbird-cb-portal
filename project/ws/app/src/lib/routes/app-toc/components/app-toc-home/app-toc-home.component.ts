@@ -462,9 +462,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
         const currentMonth = moment(now, 'YYYY-MM-DD').month()
         this.isCompletedThisMonth = completedMonth === currentMonth
+        this.content['subTheme'] = this.getSubThemes(courseData)
+        this.content['viewMore'] = false
         this.content['completedOn'] = courseData.completedOn
       }
     }
+  }
+
+  getSubThemes(courseData: any): any[] {
+    let subThemeArr: any[] = [];
+    if (courseData.content && courseData.content.competencies_v5 && courseData.content.competencies_v5.length) {
+      courseData.content.competencies_v5.forEach((_competencyObj: any) => {
+        if (subThemeArr.indexOf(_competencyObj.competencySubTheme) === -1) {
+          subThemeArr.push(_competencyObj.competencySubTheme)
+        }
+      })
+    }
+    return subThemeArr
   }
 
   filteredAcbpList(res: any) {
@@ -1673,7 +1687,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   translateLabels(label: string, type: any) {
-    // console.log(this.langtranslations.translateLabel(label, type, ''), 'label', label, 'type', type)
     return this.langtranslations.translateLabel(label, type, '')
   }
 

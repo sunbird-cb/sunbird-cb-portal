@@ -250,8 +250,8 @@ $title-line-count: 3;
         display: flex;
         flex-direction: column;
         gap: 16px;
-        min-height: 380px;
         padding-bottom: 28px;
+        height: 100%;
 
         .ribbon {
             width: 52px;
@@ -272,10 +272,10 @@ $title-line-count: 3;
         background-repeat: no-repeat;
         background-size: cover;
         width: 100%;
-        min-height: 336px;
+        min-height: 360px;
     }
 
-    .certificate-card {
+    .certificate-outer-div {
         width: 100%;
         position: relative;
         top: 28px;
@@ -287,7 +287,7 @@ $title-line-count: 3;
 }
 
 .certificate-container {
-    margin: 80px 0px 48px 0px;
+    margin: 88px 0px 88px 0px;
 }
 
 @media screen and (max-width: 767px) {
@@ -355,39 +355,67 @@ $title-line-count: 3;
     }
 }
 
-.certificate-card {
-    border-radius: 12px;
-    border-top: 1px solid rgba($color: #000000, $alpha: 0.08);
-    border-right: 1px solid rgba($color: #000000, $alpha: 0.08);
-    border-left: 1px solid rgba($color: #000000, $alpha: 0.08);
-    background: #FFF;
-    --mask: radial-gradient(16px at 16px 100%, #0000 98%, #000) -16px;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
+.certificate-outer-div {
     max-width: 340px;
     width: 100%;
     position: relative;
     right: 48px;
-    top: -72px;
+    top: -84px;
     min-height: 200px;
     z-index: 10;
 
-    .ceritificate-image {
-        display: flex;
-        max-width: 280px;
-        margin: auto;
-        width: 100%;
-        border-radius: 8px;
+    .certificate-card {
+        border-radius: 12px;
+        border-top: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.08);
+        background: #FFF;
+        --mask: radial-gradient(16px at 16px 100%, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    
+        .ceritificate-image {
+            display: flex;
+            max-width: 280px;
+            margin: auto;
+            width: 100%;
+            border-radius: 8px;
+        }
+    
+        .icon {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            color: $text-primary;
+        }
+    
+        .certificate-info {
+            border-bottom: 1px dashed rgba($color: #000000, $alpha: 0.08);
+        }
     }
 
-    .icon {
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        color: $text-primary;
+    .chips-card {
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.16);
+        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.16);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.16);
+        padding: 16px;
+        background: #FFF;
+        border-radius: 12px;
+        --mask: radial-gradient(16px at 16px 0, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
     }
+}
 
-    .certificate-info {
-        border-bottom: 1px dashed rgba($color: #000000, $alpha: 0.08);
-    }
+.chip {
+    border: 1px solid $text-primary;
+    color: $text-primary;
+    line-height: 14px;
+}
+
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 92px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
