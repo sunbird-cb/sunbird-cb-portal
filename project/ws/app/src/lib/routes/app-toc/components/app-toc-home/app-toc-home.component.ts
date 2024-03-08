@@ -470,7 +470,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getSubThemes(courseData: any): any[] {
-    let subThemeArr: any[] = [];
+    const subThemeArr: any[] = []
     if (courseData.content && courseData.content.competencies_v5 && courseData.content.competencies_v5.length) {
       courseData.content.competencies_v5.forEach((_competencyObj: any) => {
         if (subThemeArr.indexOf(_competencyObj.competencySubTheme) === -1) {
