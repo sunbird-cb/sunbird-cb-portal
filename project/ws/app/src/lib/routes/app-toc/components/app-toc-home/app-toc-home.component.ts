@@ -1041,9 +1041,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.contentSvc.autoAssignCuratedBatchApi(req, programType).subscribe(
         (data: NsContent.IBatchListResponse) => {
           if (data) {
-            setTimeout(() => {
-              this.getUserEnrollmentList()
-            },         2000)
+            // setTimeout(() => {
+            //   this.getUserEnrollmentList()
+            // },         2000)
+            this.userSvc.resetTime('enrollmentService')
+            this.navigateToPlayerPage(req.request.batchId)
           }
         },
         (_error: any) => {
@@ -1061,20 +1063,44 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             content: data.content,
             enrolled: true,
           }
-          if (this.getBatchId()) {
+          const batchId = this.getBatchId()
+          if (batchId) {
             // this.createCertTemplate(this.getBatchId(), this.content.identifier)
 
-            this.router.navigate(
-              [],
-              {
-                relativeTo: this.route,
-                queryParams: { batchId: this.getBatchId() },
-                queryParamsHandling: 'merge',
-              })
+            // this.router.navigate(
+            //   [],
+            //   {
+            //     relativeTo: this.route,
+            //     queryParams: { batchId: this.getBatchId() },
+            //     queryParamsHandling: 'merge',
+            //   })
+            this.navigateToPlayerPage(batchId)
           }
           this.enrollBtnLoading = false
         }
       )
+    }
+  }
+
+  navigateToPlayerPage(batchId: string) {
+    if (this.content) {
+      const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
+        let primaryCategory
+        if (this.content.secureSettings !== undefined) {
+          primaryCategory = 'Learning Resource'
+        } else {
+          primaryCategory = firstPlayableContent.primaryCategory || this.content.primaryCategory
+        }
+      this.firstResourceLink = viewerRouteGenerator(
+        firstPlayableContent.identifier,
+        firstPlayableContent.mimeType,
+        this.isResource ? undefined : this.content.identifier,
+        this.isResource ? undefined : this.content.contentType,
+        this.forPreview,
+        primaryCategory,
+        batchId,
+      )
+      this.router.navigate([`${this.firstResourceLink.url}`], { queryParams: { ...this.firstResourceLink.queryParams } })
     }
   }
 

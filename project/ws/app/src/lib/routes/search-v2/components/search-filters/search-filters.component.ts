@@ -161,7 +161,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
             }
           })
         })
-        
+
         if (fil.name && fil.count) {
           const reqfilter = {
             mainType: 'primaryCategory',
@@ -279,7 +279,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
                 const name = fasv.name
                 const verifiedName = name === fil.name ? fil.name : this.toCamelCase(fil.name)
                 // const verifiedName = name === item.name ? item.name : name === this.translateTo(item.name) ?
-                // this.translateTo(item.name) : this.toCamelCase(item.name)  
+                // this.translateTo(item.name) : this.toCamelCase(item.name)
                 if (name === verifiedName) {
                   fasv.ischecked = true
                 }

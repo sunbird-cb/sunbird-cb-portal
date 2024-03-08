@@ -30,16 +30,16 @@
           </div>
           <div>
             <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">
-            <mat-icon class="gray-flag" *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
-            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+            <mat-icon class="gray-flag" *ngIf="!isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">outlined_flag</mat-icon>
+            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">flag</mat-icon>
             </button>
           </div>             
         </div>
         <div class=" flex flex-row align-center justify-around ml-2" *ngIf="isMobile">          
           <div>
             <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">
-            <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
-            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+            <mat-icon *ngIf="!isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">outlined_flag</mat-icon>
+            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">flag</mat-icon>
             </button>
           </div>             
         </div>
@@ -107,8 +107,8 @@
   <div class="flex flex-column width-100">
   <!-- <div class="mtf-flag">
     <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="rounded-flag">
-      <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
-      <mat-icon *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+      <mat-icon *ngIf="!isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">outlined_flag</mat-icon>
+      <mat-icon *ngIf="isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">flag</mat-icon>
     </button>
   </div> -->
     <div class="flex flex-row width-100 justify-between">
@@ -140,16 +140,16 @@
           </div>
           <div>
             <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">
-            <mat-icon class="gray-flag" *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
-            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+            <mat-icon class="gray-flag" *ngIf="!isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">outlined_flag</mat-icon>
+            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">flag</mat-icon>
             </button>
           </div>             
         </div>
         <div class=" flex flex-row align-center justify-around ml-2" *ngIf="isMobile">          
           <div>
             <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="border0">
-            <mat-icon *ngIf="!isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">outlined_flag</mat-icon>
-            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="You can use this Flag icon to postpone attempting a particular question. The flagged question will be highlighted in orange, as a reminder, when you attempt it later.">flag</mat-icon>
+            <mat-icon *ngIf="!isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">outlined_flag</mat-icon>
+            <mat-icon class="filled-flag" *ngIf="isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">flag</mat-icon>
             </button>
           </div>             
         </div>
