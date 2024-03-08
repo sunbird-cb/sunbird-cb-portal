@@ -46,10 +46,16 @@
     }
 }
 
-::ng-deep .mat-select-panel {
-    .mat-option {
-        height: 48px !important;
+::ng-deep .batch-form-field {
+    .mat-select-panel {
+        .mat-option {
+            height: 48px !important;
+        }
     }
+} 
+
+::ng-deep .batch-dropdown {
+    margin-top: 3rem !important;
 }
 
 ::ng-deep .batch-form-field {

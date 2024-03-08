@@ -188,70 +188,118 @@ $title-line-count: 3;
     min-width: 72px;
 }
 
-.summary {
-    margin-top: 24px;
-}
-
 .earned-certificate-container {
-    height: 135px;
+    height: 136px;
     border: 1px solid rgb(27, 76, 161);
     border-radius: 8px;
     background-color: #fff;
-    margin-top: 65px;
+
+    .ribbon {
+        position: relative;
+        text-align: center;
+        background: #1b4ca1;
+        display: block;
+        width: 92px;
+        height: 60px;
+        margin-left: 20px;
+        top: -6px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+
+        &:after {
+            content: "";
+            width: 100%;
+            top: 100%;
+            position: absolute;
+            display: block;
+            border-width: 4px 28px 24px 28px;
+            border-color: #1b4ca1;
+            border-bottom-color: transparent;
+            border-style: solid;
+            box-sizing: border-box;
+        }
+    }
+
+    .earned-certificate {
+        position: relative;
+        padding: 16px 0 0 16px;
+        font-family: 'Montserrat';
+        font-size: 20px;
+        letter-spacing: 0.12px;
+        line-height: 28px;
+        color: rgb(27, 76, 161);
+        font-weight: 600;
+        width: 42%;
+    }
+
+    .certificate-background {
+        background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("/assets/icons/toc/cert-banner.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        background-position-y: -120px;
+        background-position-x: 4px;
+        height: inherit;
+    }
 }
 
-.earned-certificate-container-background {
-    background-image: url('/assets/icons/tour-complete.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100;
-    width: 100%;
-    opacity: 0.5;
-    background-position-y: -88px;
-    background-position-x: 20px;
+.mobile-certificate-container {
+    margin-top: 20px;
+
+    .earned-certificate-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-bottom: 28px;
+        height: 100%;
+
+        .ribbon {
+            width: 52px;
+            height: 56px;
+    
+            &::after {
+                border-width: 4px 28px 24px 24px;
+            }
+        }
+    }
+
+    .earned-certificate {
+        width: 70%;
+    }
+
+    .certificate-background {
+        background: url("/assets/icons/toc/mob-cert-banner.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        min-height: 360px;
+    }
+
+    .certificate-outer-div {
+        width: 100%;
+        position: relative;
+        top: 28px;
+        right: 0px;
+        min-height: 200px;
+        margin: 0px auto 28px auto;
+    }
+
 }
 
-.earned-certificate {
-    font-family: 'Montserrat';
-    font-size: 20px;
-    letter-spacing: 0.12;
-    line-height: 28px;
-    color: rgb(27, 76, 161);
-    font-weight: 600;
-    margin-left: 84px;
-    width: 40%;
-    padding-top: 16px;
-    padding-left: 16px;
+.certificate-container {
+    margin: 88px 0px 88px 0px;
 }
 
-.ribbon {
-    position: absolute;
-    top: 5.8%;
-    left: 1rem;
-    text-align: center;
-    background: #1b4ca1;
-    display: block;
-    width: 4rem;
-    height: 2rem;
-    padding-top: 2rem;
+@media screen and (max-width: 767px) {
+    .certificate-container {
+        display: none;
+    }
 }
 
-
-.ribbon:after {
-    content: "";
-    width: 100%;
-    top: 100%;
-    position: absolute;
-    display: block;
-    border-width: 0 2rem 2rem 2rem;
-    border-color: #1b4ca1;
-    border-bottom-color: transparent;
-    border-style: solid;
-    box-sizing: border-box;
-}
-
-.vertical-align-middle {
-    vertical-align: middle;
+@media screen and (min-width: 768px) {
+    .mobile-certificate-container {
+        display: none;
+    }
 }
 
 .horizontal-strip {
@@ -278,4 +326,96 @@ $title-line-count: 3;
     .mobile-karma-points {
         display: none;    
     }
+}
+
+.certificate_box {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    position: relative;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 12px;
+    }
+
+    .certificate_overlay {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
+        top: 0;
+        left: 0;
+        z-index: 1;
+        border-radius: 8px;
+        overflow-y: auto;
+    }
+}
+
+.certificate-outer-div {
+    max-width: 340px;
+    width: 100%;
+    position: relative;
+    right: 48px;
+    top: -84px;
+    min-height: 200px;
+    z-index: 10;
+
+    .certificate-card {
+        border-radius: 12px;
+        border-top: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.08);
+        background: #FFF;
+        --mask: radial-gradient(16px at 16px 100%, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    
+        .ceritificate-image {
+            display: flex;
+            max-width: 280px;
+            margin: auto;
+            width: 100%;
+            border-radius: 8px;
+        }
+    
+        .icon {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            color: $text-primary;
+        }
+    
+        .certificate-info {
+            border-bottom: 1px dashed rgba($color: #000000, $alpha: 0.08);
+        }
+    }
+
+    .chips-card {
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.16);
+        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.16);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.16);
+        padding: 16px;
+        background: #FFF;
+        border-radius: 12px;
+        --mask: radial-gradient(16px at 16px 0, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
+}
+
+.chip {
+    border: 1px solid $text-primary;
+    color: $text-primary;
+    line-height: 14px;
+}
+
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 92px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
