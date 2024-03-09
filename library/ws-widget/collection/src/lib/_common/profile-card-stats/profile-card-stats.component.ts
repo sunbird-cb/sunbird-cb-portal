@@ -79,7 +79,7 @@ export class ProfileCardStatsComponent implements OnInit {
   }
 
   getRankOrdinal(rank: number) {
-    if (rank === 0) return '0th'
+    if (rank === 0) { return '0th' }
     const suffixes = ['th', 'st', 'nd', 'rd']
     const v = rank % 100
     return rank + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])

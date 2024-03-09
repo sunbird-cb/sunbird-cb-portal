@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-//import { Router } from '@angular/router'
+// import { Router } from '@angular/router'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
 import { HomePageService } from 'src/app/services/home-page.service'
@@ -15,18 +15,18 @@ import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services
 export class UserLeaderboardComponent implements OnInit {
 
   userInfo: any
-  loader: boolean = true
-  showOverlay: boolean = false
+  loader = true
+  showOverlay = false
   ApiResponse: any
   loading = false
   rank1: any
   rank2: any
   rank3: any
   otherUsers: any = []
-  currentUserId: string = ''
+  currentUserId = ''
   currentUserRank: any
-  overLayText: string = ''
-  monthName: string = ''
+  overLayText = ''
+  monthName = ''
   currentUserProfile: any
   rankLengthsArray = []
   maxLength = 2
@@ -57,7 +57,7 @@ export class UserLeaderboardComponent implements OnInit {
         }
         if (this.currentUserRank && this.currentUserRank.rank > this.currentUserRank.previous_rank) {
           // tslint:disable-next-line: max-line-length
-          this.overLayText = `${this.translateLabels('overlayText1','learnerLeaderboard')} ${this.getRankOrdinal(this.currentUserRank.rank - this.currentUserRank.previous_rank)} ${this.translateLabels('overlayText2','learnerLeaderboard')} ${this.getRankOrdinal(this.currentUserRank.rank)} ${this.translateLabels('overlayText3','learnerLeaderboard')}`
+          this.overLayText = `${this.translateLabels('overlayText1', 'learnerLeaderboard')} ${this.getRankOrdinal(this.currentUserRank.rank - this.currentUserRank.previous_rank)} ${this.translateLabels('overlayText2', 'learnerLeaderboard')} ${this.getRankOrdinal(this.currentUserRank.rank)} ${this.translateLabels('overlayText3', 'learnerLeaderboard')}`
           const isMessageShown = localStorage.getItem('motivationalMessage')
           if (!isMessageShown) {
             this.showOverlayMessage()
@@ -85,7 +85,7 @@ export class UserLeaderboardComponent implements OnInit {
     this.updateMotivationalMessagestatus()
     setTimeout(() => {
       this.showOverlay = false
-    }, 15000)
+    },         15000)
   }
 
   translateLabels(label: string, type: any) {
@@ -93,7 +93,7 @@ export class UserLeaderboardComponent implements OnInit {
   }
 
   getRankOrdinal(rank: number) {
-    if (rank === 0) return '0th'
+    if (rank === 0) { return '0th' }
     const suffixes = ['th', 'st', 'nd', 'rd']
     const v = rank % 100
     return rank + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
