@@ -16,12 +16,13 @@ import { Router } from '@angular/router'
 export class ContentRatingV2DialogComponent implements OnInit {
   @Input() ccuserRating: any
   @Input() navigatetoTOC: any
+  @Input() rateFromCompletionDialog: any
+  @Input()  isEditMode = false
   content: NsContent.IContent | null = null
   userRating = 0
   feedbackForm: FormGroup
   showSuccessScreen = false
   formDisabled = true
-  isEditMode = false
   isEdited = false
   private unsubscribe = new Subject<void>()
 
@@ -64,7 +65,6 @@ export class ContentRatingV2DialogComponent implements OnInit {
       this.userRating = this.data.userRating.rating
       if (this.userRating) {
         this.formDisabled = false
-        this.isEditMode = true
       }
     }
     if (this.data.content) {

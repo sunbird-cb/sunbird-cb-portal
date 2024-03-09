@@ -11,6 +11,7 @@ import _ from 'lodash'
 import { environment } from 'src/environments/environment';
 import { Subscription, timer } from 'rxjs'
 import { Storage } from './SCORMAdapter/storage'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 /* tslint:enable */
 
 @Component({
@@ -62,6 +63,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     private store: Storage,
     private loggerSvc: LoggerService,
     private widgetContentSvc: WidgetContentService,
+    private tocSvc: AppTocService,
   ) {
     (window as any).API = this.scormAdapterService
     // if (window.addEventListener) {
@@ -137,6 +139,17 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.scormAdapterService.addDataV3(req, htmlContent.identifier).subscribe((_res: any) => {
         this.loggerSvc.log('Progress updated successfully')
+        // for updating the progress hashmap, for instant progress to be shown
+        if (this.tocSvc.hashmap && this.tocSvc.hashmap[htmlContent.identifier]) {
+          // tslint:disable-next-line: max-length
+          if (this.tocSvc.hashmap[htmlContent.identifier]
+            && (!this.tocSvc.hashmap[htmlContent.identifier]['completionStatus']
+            || this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] < 2)) {
+            this.tocSvc.hashmap[htmlContent.identifier]['completionPercentage'] = req.completionPercentage
+            this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] = req.status
+            this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
+          }
+        }
         // this.store.clearAll()
         return
       // tslint:disable-next-line: align

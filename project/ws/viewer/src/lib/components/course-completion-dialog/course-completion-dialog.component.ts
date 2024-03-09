@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { LoggerService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { TranslateService } from '@ngx-translate/core'
 
+import { RatingService } from '@sunbird-cb/collection/src/public-api'
+import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
 @Component({
   selector: 'viewer-course-completion-dialog',
   templateUrl: './course-completion-dialog.component.html',
@@ -12,8 +13,9 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class CourseCompletionDialogComponent implements OnInit {
   courseName = ''
-  userRating: any
+  userRating: any = {}
   showRating = false
+  isEditMode = false
   constructor(
     private ratingSvc: RatingService,
     private tocSvc: AppTocService,
@@ -21,6 +23,7 @@ export class CourseCompletionDialogComponent implements OnInit {
     private translate: TranslateService,
     public dialogRef: MatDialogRef<CourseCompletionDialogComponent>,
     private langtranslations: MultilingualTranslationsService,
+    public events: EventService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       if (localStorage.getItem('websiteLanguage')) {
         this.translate.setDefaultLang('en')
@@ -30,16 +33,21 @@ export class CourseCompletionDialogComponent implements OnInit {
     }
 
   ngOnInit() {
+    const app: any = document.getElementById('viewer-conatiner-backdrop')
+    if (app) {
+      app.style.filter = 'blur(5px)'
+    }
     if (typeof(this.data.courseName) !== 'undefined') {
       this.courseName = this.data.courseName
     } else {
       this.courseName = 'course'
     }
-  }
-
-  openRatingDialog() {
     this.getUserRating()
   }
+
+  // openRatingDialog() {
+  //   this.getUserRating()
+  // }
 
   getUserRating() {
     if (this.data && this.data.identifier && this.data.primaryCategory) {
@@ -48,16 +56,45 @@ export class CourseCompletionDialogComponent implements OnInit {
           if (res && res.result && res.result.response) {
             this.userRating = res.result.response
             this.tocSvc.changeUpdateReviews(true)
-            this.showRating = true
+            // this.showRating = true
+            this.isEditMode = true
           } else {
-            this.userRating = 0
-            this.showRating = true
+            this.userRating = {
+              rating: 0,
+              comment: null,
+          }
+          this.isEditMode = false
+          // this.showRating = true
           }
         },
         (err: any) => {
           this.loggerSvc.error('USER RATING FETCH ERROR >', err)
         }
       )
+    }
+  }
+
+  addRating(index: number) {
+    this.showRating = true
+    this.userRating = {
+      rating: index + 1 ,
+      comment: null,
+    }
+    if (this.data && this.data.content) {
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'rating',
+          subType: 'content',
+          id: this.data.content.identifier || '',
+        },
+        {
+          id: this.data.content.identifier || '',
+          rating: this.userRating.rating,
+        },
+        {
+        pageIdExt: 'rating-popup',
+        module: WsEvents.EnumTelemetrymodules.FEEDBACK,
+      })
     }
   }
 

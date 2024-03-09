@@ -12,6 +12,8 @@ import _ from 'lodash'
 import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 import { CertificateDialogComponent } from '../_common/certificate-dialog/certificate-dialog.component'
 import { TranslateService } from '@ngx-translate/core'
+import { WidgetContentService } from '../_services/widget-content.service'
+import { Router } from '@angular/router'
 // import { Router } from '@angular/router'
 
 @Component({
@@ -41,7 +43,7 @@ export class CardContentV2Component extends WidgetBaseComponent
   btnGoalsConfig: NsGoal.IBtnGoal | null = null
   prefChangeSubscription: Subscription | null = null
   sourceLogos: NsInstanceConfig.ISourceLogo[] | undefined
-
+  
   isIntranetAllowedSettings = false
   constructor(
     private dialog: MatDialog,
@@ -52,6 +54,8 @@ export class CardContentV2Component extends WidgetBaseComponent
     private langtranslations: MultilingualTranslationsService,
     private certificateService: CertificateService,
     private translate: TranslateService,
+    private contSvc: WidgetContentService,
+    private router: Router,
 
   ) {
     super()
@@ -394,6 +398,10 @@ export class CardContentV2Component extends WidgetBaseComponent
     return this.langtranslations.translateLabelWithoutspace(label, type, subtype)
   }
 
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
+
   getCbPlanData() {
     let cbpList: any={}
     if (localStorage.getItem('cbpData')) {
@@ -407,5 +415,13 @@ export class CardContentV2Component extends WidgetBaseComponent
       // this.karmaPointLoading = false
       clearInterval(this.cbPlanInterval)
     }
+  }
+  async getRedirectUrlData(content: any){
+    let urlData = await this.contSvc.getResourseLink(content)
+    this.router.navigate(
+      [urlData.url],
+      {
+        queryParams: urlData.queryParams
+      })
   }
 }

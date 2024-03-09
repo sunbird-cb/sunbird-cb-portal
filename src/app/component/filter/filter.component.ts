@@ -361,4 +361,8 @@ export class FilterComponent implements OnInit {
     return true
     // }
   }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
 }

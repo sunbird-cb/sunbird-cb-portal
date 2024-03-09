@@ -1,0 +1,79 @@
+<div class="flex gap-2" [ngClass]="isMobile ? 'horizontal-strip' : 'flex-wrap'">
+    <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.duration > 0">
+        <img src="/assets/icons/toc/timer.svg" width="20px" alt="web image" />
+        <div class="text-xs">{{ content?.duration | pipeDurationTransform: 'hms' }}</div>
+    </div>
+    
+    <ng-container *ngIf="content?.children?.length">
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.course > 0">
+            <img src="/assets/icons/toc/course.svg" width="20px" alt="pdf image" />
+            <div class="text-xs" i18n>{{ tocStructure?.course }} {{ 'apptochome.courses1' | translate }}</div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.learningModule > 0">
+            <img src="/assets/icons/toc/module.svg" width="24px" alt="module image" />
+            <div class="text-xs" i18n>{{ tocStructure?.learningModule }} {{ 'apptochome.modules' | translate }}</div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.video > 0">
+            <img src="/assets/icons/toc/video.svg" width="20px" alt="video image" />
+            <div class="text-xs" i18n>{{ tocStructure?.video }} {{ 'apptochome.videos' | translate }}</div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.pdf > 0">
+            <img src="/assets/icons/toc/pdf.svg" width="20px" alt="pdf image" />
+            <div class="text-xs" i18n>{{ tocStructure?.pdf }} {{ 'apptochome.pdfs' | translate }}</div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.podcast > 0">
+            <img src="/assets/icons/toc/audio.svg" width="20px" alt="podcast image" />
+            <div class="text-xs" i18n>{{ tocStructure?.podcast }} {{ 'apptochome.audio' | translate }}</div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.webPage > 0">
+            <img src="/assets/icons/toc/web.svg" width="20px" alt="web image" />
+            <div class="text-xs" i18n>{{ tocStructure?.webPage }} {{ 'apptochome.webPages' | translate }}</div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.interactivecontent > 0">
+            <img src="/assets/icons/toc/link.svg" width="20px" alt="interactive content image" />
+            <div class="text-xs" i18n>{{ tocStructure?.interactivecontent }} {{ 'apptochome.interactiveContent' | translate }}</div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.finalTest > 0">
+            <img src="/assets/icons/toc/assessment.svg" width="20px" alt="assessment image" />
+            <div class="text-xs" i18n>{{ tocStructure?.finalTest }} {{ 'apptochome.finalTest' | translate }} </div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.practiceTest > 0">
+            <img src="/assets/icons/toc/assessment.svg" width="20px" alt="practice test image" />
+            <div class="text-xs" i18n>{{ tocStructure?.practiceTest }} {{ 'apptochome.practiceTest' | translate }} </div>
+        </div>
+    
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="tocStructure?.other > 0">
+            <img src="/assets/icons/toc/course.svg" width="20px" alt="other items image" />
+            <div class="text-xs" i18n>{{ tocStructure?.other }} {{ 'apptochome.otherItems' | translate }} </div>
+        </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2">
+            <img src="/assets/icons/toc/free.svg" width="20px" alt="free course image" />
+            <div class="text-xs" *ngIf="!content?.exclusiveContent" i18n>{{ 'apptochome.free' | translate }} </div>
+            <div class="text-xs" *ngIf="content?.exclusiveContent" i18n>{{ 'apptochome.paidContent' | translate }} </div>
+        </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="showInstructorLedMsg">
+            <img src="/assets/icons/toc/instructor-led.svg" width="20px" alt="instructor led image" />
+            <div class="text-xs" i18n>{{ 'apptocsinglepage.instructorLed' | translate }} </div>
+        </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.learningMode">
+            <img src="/assets/icons/toc/self-learning.svg" width="20px" alt="free course image" />
+            <div class="text-xs" i18n>{{ 'apptocsinglepage.selfLearning' | translate }} </div>
+        </div>
+
+        <div class="flex flex-col kpi-values items-center gap-2" *ngIf="content?.license">
+            <img src="/assets/icons/toc/key.svg" width="20px" alt="free course image" />
+            <div class="text-xs" i18n>{{ content?.license }} </div>
+        </div>
+    </ng-container>
+</div>

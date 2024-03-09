@@ -1,0 +1,421 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+
+.mt60 {
+    margin-top: 60px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.mat-body p,
+.mat-body-1 p,
+.mat-typography p {
+    margin: 0px !important;
+}
+
+.info-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+.desc {
+    .mat-body p {
+        margin: 0px !important;
+    }
+}
+
+.themes-button {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: #E6E8EF;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.theme-activated {
+    border: 1px solid $text-primary;
+    background-color: #DEE6F2;
+    color: $text-primary;
+    font-weight: 700;
+}
+
+.discussion-div {
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 1);
+
+    .forum-content {
+        padding: 12px 28px;
+    }
+
+    mat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 40px;
+        color: $colorOrange;
+    }
+
+    .action-button {
+        padding: 12px 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .suggestion-text {
+        text-align: center;
+    }
+}
+
+.ratings-div {
+    background-color: rgba(27, 76, 161, 0.08);
+    padding: 24px;
+
+    .ratings-container {
+        max-width: 380px;
+        width: 100%;
+    }
+
+    .comment-div {
+        background-color: #FFF;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.16);
+        max-width: 344px;
+        width: 100%;
+
+        .rating-start-value {
+            mat-icon {
+                color: $colorOrange;
+            }
+        }
+    }
+}
+
+.horizontal-strip {
+    .comment-div {
+        min-width: 340px;
+    }
+}
+
+// Batch time CSS...
+.batch-timer {
+    .underline {
+        border-top: 1.5px solid rgba($color: #000000, $alpha: 0.16);
+        margin: 16px 0px;
+    }
+    
+    .timer-label {
+        font-size: 12px;
+        padding: 4px 8px;
+        border: 1px solid rgba($color: #000000, $alpha: 0.16);
+        border-radius: 16px;
+        color: rgba($color: #000000, $alpha: 0.87);
+    }
+
+    .counter {
+        color: rgba($color: #000000, $alpha: 0.87);
+    }
+
+    .counter-label {
+        color: rgba($color: #000000, $alpha: 0.4);
+        text-transform: uppercase;
+        font-size: 12px;
+        line-height: 16px;
+    }
+}
+
+$title-line-count: 3;
+.text-ellipsis {
+    white-space: break-spaces;
+    position: relative;
+    overflow: hidden;
+    text-overflow: clip ;
+    display: -webkit-box;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+}
+
+.desc-ellipsis {
+    @extend .text-ellipsis;
+    min-height: $title-line-count * 24px;
+    word-break: break-word;
+}
+
+::ng-deep .ratings-modal-box {
+    max-width: 880px !important;
+    width: 100% !important;
+
+    .mat-dialog-container {
+        padding: 0px;
+        border-radius: 12px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    ::ng-deep .ratings-modal-box {
+        max-width: 90vw !important;
+    }
+}
+
+.leading-5 {
+    font-family: 'Montserrat';
+    font-size: 16px;
+    letter-spacing: 0.12px;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 500;
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+
+.leading-4 {
+    font-family: 'Lato';
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 400;
+    margin-top: 8px;
+    margin-bottom: 24px;
+
+}
+
+.kpi-values {
+    margin: 0 12px;
+    min-width: 72px;
+}
+
+.earned-certificate-container {
+    height: 136px;
+    border: 1px solid rgb(27, 76, 161);
+    border-radius: 8px;
+    background-color: #fff;
+
+    .ribbon {
+        position: relative;
+        text-align: center;
+        background: #1b4ca1;
+        display: block;
+        width: 92px;
+        height: 60px;
+        margin-left: 20px;
+        top: -6px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+
+        &:after {
+            content: "";
+            width: 100%;
+            top: 100%;
+            position: absolute;
+            display: block;
+            border-width: 4px 28px 24px 28px;
+            border-color: #1b4ca1;
+            border-bottom-color: transparent;
+            border-style: solid;
+            box-sizing: border-box;
+        }
+    }
+
+    .earned-certificate {
+        position: relative;
+        padding: 16px 0 0 16px;
+        font-family: 'Montserrat';
+        font-size: 20px;
+        letter-spacing: 0.12px;
+        line-height: 28px;
+        color: rgb(27, 76, 161);
+        font-weight: 600;
+        width: 42%;
+    }
+
+    .certificate-background {
+        background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("/assets/icons/toc/cert-banner.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        background-position-y: -120px;
+        background-position-x: 4px;
+        height: inherit;
+    }
+}
+
+.mobile-certificate-container {
+    margin-top: 20px;
+
+    .earned-certificate-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-bottom: 28px;
+        height: 100%;
+
+        .ribbon {
+            width: 52px;
+            height: 56px;
+    
+            &::after {
+                border-width: 4px 28px 24px 24px;
+            }
+        }
+    }
+
+    .earned-certificate {
+        width: 70%;
+    }
+
+    .certificate-background {
+        background: url("/assets/icons/toc/mob-cert-banner.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        min-height: 360px;
+    }
+
+    .certificate-outer-div {
+        width: 100%;
+        position: relative;
+        top: 28px;
+        right: 0px;
+        min-height: 200px;
+        margin: 0px auto 28px auto;
+    }
+
+}
+
+.certificate-container {
+    margin: 88px 0px 88px 0px;
+}
+
+@media screen and (max-width: 767px) {
+    .certificate-container {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .mobile-certificate-container {
+        display: none;
+    }
+}
+
+.horizontal-strip {
+    flex-direction: row;
+    overflow-x: scroll;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+}
+
+.horizontal-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.mobile-karma-points {
+    max-width: 360px;
+}
+
+@media screen and (min-width: 1200px) {
+    .authors-curators {
+        display: none !important;
+    }
+
+    .mobile-karma-points {
+        display: none;    
+    }
+}
+
+.certificate_box {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    position: relative;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 12px;
+    }
+
+    .certificate_overlay {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
+        top: 0;
+        left: 0;
+        z-index: 1;
+        border-radius: 8px;
+        overflow-y: auto;
+    }
+}
+
+.certificate-outer-div {
+    max-width: 340px;
+    width: 100%;
+    position: relative;
+    right: 48px;
+    top: -84px;
+    min-height: 200px;
+    z-index: 10;
+
+    .certificate-card {
+        border-radius: 12px;
+        border-top: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.08);
+        background: #FFF;
+        --mask: radial-gradient(16px at 16px 100%, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    
+        .ceritificate-image {
+            display: flex;
+            max-width: 280px;
+            margin: auto;
+            width: 100%;
+            border-radius: 8px;
+        }
+    
+        .icon {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            color: $text-primary;
+        }
+    
+        .certificate-info {
+            border-bottom: 1px dashed rgba($color: #000000, $alpha: 0.08);
+        }
+    }
+
+    .chips-card {
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.16);
+        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.16);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.16);
+        padding: 16px;
+        background: #FFF;
+        border-radius: 12px;
+        --mask: radial-gradient(16px at 16px 0, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
+}
+
+.chip {
+    border: 1px solid $text-primary;
+    color: $text-primary;
+    line-height: 14px;
+}
+
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 92px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -14,10 +14,10 @@ $secondary-color: #EF951E;
   }
 
   .course_v2{
-   border: 1px solid $secondary-color;
-   padding: 4px 8px;
-   align-items: end;
-   border-radius: 16px;
+    border: 1px solid $secondary-color;
+    padding: 4px 8px;
+    align-items: end;
+    border-radius: 16px;
   }
 
   .main_icon {
@@ -103,8 +103,8 @@ $secondary-color: #EF951E;
     .card-title {
       // margin-bottom: -6px;
       margin-bottom: 0;
-    height: 40px;
-    color:rgba(0, 0, 0, 0.87);
+      height: 40px;
+      color:rgba(0, 0, 0, 0.87);
     }
     // .description-text {
     //   color: #f5f5f5;
@@ -239,6 +239,7 @@ $secondary-color: #EF951E;
   .duration {
     height: 1.6em;
     display: flex;
+
     .resource-type {
       order: 3;
       margin-left: auto;
@@ -255,9 +256,11 @@ $secondary-color: #EF951E;
       text-overflow: ellipsis;
     }
   }
-.min-top{
-  margin-top: 50px;
-}
+
+  .min-top{
+    margin-top: 50px;
+  }
+
   $title-line-count: 1;
   $title-line-height: 1.3em;
 
@@ -333,11 +336,7 @@ $secondary-color: #EF951E;
     position: absolute;
     bottom: 0;
     // margin-left: 0;
-
-
   }
-
-
 
   ::ng-deep .mat-progress-bar {
     height: 8px!important;
@@ -349,18 +348,17 @@ $secondary-color: #EF951E;
     text-transform: uppercase;
   }
 
-
   .title-text {
     margin: 12px 0;
     position: relative;
     overflow: hidden;
-}
+  }
 
-.description-text {
-  position: relative;
-  overflow: hidden;
-  height: 63px;
-}
+  .description-text {
+    position: relative;
+    overflow: hidden;
+    height: 63px;
+  }
 
 .course_logo_box {
   width: 38px;
@@ -1506,6 +1504,20 @@ $title-line-count: 2;
     line-height: 12px;
   }
 }
+
 .view-btn {
   min-width: 171px;
+}
+
+.slider-div {
+  background-color: #FEF7ED;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+
+  .info-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
 }

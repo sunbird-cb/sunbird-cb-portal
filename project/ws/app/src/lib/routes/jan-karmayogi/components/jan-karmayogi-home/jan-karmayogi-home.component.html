@@ -1,0 +1,8 @@
+<div class="container-balanced">
+    <ng-container [wsResolverWidget]="pageData?.banner"></ng-container>
+   <div class="mt-8 flex flex-wrap">
+        <div class="mb-5 grow" *ngFor="let c of contentList  | slice:0:5">
+            <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+        </div>
+   </div>
+</div>

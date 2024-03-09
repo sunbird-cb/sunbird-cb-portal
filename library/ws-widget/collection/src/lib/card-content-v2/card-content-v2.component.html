@@ -666,7 +666,7 @@
 </ng-template>
 
 <ng-template #cardStandard>
-  <mat-card class="card-standard-container mr-5 padding-remove" [ngClass]="{
+  <mat-card class="card-standard-container mr-5 padding-remove cursor-pointer " [ngClass]="{
       greyOut:
         widgetData.deletedMode === 'greyOut' && !isLiveOrMarkForDeletion
           ? true
@@ -679,8 +679,7 @@
             : widgetData?.intranetMode === 'greyOut' && showIntranetContent
       }">
       <ng-container *ngIf="widgetData.content">
-        <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData?.content | pipeContentRoute: forPreview ).url"
-            [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+        <a (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()" 
             role="link" i18n-aria-label>
       <ng-container *ngIf="!isCardFlipped">
         <div class="status-danger" role="note" i18n-aria-label aria-label="Content expired or deleted" i18n-matTooltip
@@ -778,7 +777,7 @@
                 <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
               </ng-container>
               <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}Most trending</span>
+                <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}</span>
               </ng-container>
             </div>
           </div>
@@ -964,7 +963,8 @@
         <mat-icon class="mat-icon main_icon ws-mat-default-text margin-right-xs" alt="Module"  *ngIf="widgetData.content.mimeType === 'image/jpeg' || widgetData.content.mimeType === 'image/png'">
           image
         </mat-icon>
-        {{widgetData.content.primaryCategory || widgetData.content.contentType}}
+        {{ translateLabel(widgetData.content.primaryCategory || widgetData.content.contentType, 'searchfilters') }}
+        <!-- {{widgetData.content.primaryCategory || widgetData.content.contentType}} -->
       </p>
       <div class="flex main_title_box">
         <p class="mat-subheading-1 margin-bottom-xs font-bold-imp cursor-pointer content-title">
@@ -1055,7 +1055,8 @@
               image
             </mat-icon>
             <span class="ws-mat-black60-text font-normal mat-caption ">
-              {{widgetData.content.primaryCategory || widgetData.content.contentType}}
+              <!-- {{widgetData.content.primaryCategory || widgetData.content.contentType}} -->
+              {{ translateLabel(widgetData.content.primaryCategory || widgetData.content.contentType, 'searchfilters') }}
             </span>
           </ng-container>
         </div>
@@ -1063,8 +1064,7 @@
 
       <div class="flex main_title_box">
         <p class="mat-subheading-1 title-text font-bold-imp cursor-pointer content-title">
-          <a [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']"
-            [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData">
+          <a (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()">
             {{widgetData.content.name}}
           </a>
       </p>
@@ -1097,7 +1097,7 @@
 </ng-template>
 
 <ng-template #cardPortrait>
-    <mat-card class="card-portrait cursor-pointer" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''" [routerLink]="['/app/toc/',widgetData.content.identifier,'overview']" [queryParams]="{primaryCategory: widgetData.content.primaryCategory}" [state]="widgetData?.stateData">
+    <mat-card class="card-portrait cursor-pointer" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''" (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()" >
       <div class="course_widget portrait_widget flex  margin-bottom-xs">
         <div class="flex flex-end flex-middle course_port">
           <mat-icon class="mat-icon main_icon  ws-mat-default-text margin-right-xs">video_library</mat-icon>
@@ -1472,8 +1472,7 @@
 </ng-template>
 
 <ng-template #cardPortraitClick>
-  <a (click)="raiseTelemetry(); $event.stopPropagation()" [routerLink]="(widgetData?.content | pipeContentRoute: forPreview ).url"
-  [queryParams]="(widgetData?.content | pipeContentRoute).queryParams" [state]="widgetData?.stateData"
+  <a class="cursor-pointer" (click)="raiseTelemetry();getRedirectUrlData(widgetData?.content); $event.stopPropagation()" 
   role="link" i18n-aria-label>
   <mat-card class="card-portrait mr-2 card-portrait-clickable min-height-remove" [ngClass]="widgetData.cardCustomeClass ? widgetData.cardCustomeClass : ''">
      <div class="course_widget portrait_widget flex  margin-bottom-xs">
@@ -1551,10 +1550,10 @@
               <span>{{widgetData.content.avgRating}}</span>
             </div>
             <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostEnrolled')">
-              <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+              <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
             </ng-container>
             <ng-container *ngIf="widgetData?.content?.additionalTags && widgetData?.content?.additionalTags.includes('mostTrending')">
-              <span class="most-enrolled-text margin-left-xs">Most trending</span>
+              <span class="most-enrolled-text margin-left-xs">{{ 'cardcontentv2.mostTrending' | translate }}</span>
             </ng-container>
           </div>
         </div>

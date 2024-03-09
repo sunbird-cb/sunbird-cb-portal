@@ -1,5 +1,98 @@
 @import 'ws-vars';
 @import 'ws-mixins';
+
+// Latest CSS code
+.button {
+    border-radius: 64px;
+    letter-spacing: 0.25px;
+    padding: 12px 36px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+.batch-div {
+    border-radius: 8px;
+    background-color: rgba($color: $colorOrange, $alpha: 0.2);
+    padding: 16px;
+
+    .batch-details {
+        padding: 16px;
+        border: 1px solid $colorOrange;
+        border-radius: 8px;
+        background-color: #FFF;
+        cursor: pointer;
+    }
+
+    .batch-enrolled {
+        font-weight: bold;
+        color: $colorGreen;
+        font-size: 0.75rem;
+    }
+
+    .withdraw-batch {
+        @extend .button;
+        color: $text-primary;
+        border: 1px solid $text-primary;
+        background-color: #FFF;
+        width: 100%;
+    }
+
+    .enroll-button {
+        @extend .button;
+        color: #FFF;
+        background-color: $colorOrange;
+        border: 1px solid $colorOrange;
+    }
+}
+
+::ng-deep .batch-form-field {
+    .mat-select-panel {
+        .mat-option {
+            height: 48px !important;
+        }
+    }
+} 
+
+::ng-deep .batch-dropdown {
+    margin-top: 3rem !important;
+}
+
+::ng-deep .batch-form-field {
+    .mat-form-field-wrapper {
+        margin: 0px;
+        padding-bottom: 0px;
+    }
+
+    .mat-form-field-outline {
+        border-radius: 8px;
+    }
+
+    .mat-form-field-infix {
+        font-size: 14px;
+        border-top: 0.35rem solid transparent;
+        padding: 20px 0px;
+    }
+}
+
+.disable-btn {
+    opacity: 0.5;
+}
+
+.mb-0 {
+    margin-bottom: 0px !important;
+}
+
+.batch-timings {
+    // color: rgba($color: #000, $alpha: 0.87);
+    text-transform: uppercase;
+    line-height: 20px;
+}
+
+// Latest CSS code
+
+
+
 %container-padding {
     padding: $size-xl 2 * $size-xl;
     @include breakpoint-xs {
@@ -401,9 +494,6 @@
     text-align: left;
     line-height: 20px;
     padding: 26px;
-}
-.disable-btn {
-    opacity: 0.5;
 }
 
 .disable-send-btn[disabled] {

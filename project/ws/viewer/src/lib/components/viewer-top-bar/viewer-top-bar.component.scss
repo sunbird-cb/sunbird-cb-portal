@@ -1,13 +1,40 @@
 @import "ws-mixins";
 
+::ng-deep .theme-igot.day-mode .viewer-top.mat-toolbar.mat-primary {
+  background: #fff;
+  color: rgba(0, 0, 0, 0.87) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+::ng-deep .theme-igot.day-mode .viewer-top-secondary.mat-toolbar.mat-primary {
+  background: rgba(255, 255, 255, 1);
+  color: #000 !important;
+}
+
 .app-logo {
-  max-width: 100px;
-  max-height: 30px;
+  max-width: 115px;
+  max-height: 32px;
+  width: 100%;
 
   @include breakpoint-xs {
     max-width: 80px;
     max-height: 30px;
   }
+}
+
+.font-bold-imp {
+  font-weight: bold !important;
+}
+
+.progress-container {
+  min-width: 285px;
+}
+
+.rate-btn {
+  border: none;
+  background: #EF951E;
+  height: 32px;
+  border-radius: 16px;
 }
 
 .mr-10 {
@@ -26,8 +53,51 @@
 }
 .cheight {
   height: 56px;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infoIcon {
+  font-size: 14px;
+  height: 13px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 360px) {
+  .progress-container {
+    min-width: 160px;
+  }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 375px) {
+  .progress-container {
+    min-width: 175px;
+  }
+}
+
+@media only screen and (min-width: 390px) and (max-width: 393px) {
+  .progress-container {
+    min-width: 190px;
+  }
+}
+
+@media only screen and (min-width: 394px) and (max-width: 767px) {
+  .progress-container {
+    min-width: 220px;
+  }
+}
+
+.share-tag {
+  font-size: 14px;
+}
+.width-100{
+  width: 100%;
 }
 
 .mat-icon-button {
   width: 50px !important;
+}
+
+.blue-color {
+  color: rgb(27, 76, 161);
 }

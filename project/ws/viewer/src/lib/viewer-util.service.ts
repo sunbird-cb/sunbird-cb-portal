@@ -1,11 +1,12 @@
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { noop, Observable } from 'rxjs'
+import { noop, Observable, Subject } from 'rxjs'
 import dayjs from 'dayjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { environment } from 'src/environments/environment'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +20,14 @@ export class ViewerUtilService {
   }
   downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
   authoringBase = '/apis/authContent/'
+  markAsCompleteSubject = new Subject()
+  autoPlayNextVideo = new Subject()
   constructor(
     private http: HttpClient,
     private configservice: ConfigurationsService,
-    private contentSvc: WidgetContentService) { }
+    private contentSvc: WidgetContentService,
+    private tocSvc: AppTocService,
+    ) { }
 
   async fetchManifestFile(url: string) {
     this.setS3Cookie(url)
@@ -130,7 +135,6 @@ export class ViewerUtilService {
           ],
         },
       }
-
       // if (this.configservice.cstoken !== '') {
       //   const headers = new HttpHeaders()
       //   .set('cstoken', this.configservice.cstoken)
@@ -146,7 +150,12 @@ export class ViewerUtilService {
       this.http
         .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
         .subscribe(noop, noop)
-
+        if (this.tocSvc.hashmap[contentId] &&
+          (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2)) {
+          this.tocSvc.hashmap[contentId]['completionPercentage'] = req.request.contents[0].completionPercentage
+          this.tocSvc.hashmap[contentId]['completionStatus'] = req.request.contents[0].status
+          this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
+        }
     } else {
       req = {}
       // do nothing
@@ -202,6 +211,7 @@ export class ViewerUtilService {
               status: status || 2,
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
+              completionPercentage: status === 2 ? 100 : 0,
             },
           ],
         },
@@ -210,7 +220,14 @@ export class ViewerUtilService {
       this.http
         .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
         .subscribe(noop, noop)
-
+      if (this.tocSvc.hashmap && this.tocSvc.hashmap[contentId] && req.request.contents[0]) {
+        if (this.tocSvc.hashmap[contentId] &&
+          (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2)) {
+          this.tocSvc.hashmap[contentId]['completionPercentage'] = req.request.contents[0].completionPercentage
+          this.tocSvc.hashmap[contentId]['completionStatus'] = req.request.contents[0].status
+          this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
+        }
+      }
     } else {
       req = {}
       // do nothing

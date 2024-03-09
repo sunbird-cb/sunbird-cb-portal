@@ -40,6 +40,7 @@ export const ROOT_WIDGET_CONFIG = {
     home_carrier: 'cardHomeCarrier',
     home_notify: 'cardHomeNotify',
     event_hub: 'eventHubCard',
+    card_competency: 'competencyCard',
   },
   contentStrip: {
     _type: 'contentStrip',

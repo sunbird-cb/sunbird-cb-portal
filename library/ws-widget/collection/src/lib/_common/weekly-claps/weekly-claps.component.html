@@ -103,7 +103,7 @@
         </p>
         <p class="flex weeks-count  flex-middle  margin-remove">
             <img class="margin-right-s cursor-pointer" width="34" height="34" [src]="insightsData?.weeklyClaps?.total_claps ? 'assets/icons/home/clap_icon.svg' : 'assets/icons/home/clap_disable_icon.svg'" >
-            <span *ngIf="insightsData?.weeklyClaps?.total_claps > 1 else elseWeeklyClaps">{{insightsData?.weeklyClaps?.total_claps}} Weeks</span>
+            <span *ngIf="insightsData?.weeklyClaps?.total_claps > 1 else elseWeeklyClaps">{{insightsData?.weeklyClaps?.total_claps}} {{ 'weeklyclaps.weeks' | translate }}</span>
             <ng-template #elseWeeklyClaps>{{insightsData?.weeklyClaps?.total_claps || 0}} {{ 'weeklyclaps.weeks' | translate }}</ng-template>
         </p>
     </div>

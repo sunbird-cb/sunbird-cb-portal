@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { Observable, of, EMPTY } from 'rxjs'
+import { Observable, of, EMPTY, BehaviorSubject } from 'rxjs'
 import { catchError, retry, map, shareReplay } from 'rxjs/operators'
 import { NsContentStripMultiple } from '../content-strip-multiple/content-strip-multiple.model'
 import { NsContent } from './widget-content.model'
 import { NSSearch } from './widget-search.model'
 // tslint:disable
 import _ from 'lodash'
+import {  viewerRouteGenerator } from './viewer-route-util'
 // tslint:enable
 
 // TODO: move this in some common place
@@ -69,7 +70,8 @@ export class WidgetContentService {
   currentMetaData!: NsContent.IContent
   currentContentReadMetaData!: NsContent.IContent
   currentBatchEnrollmentList!: NsContent.ICourse[]
-
+  programChildCourseResumeData = new BehaviorSubject<any>({})
+  programChildCourseResumeData$ = this.programChildCourseResumeData.asObservable()
   isResource(primaryCategory: string) {
     if (primaryCategory) {
       const isResource = (primaryCategory === NsContent.EResourcePrimaryCategories.LEARNING_RESOURCE) ||
@@ -234,9 +236,13 @@ export class WidgetContentService {
 
   fetchContentHistoryV2(req: NsContent.IContinueLearningDataReq): Observable<NsContent.IContinueLearningData> {
     req.request.fields = ['progressdetails']
-    return this.http.post<NsContent.IContinueLearningData>(
+    const data = this.http.post<NsContent.IContinueLearningData>(
       `${API_END_POINTS.CONTENT_HISTORYV2}/${req.request.courseId}`, req
     )
+    data.subscribe((subscribeData: any) => {
+          this.programChildCourseResumeData.next({ resumeData: subscribeData.result.contentList, courseId: req.request.courseId })
+        })
+    return data
   }
 
   async continueLearning(id: string, collectionId?: string, collectionType?: string): Promise<any> {
@@ -406,7 +412,16 @@ export class WidgetContentService {
     return this.http.post(API_END_POINTS.READ_KARMAPOINTS, { limit, offset }).pipe(catchError(_err => of(true)))
   }
   fetchProgramContent(contentId: string[]): Observable<NsContent.IContent[]> {
-    return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
+    let url = ''
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      return this.http.get<NsContent.IContent[]>(
+        API_END_POINTS.CONTENT_READ(contentId),
+      )
+    }
+    url = `/api/content/v1/read/${contentId}`
+    return this.http.get<NsContent.IContent[]>(url)
+    // return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
   }
 
   getCourseKarmaPoints(request: any) {
@@ -421,4 +436,80 @@ export class WidgetContentService {
     return this.http.post<any>(API_END_POINTS.USER_KARMA_POINTS, {})
   }
 
+  getEnrolledData(doId: string) {
+    const enrollmentMapData = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+    const enrolledCourseData = enrollmentMapData[doId]
+    return enrolledCourseData
+  }
+
+  async getResourseLink(content: any) {
+    let urlData: any
+    let enrolledCourseData: any = this.getEnrolledData(content.identifier)
+    if (enrolledCourseData) {
+      if (enrolledCourseData.completionPercentage  === 100) {
+        return this.gotoTocPage(enrolledCourseData)
+      }
+      if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
+        enrolledCourseData  = {
+          ...enrolledCourseData,
+          identifier: enrolledCourseData.collectionId,
+          primaryCategory: enrolledCourseData.content.primaryCategory,
+          name: enrolledCourseData.content.name,
+        }
+        return this.getResourseDataWithData(enrolledCourseData,
+                                            enrolledCourseData.lastReadContentId,
+                                            enrolledCourseData.lrcProgressDetails.mimeType)
+      }
+        if (enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId) {
+          const doId = enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId
+          const responseData = await this.fetchProgramContent(doId).toPromise().then(async (res: any) => {
+            if (res && res.result && res.result.content) {
+              const contentData: any = res.result.content
+              enrolledCourseData  = {
+                ...enrolledCourseData,
+                identifier: enrolledCourseData.collectionId,
+                primaryCategory: enrolledCourseData.content.primaryCategory,
+                name: enrolledCourseData.content.name,
+              }
+              urlData =  this.getResourseDataWithData(enrolledCourseData, contentData.identifier, contentData.mimeType)
+              if (urlData) {
+                return urlData
+              }
+            }
+          })
+          return responseData ? responseData : this.gotoTocPage(content)
+        }
+          return this.gotoTocPage(content)
+
+    }
+      return this.gotoTocPage(content)
+
+  }
+
+  getResourseDataWithData(content: any, resourseId: any, mimeType: any) {
+    if (content) {
+      const url = viewerRouteGenerator(
+        resourseId,
+        mimeType,
+        content.identifier,
+        'Course',
+        false,
+        'Learning Resource',
+        content.batchId,
+        content.name,
+      )
+      return url
+    }
+    return this.gotoTocPage(content)
+  }
+  gotoTocPage(content: any) {
+    const urlData: any = {
+      url: `/app/toc/${content.identifier ? content.identifier : content.collectionId}/overview`,
+      queryParams: { batchId: content.batchId },
+    }
+    if (content.endDate) {
+      urlData.queryParams = { ...urlData.queryParams, planType: 'cbPlan', endDate: content.endDate }
+    }
+    return urlData
+  }
 }

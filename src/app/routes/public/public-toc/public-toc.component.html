@@ -1,6 +1,10 @@
+
+
 <!-- <div class="height-on-top"> -->
 <ws-widget-btn-page-back-nav [widgetData]="{url: '/static-home',titles: []}"></ws-widget-btn-page-back-nav>
-<ng-container>
+<ws-app-app-toc-home-root [content]="content" [initialrouteData]="initialrouteData"
+[forPreview]="true" [resumeData]="resumeData" [batchData]="batchData"></ws-app-app-toc-home-root>
+<!-- <ng-container>
     <div class="fixed-width flex flex-wrap">
         <div class="meta-section">
             <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
@@ -12,7 +16,6 @@
                 </ws-app-app-toc-single-page>
             </div>
         </div>
-        <!-- Rigtht sidebar -->
         <div class="info-section right margin-top-xl padding-m white-bg margin-left-xl margin-bottom-xl">
             <div class="header-actions margin-top-s margin-bottom-m">
                 <ng-container *ngIf="
@@ -66,7 +69,6 @@
                 <mat-icon class="align-bottom">info</mat-icon>&nbsp;
                 <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
             </p>
-            <!-- at glance -->
             <div class="margin-top-l glance-container">
                 <div class="margin-bottom-m">
                     <p class="mat-subheading-1 at-glance-heading" i18n>At a glance</p>
@@ -283,12 +285,8 @@
 
 <ng-template #tocError>
     Error
-    <!-- <div [wsResolverWidget]="errorWidgetData"></div> -->
 </ng-template>
 <ng-template #authView i18n>View</ng-template>
-
-<!--Scroll to top-->
 <button mat-fab color="accent" [ngClass]="{'show-scroll': showScroll}" (click)="scrollToTop()" class="scroll-to-top">
     <mat-icon color="primary">keyboard_arrow_up</mat-icon>
-</button>
-<!-- </div> -->
+</button> -->

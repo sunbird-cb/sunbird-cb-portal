@@ -33,10 +33,10 @@ import {
   EventService,
   WsEvents,
 } from '@sunbird-cb/utils'
-import { delay, first, catchError, map } from 'rxjs/operators'
+import { delay, first, catchError, map, filter } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
-// import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
+import { UrlService } from 'src/app/shared/url.service'
 
 import { CsModule } from '@project-sunbird/client-services'
 import { SwUpdate } from '@angular/service-worker'
@@ -44,7 +44,6 @@ import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 import { concat, interval, timer, of } from 'rxjs'
-// import { AppIntroComponent } from '../app-intro/app-intro.component'
 
 @Component({
   selector: 'ws-root',
@@ -54,35 +53,6 @@ import { concat, interval, timer, of } from 'rxjs'
 })
 export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-  @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
-  // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
-  previewContainerViewRef: ViewContainerRef | null = null
-  @ViewChild('appUpdateTitle', { static: true })
-  appUpdateTitleRef: ElementRef | null = null
-  @ViewChild('appUpdateBody', { static: true })
-  appUpdateBodyRef: ElementRef | null = null
-
-  @ViewChild('skipper', { static: false }) skipper!: ElementRef
-
-  isXSmall$ = this.valueSvc.isXSmall$
-  routeChangeInProgress = false
-  showNavbar = true
-  showFooter = false
-  currentUrl!: string
-  customHeight = false
-  isNavBarRequired = true
-  isInIframe = false
-  appStartRaised = false
-  isSetupPage = false
-  processed: any
-  loginToken: any
-  showTour = false
-  currentRouteData: any = []
-  loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
-  headerFooterConfigData: any = {}
-  mobileTopHeaderVisibilityStatus = true
-  activeMenu: any = ''
-  backGroundTheme: any
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -101,6 +71,7 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
     private utilitySvc: UtilityService,
+    private urlService: UrlService
     // private dialogRef: MatDialogRef<any>,
   ) {
     this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
@@ -177,6 +148,62 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       },
     })
   }
+
+  get navBarRequired(): boolean {
+    return this.isNavBarRequired
+  }
+
+  get isShowNavbar(): boolean {
+    return this.showNavbar
+  }
+
+  get isCustomHeight(): boolean {
+    if (window.location.pathname.includes('/public/home')
+    || window.location.pathname.includes('/public/faq')
+    || window.location.pathname.includes('/public/contact')
+    || window.location.pathname.includes('/public/signup')
+    || window.location.pathname.includes('/public/request')
+    ) {
+      this.customHeight = true
+    }
+    return this.customHeight
+  }
+
+  @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
+  // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
+  previewContainerViewRef: ViewContainerRef | null = null
+  @ViewChild('appUpdateTitle', { static: true })
+  appUpdateTitleRef: ElementRef | null = null
+  @ViewChild('appUpdateBody', { static: true })
+  appUpdateBodyRef: ElementRef | null = null
+
+  @ViewChild('skipper', { static: false }) skipper!: ElementRef
+
+  isXSmall$ = this.valueSvc.isXSmall$
+  routeChangeInProgress = false
+  showNavbar = true
+  showFooter = false
+  currentUrl!: string
+  customHeight = false
+  isNavBarRequired = true
+  isInIframe = false
+  appStartRaised = false
+  isSetupPage = false
+  processed: any
+  loginToken: any
+  showTour = false
+  currentRouteData: any = []
+  loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
+  headerFooterConfigData: any = {}
+  mobileTopHeaderVisibilityStatus = true
+  activeMenu: any = ''
+  backGroundTheme: any
+  showHubs = true
+  showBottomNav = true
+  viewerPage = false
+
+  prevUrl = ''
+  currUrl = ''
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: any) {
     if (event && event.type === 'unload') {
@@ -195,7 +222,6 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this.skipper.nativeElement.focus()
     // tslint: disable
   }
-
   ngOnInit() {
     // let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
     // this.showTour = showTour && showTour.disable ? showTour.disable : false
@@ -220,9 +246,14 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     this.btnBackSvc.initialize()
 
-    // if (this.authSvc.isAuthenticated) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.prevUrl = this.currUrl
+      this.currUrl = event.url
+      this.urlService.setPreviousUrl(this.prevUrl)
+    })
 
-    // }
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
 
@@ -237,6 +268,12 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       }
 
       if (event instanceof NavigationStart) {
+        let isMobile = false
+        if (window.innerWidth <= 1200) {
+          isMobile = true
+        } else {
+          isMobile = false
+        }
         this.showNavbar = true
         if (event.url.includes('preview') || event.url.includes('embed')) {
           this.isNavBarRequired = false
@@ -244,6 +281,19 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           this.isNavBarRequired = false
         } else {
           this.isNavBarRequired = true
+        }
+
+        if (!(event.url.includes('/page/home')) && isMobile) {
+          this.showHubs = false
+        } else {
+          if (event.url.includes('/public')) {
+            this.showHubs = false
+          } else {
+            this.showHubs = true
+          }
+        }
+        if (event.url.includes('/viewer')) {
+          this.viewerPage = true
         }
         this.routeChangeInProgress = true
         this.changeDetector.detectChanges()
@@ -254,18 +304,21 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
+
         if (this.currentUrl.includes('/public/home')) {
           this.customHeight = true
 
         } else {
           this.customHeight = false
         }
+
         if (
           !!this.currentUrl.startsWith('/public/logout')
           || !!this.currentUrl.startsWith('/public/signup')
           || !!this.currentUrl.startsWith('/public/welcome')
           || !!this.currentUrl.startsWith('/viewer/')
           || !!this.currentUrl.startsWith('/public/request')
+          || !!this.currentUrl.startsWith('/public/toc')
         ) {
           this.showFooter = false
           this.showNavbar = false
@@ -274,6 +327,10 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
           this.showFooter = true
           this.showNavbar = true
           this.isNavBarRequired = true
+        }
+
+        if (!!this.currentUrl.startsWith('/app/toc/')) {
+          this.showBottomNav = false
         }
       }
 
@@ -355,23 +412,6 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   ngAfterViewInit() {
     this.initAppUpdateCheck()
-  }
-  get navBarRequired(): boolean {
-    return this.isNavBarRequired
-  }
-  get isShowNavbar(): boolean {
-    return this.showNavbar
-  }
-  get isCustomHeight(): boolean {
-    if (window.location.pathname.includes('/public/home')
-    || window.location.pathname.includes('/public/faq')
-    || window.location.pathname.includes('/public/contact')
-    || window.location.pathname.includes('/public/signup')
-    || window.location.pathname.includes('/public/request')
-    ) {
-      this.customHeight = true
-    }
-    return this.customHeight
   }
 
   getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {

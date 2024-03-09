@@ -3,6 +3,8 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ICarousel } from './sliders-dynamic.model'
 import { Subscription, interval } from 'rxjs'
 import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 @Component({
   selector: 'ws-widget-sliders-dynamic',
@@ -17,13 +19,22 @@ export class SlidersDynamicComponent extends WidgetBaseComponent
   currentIndex = 0
   slideInterval: Subscription | null = null
 
-  constructor(private events: EventService) {
+  constructor(
+    private events: EventService,
+    private translate: TranslateService,
+    private langTranslations: MultilingualTranslationsService) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
     this.reInitiateSlideInterval()
   }
+
   reInitiateSlideInterval() {
     if (this.widgetData && this.widgetData.sliderData.length > 1) {
       try {
@@ -42,6 +53,7 @@ export class SlidersDynamicComponent extends WidgetBaseComponent
       }
     }
   }
+
   slideTo(index: number) {
     if (index >= 0 && index < this.widgetData.sliderData.length) {
       this.currentIndex = index
@@ -68,6 +80,7 @@ export class SlidersDynamicComponent extends WidgetBaseComponent
       window.open(currentData.redirectUrl)
     }
   }
+
   raiseTelemetry(bannerUrl: string | undefined) {
     this.openInNewTab()
     const path = window.location.pathname.replace('/', '')
@@ -86,5 +99,9 @@ export class SlidersDynamicComponent extends WidgetBaseComponent
         pageIdExt: 'banner',
         module: WsEvents.EnumTelemetrymodules.CONTENT,
     })
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langTranslations.translateLabelWithoutspace(label, type, '')
   }
 }

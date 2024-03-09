@@ -1,26 +1,35 @@
 <ng-container *ngIf="ratingSummary">
-    <div class="flex-col items-center rating margin-bottom-l">
-        <div class="flex items-center ">
-            <mat-icon class="mr-2 mat-icon material-icons rating-icon ws-mat-black16-text"
-                [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, ratingSummary?.avgRating)}"
-                *ngFor="let rating of [1, 2, 3, 4, 5]">
-                {{ getRatingIcon(rating, ratingSummary?.avgRating) }}</mat-icon>
-            <!--  <span i18n>from</span> -->
-            <span class="margin-left-s rating-number mat-body-1"> {{ratingSummary?.avgRating}} {{'ratingsummary.outof5' | translate}} </span>
+    <div class="flex flex-col gap-6">
+        <div class="flex flex-row gap-4 items-center">
+            <div class="rating-value ws-mat-default-text">{{ ratingSummary?.avgRating }}</div>
+            <div class="flex flex-col gap-1">
+                <div class="flex flex-row gap-2">
+                    <mat-icon class="mat-icon material-icons rating-icon ws-mat-black16-text"
+                        [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, ratingSummary?.avgRating)}"
+                        *ngFor="let rating of [1, 2, 3, 4, 5]">
+                        {{ getRatingIcon(rating, ratingSummary?.avgRating) }}
+                    </mat-icon>
+                </div>
+                <div class="text-base">{{ ratingSummary?.total_number_of_ratings | pipeCountTransform }}
+                    {{'ratingsummary.ratings' | translate}}
+                </div>
+            </div>
         </div>
-        <div class="margin-top-s mat-body-1 ws-mat-black60-text">
-            {{ ratingSummary?.total_number_of_ratings | pipeCountTransform }} {{'ratingsummary.ratings' | translate}}</div>
-    </div>
-    <div class="flex items-center margin-bottom-xs" *ngFor="let rating of ratingSummary?.breakDown?.slice().reverse()">
-        <div class="mat-body-2 bold-imp margin-right-m">{{rating.key}} {{'ratingsummary.star' | translate}}</div>
-        <div class="flex items-center rating-progress">
-            <mat-progress-bar [mode]="'determinate'" [matTooltip]="rating?.percent + ' %'"
-                [value]="rating?.percent" class="rating-bar"
-                [attr.aria-labelledby]="'m-c-'+ contentId"
-                [ngClass]="{ 'visibility-0': rating === undefined, 'thick': className}"
-                i18n-aria-label>
-                {{rating?.percent}} %
-            </mat-progress-bar>
+        <div class="flex flex-col gap-2">
+            <ng-container *ngFor="let rating of ratingSummary?.breakDown?.slice().reverse()">
+                <div class="flex flex-row gap-4 items-center">
+                    <div class="flex-none font-bold">{{ rating.key }} {{ 'ratingsummary.star' | translate }}</div>
+                    <div class="flex items-center rating-progress">
+                        <mat-progress-bar [mode]="'determinate'" [matTooltip]="rating?.percent + ' %'"
+                            [value]="rating?.percent" class="rating-bar"
+                            [attr.aria-labelledby]="'m-c-'+ contentId"
+                            [ngClass]="{ 'visibility-0': rating === undefined, 'thick': className}"
+                            i18n-aria-label>
+                            {{rating?.percent}} %
+                        </mat-progress-bar>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </ng-container>

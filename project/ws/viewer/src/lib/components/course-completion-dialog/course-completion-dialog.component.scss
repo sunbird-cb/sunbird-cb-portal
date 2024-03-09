@@ -20,3 +20,70 @@
   ::ng-deep .mat-card>.mat-card-actions:last-child {
     margin-bottom: -15px;
 }
+
+.congrats-container {
+ text-align: center;
+}
+
+::ng-deep .mat-dialog-container {
+  box-shadow: none !important;
+  background: transparent !important;
+  color: white !important;
+}
+
+.heading-text {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+  font-family: 'Montserrat';
+}
+
+.subheading-text {
+  font-family: 'Lato';
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+  line-height: 20px;
+  margin-top:8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.subheading-text-bold {
+  font-family: 'Lato';
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+  line-height: 20px;
+  margin-top: 16px;
+}
+
+::ng-deep .cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.seperator {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+    margin: 10px;
+}
+
+.star-panel {
+  margin: 16px 0;
+}
+
+.ws-mat-white16-text {
+  color: #fff;
+}
+
+.rating-icon {
+ font-size: 40px;
+}
+
+::ng-deep .rating-button.mat-icon-button{
+  margin:0 8px !important;   
+}
+
+#app-bg {
+  filter: blur(10px)
+}

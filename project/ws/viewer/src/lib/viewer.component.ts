@@ -8,7 +8,10 @@ import { RootService } from '../../../../../src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from './viewer-data.service'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service copy'
 import { MobileAppsService } from '../../../../../src/app/services/mobile-apps.service'
+import { ViewerHeaderSideBarToggleService } from './viewer-header-side-bar-toggle.service'
+import { PdfScormDataService } from './pdf-scorm-data-service'
 import { TranslateService } from '@ngx-translate/core'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 export enum ErrorType {
   accessForbidden = 'accessForbidden',
@@ -50,6 +53,18 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private screenSizeSubscription: Subscription | null = null
   private resourceChangeSubscription: Subscription | null = null
   leafNodesCount: any
+  viewerHeaderSideBarToggleFlag = true
+  isMobile = false
+  contentMIMEType = ''
+  handleBackFromPdfScormFullScreenFlag = false
+  enrollmentList: any
+  hierarchyData: any
+  enrolledCourseData: any
+  batchData: any
+  tocStructure: any
+  hasTocStructure = false
+  viewerAboutContentData: any
+  hierarchyMapData: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -62,8 +77,19 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
     private abc: MobileAppsService,
+    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
+    public pdfScormDataService: PdfScormDataService,
     private translate: TranslateService,
+    public tocSvc: AppTocService
   ) {
+    this.rootSvc.showNavbarDisplay$.next(false)
+    this.abc.mobileTopHeaderVisibilityStatus.next(false)
+
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
     if (localStorage.getItem('websiteLanguage')) {
@@ -78,6 +104,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     e.activatedRoute.data.subscribe((data: { content: { data: NsContent.IContent } }) => {
       if (data.content && data.content.data) {
         this.content = data.content.data
+        this.contentMIMEType = data.content.data.mimeType
       }
     })
   }
@@ -92,6 +119,48 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    const contentData = this.activatedRoute.snapshot.data.hierarchyData
+    && this.activatedRoute.snapshot.data.hierarchyData.data || ''
+    this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData
+    && this.activatedRoute.snapshot.data.enrollmentData.data || ''
+    // const contentRead = this.activatedRoute.snapshot.data.contentRead
+    && this.activatedRoute.snapshot.data.contentRead.data || ''
+    // if (contentRead.result && contentRead.result.content) {
+    //   this.contentSvc.currentContentReadMetaData = contentRead.result.content
+    // }
+    if (contentData && contentData.result && contentData.result.content) {
+      this.hierarchyData = contentData.result.content
+      this.manipulateHierarchyData()
+      this.resetAndFetchTocStructure()
+    }
+    if (this.collectionId && this.enrollmentList) {
+      const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
+      this.enrolledCourseData = enrolledCourseData
+      this.batchData = {
+        content: [enrolledCourseData.batch],
+        enrolled: true,
+      }
+    }
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
+      this.handleBackFromPdfScormFullScreenFlag = data
+    })
+
+    this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data: any) => {
+      if (data) {
+        if (this.isMobile) {
+          this.sideNavBarOpened = false
+          this.viewerHeaderSideBarToggleFlag = data
+        } else {
+          this.sideNavBarOpened = true
+          this.viewerHeaderSideBarToggleFlag = data
+        }
+
+      } else {
+        this.sideNavBarOpened = false
+        this.viewerHeaderSideBarToggleFlag = data
+      }
+
+    })
     this.getAuthDataIdentifer()
     // this.getEnrollmentList()
     this.isNotEmbed = !(
@@ -139,7 +208,6 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
       if (this.error && this.error.errorType === this.errorType.previewUnAuthorised) {
       }
-      // //console.log(this.error)
     })
   }
 
@@ -188,5 +256,44 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   get isPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     return this.forPreview
+  }
+
+  manipulateHierarchyData() {
+    this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
+    // this.hierarchyMapData = this.tocSvc.callHirarchyProgressHashmap(this.hierarchyData)
+  }
+  resetAndFetchTocStructure() {
+    this.tocStructure = {
+      assessment: 0,
+      finalTest: 0,
+      course: 0,
+      handsOn: 0,
+      interactiveVideo: 0,
+      learningModule: 0,
+      other: 0,
+      pdf: 0,
+      survey: 0,
+      podcast: 0,
+      practiceTest: 0,
+      quiz: 0,
+      video: 0,
+      webModule: 0,
+      webPage: 0,
+      youtube: 0,
+      interactivecontent: 0,
+      offlineSession: 0,
+    }
+    if (this.hierarchyData) {
+      this.hasTocStructure = false
+      this.tocStructure.learningModule = this.hierarchyData.primaryCategory === NsContent.EPrimaryCategory.MODULE ? -1 : 0
+      this.tocStructure.course = this.hierarchyData.primaryCategory === NsContent.EPrimaryCategory.COURSE ? -1 : 0
+      this.tocStructure = this.tocSvc.getTocStructure(this.hierarchyData, this.tocStructure)
+      for (const progType in this.tocStructure) {
+        if (this.tocStructure[progType] > 0) {
+          this.hasTocStructure = true
+          break
+        }
+      }
+    }
   }
 }

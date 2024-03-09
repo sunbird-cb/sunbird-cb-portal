@@ -1,0 +1,40 @@
+@import 'ws-vars';
+
+.horizontal-strip {
+    flex-direction: row;
+    overflow-x: scroll;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+}
+
+.horizontal-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.kpi-values {
+    min-width: 64px;
+    padding: 8px;
+    text-align: center;
+
+    mat-icon {
+        color: $text-primary;
+        height: 20px;
+    }
+}
+
+.horizontal-strip {
+    .kpi-values {
+        min-width: 72px;
+        gap: 4px;
+
+        div {
+            font-weight: bold;
+        }
+    }
+}
+
+.kpi-values img{
+    height: 24px;
+    width: 24px;
+}

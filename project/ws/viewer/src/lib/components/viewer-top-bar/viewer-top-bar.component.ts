@@ -1,28 +1,37 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
-// import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
+import { ConfigurationsService, LoggerService, NsPage, ValueService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
+import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
   selector: 'viewer-viewer-top-bar',
   templateUrl: './viewer-top-bar.component.html',
   styleUrls: ['./viewer-top-bar.component.scss'],
 })
-export class ViewerTopBarComponent implements OnInit, OnDestroy {
+export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() frameReference: any
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
+  @Input() content: any
+  @Input() hierarchyMapData: any = {}
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
+  overallProgress = 0
+  overallLeafNodes = 0
+  completedCount = 0
+  loadingOverallPRogress: boolean = false
   appIcon: SafeUrl | null = null
   isTypeOfCollection = false
   courseName = ''
@@ -48,6 +57,14 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
   userid: any
   channelId: any
   optionalLink = false
+  userRating: any
+  userId: any
+  currentDataFromEnrollList: any
+  isMobile = false
+  enableShare = false
+  rootOrgId: any
+  canShare = false
+  primaryCategory = NsContent.EPrimaryCategory
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -60,6 +77,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     private router: Router,
     private widgetServ: WidgetContentService,
     private viewerSvc: ViewerUtilService,
+    private ratingSvc: RatingService,
+    private loggerSvc: LoggerService,
+    private events: EventService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -73,7 +93,11 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getAuthDataIdentifer()
-
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
     }
@@ -85,6 +109,10 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
       )
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
+
     }
     //   this.route.data.subscribe((data: any) => {
     //     this.appIcon =
@@ -149,7 +177,11 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     })
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId') as string
+      this.collectionType = params.get('collectionType') as string
       this.isPreview = params.get('preview') === 'true' ? true : false
+      const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+      this.currentDataFromEnrollList =  enrollList[this.collectionId]
+      this.getUserRating(false)
     })
 
     this.viewerDataServiceResourceSubscription = this.viewerDataSvc.changedSubject.subscribe(
@@ -159,6 +191,21 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
+
+  }
+
+  ngOnChanges(props: SimpleChanges) {
+    for (const prop in props) {
+      if (prop === 'hierarchyMapData') {
+        if(_.isEmpty(props['hierarchyMapData'].currentValue)){
+          this.loadingOverallPRogress = true
+        } else {
+          const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+          this.activatedRoute.snapshot.queryParams.collectionId : ''
+          this.ComputeCompletedNodesAndPercent(collectionId)
+        }
+      }
+    }
   }
 
   updateProgress(status: number, resourceId: any) {
@@ -169,6 +216,20 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
       this.activatedRoute.snapshot.queryParams.batchId : ''
     return this.viewerSvc.realTimeProgressUpdateQuiz(resourceId, collectionId, batchId, status)
+  }
+
+  ComputeCompletedNodesAndPercent(identifier: string) {
+    if(this.hierarchyMapData  && this.hierarchyMapData[identifier]) {
+      // tslint:disable
+      const completedItems = _.filter(this.hierarchyMapData[identifier].leafNodes, r => this.hierarchyMapData[r].completionStatus === 2 || this.hierarchyMapData[r].completionPercentage === 100)
+      this.completedCount = completedItems.length
+      this.overallLeafNodes = _.toInteger(_.get(this.hierarchyMapData[identifier], 'leafNodesCount')) || 1
+      // tslint:disable
+      this.hierarchyMapData[identifier]['completionPercentage'] = Number(((completedItems.length / this.overallLeafNodes) * 100).toFixed())
+      this.hierarchyMapData[identifier]['completionStatus'] = (this.hierarchyMapData[identifier].completionPercentage >= 100) ? 2 : 1
+      this.overallProgress = this.hierarchyMapData[identifier]['completionPercentage']
+    }
+    this.loadingOverallPRogress = false
   }
 
   ngOnDestroy() {
@@ -279,5 +340,73 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
+  }
+
+  getUserRating(fireUpdate: boolean) {
+    if (this.configSvc.userProfile) {
+      this.userId = this.configSvc.userProfile.userId || ''
+    }
+    if (this.collectionId && this.collectionType) {
+      this.ratingSvc.getRating(this.collectionId, this.collectionType, this.userId).subscribe(
+        (res: any) => {
+          if (res && res.result && res.result.response) {
+            this.userRating = res.result.response
+            if (fireUpdate) {
+              // this.tocSvc.changeUpdateReviews(true)
+            }
+          }
+        },
+        (err: any) => {
+          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
+        }
+      )
+    }
+  }
+
+  openFeedbackDialog(contentP?: any): void {
+    const contentTmp = {
+      identifier: this.collectionId,
+      primaryCategory: this.collectionType,
+    }
+    const content = contentP ? contentP : contentTmp
+    const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
+      // height: '400px',
+      width: '770px',
+      data: { content, userId: this.userId, userRating: this.userRating },
+    })
+    // dialogRef.componentInstance.xyz = this.configSvc
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.getUserRating(false)
+      }
+    })
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+
+  /* tslint:disable */
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
   }
 }

@@ -22,6 +22,7 @@ import { of, Subscription } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
+// import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 export interface IViewerTocCard {
   identifier: string
   viewerUrl: string
@@ -63,6 +64,10 @@ interface ICollectionCard {
 export class ViewerTocComponent implements OnInit, OnDestroy {
   @Output() hidenav = new EventEmitter<boolean>()
   @Input() forPreview = false
+  @Input() contentData: any = {}
+  @Input() batchData: any
+  @Input() tocStructure: any
+  @Input() hierarchyMapData: any = {}
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -75,6 +80,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private contentProgressSvc: ContentProgressService,
     private userSvc: WidgetUserService,
+    // private tocSvc: AppTocService,
   ) {
     this.nestedTreeControl = new NestedTreeControl<IViewerTocCard>(this._getChildren)
     this.nestedDataSource = new MatTreeNestedDataSource()
@@ -134,7 +140,11 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
     }
 
-    this.getEnrollmentList()
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      this.getEnrollmentList()
+    }
+
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId')
       this.collectionType = params.get('collectionType') || 'course'
@@ -163,6 +173,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
           this.collectionType.toLowerCase() === NsContent.EPrimaryCategory.BLENDED_PROGRAM.toLowerCase()
         ) {
           this.collection = await this.getCollection(this.collectionId, this.collectionType)
+          // this.collection = _.get(this.hierarchyData, 'result.content')
         } else {
           this.isErrorOccurred = true
         }
@@ -195,12 +206,42 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     if (this.collection && this.batchId && this.configSvc.userProfile) {
       this.contentProgressSvc
         .getProgressHash(this.collection.identifier, this.batchId, this.configSvc.userProfile.userId)
-        .subscribe(progressHash => {
+        .subscribe((progressHash:  any) => {
           this.contentProgressHash = progressHash
-
+          if(this.collection && this.collection.identifier) {
+            // this.updateProgressBasedOnHash(progressHash)
+          }
         })
     }
   }
+
+  // private updateProgressBasedOnHash(progressHash: any) {
+  //     if(
+  //       this.contentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM ||
+  //       this.contentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
+  //       this.contentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM
+  //     ) {
+  //       this.contentSvc.programChildCourseResumeData$.subscribe((data) => {
+  //         console.log('updateProgressBasedOnHash data', data)
+  //         if(data) {
+  //           this.contentData.children && this.contentData.children.forEach((item: any)=>{
+  //             if(
+  //               item.primaryCategory === NsContent.EPrimaryCategory.COURSE && 
+  //               item.identifier === data.courseId
+  //             ){
+  //               this.tocSvc.mapCompletionPercentage(item, data.resumeData)
+  //               this.tocSvc.mapModuleDurationAndProgress(item, item)
+  //             }
+  //           })
+  //         }
+  //       })
+  //       // this.tocSvc.mapCompletionPercentageProgram(this.contentData, this.enrollmentList.courses)
+  //     } else {
+  //       this.tocSvc.mapCompletionPercentage(this.contentData, progressHash.result.contentList)
+  //       this.tocSvc.mapModuleDurationAndProgress(this.contentData, this.contentData)
+  //     }
+  // }
+
   // tslint:enable
   ngOnDestroy() {
     if (this.paramSubscription) {
@@ -240,9 +281,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.viewerDataSvc.updateNextPrevResource(Boolean(this.collection), prev, next)
       this.processCollectionForTree()
       this.expandThePath()
-      if (next && next.viewerUrl === '0') { // temp
+      // if (next && next.viewerUrl === '0') { // temp
         this.getContentProgressHash()
-      }
+      // }
     }
   }
   private async getCollection(
@@ -260,13 +301,14 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
               ).toPromise()
       }
       const contentData = content.result.content
+      this.collection = content.result.content
       this.contentSvc.currentMetaData = contentData
       this.collectionCard = this.createCollectionCard(contentData)
       const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
       this.isFetching = false
       return viewerTocCardContent
     } catch (err) {
-      switch (err.status) {
+      switch (err && err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'
           break
@@ -324,7 +366,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.isFetching = false
       return viewerTocCardContent
     } catch (err) {
-      switch (err.status) {
+      switch (err && err.status) {
         case 403: {
           this.errorWidgetData.widgetData.errorType = 'accessForbidden'
           break

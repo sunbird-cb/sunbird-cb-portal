@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
@@ -35,6 +35,7 @@ import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-que
 import { TranslateService } from '@ngx-translate/core'
 import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { TimerService } from '../../services/timer.service'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -44,7 +45,9 @@ dayjs.extend(isSameOrAfter)
   styleUrls: ['./app-toc-banner.component.scss'],
   providers: [AccessControlService, DatePipe],
 })
+
 export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+  show = false
   @Input() banners: NsAppToc.ITocBanner | null = null
   @Input() content: NsContent.IContent | null = null
   @Input() resumeData: NsContent.IContinueLearningData | null = null
@@ -54,6 +57,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() userEnrollmentList: NsContent.ICourse[] | null = null
   @Output() withdrawOrEnroll = new EventEmitter<string>()
   @Input() contentReadData: NsContent.IContent | null = null
+  @Input() clickToShare = false
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -98,9 +102,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   selectedBatchSubscription: any
   selectedBatchData: any
 
-  // configSvc: any
-
-  // countdown var
   date: any
   now: any
   targetDate: any
@@ -138,7 +139,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tocSvc: AppTocService,
-    // private progressSvc: ContentProgressService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
@@ -151,7 +151,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private translate: TranslateService,
     private userAutoComplete: UserAutocompleteService,
     private events: EventService,
-    private langtranslations: MultilingualTranslationsService
+    private langtranslations: MultilingualTranslationsService,
+    private timerService: TimerService,
   ) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
@@ -160,10 +161,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.translate.use(lang)
       }
     })
+
     this.helpEmail = environment.helpEmail
     this.shareForm = new FormGroup({
       review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
     })
+
     this.userCtrl.valueChanges.pipe(
       debounceTime(200),
       distinctUntilChanged()
@@ -184,6 +187,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.serverDate = serverDate
       this.ngAfterViewInit()
     })
+
     this.route.data.subscribe(data => {
       this.tocConfig = data.pageData.data
       if (this.content && this.isPostAssessment) {
@@ -197,12 +201,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           }
         })
       }
+
       if (this.content && this.content.identifier) {
-        this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
-          this.contentReadData = res.result.content
-        })
+        // this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
+        //   this.contentReadData = res.result.content
+        // })
       }
     })
+
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
@@ -210,6 +216,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
+
     this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -218,6 +225,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.contextPath = contextPath
       }
     })
+
     this.batchWFDataSubscription = this.tocSvc.setWFDataSubject.subscribe(
       () => {
         this.setBatchControl()
@@ -227,26 +235,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         console.log('error on batchWFDataSubscription')
       },
     )
+
     if (this.configSvc.restrictedFeatures) {
       this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
       this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
         'showIntranetMessageDesktop',
       )
     }
+
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
       this.selectedBatchData = batchData
     })
 
-    // if (this.authAccessService.hasAccess(this.content as any) && !this.isInIFrame) {
-    //   const status: string = (this.content as any).status
-    //   if (!this.forPreview) {
-    //     this.editButton = true
-    //   } else if (['Draft', 'Live'].includes(status)) {
-    //     this.editButton = true
-    //   } else if (['InReview', 'Reviewed', 'QualityReview'].includes(status)) {
-    //     this.reviewButton = true
-    //   }
-    // }
     this.checkRegistrationStatus()
     this.routerParamSubscription = this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationEnd) {
@@ -362,42 +362,42 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.tocSvc.subtitleOnBanners
   }
 
-  ngOnChanges() {
+  ngOnChanges(_changes: SimpleChanges): void {
     this.assignPathAndUpdateBanner(this.router.url)
     if (this.content) {
-      // this.content.status = 'Deleted'
       this.fetchExternalContentAccess()
       this.modifySensibleContentRating()
       this.assignPathAndUpdateBanner(this.router.url)
       this.getLearningUrls()
       this.setBatchControl()
     }
+
     if (this.resumeData && this.resumeData.length > 0 && this.content) {
       let resumeDataV2: any
-
       if (this.content.completionPercentage === 100) {
         resumeDataV2 = this.getResumeDataFromList('start')
       } else {
         resumeDataV2 = this.getResumeDataFromList()
       }
+
       if (!resumeDataV2.mimeType) {
         resumeDataV2.mimeType = this.getMimeType(this.content, resumeDataV2.identifier)
       }
+
       this.resumeDataLink = viewerRouteGenerator(
         resumeDataV2.identifier,
         resumeDataV2.mimeType,
         this.isResource ? undefined : this.content.identifier,
         this.isResource ? undefined : this.content.contentType,
         this.forPreview,
-        // this.content.primaryCategory
         'Learning Resource',
         this.getBatchId(),
         this.content.name,
       )
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
+
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
-      // this.disableEnrollBtn = true
       this.selectedBatch = batch
       if (batch) {
         if (this.checkRejected(batch)) {
@@ -407,40 +407,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       this.showRejected = false
       return
-      // let userId = ''
-      // if (batch) {
-      //   if (this.configSvc.userProfile) {
-      //     userId = this.configSvc.userProfile.userId || ''
-      //   }
-
-      //   const req = {
-      //     request: {
-      //       userId,
-      //       courseId: batch.courseId,
-      //       batchId: batch.batchId,
-      //     },
-      //   }
-      //   this.contentSvc.enrollUserToBatch(req).then((data: any) => {
-      //     if (data && data.result && data.result.response === 'SUCCESS') {
-      //       this.batchData = {
-      //         content: [batch],
-      //         enrolled: true,
-      //       }
-      //       this.router.navigate(
-      //         [],
-      //         {
-      //           relativeTo: this.route,
-      //           queryParams: { batchId: batch.batchId },
-      //           queryParamsHandling: 'merge',
-      //         })
-      //       this.openSnackbar('Enrolled Successfully!')
-      //       this.disableEnrollBtn = false
-      //     } else {
-      // this.openSnackbar('Something went wrong, please try again later!')
-      // this.disableEnrollBtn = false
-      //     }
-      //   })
-      // }
     })
   }
 
@@ -456,11 +422,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       disableClose: true,
       panelClass: ['animate__animated', 'animate__slideInLeft'],
     })
+
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus,
-                                      this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
-        // this.openSnackbar('Withdraw Request sent Successfully!')
+        // tslint:disable-next-line:max-line-length
+        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
       }
     })
   }
@@ -500,6 +466,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       return false
     })
+
     // conflicts check end
     if (userList && userList.length === 0) {
       if (this.content && this.content.wfSurveyLink) {
@@ -544,7 +511,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   public requestAndWithDrawEnroll(state: string, action: string, wfIdValue?: string) {
-    // this.disableEnrollBtn = true
     let userId = ''
     let rootOrgId = ''
     let username = ''
@@ -555,6 +521,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       username = this.configSvc.userProfile.firstName || ''
       departmentName = this.configSvc.userProfile.departmentName || ''
     }
+
     const req = {
       rootOrgId,
       userId,
@@ -574,19 +541,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         },
       ],
     }
+
     this.contentSvc.enrollAndUnenrollUserToBatchWF(req, action).then((data: any) => {
       if (data && data.result && data.result.status === 'OK') {
-        // this.batchData = {
-        //   content: [batch],
-        //   enrolled: true,
-        // }
-        // this.router.navigate(
-        //   [],
-        //   {
-        //     relativeTo: this.route,
-        //     queryParams: { batchId: batch.batchId },
-        //     queryParamsHandling: 'merge',
-        //   })
         this.batchData.workFlow = {
           wfInitiated: true,
           batch: this.selectedBatch,
@@ -613,13 +570,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     if (content && content.children) {
       if (content.children.length === 0) {
-        // if (content.children[0].identifier === identifier) {
-        //   return content.mimeType
-        // }
         // big blunder in data
-        this.logger.log(content.identifier, 'Wrong mimetypes for resume')
+        this.logger.log(content.identifier, 'Wrong mime types for resume')
         return content.mimeType
       }
+
       const flatList: any[] = []
       const getAllItemsPerChildren: any = (item: NsContent.IContent) => {
         flatList.push(item)
@@ -628,6 +583,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         return
       }
+
       getAllItemsPerChildren(this.content)
       const chld = _.first(_.filter(flatList, { identifier }))
       return chld.mimeType
@@ -649,13 +605,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
     const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
-    // if(enrollmentEndDate === 'Invalid Date'){
-    //   console.log('Invalid Date')
-    //   return false
-    // } else {
     return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
       (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
-    // }
   }
 
   public checkRejected(batch: any) {
@@ -742,8 +693,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       })
       confirmDialog.afterClosed().subscribe(result => {
         if (result) {
-          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus,
-                                        this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
+          // tslint:disable-next-line:max-line-length
+          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
         }
       })
     }
@@ -759,14 +710,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
               return el
             }
           })
+
           if (batch) {
             this.batchControl.setValue(batch)
             this.setbatchDateToCountDown(batch.startDate)
           }
+
           this.getBatchUserCount(this.batchControl.value)
           const batchData = {
             content: [this.batchControl.value],
           }
+
           if (this.selectedBatchData && this.selectedBatchData.content) {
             this.selectedBatchData = {
               ...this.selectedBatchData,
@@ -777,6 +731,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
               ...batchData,
             }
           }
+
           this.tocSvc.getSelectedBatchData(this.selectedBatchData)
         } else {
           const batch = this.batchData.content.find((el: any) => {
@@ -797,9 +752,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.targetDate = new Date(batchStartDate)
     const convertedDate = dayjs(batchStartDate).format('YYYY-MM-DD HH:mm:ss')
     this.targetTime = new Date(convertedDate).getTime()
-    // this.currentTime = `${
-    //   this.months[this.targetDate.getMonth()]
-    // } ${this.targetDate.getDate()}, ${this.targetDate.getFullYear()}`
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -931,10 +883,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.isResource && this.content && !this.content.artifactUrl.length
   }
 
-  // get showStart() {
-  //   return this.content && this.content.resourceType !== 'Certification'
-  // }
-
   get showActionButtons() {
     return (
       this.actionBtnStatus !== 'wait' &&
@@ -968,21 +916,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return isResource
     }
     return false
-  }
-  ngOnDestroy() {
-    this.tocSvc.analyticsFetchStatus = 'none'
-    if (this.routerParamSubscription) {
-      this.routerParamSubscription.unsubscribe()
-    }
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
-    if (this.batchWFDataSubscription) {
-      this.batchWFDataSubscription.unsubscribe()
-    }
-    if (this.selectedBatchSubscription) {
-      this.selectedBatchSubscription.unsubscribe()
-    }
   }
 
    getBatchUserCount(batchData: any) {
@@ -1027,7 +960,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   private getResumeDataFromList(type?: string) {
     if (!type) {
-      // const lastItem = this.resumeData && this.resumeData.pop()
       // tslint:disable-next-line:max-line-length
       const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
       return {
@@ -1035,12 +967,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
       }
     }
+
     const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
     return {
       identifier: firstItem.contentId,
       mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
     }
   }
+
   private modifySensibleContentRating() {
     if (
       this.content &&
@@ -1053,6 +987,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.content.totalRating = (this.content.totalRating as any)[this.configSvc.rootOrg || '']
     }
   }
+
   private getLearningUrls() {
     if (this.content) {
       if (!this.forPreview) {
@@ -1060,21 +995,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         //   this.contentProgress = data
         // })
       }
-      // this.progressSvc.fetchProgressHashContentsId({
-      //   "contentIds": [
-      //     "lex_29959473947367270000",
-      //     "lex_5501638797018560000"
-      //   ]
-      // }
-      // ).subscribe(data => {
-      //   console.log("DATA: ", data)
-      // })
+
       this.isPracticeVisible = Boolean(
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.PRACTICE),
       )
+
       this.isAssessVisible = Boolean(
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.ASSESS),
       )
+
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
@@ -1087,6 +1016,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       )
     }
   }
+
   private assignPathAndUpdateBanner(url: string) {
     const path = url.split('/').pop()
     if (path && this.validPaths.has(path)) {
@@ -1094,6 +1024,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.updateBannerUrl()
     }
   }
+
   private updateBannerUrl() {
     if (this.banners) {
       this.bannerUrl = this.sanitizer.bypassSecurityTrustStyle(
@@ -1101,6 +1032,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       )
     }
   }
+
   playIntroVideo() {
     if (this.content) {
       this.dialog.open(AppTocDialogIntroVideoComponent, {
@@ -1110,12 +1042,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       })
     }
   }
+
   get sanitizedIntroductoryVideoIcon() {
     if (this.content && this.content.introductoryVideoIcon) {
       return this.sanitizer.bypassSecurityTrustStyle(`url(${this.content.introductoryVideoIcon})`)
     }
     return null
   }
+
   private fetchExternalContentAccess() {
     if (this.content && this.content.registrationUrl) {
       if (!this.forPreview) {
@@ -1137,6 +1071,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     }
   }
+
   getRatingIcon(ratingIndex: number): 'star' | 'star_border' | 'star_half' {
     if (this.content && this.content.averageRating) {
       const avgRating = this.content.averageRating
@@ -1201,6 +1136,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       return qParams
     }
+
     if (this.resumeDataLink && type === 'RESUME') {
       let qParams: { [key: string]: string } = {
         ...this.resumeDataLink.queryParams,
@@ -1241,28 +1177,42 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const color = this.tagSvc.getContrast(bgColor)
     return { color, 'background-color': bgColor }
   }
-  // ngAfterViewInit
+
   ngAfterViewInit() {
     let serverDate = this.serverDate
-   if (this.serverDate) {
-    setInterval(() => {
-      // this.tickTock();
-      serverDate = serverDate  +  1000
-      this.date = new Date(serverDate)
-      this.now = this.date.getTime()
-      this.difference = this.targetTime - this.now
-      this.difference = this.difference / (1000 * 60 * 60 * 24)
+    if (this.serverDate) {
+      setInterval(() => {
+        let timer = {
+          days: 0,
+          hours: 0,
+          min: 0,
+          seconds: 0,
+        }
+        serverDate = serverDate  +  1000
+        this.date = new Date(serverDate)
+        this.now = this.date.getTime()
+        this.difference = this.targetTime - this.now
+        this.difference = this.difference / (1000 * 60 * 60 * 24)
 
-      this.days = Math.floor(this.difference)
-      this.hours = 23 - this.date.getHours()
-      this.minutes = 60 - this.date.getMinutes()
-      this.seconds = 60 - this.date.getSeconds()
-      Number(this.hours)
-      !isNaN(this.days)
-        ? (this.days = Math.floor(this.difference))
-        : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
-    },          1000)
-   }
+        this.days = Math.floor(this.difference)
+        this.hours = 23 - this.date.getHours()
+        this.minutes = 60 - this.date.getMinutes()
+        this.seconds = 60 - this.date.getSeconds()
+        Number(this.hours)
+        !isNaN(this.days)
+          ? (this.days = Math.floor(this.difference))
+          : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
+
+        timer = {
+          days: this.days,
+          hours: this.hours,
+          min: this.minutes,
+          seconds: this.seconds,
+        }
+        this.timerService.setTimerData(timer)
+
+      },          1000)
+    }
   }
 
   get showDisableMsg() {
@@ -1378,7 +1328,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.content) {
         courseId = this.content.identifier,
         courseName = this.content.name,
-        coursePosterImageUrl = this.content.posterImage,
+        coursePosterImageUrl = this.content.posterImage || '',
         primaryCategory = this.content.primaryCategory
     }
     const obj = {
@@ -1465,6 +1415,22 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.langtranslations.translateActualLabel(label, type, subtype)
   }
 
+  ngOnDestroy() {
+    this.tocSvc.analyticsFetchStatus = 'none'
+    if (this.routerParamSubscription) {
+      this.routerParamSubscription.unsubscribe()
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe()
+    }
+    if (this.batchWFDataSubscription) {
+      this.batchWFDataSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
+    }
+  }
+  
   translateLabel(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }

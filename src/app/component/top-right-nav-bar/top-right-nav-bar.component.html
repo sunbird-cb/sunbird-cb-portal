@@ -23,10 +23,10 @@
         <li *ngIf="item.type === 'langSelect' && rnc.section === 'language' && rnc.active && isMultiLangEnabled" class="langdiv">
             <mat-form-field class="custom-lang">
                 <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
-                <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
-                    <mat-option *ngFor="let lang of multiLang" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">
-                        {{lang.value}}
-                    </mat-option>
+                <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)" class="language-select">
+                    <span *ngFor="let lang of multiLang">
+                        <mat-option *ngIf="lang.active" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">{{lang.value}}</mat-option>
+                    </span>
                 </mat-select>
             </mat-form-field>
         </li>

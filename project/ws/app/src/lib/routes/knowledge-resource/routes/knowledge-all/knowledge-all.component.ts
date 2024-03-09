@@ -51,8 +51,6 @@ export class KnowledgeAllComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
-    // tslint:disable-next-line
-    console.log("translate ", this.translate)
   }
 
   ngOnDestroy() {

@@ -1,10 +1,10 @@
 <ng-container *ngIf="!isFetching; else Loading">
-  <mat-card *ngIf="collection && collectionCard">
+  <!-- commented course card in viewer toc as per new design, only content hierarchy to be shown -->
+  <!-- <mat-card *ngIf="collection && collectionCard">
     <mat-card-content>
       <span class="width-expand flex flex-middle">
         <a class="viewer-toc-header-thumbnail align-self-start margin-auto" [routerLink]="collectionCard?.redirectUrl"
           [queryParams]="collectionCard?.queryParams">
-          <!-- queryParamsHandling="preserve" -->
           <img i18n-alt alt="thumbnail"
             class="viewer-toc-header-thumbnail align-self-start margin-auto mat-app-background"
             [src]="collectionCard?.thumbnail | pipePublicURL" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
@@ -13,7 +13,6 @@
           <div class="width-1-1 flex flex-between">
             <div class="mat-body-2 text-truncate flex">
               <a [routerLink]="collectionCard?.redirectUrl" [queryParams]="collectionCard?.queryParams">
-                <!-- queryParamsHandling="preserve" -->
                 {{ collectionCard?.title | pipeLimitTo: 20 }}
               </a>
               <mat-icon *ngIf="
@@ -31,7 +30,7 @@
           <span *ngIf="collectionCard?.subText2" class="mat-body-1 margin-left-xxs"><span> {{ collectionCard?.subText2 |
               pipeLimitTo: 300 }}</span>
           </span>
-          <div *ngIf="collectionCard?.type === 'content'" class="width-1-1">
+          <div *ngIf="collectionCard?.type === 'content'" class="width-1-1"> -->
             <!-- <ws-widget-btn-content-like
               [widgetData]="{ identifier: collectionCard?.id }"
             ></ws-widget-btn-content-like>
@@ -41,7 +40,7 @@
             <ws-widget-btn-content-feedback
               [forPreview]="forPreview"
             ></ws-widget-btn-content-feedback> -->
-          </div>
+          <!-- </div>
         </span>
         <span>
           <div class="mat-body-1 content-duration mat-caption width-max-content">
@@ -50,10 +49,10 @@
         </span>
       </span>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
 
-  <mat-divider *ngIf="collection" class="margin-bottom-xs"></mat-divider>
-  <div *ngIf="collection" class="flex flex-middle">
+  <!-- <mat-divider *ngIf="collection" class="margin-bottom-xs"></mat-divider> -->
+  <!-- <div *ngIf="collection" class="flex flex-middle">
     <div i18n class="padding-left-m" *ngIf="tocMode === 'TREE'">{{ 'viewertoc.structure' | translate }}</div>
     <div i18n class="padding-left-m" *ngIf="tocMode === 'FLAT'">{{ 'viewertoc.queue' | translate }}</div>
     <span class="spacer"></span>
@@ -62,8 +61,8 @@
           <mat-icon>view_list</mat-icon>
         </span></mat-slide-toggle>
     </div>
-  </div>
-  <mat-divider class="margin-top-xs"></mat-divider>
+  </div> -->
+  <!-- <mat-divider class="margin-top-xs"></mat-divider>
   <section *ngIf="!collection">
     <div *ngIf="errorWidgetData?.widgetData?.errorType" [wsResolverWidget]="errorWidgetData"></div>
   </section>
@@ -73,24 +72,21 @@
         {{ 'viewertoc.resourceNotPartOfCollection' | translate }}
       </span>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
   <!-- Content Area -->
   <!-- Flat List -->
-  <mat-list [hidden]="tocMode !== 'FLAT'">
+  <!-- <mat-list [hidden]="tocMode !== 'FLAT'">
     <mat-list-item class="height-auto" *ngFor="let content of queue"
       [ngClass]="{ 'mat-toolbar': pathSet.has(content.identifier) }">
       <ng-container *ngTemplateOutlet="TocContentCard; context: { $implicit: content }"></ng-container>
     </mat-list-item>
-  </mat-list>
+  </mat-list> -->
   <!-- Tree -->
-  <ul [hidden]="tocMode !== 'TREE'" class="toc-tree">
+  <!-- <ul [hidden]="tocMode !== 'TREE'" class="toc-tree">
     <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl">
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
         <li class="mat-tree-node leaf-node">
           <ng-container *ngTemplateOutlet="TocContentList; context: { $implicit: node }"></ng-container>
-          <!-- <ng-container
-            *ngTemplateOutlet="TocContentCard; context: { $implicit: node }"
-          ></ng-container> -->
         </li>
       </mat-tree-node>
 
@@ -125,7 +121,9 @@
         </li>
       </mat-nested-tree-node>
     </mat-tree>
-  </ul>
+  </ul> -->
+  <ws-widget-app-toc-content [batchId]="batchId" [tocStructure]="tocStructure" [content]="contentData" [pathSet]="pathSet"   [forPreview]="false"
+   [batchData]="batchData"  [skeletonLoader]="skeletonLoader" [hierarchyMapData]="hierarchyMapData"></ws-widget-app-toc-content>
 </ng-container>
 
 <!-- Loading Template -->

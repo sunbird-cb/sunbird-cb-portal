@@ -7,7 +7,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { environment } from 'src/environments/environment'
-
+import { PdfScormDataService } from '../../pdf-scorm-data-service'
 @Component({
   selector: 'viewer-pdf',
   templateUrl: './pdf.component.html',
@@ -46,6 +46,7 @@ export class PdfComponent implements OnInit, OnDestroy {
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
     private configSvc: ConfigurationsService,
+    private pdfScormDataService: PdfScormDataService
   ) { }
 
   ngOnInit() {
@@ -236,6 +237,7 @@ export class PdfComponent implements OnInit, OnDestroy {
             for (const content of data.result.contentList) {
               if (content.contentId === pdfId && content.progressdetails && content.progressdetails.current) {
                 this.widgetResolverPdfData.widgetData.resumePage = Number(content.progressdetails.current.pop())
+                this.pdfScormDataService.handlePdfMarkComplete.next(content)
               }
             }
           }
