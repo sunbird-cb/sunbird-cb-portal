@@ -72,7 +72,7 @@ export class ProfileCardStatsComponent implements OnInit {
       const defaultData = this.configSvc.profileTimelyNudges.data[this.configSvc.profileTimelyNudges.data.length - 1]
       if (defaultData) {
         this.republicDayData['backgroupImage'] = defaultData.backgroupImage
-        this.republicDayData['info'] = defaultData['info'][rand]
+        this.republicDayData['info'] = defaultData['webInfo'][rand]
         this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
         this.republicDayData['textColor'] = defaultData['textColor']
         let userName = this.userInfo.firstName
@@ -84,7 +84,7 @@ export class ProfileCardStatsComponent implements OnInit {
           if (userName.length > 18) {
             userName = `${this.userInfo.firstName.slice(0, 18)}...`
           }
-          this.republicDayData['greet'] = defaultData['greet']
+          this.republicDayData['greet'] = defaultData['webGreet']
         }
 
         // this.showrepublicBanner = true
@@ -95,7 +95,7 @@ export class ProfileCardStatsComponent implements OnInit {
       this.configSvc.profileTimelyNudges.data.filter((data: any) => {
         if (hours >= data.startTime && hours < data.endTime) {
           this.republicDayData['backgroupImage'] = data.backgroupImage
-          this.republicDayData['info'] = data['info'][rand]
+          this.republicDayData['info'] = data['webInfo'][rand]
           this.republicDayData['centerImage'] = data['centerImage'][rand]
           // let userName = this.userInfo.firstName
           // if (userName.length > 18) {
@@ -111,7 +111,7 @@ export class ProfileCardStatsComponent implements OnInit {
             if (userName.length > 18) {
               userName = `${this.userInfo.firstName.slice(0, 18)}...`
             }
-            this.republicDayData['greet'] = data['greet']
+            this.republicDayData['greet'] = data['webGreet']
           }
           this.republicDayData['textColor'] = data['textColor']
           // let userName = this.userInfo.firstName

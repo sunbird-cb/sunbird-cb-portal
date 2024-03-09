@@ -16,7 +16,7 @@ export class MultilingualTranslationsService {
     editProfileDetails = '/apis/proxies/v8/user/v1/extPatch'
 
     constructor(private translate: TranslateService, private http: HttpClient, private configSvc: ConfigurationsService) {
-       this.getLanguage()
+    //    this.getLanguage()
     }
 
     getLanguage() {
