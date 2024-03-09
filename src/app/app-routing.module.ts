@@ -175,6 +175,21 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/jan-karmayogi',
+    loadChildren: () =>
+    import('./routes/route-jan-karmayogi.module').then(u => u.RouteJanKarmayogiModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'jan-karmayogi',
+      pageId: 'app/jan-karmayogi',
+      module: 'Knowledge Resources',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/organisation',
     loadChildren: () =>
       import('./routes/route-organization.module').then(u => u.RouteOrganizationModule),
