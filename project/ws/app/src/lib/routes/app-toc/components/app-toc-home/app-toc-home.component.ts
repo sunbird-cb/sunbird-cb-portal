@@ -1772,7 +1772,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   translateLabel(label: string, type: any) {
     if(label && type) {
       return this.langtranslations.translateLabel(label, type, '')
-    }    
+    }
   }
 
   ngOnDestroy() {
