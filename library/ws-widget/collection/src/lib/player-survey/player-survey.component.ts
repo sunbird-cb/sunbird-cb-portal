@@ -210,6 +210,9 @@ export class PlayerSurveyComponent extends WidgetBaseComponent
     // if (this.identifier) {
     //   this.fireRealTimeProgress(this.identifier)
     // }
+    if(this.viewerDataServiceSubscription) {
+      this.viewerDataServiceSubscription.unsubscribe()
+    }
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
