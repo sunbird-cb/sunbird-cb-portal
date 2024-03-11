@@ -365,6 +365,18 @@ a.action-button {
   }
 }
 
+$title-line-count: 2;
+.sourceEllipsis {
+  white-space: break-spaces;
+  position: relative;
+  overflow: hidden;
+  text-overflow: clip;
+  display: -webkit-box;
+  -webkit-line-clamp: $title-line-count;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
 //////////////................... New TOC page css.................///////////////
 
 %container-padding {
