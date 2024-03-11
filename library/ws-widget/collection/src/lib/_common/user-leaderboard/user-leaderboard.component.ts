@@ -5,19 +5,20 @@ import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
 import { HomePageService } from 'src/app/services/home-page.service'
 import moment from 'moment'
 import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service'
+import { PipeOrdinalPipe } from '@sunbird-cb/utils/src/lib/pipes/pipe-ordinal/pipe-ordinal.pipe'
 
 @Component({
   selector: 'ws-widget-user-leaderboard',
   templateUrl: './user-leaderboard.component.html',
   styleUrls: ['./user-leaderboard.component.scss'],
-  providers: [PipeDurationTransformPipe],
+  providers: [PipeDurationTransformPipe, PipeOrdinalPipe],
 })
 export class UserLeaderboardComponent implements OnInit {
 
   userInfo: any
   loader = true
   showOverlay = false
-  ApiResponse: any
+  apiResponse: any
   loading = false
   rank1: any
   rank2: any
@@ -33,7 +34,8 @@ export class UserLeaderboardComponent implements OnInit {
   constructor(private configSvc: ConfigurationsService,
               private homePageSvc: HomePageService,
               private userProfileSvc: UserProfileService,
-              private langtranslations: MultilingualTranslationsService) { }
+              private langtranslations: MultilingualTranslationsService,
+              private ordinalPipe: PipeOrdinalPipe) { }
 
   ngOnInit() {
 
@@ -45,11 +47,11 @@ export class UserLeaderboardComponent implements OnInit {
     this.homePageSvc.getLearnerLeaderboard().subscribe((res: any) => {
       if (res && res.result && res.result.result) {
         this.currentUserRank = res.result.result.find((rankDetails: any) => rankDetails.userId === this.currentUserId)
-        this.ApiResponse = res.result.result
-        this.rank1 = this.ApiResponse[0]
-        this.rank2 = this.ApiResponse[1]
-        this.rank3 = this.ApiResponse[2]
-        this.otherUsers = this.ApiResponse.slice(3, 6)
+        this.apiResponse = res.result.result
+        this.rank1 = this.apiResponse[0]
+        this.rank2 = this.apiResponse[1]
+        this.rank3 = this.apiResponse[2]
+        this.otherUsers = this.apiResponse.slice(3, 6)
         this.rankLengthsArray = this.otherUsers.map((obj: any) => obj.rank.toString().length)
         this.maxLength = Math.max(...this.rankLengthsArray)
         if (this.currentUserRank) {
@@ -57,7 +59,7 @@ export class UserLeaderboardComponent implements OnInit {
         }
         if (this.currentUserRank && this.currentUserRank.rank < this.currentUserRank.previous_rank) {
           // tslint:disable-next-line: max-line-length
-          this.overLayText = `${this.translateLabels('overlayText1', 'learnerLeaderboard')} ${this.getRankOrdinal(this.currentUserRank.rank)} ${this.translateLabels('overlayText2', 'learnerLeaderboard')} ${this.getRankOrdinal(this.currentUserRank.previous_rank - this.currentUserRank.rank)} ${this.translateLabels('overlayText3', 'learnerLeaderboard')}`
+          this.overLayText = `${this.translateLabels('overlayText1', 'learnerLeaderboard')} ${this.ordinalPipe.transform(this.currentUserRank.rank)} ${this.translateLabels('overlayText2', 'learnerLeaderboard')} ${this.ordinalPipe.transform(this.currentUserRank.previous_rank - this.currentUserRank.rank)} ${this.translateLabels('overlayText3', 'learnerLeaderboard')}`
           const isMessageShown = localStorage.getItem('motivationalMessage')
           if (!isMessageShown) {
             this.showOverlayMessage()
@@ -90,13 +92,6 @@ export class UserLeaderboardComponent implements OnInit {
 
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateActualLabel(label, type, '')
-  }
-
-  getRankOrdinal(rank: number) {
-    if (rank === 0) { return '0th' }
-    const suffixes = ['th', 'st', 'nd', 'rd']
-    const v = rank % 100
-    return rank + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
   }
 
   updateMotivationalMessagestatus() {

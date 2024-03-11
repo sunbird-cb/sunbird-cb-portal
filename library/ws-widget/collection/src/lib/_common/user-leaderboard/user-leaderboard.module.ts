@@ -10,6 +10,7 @@ import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
 import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services/user-profile.service'
+import { PipeOrdinalModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-ordinal/pipe-ordinal.module'
 
 @NgModule({
   declarations: [UserLeaderboardComponent],
@@ -27,6 +28,7 @@ import { UserProfileService } from '@ws/app/src/lib/routes/user-profile/services
     MatTooltipModule,
     SkeletonLoaderModule,
     AvatarPhotoModule,
+    PipeOrdinalModule,
   ],
   exports: [
     UserLeaderboardComponent,

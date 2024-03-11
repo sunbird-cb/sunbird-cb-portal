@@ -79,7 +79,7 @@
                   </div>
                   <div class="flex justify-center align-center">
                     <img class="margin-right-s cursor-pointer" width="30" height="30" src="/assets/icons/leaderboard.svg" >
-                    <span class="my-rank">{{getRankOrdinal(currentUserRank.rank)}} {{ 'learnerLeaderboard.rank' | translate }}</span>
+                    <span class="my-rank">{{currentUserRank?.rank | pipeOrdinal }} {{ 'learnerLeaderboard.rank' | translate }}</span>
                   </div>
                 </div>
 
