@@ -13,6 +13,19 @@
   }
 }
 
+
+@media only screen and (max-width: 768px) {
+  ::ng-deep .jan-karmayogi {
+    .cbpwidth{
+      width: calc(100vw - 50px)!important;
+    }
+  }
+}
+
+.title {
+  font: 600 16px/24px Montserrat;
+}
+
 .container-balanced-banner {
   @extend %page-center;
   height: auto;
