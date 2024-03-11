@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component'
+import { MatDialog } from '@angular/material'
+import { HomePageService } from 'src/app/services/home-page.service'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
@@ -28,13 +31,18 @@ export class ProfileCardStatsComponent implements OnInit {
   interval = 0
   profileDelay = 0
   userName = ''
+  currentUserRank: any
+  currentUserId: any
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe,
-              private langtranslations: MultilingualTranslationsService) { }
+              private langtranslations: MultilingualTranslationsService,
+              private homePageSvc: HomePageService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile
+    this.currentUserId = this.configSvc.unMappedUser.id
     if (this.userInfo) {
       this.userName = this.userInfo.firstName
       if (this.userName.length > 18) {
@@ -61,6 +69,13 @@ export class ProfileCardStatsComponent implements OnInit {
     setTimeout(() => {
         this.showrepublicBanner = false
       },       ((1000 * timeInterval) + pDelayTime))
+
+      this.homePageSvc.getLearnerLeaderboard().subscribe((res: any) => {
+        if (res && res.result && res.result.result) {
+          this.currentUserRank = res.result.result.find((rankDetails: any) => rankDetails.userId === this.currentUserId)
+        }
+      })
+
   }
 
   getTimelyNudge() {
@@ -161,5 +176,18 @@ export class ProfileCardStatsComponent implements OnInit {
   }
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateActualLabel(label, type, '')
+  }
+
+  openInfo(myDialog: any) {
+    const confirmDialog = this.dialog.open(InfoDialogComponent, {
+        width: '613px',
+        panelClass: 'custom-info-dialog',
+        backdropClass: 'info-dialog-backdrop',
+        data: {  template:  myDialog },
+      })
+      confirmDialog.afterClosed().subscribe((result: any) => {
+        if (result) {
+        }
+      })
   }
 }

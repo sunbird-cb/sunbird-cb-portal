@@ -8,6 +8,7 @@ import { SlidersDynamicModule } from './../../sliders-dynamic/sliders-dynamic.mo
 import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
 import { WeeklyClapsModule } from '../weekly-claps/weekly-claps.module'
 import { TranslateModule } from '@ngx-translate/core'
+import { PipeOrdinalModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-ordinal/pipe-ordinal.module'
 
 @NgModule({
   declarations: [ProfileCardStatsComponent],
@@ -22,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core'
     PipeDurationTransformModule,
     WeeklyClapsModule,
     TranslateModule,
+    PipeOrdinalModule,
   ],
   exports: [
     ProfileCardStatsComponent,
