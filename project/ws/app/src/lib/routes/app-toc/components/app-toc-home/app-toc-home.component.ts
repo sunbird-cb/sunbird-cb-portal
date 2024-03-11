@@ -188,6 +188,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isCompletedThisMonth = false
   @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
   @ViewChild('bannerDetails', { static: true }) bannerElem!: ElementRef
+  @ViewChild('contentSource', { static: true }) contentSource!: ElementRef
+  sourceEllipsis = false
   scrollLimit = 0
   rcElem = {
     offSetTop: 0,
@@ -575,7 +577,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.rcElem.BottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
       this.rcElem.offSetTop = this.rcElement.nativeElement.offsetTop
     }
-
   }
 
   handleBreadcrumbs() {
@@ -812,6 +813,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
 
     this.tocSvc.contentLoader.next(false)
+
+    // setTimeout(() => {
+    //   console.log("this.contentSource - ", this.contentSource);
+    //   if (this.contentSource && this.contentSource.nativeElement.offsetHeight > 44) {
+    //     console.log("if this.contentSource - ", this.contentSource.nativeElement.offsetHeight);
+    //     this.sourceEllipsis = true
+    //   }
+    // }, 250)
   }
 
   getUserRating(fireUpdate: boolean) {
