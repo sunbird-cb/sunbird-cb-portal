@@ -260,7 +260,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   updatePathSet(event: any) {
-    if(event && event.pathSet) {
+    if (event && event.pathSet) {
       this.pathSet = event.pathSet
     }
   }

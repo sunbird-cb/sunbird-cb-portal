@@ -210,7 +210,7 @@ export class PlayerSurveyComponent extends WidgetBaseComponent
     // if (this.identifier) {
     //   this.fireRealTimeProgress(this.identifier)
     // }
-    if(this.viewerDataServiceSubscription) {
+    if (this.viewerDataServiceSubscription) {
       this.viewerDataServiceSubscription.unsubscribe()
     }
   }
