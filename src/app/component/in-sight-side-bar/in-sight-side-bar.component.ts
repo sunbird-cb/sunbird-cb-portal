@@ -319,7 +319,7 @@ export class InsightSideBarComponent implements OnInit {
 
   checkLeaderboardData(event: boolean) {
     if (event) {
-      this.isLeaderboardExist = true
+      this.isLeaderboardExist = event
     }
   }
 
