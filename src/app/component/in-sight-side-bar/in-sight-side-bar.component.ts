@@ -73,6 +73,7 @@ export class InsightSideBarComponent implements OnInit {
   showCreds = false
   credMessage = 'View my credentials'
   assessmentsData: any
+  isLeaderboardExist = false
 
   constructor(
     private homePageSvc: HomePageService,
@@ -314,6 +315,12 @@ export class InsightSideBarComponent implements OnInit {
     document.body.removeChild(textArea)
     this.openSnackbar('copied')
     this.raiseTelemetry('copyToClipboard')
+  }
+
+  checkLeaderboardData(event: boolean) {
+    if (event) {
+      this.isLeaderboardExist = true
+    }
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

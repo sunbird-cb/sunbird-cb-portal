@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 // import { Router } from '@angular/router'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
@@ -14,6 +14,8 @@ import { PipeOrdinalPipe } from '@sunbird-cb/utils/src/lib/pipes/pipe-ordinal/pi
   providers: [PipeDurationTransformPipe, PipeOrdinalPipe],
 })
 export class UserLeaderboardComponent implements OnInit {
+
+  @Output() isLeaderboardAvailable = new EventEmitter<Boolean>()
 
   userInfo: any
   loader = true
@@ -47,6 +49,7 @@ export class UserLeaderboardComponent implements OnInit {
     this.homePageSvc.getLearnerLeaderboard().subscribe((res: any) => {
       if (res && res.result && res.result.result) {
         this.currentUserRank = res.result.result.find((rankDetails: any) => rankDetails.userId === this.currentUserId)
+        this.isLeaderboardAvailable.emit(true)
         this.apiResponse = res.result.result
         this.rank1 = this.apiResponse[0]
         this.rank2 = this.apiResponse[1]

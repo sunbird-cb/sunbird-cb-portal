@@ -5,8 +5,8 @@
 </div>
 
 <section class="hidden md:block" style="position: relative;" [ngClass]="{'':!collapsed, 'margin-bottom-m': collapsed}">
-    <section class="collapsible" [@collapse]="collapsed" [ngClass]="{'padding-top-m':!collapsed}">
-        <ws-widget-user-leaderboard></ws-widget-user-leaderboard>
+    <section class="collapsible" [@collapse]="collapsed" [ngClass]="{'padding-top-m':(!collapsed && isLeaderboardExist)}">
+        <ws-widget-user-leaderboard (isLeaderboardAvailable)="checkLeaderboardData($event)"></ws-widget-user-leaderboard>
     </section>
     <div class="collapsible" [@collapseWeekly]="collapsed" [ngClass]="{'margin-bottom-m margin-top-m':!collapsed}">
         <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps" [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
