@@ -45,7 +45,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 import moment from 'moment'
 
-import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
+// import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import { environment } from 'src/environments/environment'
 
 export enum ErrorType {
@@ -168,7 +168,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   breadcrumbs: any
   historyData: any
   courseCompleteState = 2
-  certData: any
   userId: any
   userRating: any
   dakshtaName = environment.dakshtaName
@@ -340,9 +339,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           this.initData(data)
         }
       })
-      // this.route.data.subscribe(data => {
-
-      // })
     }
 
     this.currentFragment = 'overview'
@@ -466,8 +462,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         const completedMonth = moment(completedOn, 'YYYY-MM-DD').month()
         const currentMonth = moment(now, 'YYYY-MM-DD').month()
         this.isCompletedThisMonth = completedMonth === currentMonth
+        this.content['subTheme'] = this.getSubThemes(courseData)
+        this.content['viewMore'] = false
+        this.content['completedOn'] = courseData.completedOn
       }
     }
+  }
+
+  getSubThemes(courseData: any): any[] {
+    const subThemeArr: any[] = []
+    if (courseData.content && courseData.content.competencies_v5 && courseData.content.competencies_v5.length) {
+      courseData.content.competencies_v5.forEach((_competencyObj: any) => {
+        if (subThemeArr.indexOf(_competencyObj.competencySubTheme) === -1) {
+          subThemeArr.push(_competencyObj.competencySubTheme)
+        }
+      })
+    }
+    return subThemeArr
   }
 
   filteredAcbpList(res: any) {
@@ -998,17 +1009,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.certId = certId
 
       this.contentSvc.downloadCert(certId).subscribe(response => {
-        this.certData = response.result.printUri
+        if (this.content) {
+          this.content['certificateObj'] = {
+            certData: response.result.printUri,
+            certId: this.certId,
+          }
+        }
       })
     }
-  }
-
-  openCertificateDialog() {
-    const cet = this.certData
-    this.dialog.open(CertificateDialogComponent, {
-      width: '1200px',
-      data: { cet, certId: this.certId },
-    })
   }
 
   public handleAutoBatchAssign() {
@@ -1679,7 +1687,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   translateLabels(label: string, type: any) {
-    // console.log(this.langtranslations.translateLabel(label, type, ''), 'label', label, 'type', type)
     return this.langtranslations.translateLabel(label, type, '')
   }
 
@@ -1765,7 +1772,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   translateLabel(label: string, type: any) {
     if(label && type) {
       return this.langtranslations.translateLabel(label, type, '')
-    }    
+    }
   }
 
   ngOnDestroy() {

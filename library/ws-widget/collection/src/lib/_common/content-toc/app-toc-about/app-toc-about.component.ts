@@ -1,30 +1,33 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'
+import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
+
 // tslint:disable-next-line
 import _ from 'lodash'
 import dayjs from 'dayjs'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-
-import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
-import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
-import { LoggerService } from '@sunbird-cb/utils/src/public-api'
-import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
-import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
-import { ReviewComponentDataService } from '../content-services/review-component-data.service'
-import { HandleClaimService } from '../content-services/handle-claim.service'
-
-import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
-import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
-import { Router } from '@angular/router'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
+
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
+import { LoggerService } from '@sunbird-cb/utils/src/public-api'
+import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
+import { HandleClaimService } from '../content-services/handle-claim.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
+import { ReviewComponentDataService } from '../content-services/review-component-data.service'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+
+import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
+import { CertificateDialogComponent } from '../../certificate-dialog/certificate-dialog.component'
 
 interface IStripUnitContentData {
   key: string
@@ -150,9 +153,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       viewMoreText: 'Show all',
       queryParams: '',
     },
-    // loaderConfig: {
-    //   cardSubType: 'card-portrait-click-skeleton',
-    // },
     tabs: [],
     filters: [],
   }
@@ -165,6 +165,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     } else {
       this.isMobile = false
     }
+
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
       this.loadCompetencies()
@@ -612,6 +613,14 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
   handleClickOfClaim(event: any): void {
     this.handleClaimService.setClaimData(event)
+  }
+
+  handleOpenCertificateDialog() {
+    const cet = this.content && this.content.certificateObj.certData
+    this.dialog.open(CertificateDialogComponent, {
+      width: '1200px',
+      data: { cet, certId: this.content && this.content.certificateObj.certId },
+    })
   }
 
   ngOnDestroy(): void {

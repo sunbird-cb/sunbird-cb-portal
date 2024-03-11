@@ -96,6 +96,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
             this.activeRoute = 'Events'
           } else if (event.url.includes('/app/knowledge-resource/all')) {
             this.activeRoute = 'Gyaan Karmayogi'
+          } else if (event.url.includes('/app/jan-karmayogi')) {
+            this.activeRoute = 'Jan Karmayogi'
           }
           this.visible = false
           localStorage.setItem('activeRoute', this.activeRoute)

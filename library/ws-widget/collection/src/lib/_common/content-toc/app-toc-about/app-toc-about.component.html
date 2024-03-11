@@ -1,3 +1,72 @@
+<ng-template #certificateCard>
+    <div class="certificate-outer-div">
+        <div class="certificate-card">
+            <div class="flex flex-col certificate-info p-4 gap-3">
+                <div class="flex flex-row">
+                    <div class="flex-1">
+                        <ng-container *ngIf="skeletonLoader">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'200px'"
+                                [height]="'24px'"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="!skeletonLoader">
+                            <div class="text-sm font-semibold cursor-pointer">{{ content?.name }}</div>
+                            <div class="text-xs font-light">{{ 'apptocsinglepage.completedCourse' | translate }} {{ content?.completedOn ?
+                                (content?.completedOn | date: 'd MMM, y') : 'NA' }}</div>
+                        </ng-container>
+                    </div>
+                    <div class="flex justify-center">
+                        <ng-container *ngIf="skeletonLoader">
+                            <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'24px'"
+                                [height]="'24px'"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="!skeletonLoader && content?.certificateObj?.certData">
+                            <mat-icon class="icon cursor-pointer"
+                                (click)="handleOpenCertificateDialog()">arrow_downward</mat-icon>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <ng-container *ngIf="skeletonLoader">
+                        <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'280px'"
+                            [height]="'148px'"></ws-widget-skeleton-loader>
+                    </ng-container>
+                    <ng-container *ngIf="!skeletonLoader">
+                        <div class="certificate_box" *ngIf="!content?.certificateObj?.certData">
+                            <img src="/assets/icons/toc/no-certificate.svg" alt="No certificate image" />
+                            <div class="flex items-center certificate_overlay">
+                                <div class="flex flex-col text-center gap-1 p-4 text-white mt-4">
+                                    <div>{{'apptochome.certificationTakesTime' | translate }}</div>
+                                    <div>{{'apptochome.issuePersistsMailus' | translate }} mission.karmayogi@gov.in
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="content?.certificateObj?.certData">
+                            <img class="ceritificate-image"
+                                [src]="content?.certificateObj?.certData | pipeSafeSanitizer: 'url'"
+                                alt="certificate image" />
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-3 chips-card">
+            <ng-container *ngFor="let subTheme of content?.subTheme; let j = index">
+                <div class="chip rounded-full p-2 text-xs"
+                    [ngClass]="{'hidden': (j > 1 && !content?.viewMore), 'chip-ellipsis': !content?.viewMore && content?.subTheme?.length > 1 }"
+                    [title]="subTheme">{{ subTheme }}</div>
+            </ng-container>
+            <div class="flex items-center text-primary underline cursor-pointer text-xs"
+                *ngIf="content?.subTheme?.length > 2 && !content?.viewMore" (click)="content.viewMore = !content.viewMore">
+                {{'competencyCardDetails.viewMore' | translate}}
+            </div>
+            <div class="flex items-center text-primary underline cursor-pointer text-xs" *ngIf="content?.viewMore"
+                (click)="content.viewMore = !content.viewMore">{{'competencyCardDetails.viewLess' | translate}}
+            </div>
+        </div>
+    </div>
+</ng-template>
+
 <ng-template #competencyLabel>
     <div class="mat-subheading-1 flex items-center gap-2">
         {{ 'apptocsinglepage.competencies' | translate }}
@@ -7,11 +76,33 @@
 </ng-template>
 
 <div class="flex flex-col gap-10 my-4 px-4" [class.mt60]="sticky">
-    <div class="earned-certificate-container flex flex-row" *ngIf="false">        
-        <div class="ribbon"></div>
-        <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
-        <div class="earned-certificate-container-background"></div>
-    </div>
+
+    <ng-container *ngIf="content?.completionStatus === 2 || content?.certificateObj?.certData">
+        <div class="certificate-container">
+            <div class="flex flex-row earned-certificate-container">
+                <div class="ribbon"></div>
+                <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
+                <div class="certificate-background">
+                    <div class="flex flex-col items-end">
+                        <ng-container [ngTemplateOutlet]="certificateCard"></ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="mobile-certificate-container">
+            <div class="earned-certificate-container">
+                <div class="flex flex-row">
+                    <div class="ribbon"></div>
+                    <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
+                </div>
+                <div class="certificate-background">
+                    <ng-container [ngTemplateOutlet]="certificateCard"></ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
     <ng-container *ngIf="timer.days >= 0 && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
         <div class="flex flex-col gap-6 batch-timer">
             <div class="flex flex-row">
@@ -50,6 +141,20 @@
         </div>
     </ng-container>
 
+    <div class="flex flex-col" *ngIf="fromViewer || isMobile">
+        <ng-container *ngIf="skeletonLoader">
+            <div class="flex flex-row gap-3">
+                <ws-widget-skeleton-loader [width]="'60px'" [height]="'60px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'60px'" [height]="'60px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'60px'" [height]="'60px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!skeletonLoader">
+            <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure"
+                [isMobile]="isMobile"></ws-widget-toc-kpi-values>
+        </ng-container>
+    </div>
+
     <div class="flex flex-col">
         <ng-container *ngIf="skeletonLoader">
             <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
@@ -68,10 +173,7 @@
                 </div>
                 <div class="leading-4">{{ 'apptocsinglepage.by' | translate }}&nbsp;{{ content?.source }}</div>                
             </ng-container>
-            <ng-container *ngIf="fromViewer || isMobile">
-                <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure" [isMobile]="isMobile"></ws-widget-toc-kpi-values>
-            </ng-container>
-            <div class="mat-subheading-1 summary">{{ 'apptocsinglepage.summary' | translate }}</div>
+            <div class="mat-subheading-1">{{ 'apptocsinglepage.summary' | translate }}</div>
             <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
                 {{ handleCapitalize(content?.description) }}
                 <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.viewLess"
