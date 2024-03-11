@@ -1646,12 +1646,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   handleNavigateToReviews(): void {
     const elementToView = document.getElementById('reviewContainer') as any
-    
-    if (elementToView) { 
+
+    if (elementToView) {
       window.scrollTo({
         top: elementToView.offsetTop,
-        behavior: "smooth"
-      });
+        behavior: 'smooth',
+      })
     }
   }
 
