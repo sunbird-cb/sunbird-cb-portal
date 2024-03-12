@@ -62,7 +62,7 @@
   </ng-container>  
   
   <ng-container *ngIf="isMobile">
-    <div class="flex flex-1 mobile-viewer-header">
+    <div class="flex flex-1 mobile-viewer-header justify-between">
           <div class="cross-icon">
             <div *ngIf="handleBackFromPdfScormFullScreenFlag">
               <img src="assets/icons/final-assessment/mobile-cross.svg"/>
@@ -93,6 +93,9 @@
               {{ resourceName }}
             </p>
           </div>          
+          <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
+            <mat-icon class="">share</mat-icon>
+          </div>
       </div>
       <ng-container *ngIf="contentMIMEType !== 'application/vnd.sunbird.questionset'">
         <div class="flex nexPrevContainerMobile">
@@ -147,3 +150,5 @@
     
   </ng-container> 
   </mat-toolbar>
+
+<ws-app-share-toc *ngIf="enableShare" [rootOrgId]="rootOrgId" [content]="content" (resetEnableShare)="resetEnableShare($event)"></ws-app-share-toc>

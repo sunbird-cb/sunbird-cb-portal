@@ -4,7 +4,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 // import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, NsPage, ValueService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
@@ -55,6 +55,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   isMobile = false
   handleBackFromPdfScormFullScreenFlag = false
   toggleSideBarFlag = true
+  enableShare = false
   pdfContentProgressData: any = { status: 1 }
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
@@ -68,7 +69,8 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     private router: Router,
     private widgetServ: WidgetContentService,
     private viewerSvc: ViewerUtilService,
-    private pdfScormDataService: PdfScormDataService
+    private pdfScormDataService: PdfScormDataService,
+    private events: EventService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -339,5 +341,33 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     ) {
       this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
     }
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+
+  /* tslint:disable */
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
   }
 }
