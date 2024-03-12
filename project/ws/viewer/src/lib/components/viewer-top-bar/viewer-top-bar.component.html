@@ -85,15 +85,15 @@
 
 <ng-container *ngIf="isMobile">
   <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">   
-    <div class="flex justify-around width-100">
+    <div class="flex justify-around items-end width-100">
       <div class="flex flex-1 flex-col  margin-right-l progress-container">
-        <div class="flex flex-row justify-between w-full ws-mat-white-text">
+        <div class="flex flex-row justify-between w-full ws-mat-black-text">
           <div class="flex items-center mb-2">
             <span class="mat-body-2 mr-2">{{'playerbrief.items' | translate}} ({{currentDataFromEnrollList?.progress}}/{{currentDataFromEnrollList?.leafNodesCount}})</span>
-            <mat-icon class="cursor-pointer ws-mat-white-text infoIcon" matTooltip="{{'playerbrief.topProgress' | translate}}">info_outline</mat-icon>
+            <mat-icon class="cursor-pointer ws-mat-black-text infoIcon" matTooltip="{{'playerbrief.topProgress' | translate}}">info_outline</mat-icon>
           </div>
   
-         <span class="mat-body-2  ws-mat-white-text"> {{currentDataFromEnrollList?.completionPercentage}}%</span>
+         <span class="mat-body-2  ws-mat-black-text"> {{currentDataFromEnrollList?.completionPercentage}}%</span>
         </div>
   
          <ws-widget-content-progress
@@ -121,9 +121,9 @@
           </ng-container>
         </div>
       </div>     
-      <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
+      <!-- <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
         <mat-icon class="blue-color">share</mat-icon>
-      </div>
+      </div> -->
     </div>
   </mat-toolbar>
 </ng-container>
