@@ -350,16 +350,16 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       }
     })
 
-    const player = this.player;
-    console.log('player', this.player)
-    if(player) {
-      if(player.controlBar.options_.children) {
-        console.log('player', player);
-        let seelBar:any = player.controlBar;
-        seelBar.progressControl['children'][0]['SeekBar']['enabled_'] = false;
-        console.log('seelBar', seelBar.progressControl)      
-      }      
-    }
+    // const player = this.player;
+    // console.log('player', this.player)
+    // if(player) {
+    //   if(player.controlBar.options_.children) {
+    //     console.log('player', player);
+    //     let seelBar:any = player.controlBar;
+    //     seelBar.progressControl['children'][0]['SeekBar']['enabled_'] = false;
+    //     console.log('seelBar', seelBar.progressControl)      
+    //   }      
+    // }
   }
   async fetchContent() {
     const content = await this.contentSvc
