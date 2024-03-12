@@ -1187,7 +1187,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     return { color, 'background-color': bgColor }
   }
 
-
   timerFunc(serverDate: any) {
     // serverDate = serverDate + timeer
     if (serverDate && this.targetTime) {
