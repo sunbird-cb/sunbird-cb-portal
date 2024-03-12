@@ -504,7 +504,7 @@
 
 @media only screen and (min-width: 281px) and (max-width: 767px) { 
     .message {
-        width:384px;
+        width:380px;
         text-align: center;
         margin-top: -40px;
     }
@@ -557,6 +557,10 @@
 
     .section-title {
         padding:16px;
+    }
+
+    .top-margin-63 {
+        margin-top: 0px;
     }
 }
 

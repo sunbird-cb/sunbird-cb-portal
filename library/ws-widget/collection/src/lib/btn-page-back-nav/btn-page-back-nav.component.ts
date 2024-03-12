@@ -53,7 +53,6 @@ export class BtnPageBackNavComponent extends WidgetBaseComponent
       }
     }
     if (this.widgetData.url !== 'back' && this.widgetData.url !== 'doubleBack') {
-
       this.btnBackSvc.checkUrl(this.widgetData.url)
 
     }
