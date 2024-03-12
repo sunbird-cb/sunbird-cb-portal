@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
@@ -14,7 +14,7 @@ import {
 import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
 import { AccessControlService } from '@ws/author'
-import { Subscription } from 'rxjs'
+import { Subscription, timer } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
@@ -36,6 +36,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { TimerService } from '../../services/timer.service'
+
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -46,7 +47,7 @@ dayjs.extend(isSameOrAfter)
   providers: [AccessControlService, DatePipe],
 })
 
-export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   show = false
   @Input() banners: NsAppToc.ITocBanner | null = null
   @Input() content: NsContent.IContent | null = null
@@ -58,6 +59,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Output() withdrawOrEnroll = new EventEmitter<string>()
   @Input() contentReadData: NsContent.IContent | null = null
   @Input() clickToShare = false
+  timer: any
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -116,6 +118,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   canShare = false
   enableShare = false
   rootOrgId: any
+  timerIntervalClear: any
 
   // share content
   shareForm: FormGroup | undefined
@@ -132,7 +135,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   userProfile: any
   maxEmailsLimit = 30
   showLoader = false
-
+  timerInterval: any
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
@@ -185,7 +188,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   ngOnInit() {
     this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
       this.serverDate = serverDate
-      this.ngAfterViewInit()
+      if (this.serverDate) {
+        this.timerInterval = timer(1000, 1000)
+        if (this.timerIntervalClear) {
+          this.timerIntervalClear.unsubscribe()
+        }
+        this.timerIntervalClear = this.timerInterval.subscribe((t: any) => this.timerFunc(serverDate + t * 1000))
+      }
     })
 
     this.route.data.subscribe(data => {
@@ -1178,40 +1187,38 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return { color, 'background-color': bgColor }
   }
 
-  ngAfterViewInit() {
-    let serverDate = this.serverDate
-    if (this.serverDate) {
-      setInterval(() => {
-        let timer = {
-          days: 0,
-          hours: 0,
-          min: 0,
-          seconds: 0,
-        }
-        serverDate = serverDate  +  1000
-        this.date = new Date(serverDate)
-        this.now = this.date.getTime()
-        this.difference = this.targetTime - this.now
-        this.difference = this.difference / (1000 * 60 * 60 * 24)
 
-        this.days = Math.floor(this.difference)
-        this.hours = 23 - this.date.getHours()
-        this.minutes = 60 - this.date.getMinutes()
-        this.seconds = 60 - this.date.getSeconds()
-        Number(this.hours)
-        !isNaN(this.days)
-          ? (this.days = Math.floor(this.difference))
-          : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
+  timerFunc(serverDate: any) {
+    // serverDate = serverDate + timeer
+    if (serverDate && this.targetTime) {
+      let timerLocal = {
+        days: 0,
+        hours: 0,
+        min: 0,
+        seconds: 0,
+      }
+      // serverDate = serverDate  +  1000
+      this.date = new Date(serverDate)
+      this.now = this.date.getTime()
+      this.difference = this.targetTime - this.now
+      this.difference = this.difference / (1000 * 60 * 60 * 24)
 
-        timer = {
-          days: this.days,
-          hours: this.hours,
-          min: this.minutes,
-          seconds: this.seconds,
-        }
-        this.timerService.setTimerData(timer)
+      this.days = Math.floor(this.difference)
+      this.hours = 23 - this.date.getHours()
+      this.minutes = 60 - this.date.getMinutes()
+      this.seconds = 60 - this.date.getSeconds()
+      Number(this.hours)
+      !isNaN(this.days)
+        ? (this.days = Math.floor(this.difference))
+        : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
 
-      },          1000)
+      timerLocal = {
+        days: this.days,
+        hours: this.hours,
+        min: this.minutes,
+        seconds: this.seconds,
+      }
+      this.timerService.setTimerData(timerLocal)
     }
   }
 
@@ -1428,6 +1435,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     if (this.selectedBatchSubscription) {
       this.selectedBatchSubscription.unsubscribe()
+    }
+    if (this.timerIntervalClear) {
+      // clearInterval(this.timerIntervalClear);
+      this.timerIntervalClear.unsubscribe()
+      this.targetTime=''
     }
   }
   
