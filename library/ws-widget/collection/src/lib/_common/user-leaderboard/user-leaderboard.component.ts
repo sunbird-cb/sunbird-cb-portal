@@ -71,7 +71,7 @@ export class UserLeaderboardComponent implements OnInit {
           if (isMessageShown && this.currentUserProfile && this.currentUserProfile.lastMotivationalMessageTime) {
             const date = moment(this.currentUserProfile.lastMotivationalMessageTime)
             // tslint:disable-next-line: max-line-length
-            if ((date.month() === 0 && this.rank1.month !== 12) || (date.month() !== 0 && date.month() !== (this.rank1.month))) {
+            if ((date.month() === 0 && (+this.rank1.month !== 12)) || (date.month() !== 0 && date.month() !== (+this.rank1.month))) {
               this.showOverlayMessage()
             }
           }
