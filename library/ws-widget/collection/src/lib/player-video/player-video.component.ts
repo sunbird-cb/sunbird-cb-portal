@@ -154,8 +154,6 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
   }
   private initializeVPlayer() {
-    
-    
     // alert()
     // let playerInstance:any = this.player;
     // if(playerInstance) {
