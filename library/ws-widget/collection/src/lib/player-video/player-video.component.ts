@@ -90,6 +90,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   // }
 
   async ngAfterViewInit() {
+    
     this.widgetData = {
       ...this.widgetData,
     }
@@ -153,6 +154,8 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
   }
   private initializeVPlayer() {
+    
+    
     // alert()
     // let playerInstance:any = this.player;
     // if(playerInstance) {
@@ -244,7 +247,8 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     ).dispose
   }
 
-  private initializePlayer() {
+  private initializePlayer() {   
+    
     const dispatcher: telemetryEventDispatcherFunction = event => {
       if (this.widgetData.identifier) {
         this.eventSvc.dispatchEvent(event)
@@ -341,8 +345,20 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       }
       if (this.widgetData.url) {
         initObj.player.src(this.viewerSvc.getCdnUrl(this.widgetData.url))
+        
       }
     })
+
+    const player = this.player;
+    console.log('player', this.player)
+    if(player) {
+      if(player.controlBar.options_.children) {
+        console.log('player', player);
+        let seelBar:any = player.controlBar;
+        seelBar.progressControl['children'][0]['SeekBar']['enabled_'] = false;
+        console.log('seelBar', seelBar.progressControl)      
+      }      
+    }
   }
   async fetchContent() {
     const content = await this.contentSvc

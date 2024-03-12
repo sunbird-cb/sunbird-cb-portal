@@ -339,4 +339,12 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
       this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
     }
   }
+
+  backToTOC() {
+    if(this.prevResourceUrl) {
+      this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
+    } else {
+      this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+    }
+  }
 }

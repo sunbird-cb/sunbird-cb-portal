@@ -379,9 +379,10 @@
 </div>
 
 <!-- Mobile -->
+
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial' && isMobile && fetchingQuestionsStatus === 'done'">
   <div class="flex flex-column"
-    *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
+    *ngIf="!isSubmitted">
       <div>
         <div class="flex flex-row justify-around align-end mobile-question-header">
           <div (click)="back()">
@@ -602,6 +603,7 @@
         </div>
       </div>
      
+    </div>
   </div>
   <div class="fixed-question-control" *ngIf="!isSubmitted">
     <div>
