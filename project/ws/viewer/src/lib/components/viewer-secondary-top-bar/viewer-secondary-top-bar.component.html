@@ -64,7 +64,7 @@
   <ng-container *ngIf="isMobile">
     <div class="flex flex-1 mobile-viewer-header">
           <div class="cross-icon">
-            <div *ngIf="handleBackFromPdfScormFullScreenFlag">
+            <div *ngIf="handleBackFromPdfScormFullScreenFlag" (click)="backToPrev()">
               <img src="assets/icons/final-assessment/mobile-cross.svg"/>
             </div>
             <div *ngIf="!handleBackFromPdfScormFullScreenFlag"> 
