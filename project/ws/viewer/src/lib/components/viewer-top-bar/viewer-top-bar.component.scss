@@ -65,25 +65,31 @@
 
 @media only screen and (min-width: 360px) and (max-width: 360px) {
   .progress-container {
-    min-width: 160px;
+    min-width: auto;
   }
 }
 
 @media only screen and (min-width: 361px) and (max-width: 375px) {
   .progress-container {
-    min-width: 175px;
+    min-width: auto;
   }
 }
 
 @media only screen and (min-width: 390px) and (max-width: 393px) {
   .progress-container {
-    min-width: 190px;
+    min-width: auto;
   }
 }
 
 @media only screen and (min-width: 394px) and (max-width: 767px) {
   .progress-container {
-    min-width: 220px;
+    min-width: auto;
+  }
+}
+
+@media only screen and (max-width: 360px){
+  .progress-container {
+    min-width: auto;
   }
 }
 
