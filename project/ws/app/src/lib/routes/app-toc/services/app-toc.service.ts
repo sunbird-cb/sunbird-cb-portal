@@ -229,7 +229,7 @@ export class AppTocService {
       }
       getAllItemsPerChildren(content)
       const chld = _.first(_.filter(flatList, { identifier }))
-      return chld.mimeType
+      return (chld &&  chld.mimeType) || ''
     }
     // return chld.mimeType
     return NsContent.EMimeTypes.UNKNOWN

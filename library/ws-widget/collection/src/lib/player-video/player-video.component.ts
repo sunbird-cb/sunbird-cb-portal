@@ -324,6 +324,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       enableTelemetry,
       this.widgetData,
       this.widgetData.mimeType,
+      this.widgetData.size
     )
     this.player = initObj.player
     this.dispose = initObj.dispose
