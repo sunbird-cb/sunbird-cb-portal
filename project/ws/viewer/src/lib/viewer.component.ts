@@ -65,6 +65,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   hasTocStructure = false
   viewerAboutContentData: any
   hierarchyMapData: any
+  pathSet: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -256,6 +257,12 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   get isPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     return this.forPreview
+  }
+
+  updatePathSet(event: any) {
+    if (event && event.pathSet) {
+      this.pathSet = event.pathSet
+    }
   }
 
   manipulateHierarchyData() {

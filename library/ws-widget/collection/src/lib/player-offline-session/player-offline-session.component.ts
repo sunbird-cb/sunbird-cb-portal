@@ -9,7 +9,6 @@ import {
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { Subscription } from 'rxjs'
 import { IWidgetsPlayerOfflineSessionData } from './player-offline-session.model'
-import { ViewerDataService } from '@ws/viewer/src/lib/viewer-data.service'
 import { WidgetContentService } from '../_services/widget-content.service'
 
 @Component({
@@ -27,7 +26,6 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
   tocConfig = null
 
   constructor(
-    private viewerDataSvc: ViewerDataService,
     private widgetContentSvc: WidgetContentService,
   ) {
     super()
@@ -48,8 +46,6 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
     if (this.widgetData.content) {
       this.content = this.widgetData.content
     }
-    this.viewerDataServiceSubscription = this.viewerDataSvc.changedSubject.subscribe(_data => {
-    })
   }
 
   ngOnDestroy() {

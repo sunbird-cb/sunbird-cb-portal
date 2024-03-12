@@ -81,8 +81,10 @@
         <div class="certificate-container">
             <div class="flex flex-row earned-certificate-container">
                 <div class="ribbon"></div>
-                <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
                 <div class="certificate-background">
+                    <div class="p-4">
+                        <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
+                    </div>
                     <div class="flex flex-col items-end">
                         <ng-container [ngTemplateOutlet]="certificateCard"></ng-container>
                     </div>
@@ -177,10 +179,12 @@
             <div class="mat-subheading-1">{{ 'apptocsinglepage.summary' | translate }}</div>
             <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
                 {{ handleCapitalize(content?.description) }}
-                <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.viewLess"
-                    (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</span>
+                <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="summary.viewLess"
+                    (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>
-            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="summary.ellipsis" (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">{{ 'apptocsinglepage.viewMore' | translate }}</div>
+            <div class="ws-mat-default-text font-bold text-sm" *ngIf="summary.ellipsis">
+                <span class="cursor-pointer" (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">{{ 'apptocsinglepage.viewMore' | translate }}</span>
+            </div>
         </ng-container>
     </div>
 
@@ -201,10 +205,12 @@
             <div class="mat-subheading-1">{{ 'apptocsinglepage.description' | translate }}</div>
             <div class="desc" [ngClass]="{'desc-ellipsis': description.ellipsis}" #descElem>
                 <span [innerHTML]="content?.instructions"></span>
-                <span class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="description.viewLess"
-                    (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</span>
+                <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="description.viewLess"
+                    (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>
-            <div class="ws-mat-default-text font-bold cursor-pointer text-xs" *ngIf="description.ellipsis" (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">{{ 'apptocsinglepage.viewMore' | translate }}</div>
+            <div class="ws-mat-default-text font-bold text-sm" *ngIf="description.ellipsis">
+                <span class="cursor-pointer" (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">{{ 'apptocsinglepage.viewMore' | translate }}</span>
+            </div>
         </ng-container>
     </div>
 

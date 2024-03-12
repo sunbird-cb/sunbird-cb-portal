@@ -20,6 +20,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   @Input() frameReference: any
   @Input() forPreview = false
+  @Input() content: any
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
   @Input() contentMIMEType: any

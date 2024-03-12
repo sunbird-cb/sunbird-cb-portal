@@ -1,6 +1,10 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+.bggrey {
+  background-color: #eff3f9;
+}
+
 .content-container {
   min-height: 600px;
 }
