@@ -31,6 +31,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('stickyMenu', { static: false }) tabElement!: MatTabGroup
   @Input() condition: any
   @Input() kparray: any
+  @Input() selectedBatchData: any
   sticky = false
   menuPosition: any
   isMobile = false

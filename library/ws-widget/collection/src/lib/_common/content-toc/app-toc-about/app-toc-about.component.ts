@@ -96,6 +96,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   @Input() forPreview = false
   @Input() batchData: any
   @Input() fromViewer = false
+  @Input() selectedBatchData: any
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
   primaryCategory = NsContent.EPrimaryCategory
@@ -139,7 +140,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       icon: '',
     },
     sliderConfig: {
-      showNavs : false,
+      showNavs : true,
       showDots: false,
     },
     loader: true,

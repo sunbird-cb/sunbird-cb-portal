@@ -133,6 +133,20 @@
     }
 }
 
+.batch-info {
+    padding: 16px;
+    border-radius: 4px;
+    background-color: rgba(27, 76, 161, 0.08);
+    border: 1px solid rgba(27, 76, 161, 0.08);
+    text-align: center;
+
+    .batch-label {
+        font-size: 0.75rem;
+        color: rgba($color: #000, $alpha: 0.6);
+        line-height: 1rem;
+    }
+}
+
 $title-line-count: 3;
 .text-ellipsis {
     white-space: break-spaces;
@@ -322,7 +336,7 @@ $title-line-count: 3;
 }
 
 @media screen and (min-width: 1200px) {
-    .authors-curators {
+    .hideAbove1200 {
         display: none !important;
     }
 
