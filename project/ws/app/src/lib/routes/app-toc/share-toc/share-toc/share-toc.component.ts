@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { MultilingualTranslationsService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -16,7 +16,6 @@ import {
   styleUrls: ['./share-toc.component.scss'],
 })
 export class ShareTocComponent implements OnInit {
-   // share content
    shareForm: FormGroup | undefined
    selectable = true
    removable = true
@@ -58,7 +57,6 @@ export class ShareTocComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe((res: any) => {
       this.filteredUsers = []
-      //this.allUsers = []
       if (res) {
         this.getUsersToShare(res)
       }
@@ -108,7 +106,6 @@ export class ShareTocComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    // this.getUsersToShare(event.value)
     if (event.value && this.matAutocomplete && !this.matAutocomplete.isOpen) {
       const input = event.input
       const value = event.value
@@ -249,7 +246,6 @@ export class ShareTocComponent implements OnInit {
     const textArea = document.createElement('textarea')
     textArea.value = window.location.href
     document.body.appendChild(textArea)
-    //textArea.focus()
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
