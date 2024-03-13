@@ -154,14 +154,19 @@ $title-line-count: 3;
     overflow: hidden;
     text-overflow: clip ;
     display: -webkit-box;
-    -webkit-line-clamp: $title-line-count;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: $title-line-count;
+    word-break: break-word;
 }
 
 .desc-ellipsis {
     @extend .text-ellipsis;
     min-height: $title-line-count * 24px;
-    word-break: break-word;
+}
+
+.tags-ellipsis {
+    max-height: 64px;
+    overflow: hidden;
 }
 
 ::ng-deep .ratings-modal-box {
