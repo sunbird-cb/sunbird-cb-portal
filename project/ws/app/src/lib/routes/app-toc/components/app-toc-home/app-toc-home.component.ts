@@ -265,9 +265,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
       // Present in app-toc-about.component
       if (document.getElementById('ratingsDiv')) {
-        const ratingsDiv = document.getElementById('ratingsDiv') as any
-        this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+        setTimeout(() => {
+          const ratingsDiv = document.getElementById('ratingsDiv') as any
+          this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+        },         500)
       }
+
       if (document.getElementById('contentContainer')) {
         const contentDiv = document.getElementById('contentContainer') as any
         this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any

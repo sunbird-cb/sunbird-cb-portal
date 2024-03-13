@@ -73,8 +73,8 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   handleTabChange(event: MatTabChangeEvent): void {
     this.tabChangeValue = event.tab
     this.selectedTabIndex = event.index
-    if (this.selectedTabIndex === 1) {
+    // if (this.selectedTabIndex === 1) {
       this.loadCheckService.componentLoaded(true)
-    }
+    // }
   }
 }

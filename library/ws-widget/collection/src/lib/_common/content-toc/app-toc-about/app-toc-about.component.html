@@ -175,9 +175,9 @@
                 </div>
                 <div class="leading-4">{{ 'apptocsinglepage.by' | translate }}&nbsp;{{ content?.source }}</div>                
             </ng-container>
-            <div class="mat-subheading-1">{{ 'apptocsinglepage.summary' | translate }}</div>
+            <div class="mat-subheading-1 font-bold">{{ 'apptocsinglepage.summary' | translate }}</div>
             <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
-                {{ handleCapitalize(content?.description) }}
+                <span class="mob-text">{{ handleCapitalize(content?.description) }}</span>
                 <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="summary.viewLess"
                     (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>
@@ -203,7 +203,7 @@
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1">{{ 'apptocsinglepage.description' | translate }}</div>
             <div class="desc" [ngClass]="{'desc-ellipsis': description.ellipsis}" #descElem>
-                <span [innerHTML]="content?.instructions"></span>
+                <span [innerHTML]="content?.instructions" class="mob-text"></span>
                 <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="description.viewLess"
                     (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>
@@ -271,7 +271,7 @@
             <div class="mat-subheading-1">{{ 'userProfile.tags' | translate }}</div>
             <div class="flex flex-wrap gap-2" *ngIf="content?.keywords?.length">
                 <ng-container *ngFor="let tag of content?.keywords; let i = index">
-                    <div class="text-xs" [ngClass]="{'hidden': (i > 18 && !viewMoreTags)}">{{ handleCapitalize(tag) }}</div>
+                    <div class="text-xs mob-text" [ngClass]="{'hidden': (i > 18 && !viewMoreTags)}">{{ handleCapitalize(tag) }}</div>
                     <div class="flex items-center" [ngClass]="{'hidden': (i > 18 && !viewMoreTags)}" *ngIf="content?.keywords?.length > (i + 1)">
                         <span class="period"></span>
                     </div>
@@ -341,7 +341,7 @@
                     </div>
                     <div class="flex flex-col gap-1 justify-center">
                         <div class="font-bold">{{ handleCapitalize(author?.name.toLowerCase(), 'name') }}</div>
-                        <div class="text-xs leading-3">{{ 'apptocsinglepage.author' | translate }}</div>
+                        <div class="text-xs leading-3 mob-text">{{ 'apptocsinglepage.author' | translate }}</div>
                     </div>
                 </div>
     
@@ -353,7 +353,7 @@
                     </div>
                     <div class="flex flex-col gap-1 justify-center">
                         <div class="font-bold">{{ handleCapitalize(creator?.name.toLowerCase(), 'name') }}</div>
-                        <div class="text-xs leading-3">{{ 'apptocsinglepage.curator' | translate }}</div>
+                        <div class="text-xs leading-3 mob-text">{{ 'apptocsinglepage.curator' | translate }}</div>
                     </div>
                 </div>
             </div>
