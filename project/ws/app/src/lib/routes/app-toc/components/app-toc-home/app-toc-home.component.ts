@@ -431,7 +431,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
-    
+
     if (this.content && ![
       NsContent.ECourseCategory.MODERATED_COURSE,
       NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
@@ -842,7 +842,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
 
     setTimeout(() => {
-      console.log('this.contentSource - ', this.contentSource)
       if (this.contentSource && this.contentSource.nativeElement.offsetHeight > 44) {
         this.sourceEllipsis = true
       }
