@@ -85,15 +85,35 @@
         <!-- PRogram & mandatory course block -->
         <ng-container
           *ngIf="content?.primaryCategory === primaryCategory.PROGRAM || content?.primaryCategory === primaryCategory.MANDATORY_COURSE_GOAL">
-          <ng-container
-            *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) && content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
-            <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.youAreNotInvited' | translate }}</span>
+          <ng-container *ngIf="(courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory) && (contentReadData?.batches && !batchData?.enrolled)">
+            <ng-container *ngIf="(content?.primaryCategory !== primaryCategory.RESOURCE)  && !enrollBtnLoading">
+              <a class="flex action-button justify-center resume" (click)="handleAutoBatchAssign()">
+                <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
+                  {{'apptochome.enroll' | translate}}
+                </ng-container>
+              </a>
+              <!-- <ng-container *ngIf="isAcbpCourse">
+                <ws-app-karmapoints-panel [btntype]="'ACBP'" [data]="kparray"></ws-app-karmapoints-panel>
+              </ng-container>
+              <ng-container *ngIf="!isAcbpCourse && !monthlyCapExceed && userEnrollmentList && !userEnrollmentList.length">
+               <ws-app-karmapoints-panel [btntype]="'Enroll'" [data]="kparray"></ws-app-karmapoints-panel>
+              </ng-container> -->
+            </ng-container>
           </ng-container>
-          <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
-            <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.noActiveBatches' | translate }}</span>
+          <ng-container *ngIf="(courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory) && !contentReadData?.batches && !batchData?.enrolled && !enrollBtnLoading">
+            No Batches
           </ng-container>
-          <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
-            <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!!.</span>
+          <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM !== contentReadData?.courseCategory">
+            <ng-container
+              *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) && content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
+              <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.youAreNotInvited' | translate }}</span>
+            </ng-container>
+            <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === '0'">
+              <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.noActiveBatches' | translate }}</span>
+            </ng-container>
+            <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== '0'">
+              <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!!.</span>
+            </ng-container>
           </ng-container>
           <ng-container *ngIf="isBatchInProgress &&
                         ( actionBtnStatus === 'grant' &&
@@ -386,15 +406,15 @@
           <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
             <div class="flex flex-row gap-3 justify-around">
               <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || 'NA' }}</div>
+                <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}</div>
                 <div class="batch-label">{{ 'apptoc.batchSize' | translate }}</div>
               </div>
               <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.totalApplied || 'NA' }}</div>
+                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.totalApplied || '0' }}</div>
                 <div class="batch-label">{{ 'apptoc.totalApplied' | translate }}</div>
               </div>
               <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.enrolled || 'NA' }}</div>
+                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.enrolled || '0' }}</div>
                 <div class="batch-label">{{ 'apptoc.totalEnrolled' | translate }}</div>
               </div>
             </div>

@@ -130,6 +130,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   competenciesObject: any = []
   private destroySubject$ = new Subject<any>()
   viewMoreTags = false
+  timerUnsubscribe: any
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -174,7 +175,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   }
 
   ngAfterViewInit(): void {
-    this.timerService.getTimerData()
+    this.timerUnsubscribe = this.timerService.getTimerData()
     .pipe(takeUntil(this.destroySubject$))
     .subscribe((_timer: any) => {
       this.timer = _timer
@@ -626,6 +627,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
   ngOnDestroy(): void {
     this.destroySubject$.unsubscribe()
+    this.timerUnsubscribe.unsubscribe()
   }
 
 }
