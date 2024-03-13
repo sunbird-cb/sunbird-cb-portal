@@ -197,7 +197,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
           this.description.ellipsis = true
         }
 
-        if (this.tagsElem.nativeElement.offsetHeight > 64) {
+        if (this.tagsElem && this.tagsElem.nativeElement.offsetHeight > 64) {
           this.tagsEllipsis = true
         }
       },         500)
