@@ -427,17 +427,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
-    if (this.content && (
-      this.content.primaryCategory === this.primaryCategory.COURSE ||
-      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
-      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
-      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
-      ) {
-        this.canShare = true
-        if (this.configSvc.userProfile) {
-          this.rootOrgId = this.configSvc.userProfile.rootOrgId
-          // this.getUsersToShare('')
-        }
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { MultilingualTranslationsService, EventService, WsEvents, ConfigurationsService } from '@sunbird-cb/utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -16,13 +16,12 @@ import {
   styleUrls: ['./share-toc.component.scss'],
 })
 export class ShareTocComponent implements OnInit {
-   // share content
    shareForm: FormGroup | undefined
    selectable = true
    removable = true
    addOnBlur = true
-   separatorKeysCodes: number[] = [ENTER, COMMA]
-   userCtrl = new FormControl()
+   separatorKeysCodes: number[] = [ENTER]
+   userCtrl = new FormControl('')
    filteredUsers: any []| undefined
    users: any[] = []
    allUsers: any[] = []
@@ -58,7 +57,6 @@ export class ShareTocComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe((res: any) => {
       this.filteredUsers = []
-      this.allUsers = []
       if (res) {
         this.getUsersToShare(res)
       }
@@ -74,21 +72,25 @@ export class ShareTocComponent implements OnInit {
       if (data.result && data.result.response) {
         this.apiResponse = data.result.response.content
         let name = ''
+        let pEmail = ''
         this.apiResponse.forEach((apiData: any) => {
           apiData.firstName.split(' ').forEach((d: any) => {
             name = name + d.substr(0, 1).toUpperCase()
           })
-          this.allUsers.push(
-            {
-              maskedEmail: apiData.maskedEmail,
-              id: apiData.identifier,
-              name: apiData.firstName,
-              iconText: name,
-              email: (
-                apiData.profileDetails && apiData.profileDetails.personalDetails) ?
-                apiData.profileDetails.personalDetails.primaryEmail : '',
+          if (apiData.profileDetails && apiData.profileDetails.personalDetails) {
+            pEmail = apiData.profileDetails.personalDetails.primaryEmail
+            if (!this.allUsers.filter(user => user.email.toLowerCase().includes(pEmail.toLowerCase())).length) {
+              this.allUsers.push(
+                {
+                  maskedEmail: apiData.maskedEmail,
+                  id: apiData.identifier,
+                  name: apiData.firstName,
+                  iconText: name,
+                  email: pEmail,
+                }
+              )
             }
-          )
+          }
         })
         this.showLoader = false
       }
@@ -104,7 +106,6 @@ export class ShareTocComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    // this.getUsersToShare(event.value)
     if (event.value && this.matAutocomplete && !this.matAutocomplete.isOpen) {
       const input = event.input
       const value = event.value
@@ -112,7 +113,12 @@ export class ShareTocComponent implements OnInit {
         this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
         return
       }
-      const ePattern = new RegExp(`^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`)
+      if (this.users.includes(value.trim())) {
+        this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
+        return
+      }
+      // tslint:disable-next-line: max-line-length
+      const ePattern = new RegExp(/^(?!.*\.\.)(?!.*\._)(?!.*\._\.)(?!.*\.\.$)(?!.*\.$)[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/)
       if (ePattern.test(value)) {
         if ((value || '').trim()) {
           this.users.push(value.trim())
@@ -120,7 +126,13 @@ export class ShareTocComponent implements OnInit {
         if (input) {
           input.value = ''
         }
-        this.userCtrl.setValue(null)
+        this.userCtrl.setValue('')
+        const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+        if (el != null) {
+          setTimeout(() => {
+            el[0].scrollTop = el[0].scrollHeight
+          },         200)
+        }
       } else {
         this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
         return
@@ -141,17 +153,27 @@ export class ShareTocComponent implements OnInit {
       this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
       return
     }
+    if (this.users.includes(event.option.value)) {
+      this.openSnackbar(this.translateLabels('dulicateUser', 'contentSharing', ''))
+      return
+    }
     this.users.push(event.option.value)
     if (this.userInput) {
       this.userInput.nativeElement.value = ''
     }
-    this.userCtrl.setValue(null)
+    this.userCtrl.setValue('')
+    const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+    if (el != null) {
+      setTimeout(() => {
+        el[0].scrollTop = el[0].scrollHeight
+      },         200)
+    }
   }
 
   filterSharedUsers(value: string): string[] {
     if (value) {
       const filterValue = value.toLowerCase()
-      return this.allUsers.filter(user => user.name.toLowerCase().indexOf(filterValue) >= 0)
+      return this.allUsers.filter(user => user.name.toLowerCase().includes(filterValue))
     }
     return []
   }
@@ -183,11 +205,13 @@ export class ShareTocComponent implements OnInit {
     }
     const recipients: any = []
     this.users.forEach((selectedUser: any) => {
-      const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
-      if (selectedUserObj.length) {
-        recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
-      } else {
+      if (selectedUser.includes('@') && selectedUser.includes('.')) {
         recipients.push({ email: selectedUser })
+      } else {
+        const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
+        if (selectedUserObj.length) {
+          recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
+        }
       }
     })
     if (recipients.length) {
@@ -198,6 +222,9 @@ export class ShareTocComponent implements OnInit {
         }
         this.users = []
         this.resetEnableShareFlag()
+        this.filteredUsers = []
+        this.allUsers = []
+        this.userCtrl.setValue('')
       }, error => {
         // tslint:disable
         console.log(error)
@@ -207,10 +234,11 @@ export class ShareTocComponent implements OnInit {
   }
 
   onClose() {
-    this.resetEnableShareFlag();
+    this.resetEnableShareFlag()
     this.users = []
     this.filteredUsers = []
-    this.userCtrl.setValue(null)
+    this.allUsers = []
+    this.userCtrl.setValue('')
     this.raiseTelemetry('shareClose')
   }
 
@@ -218,7 +246,6 @@ export class ShareTocComponent implements OnInit {
     const textArea = document.createElement('textarea')
     textArea.value = window.location.href
     document.body.appendChild(textArea)
-    textArea.focus()
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
