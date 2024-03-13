@@ -431,18 +431,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
-
-    if (this.content && (
-      this.content.primaryCategory === this.primaryCategory.COURSE ||
-      this.content.primaryCategory === this.primaryCategory.STANDALONE_ASSESSMENT ||
-      this.content.primaryCategory === this.primaryCategory.CURATED_PROGRAM ||
-      this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM)
-      ) {
-        this.canShare = true
-        if (this.configSvc.userProfile) {
-          this.rootOrgId = this.configSvc.userProfile.rootOrgId
-          // this.getUsersToShare('')
-        }
+    
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
     }
   }
 
@@ -918,6 +917,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
               this.content['completionPercentage'] = enrolledCourse.completionPercentage
               this.enrollBtnLoading = false
+              this.tocSvc.mapModuleCount(this.content)
               // this.tocSvc.contentLoader.next(false)
             }
             this.batchData = {
@@ -938,6 +938,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
           } else {
             this.tocSvc.checkModuleWiseData(this.content)
+            this.tocSvc.mapModuleCount(this.content)
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE

@@ -167,9 +167,15 @@ export class YoutubeComponent implements OnInit, OnDestroy {
                 content.progressdetails.current &&
                 this.widgetResolverYoutubeData
               ) {
-                this.widgetResolverYoutubeData.widgetData.resumePoint = Number(
-                  content.progressdetails.current.pop(),
-                )
+                if(content.progress === 100 || content.status === 2){
+                  // if its completed then resume from starting
+                  this.widgetResolverYoutubeData.widgetData.resumePoint = 0
+                } else {
+                  // resume from last played point
+                  this.widgetResolverYoutubeData.widgetData.resumePoint = Number(
+                    content.progressdetails.current.pop(),
+                  )
+                }
                 this.widgetResolverYoutubeData.widgetData.size = content.progressdetails.max_size
               }
             }

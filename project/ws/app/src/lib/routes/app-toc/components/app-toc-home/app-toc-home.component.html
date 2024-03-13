@@ -108,11 +108,11 @@
               *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) && content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
               <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.youAreNotInvited' | translate }}</span>
             </ng-container>
-            <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === '0'">
+            <ng-container *ngIf="!isBatchInProgress && !!currentCourseBatchId && getStartDate === 'NA'">
               <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.noActiveBatches' | translate }}</span>
             </ng-container>
-            <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== '0'">
-              <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!!.</span>
+            <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
+              <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!</span>
             </ng-container>
           </ng-container>
           <ng-container *ngIf="isBatchInProgress &&
@@ -187,7 +187,7 @@
           <ws-widget-skeleton-loader [width]="'100%'" [height]="'36px'"
             [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
         </ng-container>
-      
+
         <!-- Curated program block -->
         <ng-container
           *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled && !enrollBtnLoading">
@@ -265,7 +265,7 @@
           </div>
         </ng-container>
       </div>
-      
+
       <ng-container *ngIf="resumeData">
         <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
           <mat-icon>star_purple500</mat-icon>
@@ -305,7 +305,7 @@
               </div>
             </ng-container>
 
-            <div class="flex items-center text-white mob-share">
+            <div class="flex items-center text-white mob-share" *ngIf="canShare">
               <mat-icon (click)="onClickOfShare()">share</mat-icon>
             </div>
           </div>
@@ -567,15 +567,15 @@
 </ng-container>
 <ng-template #noDataFound>
   <div class="error-not-found flex flex-wrapped margin-left-m margin-top-xl margin-right-m flex-col justify-center align-items-center text-center">
-    <div class="error-logo">  
+    <div class="error-logo">
       <div class="error-message ws-mat-primary-text font-weight-bold" i18n>
         The page you requested cannot be found
       </div>
     </div>
     <!-- <div class="error-support">
       <div class="support-message" i18n>We have updated our web site and many URLs have changed.</div>
-      <div class="support-message" i18n>You might want to:</div>      
+      <div class="support-message" i18n>You might want to:</div>
     </div> -->
   </div>
-  
+
 </ng-template>
