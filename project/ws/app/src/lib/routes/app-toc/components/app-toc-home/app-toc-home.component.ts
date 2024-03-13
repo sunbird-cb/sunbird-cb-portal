@@ -915,6 +915,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.getContinueLearningData(this.content.identifier, enrolledCourse.batchId)
               this.content['completionPercentage'] = enrolledCourse.completionPercentage
               this.enrollBtnLoading = false
+              this.tocSvc.mapModuleCount(this.content)
               // this.tocSvc.contentLoader.next(false)
             }
             this.batchData = {
@@ -935,6 +936,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
           } else {
             this.tocSvc.checkModuleWiseData(this.content)
+            this.tocSvc.mapModuleCount(this.content)
             // It's understood that user is not already enrolled
             // Fetch the available batches and present to user
             if (this.content.primaryCategory === this.primaryCategory.COURSE
