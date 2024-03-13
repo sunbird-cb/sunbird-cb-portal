@@ -152,16 +152,16 @@
     <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
         <div class="flex flex-row gap-3 justify-around hideAbove1200">
             <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || 'NA' }}
+                <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}
                 </div>
                 <div class="batch-label">{{ 'apptoc.batchSize' | translate }}</div>
             </div>
             <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.totalApplied || 'NA' }}</div>
+                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.totalApplied || '0' }}</div>
                 <div class="batch-label">{{ 'apptoc.totalApplied' | translate }}</div>
             </div>
             <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.enrolled || 'NA' }}</div>
+                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.enrolled || '0' }}</div>
                 <div class="batch-label">{{ 'apptoc.totalEnrolled' | translate }}</div>
             </div>
         </div>

@@ -309,7 +309,7 @@ $title-line-count: 3;
 }
 
 .certificate-container {
-    margin: 88px 0px 88px 0px;
+    margin: 108px 0px 88px 0px;
 }
 
 @media screen and (max-width: 767px) {
@@ -378,11 +378,11 @@ $title-line-count: 3;
 }
 
 .certificate-outer-div {
-    max-width: 340px;
+    max-width: 320px;
     width: 100%;
     position: relative;
-    right: 72px;
-    top: -142px;
+    right: 108px;
+    top: -168px;
     min-height: 200px;
     z-index: 10;
 
@@ -398,7 +398,7 @@ $title-line-count: 3;
     
         .ceritificate-image {
             display: flex;
-            max-width: 280px;
+            max-width: 248px;
             margin: auto;
             width: 100%;
             border-radius: 8px;
