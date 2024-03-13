@@ -209,10 +209,10 @@ export class AppTocService {
   mapModuleCount(content: NsContent.IContent) {
     if (content && content.children) {
       content.children.map(child => {
-        if(child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
           content['moduleCount'] = content['moduleCount'] ? content['moduleCount'] + 1 : 1
         }
-        if(child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
           this.mapModuleCount(child)
         }
       })
@@ -557,7 +557,7 @@ export class AppTocService {
               const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
                 this.contentLoader.next(false)
               })
-              if(certData && certData.result) {
+              if (certData && certData.result) {
                 parentChild.issuedCertificatesSVG = certData.result.printUri
               }
               this.contentLoader.next(false)

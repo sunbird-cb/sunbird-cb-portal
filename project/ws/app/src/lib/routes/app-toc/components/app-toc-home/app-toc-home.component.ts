@@ -188,7 +188,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isCompletedThisMonth = false
   @ViewChild('rightContainer', { static: false }) rcElement!: ElementRef
   @ViewChild('bannerDetails', { static: true }) bannerElem!: ElementRef
-  @ViewChild('contentSource', { static: true }) contentSource!: ElementRef
+  @ViewChild('contentSource', { static: false }) contentSource!: ElementRef
   sourceEllipsis = false
   scrollLimit = 0
   rcElem = {
@@ -265,9 +265,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.loadCheckService.childComponentLoaded$.subscribe(_isLoaded => {
       // Present in app-toc-about.component
       if (document.getElementById('ratingsDiv')) {
-        const ratingsDiv = document.getElementById('ratingsDiv') as any
-        this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+        setTimeout(() => {
+          const ratingsDiv = document.getElementById('ratingsDiv') as any
+          this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+        },         500)
       }
+
       if (document.getElementById('contentContainer')) {
         const contentDiv = document.getElementById('contentContainer') as any
         this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
@@ -289,7 +292,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       }
     })
+
     this.getServerDateTime()
+
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
       this.selectedBatchData = batchData
     })
@@ -297,7 +302,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
       this.serverDate = serverDate
     })
-    // this.route.fragment.subscribe(fragment => { this.fragment = fragment })
+
     this.channelId = this.telemetryService.telemetryConfig ? this.telemetryService.telemetryConfig.channel : ''
     try {
       this.isInIframe = window.self !== window.top
@@ -306,16 +311,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
 
     if (this.route) {
+      this.skeletonLoader = true
       this.routeSubscription = this.route.data.subscribe((data: Data) => {
         if (data && data.content && data.content.data && data.content.data.identifier) {
           this.courseID = data.content.data.identifier
-          this.skeletonLoader = true
+          this.skeletonLoader = false
           this.tocSvc.fetchGetContentData(data.content.data.identifier).subscribe(res => {
             this.contentReadData = res.result.content
-            this.skeletonLoader = false
           },                                                                      (error: HttpErrorResponse) => {
             if (!error.ok) {
-              this.skeletonLoader = false
               this.matSnackBar.open('Unable to fetch content data, due to some error!')
             }
           })
@@ -427,6 +431,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         primaryCategory: this.content.primaryCategory,
       }
     }
+
     if (this.content && ![
       NsContent.ECourseCategory.MODERATED_COURSE,
       NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
@@ -812,14 +817,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     })
 
     this.tocSvc.contentLoader.next(false)
-
-    // setTimeout(() => {
-    //   console.log("this.contentSource - ", this.contentSource);
-    //   if (this.contentSource && this.contentSource.nativeElement.offsetHeight > 44) {
-    //     console.log("if this.contentSource - ", this.contentSource.nativeElement.offsetHeight);
-    //     this.sourceEllipsis = true
-    //   }
-    // }, 250)
   }
 
   getUserRating(fireUpdate: boolean) {
@@ -844,6 +841,11 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     }
 
+    setTimeout(() => {
+      if (this.contentSource && this.contentSource.nativeElement.offsetHeight > 44) {
+        this.sourceEllipsis = true
+      }
+    },         250)
   }
 
    private getUserEnrollmentList() {

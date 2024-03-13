@@ -100,7 +100,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   nestedDataSource: MatTreeNestedDataSource<IViewerTocCard>
   defaultThumbnail: SafeUrl | null = null
   isFetching = true
-  pathSet:any
+  pathSet: any
   contentProgressHash: { [id: string]: number } | null = null
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
@@ -543,7 +543,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     if (this.collection && this.resourceId) {
       const path = this.utilitySvc.getPath(this.collection, this.resourceId)
       this.pathSet = new Set(path.map((u: { identifier: any }) => u.identifier))
-      this.pathSetEvent.emit({pathSet: this.pathSet})
+      this.pathSetEvent.emit({ pathSet: this.pathSet })
       // path.forEach((node: IViewerTocCard) => {
       //   this.nestedTreeControl.expand(node)
       // })

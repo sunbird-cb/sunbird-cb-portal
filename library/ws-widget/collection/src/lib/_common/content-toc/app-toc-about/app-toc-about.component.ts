@@ -96,8 +96,10 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   @Input() forPreview = false
   @Input() batchData: any
   @Input() fromViewer = false
+  @Input() selectedBatchData: any
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
+  @ViewChild('tagsElem', { static: false }) tagsElem !: ElementRef
   primaryCategory = NsContent.EPrimaryCategory
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
   summary = {
@@ -108,6 +110,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     ellipsis: false,
     viewLess: false,
   }
+  tagsEllipsis = false
   competencySelected = ''
   ratingSummary: any
   authReplies: any
@@ -140,7 +143,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       icon: '',
     },
     sliderConfig: {
-      showNavs : false,
+      showNavs : true,
       showDots: false,
     },
     loader: true,
@@ -192,6 +195,10 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
         if (this.descElem.nativeElement.offsetHeight > 72) {
           this.description.ellipsis = true
+        }
+
+        if (this.tagsElem && this.tagsElem.nativeElement.offsetHeight > 64) {
+          this.tagsEllipsis = true
         }
       },         500)
     }

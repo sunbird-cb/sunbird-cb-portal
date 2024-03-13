@@ -167,7 +167,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
                 content.progressdetails.current &&
                 this.widgetResolverYoutubeData
               ) {
-                if(content.progress === 100 || content.status === 2){
+                if (content.progress === 100 || content.status === 2) {
                   // if its completed then resume from starting
                   this.widgetResolverYoutubeData.widgetData.resumePoint = 0
                 } else {
