@@ -32,11 +32,11 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() condition: any
   @Input() kparray: any
   @Input() selectedBatchData: any
+  @Input() config: any
   sticky = false
   menuPosition: any
   isMobile = false
   selectedTabIndex = 0
-  config: any
 
   constructor(
     private route: ActivatedRoute,

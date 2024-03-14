@@ -66,6 +66,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   viewerAboutContentData: any
   hierarchyMapData: any
   pathSet: any
+  tocConfig: any = null 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -81,7 +82,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
     public pdfScormDataService: PdfScormDataService,
     private translate: TranslateService,
-    public tocSvc: AppTocService
+    public tocSvc: AppTocService,
   ) {
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
@@ -120,6 +121,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.getTocConfig()
     const contentData = this.activatedRoute.snapshot.data.hierarchyData
     && this.activatedRoute.snapshot.data.hierarchyData.data || ''
     this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData
@@ -231,6 +233,14 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.resourceChangeSubscription) {
       this.resourceChangeSubscription.unsubscribe()
     }
+  }
+
+  getTocConfig() {
+    const url = `${this.configSvc.sitePath}/feature/toc.json`
+    this.widgetServ.fetchConfig(url).subscribe(data => {
+      this.tocConfig = data
+      this.widgetServ.updateTocConfig(data)
+    })
   }
 
   toggleSideBar() {

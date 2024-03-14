@@ -66,7 +66,8 @@ export class WidgetContentService {
   ) {
   }
 
-  tocConfigData: any = null
+  tocConfigData: any = new BehaviorSubject<any>({})
+  tocConfigData$  = this.tocConfigData.asObservable()
   currentMetaData!: NsContent.IContent
   currentContentReadMetaData!: NsContent.IContent
   currentBatchEnrollmentList!: NsContent.ICourse[]
@@ -93,7 +94,7 @@ export class WidgetContentService {
   }
 
   updateTocConfig(data: any) {
-    this.tocConfigData = data
+    this.tocConfigData.next(data)
   }
 
   fetchContent(

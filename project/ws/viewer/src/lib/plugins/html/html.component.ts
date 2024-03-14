@@ -49,6 +49,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   private timer!: any
   // Subscription object
   private sub!: Subscription
+  tocConfigSubscription: Subscription | null = null
   tocConfig!: any
 
   constructor(
@@ -83,6 +84,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data:any) => {
+        this.tocConfig = data
+    })
     if (this.htmlContent && this.htmlContent.identifier) {
       this.scormAdapterService.contentId = this.htmlContent.identifier
       if (!this.forPreview) {
@@ -104,6 +108,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     // console.log('this.ticks: ', this.ticks)
     this.raiseRealTimeProgress()
     // this.store.clearAll()
+    if(this.tocConfigSubscription){
+      this.tocConfigSubscription.unsubscribe()
+    }
   }
 
   private raiseRealTimeProgress() {
@@ -202,7 +209,6 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getThreshold() {
-    this.tocConfig = this.widgetContentSvc.tocConfigData
     if (this.tocConfig) {
       this.progressThreshold = this.tocConfig.ScormProgressThreshold
     }

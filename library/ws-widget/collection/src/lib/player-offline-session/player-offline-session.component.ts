@@ -24,6 +24,7 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
   content: any
   enableTelemetry = false
   tocConfig = null
+  tocConfigSubscription: Subscription | null = null
 
   constructor(
     private widgetContentSvc: WidgetContentService,
@@ -32,7 +33,9 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
-    this.tocConfig  = this.widgetContentSvc.tocConfigData
+    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data:any) => {
+        this.tocConfig = data
+    })
     // TODO:When player is fully implemented put initial functions here
   }
 
@@ -54,6 +57,9 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
 
       // this.saveContinueLearning(this.identifier)
       // this.fireRealTimeProgress(this.identifier)
+    }
+    if(this.tocConfigSubscription){
+      this.tocConfigSubscription.unsubscribe()
     }
   }
 }
