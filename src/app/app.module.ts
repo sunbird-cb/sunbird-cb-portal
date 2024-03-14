@@ -95,6 +95,7 @@ import { SocialLinkComponent } from './component/social-link/social-link.compone
 import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
 import { AppLogoComponent } from './component/app-logo/app-logo.component';
 import { NoDataComponent } from './component/no-data/no-data.component';
+import { SurveyPocComponent } from './component/survey-poc/survey-poc.component';
 
 
 @Injectable()
@@ -142,6 +143,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     SocialLinkComponent,
     FooterSectionComponent,
     AppLogoComponent,
+    SurveyPocComponent,
   ],
   imports: [
     FormsModule,
