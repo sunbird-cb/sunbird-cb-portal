@@ -308,9 +308,15 @@ export class VideoComponent implements OnInit, OnDestroy {
                 content.progressdetails.current &&
                 this.widgetResolverVideoData
               ) {
-                this.widgetResolverVideoData.widgetData.resumePoint = Number(
-                  content.progressdetails.current.pop(),
-                )
+                if (content.progress === 100 || content.status === 2) {
+                  // if its completed then resume from starting
+                  this.widgetResolverVideoData.widgetData.resumePoint = 0
+                } else {
+                  // resume from last played point
+                  this.widgetResolverVideoData.widgetData.resumePoint = Number(
+                    content.progressdetails.current.pop(),
+                  )
+                }
               }
             }
           }

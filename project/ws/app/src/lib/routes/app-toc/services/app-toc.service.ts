@@ -206,6 +206,19 @@ export class AppTocService {
     }
   }
 
+  mapModuleCount(content: NsContent.IContent) {
+    if (content && content.children) {
+      content.children.map(child => {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          content['moduleCount'] = content['moduleCount'] ? content['moduleCount'] + 1 : 1
+        }
+        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+          this.mapModuleCount(child)
+        }
+      })
+    }
+  }
+
   getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
     if (content.identifier === identifier) {
       return content.mimeType
@@ -544,7 +557,9 @@ export class AppTocService {
               const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
                 this.contentLoader.next(false)
               })
-              parentChild.issuedCertificatesSVG = certData.result.printUri
+              if (certData && certData.result) {
+                parentChild.issuedCertificatesSVG = certData.result.printUri
+              }
               this.contentLoader.next(false)
             }
             parentChild.completionPercentage = 100
@@ -576,6 +591,7 @@ export class AppTocService {
                   inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
                   this.updateResumaData(inprogressDataCheck)
                   this.mapCompletionPercentage(parentChild, data.result.contentList)
+                  this.mapModuleCount(parentChild)
                 } else {
                   if (firstUncompleteCourse) {
                     const firstChildData = this.widgetSvc.getFirstChildInHierarchy(firstUncompleteCourse)
@@ -594,6 +610,7 @@ export class AppTocService {
                     }]
                     inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck : resumeData
                     this.updateResumaData(inprogressDataCheck)
+                    this.mapModuleCount(parentChild)
                   }
                 }
                 return progressdata
@@ -698,7 +715,7 @@ export class AppTocService {
   mapCompletionChildPercentageProgram(course: any) {
     if (course && course.children) {
       course.children.map((courseChild: any) => {
-          if ((courseChild && courseChild.children) || courseChild.primaryCategory === 'Course Unit') {
+          if ((courseChild && courseChild.children) || courseChild.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
             this.mapCompletionChildPercentageProgram(courseChild)
             course['moduleCount'] = course['moduleCount'] ? course['moduleCount'] + 1 : 1
           } else {

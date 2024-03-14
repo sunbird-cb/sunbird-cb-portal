@@ -5,6 +5,10 @@
     margin-top: 60px;
 }
 
+.mat-subheading-1 {
+    font-weight: 700;
+}
+
 .hidden {
     display: none !important;
 }
@@ -15,7 +19,7 @@
     font-size: 16px;
 }
 
-.desc, .desc-ellipsis { 
+.desc { 
     ::ng-deep span {
         p {
             margin: 0px !important;
@@ -65,6 +69,10 @@
 @media screen and (max-width: 768px) {
     .suggestion-text {
         text-align: center;
+    }
+
+    .mob-text {
+        color: rgba($color: #000000, $alpha: 0.6);
     }
 }
 
@@ -125,6 +133,20 @@
     }
 }
 
+.batch-info {
+    padding: 16px;
+    border-radius: 4px;
+    background-color: rgba(27, 76, 161, 0.08);
+    border: 1px solid rgba(27, 76, 161, 0.08);
+    text-align: center;
+
+    .batch-label {
+        font-size: 0.75rem;
+        color: rgba($color: #000, $alpha: 0.6);
+        line-height: 1rem;
+    }
+}
+
 $title-line-count: 3;
 .text-ellipsis {
     white-space: break-spaces;
@@ -132,14 +154,19 @@ $title-line-count: 3;
     overflow: hidden;
     text-overflow: clip ;
     display: -webkit-box;
-    -webkit-line-clamp: $title-line-count;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: $title-line-count;
+    word-break: break-word;
 }
 
 .desc-ellipsis {
     @extend .text-ellipsis;
     min-height: $title-line-count * 24px;
-    word-break: break-word;
+}
+
+.tags-ellipsis {
+    max-height: 64px;
+    overflow: hidden;
 }
 
 ::ng-deep .ratings-modal-box {
@@ -282,7 +309,7 @@ $title-line-count: 3;
 }
 
 .certificate-container {
-    margin: 88px 0px 88px 0px;
+    margin: 108px 0px 88px 0px;
 }
 
 @media screen and (max-width: 767px) {
@@ -314,7 +341,7 @@ $title-line-count: 3;
 }
 
 @media screen and (min-width: 1200px) {
-    .authors-curators {
+    .hideAbove1200 {
         display: none !important;
     }
 
@@ -351,11 +378,11 @@ $title-line-count: 3;
 }
 
 .certificate-outer-div {
-    max-width: 340px;
+    max-width: 320px;
     width: 100%;
     position: relative;
-    right: 72px;
-    top: -142px;
+    right: 108px;
+    top: -168px;
     min-height: 200px;
     z-index: 10;
 
@@ -371,7 +398,7 @@ $title-line-count: 3;
     
         .ceritificate-image {
             display: flex;
-            max-width: 280px;
+            max-width: 248px;
             margin: auto;
             width: 100%;
             border-radius: 8px;
