@@ -46,32 +46,53 @@
     }
 }
 
-::ng-deep .batch-form-field {
-    .mat-select-panel {
-        .mat-option {
-            height: 48px !important;
-        }
-    }
-} 
+// ::ng-deep .batch-form-field {
+//     .mat-select-panel {
+//         .mat-option {
+//             min-height: 48px !important;
+//             max-height: 64px !important;
+//         }
+//     }
+// } 
 
 ::ng-deep .batch-dropdown {
     margin-top: 3rem !important;
 }
 
 ::ng-deep .batch-form-field {
+    height: 64px;
+
     .mat-form-field-wrapper {
         margin: 0px;
         padding-bottom: 0px;
+        height: inherit;
+
+        .mat-form-field-flex {
+            height: inherit;
+        }
     }
 
     .mat-form-field-outline {
         border-radius: 8px;
+        height: inherit;
     }
 
     .mat-form-field-infix {
+        display: flex;
+        align-items: center;
         font-size: 14px;
         border-top: 0.35rem solid transparent;
-        padding: 20px 0px;
+        padding: 8px 0px;
+        height: 44px;
+
+        .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+            transform: translateY(0%) !important;
+        }
+    }
+
+    .mat-select-value-text {
+        white-space: pre-line !important;
+        line-height: 21px;
     }
 }
 

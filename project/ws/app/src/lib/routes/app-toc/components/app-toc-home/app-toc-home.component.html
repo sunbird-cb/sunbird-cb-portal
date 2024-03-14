@@ -425,15 +425,15 @@
             </ws-app-toc-banner>
           </div>
 
-          <div class="flex flex-col gap-4">
-            <ng-container *ngIf="skeletonLoader">
-              <ws-widget-skeleton-loader [width]="'336px'" [height]="'40px'"
-                [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-              <ws-widget-skeleton-loader [width]="'336px'" [height]="'68px'"
-                [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-            </ng-container>
+          <ng-container *ngIf="skeletonLoader">
+            <ws-widget-skeleton-loader [width]="'336px'" [height]="'40px'"
+              [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+            <ws-widget-skeleton-loader [width]="'336px'" [height]="'68px'"
+              [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+          </ng-container>
 
-            <ng-container *ngIf="!skeletonLoader">
+          <ng-container *ngIf="!skeletonLoader">
+            <div class="flex flex-col gap-4">
               <div class="flex flex-row items-center gap-2 info-div" *ngIf="content?.isInIntranet && showIntranetMsg">
                 <mat-icon>info</mat-icon>
                 <ng-container i18n>{{ 'apptochome.viewedInIntranet' | translate }}</ng-container>
@@ -450,63 +450,63 @@
                 <a href="{{ cscmsUrl }}" target="_blank" class="flex action-button justify-center">
                   {{ 'apptochome.applyForPhysicalTraining' | translate }}</a>
               </div>
+            </div>
 
-              <!-- Overall progress functionality -->
-              <ng-container [ngTemplateOutlet]="progressFunctionality"></ng-container>
-              <!-- Overall progress functionality -->
+            <!-- Overall progress functionality -->
+            <ng-container [ngTemplateOutlet]="progressFunctionality"></ng-container>
+            <!-- Overall progress functionality -->
 
-              <!-- <div *ngIf="resumeData && !userRating"> -->
-                <!-- <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
-                  [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel> -->
-              <!-- </div> -->
+            <!-- <div *ngIf="resumeData && !userRating"> -->
+              <!-- <ws-app-karmapoints-panel [btntype]="'Rate this course'" [data]="kparray"
+                [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel> -->
+            <!-- </div> -->
 
-              <!-- <div *ngIf="resumeData && userRating">
-                <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"
-                  [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
-              </div> -->
+            <!-- <div *ngIf="resumeData && userRating">
+              <ws-app-karmapoints-panel [btntype]="'Edit rating'" [data]="kparray"
+                [pCategory]="content?.primaryCategory"></ws-app-karmapoints-panel>
+            </div> -->
 
-              <ng-container [ngTemplateOutlet]="enrollFunctionality"></ng-container>
-              <div class="karma-points-div">
-                <ws-widget-karma-points [btntype]="" [data]="kparray" [btnCategory]="" (clickClaimKarmaPoints)="onClickOfClaim($event)"
-                  [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}"></ws-widget-karma-points>
+            <ng-container [ngTemplateOutlet]="enrollFunctionality"></ng-container>
+            <div class="karma-points-div">
+              <ws-widget-karma-points [btntype]="" [data]="kparray" [btnCategory]="" (clickClaimKarmaPoints)="onClickOfClaim($event)"
+                [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}"></ws-widget-karma-points>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="skeletonLoader">
+            <div class="flex flex-wrap gap-6">
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
               </div>
-            </ng-container>
-
-            <ng-container *ngIf="skeletonLoader">
-              <div class="flex flex-wrap gap-6">
-                <div class="flex flex-col items-center gap-2 kpi-loader-div">
-                  <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
-                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                  <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                </div>
-                <div class="flex flex-col items-center gap-2 kpi-loader-div">
-                  <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
-                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                  <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                </div>
-                <div class="flex flex-col items-center gap-2 kpi-loader-div">
-                  <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
-                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                  <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                </div>
-                <div class="flex flex-col items-center gap-2 kpi-loader-div">
-                  <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
-                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                  <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                </div>
-                <div class="flex flex-col items-center gap-2 kpi-loader-div">
-                  <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
-                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                  <ws-widget-skeleton-loader [width]="'40px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                  <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                </div>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
               </div>
-            </ng-container>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <div class="flex flex-col items-center gap-2 kpi-loader-div">
+                <ws-widget-skeleton-loader [width]="'28px'" [height]="'28px'"
+                  [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'40px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [width]="'48px'" [height]="'8px'" [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+              </div>
+            </div>
+          </ng-container>
 
-            <ng-container *ngIf="!skeletonLoader">
-              <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure" [showInstructorLedMsg]="showInstructorLedMsg"></ws-widget-toc-kpi-values>
-            </ng-container>
-          </div>
+          <ng-container *ngIf="!skeletonLoader">
+            <ws-widget-toc-kpi-values [content]="content" [tocStructure]="tocStructure" [showInstructorLedMsg]="showInstructorLedMsg"></ws-widget-toc-kpi-values>
+          </ng-container>
         </div>
 
         <div class="flex flex-col gap-8 p-5">
