@@ -54,6 +54,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   private player: videoJs.Player | null = null
   private dispose: (() => void) | null = null
   videoEnd = false
+  timerInterval: any
   video: any
   constructor(
     private eventSvc: EventService,
@@ -118,8 +119,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
 
         }
         let counter = 1
-
-          setInterval(() => {
+        this.timerInterval =   setInterval(() => {
             if (counter <= 30) {
                 this.updateProgress(counter)
             }
@@ -130,7 +130,9 @@ export class PlayerVideoComponent extends WidgetBaseComponent
               if (autoPlayVideo) {
                 autoPlayVideo.style.opacity = '1'
               }
-            this.viewerSvc.autoPlayNextVideo.next(true)
+              this.viewerSvc.autoPlayNextVideo.next(true)
+              counter = 0
+              clearInterval(this.timerInterval)
             }
             counter = counter + 1
           },          1000)
@@ -383,5 +385,6 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     if (autoPlayVideo) {
       autoPlayVideo.style.opacity = '1'
     }
+    clearInterval(this.timerInterval)
   }
 }
