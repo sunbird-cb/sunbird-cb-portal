@@ -480,9 +480,34 @@
 }
 
 .message {
-    width:412px;
+    width:384px;
     text-align: center;
     margin-top: -40px;
+}
+
+.quest_btn-blue{
+    width: 100%;
+    border-radius: 63px;
+    color: #fff !important;
+    text-align: center;
+    background-color: #1b4ca1;
+    margin: 0 32px;
+}
+
+@media only screen and (min-width: 280px) and (max-width: 280px) { 
+    .message {
+        width:280px;
+        text-align: center;
+        margin-top: -40px;
+    }
+}
+
+@media only screen and (min-width: 281px) and (max-width: 767px) { 
+    .message {
+        width:380px;
+        text-align: center;
+        margin-top: -40px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -509,7 +534,7 @@
         // left: 25%;
     }
 
-    .quest_btn[_ngcontent-uam-c41] {
+    .quest_btn{
         width: 100%;
         border-radius: 63px;
         border: 1px solid #1b4ca1;
@@ -533,6 +558,10 @@
     .section-title {
         padding:16px;
     }
+
+    .top-margin-63 {
+        margin-top: 0px;
+    }
 }
 
 .blue-bg {
@@ -554,4 +583,12 @@
       conic-gradient(transparent var(--percentage, 0), gray var(--percentage, 0)) border-box,
       conic-gradient(var(--passPercentage) 120deg, var(--passPercentage) 120deg 240deg, var(--passPercentage) 240deg) border-box;
     --percentage: 0deg;
-  }
+}
+
+.questionPanel {
+    height: auto !important;
+}
+
+.question-header {
+    min-height: 32px !important;
+}

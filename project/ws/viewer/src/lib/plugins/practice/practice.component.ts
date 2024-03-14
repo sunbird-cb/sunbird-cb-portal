@@ -115,6 +115,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   questionAttemptedCount = 0
   expandFalse = true
   showOverlay = false
+  showToolTip = false
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -847,13 +848,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return responseQ
   }
   async submitQuiz() {
-
     this.raiseTelemetry('quiz', null, 'submit')
     this.showOverlay = true
     setTimeout(() => {
       this.showOverlay = false
       this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
-    },         1000)
+    },         5000)
     this.isSubmitted = true
     this.ngOnDestroy()
     if (!this.quizJson.isAssessment) {

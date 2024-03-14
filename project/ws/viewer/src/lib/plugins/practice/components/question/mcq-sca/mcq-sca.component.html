@@ -1,4 +1,4 @@
-<mat-radio-group class="flex flex-1 flex-column quiz-radio-group" [ngClass]="question?.options?.length > 5 ? 'more-than-five-option' : ''">
+<mat-radio-group class="flex flex-1 flex-column quiz-radio-group" [ngClass]="question?.options?.length > 3 ? 'more-than-five-option' : ''">
     <div *ngFor="let option of question?.options">
         <!-- =={{option?.isCorrect}}=={{showAns}} -->
         <mat-radio-button disableRipple  #btn class="flex flex-1 padding-s quiz-radio-button margin-top-s b-r" [ngClass]="{

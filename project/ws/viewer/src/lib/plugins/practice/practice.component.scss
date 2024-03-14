@@ -494,10 +494,9 @@ $nav-height: 40px;
 
   .fixed-question-control {
     position: fixed;
-    bottom: 42px;
-    width: 96%;
-    margin: 0 16px;
-    // background-color: #fff;
+    bottom: 0px;
+    width: 100%;
+    background: white;
   }
 
   .expand-icon {
@@ -523,7 +522,7 @@ $nav-height: 40px;
     width: 100%;
     padding: 0;
     background: #EBEDEE;
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
   }
@@ -537,7 +536,7 @@ $nav-height: 40px;
   }
 
   .first {
-    width: 100% !important;
+    width: 92% !important;
     height: 40px;
     margin-bottom: 6%;
   }
@@ -548,7 +547,7 @@ $nav-height: 40px;
     // }
     width:167px;
     border-radius: 63px;
-    margin-bottom: 6%;
+    margin-bottom: 3%;
   }
 
   
@@ -663,6 +662,8 @@ $nav-height: 40px;
 
 .info-tooltip-container-item span{
   margin-left: 16px;
+  background: transparent;
+  color: #fff;
 }
 
 .margin-side-8 {
@@ -718,4 +719,22 @@ $nav-height: 40px;
 
 ::ng-deep .mat-chip-list-wrapper .mat-standard-chip, .mat-chip-list-wrapper input.mat-input-element {
   margin:0 !important
+}
+
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+  .info-hover {
+    display: block;
+    background: rgb(102,102,102);
+    width: 249px;
+    height: 156px;
+    border-radius: 10px;
+    color: #fff;
+    position: absolute;
+    margin-left: 100px;
+    margin-top: 18px;
+    z-index: 1;
+  }
+  .seperate-text span{
+    padding:0 
+  }
 }

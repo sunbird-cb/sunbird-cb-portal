@@ -66,7 +66,8 @@ export class WidgetContentService {
   ) {
   }
 
-  tocConfigData: any = null
+  tocConfigData: any = new BehaviorSubject<any>({})
+  tocConfigData$  = this.tocConfigData.asObservable()
   currentMetaData!: NsContent.IContent
   currentContentReadMetaData!: NsContent.IContent
   currentBatchEnrollmentList!: NsContent.ICourse[]
@@ -93,7 +94,7 @@ export class WidgetContentService {
   }
 
   updateTocConfig(data: any) {
-    this.tocConfigData = data
+    this.tocConfigData.next(data)
   }
 
   fetchContent(
@@ -412,7 +413,16 @@ export class WidgetContentService {
     return this.http.post(API_END_POINTS.READ_KARMAPOINTS, { limit, offset }).pipe(catchError(_err => of(true)))
   }
   fetchProgramContent(contentId: string[]): Observable<NsContent.IContent[]> {
-    return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
+    let url = ''
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      return this.http.get<NsContent.IContent[]>(
+        API_END_POINTS.CONTENT_READ(contentId),
+      )
+    }
+    url = `/api/content/v1/read/${contentId}`
+    return this.http.get<NsContent.IContent[]>(url)
+    // return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
   }
 
   getCourseKarmaPoints(request: any) {

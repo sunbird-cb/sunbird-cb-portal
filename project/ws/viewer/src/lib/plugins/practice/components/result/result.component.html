@@ -13,11 +13,16 @@
         </div>
         </ng-container>  -->
         <ng-container>
-        <div class="quest_btn">
+        <div class="quest_btn" *ngIf="quizResponse">
           <a mat-button (click)="action('retake')">
-            Try Again
+            {{ 'playerbrief.tryAgain' | translate }}
           </a>
         </div>
+        <!-- <div class="quest_btn-blue">
+          <a mat-button (click)="action('retake')">
+            {{ 'playerbrief.finish' | translate }}
+          </a>
+        </div> -->
         </ng-container> 
         <!-- <ng-container
         *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
@@ -104,12 +109,12 @@
         <div *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
           <div class="flex flex-col justify-center align-center success-message-result">
               <div><img src="assets/icons/final-assessment/practice-assessment-badge.svg"></div>
-              <div class="mat-subheading-2">Well done, Keep learning!</div>
+              <div class="mat-subheading-2">{{'quizresult.passMdg4' | translate}}</div>
           </div>
         </div>
-        <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory" class="flex flex-col justify-center align-center success-message-result">
+        <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory && quizResponse" class="flex flex-col justify-center align-center success-message-result">
           <ng-container *ngIf="isPassed && percentage === 100">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="108">
               
               <path  class="progress-clr" d="M55,90
                       A55,55 0 1,1 140,90"
@@ -120,10 +125,10 @@
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
                 <div class="level-text">{{levelText || 'Passed'}}</div>
             </div>
-            <div class="mat-subheading-2 message">You have aced the assessment, with flying colours.</div>
+            <div class="mat-subheading-2 message">{{'quizresult.passMsg1' | translate}}</div>
           </ng-container>
           <ng-container *ngIf="isPassed && percentage < 100">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="108">
               
               <path  class="progress-clr" d="M55,90
                       A55,55 0 1,1 140,90"
@@ -132,12 +137,12 @@
             </svg>
             <div style="position:relative; top: -60px; left: 0px;">
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
-                <div class="level-text">{{levelText || 'Passed'}}</div>
+                <div class="level-text">{{levelText || ('playerbrief.passed' | translate)}}</div>
             </div>
-            <div class="mat-subheading-2 message">Congratulations on successfully passing the assessment. Good job!</div>
+            <div class="mat-subheading-2 message">{{'quizresult.passMsg2' | translate}}</div>
           </ng-container>
-          <ng-container *ngIf="!isPassed">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
+          <ng-container *ngIf="!isPassed  && quizResponse">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="108">
               
               <path  class="progress-red-clr" d="M55,90
                       A55,55 0 1,1 140,90"
@@ -151,29 +156,29 @@
             </div> -->
             <div style="position:relative; top: -60px; left: 0px;">
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
-                <div class="level-text">{{levelText || 'Failed'}}</div>
+                <div class="level-text">{{levelText || ('playerbrief.failed' | translate)}}</div>
             </div>
-            <div class="mat-subheading-2 message">You have the opportunity to try again and do better next time. Keep going!</div>
+            <div class="mat-subheading-2 message">{{'playerbrief.tryAgainMessage' | translate}}</div>
           </ng-container>
         </div>     
-        <mat-card class="result_box_time_container">
-        <div class="flex flex-row justify-between response_box">        
-          <div class="stats-label">
-            <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
-            <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
-            <div class="ml-2"> Total Questions: </div>
+        <mat-card class="result_box_time_container" *ngIf="quizResponse">
+          <div class="flex flex-row justify-between response_box">        
+            <div class="stats-label">
+              <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
+              <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
+              <div class="ml-2"> {{'playerbrief.totalQuestions' | translate}}: </div>
+            </div>
+            <div class="stats-label">
+              <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
+              <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
+            </div>
           </div>
-          <div class="stats-label">
-            <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
-            <div class="ml-2">{{quizResponse?.total}} questions</div>
-          </div>
-        </div>
-      </mat-card> 
+        </mat-card> 
         <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
           <mat-card *ngIf="_parts" class="result_box">
             <mat-card-title class="section-title">
               <span class="mat-subheading-1" *ngIf="!isOnlySection">{{'Section ' + (i+1)}}</span>
-              <span class="mat-subheading-2" *ngIf="isOnlySection">{{'Your Performance Summary'}}</span> 
+              <span class="mat-subheading-2" *ngIf="isOnlySection">{{'playerbrief.performanceSummary' | translate}}</span> 
             </mat-card-title>
             <mat-card-content class="flex flex-1 flex-column">
               <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
@@ -183,7 +188,7 @@
                 isSVG: false,
                 imgIcon: 'correct_arrow',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] +' questions correct answered',
+                text: _parts[_result] + ' '+translateLabels(' questionCorrectAnswered', 'playerbrief'),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']}
@@ -194,7 +199,7 @@
                 isSVG: false,
                 imgIcon: 'blue-cross',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] + ' questions wrong answered',
+                text: _parts[_result] + ' '+translateLabels(' questionWrongAnswered', 'playerbrief'),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']
@@ -204,7 +209,7 @@
                 isSVG: false,
                 imgIcon: 'blue-question',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] + ' unanswered',
+                text: _parts[_result] +' '+translateLabels(' questionUnAnswered', 'playerbrief'),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']

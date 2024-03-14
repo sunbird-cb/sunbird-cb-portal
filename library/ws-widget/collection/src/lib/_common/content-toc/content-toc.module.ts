@@ -21,13 +21,15 @@ import { HttpLoaderFactory } from 'src/app/app.module'
 
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { WidgetResolverModule } from '@sunbird-cb/resolver/src/public-api'
-import { PipeDurationTransformModule, HorizontalScrollerV2Module } from '@sunbird-cb/utils/src/public-api'
+import { PipeDurationTransformModule, HorizontalScrollerV2Module, PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api'
 import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module'
 import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
 import { RatingSummaryModule } from '../rating-summary/rating-summary.module'
 import { ContentProgressModule } from '../content-progress/content-progress.module'
 import { CardCompetencyModule } from '../../card-competency/card-competency.module'
 import { TocKpiValuesModule } from './toc-kpi-values/toc-kpi-values.module'
+import { KarmaPointsModule } from './karma-points/karma-points.module'
+import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
 
 import { ContentTocComponent } from './content-toc.component'
 import { AppTocAboutComponent } from './app-toc-about/app-toc-about.component'
@@ -38,8 +40,8 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
 import { EnrollModalComponent } from './enroll-modal/enroll-modal.component'
 import { AppTocSessionCardNewComponent } from './app-toc-session-card-new/app-toc-session-card-new.component'
 import { AppTocSessionsNewComponent } from './app-toc-sessions-new/app-toc-sessions-new.component'
-import { AttendanceCardModule } from '../attendance-card/attendance-card.module'
 import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-skeleton/app-toc-content-card-v2-skeleton.component'
+
 @NgModule({
   declarations: [
     ContentTocComponent,
@@ -79,6 +81,7 @@ import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-
     AttendanceCardModule,
     MatTooltipModule,
     TocKpiValuesModule,
+    KarmaPointsModule,
     TranslateModule,
     TranslateModule.forRoot({
       loader: {
@@ -87,6 +90,7 @@ import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-
         deps: [HttpClient],
       },
     }),
+    PipeSafeSanitizerModule,
   ],
   exports: [
     ContentTocComponent,

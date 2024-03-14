@@ -206,6 +206,19 @@ export class AppTocService {
     }
   }
 
+  mapModuleCount(content: NsContent.IContent) {
+    if (content && content.children) {
+      content.children.map(child => {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          content['moduleCount'] = content['moduleCount'] ? content['moduleCount'] + 1 : 1
+        }
+        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+          this.mapModuleCount(child)
+        }
+      })
+    }
+  }
+
   getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
     if (content.identifier === identifier) {
       return content.mimeType
@@ -229,7 +242,7 @@ export class AppTocService {
       }
       getAllItemsPerChildren(content)
       const chld = _.first(_.filter(flatList, { identifier }))
-      return chld.mimeType
+      return (chld &&  chld.mimeType) || ''
     }
     // return chld.mimeType
     return NsContent.EMimeTypes.UNKNOWN
@@ -485,9 +498,16 @@ export class AppTocService {
   }
 
   fetchGetContentData(contentId: string) {
-    return this.http.get<{ result: any }>(
-      API_END_POINTS.GET_CONTENT(contentId),
-    )
+    let url = ''
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      return this.http.get<{ result: any }>(
+        API_END_POINTS.GET_CONTENT(contentId),
+      )
+    }
+      url = `/api/content/v1/read/${contentId}`
+      return this.http.get<{ result: any }>(url)
+
   }
 
   fetchContentParent(contentId: string, data: NsAppToc.IContentParentReq, forPreview = false) {
@@ -534,8 +554,12 @@ export class AppTocService {
             completedLeafNodes = [...completedLeafNodes, ...parentChild.leafNodes]
             if (foundContent.issuedCertificates.length > 0) {
               const certId: any = foundContent.issuedCertificates[0].identifier
-              const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {})
-              parentChild.issuedCertificatesSVG = certData.result.printUri
+              const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
+                this.contentLoader.next(false)
+              })
+              if (certData && certData.result) {
+                parentChild.issuedCertificatesSVG = certData.result.printUri
+              }
               this.contentLoader.next(false)
             }
             parentChild.completionPercentage = 100
@@ -567,6 +591,7 @@ export class AppTocService {
                   inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
                   this.updateResumaData(inprogressDataCheck)
                   this.mapCompletionPercentage(parentChild, data.result.contentList)
+                  this.mapModuleCount(parentChild)
                 } else {
                   if (firstUncompleteCourse) {
                     const firstChildData = this.widgetSvc.getFirstChildInHierarchy(firstUncompleteCourse)
@@ -585,6 +610,7 @@ export class AppTocService {
                     }]
                     inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck : resumeData
                     this.updateResumaData(inprogressDataCheck)
+                    this.mapModuleCount(parentChild)
                   }
                 }
                 return progressdata
@@ -689,7 +715,7 @@ export class AppTocService {
   mapCompletionChildPercentageProgram(course: any) {
     if (course && course.children) {
       course.children.map((courseChild: any) => {
-          if ((courseChild && courseChild.children) || courseChild.primaryCategory === 'Course Unit') {
+          if ((courseChild && courseChild.children) || courseChild.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
             this.mapCompletionChildPercentageProgram(courseChild)
             course['moduleCount'] = course['moduleCount'] ? course['moduleCount'] + 1 : 1
           } else {

@@ -4,6 +4,18 @@
   (userSelection)="getSections($event)">
 </viewer-overview>
 
+<div class="calculate-overlay" *ngIf="showOverlay"> 
+  <div class="overlay">
+    <div>      
+        <mat-spinner [diameter]="150" ></mat-spinner>
+    </div>
+    <div>
+      <span class="mat-heading" i18n>{{'playerbrief.calculateResult' | translate}}</span>
+    </div>
+  </div>
+   
+</div>
+
 <!-- Desktop -->
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial' && !isMobile && fetchingQuestionsStatus === 'done'">
   <!-- <div class="flex flex-column quiz_inner_container"> -->
@@ -66,17 +78,17 @@
             <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
               class="text-white ws-mat-primary-background margin-xs quest_btn" mat-button
               (click)="getNextQuestion(currentQuestionIndex + 1)">
-              <ng-container *ngIf="!isXsmall">Next</ng-container>
+              <ng-container *ngIf="!isXsmall">{{ 'playerbrief.next' | translate }}</ng-container>
             </a>
             &nbsp;&nbsp;
             <a *ngIf="(currentQuestionIndex + 1) === totalQCount"
               class="text-white ws-mat-primary-background margin-xs quest_btn" mat-button (click)="proceedToSubmit()">
-              <ng-container *ngIf="!isXsmall">Submit</ng-container>
+              <ng-container *ngIf="!isXsmall">{{ 'playerbrief.submit' | translate }}</ng-container>
             </a>
             &nbsp;&nbsp;
             <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border margin-xs quest_btn prev" mat-button
               (click)="getNextQuestion(currentQuestionIndex - 1)">
-              <ng-container *ngIf="!isXsmall">Previous</ng-container>
+              <ng-container *ngIf="!isXsmall">{{ 'playerbrief.previous' | translate }}</ng-container>
             </a>
 
             <!-- <button class="text-white ws-mat-primary-background" mat-raised-button i18n="button quiz submit"
@@ -135,7 +147,7 @@
             <div class="flex flex-row">
                 <div>
                   <p class="mat-subheading-1">
-                    {{ 'practiceoverview.questions' | translate }}
+                    {{ 'playerbrief.questions' | translate }}
                   </p>
                 </div>
                 <div class="question-info">
@@ -143,16 +155,42 @@
                 </div>
                 <div class="info-hover">
                   <div class="info-tooltip-container">
-                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>Answered</span></div>
-                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>Not Answered</span></div>
-                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>Flagged</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{ 'playerbrief.answered' | translate }}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{ 'playerbrief.notAnswered' | translate }}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{ 'playerbrief.flagged' | translate }}</span></div>
                   </div>
                 </div>
             </div>
-           
+            
             <div class="timer" *ngIf="quizJson?.timeLimit">
               <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
-                  <ng-container [ngTemplateOutlet]="timer"></ng-container>
+                  <!-- <ng-container [ngTemplateOutlet]="timer"></ng-container> -->
+                  <div *ngIf="timeLeft" class="flex flex-1 flex-center">
+                    <img src="assets/icons/final-assessment/timer.svg">
+                    &nbsp;&nbsp; 
+                    
+                    <ng-container *ngIf="quizJson.timeLimit >= 3600">
+                      
+                      <div *ngIf="timeLeft > 120">
+                        <span class="time-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+                      </div>
+                      <div *ngIf="timeLeft <= 120" class="ws-mat-red-text">
+                        <span class="time-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="quizJson.timeLimit < 3600">
+                      <div *ngIf="timeLeft > 120">
+                        <span class="time-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+                      </div>
+                      <div *ngIf="timeLeft <= 120" class="ws-mat-red-text">
+                        <span class="time-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+                      </div>
+                    </ng-container>
+                
+                    <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" i18n>
+                      <span class="time-title ws-mat-default-text"> (Submitted)</span>
+                    </div>
+                  </div>
                 </span>
               </mat-chip></mat-chip-list>
             </div>
@@ -162,11 +200,11 @@
             <div class="flex flex-row justify-around">
               <div class="flex flex-col align-center">
                 <div class="ques-count">{{totalQCount - questionAttemptedCount}}</div>
-                <div class="stats-label">Not answered</div>
+                <div class="stats-label">{{ 'playerbrief.notAnswered' | translate }}</div>
               </div>
               <div class="flex flex-col align-center">
                 <div class="ques-count">{{questionAttemptedCount ? questionAttemptedCount  : 0}}</div>
-                <div class="stats-label">Answered</div>
+                <div class="stats-label">{{ 'playerbrief.answered' | translate }}</div>
               </div>
               <!-- <div class="flex flex-col align-center">
                 <div class="ques-count">{{markedQuestions.size}}</div>
@@ -341,30 +379,47 @@
 </div>
 
 <!-- Mobile -->
+
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial' && isMobile && fetchingQuestionsStatus === 'done'">
   <div class="flex flex-column"
-    *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
+    *ngIf="!isSubmitted">
       <div>
         <div class="flex flex-row justify-around align-end mobile-question-header">
           <div (click)="back()">
-            <img src="assets/icons/final-assessment/mobile-cross.svg"/>
+            <img class="vertical-middle" src="assets/icons/final-assessment/mobile-cross.svg"/>
           </div>
           <div class="no-border flex cursor-pointer back_button">
             <span class="subheading-back">{{resourceName}}</span>
-            <div class="question-info">
-              <img src="assets/icons/final-assessment/question_info.svg"/>
-            </div>
-            <div class="info-hover">
-              <div class="info-tooltip-container">
-                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>Answered</span></div>
-                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>Not Answered</span></div>
-                  <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>Flagged</span></div>
-              </div>
-            </div>
+            
           </div>
           <div class="timer" *ngIf="quizJson?.timeLimit">
             <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
-                <ng-container [ngTemplateOutlet]="timer"></ng-container>
+              <div *ngIf="timeLeft" class="flex flex-1 flex-center">
+                <img src="assets/icons/final-assessment/timer.svg">
+                &nbsp;&nbsp; 
+                
+                <ng-container *ngIf="quizJson.timeLimit >= 3600">
+                  
+                  <div *ngIf="timeLeft > 120">
+                    <span class="time-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+                  </div>
+                  <div *ngIf="timeLeft <= 120" class="ws-mat-red-text">
+                    <span class="time-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="quizJson.timeLimit < 3600">
+                  <div *ngIf="timeLeft > 120">
+                    <span class="time-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+                  </div>
+                  <div *ngIf="timeLeft <= 120" class="ws-mat-red-text">
+                    <span class="time-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+                  </div>
+                </ng-container>
+            
+                <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" i18n>
+                  <span class="time-title ws-mat-default-text"> (Submitted)</span>
+                </div>
+              </div>
               </span>
             </mat-chip></mat-chip-list>
           </div>
@@ -376,11 +431,11 @@
                 <div class="flex flex-row justify-around">
                   <div class="flex flex-col align-center">
                     <div class="ques-count">{{totalQCount - questionAttemptedCount}}</div>
-                    <div class="stats-label">Not answered</div>
+                    <div class="stats-label">{{'playerbrief.notAnswered' | translate}}</div>
                   </div>
                   <div class="flex flex-col align-center">
                     <div class="ques-count">{{questionAttemptedCount ? questionAttemptedCount  : 0}}</div>
-                    <div class="stats-label">Answered</div>
+                    <div class="stats-label">{{'playerbrief.answered' | translate}}</div>
                   </div>
                   <!-- <div class="flex flex-col align-center">
                     <div class="ques-count">{{markedQuestions.size}}</div>
@@ -389,7 +444,18 @@
                 </div>
               </div>
               <div class="seperate-text">
-                <span>Questions</span>
+                <span>{{'playerbrief.questions' | translate | titlecase}}</span><span><img (click)="showToolTip=!showToolTip" class="question-info" src="assets/icons/final-assessment/question_info.svg"/></span>
+                <!-- <div class="question-info">
+                  <img src="assets/icons/final-assessment/question_info.svg"/>
+                </div>
+               
+              </div> -->
+              <div class="info-hover" *ngIf="showToolTip">
+                <div class="info-tooltip-container">
+                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{'playerbrief.answered' | translate}}</span></div>
+                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{'playerbrief.notAnswered' | translate}}</span></div>
+                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{'playerbrief.flagged' | translate}}</span></div>
+                </div>
               </div>
               
           </div>
@@ -528,7 +594,7 @@
                 *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
                 <button class="text-white ws-mat-primary-background margin-xs quest_btn" mat-raised-button
                   (click)="nextSection(allSecAttempted.next)" i18n="button quiz submit">
-                  Next Section
+                  {{ 'practiceoverview.nextSection' | translate }}
                 </button>
               </ng-container>
             </div>
@@ -537,10 +603,11 @@
         </div>
       </div>
      
+    </div>
   </div>
   <div class="fixed-question-control" *ngIf="!isSubmitted">
     <div>
-      <div class="flex flex-row justify-around">
+      <div class="flex flex-row justify-center">
         <ng-container
           *ngIf="!allSecAttempted.full && allSecAttempted.next && ((currentQuestionIndex+1) === totalQCount)">
           <button class="text-white ws-mat-primary-background quest_btn" mat-raised-button
@@ -550,18 +617,18 @@
         </ng-container>
         <a *ngIf="currentQuestionIndex !== 0" class="ws-mat-accent-border quest_btn prev" mat-button
         (click)="getNextQuestion(currentQuestionIndex - 1)">
-        <ng-container>{{ 'practiceoverview.previous' | translate }}</ng-container>
+        <ng-container>{{ 'playerbrief.previous' | translate }}</ng-container>
       </a>
       &nbsp;&nbsp;
         <a *ngIf="(currentQuestionIndex+1) !== totalQCount"
           class="text-white ws-mat-primary-background quest_btn" [ngClass]="currentQuestionIndex === 0 ? 'first' : ''" mat-button
           (click)="getNextQuestion(currentQuestionIndex + 1)">
-          <ng-container>{{ 'practiceoverview.nextQuestion' | translate }}</ng-container>
+          <ng-container>{{ 'playerbrief.next' | translate }}</ng-container>
         </a>
         &nbsp;&nbsp;
         <a *ngIf="(currentQuestionIndex + 1) === totalQCount"
           class="text-white ws-mat-primary-background quest_btn" mat-button (click)="proceedToSubmit()">
-          <ng-container>Submit</ng-container>
+          <ng-container>{{ 'playerbrief.submit' | translate }}</ng-container>
         </a>
         
        
@@ -954,10 +1021,13 @@
 
 
 <ng-template #timer>
+  
   <div *ngIf="timeLeft" class="flex flex-1 flex-center">
     <img src="assets/icons/final-assessment/timer.svg">
-    &nbsp;&nbsp;
+    &nbsp;&nbsp; 
+    
     <ng-container *ngIf="quizJson.timeLimit >= 3600">
+      
       <div *ngIf="timeLeft > 120">
         <span class="time-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
       </div>
@@ -1011,14 +1081,3 @@
   </div>
 </ng-template>
 
-<div class="calculate-overlay" *ngIf="showOverlay"> 
-  <div class="overlay">
-    <div>      
-        <mat-spinner [diameter]="150" ></mat-spinner>
-    </div>
-    <div>
-      <span class="mat-heading" i18n>Be patient please, while we calculate your result!</span>
-    </div>
-  </div>
-   
-</div>

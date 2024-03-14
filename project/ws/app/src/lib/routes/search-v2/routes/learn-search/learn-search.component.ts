@@ -360,6 +360,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     ]
     this.newQueryParam = data
     let modifiedDataCount = 0
+    this.searchResults = []
     this.searchSrvc.fetchSearchDataByCategory(data).subscribe((response: any) => {
       if (response && response.result && response.result.count) {
         response.result.content.forEach((res: any) => {

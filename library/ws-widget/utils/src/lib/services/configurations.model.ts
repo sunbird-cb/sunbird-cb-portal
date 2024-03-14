@@ -65,7 +65,7 @@ export namespace NsInstanceConfig {
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
     positions: any
-    webistelanguages: any[]
+    websitelanguages: any[]
     profileTimelyNudges: any
   }
   export interface IPortalUrls {

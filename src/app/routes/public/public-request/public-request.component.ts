@@ -144,7 +144,7 @@ export class PublicRequestComponent implements OnInit {
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.multiLang = instanceConfig.webistelanguages
+      this.multiLang = instanceConfig.websitelanguages
     }
 
     this.onPhoneChange()

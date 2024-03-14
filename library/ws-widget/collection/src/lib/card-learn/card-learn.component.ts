@@ -146,7 +146,7 @@ export class CardLearnComponent extends WidgetBaseComponent
 
     this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
       let contentList = []
-      if (results.result.content.length) {
+      if (results && results.result && results.result.content && results.result.content.length) {
         if (this.configSvc && this.configSvc.unMappedUser &&
                this.configSvc.unMappedUser.profileDetails &&
                this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {

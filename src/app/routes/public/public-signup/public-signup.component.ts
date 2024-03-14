@@ -216,7 +216,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
       this.portalID = `${this.telemetryConfig.pdata.id}`
-      this.multiLang = instanceConfig.webistelanguages
+      this.multiLang = instanceConfig.websitelanguages
     }
 
     if (isPlatformBrowser(this._platformId)) {

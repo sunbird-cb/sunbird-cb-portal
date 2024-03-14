@@ -5,7 +5,7 @@
             <mat-expansion-panel *ngIf="fs.values.length > 0" (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="true" class="margin-top-l margin-bottom-l">
                 <mat-expansion-panel-header class="padding-remove">
                     <mat-panel-title>
-                        <p class="mat-subheading-2 margin-bottom-xs font-bold-imp">{{translateTo(fs.displayname)}}</p>
+                        <p class="mat-subheading-2 margin-bottom-xs font-bold-imp">{{ translateActualLabels(fs.displayname, 'searchfilters') }}</p>
                         <!-- <p class="mat-subheading-2 margin-bottom-xs font-bold-imp" *ngIf="fs.name === 'contentType'">Content type</p> -->
                         <!-- <p class="mat-subheading-2 margin-bottom-xs font-bold-imp" *ngIf="fs.name === 'mimeType'">Resource type</p>
                         <p class="mat-subheading-2 margin-bottom-xs font-bold-imp" *ngIf="fs.name === 'source'">Provider</p>
@@ -32,15 +32,14 @@
                             </mat-checkbox>
                             <ng-container *ngIf="options.name !== 'moderatedCourses'">
                                 <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
-                                    <label for="{{options.name}}">options.name
-                                        <!-- {{ translateLabels(options.name, 'searchfilters') }} -->
+                                    <label for="{{options.name}}">
+                                        {{ translateLabels(options.displayName, 'searchfilters') }}
                                     </label>
                                 </mat-checkbox>
                             </ng-container>
                             <ng-container *ngIf="karmayogiBadge && options.name === 'moderatedCourses'">
                                 <mat-checkbox (change)="modifyUserFilters(options, fs.name)" [checked]="options.ischecked" *ngIf="options.name !== 'application/pdf' && options.name !== 'audio/mpeg' && options.name !== 'application/vnd.ekstep.content-collection' && options.name !== 'text/x-url'">
-                                    <label for="{{options.name}}">options.name
-                                        <!-- {{ translateLabels(options.name, 'searchfilters') }} --></label>
+                                    <label for="{{options.name}}">{{ translateLabels(options.displayName, 'searchfilters') }}</label>
                                 </mat-checkbox>
                             </ng-container>
                         </span>
