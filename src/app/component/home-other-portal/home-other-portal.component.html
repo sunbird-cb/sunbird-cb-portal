@@ -1,29 +1,26 @@
-
 <ng-container *ngIf="!showSkeleton; else noPortalData">
 <mat-card class="mat-card pad-4 other-portal-box" *ngIf="portalLinks && portalLinks.length;">
-    <p class="mat-subheading-1">Other Portals You Have Access To</p>
+    <p class="mat-subheading-1">{{ 'homeotherportals.otherPortals' | translate }}</p>
     <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of portalLinks">
-        <a class="flex flex-row items-center content-center" target="_blank" href="{{wdata.widgetData.actionBtn.url}}">
+        <a class="flex flex-row items-center content-center" (click)="raiseTelemetry(wdata)" target="_blank" href="{{wdata.widgetData.actionBtn.url}}">
             <div class="icon-box margin-right-s flex items-center justify-center">
                 <img src="{{wdata.widgetData.actionBtn.icon}}">
             </div>
             <div class="flex flex-col card-text-box">
                 <p class="mat-subheading-2 margin-remove-bottom" [attr.id]="wdata.widgetData.actionBtn.icon">
-                    {{ wdata.widgetData.actionBtn.name }}
+                    <!-- {{ wdata.widgetData.actionBtn.name }} -->
+                    {{ translateLabels( wdata.widgetData.actionBtn.name, 'homeotherportals') }}
                 </p>
                 <p class="small-font margin-remove-bottom" *ngIf="wdata.widgetData.actionBtn.subtitle"> 
-                    {{ wdata.widgetData.actionBtn.subtitle }}
+                    <!-- {{ wdata.widgetData.actionBtn.subtitle }} -->
+                    {{ translateLabels( wdata.widgetData.actionBtn.subtitle, 'homeotherportals') }}
                 </p>
             </div>
         </a>
     </div>
 </mat-card>
 </ng-container>
-
-
 <ng-template #noPortalData>
-
-
 <mat-card class="mat-card pad-4 other-portal-box margin-top-m" >
     <p class="mat-subheading-1 margin-bottom-m flex"><ws-widget-skeleton-loader [width]="'150px'" [height]="'16px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader></p>
     <div class="flex flex-row items-center content-center portal-box" *ngFor="let wdata of noPortal">

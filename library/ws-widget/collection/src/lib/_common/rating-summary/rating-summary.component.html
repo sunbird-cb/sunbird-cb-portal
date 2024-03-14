@@ -4,17 +4,21 @@
             <div class="rating-value ws-mat-default-text">{{ ratingSummary?.avgRating }}</div>
             <div class="flex flex-col gap-1">
                 <div class="flex flex-row gap-2">
-                    <mat-icon class="mat-icon material-icons rating-icon ws-mat-black16-text" [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, ratingSummary?.avgRating)}" *ngFor="let rating of [1, 2, 3, 4, 5]">
+                    <mat-icon class="mat-icon material-icons rating-icon ws-mat-black16-text"
+                        [ngClass]="{'ws-mat-orange-text': getRatingIconClass(rating, ratingSummary?.avgRating)}"
+                        *ngFor="let rating of [1, 2, 3, 4, 5]">
                         {{ getRatingIcon(rating, ratingSummary?.avgRating) }}
                     </mat-icon>
                 </div>
-                <div class="text-base">{{ ratingSummary?.total_number_of_ratings | pipeCountTransform }} ratings</div>
+                <div class="text-base">{{ ratingSummary?.total_number_of_ratings | pipeCountTransform }}
+                    {{'ratingsummary.ratings' | translate}}
+                </div>
             </div>
         </div>
         <div class="flex flex-col gap-2">
             <ng-container *ngFor="let rating of ratingSummary?.breakDown?.slice().reverse()">
                 <div class="flex flex-row gap-4 items-center">
-                    <div class="flex-none font-bold">{{rating.key}} star</div>
+                    <div class="flex-none font-bold">{{ rating.key }} {{ 'ratingsummary.star' | translate }}</div>
                     <div class="flex items-center rating-progress">
                         <mat-progress-bar [mode]="'determinate'" [matTooltip]="rating?.percent + ' %'"
                             [value]="rating?.percent" class="rating-bar"

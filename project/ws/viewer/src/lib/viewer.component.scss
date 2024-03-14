@@ -29,6 +29,7 @@
 
 .viewer-sidenav {
   width: 100%;
+  border-left: 1px solid #1a4ca1 !important;
 
   @include breakpoint-gt-xs {
     width: 25%;
@@ -77,4 +78,68 @@
       margin-top: $size-s;
     }
   }
+}
+
+.sidenavContent{
+  background-color: rgb(27, 76, 161);
+}
+
+::ng-deep .mat-drawer-content{
+  height: 100% !important;
+}
+
+.viewer-player-container {
+  height: 557px;
+  // overflow: hidden;
+}
+
+.toc-container {
+  background: #fff;
+  margin: 0;
+  padding: 16px 0;
+
+}
+
+.toc-container-mobile {
+  background: #fff;
+  margin: 0;
+  padding: 16px 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  margin-bottom: 60px;
+}
+
+@media screen and (min-width: 280px) and (max-width: 912px) {
+  .viewer-player-container {
+    height: auto;
+    min-height: 23%;
+    // background-color: #000;
+  }
+
+  .viewer-sidenav-container {
+    height: calc(100vh);
+  }
+  ::ng-deep .mat-sidenav  {
+    display: none !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;   // for vertical scroll bar
+  height: 8px;  // for horizontal scroll bar
+  z-index: 10;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(27, 76, 161);
+}
+
+// ::-webkit-scrollbar-thumb {
+//   background-color: rgb(27, 76, 161);
+//   border-radius: 180px;
+// }
+
+
+::ng-deep .mat-drawer.mat-drawer-side{
+  z-index: 0 !important;
 }

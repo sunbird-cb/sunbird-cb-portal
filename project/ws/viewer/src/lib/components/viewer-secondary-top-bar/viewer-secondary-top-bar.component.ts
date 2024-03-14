@@ -4,23 +4,26 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
 // import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, NsPage, ValueService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
+import { PdfScormDataService } from '../../pdf-scorm-data-service'
 
 @Component({
   selector: 'viewer-viewer-secondary-top-bar',
   templateUrl: './viewer-secondary-top-bar.component.html',
-  styleUrls: ['./viewer-secondary-top-bar.component.scss']
+  styleUrls: ['./viewer-secondary-top-bar.component.scss'],
 })
 export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   @Input() frameReference: any
   @Input() forPreview = false
+  @Input() content: any
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
+  @Input() contentMIMEType: any
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -49,6 +52,11 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   userid: any
   channelId: any
   optionalLink = false
+  isMobile = false
+  handleBackFromPdfScormFullScreenFlag = false
+  toggleSideBarFlag = true
+  enableShare = false
+  pdfContentProgressData: any = { status: 1 }
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -61,6 +69,8 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     private router: Router,
     private widgetServ: WidgetContentService,
     private viewerSvc: ViewerUtilService,
+    private pdfScormDataService: PdfScormDataService,
+    private events: EventService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -74,6 +84,27 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getAuthDataIdentifer()
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
+
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
+      this.handleBackFromPdfScormFullScreenFlag = data
+    })
+
+    this.pdfScormDataService.handlePdfMarkComplete.subscribe((contentData: any) => {
+      this.pdfContentProgressData = contentData
+    })
+
+    this.viewerSvc.autoPlayNextVideo.subscribe((autoPlayVideoData: any) => {
+      if (autoPlayVideoData) {
+        if (this.isTypeOfCollection && this.nextResourceUrl && this.nextResourceUrlParams && this.nextResourceUrlParams.queryParams) {
+          this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams })
+        }
+      }
+    })
 
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true
@@ -185,6 +216,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   }
 
   toggleSideBar() {
+    this.toggleSideBarFlag = !this.toggleSideBarFlag
     this.toggle.emit()
   }
   get needToHide(): boolean {
@@ -265,18 +297,83 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
                   },
                 })
                 dialogRef.afterClosed().subscribe(result => {
+                  const app: any = document.getElementById('viewer-conatiner-backdrop')
+                  app.style.filter = 'blur(0px)'
                   if (result === true) {
-                    this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                    this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
                   }
                 })
               } else {
-                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
               }
             } else {
-              this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+              this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
             }
           })
       }
+    } else {
+      this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+    }
+  }
+
+  markAsComplete() {
+    this.viewerSvc.markAsCompleteSubject.next(true)
+    if (!this.nextResourceUrl) {
+      this.pdfContentProgressData['status'] = 2
+      this.finishDialog()
+    }
+  }
+
+  checkForNextOfflineOnlineSession() {
+    const nextUrl: any = this.nextResourceUrl
+    if ((nextUrl.includes('offline-session')) ||
+    (nextUrl.includes('online-session'))
+    ) {
+      this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams })
+    }
+  }
+
+  checkForPrevOfflineOnlineSession() {
+    const prevUrl: any = this.prevResourceUrl
+    if ((prevUrl.includes('offline-session')) ||
+    (prevUrl.includes('online-session'))
+
+    ) {
+      this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
+    }
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+
+  /* tslint:disable */
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
+  }
+
+  backToPrev() {
+    if(this.prevResourceUrl) {
+      this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
     } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }

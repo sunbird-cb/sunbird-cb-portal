@@ -1,7 +1,11 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 import { WidgetBaseComponent, NsWidgetResolver } from '@sunbird-cb/resolver'
-import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { EventService, MultilingualTranslationsService, WsEvents } from '@sunbird-cb/utils'
+/* tslint:disable */
+import _ from 'lodash'
+/* tslint:enable */
 @Component({
   selector: 'ws-widget-profile-v2-karmapoints',
   templateUrl: './profile-karmapoints.component.html',
@@ -15,8 +19,15 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
   @HostBinding('id')
   public id = 'profile-karmapoints'
 
-  constructor(private router: Router, private events: EventService) {
+  constructor(private router: Router, private events: EventService,
+              private langtranslations: MultilingualTranslationsService,
+              private translate: TranslateService) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -59,18 +70,27 @@ export class ProfileKarmapointsComponent extends WidgetBaseComponent implements 
 
   getTitle(row: any) {
     if (row && row.operation_type === 'COURSE_COMPLETION') {
-      return 'Course Completion'
+      return this.translateLabels('Course Completion', 'profileKarmapoints')
     }
     if (row && row.operation_type === 'RATING') {
-      return 'Course Rating'
+      return this.translateLabels('Course Rating', 'profileKarmapoints')
     }
     if (row && row.operation_type === 'FIRST_LOGIN') {
-      return 'First Login'
+      return this.translateLabels('First Login', 'profileKarmapoints')
     }
     if (row && row.operation_type === 'FIRST_ENROLMENT') {
-      return 'First Enrollment'
+      return this.translateLabels('First Enrollment', 'profileKarmapoints')
     }
     return `${row ? row.operation_type.split('_').join(' ') : 'No Title'}`
   }
 
+  translateName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'profileKarmapoints.' + _.camelCase(menuName.replace(/\s/g, ''))
+    return this.translate.instant(translationKey)
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
 }

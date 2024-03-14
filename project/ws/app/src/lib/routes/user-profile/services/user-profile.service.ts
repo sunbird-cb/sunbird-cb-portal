@@ -27,9 +27,11 @@ const API_ENDPOINTS = {
   getPendingFields: '/apis/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
   getDesignation: '/apis/proxies/v8/user/v1/positions',
   editProfileDetails: '/apis/proxies/v8/user/v1/extPatch',
+  updatePrimaryEmail: '/apis/proxies/v8/user/otp/v2/extPatch',
   updateProfilePic: '/apis/proxies/v8/storage/profilePhotoUpload/profileImage',
   GET_GROUPS: '/api/user/v1/groups',
   getApprovalReqs: '/apis/protected/v8/workflowhandler/applicationsSearch',
+  ehrmsDataRequest: '/apis/proxies/v8/ehrms/details',
 }
 
 @Injectable()
@@ -40,6 +42,9 @@ export class UserProfileService {
   }
   editProfileDetails(data: any) {
     return this.http.post<any>(API_ENDPOINTS.editProfileDetails, data)
+  }
+  updatePrimaryEmailDetails(data: any) {
+    return this.http.post<any>(API_ENDPOINTS.updatePrimaryEmail, data)
   }
   updateProfileDetails(data: any) {
     return this.http.patch<any>(API_ENDPOINTS.updateProfileDetails, data)
@@ -97,5 +102,15 @@ export class UserProfileService {
   }
   getApprovalReqs(data: any): Observable<any> {
     return this.http.post<any>(API_ENDPOINTS.getApprovalReqs, data)
+  }
+
+  fetchEhrmsDetails() {
+    return this.http
+      .get(API_ENDPOINTS.ehrmsDataRequest)
+      .pipe(
+        map(
+          (result: any) => result
+        )
+      )
   }
 }

@@ -1,5 +1,9 @@
 @import 'ws-mixins';
+@import 'ws-vars';
 
+.hideForNav {
+  display: none !important;
+}
 
 .tourGuideBtn {
   padding: 10px 16px;
@@ -7,7 +11,6 @@
   flex-direction: row;
   cursor: pointer;
 }
-
 .fix-ww {
   margin-left: auto;
   margin-right: auto;
@@ -16,12 +19,13 @@
   flex: 1;
   height: 56px;
 }
+.mobile-height {
+  height: 56px !important;
+}
 
 .mobile {
-  height: 56px !important;
   border-bottom: 1px solid #ccc;
   box-shadow: none !important;
-
 }
 
 .tourGuideBtn:hover {
@@ -46,21 +50,28 @@
   }
 }
 
-
-.app-logo {
+.app-logo-new {
+  height: 56px !important;
+  margin-top: -3px;
   @include breakpoint-xs {
     max-width: 120px;
     margin-top: 4px;
   }
   cursor: pointer !important;
 }
-
+.logo-box,
+.app-logo {
+  transition: 2s ease-in-out;
+}
+.logo-text {
+  font: 700 12px/18px 'Montserrat';
+  margin-bottom: 0 !important;
+}
 .title {
   font-size: 12px !important;
   line-height: 26px !important;
   font-weight: 300 !important;
 }
-
 .search-card-view {
   position: absolute;
   width: 280px;
@@ -89,8 +100,6 @@
     left: 450px;
   }
 }
-
-@import 'ws-vars';
 
 .menu-section {
   padding: 8px;
@@ -147,15 +156,14 @@
   display: flex;
   margin-left: 0;
   text-align: center;
-  flex: 10;
-  max-width: 486px;
+  flex: 4;
+  max-width: 286px;
   margin-right: 1rem;
 }
 
 .mobile-download-app-desc {
   margin-left: 8px;
 }
-
 
 @media only screen and (max-width: 768px) {
   .my-search {
@@ -173,12 +181,6 @@
     align-items: center;
   }
 
-  // .app-logo {
-  //   @include breakpoint-xs {
-  //     max-width: 100%;
-  //   }
-  // }
-
   .help-icon {
     height: 20px;
     width: 20px;
@@ -195,9 +197,8 @@
     flex: 1;
     height: 52px;
     position: relative;
-    top: -4px;
+    top: -1px;
   }
-
 
   .kb-symbol {
     background: rgba(239, 149, 30, 0.24);
@@ -209,7 +210,7 @@
     border: 1px solid rgba(239, 149, 30, 0.24);
     margin-left: 4px;
   }
-  .kb-symbol img{
+  .kb-symbol img {
     vertical-align: middle;
   }
 
@@ -220,11 +221,11 @@
   }
 
   .cross-mobile-download-app span {
-    color: rgba(0, 0, 0, 0.16)
+    color: rgba(0, 0, 0, 0.16);
   }
 
   .mobile-download-app-desc {
-    margin-left:8px;
+    margin-left: 8px;
   }
   .mobile-download-app-desc-heading {
     margin: 0;
@@ -240,7 +241,7 @@
 
   .download-app-chip-top-header {
     border-radius: 64px;
-    background: #F3962F;
+    background: #f3962f;
     color: #fff;
     min-width: 128px;
     text-align: center;
@@ -258,9 +259,9 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    height:64px;
-    padding:0;
-    margin:0;
+    height: 64px;
+    padding: 0;
+    margin: 0;
     justify-content: center;
   }
 
@@ -302,7 +303,6 @@
   .mobile-footer-fixed-nav-list-item span {
     line-height: 16px;
   }
-
 }
 
 .signup_div {
@@ -329,7 +329,7 @@
   .karma-lbl {
     opacity: 1;
     color: rgba(0, 0, 0, 0.87);
-    font-family: "Lato-Bold";
+    font-family: 'Lato-Bold';
     font-size: 10px;
     font-weight: 700;
     font-style: Bold;
@@ -341,7 +341,7 @@
   .karma-point {
     opacity: 1;
     color: rgba(27, 76, 161, 1);
-    font-family: "Lato-Bold";
+    font-family: 'Lato-Bold';
     font-size: 14px;
     font-weight: 700;
     font-style: Bold;
@@ -356,7 +356,7 @@
   position: relative;
   opacity: 1;
   color: rgba(255, 255, 255, 0.95);
-  font-family: "Lato-Regular";
+  font-family: 'Lato-Regular';
   font-size: 12px;
   font-weight: 400;
   font-style: Regular;

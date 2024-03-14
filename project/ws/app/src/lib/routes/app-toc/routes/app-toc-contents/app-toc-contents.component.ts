@@ -8,6 +8,7 @@ import { AppTocService } from '../../services/app-toc.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-app-toc-contents',
@@ -34,8 +35,16 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private tocSvc: AppTocService,
     private configSvc: ConfigurationsService,
-    private viewerSVC: ViewerUtilService
-  ) { }
+    private viewerSVC: ViewerUtilService,
+    private translate: TranslateService
+
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+   }
 
   ngOnInit() {
     // this.forPreview = window.location.href.includes('/author/')

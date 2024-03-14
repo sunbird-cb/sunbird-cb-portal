@@ -7,6 +7,8 @@ import { Observable } from 'rxjs'
 
 import { v4 as uuid } from 'uuid'
 import { RequestService } from 'src/app/routes/public/public-request/request.service'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -51,7 +53,9 @@ export class RequestDialogComponent implements OnInit {
     private snackBar: MatSnackBar,
     private requestSvc: RequestService,
     private dialogRef: MatDialogRef<RequestDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: any
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.requestType = this.data.reqType
     this.userData = this.data
@@ -61,6 +65,12 @@ export class RequestDialogComponent implements OnInit {
       designation: new FormControl('', this.requestType === 'Position' ? [Validators.pattern(this.customCharsPattern),
       Validators.required, forbiddenNamesValidatorPosition(this.masterPositions)] : []),
     })
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -135,5 +145,9 @@ export class RequestDialogComponent implements OnInit {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
     })
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

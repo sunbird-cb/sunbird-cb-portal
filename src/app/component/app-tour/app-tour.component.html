@@ -5,31 +5,31 @@
   <div class="app-tour-popup" *ngIf="!isMobile" (click)="$event.stopPropagation()">
     <div class="first-panel">
       <div class="text-center">
-        <span class="ws-mat-default-text mat-h2 tour-panel-title">Get started</span>
+        <span class="ws-mat-default-text mat-h2 tour-panel-title">{{'tour.getStarted' | translate }}</span>
         <br/>
-        <span class="ws-mat-default-text mat-h5 tour-panel-desc">Namaste! Welcome to the journey of anytime anywhere learning.</span>
+        <span class="ws-mat-default-text mat-h5 tour-panel-desc">{{'tour.welcomeNote' | translate }}</span>
       </div>
       <div class="first-action-container">
         <div class="first-panel-action" (click)="starVideoPlayer()">
           <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
           <div class="blk2"><img alt="" src="fusion-assets/images/play-tour.svg"></div>
-          <div class="blk3"><span>What is iGOT Karmayogi?</span></div>
+          <div class="blk3"><span>{{'tour.whatIsiGOTKarmayogi' | translate }}</span></div>
           <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
         </div>
       </div>
     </div>
     <div class="second-panel">
       <div class="second-action-container">
-        <div class="second-panel-action" (click)="startTour('welcome-start', 'welcome')">
+        <div class="second-panel-action" (click)="startTour('tour-start', 'tour')">
           <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
           <div class="blk2"><img alt="" src="fusion-assets/images/take-tour.svg"></div>
-          <div class="blk3"><span>Take a tour</span></div>
+          <div class="blk3"><span>{{'tour.takeTour' | translate }}</span></div>
           <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
         </div>
         <div class="second-panel-action second-panel-action-buttons">
           <!-- <span (click)="skipTour()" class="skip-btn">Skip</span> -->
-          <button (click)="skipTour('welcome-skip', 'welcome')" class="dialog-btn skip-btn" mat-button>Skip</button>
-          <button (click)="starVideoPlayer()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
+          <button (click)="skipTour('welcome-skip', 'welcome')" class="dialog-btn skip-btn" mat-button>{{'tour.skip' | translate }}</button>
+          <button (click)="starVideoPlayer()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>{{'tour.getStarted' | translate }}</button>
         </div>
       </div>
     </div>
@@ -45,9 +45,9 @@
     </div>
     <div class="first-panel">
       <div class="text-center">
-        <span class="ws-mat-white-text mat-h2 header-text">Get started</span>
+        <span class="ws-mat-white-text mat-h2 header-text">{{'tour.getStarted' | translate }}</span>
         <br/>
-        <span class="ws-mat-white-text mat-h5 header-desc">Namaste! Welcome to the journey of anytime anywhere learning.</span>
+        <span class="ws-mat-white-text mat-h5 header-desc">{{'tour.welcomeNote' | translate }}</span>
       </div>
     </div>
     <div class="second-panel no-border">
@@ -55,25 +55,25 @@
           <div class="second-panel-action" (click)="starVideoPlayer()">
             <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
             <div class="blk2"><img alt="" src="fusion-assets/images/play-tour.svg"></div>
-            <div class="blk3"><span>What is iGOT Karmayogi?</span></div>
+            <div class="blk3"><span>{{'tour.whatIsiGOTKarmayogi' | translate }}</span></div>
             <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
           </div>
       </div>
     </div>
     <div class="second-panel">
       <div class="second-action-container">
-        <div class="second-panel-action" (click)="startTour('welcome-start', 'welcome')">
+        <div class="second-panel-action" (click)="startTour('tour-start', 'tour')">
           <div class="blk1"><mat-icon class="icon-tour gray-icon">check_circle</mat-icon></div>
           <div class="blk2"><img alt="" src="fusion-assets/images/take-tour.svg"></div>
-          <div class="blk3"><span>Take a tour</span></div>
+          <div class="blk3"><span>{{'tour.takeTour' | translate }}</span></div>
           <div class="blk4"><mat-icon class="icon-tour blue-icon">navigate_next</mat-icon></div>
         </div>
       </div>
     </div>
     <div class="third-panel">
       <div class="second-panel-action second-panel-action-buttons">
-        <span (click)="skipTour('welcome-skip', 'welcome')" class="skip-btn">Skip</span>
-        <button (click)="starVideoPlayer()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>Get Started</button>
+        <span (click)="skipTour('welcome-skip', 'welcome')" class="skip-btn">{{'tour.takeTour' | translate }}</span>
+        <button (click)="starVideoPlayer()" class="dialog-btn ws-mat-primary-background-op30 action-orange" mat-button>{{'tour.getStarted' | translate }}</button>
       </div>
     </div>
   </div>
@@ -81,14 +81,18 @@
 </div>
 
 <!-- <ngx-guided-tour backText="Previous" doneText="Finish" progressIndicatorLocation="inside-next-button"></ngx-guided-tour> -->
-<ngx-guided-tour backText="Previous" doneText="Finish" progressIndicatorLocation="dots"></ngx-guided-tour>
+<ngx-guided-tour
+  nextText="{{'tour.next' | translate}}"
+  backText="{{'tour.previous' | translate}}"
+  doneText="{{'tour.finish' | translate}}"
+  progressIndicatorLocation="dots"></ngx-guided-tour>
 
 <div *ngIf="showCompletePopup && !isMobile" class="backdrop bg-zinc-400" [ngClass]="{'requires-no-scroll': noScroll}">
   <div *ngIf="showCompletePopup && !isMobile" (click)="onCongrats()" class="complete-tour">
     <img width="107" height="107" alt="" src="/assets/icons/tour-complete.png">
-    <span class="ws-mat-default-text mat-h2">Congratulations!</span>
+    <span class="ws-mat-default-text mat-h2">{{'tour.congrats' | translate }}</span>
     <br/>
-    <span class="ws-mat-default-text mat-h5">You are all set to start your learning journey.</span>
+    <span class="ws-mat-default-text mat-h5">{{'tour.startNow' | translate }}</span>
   </div>
   <div class="tour-avatar">
     <img alt="" src="fusion-assets/images/KarmaSahayogi.svg">
@@ -105,9 +109,9 @@
         <img width="107" height="107" alt="" src="/assets/icons/tour-complete.png">
       </div>
       <div class="complete-mobile-panel2">
-        <span class="title">Congratulations!</span>
+        <span class="title">{{'tour.congrats' | translate }}</span>
         <br/>
-        <span class="desc">You are all set to start your learning journey.</span>
+        <span class="desc">{{'tour.startNow' | translate }}</span>
       </div>
     </div>
   </div>

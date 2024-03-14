@@ -7,7 +7,7 @@ import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 
 import { PipeDurationTransformModule, PipeLimitToModule } from '@sunbird-cb/utils'
-
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import {
   MatCardModule,
   MatDialogModule,
@@ -22,6 +22,8 @@ import {
   MatProgressBarModule,
   MatExpansionModule,
   MatTooltipModule,
+  MatChipsModule,
+  MatCheckboxModule,
 } from '@angular/material'
 
 import {
@@ -32,6 +34,7 @@ import { FillInTheBlankComponent } from './components/question/fitb/fitb.compone
 import { MultipleChoiseQuesComponent } from './components/question/mcq-mca/mcq-mca.component'
 import { SingleChoiseQuesComponent } from './components/question/mcq-sca/mcq-sca.component'
 import { MatchTheFollowingQuesComponent } from './components/question/mtf/mtf.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -64,6 +67,10 @@ import { MatchTheFollowingQuesComponent } from './components/question/mtf/mtf.co
     BtnFullscreenModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    SkeletonLoaderModule,
+    TranslateModule,
   ],
   exports: [
     PracticeComponent,

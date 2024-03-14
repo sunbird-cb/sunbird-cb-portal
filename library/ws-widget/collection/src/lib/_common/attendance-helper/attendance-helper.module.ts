@@ -13,6 +13,9 @@ import { MatButtonModule,
   MatCardModule,
   MatMenuModule,
 } from '@angular/material'
+import { HttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
 
 @NgModule({
   declarations: [AttendanceHelperComponent],
@@ -30,6 +33,14 @@ import { MatButtonModule,
     MatInputModule,
     MatSnackBarModule,
     MatMenuModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+
   ],
   exports: [AttendanceHelperComponent],
   entryComponents: [AttendanceHelperComponent],

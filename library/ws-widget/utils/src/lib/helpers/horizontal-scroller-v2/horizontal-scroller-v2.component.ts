@@ -12,18 +12,17 @@ import { TFetchStatus } from '../../constants/misc.constants'
   templateUrl: './horizontal-scroller-v2.component.html',
   styleUrls: ['./horizontal-scroller-v2.component.scss'],
 })
+
 export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestroy {
 
-  @Input()
-  loadStatus: TFetchStatus = 'fetching'
-  @Input()
-  onHover = false
+  @Input() loadStatus: TFetchStatus = 'fetching'
+  @Input() onHover = false
   @Input() sliderConfig = {
     showNavs: true,
     showDots: true,
+    cerificateCardMargin: false,
   }
-  @Output()
-  loadNext = new EventEmitter()
+  @Output() loadNext = new EventEmitter()
   @Input() widgetsLength: any
   @Input() defaultMaxWidgets: any
   @Input() stripConfig: any
@@ -47,15 +46,16 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
         horizontalScrollElem.nativeElement,
         'scroll',
       )
-        .pipe(debounceTime(100), throttleTime(100))
-        .subscribe(_ => {
-          this.updateNavigationBtnStatus(horizontalScrollElem
-            .nativeElement as HTMLElement)
-        })
+      .pipe(debounceTime(100), throttleTime(100))
+      .subscribe(_ => {
+        this.updateNavigationBtnStatus(horizontalScrollElem
+          .nativeElement as HTMLElement)
+      })
 
-       this.getBottomDotsArray()
+      this.getBottomDotsArray()
     }
   }
+
   ngOnChanges() {
     timer(100).subscribe(() => {
       if (this.horizontalScrollElem) {
@@ -71,33 +71,36 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
       this.scrollObserver.unsubscribe()
     }
   }
-  showPrev() {
-      // const elem = this.horizontalScrollElem.nativeElement
-      // elem.scrollLeft -= 0.20 * elem.clientWidth
-      if (this.horizontalScrollElem) {
-        // const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth * 0.24)
-        const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
-        this.horizontalScrollElem.nativeElement.scrollTo({
-          left: this.horizontalScrollElem.nativeElement.scrollLeft - clientWidth,
-          behavior: 'smooth',
-        })
 
-        this.activeNav -= 1
-      }
+  showPrev() {
+    // const elem = this.horizontalScrollElem.nativeElement
+    // elem.scrollLeft -= 0.20 * elem.clientWidth
+    if (this.horizontalScrollElem) {
+      // const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth * 0.24)
+      const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
+      this.horizontalScrollElem.nativeElement.scrollTo({
+        left: this.horizontalScrollElem.nativeElement.scrollLeft - clientWidth,
+        behavior: 'smooth',
+      })
+
+      this.activeNav -= 1
+    }
   }
+
   showNext() {
-      // const elem = this.horizontalScrollElem.nativeElement
-      // elem.scrollLeft += 0.20 * elem.clientWidth
-      if (this.horizontalScrollElem) {
-        // const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth * 0.24)
-        const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
-        this.horizontalScrollElem.nativeElement.scrollTo({
-          left: this.horizontalScrollElem.nativeElement.scrollLeft + clientWidth,
-          behavior: 'smooth',
-        })
-        this.activeNav += 1
-      }
+    // const elem = this.horizontalScrollElem.nativeElement
+    // elem.scrollLeft += 0.20 * elem.clientWidth
+    if (this.horizontalScrollElem) {
+      // const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth * 0.24)
+      const clientWidth = (this.horizontalScrollElem.nativeElement.clientWidth)
+      this.horizontalScrollElem.nativeElement.scrollTo({
+        left: this.horizontalScrollElem.nativeElement.scrollLeft + clientWidth,
+        behavior: 'smooth',
+      })
+      this.activeNav += 1
+    }
   }
+
   private updateNavigationBtnStatus(elem: HTMLElement) {
     this.enablePrev = true
     this.enableNext = true
@@ -149,7 +152,6 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
       })
     }
     this.activeNav = ele
-
   }
 
   getBottomDotsArray() {
@@ -167,29 +169,26 @@ export class HorizontalScrollerV2Component implements OnInit, OnChanges, OnDestr
         document.getElementsByClassName('horizontal-scroll-container')[0]) {
           const scrollerWidth = document.getElementsByClassName('horizontal-scroll-container')[0].clientWidth
           const totalCardsLength = cardWidth * this.widgetsLength
-            if (totalCardsLength > scrollerWidth) {
-              arrLength = (scrollerWidth / cardWidth)
-              this.defaultMaxWidgets = this.defaultMaxWidgets ?  this.widgetsLength < this.defaultMaxWidgets ?
-               this.widgetsLength : this.defaultMaxWidgets : this.defaultMaxWidgets
-              arrLength = this.defaultMaxWidgets / arrLength
-              for (let i = 0; i < arrLength; i += 1) {
-                this.bottomDotsArray.push(i)
-              }
-              // console.log('this.cardSubType', this.cardSubType, arrLength, this.widgetsLength ,
-              // this.defaultMaxWidgets, scrollerWidth, this.bottomDotsArray)
-            }
-          }
-      } else {
-          setTimeout(() => {
-            arrLength = document.getElementsByClassName(this.cardSubType).length
+          if (totalCardsLength > scrollerWidth) {
+            arrLength = (scrollerWidth / cardWidth)
+            this.defaultMaxWidgets = this.defaultMaxWidgets ?  this.widgetsLength < this.defaultMaxWidgets ?
+              this.widgetsLength : this.defaultMaxWidgets : this.defaultMaxWidgets
+            arrLength = this.defaultMaxWidgets / arrLength
             for (let i = 0; i < arrLength; i += 1) {
               this.bottomDotsArray.push(i)
             }
-          },         1000)
+            // console.log('this.cardSubType', this.cardSubType, arrLength, this.widgetsLength ,
+            // this.defaultMaxWidgets, scrollerWidth, this.bottomDotsArray)
+          }
+        }
+      } else {
+        setTimeout(() => {
+          arrLength = document.getElementsByClassName(this.cardSubType).length
+          for (let i = 0; i < arrLength; i += 1) {
+            this.bottomDotsArray.push(i)
+          }
+        },         1000)
       }
-
     }
-
   }
-
 }

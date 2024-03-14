@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CbpFiltersComponent } from './cbp-filters.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { CbpFiltersComponent } from './cbp-filters.component'
 
 describe('CbpFiltersComponent', () => {
-  let component: CbpFiltersComponent;
-  let fixture: ComponentFixture<CbpFiltersComponent>;
+  let component: CbpFiltersComponent
+  let fixture: ComponentFixture<CbpFiltersComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CbpFiltersComponent ]
+      declarations: [CbpFiltersComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CbpFiltersComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CbpFiltersComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

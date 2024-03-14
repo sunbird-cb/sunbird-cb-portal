@@ -17,4 +17,109 @@
 
 .font-bold-imp {
     font-weight: bold !important;
+    color:rgb(27, 76, 161);
+}
+
+.mobile-viewer-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.resource-name {
+    margin: 0 auto;
+}
+
+.nexPrevContainerMobile {
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    background: #fff;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.08);
+    align-items: center;
+}
+
+.margin-left-16 {
+    margin-left: 16px;
+}
+
+.margin-right-16 {
+    margin-right: 16px;
+}
+
+.finish {
+    color:rgb(27, 76, 161)
+}
+
+.heading {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0.25;
+    color:rgba(0, 0, 0, 0.87)
+}
+
+.blue-rounded-btn {
+    width: 147px;
+    border: 1px solid rgb(27, 76, 161);
+    border-radius: 63px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}  
+
+.center-toggle {
+    position: fixed;
+    margin-left: 5px;
+    z-index: 10000;
+    background: #fff !important;
+    height: 24px;
+    width: 24px;
+    margin-top: -10px;
+    border: 1px solid rgb(27, 76, 161)
+}
+
+.blue-color {
+    color: rgb(27, 76, 161);
+}
+
+.completed {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.25;
+    line-height: 20px;
+    font-family: 'Lato';
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.completed span {
+    margin-left: 8px;
+}
+
+.margin-top-2 {
+    margin-top: 2px;
+}
+
+.vertical-middle {
+    vertical-align: middle;
+}
+
+.cross-icon img{
+    padding: 16px;
+    vertical-align: middle;
+}
+
+@media screen and (min-width: 280px) and (max-width: 540px) {
+    .heading {
+        padding-top: 10px;
+        width:330px;
+    }
 }

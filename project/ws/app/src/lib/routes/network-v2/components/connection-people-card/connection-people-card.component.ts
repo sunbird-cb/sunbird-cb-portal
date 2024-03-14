@@ -4,6 +4,7 @@ import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsUser } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
 // import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
 
 @Component({
@@ -25,11 +26,17 @@ export class ConnectionPeopleCardComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private activeRoute: ActivatedRoute,
+    private translate: TranslateService,
     // private connectionHoverService: ConnectionHoverService,
     //  private configSvc: ConfigurationsService,
   ) {
     if (this.activeRoute.parent) {
       this.me = this.activeRoute.parent.snapshot.data.me
+    }
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
   }
 

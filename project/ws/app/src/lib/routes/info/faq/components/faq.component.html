@@ -5,45 +5,45 @@
             <div class="flex flex-row">
                 <div  class="discuss-left-panel">
                     <ul class="sb-sidebar-menu pl-0 ng-star-inserted">
-                        <li class="df-sidebar-menu-list menu-active ng-star-inserted" id="d.route"><a>Mission Karmayogi</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Account and access</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Learn</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> Discuss</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Network</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Competencies</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>iGOT Marketplace</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Content provider</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> FRACing</a></li>
+                        <li class="df-sidebar-menu-list menu-active ng-star-inserted" id="d.route"><a> {{ 'common.missionKarmyogi' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.accountAndAccess' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.learn' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.discuss' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.network' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.competencies' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.igotMarketplace' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.contentProvider' | translate }}</a></li>
+                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.fracing' | translate }}</a></li>
                     </ul>
-                   
+
                 </div>
 
                 <!-- for mobile-view -->
-                <button type="button" class="openbtn" (click)="showMenuButton()">☰</button> 
+                <button type="button" class="openbtn" (click)="showMenuButton()">☰</button>
                 <div class="overlay-sidebar" *ngIf="!showSideMenu">
                   <div class="overlay-sidebar__menu">
                       <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
                       <div class="sidebar-menu__content">
-                        <ul class="sb-sidebar-menu-mob pl-0">
-                          <li class="df-sidebar-menu-list menu-active ng-star-inserted" id="d.route"><a>Mission Karmayogi</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Account and access</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Learning</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> Discussions</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Network</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Competencies</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>iGOT Marketplace</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>Content provider</a></li>
-                        <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> FRACing process</a></li>
+                        <ul class="sb-sidebar-menu pl-0 ng-star-inserted">
+                          <li class="df-sidebar-menu-list menu-active ng-star-inserted" id="d.route"><a> {{ 'common.missionKarmyogi' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.accountAndAccess' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.learn' | translate }}Learn</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.discuss' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.network' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.competencies' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.igotMarketplace' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a>{{ 'common.contentProvider' | translate }}</a></li>
+                          <li class="df-sidebar-menu-list ng-star-inserted" id="d.route"><a> {{ 'common.fracing' | translate }}</a></li>
                       </ul>
                       </div>
                   </div>
                 </div>
-    
+
 
 
                 <div class="discuss-right-panel">
-                    <p class="mat-display-1 main_title_text margin-bottom-xl">Frequently asked questions</p>
-                   
+                    <p class="mat-display-1 main_title_text margin-bottom-xl">{{ 'faq.frequently_asked_questions' | translate }}</p>
+
                     <form class="flex-1">
                         <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary" >
                           <mat-icon matPrefix class="flex items-center justify-center">search</mat-icon>
@@ -51,35 +51,34 @@
                               [placeholder]="'Find question…'" i18-aria-label aria-label="Query" matInput />
                         </mat-form-field>
                       </form>
-                      
-                    
+
+
                     <!-- =====================Mission Karmayogi =================-->
                     <div class="flex flex-column margin-bottom-xl">
-                        <p class="mat-title margin-bottom-m">Mission Karmayogi</p>
+                        <p class="mat-title margin-bottom-m">{{ 'common.missionKarmyogi' | translate }}</p>
                         <mat-accordion>
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                  What is mission Karmayogi?
-                                 
+                                  {{ 'faq.missionTitle' | translate }}
+
                                 </mat-panel-title>
-                              
+
                               </mat-expansion-panel-header>
-                              <p class="mat-body-2 margin-remove">Mission Karmayogi - National Programme for Civil Services Capacity Building has been envisioned by the 
-                                  Government to address the changing needs and aspiration of the citizen. The Programme has been designed
-                                   to enhance the civil services under a national Programme, anchored by an apex body headed by the 
-                                   Prime Minister.</p>
+                              <p class="mat-body-2 margin-remove">
+                                {{ 'faq.missionDescription' | translate }}
+                               </p>
                             </mat-expansion-panel>
-    
+
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
-                                    What are hubs?
+                                     {{ 'faq.missionHub' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
-                                <p>iGOT Karmayogi platform enables officials to explore, acquire and certify their competencies that are critical to discharging their duties. The platform also helps them connect and collaborate across silos and become more efficient in the execution of their
-                                   responsibilities. These are made possible, with a series of features organized into specific hubs. </p>
+                                <p>
+                                  {{ 'faq.hubDescription' | translate }}</p>
                             </mat-expansion-panel>
 
                         </mat-accordion>
@@ -89,43 +88,38 @@
                     <!--==========Account and access ===========-->
 
                     <div class="flex flex-column margin-bottom-xl">
-                        <p class="mat-title margin-bottom-m">Account and access</p>
+                        <p class="mat-title margin-bottom-m">{{ 'common.accountAndAccess' | translate }}</p>
                         <mat-accordion>
-    
+
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
-                                    How can I reset my password?
+                                   {{ 'faq.accountTitle' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
-                                <p>You can reset or change your password by clicking on the 'Forgot password' link.
-                                   An email will be sent to you through which you will be able to reset or change your password. </p>
+                                <p>
+                                  {{ 'faq.accountDescriptionYou' | translate }}</p>
                             </mat-expansion-panel>
 
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
-                                    How can I edit my details?
+                                     {{ 'faq.panelDetails' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
-                                <p>"You can edit your profile details by the following steps:
-                                  1. Click on 'View profile' button in the profile dropdown.
-                                  2. Click on the 'Edit profile' button
-                                  3. make the necessary changes and click on the 'Save details' button.
-                                  
-                                  Please note that few profile details will be updated only after it is approved by the admin." </p>
+                                <p> {{ 'faq.panelHeader' | translate }}</p>
                             </mat-expansion-panel>
 
                             <mat-expansion-panel class="margin-bottom-m accordian_panel">
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
-                                    How can I know what are the various portals I have access to?
+                                    {{ 'faq.portalAccessQ' | translate }}
                                   </mat-panel-title>
-                                
+
                                 </mat-expansion-panel-header>
-                                <p>In your profile dropdown menu, you can see the list of all other portals that you have access to. </p>
+                                <p> {{ 'faq.portalAccessA' | translate }} </p>
                             </mat-expansion-panel>
                         </mat-accordion>
                     </div>
@@ -133,103 +127,97 @@
                     <!-- ================ learn ===========-->
 
                     <div class="flex flex-column margin-bottom-xl">
-                      <p class="mat-title margin-bottom-m">Learn</p>
+                      <p class="mat-title margin-bottom-m">{{ 'common.learn' | translate }}</p>
                       <mat-accordion>
-  
-                          <mat-expansion-panel class="margin-bottom-m accordian_panel">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                  What is a learn hub?
-                                </mat-panel-title>
-                              
-                              </mat-expansion-panel-header>
-                              <p>Learnhub is one among the many hubs that facilitates competency building through suitable courses, assessments and learning recommendations (i.e. CBPs). </p>
-                          </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                  What is a CBP?
+                                  {{ 'faq.learnTitle' | translate }}
                                 </mat-panel-title>
-                              
+
                               </mat-expansion-panel-header>
-                              <p>Competency Building Product (CBP) is a content comprising of resources, course, modules and programs 
-                                which can be consumed by the government officials to enhance their competencies or acquire new ones. </p>
+                              <p>{{ 'faq.learnHeader' | translate }}</p>
                           </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                  How can I search for a CBP?
+                                  {{ 'faq.cbpTitle' | translate }}
                                 </mat-panel-title>
-                              
+
                               </mat-expansion-panel-header>
-                              <p>"You can search for a CBP through various ways:
-                                1. Search a CBP by name 
-                                2. Explore by topics 
-                                3. Explore by competencies 
-                                4. Explore by topics" </p>
+                              <p>{{ 'faq.cbpDescription' | translate }} </p>
+                          </mat-expansion-panel>
+
+                          <mat-expansion-panel class="margin-bottom-m accordian_panel">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  {{ 'faq.cbpHowtitle' | translate }}
+                                </mat-panel-title>
+
+                              </mat-expansion-panel-header>
+                              <p>{{ 'faq.cbpHowDescription' | translate }} </p>
                           </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                Where can I see all the newly added CBPs?
+                                {{ 'faq.cbpWhereTitle' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>You can view all the newly added CBPs under the 'Newly added course' section in the homepage. </p>
+                            <p>{{ 'faq.cbpWhereDesc' | translate }} </p>
                           </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                How can I start learning?
+                                {{ 'faq.cbpLearning' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>After selecting the CBP that you want to learn, click on the 'Start' button. </p>
+                            <p>{{ 'faq.cbpPanelDescription' | translate }}</p>
                           </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                Can I resume/pause a CBP?
+                                {{ 'faq.resumePassCBPQ' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>Yes, you can pause a CBP that you are currently consuming and resume at any point of time.</p>
+                            <p>{{ 'faq.resumePassCBPA' | translate }}</p>
                           </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                Is it necessary to pass an assessment?
+                                {{ 'faq.assessmentQuery' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>It is necessary to pass the CBP assessment for you to acquire the competency that the CBP caters to. </p>
+                            <p>{{ 'faq.assesmentAnswer' | translate }}</p>
                           </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                What is a competency assessment?
+                                {{ 'faq.competencyAssessment' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>Every competency will have assessments attached to it and only after passing the assessment with minimun required score,
-                              you will be able to acquire the competency and attached it to you competency list </p>
+                            <p>{{ 'faq.competencyAssessmentAns' | translate }}</p>
                           </mat-expansion-panel>
 
                           <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                Who creates the CBPs?
+                                {{ 'faq.cbpCreator' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>The CBPs are created by the CBP providers through the CBP portal which is listed after going through a review process. </p>
+                            <p>{{ 'faq.cbpCreatorAns' | translate }} </p>
                           </mat-expansion-panel>
 
                       </mat-accordion>
@@ -238,58 +226,57 @@
                   <!-- =================== discuss ===================-->
 
                   <div class="flex flex-column margin-bottom-xl">
-                    <p class="mat-title margin-bottom-m">Disucss</p>
+                    <p class="mat-title margin-bottom-m">{{ 'common.discuss' | translate }}</p>
                     <mat-accordion>
 
                         <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                How can I use the discuss forum?
+                                {{ 'faq.discussQue' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>The discuss hub enables you to post your query, idea or suggestion which will be visible to all officials on the platform.
-                               Other officials can then engage with your post, provide necessary information and guide the official </p>
+                            <p>{{ 'faq.discussQueAns' | translate }} </p>
                         </mat-expansion-panel>
 
                         <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                Who can see my posts?
+                                {{ 'faq.discussPost' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>Any official who have been onboarded to the iGOT Karmayogi platform will be able to view and engage with your post. </p>
+                            <p>{{ 'faq.discussPostAns' | translate }} </p>
                         </mat-expansion-panel>
 
                         <mat-expansion-panel class="margin-bottom-m accordian_panel">
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                Can I delete my post?
+                                {{ 'faq.discussDeletePost' | translate }}
                               </mat-panel-title>
-                            
+
                             </mat-expansion-panel-header>
-                            <p>Yes, you will be able to edit or delete your post by clicking on the ellipses in the post. </p>
+                            <p>{{ 'faq.discussDeletePostAns' | translate }} </p>
                         </mat-expansion-panel>
 
                         <mat-expansion-panel class="margin-bottom-m accordian_panel">
                           <mat-expansion-panel-header>
                             <mat-panel-title>
-                              How can I get quick access to a post?
+                              {{ 'faq.discussQuickAccessPostQ' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
-                          <p>You can bookmark a post to save it. Additionally, you can search for a post by selecting the right caterogy or tag. </p>
+                          <p>{{ 'faq.discussQuickAccessPostA' | translate }} </p>
                       </mat-expansion-panel>
 
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                            How can discuss hub help me?
+                            {{ 'faq.discussHowHubHelp' | translate }}
                           </mat-panel-title>
-                        
+
                         </mat-expansion-panel-header>
-                        <p>Discuss hub provides officials with an opportunity to benefit from insights from previous discussions and to trigger new conversations around particular queries they may have. </p>
+                        <p>{{ 'faq.discussHowHubHelpAns' | translate }} </p>
                     </mat-expansion-panel>
 
                     </mat-accordion>
@@ -298,18 +285,17 @@
                 <!-- =================== Network ===================-->
 
                 <div class="flex flex-column margin-bottom-xl">
-                  <p class="mat-title margin-bottom-m">Network</p>
+                  <p class="mat-title margin-bottom-m">{{ 'common.Network' | translate }}</p>
                   <mat-accordion>
 
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
                           <mat-expansion-panel-header>
                             <mat-panel-title>
-                              What are connections?
+                              {{ 'common.networkConnQue' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
-                          <p>Connections are the people (governement officials) who you are connected to in the iGOT platform. Your connections will be able to see
-                             the posts you have made, your profile details, your activites until you mark those as private.</p>
+                          <p>{{ 'common.networkConnAns' | translate }}</p>
                       </mat-expansion-panel>
 
                   </mat-accordion>
@@ -318,72 +304,67 @@
                  <!-- =================== Competencies ===================-->
 
                  <div class="flex flex-column margin-bottom-xl">
-                  <p class="mat-title margin-bottom-m">Competencies</p>
+                  <p class="mat-title margin-bottom-m">{{ 'common.competencies' | translate }}</p>
                   <mat-accordion>
 
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
                           <mat-expansion-panel-header>
                             <mat-panel-title>
-                              Where can I see my competencies?
+                              {{ 'faq.competenciesTitleWhere' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
-                          <p>You can see the competencies that you have acquired and the list of recommended competencies in the Competency hub. </p>
+                          <p> {{ 'faq.competenciesTitleWhereAns' | translate }} </p>
                       </mat-expansion-panel>
 
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
                           <mat-expansion-panel-header>
                             <mat-panel-title>
-                              What is a competency hub?
+                              {{ 'faq.competenciesWhatIsHub' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
-                          <p>Competency hub is one of the key hubs in the iGOT platform detailing about the recommended competencies for your position and your 
-                            acquired competencies thus giving information about your competency gap. </p>
+                          <p> {{ 'faq.competenciesHubAns' | translate }}</p>
                       </mat-expansion-panel>
 
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
                           <mat-expansion-panel-header>
                             <mat-panel-title>
-                              How can I acquire a competency?
+                              {{ 'faq.competencyAcquire' | translate }}
                             </mat-panel-title>
-                          
+
                           </mat-expansion-panel-header>
-                          <p>"You can acquire a competency by consuming CBP and taking up the CBP assessments catering to that competencies, taking up the competency assessment.
-                            WPCAS and PIAA will also be required in the future to acquire a competency." </p>
+                          <p> {{ 'faq.competencyAcquireAns' | translate }}</p>
                       </mat-expansion-panel>
 
                       <mat-expansion-panel class="margin-bottom-m accordian_panel">
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                            What are competencies?
+                            {{ 'faq.competencyQ' | translate }}
                           </mat-panel-title>
-                        
+
                         </mat-expansion-panel-header>
-                        <p>Competency is defined as a combination of attitudes, skills and knowledge (ASK) that enable an individual to perform a task or activity successfully
-                           in a given job. There are three types of competencies – Behavioural, Domain and Functional </p>
+                        <p> {{ 'faq.competencyA' | translate }} </p>
                     </mat-expansion-panel>
 
                     <mat-expansion-panel class="margin-bottom-m accordian_panel">
                       <mat-expansion-panel-header>
                         <mat-panel-title>
-                          What is WPCAS?
+                          {{ 'faq.whatIsWpacs' | translate }}
                         </mat-panel-title>
-                      
+
                       </mat-expansion-panel-header>
-                      <p>An official’s Workplace Competency Assessment Score (WPCAS) is constructed from their colleagues’ (peers, subordinates, and superiors) assessments about their performance. Through these assessments, an official’s colleagues are provided the opportunity to examine the extent to which he/she is demonstrating a particular competency in the workplace. For each competency an official is supposed to have, his/her colleagues receive questions where they are asked to indicate how he/she performed recently on that competency. The responses to these questions are then collated to create a single score for each competency every 3 months. 
-                        The assessments also serve the purpose of providing feedback to help officials improve their performance.</p>
+                      <p> {{ 'faq.wpacsAnswer' | translate }}</p>
                   </mat-expansion-panel>
 
                   <mat-expansion-panel class="margin-bottom-m accordian_panel">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
-                        What is CBP competency score?
+                        {{ 'faq.cbpCompetencyStore' | translate }}
                       </mat-panel-title>
-                    
+
                     </mat-expansion-panel-header>
-                    <p>This score will be given to a learner on the completion of a CBP and its corresponding assessments. It is based on the learner’s 
-                      performance on these assessments and contributes to the TCS (thereby the overall competency score of an individual).</p>
+                    <p> {{ 'faq.cbpCompetencyStoreAns' | translate }}</p>
                 </mat-expansion-panel>
 
                   </mat-accordion>
@@ -392,39 +373,37 @@
               <!-- =================== Network ===================-->
 
               <div class="flex flex-column margin-bottom-xl">
-                <p class="mat-title margin-bottom-m">FRACing</p>
+                <p class="mat-title margin-bottom-m">{{ 'common.fracing' | translate }}</p>
                 <mat-accordion>
 
                     <mat-expansion-panel class="margin-bottom-m accordian_panel">
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                            What is FRAC?
+                            {{ 'faq.whatIsFrac' | translate }}
                           </mat-panel-title>
-                        
+
                         </mat-expansion-panel-header>
-                        <p>The Framework of Roles, Activities and Competencies (FRAC), as termed within Mission Karmayogi’s Integrated Government Online Training platform (iGOT) initiative, is the mapping of three constructs (roles, activities and competencies, supported by knowledge resources) for each individual position within all
-                           government ministries, departments and organisations (MDOs) at the national, state and local level.</p>
+                        <p> {{ 'faq.frcCAns' | translate }}</p>
                     </mat-expansion-panel>
 
                     <mat-expansion-panel class="margin-bottom-m accordian_panel">
                       <mat-expansion-panel-header>
                         <mat-panel-title>
-                          What is a Work order?
+                          {{ 'faq.workOrderQ' | translate }}
                         </mat-panel-title>
-                      
+
                       </mat-expansion-panel-header>
-                      <p>"Work allocation orders are documents which formally allocate the roles and accountabilities to every government official, usually upon joining. These are allocated by the supervisor or 
-                        Head of the MDO, and updated as and when necessary."</p>
+                      <p> {{ 'faq.workOrderA' | translate }}</p>
                   </mat-expansion-panel>
 
                 </mat-accordion>
               </div>
 
 
-                    
+
                 </div>
             </div>
-           
+
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

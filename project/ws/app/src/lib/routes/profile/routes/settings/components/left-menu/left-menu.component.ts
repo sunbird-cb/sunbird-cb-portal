@@ -4,6 +4,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Router } from '@angular/router'
 /* tslint:disable*/
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-left-menu',
@@ -18,8 +19,15 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
     private events: EventService,
     private configSvc: ConfigurationsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+  }
 
   ngOnInit(): void {
 
@@ -48,10 +56,15 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
       },
       { },
     )
-    if (tab.name == "'Get Started' tour") {
+    if (tab.name == "getStartedTour") {
       this.router.navigate(['/page/home'], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
       this.configSvc.updateTourGuideMethod(false)
     }
+  }
+
+  translateLetMenuName(menuName: string): string {
+    const translationKey = 'settingLeftMenu.' + menuName.replace(/\s/g, "")
+    return this.translate.instant(translationKey);
   }
 
 }

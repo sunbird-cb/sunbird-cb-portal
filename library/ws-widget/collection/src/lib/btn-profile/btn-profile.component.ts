@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig, EventService, WsEvents } from '@sunbird-cb/utils'
 import { IBtnAppsConfig } from '../btn-apps/btn-apps.model'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
@@ -9,6 +9,7 @@ import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import _ from 'lodash'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { ActivatedRoute, Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:enable*/
 interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
@@ -52,7 +53,9 @@ export class BtnProfileComponent extends WidgetBaseComponent
     private dialog: MatDialog,
     private accessService: AccessControlService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
+    private events: EventService
   ) {
     super()
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
@@ -96,6 +99,12 @@ export class BtnProfileComponent extends WidgetBaseComponent
             )),
           }),
       )
+    }
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
   }
   updateUserInfo() {
@@ -149,6 +158,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   logout() {
+    this.raiseTelemetry('signout')
     this.dialog.open<LogoutComponent>(LogoutComponent)
   }
 
@@ -186,16 +196,45 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   redirectToTourPage() {
+    // this.raiseGetStartedImpression('Get Started')
+    this.raiseTelemetry('Get Started')
     this.router.navigate(['/page/home'], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
     this.configSvc.updateTourGuideMethod(false)
   }
 
   redirectToMyLearning() {
+    this.raiseTelemetry('My Learning')
     // /app/seeAll?key=continueLearning
     this.router.navigate(['/app/seeAll'], { queryParams: { key: 'continueLearning' } })
   }
 
   handleRedirectToCompetencyPassbook() {
+    this.raiseTelemetry('Learning History')
     this.router.navigate(['/page/competency-passbook/list'])
   }
+
+  raiseTelemetry(tabname: string) {
+    const name = tabname.toLowerCase().split(' ').join('-')
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${name}`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME,
+      }
+    )
+  }
+
+  // rasieProfileMenuTelemetry(tabname: string) {
+  //   tabname = tabname.toLowerCase().split(' ').join('-')
+  //   const data: WsEvents.ITelemetryTabData = {
+  //     label: `${tabname}`
+  //   }
+  //   this.events.handleTabTelemetry(
+  //     WsEvents.EnumInteractTypes.CLICK,
+  //     data,
+  //   )
+  // }
 }

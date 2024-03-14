@@ -1,0 +1,22 @@
+<div [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'" [ngClass]="{'expanded': isExpanded}" >
+    <div class="competency-passbook-theme" [ngClass]="{'behavioural': (widgetData?.competencyArea?.toLowerCase() === 'behavioural' || widgetData?.competencyArea?.toLowerCase() === 'behavioral'), 'functional': widgetData?.competencyArea?.toLowerCase() === 'functional', 'domain': widgetData?.competencyArea?.toLowerCase() === 'domain', 'shadow-md': isExpanded}">
+        <div class="detail">
+            <div class="flex flex-col gap-2">
+                <div class="text-base font-bold ellipsis" title="{{ widgetData?.content?.key }}">{{ widgetData?.content?.key }}</div>
+                <div class="flex flex-wrap gap-4 chip-container">
+                    <ng-container *ngFor="let subTheme of widgetData?.content?.value; let i = index">
+                        <div class="chip rounded-full text-xs" [ngClass]="{'hidden': (i >= 1 && !isExpanded), 'chip-ellipsis': !isExpanded && widgetData?.content?.value?.length > 1 }" title="{{ subTheme }}">
+                            {{ subTheme }}
+                        </div>
+                    </ng-container>
+                    <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="widgetData?.content?.value?.length > 1 && !isExpanded" (click)="handleToggleSize()">
+                        View more
+                    </div>
+                    <div class="flex items-center ws-mat-default-text underline cursor-pointer text-xs" *ngIf="isExpanded" (click)="handleToggleSize()">
+                        view less
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -44,7 +44,7 @@
     <ng-container *ngSwitchCase="displayContentTypeEnum.WEB_MODULE" i18n>Web Module</ng-container>
     <ng-container *ngSwitchCase="displayContentTypeEnum.WEB_PAGE" i18n>Web Page</ng-container>
     <ng-container *ngSwitchCase="displayContentTypeEnum.YOUTUBE" i18n>Youtube</ng-container>
-    <ng-container *ngSwitchDefault i18n>{{displayContentType}}</ng-container>
+    <ng-container *ngSwitchDefault i18n>{{ translateLabels(displayContentType, 'searchfilters') }}</ng-container>
   </span>
   </ng-container>
 <!-- <ng-container *ngIf="displayContentType">{{displayContentType}}</ng-container> -->

@@ -3,7 +3,8 @@ import { NSDiscussData } from '../../../discuss/models/discuss.model'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { DiscussService } from '../../../discuss/services/discuss.service'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-careers',
@@ -25,11 +26,20 @@ export class CareersComponent implements OnInit {
     private router: Router,
     private discussService: DiscussService,
     private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['careersCategoryId'] || 1
     this.setPagination()
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {
@@ -37,6 +47,11 @@ export class CareersComponent implements OnInit {
       this.currentActivePage = x.page || 1
       this.refreshData(this.currentActivePage)
     })
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   filter(key: string | 'timestamp' | 'viewcount') {

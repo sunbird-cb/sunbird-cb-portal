@@ -2,7 +2,7 @@ import { trigger, transition, style, animate } from '@angular/animations'
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router, NavigationEnd } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService, NsInstanceConfig, ValueService, EventService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
@@ -55,6 +55,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   public id = `hub_${Math.random()}`
   public activeRoute = ''
   public showDashboardIcon = true
+  isHubEnable!: boolean
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
   constructor(
@@ -62,6 +63,8 @@ export class CardHubsListComponent extends WidgetBaseComponent
     private discussUtilitySvc: DiscussUtilsService,
     private router: Router,
     private valueSvc: ValueService,
+    private langtranslations: MultilingualTranslationsService,
+    private events: EventService
     // private accessService: AccessControlService
   ) {
     super()
@@ -71,8 +74,9 @@ export class CardHubsListComponent extends WidgetBaseComponent
   inactiveHubList!: NsInstanceConfig.IHubs[]
   ngOnInit() {
     this.router.events.subscribe((event: any) => {
-
       if (event instanceof NavigationEnd) {
+          // certificate link check
+          this.isHubEnable = (event.url.includes('/certs') || event.url.includes('/public/certs')) ? false : true
           // Hide loading indicator
           // console.log('event', event)
           if (event.url === '/' || event.url.includes('/page/home')) {
@@ -90,6 +94,10 @@ export class CardHubsListComponent extends WidgetBaseComponent
             this.activeRoute = 'Competencies'
           } else if (event.url.includes('app/event-hub')) {
             this.activeRoute = 'Events'
+          } else if (event.url.includes('/app/knowledge-resource/all')) {
+            this.activeRoute = 'Gyaan Karmayogi'
+          } else if (event.url.includes('/app/jan-karmayogi')) {
+            this.activeRoute = 'Jan Karmayogi'
           }
           this.visible = false
           localStorage.setItem('activeRoute', this.activeRoute)
@@ -178,6 +186,13 @@ export class CardHubsListComponent extends WidgetBaseComponent
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
+  trackTelemetry(name: any) {
+    if (name.search('Portal')) {
+        const portalName = name.toLowerCase().split(' ').join('-')
+        this.raiseTelemetry(portalName)
+    } else { this.raiseTelemetry(name.toLowerCase()) }
+  }
+
   getUserFullName(user: any) {
     if (user && user.personalDetails.firstname && user.personalDetails.surname) {
       return `${user.personalDetails.firstname.trim()} ${user.personalDetails.surname.trim()}`
@@ -236,6 +251,23 @@ export class CardHubsListComponent extends WidgetBaseComponent
     }
     const value = this.hasRole(roles)
     return value
+  }
+
+  translateLabels(label: string, type: any, subtype: '') {
+    return this.langtranslations.translateLabel(label, type, subtype)
+  }
+  raiseTelemetry(name: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.HUB_MENU,
+        id: name,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME,
+      }
+    )
   }
 
 }

@@ -9,7 +9,7 @@
       <div class="w-full" role="link" tabindex="0">
         <div class="flex flex-1 flex-column margin-fix mb-2" role="link" tabindex="0">
           <span class="mat-subheading-1">
-            Your competencies
+            {{ 'competencies.labelYourCompetencies' | translate }}
           </span>
         </div>
         <mat-card class="no-competency-card margin-right-s">
@@ -26,7 +26,7 @@
 
 
                   <p class="mat-h3 margin-remove">{{ myCompetencies.length }}</p>
-                  <p class="mat-body-2">Your competencies</p>
+                  <p class="mat-body-2">{{ 'competencies.labelYourCompetencies' | translate }}</p>
                 </div>
 
                 <div class="progress_data_box">
@@ -37,7 +37,7 @@
                   </mat-progress-bar>
                   <p class="mat-h3 margin-remove">{{ ((filteredCompetencies) ? filteredCompetencies.length : 0 ) +
                     ((watCompetencies) ? watCompetencies.length : 0 )}}</p>
-                  <p class="mat-body-2 margin-remove">Recommended competencies</p>
+                  <p class="mat-body-2 margin-remove">{{ 'competencies.labelRecommendCompetencies' | translate }}</p>
                 </div>
               </div>
             </div>
@@ -47,18 +47,15 @@
       <div class="w-full pt-5">
         <div class="flex flex-1 flex-column margin-fix mt-5 filter_outer_box">
           <div class="flex flex-1 filter">
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'acquired_by_you', 'ws-mat-accent-border':currentFilter !== 'acquired_by_you'}" 
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'acquired_by_you', 'ws-mat-accent-border':currentFilter !== 'acquired_by_you'}"
             (click)="filter('acquired_by_you'); tabTelemetry('Added by you', 2)">
-            Acquired by you </a>
+            {{ 'competencies.acquiredByYou' | translate }} </a>
             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'desired_competencies', 'ws-mat-accent-border':currentFilter !== 'desired_competencies'}"
-            (click)="filter('desired_competencies'); tabTelemetry('Added by you', 2)"> 
-            Desired </a>
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended', 'ws-mat-accent-border':currentFilter !== 'recommended'}" 
+            (click)="filter('desired_competencies'); tabTelemetry('Added by you', 2)">
+            {{ 'competencies.desired' | translate }}</a>
+            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended', 'ws-mat-accent-border':currentFilter !== 'recommended'}"
             (click)="filter('recommended'); tabTelemetry('Recommended from FRAC', 0)">
-            From FRAC </a>
-            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'recommended_from_wat', 'ws-mat-accent-border':currentFilter !== 'recommended_from_wat'}"
-              (click)="filter('recommended_from_wat'); tabTelemetry('Recommended from WAT', 1)">
-            From WAT </a>
+            {{ 'competencies.fromFRAC' | translate }}</a>
           </div>
         </div>
 
@@ -66,13 +63,13 @@
           <form (submit)="updateQuery(queryControl.value)" class="flex-1 search_form">
             <mat-form-field appearance="outline" class="autocomplete-form comp-search" color="primary" [floatLabel]="'never'">
               <mat-icon matPrefix class="flex items-center justify-center">search</mat-icon>
-              <input type="search" #searchInput i18n-placeholder="search content" [placeholder]="'Search'"
+              <input type="search" #searchInput i18n-placeholder="search content" [placeholder]="'common.search' | translate"
                 i18-aria-label aria-label="Query" matInput [formControl]="queryControl" accesskey="F" maxlength="50" />
             </mat-form-field>
           </form>
           <div class="flex justify-center" *ngIf="myCompetencies && myCompetencies.length > 0 && currentFilter && currentFilter === 'acquired_by_you'">
             <a class="add_competency_btn text-white flex items-center justify-center cursor-pointer mat-subheading-2"
-              routerLink="/app/competencies/all">Add a competency</a>
+              routerLink="/app/competencies/all">{{ 'competencies.addCompetency' | translate }}</a>
           </div>
         </div>
 
@@ -80,10 +77,9 @@
           <div *ngIf="myCompetencies && myCompetencies.length == 0">
             <div class="flex flex-col items-center justify-center post_image_box">
               <img src="/assets/images/banners/competencies.svg">
-              <p class="mat-h4 ws-mat-black60-text">No competencies found</p>
-              <p class="mat-body ws-mat-black60-text">Find competencies to add from</p>
-              <p class="mat-body ws-mat-default-text"><a class="work_order_link" routerLink="/app/competencies/all">All
-                  competencies</a></p>
+              <p class="mat-h4 ws-mat-black60-text">{{ 'msg.noCompetenciesFound' | translate }}</p>
+              <p class="mat-body ws-mat-black60-text">{{ 'msg.findCompetenciesToAddFrom' | translate }}</p>
+              <p class="mat-body ws-mat-default-text"><a class="work_order_link" routerLink="/app/competencies/all">{{ 'msg.allCompetencies' | translate }}</a></p>
               <br />
             </div>
           </div>
@@ -133,7 +129,7 @@
                                 </div> -->
                           <div class="flex md:flex-row justify-between">
                             <div>
-                              <p>CBP course</p>
+                                <p>{{ 'competencies.cbpCourse' | translate }}</p>
                             </div>
                             <div class="proficiency_graph_box">
                               <ul class="tagIconList nolevel" *ngIf="!comp.competencyCBPCompletionLevel || comp.competencyCBPCompletionLevel === '' || !comp.children">
@@ -189,7 +185,7 @@
                           </div>
                           <div class="flex flex-row justify-between prof_txt_data">
                             <div>
-                              <p>Self attestation</p>
+                              <p>{{ 'competencies.selfAttestation' | translate }}</p>
                             </div>
                             <div class="proficiency_graph_box">
                               <ul class="tagIconList nolevel" *ngIf="!comp.competencySelfAttestedLevel || comp.competencySelfAttestedLevel === '' || !comp.children">
@@ -252,7 +248,7 @@
                             <span *ngIf="comp.competencySelfAttestedLevel < comp.competencyCBPCompletionLevel">{{comp.competencySelfAttestedLevelValue}}</span>
                             <span *ngIf="comp.competencySelfAttestedLevel === comp.competencyCBPCompletionLevel">{{comp.competencySelfAttestedLevelValue}} <mat-icon class="completedicon">check_circle</mat-icon></span>
                           </p>
-                          <p class="deactivate_text mat-body-2" *ngIf="!comp.competencySelfAttestedLevel && !comp.competencyCBPCompletionLevel">Not enough data</p>
+                          <p class="deactivate_text mat-body-2" *ngIf="!comp.competencySelfAttestedLevel && !comp.competencyCBPCompletionLevel">{{ 'msg.notEnoughData' | translate }}</p>
                         </div>
                       </div>
                     </mat-card-content>
@@ -267,10 +263,9 @@
           <div *ngIf="desiredCompetencies && desiredCompetencies.length == 0">
             <div class="flex flex-col items-center justify-center post_image_box">
               <img src="/assets/images/banners/competencies.svg">
-              <p class="mat-h4 ws-mat-black60-text">No competencies found</p>
-              <p class="mat-body ws-mat-black60-text">Find competencies to add from</p>
-              <p class="mat-body ws-mat-default-text"><a class="work_order_link" routerLink="/app/competencies/all">All
-                  competencies</a></p>
+              <p class="mat-h4 ws-mat-black60-text">{{ 'msg.noCompetenciesFound' | translate }}</p>
+              <p class="mat-body ws-mat-black60-text">{{ 'msg.findCompetenciesToAddFrom' | translate }}</p>
+              <p class="mat-body ws-mat-default-text"><a class="work_order_link" routerLink="/app/competencies/all">{{ 'msg.allCompetencies' | translate }}</a></p>
               <br />
             </div>
           </div>
@@ -340,7 +335,7 @@
                         </div> -->
                         <div class="flex proficient_level_box">
                           <p class="matbold mat-body-2" *ngIf="comp.competencySelfAttestedLevel">{{comp.competencySelfAttestedLevelValue}}</p>
-                          <p class="deactivate_text mat-body-2" *ngIf="!comp.competencySelfAttestedLevel">Not enough data</p>
+                          <p class="deactivate_text mat-body-2" *ngIf="!comp.competencySelfAttestedLevel">{{ 'msg.notEnoughData' | translate }}</p>
                         </div>
                       </div>
                     </mat-card-content>
@@ -362,7 +357,7 @@
           <div *ngIf="watCompetencies && watCompetencies.length == 0">
             <div class="flex flex-col items-center justify-center post_image_box">
               <img src="/assets/images/banners/competencies.svg">
-              <p class="mat-h4 ws-mat-black60-text">No competencies found from WAT</p>
+              <p class="mat-h4 ws-mat-black60-text">{{ 'competencies.fromWAT' | translate }}</p>
               <!-- <p class="mat-body ws-mat-black60-text">Find competencies to add from.</p>
               <p class="mat-body"><a class="work_order_link" routerLink="/app/competencies/all">All Competencies</a></p> -->
               <br />
@@ -388,7 +383,7 @@
 
 
                         <div class="flex proficient_level_box">
-                          <p class="deactivate_text mat-body-2">Not enough data</p>
+                          <p class="deactivate_text mat-body-2">{{ 'msg.notEnoughData' | translate }}</p>
                         </div>
                       </div>
                     </mat-card-content>
@@ -396,7 +391,7 @@
                 </mat-card>
               </ng-container>
               <ng-container *ngIf="watCompetencies && watCompetencies.length === 0">
-                <p>Not found</p>
+                <p>{{ 'msg.notFound' | translate }}</p>
               </ng-container>
             </ng-container>
           </div>
@@ -416,8 +411,8 @@
             </div>
             <div class="flex flex-col items-center justify-center post_image_box" *ngIf="userPosition == null">
               <img src="/assets/images/banners/competencies.svg">
-              <p class="mat-h4 ws-mat-black60-text">No competencies found</p>
-              <p class="mat-body ws-mat-black60-text">Competencies will be recommended based on your position.</p>
+              <p class="mat-h4 ws-mat-black60-text">{{ 'msg.noCompetenciesFound' | translate }}</p>
+              <p class="mat-body ws-mat-black60-text">{{ 'competencies.recommendedBasedOnPosition' | translate }}</p>
               <br />
             </div>
           </div>
@@ -436,7 +431,7 @@
 
 
                       <div class="flex proficient_level_box">
-                        <p class="deactivate_text mat-body-2">Not enough data</p>
+                        <p class="deactivate_text mat-body-2">{{ 'msg.notEnoughData' | translate }}</p>
                       </div>
                     </div>
                   </mat-card-content>

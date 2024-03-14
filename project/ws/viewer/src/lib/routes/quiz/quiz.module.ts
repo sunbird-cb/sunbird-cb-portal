@@ -36,6 +36,7 @@ import { QuizComponent } from './quiz.component'
 import { QuizRoutingModule } from './quiz-routing.module'
 
 import { QuizModule as QuizViewContainerModule } from '../../route-view-container/quiz/quiz.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [QuizComponent],
@@ -64,6 +65,7 @@ import { QuizModule as QuizViewContainerModule } from '../../route-view-containe
     UserContentRatingModule,
     BtnContentFeedbackV2Module,
     BtnPageBackModule,
+    TranslateModule.forChild(),
   ],
 })
 export class QuizModule { }

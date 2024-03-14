@@ -7,7 +7,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { environment } from 'src/environments/environment'
-
+import { PdfScormDataService } from '../../pdf-scorm-data-service'
 @Component({
   selector: 'viewer-pdf',
   templateUrl: './pdf.component.html',
@@ -46,6 +46,7 @@ export class PdfComponent implements OnInit, OnDestroy {
     private eventSvc: EventService,
     private accessControlSvc: AccessControlService,
     private configSvc: ConfigurationsService,
+    private pdfScormDataService: PdfScormDataService
   ) { }
 
   ngOnInit() {
@@ -105,7 +106,7 @@ export class PdfComponent implements OnInit, OnDestroy {
             this.widgetResolverPdfData.widgetData.collectionId = ''
           }
           this.widgetResolverPdfData.widgetData.resumePage = 1
-          if ( this.pdfData && this.pdfData.identifier) {
+          if (this.pdfData && this.pdfData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
                 this.pdfData.identifier,
@@ -217,8 +218,10 @@ export class PdfComponent implements OnInit, OnDestroy {
       // this.activatedRoute.data.subscribe(data => {
       //   userId = data.profileData.data.userId
       // })
-      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
-        this.activatedRoute.snapshot.queryParams.batchId, pdfId)
+      const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+        this.activatedRoute.snapshot.queryParams.collectionId,
+        this.activatedRoute.snapshot.queryParams.batchId,
+        pdfId)
       const req: NsContent.IContinueLearningDataReq = {
         request: {
           userId,
@@ -233,7 +236,12 @@ export class PdfComponent implements OnInit, OnDestroy {
           if (data && data.result && data.result.contentList.length) {
             for (const content of data.result.contentList) {
               if (content.contentId === pdfId && content.progressdetails && content.progressdetails.current) {
-                this.widgetResolverPdfData.widgetData.resumePage = Number(content.progressdetails.current.pop())
+                if (content.progress === 100 || content.status === 2) {
+                  this.widgetResolverPdfData.widgetData.resumePage = 1
+                } else {
+                  this.widgetResolverPdfData.widgetData.resumePage = Number(content.progressdetails.current.pop())
+                }
+                this.pdfScormDataService.handlePdfMarkComplete.next(content)
               }
             }
           }

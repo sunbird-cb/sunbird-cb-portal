@@ -12,6 +12,8 @@ import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
 import { v4 as uuid } from 'uuid'
 import { Location } from '@angular/common'
+import { TranslateService } from '@ngx-translate/core'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -67,6 +69,9 @@ export class PublicRequestComponent implements OnInit {
     applicationId: string; actorUserId: string; deptName: string; updateFieldValues: any}  | undefined
   formobj: { toValue: {} ; fieldKey: any; description: any; firstName: any; email: any; mobile: any} | undefined
   userform: any
+  selectedLanguage = 'en'
+  multiLang: any = []
+  isMultiLangEnabled: any
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -74,7 +79,10 @@ export class PublicRequestComponent implements OnInit {
               private signupSvc: SignupService,
               private dialog: MatDialog,
               private requestSvc: RequestService,
-              private _location: Location) {
+              private _location: Location,
+              private configSvc: ConfigurationsService,
+              private langtranslations: MultilingualTranslationsService,
+              private translate: TranslateService) {
     const navigation = this.router.getCurrentNavigation()
     if (navigation) {
       const extraData = navigation.extras.state as {
@@ -117,17 +125,35 @@ export class PublicRequestComponent implements OnInit {
       // this.requestForm.controls['mobile'].markAsTouched()
       // this.requestForm.controls['confirmBox'].markAsTouched()
     }
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.selectedLanguage = lang
+      this.translate.use(lang)
+    } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
+    }
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
    }
 
   ngOnInit() {
+    const instanceConfig = this.configSvc.instanceConfig
+    if (instanceConfig) {
+      this.multiLang = instanceConfig.websitelanguages
+    }
 
     this.onPhoneChange()
     this.onEmailChange()
   }
 
   modifyDomain(domainName: string) {
-    if (domainName.includes("@")) {
-      return domainName.replace("@", '')
+    if (domainName.includes('@')) {
+      return domainName.replace('@', '')
     }
     return domainName
   }
@@ -183,14 +209,14 @@ export class PublicRequestComponent implements OnInit {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
   resendOTP() {
@@ -200,8 +226,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-
-          alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -209,7 +234,7 @@ export class PublicRequestComponent implements OnInit {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
 
@@ -217,8 +242,8 @@ export class PublicRequestComponent implements OnInit {
     // console.log(otp)
     const mob = this.requestForm.get('mobile')
     if (otp && otp.value) {
-      if(otp && otp.value.length < 4) {
-        this.snackBar.open('Please enter a valid OTP.')
+      if (otp && otp.value.length < 4) {
+        this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
@@ -235,7 +260,7 @@ export class PublicRequestComponent implements OnInit {
         })
       }
     } else {
-      this.snackBar.open('Please enter a valid OTP.')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
     }
   }
 
@@ -292,14 +317,14 @@ export class PublicRequestComponent implements OnInit {
     if (email && email.value && email.valid) {
       this.requestSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your email address (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -310,7 +335,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
           this.disableEmailVerifyBtn = false
-          alert('An OTP has been sent to your email address (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
@@ -318,7 +343,7 @@ export class PublicRequestComponent implements OnInit {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -397,7 +422,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -428,7 +453,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -458,7 +483,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -491,12 +516,30 @@ export class PublicRequestComponent implements OnInit {
 
   public goBackUrl() {
     const formData = this.requestForm.value
-    this.signupSvc.updateSignUpData({firstname: formData.firstname, mobile: formData.mobile, email: formData.email, isMobileVerified: this.isMobileVerified , isEmailVerified: this.isEmailVerified })
+    this.signupSvc.updateSignUpData({
+      firstname: formData.firstname,
+      mobile: formData.mobile, email: formData.email,
+      isMobileVerified: this.isMobileVerified,
+      isEmailVerified: this.isEmailVerified })
     this._location.back()
   }
   numericOnly(event: any): boolean {
     const pattren = /^([0-9])$/
     const result = pattren.test(event.key)
     return result
+  }
+
+  selectLanguage(event: any) {
+    this.selectedLanguage = event
+    localStorage.setItem('websiteLanguage', this.selectedLanguage)
+    this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
+  }
+
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
   }
 }

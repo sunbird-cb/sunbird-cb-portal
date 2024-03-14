@@ -6,8 +6,8 @@
         <img src="https://www.igot-dev.in/img/karmayogiLogo.svg" alt="Application Logo" class="app-logo" />
       </a>
       <div class="text-end flex flex-1 flex-row-reverse signup_div">
-        <a routerLink="/public/signup" class="btn btn-primary text-center margin-left-s">Register</a>
-        <a href="/protected/v8/resource" class="btn btn-link">Sign In</a>
+        <a routerLink="/public/signup" class="btn btn-primary text-center margin-left-s">{{ 'common.register' | translate }}</a>
+        <a href="/protected/v8/resource" class="btn btn-link">{{ 'common.signIn' | translate }}</a>
         <!-- <a href="/apis/public/v8/google/auth" class="btn btn-link">Parichay</a> -->
         <!-- <a href="/apis/public/v8/google/auth" class="btn btn-link">Sign In with P</a> -->
       </div>
@@ -18,12 +18,10 @@
     <div class="container container-balanced">
       <div class="items-center justify-between mainContent grid-cols-2 grid">
         <div class="content">
-          <h1 class="mb-4 title-heading">Learn. Network. Grow your career.</h1>
-          <p class="mb-12">Gain skills to rocket your career growth. Connect with civil servants and experts to learn
-            and
-            discover new opportunities in the Indian civil services.</p>
+          <h1 class="mb-4 title-heading">{{ 'publicHome.mainSectionContent' | translate }}</h1>
+          <p class="mb-12">{{ 'publicHome.mainSectionContent' | translate }}</p>
           <div class="d-block float-left mb-12 mt-10 ">
-            <a routerLink="/public/signup" class="btn btn-secondary mr-4">Register</a>
+            <a routerLink="/public/signup" class="btn btn-secondary mr-4">{{ 'common.register' | translate }}</a>
           </div>
         </div>
         <div class="displayImg text-center">
@@ -33,7 +31,7 @@
 
       <div *ngIf="learnNetworkSection?.length > 0" class="analyticsRecord">
         <div class="flex flex-col">
-          <h1 class="mb-12 text-center">Learn and network with civil servants and subject matter experts across India
+          <h1 class="mb-12 text-center">{{ 'publicHome.learnAndNetwork' | translate }}
           </h1>
           <div class="grid-cols-4 grid recordBox mt-8">
             <div class="listInfo" *ngFor="let content of learnNetworkSection">
@@ -62,13 +60,11 @@
     <div class="container container-balanced">
       <div class="row">
         <div class="servicesTab pb-12">
-          <div class="mat-headline text-white text-left mt-12 service_heading">How does the platform enable you to
-            become the best version of
-            yourself?</div>
+          <div class="mat-headline text-white text-left mt-12 service_heading">{{ 'publicHome.serviceHeading' | translate }}</div>
 
           <div class="flex flex-1 flex-row player_box">
             <div class="flex flex-1 flex-col">
-              <h4 class="margin-bottom-l text-white text-left">An experienced civil servant</h4>
+              <h4 class="margin-bottom-l text-white text-left">{{ 'publicHome.expCivilServant' | translate }}</h4>
               <div class="exCivilVideo">
                 <!-- <img src="/assets/instances/eagle/landing-img/video1.png" alt="video presentation"> -->
                 <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video1.png">
@@ -78,7 +74,7 @@
             </div>
 
             <div class="flex flex-1 flex-col margin-left-m">
-              <h4 class="margin-bottom-l text-white text-left">A newly recruited civil servant</h4>
+              <h4 class="margin-bottom-l text-white text-left">{{ 'publicHome.servicesSection' | translate }}</h4>
               <div class="exCivilVideo">
                 <video width="100%" height="auto" controls poster="/assets/instances/eagle/landing-img/video2.png">
                   <source src="https://igot.blob.core.windows.net/public/Shilpa-final.mp4" type="video/mp4">
@@ -99,9 +95,9 @@
       <div class="flex flex-row w-100">
         <!-- <div class="grid-cols-1 grid"> -->
         <div class="flex flex-column justify-center items-center journeyContent">
-          <h1 class="mb-3">Start your learning journey </h1>
-          <p>Are you a government official without an iGOT Karmayogi account yet? Start here.</p>
-          <div class="mt-2"><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
+          <h1 class="mb-3">{{ 'publicHome.journeySectionMain' | translate }}</h1>
+          <p>{{ 'publicHome.journeySectionPara' | translate }}</p>
+          <div class="mt-2"><a routerLink="/public/signup" class="btn btn-primary">{{ 'common.register' | translate }}</a> </div>
         </div>
         <!-- </div> -->
       </div>
@@ -111,13 +107,13 @@
   <section class="solutionService pt-12 pb-8">
     <div class="container container-balanced">
       <div class="row">
-        <h1 class=" text-center">Solutioning space for all of Government</h1>
+        <h1 class=" text-center">Solutioning space for all of Government{{ 'publicHome.learnAndNetwork' | translate }}</h1>
         <div class="grid-cols-3 grid gap-4 mt-8 solutionServiceInner">
           <div class="">
             <div class="servicesItem learning">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/Learn.svg" alt="learning icon"></div>
-              <h2 class="ws-mat-primary-default-text">Learning hub</h2>
-              <p>Learn anywhere, anytime and bridge your competency gaps using impactful and engaging learning content.
+              <h2 class="ws-mat-primary-default-text">{{ 'publicHome.learningHub' | translate }}</h2>
+              <p>{{ 'publicHome.learnhubPara' | translate }}
               </p>
             </div>
           </div>
@@ -125,38 +121,38 @@
             <div class="servicesItem discussion">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/discussionIcon.svg" alt="Discussion icon">
               </div>
-              <h2 class="ws-mat-primary-default-text">Discussion hub</h2>
-              <p>Discuss and learn with peers, colleagues, civil servants and experts across the country.</p>
+              <h2 class="ws-mat-primary-default-text">{{ 'publicHome.discussionHub' | translate }}</h2>
+              <p>{{ 'publicHome.ServiceItemDiscussion' | translate }}</p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem user">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/userIcon.svg" alt="User icon"></div>
-              <h2 class="ws-mat-primary-default-text">Network hub</h2>
-              <p>Connect with civil servants across the country. Grow your network within government circles.</p>
+              <h2 class="ws-mat-primary-default-text">{{ 'publicHome.networkHub' | translate }}</h2>
+              <p>{{ 'publicHome.learnAndNetwork' | translate }}</p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem competency">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/competencyIcon.svg" alt="competency icon">
               </div>
-              <h2 class="ws-mat-primary-default-text">Competency hub</h2>
-              <p>Identify your competency requirements, competency gaps, so you can grow faster in the right direction.
+              <h2 class="ws-mat-primary-default-text">{{ 'publicHome.competencyHub' | translate }}</h2>
+              <p>{{ 'publicHome.competencyHubPara' | translate }}
               </p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem career">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/careerIcon.svg" alt="career icon"></div>
-              <h2 class="ws-mat-primary-default-text">Career hub</h2>
-              <p> Explore career opportunities across the country and signal your expertise.</p>
+              <h2 class="ws-mat-primary-default-text">{{ 'publicHome.careerHub' | translate }}</h2>
+              <p> {{ 'publicHome.careerHubPara' | translate }}</p>
             </div>
           </div>
           <div class="">
             <div class="servicesItem event">
               <div class="icon"><img src="/assets/instances/eagle/landing-img/eventIcon.svg" alt="event icon"></div>
-              <h2 class="ws-mat-primary-default-text"> Events hub</h2>
-              <p>Join online and in-person events to break silos and share ideas.</p>
+              <h2 class="ws-mat-primary-default-text"> {{ 'publicHome.eventHub' | translate }}</h2>
+              <p>{{ 'publicHome.eventHubPara' | translate }}</p>
             </div>
           </div>
         </div>
@@ -170,10 +166,8 @@
         <div class="grid-cols-1 grid">
           <div class="flex flex-1 flex-row">
             <div class="flex flex-1 flex-col">
-              <h1 class="mb-3">Walkthrough of the iGOT Karmayogi Portal</h1>
-              <p class="mb-12">Gain skills to rocket your career growth. Connect with civil servants and experts to
-                learn and discover new
-                opportunities in the Indian civil services.</p>
+              <h1 class="mb-3">{{ 'publicHome.walkthroughIgot' | translate }}</h1>
+              <p class="mb-12">{{ 'publicHome.igotWalkthrough' | translate }}</p>
             </div>
 
             <div class="flex flex-1 flex-col">
@@ -194,8 +188,8 @@
       <div class="flex flex-row justify-center  items-center ">
         <div class="grid-cols-1 grid">
           <div class="growthHub  text-center">
-            <h1 class="pb-2">Learn. Network. Take your career growth to the next level.</h1>
-            <div class=""><a routerLink="/public/signup" class="btn btn-primary">Register</a> </div>
+            <h1 class="pb-2">{{ 'publicHome.learnAndNetwork' | translate }}</h1>
+            <div class=""><a routerLink="/public/signup" class="btn btn-primary">{{ 'common.register' | translate }}</a> </div>
           </div>
         </div>
       </div>

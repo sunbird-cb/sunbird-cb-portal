@@ -42,7 +42,8 @@
   $colorLightBlue: #cbe2f0;
   $linkColour: rgb(27, 76, 161);
   outline-color: mat-color($accent, lighter);
-
+  $colorAccent: rgb(27, 76, 161); 
+  
   .icon-svg {
     fill: $iconColor;
   }
@@ -280,35 +281,35 @@
     }
   } @else {
     .mat-radio-button {
-      background-color: transparent !important;
+      background-color: transparent;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorPrimaryDark !important;
+          background-color: $colorPrimaryDark;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorPrimaryDark !important;
+          border-color: $colorPrimaryDark;
         }
       }
     }
 
     .mat-radio-checked {
-      background-color: rgba(0, 116, 182, 0.05) !important;
+      background-color: rgba(0, 116, 182, 0.05) ;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorAccent !important;
+          background-color: $colorAccent ;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorAccent !important;
+          border-color: $colorAccent ;
         }
       }
     }
 
     .mat-pseudo-checkbox-checked {
-      background-color: $colorAccent !important;
+      background-color: $colorAccent ;
     }
 
     .mat-progress-spinner circle,
@@ -582,6 +583,9 @@
 
     .ws-mat-orange-light-bg {
       background-color: $colorOrangeLight !important;
+    }
+    .ws-mat-orange-medium-bg {
+      background-color: rgba(239, 149, 30, 0.32)  !important;
     }
 
     .ws-mat-white-text {

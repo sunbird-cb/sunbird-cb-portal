@@ -9,7 +9,7 @@ import {
   ViewChild, ViewChildren,
 } from '@angular/core'
 import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
-import { interval, Subscription } from 'rxjs'
+import { Subscription, interval } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { NSPractice } from './practice.model'
 import { QuestionComponent } from './components/question/question.component'
@@ -24,6 +24,8 @@ import _ from 'lodash'
 import { NSQuiz } from '../quiz/quiz.model'
 import { environment } from 'src/environments/environment'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { ViewerDataService } from '../../viewer-data.service'
+import { ViewerHeaderSideBarToggleService } from './../../viewer-header-side-bar-toggle.service'
 // import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
@@ -70,6 +72,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
   @ViewChild('submitModal', { static: false }) submitModal: ElementRef | null = null
+  resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
   currentQuestionIndex = 0
   currentTheme = ''
   fetchingResultsStatus: FetchStatus = 'none'
@@ -94,7 +97,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   telemetrySubscription: Subscription | null = null
   attemptSubData!: NSPractice.ISecAttempted[]
   attemptSubscription: Subscription | null = null
-  timeLeft = 0
+  timeLeft = 55
   timerSubscription: Subscription | null = null
   viewState: NSPractice.TQuizViewMode = 'initial'
   paramSubscription: Subscription | null = null
@@ -108,6 +111,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   showAnswer = false
   matchHintDisplay: any[] = []
   canAttempt!: NSPractice.IRetakeAssessment
+  isMobile = false
+  questionAttemptedCount = 0
+  expandFalse = true
+  showOverlay = false
+  showToolTip = false
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -118,13 +126,22 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     private valueSvc: ValueService,
     // private vws: ViewerDataService,
     public snackbar: MatSnackBar,
-    private sanitized: DomSanitizer
+    private sanitized: DomSanitizer,
+    private viewerDataSvc: ViewerDataService,
+    private viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService
+
   ) {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
     }
   }
   init() {
+
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
     // this.getSections()
     this.isSubmitted = false
     this.markedQuestions = new Set([])
@@ -152,6 +169,13 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     })
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.isXsmall = isXSmall
+    })
+
+    this.quizSvc.checkAlreadySubmitAssessment.subscribe(result => {
+      if (result) {
+        this.isSubmitted = true
+        this.viewState = 'answer' || 'review'
+      }
     })
   }
   @HostListener('window:beforeunload', ['$event'])
@@ -644,6 +668,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (this.markSectionAsComplete(answered) && this.selectedSection) {
       this.quizSvc.setFullAttemptSection(this.selectedSection)
     }
+    if (this.questionAnswerHash) {
+      this.questionAttemptedCount = Object.keys(this.questionAnswerHash).length
+    }
   }
   markSectionAsComplete(answered: any): boolean {
     let seted = true
@@ -822,6 +849,11 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   async submitQuiz() {
     this.raiseTelemetry('quiz', null, 'submit')
+    this.showOverlay = true
+    setTimeout(() => {
+      this.showOverlay = false
+      this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
+    },         5000)
     this.isSubmitted = true
     this.ngOnDestroy()
     if (!this.quizJson.isAssessment) {
@@ -1104,6 +1136,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.attemptSubData = []
     this.currentQuestionIndex = 0
     this.currentQuestion = null
+
     // this.viewState = 'initial'
     // this.isSubmitted = true
   }

@@ -3,10 +3,11 @@ import { NSDiscussData } from '../../../discuss/models/discuss.model'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { EventService } from '../../services/events.service'
-import * as moment from 'moment'
+import moment from 'moment'
 import { ConfigurationsService, WsEvents, EventService as EventServiceGlobal } from '@sunbird-cb/utils'
 import { MatTabChangeEvent } from '@angular/material'
 import { environment } from 'src/environments/environment'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-events',
@@ -33,6 +34,7 @@ export class EventsComponent implements OnInit {
   sliderConfig = {
     showNavs: true,
     showDots: true,
+    cerificateCardMargin: false,
     maxWidgets: 2,
   }
   eventWidgetData: any
@@ -43,13 +45,21 @@ export class EventsComponent implements OnInit {
     private eventSvc: EventService,
     private configSvc: ConfigurationsService,
     private eventService: EventServiceGlobal,
+    private translate: TranslateService,
   ) {
+
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['eventsCategoryId'] || 1
 
     if (this.configSvc.userProfile) {
       this.departmentID = this.configSvc.userProfile.rootOrgId
+    }
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
     this.eventWidgetData = (this.route.parent && this.route.parent.snapshot.data.pageData.data.eventStrips) || []
   }
@@ -123,6 +133,11 @@ export class EventsComponent implements OnInit {
     this.eventSvc.getEventsList(requestObj).subscribe((events: any) => {
       this.setEventListData(events)
     })
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   setEventListData(eventObj: any) {

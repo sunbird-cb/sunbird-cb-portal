@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core'
-import { MatDialog, MatSnackBar } from '@angular/material'
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
 import {
@@ -7,19 +7,20 @@ import {
   NsContent,
   NsGoal,
   NsPlaylist,
+  UserAutocompleteService,
   viewerRouteGenerator,
   WidgetContentService,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService } from '@sunbird-cb/utils'
+import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
 import { AccessControlService } from '@ws/author'
-import { Subscription } from 'rxjs'
+import { Subscription, timer } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
-import { FormControl, Validators } from '@angular/forms'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 import dayjs from 'dayjs'
 import * as  lodash from 'lodash'
 import { TitleTagService } from '../../services/title-tag.service'
@@ -31,6 +32,11 @@ import { DatePipe } from '@angular/common'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { EnrollQuestionnaireComponent } from '../enroll-questionnaire/enroll-questionnaire.component'
+import { TranslateService } from '@ngx-translate/core'
+import { ENTER } from '@angular/cdk/keycodes'
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { TimerService } from '../../services/timer.service'
+
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -40,7 +46,9 @@ dayjs.extend(isSameOrAfter)
   styleUrls: ['./app-toc-banner.component.scss'],
   providers: [AccessControlService, DatePipe],
 })
-export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+
+export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
+  show = false
   @Input() banners: NsAppToc.ITocBanner | null = null
   @Input() content: NsContent.IContent | null = null
   @Input() resumeData: NsContent.IContinueLearningData | null = null
@@ -50,6 +58,10 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() userEnrollmentList: NsContent.ICourse[] | null = null
   @Output() withdrawOrEnroll = new EventEmitter<string>()
   @Input() contentReadData: NsContent.IContent | null = null
+  @Input() clickToShare = false
+  @Output() programEnrollCall = new EventEmitter<any>()
+  timer: any
+  nsContent = NsContent
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -94,9 +106,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   selectedBatchSubscription: any
   selectedBatchData: any
 
-  // configSvc: any
-
-  // countdown var
   date: any
   now: any
   targetDate: any
@@ -108,14 +117,33 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   seconds: any
   serverDateSubscription: any
   serverDate: any
+  canShare = false
+  enableShare = false
+  rootOrgId: any
+  timerIntervalClear: any
 
+  // share content
+  shareForm: FormGroup | undefined
+  selectable = true
+  removable = true
+  addOnBlur = true
+  separatorKeysCodes: number[] = [ENTER]
+  userCtrl = new FormControl('')
+  filteredUsers: any []| undefined
+  users: any[] = []
+  allUsers: any[] = []
+  apiResponse: any
+  courseDetails: any
+  userProfile: any
+  maxEmailsLimit = 30
+  showLoader = false
+  timerInterval: any
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tocSvc: AppTocService,
-    // private progressSvc: ContentProgressService,
     private contentSvc: WidgetContentService,
     private utilitySvc: UtilityService,
     private mobileAppsSvc: MobileAppsService,
@@ -124,16 +152,53 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     private tagSvc: TitleTagService,
     private actionSVC: ActionService,
     private logger: LoggerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private translate: TranslateService,
+    private userAutoComplete: UserAutocompleteService,
+    private events: EventService,
+    private langtranslations: MultilingualTranslationsService,
+    private timerService: TimerService,
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+
     this.helpEmail = environment.helpEmail
+    this.shareForm = new FormGroup({
+      review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
+    })
+
+    this.userCtrl.valueChanges.pipe(
+      debounceTime(200),
+      distinctUntilChanged()
+    ).subscribe((res: any) => {
+      if (res) {
+        this.filteredUsers = []
+        // this.allUsers = []
+        this.getUsersToShare(res)
+      }
+    })
   }
+
+  @ViewChild('userInput', { static: false }) userInput: ElementRef<HTMLInputElement> | undefined
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete | undefined
 
   ngOnInit() {
     this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
       this.serverDate = serverDate
-      this.ngAfterViewInit()
+      if (this.serverDate) {
+        this.timerInterval = timer(1000, 1000)
+        if (this.timerIntervalClear) {
+          this.timerIntervalClear.unsubscribe()
+        }
+        this.timerIntervalClear = this.timerInterval.subscribe((t: any) => this.timerFunc(serverDate + t * 1000))
+      }
     })
+
     this.route.data.subscribe(data => {
       this.tocConfig = data.pageData.data
       if (this.content && this.isPostAssessment) {
@@ -147,12 +212,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
           }
         })
       }
+
       if (this.content && this.content.identifier) {
-        this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
-          this.contentReadData = res.result.content
-        })
+        // this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
+        //   this.contentReadData = res.result.content
+        // })
       }
     })
+
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig && instanceConfig.logos && instanceConfig.logos.defaultSourceLogo) {
       this.defaultSLogo = instanceConfig.logos.defaultSourceLogo
@@ -160,6 +227,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.configSvc.restrictedFeatures) {
       this.isGoalsEnabled = !this.configSvc.restrictedFeatures.has('goals')
     }
+
     this.routeSubscription = this.route.queryParamMap.subscribe(qParamsMap => {
       const contextId = qParamsMap.get('contextId')
       const contextPath = qParamsMap.get('contextPath')
@@ -168,6 +236,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.contextPath = contextPath
       }
     })
+
     this.batchWFDataSubscription = this.tocSvc.setWFDataSubject.subscribe(
       () => {
         this.setBatchControl()
@@ -177,26 +246,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         console.log('error on batchWFDataSubscription')
       },
     )
+
     if (this.configSvc.restrictedFeatures) {
       this.isRegistrationSupported = this.configSvc.restrictedFeatures.has('registrationExternal')
       this.showIntranetMessage = !this.configSvc.restrictedFeatures.has(
         'showIntranetMessageDesktop',
       )
     }
+
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
       this.selectedBatchData = batchData
     })
 
-    // if (this.authAccessService.hasAccess(this.content as any) && !this.isInIFrame) {
-    //   const status: string = (this.content as any).status
-    //   if (!this.forPreview) {
-    //     this.editButton = true
-    //   } else if (['Draft', 'Live'].includes(status)) {
-    //     this.editButton = true
-    //   } else if (['InReview', 'Reviewed', 'QualityReview'].includes(status)) {
-    //     this.reviewButton = true
-    //   }
-    // }
     this.checkRegistrationStatus()
     this.routerParamSubscription = this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationEnd) {
@@ -223,6 +284,54 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         primaryCategory: this.content.primaryCategory,
       }
     }
+
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+        // this.getUsersToShare('')
+      }
+    }
+  }
+
+  getUsersToShare(queryStr: string) {
+    this.showLoader = true
+    this.userAutoComplete.searchUser(queryStr, this.rootOrgId).subscribe(data => {
+      if (data.result && data.result.response) {
+        this.apiResponse = data.result.response.content
+        let name = ''
+        let pEmail = ''
+        this.apiResponse.forEach((apiData: any) => {
+          apiData.firstName.split(' ').forEach((d: any) => {
+            name = name + d.substr(0, 1).toUpperCase()
+          })
+          if (apiData.profileDetails && apiData.profileDetails.personalDetails) {
+            pEmail = apiData.profileDetails.personalDetails.primaryEmail
+            if (!this.allUsers.filter(user => user.email.toLowerCase().includes(pEmail.toLowerCase())).length) {
+              this.allUsers.push(
+                {
+                  maskedEmail: apiData.maskedEmail,
+                  id: apiData.identifier,
+                  name: apiData.firstName,
+                  iconText: name,
+                  email: pEmail,
+                }
+              )
+            }
+          }
+        })
+        this.showLoader = false
+      }
+      if (this.allUsers.length === 0) {
+        this.filteredUsers = []
+      }
+      this.filteredUsers = this.filterSharedUsers(queryStr)
+    })
   }
 
   get showIntranetMsg() {
@@ -264,44 +373,42 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.tocSvc.subtitleOnBanners
   }
 
-  ngOnChanges() {
+  ngOnChanges(_changes: SimpleChanges): void {
     this.assignPathAndUpdateBanner(this.router.url)
     if (this.content) {
-      // this.content.status = 'Deleted'
       this.fetchExternalContentAccess()
       this.modifySensibleContentRating()
       this.assignPathAndUpdateBanner(this.router.url)
       this.getLearningUrls()
       this.setBatchControl()
     }
+
     if (this.resumeData && this.resumeData.length > 0 && this.content) {
       let resumeDataV2: any
-
       if (this.content.completionPercentage === 100) {
         resumeDataV2 = this.getResumeDataFromList('start')
       } else {
         resumeDataV2 = this.getResumeDataFromList()
       }
+
       if (!resumeDataV2.mimeType) {
         resumeDataV2.mimeType = this.getMimeType(this.content, resumeDataV2.identifier)
       }
+
       this.resumeDataLink = viewerRouteGenerator(
         resumeDataV2.identifier,
         resumeDataV2.mimeType,
         this.isResource ? undefined : this.content.identifier,
         this.isResource ? undefined : this.content.contentType,
         this.forPreview,
-        // this.content.primaryCategory
         'Learning Resource',
         this.getBatchId(),
         this.content.name,
       )
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
-      /* tslint:disable-next-line */
-      console.log(this.resumeDataLink,'=====> banner resum data link <========')
     }
+
     this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
-      // this.disableEnrollBtn = true
       this.selectedBatch = batch
       if (batch) {
         if (this.checkRejected(batch)) {
@@ -311,40 +418,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       this.showRejected = false
       return
-      // let userId = ''
-      // if (batch) {
-      //   if (this.configSvc.userProfile) {
-      //     userId = this.configSvc.userProfile.userId || ''
-      //   }
-
-      //   const req = {
-      //     request: {
-      //       userId,
-      //       courseId: batch.courseId,
-      //       batchId: batch.batchId,
-      //     },
-      //   }
-      //   this.contentSvc.enrollUserToBatch(req).then((data: any) => {
-      //     if (data && data.result && data.result.response === 'SUCCESS') {
-      //       this.batchData = {
-      //         content: [batch],
-      //         enrolled: true,
-      //       }
-      //       this.router.navigate(
-      //         [],
-      //         {
-      //           relativeTo: this.route,
-      //           queryParams: { batchId: batch.batchId },
-      //           queryParamsHandling: 'merge',
-      //         })
-      //       this.openSnackbar('Enrolled Successfully!')
-      //       this.disableEnrollBtn = false
-      //     } else {
-      // this.openSnackbar('Something went wrong, please try again later!')
-      // this.disableEnrollBtn = false
-      //     }
-      //   })
-      // }
     })
   }
 
@@ -360,11 +433,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       disableClose: true,
       panelClass: ['animate__animated', 'animate__slideInLeft'],
     })
+
     confirmDialog.afterClosed().subscribe(result => {
       if (result) {
-        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus,
-                                      this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
-        // this.openSnackbar('Withdraw Request sent Successfully!')
+        // tslint:disable-next-line:max-line-length
+        this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
       }
     })
   }
@@ -390,65 +463,70 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   public requestToEnrollDialog() {
-    // conflicts check start
-    const batchData = this.batchControl.value
-    const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
-      if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-        if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) &&
-        dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) ||
-        dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) &&
-        dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
-          return true
-        }
-        return false
-      }
-      return false
-    })
-    // conflicts check end
-    if (userList && userList.length === 0) {
-      if (this.content && this.content.wfSurveyLink) {
-        const sID = this.content.wfSurveyLink.split('surveys/')
-        const surveyId = sID[1]
-        const courseId = this.content.identifier
-        const courseName = this.content.name
-        const apiData = {
-          // tslint:disable-next-line:prefer-template
-          getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
-          // tslint:disable-next-line:prefer-template
-          postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
-          getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
-          customizedHeader: {},
-        }
-        const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
-          width: '920px',
-          maxHeight: '85vh',
-          data: {
-            surveyId,
-            courseId,
-            courseName,
-            apiData,
 
-          },
-          disableClose: false,
-          panelClass: ['animate__animated', 'animate__slideInLeft'],
+    const batchData = this.batchControl.value
+    if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+        // conflicts check start
+        const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
+          if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+            if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) &&
+            dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) ||
+            dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) &&
+            dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
+              return true
+            }
+            return false
+          }
+          return false
         })
-        enrollQuestionnaire.afterClosed().subscribe(result => {
-          if (result) {
+
+        // conflicts check end
+        if (userList && userList.length === 0) {
+          if (this.content && this.content.wfSurveyLink) {
+            const sID = this.content.wfSurveyLink.split('surveys/')
+            const surveyId = sID[1]
+            const courseId = this.content.identifier
+            const courseName = this.content.name
+            const apiData = {
+              // tslint:disable-next-line:prefer-template
+              getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
+              // tslint:disable-next-line:prefer-template
+              postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
+              getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
+              customizedHeader: {},
+            }
+            const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
+              width: '920px',
+              maxHeight: '85vh',
+              data: {
+                surveyId,
+                courseId,
+                courseName,
+                apiData,
+
+              },
+              disableClose: false,
+              panelClass: ['animate__animated', 'animate__slideInLeft'],
+            })
+            enrollQuestionnaire.afterClosed().subscribe(result => {
+              if (result) {
+                this.openRequestToEnroll(batchData)
+              }
+            })
+          } else {
             this.openRequestToEnroll(batchData)
           }
-        })
-      } else {
-        this.openRequestToEnroll(batchData)
-      }
+        } else {
+          if (userList && userList.length > 0) {
+            this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
+          }
+        }
     } else {
-      if (userList && userList.length > 0) {
-        this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
-      }
+      this.programEnrollCall.emit(batchData)
     }
   }
 
   public requestAndWithDrawEnroll(state: string, action: string, wfIdValue?: string) {
-    // this.disableEnrollBtn = true
     let userId = ''
     let rootOrgId = ''
     let username = ''
@@ -459,6 +537,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       username = this.configSvc.userProfile.firstName || ''
       departmentName = this.configSvc.userProfile.departmentName || ''
     }
+
     const req = {
       rootOrgId,
       userId,
@@ -478,19 +557,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         },
       ],
     }
+
     this.contentSvc.enrollAndUnenrollUserToBatchWF(req, action).then((data: any) => {
       if (data && data.result && data.result.status === 'OK') {
-        // this.batchData = {
-        //   content: [batch],
-        //   enrolled: true,
-        // }
-        // this.router.navigate(
-        //   [],
-        //   {
-        //     relativeTo: this.route,
-        //     queryParams: { batchId: batch.batchId },
-        //     queryParamsHandling: 'merge',
-        //   })
         this.batchData.workFlow = {
           wfInitiated: true,
           batch: this.selectedBatch,
@@ -517,13 +586,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     if (content && content.children) {
       if (content.children.length === 0) {
-        // if (content.children[0].identifier === identifier) {
-        //   return content.mimeType
-        // }
         // big blunder in data
-        this.logger.log(content.identifier, 'Wrong mimetypes for resume')
+        this.logger.log(content.identifier, 'Wrong mime types for resume')
         return content.mimeType
       }
+
       const flatList: any[] = []
       const getAllItemsPerChildren: any = (item: NsContent.IContent) => {
         flatList.push(item)
@@ -532,6 +599,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         return
       }
+
       getAllItemsPerChildren(this.content)
       const chld = _.first(_.filter(flatList, { identifier }))
       return chld.mimeType
@@ -553,13 +621,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   public handleEnrollmentEndDate(batch: any) {
     const enrollmentEndDate = dayjs(lodash.get(batch, 'enrollmentEndDate')).format('YYYY-MM-DD')
     const systemDate = dayjs(this.serverDate).format('YYYY-MM-DD')
-    // if(enrollmentEndDate === 'Invalid Date'){
-    //   console.log('Invalid Date')
-    //   return false
-    // } else {
     return (enrollmentEndDate && enrollmentEndDate !== 'Invalid Date') ?
       (dayjs(enrollmentEndDate).isSame(systemDate, 'day') || dayjs(enrollmentEndDate).isAfter(systemDate)) : false
-    // }
   }
 
   public checkRejected(batch: any) {
@@ -646,8 +709,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       })
       confirmDialog.afterClosed().subscribe(result => {
         if (result) {
-          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus,
-                                        this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
+          // tslint:disable-next-line:max-line-length
+          this.requestAndWithDrawEnroll(this.batchData.workFlow.wfItem.currentStatus, this.WFBlendedProgramStatus.WITHDRAW, this.batchData.workFlow.wfItem.wfId)
         }
       })
     }
@@ -655,7 +718,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public setBatchControl() {
     // on first load select first value in the batch list if its having valid enrollment Date
-    if (this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+    if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM ||
+        this.content.primaryCategory === this.primaryCategory.PROGRAM)) {
       if (this.batchData && this.batchData.content.length) {
         if (!this.batchData.workFlow || (this.batchData.workFlow && !this.batchData.workFlow.wfInitiated)) {
           const batch = this.batchData.content.find((el: any) => {
@@ -663,14 +727,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
               return el
             }
           })
+
           if (batch) {
             this.batchControl.setValue(batch)
             this.setbatchDateToCountDown(batch.startDate)
           }
+
           this.getBatchUserCount(this.batchControl.value)
           const batchData = {
             content: [this.batchControl.value],
           }
+
           if (this.selectedBatchData && this.selectedBatchData.content) {
             this.selectedBatchData = {
               ...this.selectedBatchData,
@@ -681,6 +748,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
               ...batchData,
             }
           }
+
           this.tocSvc.getSelectedBatchData(this.selectedBatchData)
         } else {
           const batch = this.batchData.content.find((el: any) => {
@@ -701,9 +769,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.targetDate = new Date(batchStartDate)
     const convertedDate = dayjs(batchStartDate).format('YYYY-MM-DD HH:mm:ss')
     this.targetTime = new Date(convertedDate).getTime()
-    // this.currentTime = `${
-    //   this.months[this.targetDate.getMonth()]
-    // } ${this.targetDate.getDate()}, ${this.targetDate.getFullYear()}`
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -835,10 +900,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     return this.isResource && this.content && !this.content.artifactUrl.length
   }
 
-  // get showStart() {
-  //   return this.content && this.content.resourceType !== 'Certification'
-  // }
-
   get showActionButtons() {
     return (
       this.actionBtnStatus !== 'wait' &&
@@ -872,21 +933,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return isResource
     }
     return false
-  }
-  ngOnDestroy() {
-    this.tocSvc.analyticsFetchStatus = 'none'
-    if (this.routerParamSubscription) {
-      this.routerParamSubscription.unsubscribe()
-    }
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
-    if (this.batchWFDataSubscription) {
-      this.batchWFDataSubscription.unsubscribe()
-    }
-    if (this.selectedBatchSubscription) {
-      this.selectedBatchSubscription.unsubscribe()
-    }
   }
 
    getBatchUserCount(batchData: any) {
@@ -931,7 +977,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   private getResumeDataFromList(type?: string) {
     if (!type) {
-      // const lastItem = this.resumeData && this.resumeData.pop()
       // tslint:disable-next-line:max-line-length
       const lastItem = this.resumeData && this.resumeData.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
       return {
@@ -939,12 +984,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
       }
     }
+
     const firstItem = this.resumeData && this.resumeData.length && this.resumeData[0]
     return {
       identifier: firstItem.contentId,
       mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
     }
   }
+
   private modifySensibleContentRating() {
     if (
       this.content &&
@@ -957,6 +1004,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.content.totalRating = (this.content.totalRating as any)[this.configSvc.rootOrg || '']
     }
   }
+
   private getLearningUrls() {
     if (this.content) {
       if (!this.forPreview) {
@@ -964,21 +1012,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         //   this.contentProgress = data
         // })
       }
-      // this.progressSvc.fetchProgressHashContentsId({
-      //   "contentIds": [
-      //     "lex_29959473947367270000",
-      //     "lex_5501638797018560000"
-      //   ]
-      // }
-      // ).subscribe(data => {
-      //   console.log("DATA: ", data)
-      // })
+
       this.isPracticeVisible = Boolean(
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.PRACTICE),
       )
+
       this.isAssessVisible = Boolean(
         this.tocSvc.filterToc(this.content, NsContent.EFilterCategory.ASSESS),
       )
+
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
@@ -989,11 +1031,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.content.primaryCategory,
         this.getBatchId(),
       )
-
-      /* tslint:disable-next-line */
-      console.log(this.firstResourceLink,'=====> banner first data link <========')
     }
   }
+
   private assignPathAndUpdateBanner(url: string) {
     const path = url.split('/').pop()
     if (path && this.validPaths.has(path)) {
@@ -1001,6 +1041,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.updateBannerUrl()
     }
   }
+
   private updateBannerUrl() {
     if (this.banners) {
       this.bannerUrl = this.sanitizer.bypassSecurityTrustStyle(
@@ -1008,6 +1049,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       )
     }
   }
+
   playIntroVideo() {
     if (this.content) {
       this.dialog.open(AppTocDialogIntroVideoComponent, {
@@ -1017,12 +1059,14 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       })
     }
   }
+
   get sanitizedIntroductoryVideoIcon() {
     if (this.content && this.content.introductoryVideoIcon) {
       return this.sanitizer.bypassSecurityTrustStyle(`url(${this.content.introductoryVideoIcon})`)
     }
     return null
   }
+
   private fetchExternalContentAccess() {
     if (this.content && this.content.registrationUrl) {
       if (!this.forPreview) {
@@ -1044,6 +1088,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
     }
   }
+
   getRatingIcon(ratingIndex: number): 'star' | 'star_border' | 'star_half' {
     if (this.content && this.content.averageRating) {
       const avgRating = this.content.averageRating
@@ -1108,6 +1153,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       return qParams
     }
+
     if (this.resumeDataLink && type === 'RESUME') {
       let qParams: { [key: string]: string } = {
         ...this.resumeDataLink.queryParams,
@@ -1148,13 +1194,17 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const color = this.tagSvc.getContrast(bgColor)
     return { color, 'background-color': bgColor }
   }
-  // ngAfterViewInit
-  ngAfterViewInit() {
-    let serverDate = this.serverDate
-   if (this.serverDate) {
-    setInterval(() => {
-      // this.tickTock();
-      serverDate = serverDate  +  1000
+
+  timerFunc(serverDate: any) {
+    // serverDate = serverDate + timeer
+    if (serverDate && this.targetTime) {
+      let timerLocal = {
+        days: 0,
+        hours: 0,
+        min: 0,
+        seconds: 0,
+      }
+      // serverDate = serverDate  +  1000
       this.date = new Date(serverDate)
       this.now = this.date.getTime()
       this.difference = this.targetTime - this.now
@@ -1168,8 +1218,15 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       !isNaN(this.days)
         ? (this.days = Math.floor(this.difference))
         : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
-    },          1000)
-   }
+
+      timerLocal = {
+        days: this.days,
+        hours: this.hours,
+        min: this.minutes,
+        seconds: this.seconds,
+      }
+      this.timerService.setTimerData(timerLocal)
+    }
   }
 
   get showDisableMsg() {
@@ -1192,5 +1249,208 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       return this.tocConfig[msg]
     }
     return ''
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetry('shareContent')
+  }
+
+  add(event: MatChipInputEvent): void {
+    // this.getUsersToShare(event.value)
+    if (event.value && this.matAutocomplete && !this.matAutocomplete.isOpen) {
+      const input = event.input
+      const value = event.value
+      if (this.users.length === this.maxEmailsLimit) {
+        this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
+        return
+      }
+      if (this.users.includes(value.trim())) {
+        this.openSnackbar(this.translateLabels('dulicateEmail', 'contentSharing', ''))
+        return
+      }
+      // tslint:disable-next-line: max-line-length
+      const ePattern = new RegExp(/^(?!.*\.\.)(?!.*\._)(?!.*\._\.)(?!.*\.\.$)(?!.*\.$)[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/)
+      if (ePattern.test(value)) {
+        if ((value || '').trim()) {
+          this.users.push(value.trim())
+        }
+        if (input) {
+          input.value = ''
+        }
+        this.userCtrl.setValue('')
+        const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+        if (el != null) {
+          setTimeout(() => {
+            el[0].scrollTop = el[0].scrollHeight
+          },         200)
+        }
+      } else {
+        this.openSnackbar(this.translateLabels('invalidEmail', 'contentSharing', ''))
+        return
+      }
+    }
+  }
+
+  remove(user: string): void {
+    const index = this.users.indexOf(user)
+
+    if (index >= 0) {
+      this.users.splice(index, 1)
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    if (this.users.length === this.maxEmailsLimit) {
+      this.openSnackbar(this.translateLabels('maxLimit', 'contentSharing', ''))
+      return
+    }
+    if (this.users.includes(event.option.value)) {
+      this.openSnackbar(this.translateLabels('dulicateUser', 'contentSharing', ''))
+      return
+    }
+    this.users.push(event.option.value)
+    if (this.userInput) {
+      this.userInput.nativeElement.value = ''
+    }
+    this.userCtrl.setValue('')
+    const el: any = document.getElementsByClassName('mat-chip-list-wrapper')
+    if (el != null) {
+      setTimeout(() => {
+        el[0].scrollTop = el[0].scrollHeight
+      },         200)
+    }
+  }
+
+  filterSharedUsers(value: string): string[] {
+    if (value) {
+      const filterValue = value.toLowerCase()
+      return this.allUsers.filter(user => user.name.toLowerCase().includes(filterValue))
+    }
+    return []
+  }
+
+  submitSharing() {
+    let courseId = ''
+    let courseName = ''
+    let coursePosterImageUrl = ''
+    let courseProvider = ''
+    let primaryCategory = ''
+    if (this.configSvc.userProfile) {
+      courseProvider = this.configSvc.userProfile.rootOrgName || ''
+    }
+    if (this.content) {
+        courseId = this.content.identifier,
+        courseName = this.content.name,
+        coursePosterImageUrl = this.content.posterImage || '',
+        primaryCategory = this.content.primaryCategory
+    }
+    const obj = {
+      request: {
+        courseId,
+        courseName,
+        coursePosterImageUrl,
+        courseProvider,
+        primaryCategory,
+        recipients: '',
+      },
+    }
+    const recipients: any = []
+    this.users.forEach((selectedUser: any) => {
+      if (selectedUser.includes('@') && selectedUser.includes('.')) {
+        recipients.push({ email: selectedUser })
+      } else {
+        const selectedUserObj: any = this.allUsers.filter(user => user.name === selectedUser)
+        if (selectedUserObj.length) {
+          recipients.push({ userId: selectedUserObj[0].id, email: selectedUserObj[0].email })
+        }
+      }
+
+    })
+    if (recipients.length) {
+      obj.request.recipients = recipients
+      this.tocSvc.shareContent(obj).subscribe(result => {
+        if (result.responseCode === 'OK') {
+          this.openSnackbar(this.translateLabels('success', 'contentSharing', ''))
+        }
+        this.users = []
+        this.filteredUsers = []
+        this.allUsers = []
+        this.enableShare = false
+        this.userCtrl.setValue('')
+      }, error => {
+        // tslint:disable
+        console.log(error)
+        this.openSnackbar(this.translateLabels('error','contentSharing',''))
+      })
+    }
+  }
+
+  onClose() {
+    this.enableShare = false
+    this.users = []
+    this.filteredUsers = []
+    this.allUsers = []
+    this.userCtrl.setValue('')
+    this.raiseTelemetry('shareClose')
+  }
+
+  copyToClipboard() {
+    const textArea = document.createElement('textarea')
+    textArea.value = window.location.href
+    document.body.appendChild(textArea)
+    //textArea.focus()
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    this.openSnackbar(this.translateLabels('linkCopied','contentSharing',''))
+    this.raiseTelemetry('copyToClipboard')
+  }
+
+  raiseTelemetry(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    return this.langtranslations.translateActualLabel(label, type, subtype)
+  }
+
+  ngOnDestroy() {
+    this.tocSvc.analyticsFetchStatus = 'none'
+    if (this.routerParamSubscription) {
+      this.routerParamSubscription.unsubscribe()
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe()
+    }
+    if (this.batchWFDataSubscription) {
+      this.batchWFDataSubscription.unsubscribe()
+    }
+    if (this.selectedBatchSubscription) {
+      this.selectedBatchSubscription.unsubscribe()
+    }
+    if (this.timerIntervalClear) {
+      // clearInterval(this.timerIntervalClear);
+      this.timerIntervalClear.unsubscribe()
+      this.targetTime=''
+    }
+  }
+  
+  translateLabel(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

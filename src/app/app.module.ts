@@ -1,6 +1,6 @@
 import { FullscreenOverlayContainer, OverlayContainer } from '@angular/cdk/overlay'
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common'
-import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClient, HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { APP_INITIALIZER, Injectable, NgModule, ErrorHandler } from '@angular/core'
 import {
   GestureConfig,
@@ -24,7 +24,7 @@ import {
   MatTabsModule,
   MatSelectModule,
   MatTableModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -81,14 +81,17 @@ import { WelcomeUserResolverService } from './services/welcome-user-resolver.ser
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
 import { PublicRequestModule } from './routes/public/public-request/public-request.module'
 import { AppTourComponent } from './component/app-tour/app-tour.component'
-import {GuidedTourModule, GuidedTourService} from 'cb-tour-guide'
+import { GuidedTourModule, GuidedTourService } from 'cb-tour-guide'
 import { AppTourVideoComponent } from './component/app-tour-video/app-tour-video.component'
 import { AppChatbotModule } from './component/app-chatbot/app-chatbot.module'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
+<<<<<<< HEAD
 import { HeaderModule } from './header/header.module';
 import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
 import { SocialLinkComponent } from './component/social-link/social-link.component';
@@ -97,6 +100,15 @@ import { AppLogoComponent } from './component/app-logo/app-logo.component';
 import { NoDataComponent } from './component/no-data/no-data.component';
 import { SurveyPocComponent } from './component/survey-poc/survey-poc.component';
 
+=======
+import { HeaderModule } from './header/header.module'
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
+import { SocialLinkComponent } from './component/social-link/social-link.component'
+import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component'
+import { AppLogoComponent } from './component/app-logo/app-logo.component'
+import { ProfileV3Module } from '@ws/app/src/lib/routes/profile-v3/profile-v3.module'
+import { NoDataComponent } from './component/no-data/no-data.component'
+>>>>>>> bf1bae27c7d537ff076cb55211dd9b654e4354d8
 
 @Injectable()
 export class HammerConfig extends GestureConfig {
@@ -114,6 +126,11 @@ const appInitializer = (initSvc: InitService, logger: LoggerService) => async ()
 
 const getBaseHref = (platformLocation: PlatformLocation): string => {
   return platformLocation.getBaseHrefFromDOM()
+}
+
+// tslint:disable-next-line:function-name
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
 }
 
 // tslint:disable-next-line: max-classes-per-file
@@ -153,6 +170,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     BrowserModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    BrowserModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
     AppRoutingModule,
@@ -196,18 +214,27 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    HeaderModule
+    HeaderModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+    ProfileV3Module,
   ],
   exports: [
     TncComponent,
-    HeaderModule
+    HeaderModule,
+    TranslateModule,
   ],
   bootstrap: [RootComponent],
   entryComponents: [
     DialogConfirmComponent,
     LoginComponent,
     AppIntroComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
   ],
   providers: [
     {
@@ -238,15 +265,21 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     AppHierarchyResolverService,
     AppContentResolverService,
     AppEnrollmentResolverService,
+    HttpClient,
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseHref,
       deps: [PlatformLocation],
     },
+    {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient],
+    },
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
-    GuidedTourService
+    GuidedTourService,
   ],
 })
 export class AppModule { }

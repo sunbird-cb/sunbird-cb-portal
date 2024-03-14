@@ -1,5 +1,4 @@
 <div class="provider_right_main_block flex flex-1 flex-col">
-
     <p class="mat-title margin-top-s margin-bottom-m">{{provider}}</p>
 
     <!--============= explore_popular_topic ===================-->
@@ -11,8 +10,6 @@
             Explore popular topics cards here
         </div>
     </div> -->
-
-
     <!--============= top_cbp_section ===================-->
     <!-- <div class="top_cbp_section flex flex-col">
         <div class="flex flex-col top_head_block">
@@ -23,8 +20,6 @@
         </div>
 
     </div> -->
-
-
     <div class="all_cbp_box">
         <div class="top_search_box">
             <form [formGroup]="searchForm" class="w-full flex flex-1 justify-between">
@@ -36,7 +31,7 @@
                             </mat-icon>
                             <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
                                 aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
-                                [placeholder]="'Search'" matInput />
+                                placeholder="{{'providerallcbp.search' | translate }}"  matInput />
                         </mat-form-field>
                     </div>
                 </div>
@@ -47,15 +42,12 @@
 
                             <mat-form-field class="w-full" appearance="outline">
                                 <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
-                                    placeholder="Sort by">
-                                    <mat-option [value]="'asc'" slected>Ascending ( A - Z )</mat-option>
-                                    <mat-option [value]="'desc'">Descending ( Z - A )</mat-option>
+                                    placeholder="{{ 'providerallcbp.sortBy' | translate }}">
+                                    <mat-option [value]="'asc'" slected>{{ 'providerallcbp.ascending' | translate }} ( A - Z )</mat-option>
+                                    <mat-option [value]="'desc'">{{ 'providerallcbp.descending' | translate }} ( Z - A )</mat-option>
                                 </mat-select>
                             </mat-form-field>
-
                         </div>
-
-
                     </div>
                 </div>
             </form>
@@ -63,8 +55,8 @@
 
         <mat-sidenav-container>
             <mat-sidenav-content class="custom-sidecontent">
-                <p class="mat-title margin-bottom-xs">All CBPs</p>
-                <p class="mat-body-2 ws-mat-black60-text">{{totalCount || 0}} CBPs from this provider</p>
+                <p class="mat-title margin-bottom-xs">{{ 'providerallcbp.allCbps' | translate }}</p>
+                <p class="mat-body-2 ws-mat-black60-text">{{totalCount || 0}} {{ 'providerallcbp.fromProvider' | translate}}</p>
 
                 <div class="">
                     <ng-container *ngFor="let c of cbps">
@@ -81,10 +73,9 @@
                 </div>
                 <a (click)="loadMore()" class="cursor-pointer ws-mat-default-text mat-subheading-2 load_more_link"
                     [hidden]="disableLoadMore || (displayLoader | async)">
-                    Load more
+                    {{ 'providerallcbp.loadMore' | translate}}
                 </a>
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>
-
 </div>

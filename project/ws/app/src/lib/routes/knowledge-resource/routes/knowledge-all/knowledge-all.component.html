@@ -1,32 +1,31 @@
 <div class="flex width-expand flex-col">
-    <div class="flex flex-1 mb-4 search">
+    <div class="flex flex-1 search">
 
         <form class="flex-1">
           <mat-form-field appearance="outline" class="autocomplete-form search_faq_form" color="primary" >
             <mat-icon matPrefix class="py-5 flex items-center justify-center">search</mat-icon>
             <input  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" class="ml-2" i18n-placeholder="search content"
-                [placeholder]="'Search'" i18-aria-label aria-label="Query" matInput maxlength="50" />
+                placeholder="{{'knowledgeall.search' | translate }}" i18-aria-label aria-label="Query" matInput maxlength="50" />
           </mat-form-field>
         </form>
       </div>
 
       <div class="flex flex-col">
         <!-- <a *ngFor="let resource of allResources" [routerLink]="['/app/knowledge-resource/all', resource.id]"> -->
-        <div *ngIf="allResources; else nodata" >
-          <a *ngFor="let resource of allResources | filter : searchText">
+        <div *ngIf="allResources; else nodata" class="flex space-btwn flex-direction" style="flex-wrap: wrap;">
+          <div *ngFor="let resource of allResources | filter : searchText" class="knowledge_card">
             <ws-app-knowledge-card [resource]="resource" (resourceBookmarkEvent)="refresh()">
 
             </ws-app-knowledge-card>
-          </a>
+          </div>
         </div>
 
         <ng-template #nodata>
           <img src="assets/common/error-pages/empty_search.svg" class="empty_search">
-          <h2 class="mat-h2 text-center margin-top-m" i18n>No results found</h2>
+          <h2 class="mat-h2 text-center margin-top-m" i18n>{{ 'knowledgeall.noresultfound' | translate }}</h2>
        </ng-template>
 
       </div>
-
 </div>
 
 

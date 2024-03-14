@@ -6,7 +6,8 @@ import moment from 'moment'
 import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog/profile-certificate-dialog.component'
 import { IProCert } from './profile-cretifications-v2.model'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-widget-profile-cretifications-v2',
   templateUrl: './profile-cretifications-v2.component.html',
@@ -25,14 +26,22 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
   certData: any
   defaultThumbnail = ''
   allCertificate: any = []
+  certId: any
 
   constructor(
     private dialog: MatDialog,
     private contentSvc: WidgetContentService,
     private tocSvc: AppTocService,
-    private configSvc: ConfigurationsService
+    private configSvc: ConfigurationsService,
+    private events: EventService,
+    private translate: TranslateService
   ) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit(): void {
@@ -48,9 +57,10 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
     let dat
     if (date) {
 
-      dat = `Issued on ${moment(date).format('MMM YYYY')}`
+      dat = `${this.translateTabName('Issued on')} ${moment(date).format('MMM YYYY')}`
     } else {
-      dat = 'Certificate Not issued '
+      // dat = 'Certificate Not issued '
+      dat = this.translateTabName('certificateNotIssued')
     }
     return dat
   }
@@ -71,8 +81,8 @@ export class ProfileCretificationsV2Component extends WidgetBaseComponent implem
 
   downloadCert(data: any) {
 if (data.length > 0) {
-  const certId = data[0].identifier
-  this.contentSvc.downloadCert(certId).subscribe(response => {
+  this.certId = data[0].identifier
+  this.contentSvc.downloadCert(this.certId).subscribe(response => {
     this.certData = response.result.printUri
   })
 }
@@ -83,13 +93,15 @@ if (data.length > 0) {
         if (value.issuedCertificates[0].identifier === element.identifier) {
           const cet = element.dataUrl
           const courseDoId = value.courseId
+          const certId = element.identifier
           if (courseDoId) {
           this.tocSvc.fetchGetContentData(courseDoId).subscribe(res => {
             if (res.result) {
               const courseData = res.result
+              this.raiseIntreactTelemetry()
               this.dialog.open(ProfileCertificateDialogComponent, {
                 autoFocus: false,
-                data: { cet, value, courseData },
+                data: { cet, value, courseData, certId },
               })
             }
           })
@@ -106,5 +118,21 @@ if (data.length > 0) {
     })
 
   }
-
+  raiseIntreactTelemetry() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'view-certificate',
+        subType: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      },
+      {
+        id: this.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      })
+  }
+  translateTabName(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'profileCretificationsV2.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
+  }
 }

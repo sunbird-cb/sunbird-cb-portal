@@ -5,12 +5,13 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { ConfigurationsService, EventService, LoggerService, TFetchStatus } from '@sunbird-cb/utils'
 import { MobileAppsService } from '../../../../../../../src/app/services/mobile-apps.service'
-import { SCORMAdapterService } from './SCORMAdapter/scormAdapter'
+import { SCORMAdapterService, scormLMSStatus } from './SCORMAdapter/scormAdapter'
 /* tslint:disable */
 import _ from 'lodash'
 import { environment } from 'src/environments/environment';
 import { Subscription, timer } from 'rxjs'
 import { Storage } from './SCORMAdapter/storage'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 /* tslint:enable */
 
 @Component({
@@ -34,6 +35,8 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   progress = 100
   progressThreshold = 70
+  public scormLMSStatus = scormLMSStatus
+  playScormContentFlag = scormLMSStatus.LMSWating
   realTimeProgressRequest = {
     content_type: 'Resource',
     primaryCategory: NsContent.EPrimaryCategory.RESOURCE,
@@ -48,6 +51,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   private timer!: any
   // Subscription object
   private sub!: Subscription
+  tocConfigSubscription: Subscription | null = null
   tocConfig!: any
 
   constructor(
@@ -62,6 +66,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     private store: Storage,
     private loggerSvc: LoggerService,
     private widgetContentSvc: WidgetContentService,
+    private tocSvc: AppTocService,
   ) {
     (window as any).API = this.scormAdapterService
     // if (window.addEventListener) {
@@ -81,6 +86,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data:any) => {
+        this.tocConfig = data
+    })
     if (this.htmlContent && this.htmlContent.identifier) {
       this.scormAdapterService.contentId = this.htmlContent.identifier
       if (!this.forPreview) {
@@ -88,6 +96,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         this.timer = timer(1000, 1000)
         // subscribing to a observable returns a subscription object
         this.sub = this.timer.subscribe((t: any) => this.tickerFunc(t))
+        this.scormAdapterService.scormInitialized$.subscribe(value => {
+          this.playScormContentFlag = value
+        })
       }
     }
   }
@@ -99,9 +110,12 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy() {
     window.removeEventListener('message', this.receiveMessage)
     window.removeEventListener('onmessage', this.receiveMessage)
-    console.log('this.ticks: ', this.ticks)
+    // console.log('this.ticks: ', this.ticks)
     this.raiseRealTimeProgress()
     // this.store.clearAll()
+    if(this.tocConfigSubscription){
+      this.tocConfigSubscription.unsubscribe()
+    }
   }
 
   private raiseRealTimeProgress() {
@@ -115,7 +129,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       this.fireRealTimeProgress(this.htmlContent)
       // this.store.clearAll()
     }
-    this.sub.unsubscribe();
+    this.sub.unsubscribe()
   }
 
   private fireRealTimeProgress(htmlContent: any) {
@@ -133,13 +147,25 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         ...this.realTimeProgressRequest,
         status: (completionData && completionData.status) || 0,
         completionPercentage: (completionData && completionData.completionPercentage) || 0,
-        progressDetails: { spentTime: (completionData && completionData.spentTime) || 0 }
+        progressDetails: { spentTime: (completionData && completionData.spentTime) || 0 },
       }
       this.scormAdapterService.addDataV3(req, htmlContent.identifier).subscribe((_res: any) => {
         this.loggerSvc.log('Progress updated successfully')
+        // for updating the progress hashmap, for instant progress to be shown
+        if (this.tocSvc.hashmap && this.tocSvc.hashmap[htmlContent.identifier]) {
+          // tslint:disable-next-line: max-length
+          if (this.tocSvc.hashmap[htmlContent.identifier]
+            && (!this.tocSvc.hashmap[htmlContent.identifier]['completionStatus']
+            || this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] < 2)) {
+            this.tocSvc.hashmap[htmlContent.identifier]['completionPercentage'] = req.completionPercentage
+            this.tocSvc.hashmap[htmlContent.identifier]['completionStatus'] = req.status
+            this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
+          }
+        }
         // this.store.clearAll()
         return
-      }, (err) => {
+      // tslint:disable-next-line: align
+      }, (err: any) => {
         this.loggerSvc.error('Error calling progress update for scorm content', err)
         // this.store.clearAll()
         return
@@ -151,21 +177,22 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
 
   calculateCompletionStatus(htmlContent: any) {
     const data = this.store.getAll()
-    let spentTime = 0
+    let spentTimen = 0
     let percentage = 0
     if ((data && data['completionStatus'] === 2)) {
       return {
         completionPercentage: data && data['completionPercentage'],
         status: data && data['completionStatus'],
-        spentTime: data && data['spentTime']
+        spentTime: data && data['spentTime'],
+      // tslint:disable-next-line: whitespace
       }
-    } else {
-
+    }
       // if (data) {
-        spentTime = this.ticks + (data && data["spentTime"] || 0)
-        if (htmlContent && spentTime) {
+        spentTimen = this.ticks + (data && data['spentTime'] || 0)
+        if (htmlContent && spentTimen) {
           // ~~ will remove decimal after division
-          percentage = ~~((spentTime / htmlContent.duration) * 100)
+          // tslint:disable-next-line
+          percentage = ~~((spentTimen / htmlContent.duration) * 100)
         }
       // }
 
@@ -173,21 +200,21 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         return {
           completionPercentage: 100,
           status: 2,
-          spentTime: spentTime
+          spentTime: spentTimen,
         }
+    // tslint:disable-next-line
       } else {
         return {
           completionPercentage: percentage,
           status: 1,
-          spentTime: spentTime
+          spentTime: spentTimen,
         }
-      }
+      // }
     }
   }
 
   getThreshold() {
-    this.tocConfig = this.widgetContentSvc.tocConfigData
-    if(this.tocConfig) {
+    if (this.tocConfig) {
       this.progressThreshold = this.tocConfig.ScormProgressThreshold
     }
     return this.progressThreshold
@@ -201,14 +228,14 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       ? this.configSvc.instanceConfig.intranetIframeUrls
       : []
     // For successive scorm resources, when switched to next content -  start
-    if(!this.oldData) {
+    if (!this.oldData) {
       this.oldData = this.htmlContent
     } else {
-      if(this.htmlContent && (this.oldData.identifier !== this.htmlContent.identifier)) {
+      if (this.htmlContent && (this.oldData.identifier !== this.htmlContent.identifier)) {
         if (!this.store.getItem('Initialized')) {
           this.fireRealTimeProgress(this.oldData)
         }
-        this.sub.unsubscribe();
+        this.sub.unsubscribe()
         this.ticks = 0
         this.timer = timer(1000, 1000)
         // subscribing to a observable returns a subscription object
@@ -435,6 +462,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         if (data.target) {
           this.pageFetchStatus = 'done'
           this.showIsLoadingMessage = false
+          if (!this.store.getItem('Initialized') && this.playScormContentFlag === scormLMSStatus.LMSWating) {
+            this.playScormContentFlag = scormLMSStatus.LMSNegative
+          }
         }
       })
     }

@@ -65,7 +65,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     } else {
       this.dataSubscription = this.activatedRoute.data.subscribe(
         async data => {
-          this.offlineSessionData = data.content.data
+          this.offlineSessionData = data && data.content && data.content.data
           if (this.alreadyRaised && this.oldData) {
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Unloaded, this.oldData)
           }
@@ -113,7 +113,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.offlineSessionData)
           }
           this.isFetchingDataComplete = true
-          if(this.batchData) {
+          if (this.batchData) {
             this.getSessionData(data)
           } else {
             this.fetchProgramBatchData(data)
@@ -137,6 +137,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
 
   // get session  data  from batch api start
   getSessionData(resolveData: any) {
+    if (this.batchData && this.batchData.batchAttributes && this.batchData.batchAttributes.sessionDetails_v2) {
     const sessionData = this.batchData.batchAttributes.sessionDetails_v2.find((obj: any) => {
       return obj.sessionId ===  this.activatedRoute.snapshot.params.resourceId
 
@@ -145,8 +146,10 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     if (this.configSvc.userProfile) {
       userId = this.configSvc.userProfile.userId || ''
     }
-    const requestCourse = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
-      this.activatedRoute.snapshot.queryParams.batchId, this.activatedRoute.snapshot.params.resourceId)
+    const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+      this.activatedRoute.snapshot.queryParams.collectionId,
+      this.activatedRoute.snapshot.queryParams.batchId,
+      this.activatedRoute.snapshot.params.resourceId)
     const req: NsContent.IContinueLearningDataReq = {
       request: {
         userId,
@@ -173,10 +176,11 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
     // calling initData to form the data
     this.initData(resolveData)
   }
+  }
   // get session data  from batch api end
 
   initData(data: any) {
-    this.offlineSessionData = data.content.data
+    this.offlineSessionData = data && data.content && data.content.data
     if (this.offlineSessionData) {
       this.formDiscussionForumWidget(this.offlineSessionData)
       if (this.discussionForumWidget) {

@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CbpSideBarComponent } from './cbp-side-bar.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { CbpSideBarComponent } from './cbp-side-bar.component'
 
 describe('CbpSideBarComponent', () => {
-  let component: CbpSideBarComponent;
-  let fixture: ComponentFixture<CbpSideBarComponent>;
+  let component: CbpSideBarComponent
+  let fixture: ComponentFixture<CbpSideBarComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CbpSideBarComponent ]
+      declarations: [CbpSideBarComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CbpSideBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CbpSideBarComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

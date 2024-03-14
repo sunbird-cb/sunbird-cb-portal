@@ -24,9 +24,15 @@ export class VideoComponent implements OnInit {
   @Input() isPreviewMode = false
   isTypeOfCollection = false
   isRestricted = false
+  isMobile = false
   constructor(private activatedRoute: ActivatedRoute, private configSvc: ConfigurationsService) { }
 
   ngOnInit() {
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
     if (this.configSvc.restrictedFeatures) {
       this.isRestricted =
         !this.configSvc.restrictedFeatures.has('disscussionForum')

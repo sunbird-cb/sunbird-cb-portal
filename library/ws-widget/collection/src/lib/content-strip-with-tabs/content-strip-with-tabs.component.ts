@@ -11,6 +11,7 @@ import {
   ConfigurationsService,
   UtilityService,
   WsEvents,
+  MultilingualTranslationsService,
 } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
@@ -21,6 +22,7 @@ import _ from 'lodash'
 import { MatTabChangeEvent } from '@angular/material'
 import { NsCardContent } from '../card-content-v2/card-content-v2.model'
 import { ITodayEvents } from '@ws/app/src/lib/routes/events/models/event'
+import { TranslateService } from '@ngx-translate/core'
 
 interface IStripUnitContentData {
   key: string
@@ -37,6 +39,7 @@ interface IStripUnitContentData {
     showNavs: boolean,
     showDots: boolean,
     maxWidgets?: number
+    cerificateCardMargin?: boolean
   },
   tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
   stripName?: string
@@ -83,6 +86,7 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
   changeEventSubscription: Subscription | null = null
   defaultMaxWidgets = 12
   enrollInterval: any
+  todaysEvents: any = []
 
   constructor(
     // private contentStripSvc: ContentStripNewMultipleService,
@@ -94,8 +98,16 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
     // private http: HttpClient,
     // private searchServSvc: SearchServService,
     private userSvc: WidgetUserService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -343,7 +355,11 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
               contentTemp.completionStatus = c.completionStatus || c.status || 0
               contentTemp.enrolledDate = c.enrolledDate || ''
               contentTemp.lastContentAccessTime = c.lastContentAccessTime || ''
+              contentTemp.lastReadContentStatus = c.lastReadContentStatus || ''
+              contentTemp.lastReadContentId = c.lastReadContentId || ''
+              contentTemp.lrcProgressDetails = c.lrcProgressDetails || ''
               contentTemp.issuedCertificates = c.issuedCertificates || []
+              contentTemp.batchId = c.batchId || ''
               return contentTemp
             })
           }
@@ -1149,6 +1165,10 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       }
     }
     return returnValue
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
 }

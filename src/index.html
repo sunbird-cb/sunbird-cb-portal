@@ -29,9 +29,14 @@
   <script rel="preload" src="/assets/env.js" as="script"></script>
   <script>window.git_build = '{git-hash}';</script>
   <script>window.git_branch = '{git-branch}';</script>
+  <META HTTP-EQUIV='content-type' CONTENT='text/html; charset=UTF-8'>
+    <link href="src\zoho-style.css">
+    <script src='https://js.zohostatic.in/support/app/js/jqueryandencoder.ffa5afd5124fbedceea9.js'></script>
+   <script src="src\zoho-script.js"></script>
+
 </head>
 
-<body class="mat-app-background mat-body mat-typography custom-scroll">
+<body class="mat-app-background mat-body mat-typography custom-scroll" id="app-bg">
   <ws-root role="main">
     <style>
       .loader-container {
@@ -82,13 +87,18 @@
       <div class="loader-ripple">
         <div></div>
         <div></div>
+
       </div>
+    </div>
+
+    <div id="zoho-form-box">
+
     </div>
   </ws-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 
   <!-- <script type="text/javascript" nonce="{place_your_nonce_value_here}" src="https://desk.zoho.in/portal/api/web/inapp/120349000000222059?orgId=60023043070" defer></script> -->
-        <script src="https://desk.zoho.in/portal/api/feedbackwidget/120349000000212259?orgId=60023043070&displayType=popout"></script>
+        <!-- <script src="https://desk.zoho.in/portal/api/feedbackwidget/120349000000212259?orgId=60023043070&displayType=popout"></script> -->
         <script src="https://cdn.userway.org/widget.js" data-account="pam3S93IQ7"></script>
         <script>
     (function(d){
@@ -140,12 +150,15 @@
 </script>
 
 <script>
-  setTimeout(()=>{
-    document.getElementById("feedbacklabelspan").style.display = 'none';
-      document.getElementById("help-icon").addEventListener('click',function() {
-      zsLoadAutoSuggestions();
-    })
-  },10000)
+  // setTimeout(()=>{
+  //   document.getElementById("feedbacklabelspan").style.display = 'none';
+    
+  //   let htm = this.sanitizer.bypassSecurityTrustHtml(this.html);
+  //     document.getElementById("help-icon").addEventListener('click',function() {
+
+
+  //   })
+  // },10000)
   
 </script>
 </html>

@@ -48,8 +48,19 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ViewerComponent } from './viewer.component'
 import { ViewerTocComponent } from './components/viewer-toc/viewer-toc.component'
 import { ViewerTopBarModule } from './components/viewer-top-bar/viewer-top-bar.module'
-import { ViewerSecondaryTopBarModule } from './components/viewer-secondary-top-bar/viewer-secondary-top-bar.module'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpClient } from '@angular/common/http'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
+// tslint:disable-next-line:function-name
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
+
+import { ViewerSecondaryTopBarModule } from './components/viewer-secondary-top-bar/viewer-secondary-top-bar.module'
+import { ContentTocModule } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-toc.module'
+import { PdfScormDataService } from './pdf-scorm-data-service'
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 @NgModule({
   declarations: [ViewerComponent, ViewerTocComponent],
   imports: [
@@ -85,11 +96,21 @@ import { ViewerSecondaryTopBarModule } from './components/viewer-secondary-top-b
     BtnContentFeedbackV2Module,
     DisplayContentTypeIconModule,
     PipePartialContentModule,
+    SkeletonLoaderModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
     MatTabsModule,
     PlayerBriefModule,
     ViewerTopBarModule,
     ViewerSecondaryTopBarModule,
     ContentProgressModule,
+    ContentTocModule,
   ],
+  providers: [PdfScormDataService],
 })
 export class ViewerModule { }

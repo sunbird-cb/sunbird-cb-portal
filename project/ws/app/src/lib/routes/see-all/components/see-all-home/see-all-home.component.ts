@@ -18,7 +18,7 @@ import {
   NsContent,
 } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import {
-  ConfigurationsService, EventService, WsEvents,
+  ConfigurationsService, EventService, MultilingualTranslationsService, WsEvents,
 } from '@sunbird-cb/utils'
 import { WidgetUserService } from '@sunbird-cb/collection/src/lib/_services/widget-user.service'
 import { MatTabChangeEvent } from '@angular/material'
@@ -50,7 +50,10 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     private userSvc: WidgetUserService,
     private eventSvc: EventService,
-  ) {}
+    private langtranslations: MultilingualTranslationsService,
+  ) {
+
+  }
 
   async ngOnInit() {
     this.activated.queryParams.subscribe((res: any) => {
@@ -515,5 +518,9 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label.toLowerCase(), type, '')
+  }
 
 }

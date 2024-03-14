@@ -1,0 +1,13 @@
+@import '_ws-vars.scss';
+
+.modal-container {
+    .cancel-button {
+        background-color: #FFF;
+        color: $text-primary;
+    }
+
+    .confirm-button {
+        color: #FFF;
+        background-color: $text-primary;
+    }
+}

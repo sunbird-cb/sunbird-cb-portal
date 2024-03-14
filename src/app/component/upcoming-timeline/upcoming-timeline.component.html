@@ -2,7 +2,7 @@
 <ng-container *ngIf="upcommingList.length">
     <div class="mt-8 mb-8 highlight-block hidden md:block">
         <div class="flex flex-middle margin-bottom-s">
-            <p class="title">Upcoming</p>
+            <p class="title">{{'cbpPlanStats.upcoming' | translate }}</p>
             <mat-icon aria-hidden="true" (click)="upComingMethod('upcoming')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
         <!-- <div>
@@ -17,7 +17,7 @@
 <ng-container *ngIf="overDueList.length">
     <div class="mt-8 mb-8 highlight-block hidden md:block" *ngIf="overDueList.length">
         <div class="flex flex-middle margin-bottom-s">
-            <p class="title">Overdue</p>
+            <p class="title">{{'cbpPlanStats.overdue' | translate }}</p>
             <mat-icon aria-hidden="true" (click)="upComingMethod('overdue')" class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color cursor-pointer" role="img"> chevron_right </mat-icon>
         </div>
         <!-- <div>
@@ -34,7 +34,7 @@
             <mat-tab-group  mat-stretch-tabs>
                 <mat-tab >
                     <ng-template mat-tab-label>
-                        Upcoming&nbsp;
+                        {{'cbpPlanStats.upcoming' | translate }}&nbsp;
                         <span *ngIf="upcommingList.length">({{upcommingList.length}})</span>
                       </ng-template>
                     <ng-container *ngIf="upcommingList.length">
@@ -50,7 +50,7 @@
                 </mat-tab>
                 <mat-tab>
                     <ng-template mat-tab-label>
-                        Over due&nbsp;
+                        {{'cbpPlanStats.upcoming' | translate }}&nbsp;
                         <span *ngIf="upcommingList.length">({{upcommingList.length}})</span>
                       </ng-template>
                     <ng-container *ngIf="overDueList.length">
@@ -66,7 +66,7 @@
                 </mat-tab>
             </mat-tab-group>
         </div>
-        
+
     </div>
 
     <ng-template #nextTemplate>
@@ -90,7 +90,7 @@
         </ng-container>
     </ng-template>
 </div>
- 
+
 
 <ng-template #detail let-data="data">
     <div class="mt-8 mb-8 highlight-block">

@@ -55,7 +55,8 @@ export class ContentProgressService {
     })
   }
   private get shouldFetchProgress(): boolean {
-    return Boolean(this.progressHash === null && !this.isFetchingProgress)
+    // return Boolean(this.progressHash === null && !this.isFetchingProgress)
+    return Boolean(!this.isFetchingProgress)
   }
 
   fetchProgressHashContentsId(

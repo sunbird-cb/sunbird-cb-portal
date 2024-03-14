@@ -6,6 +6,7 @@ import { SkeletonLoaderModule } from '../skeleton-loader/skeleton-loader.module'
 import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
 
 import { DiscussionsComponent } from './discussions.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [DiscussionsComponent],
@@ -15,6 +16,7 @@ import { DiscussionsComponent } from './discussions.component'
     MatIconModule,
     SkeletonLoaderModule,
     PipeRelativeTimeModule,
+    TranslateModule,
   ],
   exports: [
     DiscussionsComponent,

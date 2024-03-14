@@ -56,6 +56,8 @@ export class ConfigurationsService {
   isNewUser = false
   portalUrls: IPortalUrls | undefined
   positions: any
+  overrideThemeChanges: any
+  profileTimelyNudges: any
 
   // pinnedApps
   pinnedApps = new BehaviorSubject<Set<string>>(new Set())
@@ -74,6 +76,8 @@ export class ConfigurationsService {
   // platform rating
   updatePlatformRating = new BehaviorSubject({ bottom: '120px' })
   updatePlatformRatingObservable$ = this.updatePlatformRating.asObservable()
+
+  languageTranslationFlag = new Subject()
 
   // Preference Related Values
   activeThemeObject: NsInstanceConfig.ITheme | null = null

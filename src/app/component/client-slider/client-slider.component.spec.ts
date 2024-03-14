@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ClientSliderComponent } from './client-slider.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ClientSliderComponent } from './client-slider.component'
 
 describe('ClientSliderComponent', () => {
-  let component: ClientSliderComponent;
-  let fixture: ComponentFixture<ClientSliderComponent>;
+  let component: ClientSliderComponent
+  let fixture: ComponentFixture<ClientSliderComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientSliderComponent ]
+      declarations: [ClientSliderComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClientSliderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ClientSliderComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

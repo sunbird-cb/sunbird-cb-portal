@@ -1,15 +1,22 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
 import { jsPDF } from 'jspdf'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'ws-widget-certificate-dialog',
   templateUrl: './certificate-dialog.component.html',
   styleUrls: ['./certificate-dialog.component.scss'],
+   /* tslint:disable */
+   host: { class: 'certificate-inner-dialog-panel' },
+   /* tslint:enable */
 })
 export class CertificateDialogComponent implements OnInit {
   url!: string
+  navUrl = ''
   constructor(
+    private events: EventService,
     public dialogRef: MatDialogRef<CertificateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -18,9 +25,12 @@ export class CertificateDialogComponent implements OnInit {
 
   ngOnInit() {
     this.url = this.data.cet
+    // tslint:disable-next-line:max-line-length
+    this.navUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${environment.contentHost}/apis/public/v8/cert/download/${this.data.certId}`
   }
 
   downloadCert() {
+    this.raiseIntreactTelemetry('svg')
     const a: any = document.createElement('a')
     a.href = this.data.cet
     a.download = 'Certificate'
@@ -29,7 +39,9 @@ export class CertificateDialogComponent implements OnInit {
     a.click()
     a.remove()
   }
+
   downloadCertPng() {
+    this.raiseIntreactTelemetry('png')
     const uriData = this.data.cet
     const img = new Image()
     img.src = uriData
@@ -53,6 +65,7 @@ export class CertificateDialogComponent implements OnInit {
     }
   }
   async downloadCertPdf() {
+    this.raiseIntreactTelemetry('pdf')
     const uriData = this.data.cet
     const img = new Image()
     img.src = uriData
@@ -76,4 +89,38 @@ export class CertificateDialogComponent implements OnInit {
       }
     }
   }
+
+  shareCert() {
+    this.raiseShareIntreactTelemetry('share')
+    return window.open(this.navUrl, '_blank')
+  }
+
+  raiseShareIntreactTelemetry(type?: string, action?: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${type}-${WsEvents.EnumInteractSubTypes.CERTIFICATE}`,
+        subType: action && action,
+      },
+      {
+        id: this.data.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      }
+    )
+  }
+
+  raiseIntreactTelemetry(action?: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'download-certificate',
+        subType: action && action,
+      },
+      {
+        id: this.data.certId,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      }
+    )
+  }
+
 }

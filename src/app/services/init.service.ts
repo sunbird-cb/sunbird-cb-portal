@@ -30,6 +30,7 @@ import { Subscription } from 'rxjs'
 import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 import { NPSGridService } from '@sunbird-cb/collection/src/lib/grid-layout/nps-grid.service'
 import moment from 'moment'
+import { TranslateService } from '@ngx-translate/core'
 // import { of } from 'rxjs'
 /* tslint:enable */
 // interface IDetailsResponse {
@@ -80,6 +81,7 @@ export class InitService {
     private userPreference: UserPreferenceService,
     private http: HttpClient,
     private npsSvc: NPSGridService,
+    private translate: TranslateService,
     // private widgetContentSvc: WidgetContentService,
 
     @Inject(APP_BASE_HREF) private baseHref: string,
@@ -160,6 +162,8 @@ export class InitService {
     })
     // this.logger.removeConsoleAccess()
     await this.fetchDefaultConfig()
+    await this.profileNudgeConfig()
+    await this.themeOverrideConfig()
     // const authenticated = await this.authSvc.initAuth()
     // if (!authenticated) {
     //   this.settingsSvc.initializePrefChanges(environment.production)
@@ -258,6 +262,38 @@ export class InitService {
     // Apply the settings using settingsService
     this.settingsSvc.initializePrefChanges(environment.production)
     this.userPreference.initialize()
+
+    // lang selection
+    // if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+    //   if (this.configSvc.unMappedUser) {
+    //     if (this.configSvc.unMappedUser.profileDetails && this.configSvc.unMappedUser.profileDetails
+    //       && this.configSvc.unMappedUser.profileDetails.additionalProperties
+    //       && this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang) {
+    //       const lang = this.configSvc.unMappedUser.profileDetails.additionalProperties.webPortalLang
+    //       this.translate.use(lang)
+    //       localStorage.setItem('websiteLanguage', lang)
+    //     } else {
+    //       if (localStorage.getItem('websiteLanguage')) {
+    //         let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+    //         lang = lang.replace(/\"/g, '')
+    //         this.translate.use(lang)
+    //       } else {
+    //         this.translate.setDefaultLang('en')
+    //         localStorage.setItem('websiteLanguage', 'en')
+    //       }
+    //     }
+    //   } else if (localStorage.getItem('websiteLanguage')) {
+    //     let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+    //     lang = lang.replace(/\"/g, '')
+    //     this.translate.use(lang)
+    //   } else {
+    //     this.translate.setDefaultLang('en')
+    //     localStorage.setItem('websiteLanguage', 'en')
+    //   }
+    // } else {
+      this.translate.setDefaultLang('en')
+      localStorage.setItem('websiteLanguage', 'en')
+    // }
   }
   // private reloadAccordingToLocale() {
   //   if (window.location.origin.indexOf('http://localhost:') > -1) {
@@ -301,6 +337,22 @@ export class InitService {
     this.configSvc.activeOrg = publicConfig.org[0]
     this.configSvc.appSetup = publicConfig.appSetup
     this.configSvc.positions = publicConfig.positions
+    return publicConfig
+  }
+
+  private async profileNudgeConfig(): Promise<NsInstanceConfig.IConfig> {
+    const publicConfig: NsInstanceConfig.IConfig = await this.http
+      .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/profile-nudge.json`)
+      .toPromise()
+    this.configSvc.profileTimelyNudges = publicConfig.profileTimelyNudges
+    return publicConfig
+  }
+
+  private async themeOverrideConfig(): Promise<NsInstanceConfig.IConfig> {
+    const publicConfig: NsInstanceConfig.IConfig = await this.http
+      .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/theme-override-config.json`)
+      .toPromise()
+      this.configSvc.overrideThemeChanges = publicConfig.overrideThemeChanges
     return publicConfig
   }
 
@@ -403,6 +455,7 @@ export class InitService {
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
             userRoles: _.get(profileV2, 'userRoles') || [],
+            webPortalLang: _.get(profileV2, 'additionalProperties.webPortalLang') || '',
           }
 
           if (!this.configSvc.nodebbUserProfile) {
@@ -528,6 +581,7 @@ export class InitService {
             systemTopics: _.get(profileV2, 'systemTopics') || [],
             desiredTopics: _.get(profileV2, 'desiredTopics') || [],
             userRoles: _.get(profileV2, 'userRoles') || [],
+            webPortalLang: _.get(profileV2, 'additionalProperties.webPortalLang') || '',
           }
 
           if (!this.configSvc.nodebbUserProfile) {

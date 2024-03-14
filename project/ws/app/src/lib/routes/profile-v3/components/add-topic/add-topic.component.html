@@ -1,19 +1,20 @@
-<span class="mat-title">Create the topic</span>
+<span class="mat-title">{{'addtopicdialog.topicHeader' | translate}}</span>
 <form [formGroup]="createTopic" class="flex flex-1 flex-column margin-top-m">
   <div class="input-column px-2 text-input-col">
     <mat-form-field appearance="outline" class="margin-top-xs">
-      <input matInput maxlength="100" autocomplete="off" id="topicName" #topicName name="topicName" placeholder="Type here" formControlName="topicName" />
+      <input matInput maxlength="100" autocomplete="off" id="topicName" #topicName name="topicName"
+      placeholder="{{'addtopicdialog.typeHere' | translate}}" formControlName="topicName" />
     </mat-form-field>
   </div>
   <div class="flex flex-1 flex-row-reverse">
     <a mat-button type="submit" class="ws-mat-accent-background cursor-pointer margin-xs" (click)="create()">
       <span class="ws-mat-primary-default-text padding-s" i18n>
-        Add
+        {{'addtopicdialog.add' | translate}}
       </span>
     </a>
     <a mat-button type="button" class="ws-mat-accent-border-active cursor-pointer margin-xs" (click)="cancel()">
       <span class="ws-mat-default-text padding-s" i18n>
-        Cancel
+        {{'addtopicdialog.cancel' | translate}}
       </span>
     </a>
   </div>

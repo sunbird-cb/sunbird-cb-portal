@@ -100,41 +100,41 @@ const routes: Routes = [
   //   loadChildren: () => import('./routes/route-admin.module').then(u => u.RouteAdminModule),
   //   canActivate: [GeneralGuard],
   // },
-  {
-    path: 'app/careers',
-    loadChildren: () =>
-      import('./routes/route-careers.module').then(u => u.RouteCareerHubModule),
-    canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'career',
-      pageId: 'app/careers',
-      module: 'Careers',
-    },
-    resolve: {
-      pageData: PageResolve,
-    },
-  },
+  // {
+  //   path: 'app/careers',
+  //   loadChildren: () =>
+  //     import('./routes/route-careers.module').then(u => u.RouteCareerHubModule),
+  //   canActivate: [GeneralGuard],
+  //   data: {
+  //     pageType: 'feature',
+  //     pageKey: 'career',
+  //     pageId: 'app/careers',
+  //     module: 'Careers',
+  //   },
+  //   resolve: {
+  //     pageData: PageResolve,
+  //   },
+  // },
   // {
   //   path: 'app/channels',
   //   loadChildren: () => import('./routes/route-channels.module').then(u => u.RouteChannelsModule),
   //   canActivate: [GeneralGuard],
   // },
-  {
-    path: 'app/competencies',
-    loadChildren: () =>
-      import('./routes/route-competencie.module').then(u => u.RouteCompetenciesModule),
-    canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'competencie',
-      pageId: 'app/competencies',
-      module: 'Competency',
-    },
-    resolve: {
-      pageData: PageResolve,
-    },
-  },
+  // {
+  //   path: 'app/competencies',
+  //   loadChildren: () =>
+  //     import('./routes/route-competencie.module').then(u => u.RouteCompetenciesModule),
+  //   canActivate: [GeneralGuard],
+  //   data: {
+  //     pageType: 'feature',
+  //     pageKey: 'competencie',
+  //     pageId: 'app/competencies',
+  //     module: 'Competency',
+  //   },
+  //   resolve: {
+  //     pageData: PageResolve,
+  //   },
+  // },
   {
     path: 'app/content-assignment',
     loadChildren: () =>
@@ -169,6 +169,21 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'knowledge-resource',
       pageId: 'app/knowledge-resource',
+      module: 'Knowledge Resources',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
+    path: 'app/jan-karmayogi',
+    loadChildren: () =>
+    import('./routes/route-jan-karmayogi.module').then(u => u.RouteJanKarmayogiModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'jan-karmayogi',
+      pageId: 'app/jan-karmayogi',
       module: 'Knowledge Resources',
     },
     resolve: {
@@ -553,6 +568,7 @@ const routes: Routes = [
   },
   {
     path: 'app/toc',
+    // loadChildren: () => import('../../project/ws/app/src/lib/routes/app-toc/app-toc.module').then(u => u.AppTocModule),
     loadChildren: () => import('./routes/route-app-toc.module').then(u => u.RouteAppTocModule),
     canActivate: [GeneralGuard],
     data: {
@@ -721,8 +737,8 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      //module: ModuleNameResolve,
-      //pageId: PageNameResolve,
+      // module: ModuleNameResolve,
+      // pageId: PageNameResolve,
     },
     canActivate: [GeneralGuard],
   },
@@ -955,7 +971,7 @@ const routes: Routes = [
     resolve: {
       hierarchyData: AppHierarchyResolverService,
       enrollmentData: AppEnrollmentResolverService,
-      contentRead: AppContentResolverService
+      contentRead: AppContentResolverService,
     },
     loadChildren: () => import('./routes/route-viewer.module').then(u => u.RouteViewerModule),
     canActivate: [GeneralGuard],

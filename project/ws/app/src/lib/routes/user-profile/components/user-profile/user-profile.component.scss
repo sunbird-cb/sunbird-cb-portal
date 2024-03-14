@@ -296,9 +296,12 @@ input[type=number] {
   .btn-success {
     background-color: rgb(48, 105, 51) !important;
     border-radius: 8px;
-    width: 240px;
+    width: 232px;
     box-shadow: none;
     margin-right: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &.btn-responsive {
       width: 100%;
@@ -643,7 +646,7 @@ input.mat-input-element {
       }
     }
 
-   
+
 
     .profile-cols-full {
       padding: 1rem;
@@ -739,4 +742,61 @@ input.mat-input-element {
   cursor: not-allowed !important;
   pointer-events: none !important;
   opacity: 0.9 !important;
+}
+
+.relative-position {
+  position: relative;
+}
+
+.update-primary-email {
+  color: #1b4ca1;
+  cursor: pointer;
+  position: absolute;
+  top: 43px;
+  right: 17px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.update-primary-email-section {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  .cancel-btn {
+    color: #0074b6;
+    background-color: white;
+  }
+  .align-items {
+    justify-content: space-between;
+  }
+  .verify-email {
+    width: 50%;
+  }
+
+  .re-send {
+    color: #0074b6;
+    cursor: pointer;
+    position: absolute;
+    top: 43px;
+    right: 17px;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  .send-otp-btn[disabled] {
+    opacity: 0.6;
+  }
+
+  .verfy-email-otp[disabled] {
+    opacity: 0.6;
+  }
+
+  .custom-error {
+    margin-top: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .verify-email {
+      width: 100%;
+    }
+  }
 }

@@ -44,7 +44,7 @@ import {
     MatButtonModule,
     BtnFullscreenModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   exports: [
     QuizComponent,

@@ -26,9 +26,9 @@
                       ">
               <div class="flex flex-1 items-center">
                 <p class="mat-subheading-1 margin-remove inline-block" *ngIf="stripsResultDataMap[key]?.stripTitle">
-                  {{ stripsResultDataMap[key]?.stripTitle }}
+                  {{ translateLabels(stripsResultDataMap[key]?.stripTitle, 'home') }}
                 </p>
-      
+
                 <button *ngIf="stripsResultDataMap[key]?.stripInfo?.icon" type="button" mat-icon-button
                   (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="info"
                   class="margin-left-xs">
@@ -46,12 +46,12 @@
                   class="ml-4 view-more ws-mat-default-text">
                   <a class="flex ws-mat-default-text items-center justify-center mat-body-1" [routerLink]="stripsResultDataMap[key]?.viewMoreUrl?.path"
                     [queryParams]="stripsResultDataMap[key]?.viewMoreUrl?.queryParams">
-                    <span i18n class="ws-mat-default-text">{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
+                    <span i18n class="ws-mat-default-text">{{translateLabels(widgetData.strips[0].viewMoreUrl.viewMoreText,'home')  || 'See all'}}</span>
                     <mat-icon class="ws-mat-default-text mat-icon notranslate material-icons mat-icon-no-color" color="accent">navigate_next</mat-icon>
                   </a>
                 </div>
                 <!-- viewAll end-->
-              </div>              
+              </div>
               <button mat-icon-button (click)="setHiddenForStrip(key)" *ngIf="stripsResultDataMap[key]?.canHideStrip">
                 <mat-icon>close</mat-icon>
               </button>
@@ -75,16 +75,16 @@
                 <mat-tab-group animationDuration="0ms" [selectedIndex]="getSelectedIndex(stripsResultDataMap[key], key)"
                 class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
                   (selectedTabChange)="tabClicked($event, stripsResultDataMap[key], key)">
-                  <mat-tab *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
+                  <mat-tab label="{{tab?.label}}" *ngFor="let tab of stripsResultDataMap[key].tabs; let last = last;">
                     <ng-template mat-tab-label>
-                      <span>{{tab?.label}} &nbsp;</span> 
+                      <span>{{ translateLabels(tab?.label, 'home') }} &nbsp;</span>
                       <span *ngIf="tab?.showTabDataCount && tab?.widgets?.length">({{tab?.widgets?.length}})</span>
                     </ng-template>
                     <div>
                       <!-- <ng-container [ngTemplateOutlet]="loader" *ngIf="stripsResultDataMap[key]?.showOnLoader">
                       </ng-container> -->
                       <div *ngIf="stripsResultDataMap && stripsResultDataMap[key]?.showOnLoader ||
-                      !tab.fetchTabStatus" 
+                      !tab.fetchTabStatus"
                       class="text-center my-2">
                             <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig"
                                     [loadStatus]="'fetching'" [stripConfig]="stripsResultDataMap[key]?.stripConfig">
@@ -93,25 +93,25 @@
                               </ng-container>
                             </ws-utils-horizontal-scroller-v2>
                       </div>
-                      <div *ngIf="((tab?.fetchTabStatus && tab?.fetchTabStatus === 'done') && 
+                      <div *ngIf="((tab?.fetchTabStatus && tab?.fetchTabStatus === 'done') &&
                       (!tab?.widgets || !tab?.widgets?.length))">
                       <ng-container *ngIf="tab?.value === 'inprogress'; else msgTemp">
                         <div class="w-full flex flex-col items-center justify-center">
                           <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.svg">
-                          <div class="mat-subheading-1 text-center info-content">Get ready for your next learning adventure - 
-                            <a class="click-here" [routerLink]="'/page/learn'">Click here</a> to enroll in your next course now!</div>
+                          <div class="mat-subheading-1 text-center info-content">{{ 'contentstripmultiple.getReadyForLearningAdventure' | translate }} -
+                            <a class="click-here" [routerLink]="'/page/learn'">{{ 'contentstripmultiple.clickHere' | translate }}</a> {{ 'contentstripmultiple.toEnrollNextCourse' | translate }}</div>
                         </div>
                       </ng-container>
                       <ng-template #msgTemp>
                         <div class="w-full flex flex-col items-center justify-center">
                           <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.png">
-                          <div class="mat-subheading-1 text-center">{{tab.nodataMsg}}</div>
+                          <div class="mat-subheading-1 text-center">{{ translateLabels(tab.nodataMsg, 'home') }}</div>
                         </div>
                       </ng-template>
                       </div>
                       <ng-container *ngIf="(tab?.fetchTabStatus === 'done' || tab?.widgets?.length)">
                         <ng-container  *ngIf="!tab?.tabLoading">
-                       
+
                           <ws-utils-horizontal-scroller-v2 [sliderConfig]="stripsResultDataMap[key]?.sliderConfig" [widgetsLength]="tab?.widgets?.length"
                             *ngIf="getContineuLearningLenth(stripsResultDataMap[key]) && showAccordion(key)"
                             [loadStatus]="'done'" [defaultMaxWidgets]="tab?.maxWidgets ||

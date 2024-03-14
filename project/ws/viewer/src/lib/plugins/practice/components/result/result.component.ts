@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NsContent, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { MatAccordion } from '@angular/material/expansion'
-
 @Component({
   selector: 'viewer-result',
   templateUrl: './result.component.html',
@@ -20,8 +19,13 @@ export class ResultComponent implements OnChanges {
   staticImage = '/assets/images/exam/practice-result.png'
   questionTYP = NsContent.EPrimaryCategory
   selectedQuestionData: any
+  activeQuestionSet: any = ''
+  color = 'warn'
+  mode = 'determinate'
+  value = 45
+  showText = 'Rating'
+  constructor(private langtranslations: MultilingualTranslationsService) {
 
-  constructor() {
   }
 
   ngOnChanges() {
@@ -46,7 +50,19 @@ export class ResultComponent implements OnChanges {
   retryResult() {
     this.fetchResult.emit()
   }
-  getQuestionCount(data: any) {
+  getQuestionCount(data: any, activeQuestionSet: any) {
+    this.activeQuestionSet = activeQuestionSet
     this.selectedQuestionData = data
+  }
+
+  updateProgress(value: any) {
+    const progress: any = document.querySelector('.circular-progress')
+    progress.style.setProperty('--percentage', `${value * 3.6}deg`)
+    progress.style.setProperty('--passPercentage', value)
+    progress.innerText = `${value}%`
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

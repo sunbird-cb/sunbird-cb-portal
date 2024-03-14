@@ -1,6 +1,14 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+.bggrey {
+  background-color: #eff3f9;
+}
+
+.content-container {
+  min-height: 1000px;
+}
+
 .content-accordion {
     .content-panel {
         box-shadow: none;
@@ -51,10 +59,14 @@
       // border-bottom: 1px solid $border-color;
       // background: #F5F6FA 0% 0% no-repeat padding-box;
       background: #ffffff;
-      border-radius: 8px;
-      border: 1px solid #F5F6FA;
+      // border-radius: 8px;
+      border: 1px solid rgba(221,221,221, 1);
       overflow: hidden;
       position: relative;
+
+      &.content-active {
+        border: 1px solid #1a4ca1;
+      }
     }
 
     .noChildren {
@@ -71,15 +83,49 @@
 
 
 ::ng-deep .mat-expansion-indicator {
-    display: none !important;
+  display: none !important;
 }
 
-.hidden {
-    display: none !important;
-}
 
 .mat-panel-indicator {
     width: 28px;
     height: 28px;
     font-size: 28px;
 }
+.tab-list {
+  .tab-data {
+    border-radius: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 1;
+    background-color: #e5e9ef;
+    padding: 6px 16px;
+    cursor: pointer;
+    span{
+      opacity: 1;
+      color: rgba(0, 0, 0, 0.87);
+      font-family: "Lato-Regular";
+      font-size: 14px;
+      font-weight: 400;
+      font-style: Regular;
+      letter-spacing: 0.25px;
+      text-align: left;
+      line-height: 20px;
+    }
+  }
+  .active-tab {
+    border-radius: 18px;
+    border: 1px solid rgba(27, 76, 161, 1);
+    opacity: 1;
+    background-color: #dee6f2;
+    span {
+      color: rgba(27, 76, 161, 1);
+    }
+  }
+  .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+
+  }
+}
+

@@ -1,7 +1,7 @@
-<div class="padding-dynamic" *ngIf="pdfData">
+<div class="padding-dynamic" *ngIf="pdfData && playPdfContentFlag">
   <div class="flex flex-around flex-wrapped">
     <div class="w-full">
-      <div>
+      <div class="pdf-outer-container">
         <mat-card>
           <mat-card-content>
             <div id="fullScreenContainer" class="video-player">
@@ -54,4 +54,25 @@
       <ng-container [wsResolverWidget]="discussionForumWidget"></ng-container>
     </div>
   </div> -->
+</div>
+<div class="start-pdf-content-container" *ngIf="!playPdfContentFlag && isMobile">
+  <div class="flex flex-around flex-wrapped">
+    <div class="w-full">
+      <div class="content-instruction">
+        <div>
+          <p class="content-instruction-desc">Open PDF</p>
+        </div>
+        <div class="cursor-pointer">
+          <button color="secondary" class="play-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openPdf()">
+            <ng-container>
+              <span class="mr-1">
+                <img alt="PDF" class="vertical-align-middle" src="/assets/icons/content/grey/pdf.svg">
+                <span class="fw-700">Open</span>
+              </span>
+            </ng-container>                
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -4,6 +4,10 @@
   position: absolute;
   top: -0.5em;
   right: 0;
+
+  .mat-icon {
+    color: #1a4ca1;
+  }
 }
 
 a.disabled {
@@ -42,7 +46,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -66,8 +70,13 @@ span.optional-span {
 .resource-container {
   display: flex;
   align-items: center;
-  border-radius: 8px;
+  // border-radius: 8px;
   // margin-bottom: 8px;
+
+  .resource {
+    padding: 16px;
+    padding-left: 0;
+  }
 
   .card-thumbnail {
     height: 100%;
@@ -91,7 +100,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -142,7 +151,7 @@ span.optional-span {
 .resource-container {
   display: flex;
   align-items: center;
-  border-radius: 8px;
+  // border-radius: 8px;
   // background-color: #fff;
   // margin: $size-s 0;
 
@@ -159,14 +168,104 @@ span.optional-span {
   }
 }
 
+.completed-icon {
+  color: #1a4ca1;
+}
+
+.collection-wrapper {
+  padding: 1rem;
+
+  &.course.content-active {
+    background-color: #1a4ca1;
+    color: #fff;
+    .period{
+      background: #fff
+    }
+    .text-active {
+      color: #fff;
+    }
+    & .icon-color{
+      color: #fff;
+    }
+
+    & .customicon .mat-icon {
+      color: #fff;
+    }
+    
+  }
+}
+
+.text-active {
+  color: #1a4ca1;
+
+  &.font-bold{
+    font-weight: 600;
+  }
+}
+
+.activeResource {
+  background-color: #1a4ca1;
+  color: #fff;
+  // padding-left: 32px !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+
+  .text-active {
+    color: #fff;
+  
+    &.font-bold{
+      font-weight: 600;
+    }
+  }
+
+  .resourceDuration {
+    color: #fff;
+  }
+
+  .completed-icon {
+    color: #fff;
+  }
+
+}
+
+
+.child-wrapper {
+  .collection-wrapper {
+    // padding: 1rem 1rem 1rem 0;
+  }
+}
+
+.collection-wrapper.open {
+  // background-color: #eff3f9;
+  // border-radius: 0 0 8px 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+}
+
+.collection-wrapper.close {
+  // background-color: #eff3f9;
+  // border-radius: 0 0 8px 8px;
+  border: none
+}
+
+
+.child-wrapper.open {
+  // background-color: #eff3f9;
+  border-radius: 0 0 8px 8px;
+  // padding: 1rem 0 1rem 0;
+}
+
 .children-container {
   .mat-subheading-1 {
-    font: 400 16px/24px Lato !important;
+    font: 500 16px/24px Lato !important;
   }
 
   .resource-container {
-    margin-bottom: 20px;
-    margin-right: 8px;
+    margin-bottom: 16px;
+    // margin-right: 8px;
+
+    .resource {
+      padding: 0;
+    }
 
     // background-color: #fff;
     .card-thumbnail {
@@ -175,6 +274,89 @@ span.optional-span {
     }
   }
 }
+
+
+
+// for giving top margin to last level, first child resource
+:nth-child(1 of .resourceCard) .resource{
+  margin-top: 16px !important;
+}
+:nth-child(1 of .resourceCard) .activeResource{
+  margin-top: 0 !important;
+}
+
+.children-container .resourceCard:last-child .resource-container:has(.activeResource)  {
+  margin-bottom: 0 !important;
+}
+
+
+// for selecting modules that are not last children of parent, to give border
+.moduleCard:not(:last-child) >  .collection-wrapper.close.module {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+}
+
+// for selecting modules that are not last children of parent and open so that border comes at end of its children
+.moduleCard:not(:last-child) >  .collection-wrapper.open.module + .child-wrapper.open {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+}
+
+.course + .child-wrapper {
+  // padding-left: 10px;
+  .module + .child-wrapper {
+    // padding-left: 0px;
+  }
+}
+
+.moduleCard + .child-wrapper {
+  // padding-left: 0 !important;
+}
+
+.module + .child-wrapper {
+  // padding-left: 10px;
+}
+
+// .collection-wrapper.close.module {
+//   // background-color: #eff3f9;
+//   // border-radius: 0 0 8px 8px;
+//   border-bottom: 4px solid rgba(0, 0, 0, 0.08)
+// }
+
+.collection-wrapper.open.course + .child-wrapper.open {
+  // background-color: #eff3f9;
+  // border-radius: 0 0 8px 8px;
+  // border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  // border-radius: 0;
+  .collection-wrapper.open.module + .child-wrapper.open {
+    background-color: #eff3f9;
+    border-radius: 0 0 8px 8px;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0;
+  }
+}
+
+.collection-wrapper.open.module + .child-wrapper.open {
+  background-color: #eff3f9;
+  border-radius: 0 0 8px 8px;
+  // border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+  padding-bottom: 8px;
+}
+
+// .collection-wrapper.open.course + .child-wrapper.open:has(.collection-wrapper.open.module + .child-wrapper.open) {
+//   background-color: #eff3f9;
+//   border-radius: 0 0 8px 8px;
+//   // border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+//   border-radius: 0;
+// }
+
+// .collection-wrapper.open.module + .child-wrapper.open {
+//   background-color: #eff3f9;
+//   border-radius: 0 0 8px 8px;
+//   border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+//   border-radius: 0;
+// }
 
 .content-heading {
   letter-spacing: 0px;
@@ -188,10 +370,21 @@ span.optional-span {
 
 .time-icon {
   // color: #34D6A4;
-  // height: 21px;
-  // width: 21px;
-  // font-size: 20px;
+  height: 16px;
+  width: 16px;
+  font-size: 16px;
   vertical-align: middle;
+
+  &.icon-color{
+    color: rgba(0,0,0,0.6)
+  }
+}
+
+.period {
+  width: 3px;
+  height: 3px;
+  background: rgba($color: #000000, $alpha: 0.6);
+  border-radius: 4px;
 }
 
 .time-value {
@@ -203,8 +396,8 @@ span.optional-span {
 .see-all-container {
   // text-align: right;
   position: absolute;
-  right: 2px;
-  top: 5px;
+  right: 16px;
+  top: 24px;
 
   // .see-all-btn {
   //   padding-right: 0;
@@ -297,10 +490,24 @@ span.optional-span {
   }
 }
 
-.certificate-txt {
-  padding: 0 20px;
-  color: #0273b6;
-  font-weight: 700;
+.certificate-btn {
+  height: 24px;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 11px;
+  color: #fff;
+  border-radius: 20px;
+  font: 400 12px/16px Lato;
+
+  .mat-icon {
+    fill: #fff;
+    color: #fff;
+    font-size: 16px;
+    height: auto;
+    width: auto;
+  }
 }
 
 
@@ -316,4 +523,46 @@ span.optional-span {
   border: 1.5px solid rgba(0,116,182, 1);
   opacity: 1;
   padding: 8px;
+}
+
+// .children-container .content-active.module {
+//   padding-left:24px !important;
+// }
+// .children-container .collection-wrapper.module {
+//   padding-left:24px !important;
+// }
+
+// .content-active.resource {
+//   padding-left:32px !important;
+
+// }
+// .content-not-active-resource {
+//   padding-left:32px !important;
+// }
+
+
+.collection-wrapper.course,
+.collection-wrapper.module,
+.resource-container .resource  {
+  padding-left: 16px;
+}
+
+// resource in module
+.children-container.module  .resource-container .resource {
+  padding-left: 24px;
+}
+
+// module in course
+.course .collection-wrapper.module  {
+  padding-left: 24px;
+}
+
+// resource in module in course
+.course .children-container.module  .resource-container .resource{
+  padding-left: 32px
+}
+
+// resource in course
+.course  .resource-container .resource{
+  padding-left: 24px
 }

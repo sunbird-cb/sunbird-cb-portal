@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { MultilingualTranslationsService, NsContent } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { ActivatedRoute } from '@angular/router'
-
+import { ViewerHeaderSideBarToggleService } from './../../../../viewer-header-side-bar-toggle.service'
+import { PracticeService } from '../../practice.service'
 @Component({
   selector: 'viewer-overview',
   templateUrl: './overview.component.html',
@@ -29,12 +30,31 @@ export class OverviewComponent implements OnInit, OnDestroy {
   isretakeAllowed = false
   dataSubscription: any
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    public viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
+    private quizSvc: PracticeService,
+    private langtranslations: MultilingualTranslationsService,
+  ) { }
 
   ngOnInit() {
     this.dataSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {
+        if (data && data.content && data.content.data && data.content.data.identifier) {
+          const identifier =  data.content.data.identifier
+          if (identifier) {
+            this.checkForAssessmentSubmitAlready(identifier)
+          }
+        }
         this.isretakeAllowed = data.pageData.data.isretakeAllowed
+      }
+    })
+  }
+
+  checkForAssessmentSubmitAlready(identifier: any) {
+    this.quizSvc.canAttend(identifier).subscribe(response => {
+      if (response && response.attemptsMade > 0) {
+        this.quizSvc.checkAlreadySubmitAssessment.next(true)
       }
     })
   }
@@ -48,5 +68,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
   overviewed(event: NSPractice.TUserSelectionType) {
     this.loading = true
     this.userSelection.emit(event)
+    this.viewerHeaderSideBarToggleService.visibilityStatus.next(false)
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { NsPage, NsAppsConfig, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsPage, NsAppsConfig, ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection/src/lib/collection.config'
 
 /* tslint:disable*/
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 
 
 interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
@@ -27,6 +28,9 @@ export class HomeOtherPortalComponent implements OnInit {
   constructor(
     private configSvc: ConfigurationsService,
     private accessService: AccessControlService,
+    private langtranslations: MultilingualTranslationsService,
+    private translate: TranslateService,
+    private events: EventService
   ) { 
     if (this.configSvc.appsConfig) {
       const appsConfig = this.configSvc.appsConfig
@@ -64,12 +68,31 @@ export class HomeOtherPortalComponent implements OnInit {
           }),
       )
     }
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.translate.use(lang)
+    }
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {
     if (this.featuresConfig && this.featuresConfig.length > 0) {
       this.getPortalLinks()
     }
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
   }
 
   getPortalLinks() {
@@ -81,6 +104,21 @@ export class HomeOtherPortalComponent implements OnInit {
       }
       this.showSkeleton = false;
     })
+  }
+
+  raiseTelemetry(wdata: any) {
+    const name = wdata.widgetData.actionBtn.name.toLowerCase().split(' ')
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.PORTAL_NUDGE,
+        id: `${name[0]}-portal-nudge`
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME
+      }
+    )
   }
 
 }

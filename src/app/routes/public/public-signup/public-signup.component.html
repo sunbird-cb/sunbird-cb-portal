@@ -19,7 +19,20 @@
         <span class="dot"></span>
       </div> -->
   </div>
-  <div class=" right_container flex flex-col items-center justify-center py-16">
+  <div class="right_container flex flex-col py-8">
+    <div class="langdiv" *ngIf="isMultiLangEnabled">
+      <mat-form-field class="custom-lang float-right margin-right-xl">
+        <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
+        <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
+            <!-- <mat-option *ngFor="let lang of multiLang" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">
+                {{lang.value}}
+            </mat-option> -->
+            <span *ngFor="let lang of multiLang">
+              <mat-option *ngIf="lang.active" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">{{lang.value}}</mat-option>
+            </span>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <div class="right_inner_container profile-box">
       <div class="flex">
         <div class="flex items-center mr-5">
@@ -32,7 +45,7 @@
           </a>
         </div>
         <h1 class="mat-h1 margin-remove inline-block ng-star-inserted">
-          Register
+          {{ 'publicsignup.register' | translate }}
         </h1>
       </div>
       <form [formGroup]="registrationForm">
@@ -43,20 +56,20 @@
                 <label for="firstName" class=" margin-remove-bottom form-label required"
                   i18n="First name label|Label which explains the user to enter first name" i18n-aria-label
                   aria-label="First name label">
-                  Full name
+                  {{ 'publicsignup.fullName' | translate }}
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s">
                   <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
-                    placeholder="Enter your full name" autocomplete="off" i18n-aria-label aria-label="First Name input" maxlength="150" />
+                    placeholder="{{'publicsignup.enterYourFullName' | translate}}" autocomplete="off" i18n-aria-label aria-label="First Name input" maxlength="150" />
                   <mat-error [hidden]="false" i18n="First Name Error|Explains name is required" i18n-aria-label
                     aria-label="First Name Error|Explains name is required "
                     *ngIf="registrationForm?.controls['firstname'].errors?.required">
-                    Full name is mandatory
+                    {{ 'publicsignup.fullNameMandatory' | translate }}
                   </mat-error>
                   <mat-error [hidden]="false" *ngIf="registrationForm?.controls['firstname'].errors?.pattern"
                     i18n-aria-label
                     aria-label="First name Error|Name fields cannot contain numbers and special characters except ">
-                    Name field can only contain letters, space and the character (').
+                    {{ 'publicsignup.fullNameWitoutSp' | translate }}
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -152,16 +165,16 @@
                 <label for="group" class=" margin-remove-bottom form-label required"
                   i18n="Group | Label which explains the user to enter Group" i18n-aria-label
                   aria-label="Group Field label">
-                  Group
+                  {{ 'publicsignup.group' | translate }}
                 </label>
                 <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
-                  <mat-select placeholder="Select your group" id="group" #group i18n-placeholder="group" formControlName="group" >
+                  <mat-select placeholder="{{'publicsignup.selectYourGroup' | translate}}" id="group" #group i18n-placeholder="group" formControlName="group" >
                     <mat-option *ngFor="let option of masterGroup" [value]="option">{{option}}</mat-option>
                   </mat-select>
                   <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
                     *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
                     aria-label="Group is mandatory">
-                    Group is mandatory
+                    {{ 'publicsignup.groupMandatory' | translate }}
                   </mat-error>
                 </mat-form-field>
                 <!-- <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
@@ -199,50 +212,54 @@
                 <label for="email" class=" margin-remove-bottom form-label required"
                   i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
                   aria-label="Email label">
-                  Email
+                  {{ 'publicsignup.email' | translate }}
                 </label>
                 <div class="flex flex-1">
 
                   <mat-form-field appearance="outline" class="margin-top-s" id="email">
-                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)" matInput placeholder="Enter your email address" #email
+                    <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)"
+                      matInput placeholder="{{'publicsignup.enterYourEmailAddress' | translate}}" #email
                       formControlName="email" i18n-aria-label aria-label="Email input">
                     <!-- <mat-hint>Please enter a government email ID</mat-hint> -->
                   <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
                     <mat-error [hidden]="false" *ngIf="registrationForm?.controls['email'].errors?.required"
                     i18n="Email Error|Explains name is required">
-                    Please enter your email address
+                    {{ 'publicsignup.pleaseEnterEmail' | translate }}
                   </mat-error>
                   <mat-error [hidden]="false"  *ngIf="registrationForm.controls['email'].touched && registrationForm?.controls['email'].errors?.pattern"
                     i18n-aria-label aria-label="Please enter a valid email address">
-                    Please enter a valid email address
+                    {{ 'publicsignup.validEmail' | translate }}
                   </mat-error>
                   <div *ngIf="registrationForm.controls['email'].touched && emailLengthVal" class="email-error"
                     i18n="Email Error|Explains character validation">
-                    Max 64 characters before "@" & 255 characters after "@" are valid.
+                    {{ 'publicsignup.emailLengthValidation' | translate }}
                   </div>
                     <!-- <mat-hint class="pos-hint">Do not have a government email id?</mat-hint> -->
                   </mat-form-field>
                 </div>
-                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">Do not have a government email address?<span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">Request for help</span></a>
+                <a class="pos-hint help-request ws-mat-black60-text" id="org-field">
+                  {{ 'publicsignup.donotHaveGovernmentEmail' | translate }}
+                  <span class="float-right ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo('Domain')">
+                    {{ 'publicsignup.requestForHelp' | translate }}</span></a>
 
                 <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
                   <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
                     class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="registrationForm?.email?.invalid">
                     <a class="text-white" i18n>
-                      Send OTP
+                      {{ 'publicsignup.sendOTP' | translate }}
                     </a>
                   </button>
                   <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
                     <!-- <div class="flex flex-1 flex-row"> -->
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
                         <input  id="emailOTP" #emailotp type="password" minlength="4" maxlength="6"
-                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                          matInput placeholder="{{'publicsignup.enterOTP' | translate}}" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
                         <mat-hint *ngIf="timeLeftforOTPEmail > 0 ">
-                          <span>Resend OTP after {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
+                          <span>{{ 'publicsignup.resendOTPAfter' | translate }} {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
                         </mat-hint>
                         <mat-hint *ngIf="timeLeftforOTPEmail <= 0 ">
-                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTPEmail()">Resend
-                            OTP</span>
+                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTPEmail()">
+                            {{ 'publicsignup.resendOTP' | translate }}</span>
                         </mat-hint>
                       </mat-form-field>
                       <div class="flex flex-1 margin-top-s justify-end">
@@ -250,7 +267,7 @@
                           class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
                           [disabled]="registrationForm?.email?.invalid">
                           <span class="text-white" i18n>
-                            Verify OTP
+                            {{ 'publicsignup.verifyOTP' | translate }}
                           </span>
                         </button>
                       </div>
@@ -263,7 +280,7 @@
                 <label for="mobileNumber" class=" margin-remove-bottom form-label required"
                   i18n="Mobile Number label|Label which explains the user to enter Mobile Number" i18n-aria-label
                   aria-label="Mobile Number label">
-                  Mobile Number
+                  {{ 'publicsignup.mobileNumber' | translate }}
                 </label>
                 <div class="flex flex-1">
 
@@ -272,17 +289,17 @@
                       placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input" maxlength="12"> -->
                     <input  id="mobileNumber" #mobile matInput type="text" maxlength="10"  (keypress)="numericOnly($event)" (paste)="numericOnly($event)"
-                      placeholder="Mobile Number" formControlName="mobile" i18n-aria-label
+                      placeholder="{{ 'publicsignup.mobileNumber' | translate }}" formControlName="mobile" i18n-aria-label
                       aria-label="Mobile Number input">
                     <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>
                     <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
                       *ngIf="registrationForm?.controls['mobile'].errors?.required" i18n-aria-label
                       aria-label="Please enter your mobile number">
-                      Please enter your mobile number
+                      {{ 'publicsignup.pleaseEnterMobileNumber' | translate }}
                     </mat-error>
                     <mat-error [hidden]="false" *ngIf="registrationForm?.controls['mobile'].errors?.pattern"
                       i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
-                      Please enter a valid 10 digit mobile number
+                      {{ 'publicsignup.validMobilenumber' | translate }}
                     </mat-error>
                     <!-- <mat-hint align="start">Please add a valid mobile number</mat-hint> -->
                   </mat-form-field>
@@ -291,24 +308,23 @@
                   <button *ngIf="!otpSend" mat-raised-button type="button" (click)="sendOtp()"
                     class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="registrationForm?.mobile?.invalid">
                     <a class="text-white" i18n>
-                      Send OTP
+                      {{ 'publicsignup.sendOTP' | translate }}
                     </a>
                   </button>
                   <div *ngIf="otpSend" class="flex flex-1 flex-column">
                     <!-- <div class="flex flex-1 flex-row"> -->
                       <mat-form-field appearance="outline" class="margin-top-xs w-full">
                         <input  id="mobileNumber" #otp type="password" minlength="4" maxlength="6"
-                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                          matInput placeholder="{{ 'publicsignup.enterOTP' | translate }}" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
                         <mat-hint *ngIf="timeLeftforOTP > 0 ">
-                          <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
+                          <span>{{ 'publicsignup.resendOTPAfter' | translate }} {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
                         </mat-hint>
                         <mat-hint *ngIf="timeLeftforOTP <= 0 ">
-                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">Resend
-                            OTP</span>
+                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">{{ 'publicsignup.resendOTP' | translate }}</span>
                         </mat-hint>
                         {{otp.errors}}
                         <mat-error [hidden]="false" *ngIf="otp.errors?.minlength">
-                          Mobile otp is required
+                          {{ 'publicsignup.mobileOtp' | translate }}
                         </mat-error>
                       </mat-form-field>
                       <div class="flex flex-1 margin-top-s justify-end">
@@ -316,7 +332,7 @@
                           class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
                           [disabled]="registrationForm?.mobile?.invalid || disableVerifyBtn">
                           <span class="text-white" i18n>
-                            Verify OTP
+                            {{ 'publicsignup.verifyOTP' | translate }}
                           </span>
                         </button>
                       </div>
@@ -328,15 +344,15 @@
                 <label for="type" class=" margin-remove-bottom form-label required"
                   i18n="Department|Label which explains the user to enter Department" i18n-aria-label
                   aria-label="Department Field label">
-                  Center/State
+                  {{ 'publicsignup.centerOrState' | translate }}
                 </label>
                 <mat-radio-group #type class="margin-top-s" formControlName="type" i18n-aria-label
                   aria-label="Signup as">
                   <mat-radio-button class="mat-radio-button radio-select" [value]="'ministry'">
-                    Center
+                    {{ 'publicsignup.center' | translate }}
                   </mat-radio-button>
                   <mat-radio-button class="mat-radio-button radio-unselect  margin-left-s" [value]="'state'">
-                    State
+                    {{ 'publicsignup.state' | translate }}
                   </mat-radio-button>
                 </mat-radio-group>
               </div>
@@ -344,20 +360,21 @@
                 <label for="organisation" class=" margin-remove-bottom form-label required"
                   i18n="Organisation label|Label which explains the user to enter Surname" i18n-aria-label
                   aria-label="Organisation label">
-                  Organisation
+                  {{ 'publicsignup.organisation' | translate }}
                 </label>
                 <!-- <ng-container *ngIf="!hideOrg"> -->
                   <mat-form-field appearance="outline" class="margin-top-s w-full" [hidden]="hideOrg">
                     <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
                     <input matInput onfocus="this.select()" aria-label="organisation" [matAutocomplete]="auto" #organisation
-                      name="organisation" formControlName="organisation" i18n-placeholder placeholder="Search organisation" i18n-aria-label
+                      name="organisation" formControlName="organisation" i18n-placeholder
+                      placeholder="{{ 'publicsignup.searchOrganisation' | translate }}" i18n-aria-label
                       aria-label="Type here" required (keydown.enter)="searchOrgs($event.target.value)">
-                    <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >Search</span>
+                    <span matSuffix class="ws-mat-accent-text margin-xs cursor-pointer" (click)="searchOrgs(organisation.value)" >{{ 'publicsignup.search' | translate }}</span>
 
                   <mat-error [hidden]="false" i18n="Organisation name Error|Explains organisation name is required"
                     *ngIf="registrationForm?.controls['organisation'].errors?.required" i18n-aria-label
                     aria-label="Please enter your organisation name">
-                    Please enter your organisation name
+                    {{ 'publicsignup.enterOrganisationName' | translate }}
                   </mat-error>
 
                   <!-- <mat-error *ngIf="registrationForm?.controls['organisation'].errors?.pattern" i18n-aria-label
@@ -395,7 +412,7 @@
                       <mat-icon matPrefix class="flex items-right justify-right cursor-pointer close-rounded" (click)="editOrg()">close</mat-icon>
                     </div>
                     <div class="flex flex-1 items-center flex-wrap text-left mat-body-2">
-                      <span *ngIf="heirarchyObject?.l1OrgName">Under &nbsp;</span>
+                      <span *ngIf="heirarchyObject?.l1OrgName">{{ 'publicsignup.under' | translate }} &nbsp;</span>
                       <span *ngIf="heirarchyObject?.l1OrgName">{{heirarchyObject?.l1OrgName}}</span>
                       <span *ngIf="heirarchyObject?.l2OrgName"> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
                       <span *ngIf="heirarchyObject?.l2OrgName" class="flex-1">{{heirarchyObject?.l2OrgName}}</span>
@@ -404,8 +421,8 @@
                 </ng-container>
                 <div class="w-full" id="org-field">
                   <div class="flex items-center flex-1">
-                    <span class="flex-1 ws-mat-black60-text">Not found yet?</span>
-                    <a class="flex-1 ws-mat-accent-text text-right cursor-pointer font-bold pos-request" (click)="navigateTo('Organisation')"> Request for help</a>
+                    <span class="flex-1 ws-mat-black60-text">{{ 'publicsignup.notFound' | translate }}</span>
+                    <a class="flex-1 ws-mat-accent-text text-right cursor-pointer font-bold pos-request" (click)="navigateTo('Organisation')"> {{ 'publicsignup.requestForHelp' | translate }}</a>
                   </div>
                 </div>
               </div>
@@ -418,7 +435,7 @@
                     </h3>
                   </div>
                   <div class="flex flex-1 items-center flex-wrap text-left mat-body-2">
-                    <span *ngIf="organisation?.l1OrgName">Under &nbsp;</span>
+                    <span *ngIf="organisation?.l1OrgName">{{ 'publicsignup.under' | translate }} &nbsp;</span>
                     <span *ngIf="organisation?.l1OrgName">{{organisation?.l1OrgName}}</span>
                     <span *ngIf="organisation?.l2OrgName"> <mat-icon matPrefix class=" flex items-center justify-center">navigate_next</mat-icon></span>
                     <span *ngIf="organisation?.l2OrgName" class="flex-1">{{organisation?.l2OrgName}}</span>
@@ -427,15 +444,15 @@
               </ng-template>
               <ng-template #noResult let-type="type">
                 <div class="flex-col text-center items-center justify-center px-6 py-3">
-                  <div class="mat-body-2 px-6">We couldn't find any matches for your search. </div>
+                  <div class="mat-body-2 px-6">{{ 'publicsignup.noMatchingSearch' | translate }}</div>
                   <div class="mat-body-2 padding-top-xs">
-                    <a  class="flex-1 ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo(type)"> Request for help</a>
+                    <a  class="flex-1 ws-mat-accent-text cursor-pointer font-bold" (click)="navigateTo(type)"> {{ 'publicsignup.requestForHelp' | translate }}</a>
                   </div>
                 </div>
               </ng-template>
               <ng-template #onlynoResult let-type="type">
                 <div class="flex-col text-center items-center justify-center px-6 py-3">
-                  <div class="mat-body-2 px-6">We couldn't find any matches for your search.</div>
+                  <div class="mat-body-2 px-6">{{'publicsignup.noMatchingSearch' | translate}}</div>
                 </div>
               </ng-template>
               <div class="input-wrapper margin-top-s">
@@ -445,7 +462,7 @@
                     aria-label="I confirm that the above provided information are accurate. checkbox" required>
                     <label class="margin-remove-bottom mat-body-2 ws-mat-black60-text" i18n-aria-label
                       aria-label="I confirm that the above provided information are accurate. checkbox label">
-                      I confirm that the above provided information is accurate.
+                      {{ 'publicsignup.confirmInfo' | translate }}
                     </label>
                   </mat-checkbox>
                 </div>
@@ -459,7 +476,7 @@
                   </mat-checkbox>
                   <label class="margin-remove-bottom mat-body-2 ws-mat-black60-text ml-3" i18n-aria-label
                   aria-label="I agree to the IGOT karmayogi's Terms of Service. checkbox label">
-                  I agree to the IGOT karmayogi's <a class="ws-mat-accent-text terms-text" (click)="termsAndConditionClick()">Terms of Service</a>
+                  {{ 'publicsignup.agree' | translate }} <a class="ws-mat-accent-text terms-text" (click)="termsAndConditionClick()">{{ 'publicsignup.terms' | translate }}</a>
                 </label>
                 </div>
               </div>
@@ -471,14 +488,14 @@
                   <button mat-flat-button type="submit"
                     class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="signup()"
                     [disabled]="!registrationForm?.valid || !confirm || disableBtn || !isMobileVerified || !isEmailVerified || !heirarchyObject || !confirmTerms">
-                    SIGN UP
+                    {{ 'publicsignup.signup' | translate }}
                   </button>
                 </div>
               </div>
               <div class="w-full margin-top-l">
                 <div class="flex items-center  mat-body-1 flex-1">
-                  Already have an account? &nbsp;
-                  <a href="/protected/v8/resource" class="ws-mat-accent-text text-center"> Sign in here</a>
+                  {{ 'publicsignup.haveAccount' | translate }} &nbsp;
+                  <a href="/protected/v8/resource" class="ws-mat-accent-text text-center"> {{ 'publicsignup.signin' | translate }}</a>
                 </div>
               </div>
             </div>

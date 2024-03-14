@@ -23,6 +23,7 @@ export namespace NsContentStripWithTabs {
       showNavs: boolean,
       showDots: boolean,
       maxWidgets?: number
+      cerificateCardMargin?: boolean
     },
     tabs?: NsContentStripWithTabs.IContentStripTab[] | undefined,
     titleDescription?: string
@@ -63,6 +64,7 @@ export namespace NsContentStripWithTabs {
       viewMoreText: string
       path: string
     }
+    data?: []
   }
 
   export interface IStripRequestApi {

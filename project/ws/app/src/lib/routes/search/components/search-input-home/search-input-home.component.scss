@@ -3,7 +3,8 @@
 @import 'ws-common';
 
 ws-app-search-input-home .autocomplete-form {
-  width: 486px;
+  // width: 486px;
+  width: 288px;
   font-size: 0.75em;
   display: block;
   margin: auto;
@@ -19,12 +20,10 @@ ws-app-search-input-home .autocomplete-form {
   }
 
   .search-home {
-    // background: #00A9F4 0% 0% no-repeat padding-box;
-    // background: #00A9F4 0% 0% no-repeat padding-box;
     border-radius: 0px 4px 4px 0px;
     padding: 8px;
-    margin-left: 16px;
-    margin-top: 15px;
+    margin-left: 8px;
+    margin-top: 24px;
   }
 
   .mat-form-field-appearance-legacy .mat-form-field-wrapper {
@@ -105,10 +104,6 @@ ws-app-search-input-home .autocomplete-form {
   }
 }
 
-
-
-
-
 // ws-app-search-input-home input {
 //   padding-left: .5rem !important;
 // }
@@ -117,26 +112,24 @@ ws-app-search-input-home .search .mat-form-field-wrapper {
   padding-bottom: 1.85em;
 
   .mat-form-field-infix {
-    border-top-width: 5px !important;
-    margin-left: 8px;
+    border-top-width: 0 !important;
+    margin-left: 2px;
     vertical-align: middle;
+    max-width: 76%;
+    height: 26px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4 !important;
   }
-
 }
 
 ws-app-search-input-home .search-border {
   border-radius: 16px;
-  // <<<<<<< HEAD
-  // /*.75rem;*/
-  // border: 1px solid #DEDFE0;
-  // flex: 1;
-  // max-width: 500px;
-  // /* border-color: #cecece;*/
-  // =======
-  // border: 1px solid #DEDFE0;
   border: 1px solid rgba(0, 0, 0, 0.16);
   flex: 1;
-  max-width: 486px;
+  // max-width: 486px;
+  max-width: 286px;
   height: 32px;
   margin-top: auto;
   margin-bottom: auto;
@@ -145,7 +138,6 @@ ws-app-search-input-home .search-border {
 ws-app-search-input-home .border-right {
   border-right: 1px solid #cecece;
 }
-
 
 ws-app-search-input-home .lang-btn {
   margin-right: 0 !important;
@@ -250,7 +242,6 @@ ws-app-search-input-home .feature-group {
     padding-bottom: 1.65em !important;
   }
 }
-
 
 // .mat-form-field-label-wrapper {
 //   top:-12px !important;
