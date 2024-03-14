@@ -135,7 +135,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
               clearInterval(this.timerInterval)
             }
             counter = counter + 1
-          },          1000)
+          },                               1000)
 
       }
     }

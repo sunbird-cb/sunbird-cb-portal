@@ -33,7 +33,7 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
-    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data:any) => {
+    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data: any) => {
         this.tocConfig = data
     })
     // TODO:When player is fully implemented put initial functions here
@@ -58,7 +58,7 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
       // this.saveContinueLearning(this.identifier)
       // this.fireRealTimeProgress(this.identifier)
     }
-    if(this.tocConfigSubscription){
+    if (this.tocConfigSubscription) {
       this.tocConfigSubscription.unsubscribe()
     }
   }

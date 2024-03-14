@@ -66,7 +66,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   viewerAboutContentData: any
   hierarchyMapData: any
   pathSet: any
-  tocConfig: any = null 
+  tocConfig: any = null
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
