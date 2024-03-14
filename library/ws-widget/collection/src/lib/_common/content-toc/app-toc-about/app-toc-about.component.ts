@@ -79,7 +79,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private tocSvc: AppTocService,
     private configService: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router,
+    public router: Router,
     private reviewDataService: ReviewComponentDataService,
     private handleClaimService: HandleClaimService
   ) { }
