@@ -59,7 +59,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @Output() withdrawOrEnroll = new EventEmitter<string>()
   @Input() contentReadData: NsContent.IContent | null = null
   @Input() clickToShare = false
+  @Output() programEnrollCall = new EventEmitter<any>()
   timer: any
+  nsContent = NsContent
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -461,61 +463,66 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public requestToEnrollDialog() {
-    // conflicts check start
+
     const batchData = this.batchControl.value
-    const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
-      if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-        if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) &&
-        dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) ||
-        dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) &&
-        dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
-          return true
-        }
-        return false
-      }
-      return false
-    })
-
-    // conflicts check end
-    if (userList && userList.length === 0) {
-      if (this.content && this.content.wfSurveyLink) {
-        const sID = this.content.wfSurveyLink.split('surveys/')
-        const surveyId = sID[1]
-        const courseId = this.content.identifier
-        const courseName = this.content.name
-        const apiData = {
-          // tslint:disable-next-line:prefer-template
-          getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
-          // tslint:disable-next-line:prefer-template
-          postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
-          getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
-          customizedHeader: {},
-        }
-        const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
-          width: '920px',
-          maxHeight: '85vh',
-          data: {
-            surveyId,
-            courseId,
-            courseName,
-            apiData,
-
-          },
-          disableClose: false,
-          panelClass: ['animate__animated', 'animate__slideInLeft'],
+    if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+        // conflicts check start
+        const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
+          if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+            if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) &&
+            dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) ||
+            dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) &&
+            dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
+              return true
+            }
+            return false
+          }
+          return false
         })
-        enrollQuestionnaire.afterClosed().subscribe(result => {
-          if (result) {
+
+        // conflicts check end
+        if (userList && userList.length === 0) {
+          if (this.content && this.content.wfSurveyLink) {
+            const sID = this.content.wfSurveyLink.split('surveys/')
+            const surveyId = sID[1]
+            const courseId = this.content.identifier
+            const courseName = this.content.name
+            const apiData = {
+              // tslint:disable-next-line:prefer-template
+              getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
+              // tslint:disable-next-line:prefer-template
+              postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
+              getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
+              customizedHeader: {},
+            }
+            const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
+              width: '920px',
+              maxHeight: '85vh',
+              data: {
+                surveyId,
+                courseId,
+                courseName,
+                apiData,
+
+              },
+              disableClose: false,
+              panelClass: ['animate__animated', 'animate__slideInLeft'],
+            })
+            enrollQuestionnaire.afterClosed().subscribe(result => {
+              if (result) {
+                this.openRequestToEnroll(batchData)
+              }
+            })
+          } else {
             this.openRequestToEnroll(batchData)
           }
-        })
-      } else {
-        this.openRequestToEnroll(batchData)
-      }
+        } else {
+          if (userList && userList.length > 0) {
+            this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
+          }
+        }
     } else {
-      if (userList && userList.length > 0) {
-        this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
-      }
+      this.programEnrollCall.emit(batchData)
     }
   }
 
@@ -711,7 +718,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
 
   public setBatchControl() {
     // on first load select first value in the batch list if its having valid enrollment Date
-    if (this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+    if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM ||
+        this.content.primaryCategory === this.primaryCategory.PROGRAM)) {
       if (this.batchData && this.batchData.content.length) {
         if (!this.batchData.workFlow || (this.batchData.workFlow && !this.batchData.workFlow.wfInitiated)) {
           const batch = this.batchData.content.find((el: any) => {
