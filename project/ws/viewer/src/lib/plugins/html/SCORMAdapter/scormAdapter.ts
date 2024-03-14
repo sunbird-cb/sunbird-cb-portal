@@ -9,17 +9,28 @@ import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api';
 import { NsContent } from '@sunbird-cb/collection'
 import dayjs from 'dayjs'
 import { ViewerUtilService } from '../../../viewer-util.service'
+import { Subject } from 'rxjs'
 const API_END_POINTS = {
   SCROM_ADD_UPDTE: '/apis/protected/v8/scrom/add',
   SCROM_FETCH: '/apis/protected/v8/scrom/get',
   SCROM_UPDTE_PROGRESS: `/apis/proxies/v8/content-progres`,
   SCROM_FETCH_PROGRESS: `/apis/proxies/v8/read/content-progres`,
 }
+
+export enum scormLMSStatus {
+  LMSNegative = 'LMSNegative',
+  LMSPositive = 'LMSPositive',
+  LMSWating = 'LMSWating',
+}
 @Injectable({
   providedIn: 'root',
 })
 export class SCORMAdapterService {
   id = ''
+  public scormInitialized = new Subject<scormLMSStatus>()
+  scormInitialized$ = this.scormInitialized.asObservable()
+
+
   constructor(
     private store: Storage,
     private http: HttpClient,
@@ -58,6 +69,7 @@ export class SCORMAdapterService {
     //   }
     // })
     this.store.setItem('Initialized', true)
+    this.updateScormInitialized(scormLMSStatus.LMSPositive)
     return true
   }
 
@@ -174,13 +186,15 @@ export class SCORMAdapterService {
         fields: ['progressdetails'],
       },
     }
-    this.http.post<NsContent.IContinueLearningData>(
+    return this.http.post<NsContent.IContinueLearningData>(
       `${API_END_POINTS.SCROM_FETCH_PROGRESS}/${req.request.courseId}`, req
     ).subscribe(
       data => {
         if (data && data.result && data.result.contentList.length) {
+          let found = false
           for (const content of data.result.contentList) {
             if (content.contentId === this.contentId && content.progressdetails) {
+              found = true
               const data = content.progressdetails
               const loadDatas: IScromData = {
                 "cmi.core.exit": data["cmi.core.exit"],
@@ -194,11 +208,26 @@ export class SCORMAdapterService {
                 // errors: data["errors"]
               }
               this.store.setAll(loadDatas)
+              // if scorm has progress and LMS was not initialized 
+              if(data["Initialized"]) {
+                this.updateScormInitialized(scormLMSStatus.LMSPositive)
+              } else {
+                this.updateScormInitialized(scormLMSStatus.LMSNegative)
+              }
             }
           }
+          if(!found) {
+            this.updateScormInitialized(scormLMSStatus.LMSWating)
+          }
+        } else {
+          this.updateScormInitialized(scormLMSStatus.LMSWating)
         }
       },
     )
+  }
+
+  updateScormInitialized(value: scormLMSStatus) {
+    this.scormInitialized.next(value)
   }
 
   loadData() {
