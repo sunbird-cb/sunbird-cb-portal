@@ -59,7 +59,7 @@
         margin-top: 20px;
       }
       .podium-rank-content {
-        padding: 20px 16px 40px 16px;
+        padding: 20px 16px 0px 16px;
       }
       .rank1 {
         padding-top: 2px!important;
@@ -117,9 +117,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-height: 37px;
-      line-height: 17px;
+      line-height: 14px;
       min-height: 20px;
       height: fit-content;
+      padding-top: 2px;
     }
     .rank-user-points {
       font-family: Montserrat;
@@ -127,6 +128,7 @@
       font-style: normal;
       font-weight: 600;
       line-height: 19px;
+      align-items: center;
     }
 
 
@@ -228,6 +230,12 @@
           font-weight: 600;
         }
       }
+   }
+
+   .podium-karmapoints-icon {
+    width: 22px;
+    height: 22px;
+    padding-right: 3px;
    }
 
    .karmapoints-icon {

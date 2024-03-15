@@ -33,7 +33,10 @@
               </ws-widget-avatar-photo>
             </div>
             <div class="rank-user-name">{{rank2?.fullname}}</div>
-            <div class="rank-user-points">{{rank2?.total_points ? rank2?.total_points : 0}}</div>
+            <div class="rank-user-points flex">
+              <img class="podium-karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+              {{rank2?.total_points ? rank2?.total_points : 0}}
+            </div>
             <div class="flex podium-rank-change"
               *ngIf="currentUserId === rank2?.userId && rank2?.rank !== rank2?.previous_rank">
               <ng-container *ngIf="rank2?.rank < rank2?.previous_rank">
@@ -62,7 +65,10 @@
               </ws-widget-avatar-photo>
             </div>
           <div class="rank-user-name">{{rank1?.fullname}}</div>
-          <div class="rank-user-points">{{rank1?.total_points ? rank1?.total_points : 0}}</div>
+          <div class="rank-user-points flex">
+            <img class="podium-karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+            {{rank1?.total_points ? rank1?.total_points : 0}}
+          </div>
           <div class="flex podium-rank-change"
             *ngIf="currentUserId === rank1?.userId && rank1?.rank !== rank1?.previous_rank">
             <ng-container *ngIf="rank1?.rank < rank1?.previous_rank">
@@ -89,7 +95,10 @@
               </ws-widget-avatar-photo>
             </div>
           <div class="rank-user-name">{{rank3?.fullname}}</div>
-          <div class="rank-user-points">{{rank3?.total_points ? rank3?.total_points : 0}}</div>
+          <div class="rank-user-points flex">
+            <img class="podium-karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+            {{rank3?.total_points ? rank3?.total_points : 0}}
+          </div>
           <div class="flex podium-rank-change"
             *ngIf="currentUserId === rank3?.userId && rank3?.rank !== rank3?.previous_rank">
             <ng-container *ngIf="rank3?.rank < rank3?.previous_rank">
