@@ -1035,16 +1035,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.enrollBtnLoading = true
     this.changeTab = !this.changeTab
     this.userSvc.resetTime('enrollmentService')
+    const batchId = this.contentReadData && this.contentReadData.batches[0].batchId
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
-      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM)
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM, batchId)
     } else if (this.content && this.content.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
-      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM)
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, batchId)
     } else {
       this.autoAssignEnroll()
     }
   }
 
-  public autoEnrollCuratedProgram(programType: any) {
+  public autoEnrollCuratedProgram(programType: any, batchIdData: any) {
     if (this.content && this.content.identifier) {
       let userId = ''
       if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
@@ -1055,7 +1056,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           userId,
           programId: this.content.identifier,
           // as of now curated program only one batch is coming need to check and modify
-          batchId: this.contentReadData && this.contentReadData.batches[0].batchId,
+          batchId: batchIdData,
         },
       }
       this.contentSvc.autoAssignCuratedBatchApi(req, programType).subscribe(
@@ -1065,7 +1066,24 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             //   this.getUserEnrollmentList()
             // },         2000)
             this.userSvc.resetTime('enrollmentService')
-            this.navigateToPlayerPage(req.request.batchId)
+            if (programType === NsContent.ECourseCategory.MODERATED_PROGRAM && !this.isBatchInProgress) {
+              this.batchData = {
+                content: this.selectedBatchData,
+                enrolled: true,
+              }
+                this.router.navigate(
+                              [],
+                              {
+                                relativeTo: this.route,
+                                queryParams: { batchId: batchIdData },
+                                queryParamsHandling: 'merge',
+                              })
+                              setTimeout(() => {
+              this.getUserEnrollmentList()
+            },                           2000)
+            } else {
+              this.navigateToPlayerPage(req.request.batchId)
+            }
           }
         },
         (_error: any) => {
@@ -1813,5 +1831,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     if (this.resumeDataSubscription) {
       this.resumeDataSubscription.unsubscribe()
     }
+  }
+  programEnrollCall(batchData: any) {
+    const batchId = batchData.batchId
+    this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, batchId)
   }
 }

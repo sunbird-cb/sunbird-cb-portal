@@ -10,7 +10,7 @@
       </ng-container>
   </ng-container>
     <div *ngIf="isResource" class="resource-container mt-4">
-       <div class="resource flex  sm:flex-col flex-start width-expand w-100  sm:w-auto">
+       <div class="resource flex flex-wrap sm:flex-col flex-start width-expand w-100  sm:w-auto">
           <a class="w-full" [class.disabled]="(forPreview || !isEnabled) ? true : null"
           (click)="redirectToPage()">
           <div class="text-truncate1 " [ngClass]="{'cursor-pointer': !isEnabled}"
@@ -54,9 +54,12 @@
                   <div class="text-truncate1" [ngClass]="{'cursor-pointer': !isEnabled}"
                   (click)="viewChildren = !viewChildren">
                   <div class="flex flex-col sm:flex-row flex-wrap">
-                       <span *ngFor="let sType of sessionType">
-                          <span class="margin-right-s" [ngClass]="sType ==='offline' ? 'offline':'online'"> {{sType | titlecase}}</span>
-                       </span>
+                     <ng-container *ngFor="let sType of sessionType">
+                        <span class="flex" class="margin-right-s" [ngClass]="sType ==='offline' ? 'offline':'online'">
+                           {{sType | titlecase}}
+                        </span>
+
+                     </ng-container>
                        
                        
                    </div>

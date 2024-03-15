@@ -68,6 +68,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   @Input() batchData: any
   @Input() tocStructure: any
   @Input() hierarchyMapData: any = {}
+  @Input() config: any
 
   @Output() pathSetEvent = new EventEmitter()
 
