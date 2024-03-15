@@ -38,7 +38,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.condition = changes.condition.currentValue
-
+    
     if (!this.condition) { return }
     if (!this.condition.isPostAssessment && (this.condition.content && this.condition.content.hasOwnProperty('completionPercentage')
      && !this.condition.content.completionPercentage
@@ -61,26 +61,39 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
         }
     }
 
-    if (this.condition && !this.condition.isPostAssessment
-      && ((this.condition.content && this.condition.content.completionPercentage === 100)
-      || this.condition.certData)) {
-      if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
-        this.getKPData('ACBP CLAIM')
-        this.btnCategory = 'claim'
-      }
-
-      // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
-      //   this.getKPData('ACBP COMPLETED')
-      // }
-
-      if (this.condition && !this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
-        this.getKPData('Start again')
-      }
-
-      if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
-        this.getKPData('Start again')
+    const content = this.condition.content 
+    if (
+      !(
+        content.primaryCategory === this.condition.primaryCategory.COURSE && 
+        content.children.length === 0 && !content.artifactUrl.length
+      ) && 
+      !(content.primaryCategory === this.condition.primaryCategory.COURSE && 
+      !this.condition.batchData.enrolled) && 
+      !(content.primaryCategory === this.condition.primaryCategory.RESOURCE && !content.artifactUrl) && 
+      !(content.primaryCategory === this.condition.primaryCategory.MANDATORY_COURSE_GOAL) && 
+      !(content.primaryCategory === this.condition.primaryCategory.PROGRAM && this.condition.currentCourseBatchId)) {
+        
+      if (this.condition && !this.condition.isPostAssessment && ((content && content.completionPercentage === 100)
+        || this.condition.certData)) {
+        if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && !this.condition.isClaimed) {
+          this.getKPData('ACBP CLAIM')
+          this.btnCategory = 'claim'
+        }
+  
+        // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
+        //   this.getKPData('ACBP COMPLETED')
+        // }
+  
+        if (this.condition && !this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
+          this.getKPData('Start again')
+        }
+  
+        if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
+          this.getKPData('Start again')
+        }
       }
     }
+
 
     if (this.condition && this.condition.isPostAssessment
       && this.condition.showTakeAssessment
