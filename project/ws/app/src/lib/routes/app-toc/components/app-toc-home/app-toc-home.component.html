@@ -167,7 +167,7 @@
           <ws-widget-skeleton-loader [width]="'100%'" [height]="'36px'"
             [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
         </ng-container>
-      
+
         <!-- Curated program block -->
         <ng-container
           *ngIf="content?.primaryCategory === primaryCategory.CURATED_PROGRAM && !batchData?.enrolled && !enrollBtnLoading">
@@ -245,7 +245,7 @@
           </div>
         </ng-container>
       </div>
-      
+
       <ng-container *ngIf="resumeData">
         <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
           <mat-icon>star_purple500</mat-icon>
@@ -285,7 +285,7 @@
               </div>
             </ng-container>
 
-            <div class="flex items-center text-white mob-share">
+            <div class="flex items-center text-white mob-share" *ngIf="canShare">
               <mat-icon (click)="onClickOfShare()">share</mat-icon>
             </div>
           </div>
@@ -347,8 +347,8 @@
         </div>
         <!-- Overall progress functionality -->
 
-        <ws-widget-content-toc [content]="content" [pathSet]="pathSet" [tocStructure]="tocStructure" 
-        [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader" 
+        <ws-widget-content-toc [content]="content" [pathSet]="pathSet" [tocStructure]="tocStructure"
+        [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader"
         [changeTab]="changeTab" [hierarchyMapData]="tocSvc?.hashmap" [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}" [kparray]="kparray"></ws-widget-content-toc>
       </div>
     </div>
@@ -547,15 +547,15 @@
 </ng-container>
 <ng-template #noDataFound>
   <div class="error-not-found flex flex-wrapped margin-left-m margin-top-xl margin-right-m flex-col justify-center align-items-center text-center">
-    <div class="error-logo">  
+    <div class="error-logo">
       <div class="error-message ws-mat-primary-text font-weight-bold" i18n>
         The page you requested cannot be found
       </div>
     </div>
     <!-- <div class="error-support">
       <div class="support-message" i18n>We have updated our web site and many URLs have changed.</div>
-      <div class="support-message" i18n>You might want to:</div>      
+      <div class="support-message" i18n>You might want to:</div>
     </div> -->
   </div>
-  
+
 </ng-template>
