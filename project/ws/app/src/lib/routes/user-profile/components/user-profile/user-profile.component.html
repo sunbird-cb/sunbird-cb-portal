@@ -334,7 +334,7 @@
                           {{'userProfile.group' | translate }}
                         </label>
                         <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
-                          <mat-select placeholder="{{'userProfile.groupPlaceholder' | translate }}" id="group" #group i18n-placeholder="group"
+                          <mat-select placeholder="{{'userProfile.groupPlavceholder' | translate }}" id="group" #group i18n-placeholder="group"
                             formControlName="group" [disabled]="!isAllowed('group')">
                             <ng-container *ngIf="!unApprovedReq?.group">
                               <mat-option [hidden]="option.name === 'Others'" *ngFor="let option of groupsOriginal"
@@ -349,7 +349,7 @@
                           <mat-error [hidden]="false" i18n="txt txt-reviewGroup Error | Explains Group is required"
                             *ngIf="createUserForm?.controls['group'].errors?.required" i18n-aria-label
                             aria-label="Group is mandatory">
-                            {{'userProfile.groupMandatory' | translate }}
+                            {{'publicsignup.groupMandatory' | translate }}
                           </mat-error>
                         </mat-form-field>
                         <span class="txt txt-review" *ngIf="!isAllowed('group')">{{translateLabels(inReview, 'userProfile')}}</span>

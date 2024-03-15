@@ -89,6 +89,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   showCreds = false
   credMessage = 'View my credentials'
   assessmentsData: any
+  isCurrentUser!: boolean
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -148,8 +149,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
       /** // for loged in user only */
       if (user === this.currentUser.userId) {
+        this.isCurrentUser = true
         this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
       } else {
+        this.isCurrentUser = false
         this.currentUsername = this.portalProfile.personalDetails && this.portalProfile.personalDetails !== null
           ? this.portalProfile.personalDetails.userName
           : this.portalProfile.userName
@@ -302,7 +305,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.networkV2Service.fetchAllConnectionEstablishedById(wid).subscribe(
       (data: any) => {
         this.connectionRequests = data.result.data
-      },
+              },
       (_err: any) => {
         // this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
       })

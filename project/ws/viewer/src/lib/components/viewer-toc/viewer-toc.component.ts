@@ -134,7 +134,11 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
     }
 
-    this.getEnrollmentList()
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      this.getEnrollmentList()
+    }
+
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId')
       this.collectionType = params.get('collectionType') || 'course'

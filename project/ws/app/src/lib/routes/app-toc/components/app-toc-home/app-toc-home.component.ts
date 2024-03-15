@@ -76,7 +76,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   isInIframe = false
   cbPlanEndDate: any
   cbPlanDuration: any
-  forPreview = window.location.href.includes('/author/')
+  forPreview = window.location.href.includes('/author/') ||  window.location.href.includes('/public/')
   analytics = this.route.snapshot.data.pageData.data.analytics
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
@@ -350,14 +350,16 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getKarmapointsLimit() {
-    this.contentSvc.userKarmaPoints().subscribe((res: any) => {
-      if (res && res.kpList) {
-        const info = res.kpList.addinfo
-        if (info) {
-          this.monthlyCapExceed = JSON.parse(info).claimedNonACBPCourseKarmaQuota >= 4
+    if (!this.forPreview) {
+      this.contentSvc.userKarmaPoints().subscribe((res: any) => {
+        if (res && res.kpList) {
+          const info = res.kpList.addinfo
+          if (info) {
+            this.monthlyCapExceed = JSON.parse(info).claimedNonACBPCourseKarmaQuota >= 4
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   isCourseCompletedOnThisMonth() {
@@ -714,23 +716,25 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   getUserRating(fireUpdate: boolean) {
-    if (this.configSvc.userProfile) {
-      this.userId = this.configSvc.userProfile.userId || ''
-    }
-    if (this.content && this.content.identifier && this.content.primaryCategory) {
-      this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
-        (res: any) => {
-          if (res && res.result && res.result.response) {
-            this.userRating = res.result.response
-            if (fireUpdate) {
-              this.tocSvc.changeUpdateReviews(true)
+    if (!this.forPreview) {
+      if (this.configSvc.userProfile) {
+        this.userId = this.configSvc.userProfile.userId || ''
+      }
+      if (this.content && this.content.identifier && this.content.primaryCategory) {
+        this.ratingSvc.getRating(this.content.identifier, this.content.primaryCategory, this.userId).subscribe(
+          (res: any) => {
+            if (res && res.result && res.result.response) {
+              this.userRating = res.result.response
+              if (fireUpdate) {
+                this.tocSvc.changeUpdateReviews(true)
+              }
             }
+          },
+          (err: any) => {
+            this.loggerSvc.error('USER RATING FETCH ERROR >', err)
           }
-        },
-        (err: any) => {
-          this.loggerSvc.error('USER RATING FETCH ERROR >', err)
-        }
-      )
+        )
+      }
     }
   }
 
