@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { JanKarmayogiService } from '../../service/jan-karmayogi.service'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { MultilingualTranslationsService, NsContent } from '@sunbird-cb/utils'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-jan-karmayogi-home',
@@ -13,9 +14,19 @@ export class JanKarmayogiHomeComponent implements OnInit {
   contentList: any = []
 
   constructor(private janSvc: JanKarmayogiService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private translate: TranslateService,
+              private langtranslations: MultilingualTranslationsService) {
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data || {}
     this.contentList = this.transformSkeletonToWidgets(this.pageData.janStip)
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      this.translate.setDefaultLang('hi')
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {

@@ -1,7 +1,14 @@
 <div class="container-balanced">
     <ng-container [wsResolverWidget]="pageData?.banner"></ng-container>
+    <div class="w-full margin-top-l padding-top-xs event_card_main_box">
+        <div class="flex flex-1 flex-column margin-fix mb-2">
+            <span class="f-medium mat-title jan-title">
+                {{ 'janKarmayogi.JanTitle' | translate }}
+            </span>
+        </div>
+    </div>
    <div class="mt-8 flex flex-wrap">
-        <div class="mb-5 grow" *ngFor="let c of contentList  | slice:0:5">
+        <div class="mb-5 grow jan-karmayogi" *ngFor="let c of contentList  | slice:0:5">
             <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
         </div>
    </div>
