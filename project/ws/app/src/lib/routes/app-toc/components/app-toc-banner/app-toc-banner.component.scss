@@ -13,8 +13,10 @@
 
 .batch-div {
     border-radius: 8px;
-    background-color: rgba($color: $colorOrange, $alpha: 0.2);
+    background-color: #FDEAD5;
     padding: 16px;
+    max-width: 400px;
+    margin: 0 auto;
 
     .batch-details {
         padding: 16px;

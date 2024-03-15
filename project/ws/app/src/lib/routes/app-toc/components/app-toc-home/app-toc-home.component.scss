@@ -348,12 +348,15 @@ a.action-button {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1201px) {
   .mobile-enroll-div, .mob-share {
     display: none !important;
   }
-}
 
+  .hideAbove1200 {
+    display: none;
+  }
+}
 
 .mobile-progress {
   padding: 16px;
