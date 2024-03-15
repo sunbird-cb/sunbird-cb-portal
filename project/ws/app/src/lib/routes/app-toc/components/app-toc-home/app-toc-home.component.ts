@@ -1066,7 +1066,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             //   this.getUserEnrollmentList()
             // },         2000)
             this.userSvc.resetTime('enrollmentService')
-            if (programType === NsContent.ECourseCategory.MODERATED_PROGRAM && !this.isBatchInProgress) {
+            if (programType === NsContent.ECourseCategory.MODERATED_PROGRAM && this.selectedBatchData && this.selectedBatchData.content) {
               this.batchData = {
                 content: this.selectedBatchData,
                 enrolled: true,

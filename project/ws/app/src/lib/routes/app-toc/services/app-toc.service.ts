@@ -44,7 +44,7 @@ export class AppTocService {
   setBatchDataSubject: Subject<any> = new Subject()
   getSelectedBatch: Subject<any> = new Subject()
   setWFDataSubject: Subject<any> = new Subject()
-  resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
+  resumeData: BehaviorSubject<NsContent.IContinueLearningData | null> = new BehaviorSubject<any>({})
   private showSubtitleOnBanners = false
   private canShowDescription = false
   resumeDataSubscription: Subscription | null = null

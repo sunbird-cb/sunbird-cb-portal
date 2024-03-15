@@ -36,8 +36,21 @@
         <!-- {{ content?.sYS_INTERNAL_LAST_UPDATED_ON | date: 'MMM d, y' }} -->
        </div>
       </a>
+      <ng-container *ngIf="batchData?.enrolled">
+         <div *ngIf="session[content?.identifier]?.sessionHandouts?.length > 0">
+             <p class=" font-bold mat-body-1 margin-bottom-xs  ws-mat-black60-text">{{'apptocsessionscards.sessionHandouts' | translate }}</p>
+             <div class="flex flex-col flex-wrapped margin-bottom-s width-expand pr-0 w-100 sm:pr-4 sm:w-auto mb-4">
+                 <ng-container *ngFor="let handout of session[content?.identifier]?.sessionHandouts">
+                     <div class="">
+                         <span class="mr-4">{{handout.title}}</span>
+                         <a class="download-link" target=”_blank” download href="{{handout.url}}">{{'apptocsessionscards.download' | translate }}</a>
+                     </div>
+                 </ng-container>
+             </div>
+         </div>
+     </ng-container>
        <ng-container>
-          <ws-widget-attendance-card [session]="session" [config]="config"></ws-widget-attendance-card>
+          <ws-widget-attendance-card [session]="session[content?.identifier]" [config]="config"></ws-widget-attendance-card>
        </ng-container>
       
     </div>
@@ -82,6 +95,19 @@
          </div>
          </div>
       </ng-container>
+      <ng-container *ngIf="batchData?.enrolled">
+         <div *ngIf="content?.sessionHandouts?.length > 0">
+             <p class=" font-bold mat-body-1 margin-bottom-xs  ws-mat-black60-text">{{'apptocsessionscards.sessionHandouts' | translate }}</p>
+             <div class="flex flex-col flex-wrapped margin-bottom-s width-expand pr-0 w-100 sm:pr-4 sm:w-auto mb-4">
+                 <ng-container *ngFor="let handout of content?.sessionHandouts">
+                     <div class="">
+                         <span class="mr-4">{{handout.title}}</span>
+                         <a class="download-link" target=”_blank” download href="{{handout.url}}">{{'apptocsessionscards.download' | translate }}</a>
+                     </div>
+                 </ng-container>
+             </div>
+         </div>
+     </ng-container>
       <div class="child-wrapper  " [ngClass]="{'open': viewChildren, 'close': !viewChildren}" *ngIf="viewChildren"
       [@panelInOut]>
            <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">

@@ -143,6 +143,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
         content: [enrolledCourseData.batch],
         enrolled: true,
       }
+      this.tocSvc.mapSessionCompletionPercentage(this.batchData)
     }
     this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
       this.handleBackFromPdfScormFullScreenFlag = data
