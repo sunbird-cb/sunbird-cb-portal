@@ -137,7 +137,6 @@
               [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
               [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
               class="flex action-button justify-center resume">
-              dataaa s  
               <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
                 <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
                   {{ resumeData && (content.completionPercentage < 100 && content.completionPercentage> 0) ? translateLabels('resume', 'apptochome') :
