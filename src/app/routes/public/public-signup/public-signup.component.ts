@@ -14,6 +14,9 @@ import _ from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
 import { TranslateService } from '@ngx-translate/core'
+import { HttpClient } from '@angular/common/http'
+import { DomSanitizer } from '@angular/platform-browser'
+import { DialogBoxComponent as ZohoDialogComponent } from '@ws/app/src/lib/routes/profile-v3/components/dialog-box/dialog-box.component'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -129,6 +132,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   heirarchyObject: any
   hideOrg = false
   emailPattern = `^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`
+  zohoHtml: any
+  zohoUrl: any = '/assets/static-data/zoho-code.html'
+
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
@@ -152,7 +158,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
     private translate: TranslateService,
-    private langtranslations: MultilingualTranslationsService
+    private langtranslations: MultilingualTranslationsService,
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -222,6 +230,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._document.body.classList.add('cs-recaptcha')
     }
+    this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
+      this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res)
+    })
   }
 
   get typeValueStartCase() {
@@ -758,5 +769,54 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.selectedLanguage = event
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
+  }
+
+
+  getZohoForm() {
+    const dialogRef = this.dialog.open(ZohoDialogComponent, {
+      width: '45%',
+      data: {
+        view: 'zohoform',
+        value: this.zohoHtml,
+      },
+    })
+    dialogRef.afterClosed().subscribe(() => {
+    })
+    setTimeout(() => {
+      this.callXMLRequest()
+    },         0)
+  }
+
+  callXMLRequest() {
+    let webFormxhr: any = {}
+    webFormxhr = new XMLHttpRequest()
+    // tslint:disable-next-line: prefer-template
+    webFormxhr.open('GET', 'https://desk.zoho.in/support/GenerateCaptcha?action=getNewCaptcha&_=' + new Date().getTime(), true)
+    webFormxhr.onreadystatechange = () => {
+      if (webFormxhr.readyState === 4 && webFormxhr.status === 200) {
+        try {
+          const response = (webFormxhr.responseText != null) ? JSON.parse(webFormxhr.responseText) : ''
+          const zsCaptchaUrl: any = document.getElementById('zsCaptchaUrl')
+          if (zsCaptchaUrl) {
+            zsCaptchaUrl.src = response.captchaUrl
+            zsCaptchaUrl.style.display = 'block'
+          }
+          const xJdfEaS: any = document.getElementsByName('xJdfEaS')[0]
+          xJdfEaS.value = response.captchaDigest
+          const zsCaptchaLoading: any = document.getElementById('zsCaptchaLoading')
+          zsCaptchaLoading.style.display = 'none'
+          const zsCaptcha: any = document.getElementById('zsCaptcha')
+          zsCaptcha.style.display = 'block'
+          const refreshCaptcha: any = document.getElementById('refreshCaptcha')
+          if (refreshCaptcha) {
+            refreshCaptcha.addEventListener('click', () => {
+              this.callXMLRequest()
+            })
+          }
+        } catch (e) {
+        }
+      }
+    }
+    webFormxhr.send()
   }
 }
