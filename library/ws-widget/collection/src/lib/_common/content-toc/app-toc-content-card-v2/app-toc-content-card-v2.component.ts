@@ -306,7 +306,12 @@ export class AppTocContentCardV2Component implements OnInit {
   updateChildParentMap(identifier: string) {
     if(this.hierarchyMapData  && this.hierarchyMapData[identifier]) {
       let localContentData = this.hierarchyMapData[identifier]
-      if(localContentData.primaryCategory !== NsContent.EPrimaryCategory.RESOURCE) {
+      if(
+        !(localContentData.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
+        || localContentData.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+        || localContentData.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT
+        || localContentData.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT)
+      ) {
         // real percent logic
         // const total = localContentData.leafNodes.reduce((sum: number, childId: string) => {
         //   return sum + Number(this.hierarchyMapData[childId].completionPercentage || 0)
@@ -333,7 +338,8 @@ export class AppTocContentCardV2Component implements OnInit {
   }
 
   getCompletionPercentage(identifier: string) {
-    // console.log('getCompletionPercentage')
+    // console.log('getCompletionPercentage', identifier)
+    // console.log('this.hierarchyMapData[identifier] : ', this.hierarchyMapData[identifier])
     // const item = this.updateChildParentMap(identifier)
     return this.hierarchyMapData && this.hierarchyMapData[identifier] && this.hierarchyMapData[identifier].completionPercentage  
   }
