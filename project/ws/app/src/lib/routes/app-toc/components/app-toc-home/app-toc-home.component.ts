@@ -1375,18 +1375,20 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   private getResumeDataFromList(type?: string) {
     const resumeCopy = [...this.resumeData]
-    if (!type) {
-      // tslint:disable-next-line:max-line-length
-      const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
-      return {
-        identifier: lastItem.contentId,
-        mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
+    if(resumeCopy && resumeCopy.length) {
+      if (!type) {
+        // tslint:disable-next-line:max-line-length
+        const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+        return {
+          identifier: lastItem.contentId,
+          mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
+        }
       }
-    }
-    const firstItem = resumeCopy && resumeCopy.length && resumeCopy[0]
-    return {
-      identifier: firstItem.contentId,
-      mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
+      const firstItem = resumeCopy && resumeCopy.length && resumeCopy[0]
+      return {
+        identifier: firstItem.contentId,
+        mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
+      }
     }
   }
 

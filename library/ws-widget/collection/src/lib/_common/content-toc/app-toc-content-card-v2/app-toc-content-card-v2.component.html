@@ -61,7 +61,7 @@
                 </ng-container>
             </div>
             <!-- deactivated as per NIC CEO requirement to access course wthout login -->
-            <a class="" [class.disabled]="(forPreview || !isEnabled || !isEnrolled) ? true : null"
+            <a class="" [class.disabled]="(forPreview || !isEnabled || !isEnrolled || !isBatchInProgess) ? true : null"
                 [ngClass]="{'ml-3': isEnrolled}"
                 [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
                 [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null">
@@ -101,10 +101,12 @@
                                 *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
                             <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
                                 alt="offline sessions" *ngIf="content.mimeType === 'application/offline'">
-                            <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
-                                hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
-                                'hms'
-                                }}</span>
+                            <ng-container *ngIf="content.primaryCategory">
+                                <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
+                                    hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
+                                    'hms'
+                                    }}</span>
+                            </ng-container>
                         </div>
                     </ng-container>
 
@@ -320,7 +322,7 @@
             <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">
                 <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
                     [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1"
-                    [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData"
+                    [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData" [batchData]="batchData"
                     *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
                     [ngClass]="{'moduleCard': checkIsModule(child), 'resourceCard': !checkIsModule(child), 'first': isFirst}">
                 </ws-widget-app-toc-content-card-v2>
