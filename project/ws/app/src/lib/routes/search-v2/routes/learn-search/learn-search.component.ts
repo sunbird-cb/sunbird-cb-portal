@@ -359,28 +359,36 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       'secureSettings',
     ]
     this.newQueryParam = data
-    let modifiedDataCount = 0
+    // let modifiedDataCount = 0
+    if (data.request.filters.courseCategory.includes(NsContent.ECourseCategory.MODERATED_COURSE) ||
+      data.request.filters.courseCategory.includes(NsContent.ECourseCategory.MODERATED_ASSESSEMENT) ||
+      data.request.filters.courseCategory.includes(NsContent.ECourseCategory.MODERATED_PROGRAM)) {
+        if (!this.veifiedKarmayogi) {
+          data.request.filters = { ...data.request.filters, 'secureSettings.isVerifiedKarmayogi': 'No' }
+        }
+    }
     this.searchResults = []
     this.searchSrvc.fetchSearchDataByCategory(data).subscribe((response: any) => {
       if (response && response.result && response.result.count) {
-        response.result.content.forEach((res: any) => {
-          if (res.courseCategory === NsContent.ECourseCategory.MODERATED_COURSE ||
-            res.courseCategory === NsContent.ECourseCategory.MODERATED_ASSESSEMENT ||
-            res.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
-              if (this.veifiedKarmayogi) {
-                this.searchResults.push(res)
-                modifiedDataCount = modifiedDataCount + 1
-              } else {
-                if (res.secureSettings && res.secureSettings.isVerifiedKarmayogi === 'No') {
-                  this.searchResults.push(res)
-                  modifiedDataCount = modifiedDataCount + 1
-                }
-              }
-            } else {
-              this.searchResults.push(res)
-              modifiedDataCount = modifiedDataCount + 1
-            }
-        })
+        // response.result.content.forEach((res: any) => {
+        //   if (res.courseCategory === NsContent.ECourseCategory.MODERATED_COURSE ||
+        //     res.courseCategory === NsContent.ECourseCategory.MODERATED_ASSESSEMENT ||
+        //     res.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
+        //       if (this.veifiedKarmayogi) {
+        //         this.searchResults.push(res)
+        //         modifiedDataCount = modifiedDataCount + 1
+        //       } else {
+        //         if (res.secureSettings && res.secureSettings.isVerifiedKarmayogi === 'No') {
+        //           this.searchResults.push(res)
+        //           modifiedDataCount = modifiedDataCount + 1
+        //         }
+        //       }
+        //     } else {
+        //       this.searchResults.push(res)
+        //       modifiedDataCount = modifiedDataCount + 1
+        //     }
+        // })
+        this.searchResults = response.result.content
       }
       this.totalResults = response.result.count
       // this.facets = response.result.facets
