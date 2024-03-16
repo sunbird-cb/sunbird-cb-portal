@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material'
 import { animate, style, transition, trigger } from '@angular/animations'
 /* tslint:disable*/
 import _ from 'lodash'
+import moment from 'moment'
 
 @Component({
   selector: 'ws-widget-app-toc-content-card-v2',
@@ -35,6 +36,7 @@ export class AppTocContentCardV2Component implements OnInit {
   @Input() pathSet!: any
   @Input() expandActive = true
   @Input() hierarchyMapData: any = {}
+  @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   hasContentStructure = false
   enumContentTypes = NsContent.EDisplayContentTypes
   contentStructure: NsAppToc.ITocStructure = {
@@ -127,6 +129,24 @@ export class AppTocContentCardV2Component implements OnInit {
   checkIsModule(content: any): boolean {
     if (content) {
       return content.primaryCategory === NsContent.EPrimaryCategory.MODULE
+    }
+    return false
+  }
+
+  get isBatchInProgess() {
+    if(this.batchData && (this.batchData.content && this.batchData.content.length) && this.batchData.enrolled) {
+      const batchData = this.batchData.content[0]
+      if (batchData && batchData.endDate) {
+        const now = moment().format('YYYY-MM-DD')
+        const startDate = moment(batchData.startDate).format('YYYY-MM-DD')
+        const endDate = batchData.endDate ? moment(batchData.endDate).format('YYYY-MM-DD') : now
+        console.log(now,startDate,endDate)
+            return (
+              // batch.status &&
+              moment(startDate).isSameOrBefore(now)
+              && moment(endDate).isSameOrAfter(now)
+            )
+      } return true
     }
     return false
   }
