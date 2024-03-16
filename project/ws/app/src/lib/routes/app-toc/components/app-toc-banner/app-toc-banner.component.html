@@ -174,15 +174,13 @@
 </ng-template>
 <ng-template #authView i18n>{{'apptocbanner.view' | translate}}</ng-template>
 <ng-template #statusMsg>
-  <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
+  <div class="status-container mt-4" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
     <div class="flex" *ngIf="showMsg">
       <ng-container *ngIf="showIcon">
-        <mat-icon class="mr-3" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
-        <mat-icon class="mr-3 ws-mat-red-text"  style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
+        <mat-icon class="mr-4" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
+        <mat-icon class="mr-4 ws-mat-red-text" style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
       </ng-container>
-      <div class="mat-body-1">
-        <p class="margin-remove-bottom ">{{getWFMsg}}</p>
-      </div>
+      <div class="mat-body-1">{{ getWFMsg }}</div>
     </div>
   </div>
   <div class="status-container mt-5"
