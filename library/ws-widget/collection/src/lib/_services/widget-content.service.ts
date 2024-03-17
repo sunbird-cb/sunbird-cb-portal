@@ -538,7 +538,7 @@ export class WidgetContentService {
   isBatchInProgress(batchData: any) {
     // if (this.content && this.content['batches']) {
     // const batches = this.content['batches'] as NsContent.IBatch
-    if (batchData) {
+    if (batchData && batchData.endDate) {
       const now = moment().format('YYYY-MM-DD')
       const startDate = moment(batchData.startDate).format('YYYY-MM-DD')
       const endDate = batchData.endDate ? moment(batchData.endDate).format('YYYY-MM-DD') : now
@@ -547,6 +547,6 @@ export class WidgetContentService {
             moment(startDate).isSameOrBefore(now)
             && moment(endDate).isSameOrAfter(now)
           )
-    } return false
+    } return true
   }
 }
