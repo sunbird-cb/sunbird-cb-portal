@@ -150,9 +150,19 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       /** // for loged in user only */
       if (user === this.currentUser.userId) {
         this.isCurrentUser = true
+        this.tabsData.map(ele => {
+          if (ele.key === 'karmaPoints') {
+            ele.enabled = true
+          }
+        })
         this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
       } else {
         this.isCurrentUser = false
+        this.tabsData.map(ele => {
+          if (ele.key === 'karmaPoints') {
+            ele.enabled = false
+          }
+        })
         this.currentUsername = this.portalProfile.personalDetails && this.portalProfile.personalDetails !== null
           ? this.portalProfile.personalDetails.userName
           : this.portalProfile.userName

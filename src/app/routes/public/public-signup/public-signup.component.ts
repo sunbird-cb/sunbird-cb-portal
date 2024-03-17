@@ -135,7 +135,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   zohoHtml: any
   zohoUrl: any = '/assets/static-data/zoho-code.html'
 
-
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
   private userdataSubscription!: Subscription
@@ -770,7 +769,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     localStorage.setItem('websiteLanguage', this.selectedLanguage)
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
-
 
   getZohoForm() {
     const dialogRef = this.dialog.open(ZohoDialogComponent, {
