@@ -453,14 +453,14 @@
 
 .progress-clr {
     stroke: rgb(29, 137, 35);
-    stroke-dasharray: 248;
+    // stroke-dasharray: 248;
     // stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
     stroke-dashoffset: var(--i);
 }
 
 .progress-red-clr {
     stroke: #d13924;
-    stroke-dasharray: 248;
+    // stroke-dasharray: 248;
     // stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
     stroke-dashoffset: var(--i);
 }
@@ -512,7 +512,7 @@
 
 @media only screen and (max-width: 768px) {
     .box-height {
-        height: calc(100vh - 225px);
+        height: calc(100vh - 150px);
         margin: 0;
     }
     .summary-detail ul li {

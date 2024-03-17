@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { BtnPageBackNavService } from './btn-page-back-nav.service'
+import { ConfirmDialogComponent } from '../_common/confirm-dialog/confirm-dialog.component'
 type TUrl = undefined | 'none' | 'back' | string
 @Component({
   selector: 'ws-widget-btn-page-back-nav',
@@ -11,10 +13,13 @@ type TUrl = undefined | 'none' | 'back' | string
 export class BtnPageBackNavComponent extends WidgetBaseComponent
   implements OnInit, NsWidgetResolver.IWidgetData<{ url: TUrl }> {
   @Input() widgetData: { url: TUrl, titles?: NsWidgetResolver.ITitle[], queryParams?: any } = { url: 'none', titles: [] }
+  @Input() assessmentStart = false;
   presentUrl = ''
+  assessmentStartSubscription:any;
   constructor(
     private btnBackSvc: BtnPageBackNavService,
     private router: Router,
+    private dialog: MatDialog
   ) {
     super()
   }
@@ -61,6 +66,36 @@ export class BtnPageBackNavComponent extends WidgetBaseComponent
       queryParams: this.widgetData.queryParams || undefined,
       routeUrl: this.widgetData.url ? this.widgetData.url : '/app/home',
     }
+  }
+
+  navigateToBack() {
+    if(this.assessmentStart) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: {
+          title: " ",
+          cancelButton: "Cancel",
+          acceptButton: "Confirm",
+          message: "Are you sure you want to exit the assessment",
+        },
+      })
+      dialogRef.afterClosed().subscribe((result) => {
+        if(result) {
+          if(this.backUrl && this.backUrl.fragment) {
+            this.router.navigate([this.backUrl.routeUrl], {queryParams : this.backUrl.queryParams, fragment: this.backUrl.fragment })
+          } else {
+            this.router.navigate([this.backUrl.routeUrl], {queryParams : this.backUrl.queryParams })
+          }
+        }
+      })
+    } else {
+      if(this.backUrl && this.backUrl.fragment) {
+        this.router.navigate([this.backUrl.routeUrl], {queryParams : this.backUrl.queryParams, fragment: this.backUrl.fragment })
+      } else {
+        this.router.navigate([this.backUrl.routeUrl], {queryParams : this.backUrl.queryParams })
+      }
+    }
+    
+    
   }
 
 }

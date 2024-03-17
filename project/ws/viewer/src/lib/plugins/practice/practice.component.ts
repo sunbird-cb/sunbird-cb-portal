@@ -7,6 +7,7 @@ import {
   QueryList,
   SimpleChanges,
   ViewChild, ViewChildren,
+  Renderer2
 } from '@angular/core'
 import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
 import { Subscription, interval } from 'rxjs'
@@ -72,6 +73,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
   @ViewChild('submitModal', { static: false }) submitModal: ElementRef | null = null
+  @ViewChild('itemTooltip', { static: false }) itemTooltip: ElementRef | null = null;
+  @ViewChild('tooltipTrigger', { static: false }) tooltipTrigger: ElementRef | null = null;
   resourceName: string | null = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.name : ''
   currentQuestionIndex = 0
   currentTheme = ''
@@ -128,11 +131,27 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     public snackbar: MatSnackBar,
     private sanitized: DomSanitizer,
     private viewerDataSvc: ViewerDataService,
-    private viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService
+    private viewerHeaderSideBarToggleService: ViewerHeaderSideBarToggleService,
+    private renderer: Renderer2
 
   ) {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
+    }
+    this.renderer.listen('window', 'click', (event) => {
+      let infoToolTip:any = document.getElementById('toolTipSection');
+      if(!infoToolTip.contains(event.target)) {
+        this.showToolTip = false;
+      }      
+    });
+  }
+
+  toggleToolTip() {
+    let tooltipStatus = this.showToolTip;
+    if (tooltipStatus === true) {
+      this.showToolTip = false;
+    } else if (tooltipStatus === false) {
+      this.showToolTip = true;
     }
   }
   init() {
@@ -849,11 +868,14 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   async submitQuiz() {
     this.raiseTelemetry('quiz', null, 'submit')
-    this.showOverlay = true
-    setTimeout(() => {
-      this.showOverlay = false
-      this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
-    },         5000)
+    if(!this.ePrimaryCategory.PRACTICE_RESOURCE) {
+      this.showOverlay = true
+      setTimeout(() => {
+        this.showOverlay = false
+        this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
+      },         5000)
+    }
+    
     this.isSubmitted = true
     this.ngOnDestroy()
     if (!this.quizJson.isAssessment) {

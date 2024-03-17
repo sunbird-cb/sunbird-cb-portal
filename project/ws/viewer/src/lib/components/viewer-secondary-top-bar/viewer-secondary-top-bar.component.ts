@@ -280,7 +280,6 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
         }
         this.widgetServ.fetchContentHistoryV2(req).subscribe(
           (data: any) => {
-
             this.contentProgressHash = data.result.contentList
 
             if (this.leafNodesCount === this.contentProgressHash.length) {
@@ -375,7 +374,12 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     if(this.prevResourceUrl) {
       this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
     } else {
-      this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+      if(!this.forPreview) {
+        this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+      } else {
+        this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+      }
+      
     }
   }
 }
