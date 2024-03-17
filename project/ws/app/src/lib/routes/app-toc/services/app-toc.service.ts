@@ -60,7 +60,13 @@ export class AppTocService {
   contentLoader$ = this.contentLoader.asObservable()
   public hashmap: any = {}
 
-  constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) { }
+  constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) {
+    // this resume data subscription is for on load
+    this.resumeDataSubscription = this.resumeData.subscribe(
+      (_dataResult: any) => {
+
+      })
+   }
 
   get subtitleOnBanners(): boolean {
     return this.showSubtitleOnBanners
