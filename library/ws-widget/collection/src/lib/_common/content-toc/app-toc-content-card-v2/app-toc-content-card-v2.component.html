@@ -101,7 +101,16 @@
                                 *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
                             <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
                                 alt="offline sessions" *ngIf="content.mimeType === 'application/offline'">
-                            <ng-container *ngIf="content.primaryCategory">
+                            <ng-container *ngIf="content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE">
+                                <span class="resourceDuration ws-mat-black60-text">{{ content?.maxQuestions }} questions</span>
+                            </ng-container>
+                            <ng-container *ngIf="!(content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE)">
                                 <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
                                     hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
                                     'hms'
@@ -135,10 +144,21 @@
                                 *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
                             <img src="/assets/icons/content/white/module.svg" class="float-left margin-right-xs"
                                 alt="offline sessions" *ngIf="content.mimeType === 'application/offline'">
-                            <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
-                                hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
-                                'hms'
-                                }}</span>
+                            <ng-container *ngIf="content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE">
+                                <span class="resourceDuration ws-mat-black60-text">{{ content?.maxQuestions }} questions</span>
+                            </ng-container>
+                            <ng-container *ngIf="!(content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE)">
+                                <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
+                                    hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
+                                    'hms'
+                                    }}</span>
+                            </ng-container>
                         </div>
                     </ng-container>
                 </div>
