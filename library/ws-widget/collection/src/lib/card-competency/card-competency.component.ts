@@ -10,7 +10,7 @@ import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver/src/
   animations: [
     trigger('expandCollapse', [
       state('collapsed', style({
-        height: '100px',
+        height: '104px',
         width: '320px',
       })),
       state('expanded', style({

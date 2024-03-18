@@ -257,7 +257,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     //   }
     // })
   }
-  
+
   cancelTour() {
     if (this.popupTour) {
       this.tourService.cancelPopupTour()
