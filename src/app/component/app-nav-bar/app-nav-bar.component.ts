@@ -257,13 +257,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     //   }
     // })
   }
+  
   cancelTour() {
     if (this.popupTour) {
       this.tourService.cancelPopupTour()
       this.isTourGuideClosed = false
     }
-
   }
+
   bindUrl(path: string) {
     if (path) {
       // console.log(path)
@@ -272,20 +273,25 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       }
     }
   }
+
   get stillOnHomePage(): boolean {
     this.isPublicHomePage = window.location.href.includes('/public/home')
     return this.isPublicHomePage
   }
+
   get fullMenuDispaly(): boolean {
     this.isPlayerPage = window.location.href.includes('/viewer/')
     return !(this.isPlayerPage || this.stillOnHomePage)
   }
+
   get sShowAppNavBar(): boolean {
     return this.showAppNavBar
   }
+
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
   }
+
   // parichay changes
   get isforPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/')
@@ -293,12 +299,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     || window.location.href.includes('/certs')
     return this.forPreview
   }
+
   get isenableLang(): boolean {
     if (window.location.href.includes('/public/faq') || window.location.href.includes('/public/contact')) {
       return true
     }
     return false
   }
+
   get isThisSetUpPage(): boolean {
     if (window.location.pathname.includes('/app/setup')) {
       this.isSetUpPage = true
@@ -311,6 +319,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
+
   redirectToPath(pathConfig: any) {
     if (pathConfig && pathConfig.key) {
       this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } })
