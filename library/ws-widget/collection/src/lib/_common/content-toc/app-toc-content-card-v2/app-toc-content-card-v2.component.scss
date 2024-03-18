@@ -191,7 +191,11 @@ span.optional-span {
     & .customicon .mat-icon {
       color: #fff;
     }
-    
+    .progress-container {
+      span {
+        color: white !important;
+      }
+    }
   }
 }
 

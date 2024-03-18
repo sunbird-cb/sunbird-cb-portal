@@ -925,7 +925,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             }
             this.tocSvc.setBatchData(this.batchData)
             this.tocSvc.getSelectedBatchData(this.batchData)
-            this.tocSvc.mapSessionCompletionPercentage(this.batchData)
+            this.tocSvc.mapSessionCompletionPercentage(this.batchData, this.resumeData)
             if (this.getBatchId()) {
               this.router.navigate(
                 [],
@@ -1035,17 +1035,23 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     this.enrollBtnLoading = true
     this.changeTab = !this.changeTab
     this.userSvc.resetTime('enrollmentService')
-    const batchId = this.contentReadData && this.contentReadData.batches[0].batchId
+    const batchData = this.contentReadData && this.contentReadData.batches[0]
     if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
-      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM, batchId)
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM, batchData)
     } else if (this.content && this.content.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
-      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, batchId)
+      let moderatedBatchData: any
+      if (this.batchData && this.batchData.content && this.batchData.content.length > 1) {
+        moderatedBatchData = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0]
+      } else {
+        moderatedBatchData = this.batchData && this.batchData.content && this.batchData.content[0]
+      }
+      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, moderatedBatchData)
     } else {
       this.autoAssignEnroll()
     }
   }
 
-  public autoEnrollCuratedProgram(programType: any, batchIdData: any) {
+  public autoEnrollCuratedProgram(programType: any,  batchData: any) {
     if (this.content && this.content.identifier) {
       let userId = ''
       if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
@@ -1056,17 +1062,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           userId,
           programId: this.content.identifier,
           // as of now curated program only one batch is coming need to check and modify
-          batchId: batchIdData,
+          batchId: batchData.batchId,
         },
       }
       this.contentSvc.autoAssignCuratedBatchApi(req, programType).subscribe(
         (data: NsContent.IBatchListResponse) => {
           if (data) {
-            // setTimeout(() => {
-            //   this.getUserEnrollmentList()
-            // },         2000)
             this.userSvc.resetTime('enrollmentService')
-            if (programType === NsContent.ECourseCategory.MODERATED_PROGRAM && this.selectedBatchData && this.selectedBatchData.content) {
+            if (programType === NsContent.ECourseCategory.MODERATED_PROGRAM && batchData.endDate) {
               this.batchData = {
                 content: this.selectedBatchData,
                 enrolled: true,
@@ -1075,7 +1078,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
                               [],
                               {
                                 relativeTo: this.route,
-                                queryParams: { batchId: batchIdData },
+                                queryParams: { batchId: batchData.batchId },
                                 queryParamsHandling: 'merge',
                               })
                               setTimeout(() => {
@@ -1375,20 +1378,18 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   private getResumeDataFromList(type?: string) {
     const resumeCopy = [...this.resumeData]
-    if(resumeCopy && resumeCopy.length) {
-      if (!type) {
-        // tslint:disable-next-line:max-line-length
-        const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
-        return {
-          identifier: lastItem.contentId,
-          mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
-        }
-      }
-      const firstItem = resumeCopy && resumeCopy.length && resumeCopy[0]
+    if (!type) {
+      // tslint:disable-next-line:max-line-length
+      const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
       return {
-        identifier: firstItem.contentId,
-        mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
+        identifier: lastItem.contentId,
+        mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
       }
+    }
+    const firstItem = resumeCopy && resumeCopy.length && resumeCopy[0]
+    return {
+      identifier: firstItem.contentId,
+      mimeType: firstItem.progressdetails && firstItem.progressdetails.mimeType,
     }
   }
 
@@ -1835,7 +1836,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
   }
   programEnrollCall(batchData: any) {
-    const batchId = batchData.batchId
-    this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, batchId)
+    this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, batchData)
   }
 }
