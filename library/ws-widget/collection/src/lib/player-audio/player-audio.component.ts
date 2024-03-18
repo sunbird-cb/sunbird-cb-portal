@@ -25,7 +25,7 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
-  autoplay: true,
+  autoplay: false,
   preload: 'auto',
   fluid: false,
   techOrder: ['html5'],
