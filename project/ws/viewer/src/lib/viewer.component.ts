@@ -150,6 +150,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     })
 
     this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data: any) => {
+      let sideNavBarDrawerState:any = document.getElementById('side-nav-drawer-state');
       if (data) {
         if (this.isMobile) {
           this.sideNavBarOpened = false
@@ -158,10 +159,16 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.sideNavBarOpened = true
           this.viewerHeaderSideBarToggleFlag = data
         }
-
+        if(sideNavBarDrawerState) {
+          sideNavBarDrawerState.style.display = 'block';
+        }
+        
       } else {
         this.sideNavBarOpened = false
         this.viewerHeaderSideBarToggleFlag = data
+        if(sideNavBarDrawerState) {
+          sideNavBarDrawerState.style.display = 'none';
+        }
       }
 
     })

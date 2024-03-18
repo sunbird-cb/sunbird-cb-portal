@@ -56,6 +56,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   videoEnd = false
   timerInterval: any
   video: any
+  replayVideoFlag = false;
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
@@ -377,6 +378,12 @@ export class PlayerVideoComponent extends WidgetBaseComponent
 
   closeAutoPlay() {
     this.videoEnd = false
+    this.replayVideoFlag = true;    
+    clearInterval(this.timerInterval)
+  }
+
+  replayVideo() {
+    this.replayVideoFlag = false;
     const videoTag: any = document.getElementById('videoTag') || document.getElementById('realvideoTag')
     if (videoTag) {
       videoTag.style.filter = 'blur(0px)'
@@ -385,6 +392,8 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     if (autoPlayVideo) {
       autoPlayVideo.style.opacity = '1'
     }
-    clearInterval(this.timerInterval)
+    if(this.player) {
+      this.player.play()
+    }
   }
 }

@@ -122,6 +122,11 @@
   ::ng-deep .mat-sidenav  {
     display: none !important;
   }
+
+  .mat-drawer-content {
+    overflow: auto !important;
+    overflow-y: hidden !important;
+  }
 }
 
 ::-webkit-scrollbar {

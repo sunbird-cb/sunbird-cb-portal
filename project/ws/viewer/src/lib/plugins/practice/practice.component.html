@@ -147,7 +147,7 @@
             <div class="flex flex-row">
                 <div>
                   <p class="mat-subheading-1">
-                    {{ 'playerbrief.questions' | translate }}
+                    {{ 'playerbrief.questions' | translate | titlecase}}
                   </p>
                 </div>
                 <div class="question-info">
@@ -213,7 +213,7 @@
             </div>
           </div>
           <div class="seperate-text">
-            <span>{{ 'practiceoverview.questions' | translate }}</span>
+            <span>{{ 'practiceoverview.questions' | translate | titlecase}}</span>
           </div>
           <!-- <div class="flex flex-row justify-between">
 
@@ -443,22 +443,35 @@
                   </div> -->
                 </div>
               </div>
-              <div class="seperate-text">
-                <span>{{'playerbrief.questions' | translate | titlecase}}</span><span><img (click)="showToolTip=!showToolTip" class="question-info" src="assets/icons/final-assessment/question_info.svg"/></span>
-                <!-- <div class="question-info">
-                  <img src="assets/icons/final-assessment/question_info.svg"/>
-                </div>
-               
-              </div> -->
-              <div class="info-hover" *ngIf="showToolTip">
-                <div class="info-tooltip-container">
-                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{'playerbrief.answered' | translate}}</span></div>
-                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{'playerbrief.notAnswered' | translate}}</span></div>
-                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{'playerbrief.flagged' | translate}}</span></div>
+              <div class="outer-border-box" id="toolTipSection">
+                <div class="label-source-box">
+                  <span class="box-title">{{'playerbrief.questions' | translate | titlecase}} 
+                    <img (click)="showToolTip=!showToolTip" class="question-info"  src="assets/icons/final-assessment/question_info.svg"/>
+                  </span>               
+                  <div class="info-hover" id="infoToolTip" *ngIf="showToolTip">
+                    <div class="info-tooltip-container">
+                        <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{'playerbrief.answered' | translate}}</span></div>
+                        <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{'playerbrief.notAnswered' | translate}}</span></div>
+                        <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{'playerbrief.flagged' | translate}}</span></div>
+                    </div>
+                  </div>   
                 </div>
               </div>
+              <!-- <div class="seperate-text" id="toolTipSection">
+                <span>{{'playerbrief.questions' | translate | titlecase}}</span>
+                <span>
+                <img (click)="showToolTip=!showToolTip" class="question-info"  src="assets/icons/final-assessment/question_info.svg"/>
+                <div class="info-hover" id="infoToolTip" *ngIf="showToolTip">
+                  <div class="info-tooltip-container">
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{'playerbrief.answered' | translate}}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{'playerbrief.notAnswered' | translate}}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{'playerbrief.flagged' | translate}}</span></div>
+                  </div>
+                </div>
               
-          </div>
+              </span>            
+              
+          </div> -->
             
           </div>   
           <div [ngClass]="!expandFalse ? 'my-2':''">
