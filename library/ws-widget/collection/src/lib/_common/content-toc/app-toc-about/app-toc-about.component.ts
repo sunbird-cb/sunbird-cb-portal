@@ -195,12 +195,22 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
 
-        if (this.summaryElem.nativeElement.offsetHeight > 72) {
-          this.summary.ellipsis = true
-        }
+        if (!this.isMobile) {
+          if (this.summaryElem.nativeElement.offsetHeight > 72) {
+            this.summary.ellipsis = true
+          }
 
-        if (this.descElem.nativeElement.offsetHeight > 72) {
-          this.description.ellipsis = true
+          if (this.descElem.nativeElement.offsetHeight > 72) {
+            this.description.ellipsis = true
+          }
+        } else {
+          if (this.summaryElem.nativeElement.offsetHeight > 48) {
+            this.summary.ellipsis = true
+          }
+
+          if (this.descElem.nativeElement.offsetHeight > 48) {
+            this.description.ellipsis = true
+          }
         }
 
         if (this.tagsElem && this.tagsElem.nativeElement.offsetHeight > 64) {
