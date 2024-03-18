@@ -91,16 +91,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
-<<<<<<< HEAD
-import { HeaderModule } from './header/header.module';
-import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
-import { SocialLinkComponent } from './component/social-link/social-link.component';
-import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component';
-import { AppLogoComponent } from './component/app-logo/app-logo.component';
-import { NoDataComponent } from './component/no-data/no-data.component';
-import { SurveyPocComponent } from './component/survey-poc/survey-poc.component';
-
-=======
 import { HeaderModule } from './header/header.module'
 import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
 import { SocialLinkComponent } from './component/social-link/social-link.component'
@@ -108,7 +98,7 @@ import { FooterSectionComponent } from './component/app-footer/footer-section/fo
 import { AppLogoComponent } from './component/app-logo/app-logo.component'
 import { ProfileV3Module } from '@ws/app/src/lib/routes/profile-v3/profile-v3.module'
 import { NoDataComponent } from './component/no-data/no-data.component'
->>>>>>> bf1bae27c7d537ff076cb55211dd9b654e4354d8
+import { SurveyPocComponent } from './component/survey-poc/survey-poc.component'
 
 @Injectable()
 export class HammerConfig extends GestureConfig {

@@ -86,7 +86,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data:any) => {
+    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data: any) => {
         this.tocConfig = data
     })
     if (this.htmlContent && this.htmlContent.identifier) {
@@ -113,7 +113,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     // console.log('this.ticks: ', this.ticks)
     this.raiseRealTimeProgress()
     // this.store.clearAll()
-    if(this.tocConfigSubscription){
+    if (this.tocConfigSubscription) {
       this.tocConfigSubscription.unsubscribe()
     }
   }
