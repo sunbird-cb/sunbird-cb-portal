@@ -449,7 +449,9 @@ export class WidgetContentService {
     if (enrolledCourseData) {
       if (enrolledCourseData.content.courseCategory ===  NsContent.ECourseCategory.BLENDED_PROGRAM ||
         enrolledCourseData.content.courseCategory ===  NsContent.ECourseCategory.INVITE_ONLY_PROGRAM ||
-        enrolledCourseData.content.courseCategory ===  NsContent.ECourseCategory.MODERATED_PROGRAM) {
+        enrolledCourseData.content.courseCategory ===  NsContent.ECourseCategory.MODERATED_PROGRAM ||
+        enrolledCourseData.content.primaryCategory ===  NsContent.EPrimaryCategory.BLENDED_PROGRAM ||
+        enrolledCourseData.content.primaryCategory ===  NsContent.EPrimaryCategory.PROGRAM) {
           if (!this.isBatchInProgress(enrolledCourseData.batch)) {
             return this.gotoTocPage(content)
           }

@@ -109,7 +109,7 @@
         <ng-container *ngIf="(courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory) && !contentReadData?.batches && !batchData?.enrolled && !enrollBtnLoading">
           No Batches
         </ng-container>
-        <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM !== contentReadData?.courseCategory">
+        <ng-container *ngIf="courseCategory?.MODERATED_PROGRAM !== contentReadData?.courseCategory && !enrollBtnLoading">
           <ng-container
             *ngIf="!(content?.primaryCategory === primaryCategory.PROGRAM && currentCourseBatchId) && content?.primaryCategory !== primaryCategory.MANDATORY_COURSE_GOAL">
             <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.youAreNotInvited' | translate }}</span>
@@ -121,7 +121,7 @@
             <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!</span>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="!isBatchInProgress && courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory">
+        <ng-container *ngIf="!isBatchInProgress && courseCategory?.MODERATED_PROGRAM === contentReadData?.courseCategory && !enrollBtnLoading">
           <ng-container *ngIf="!isBatchInProgress && currentCourseBatchId && getStartDate !== 'NA'">
             <span class="font-bold shadow-lg text-info-div" i18n>{{ 'apptochome.batchWillStart' | translate }} {{getStartDate}}!</span>
           </ng-container>
