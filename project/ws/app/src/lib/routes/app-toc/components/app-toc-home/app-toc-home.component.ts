@@ -40,6 +40,7 @@ import { RatingService } from '../../../../../../../../../library/ws-widget/coll
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 import { TranslateService } from '@ngx-translate/core'
 import { LoadCheckService } from '../../services/load-check.service'
+import { ResetRatingsService } from './../../services/reset-ratings.service'
 
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
@@ -251,7 +252,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private events: EventService,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService,
-    private handleClaimService: HandleClaimService
+    private handleClaimService: HandleClaimService,
+    private resetRatingsService: ResetRatingsService
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -1599,13 +1601,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   openFeedbackDialog(content: any): void {
     const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
-      width: '770px',
+      width: '768px',
       data: { content, userId: this.userId, userRating: this.userRating },
     })
+
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.getUserRating(true)
         this.getUserEnrollmentList()
+        this.resetRatingsService.setRatingServiceUpdate(true)
       }
     })
   }
@@ -1832,6 +1836,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.resumeDataSubscription.unsubscribe()
     }
   }
+
   programEnrollCall(batchData: any) {
     const batchId = batchData.batchId
     this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, batchId)

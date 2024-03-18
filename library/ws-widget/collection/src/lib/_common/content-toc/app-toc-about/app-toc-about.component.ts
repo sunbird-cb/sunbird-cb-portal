@@ -25,6 +25,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
 import { ReviewComponentDataService } from '../content-services/review-component-data.service'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { ResetRatingsService } from '@ws/app/src/lib/routes/app-toc/services/reset-ratings.service'
 
 import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
 import { CertificateDialogComponent } from '../../certificate-dialog/certificate-dialog.component'
@@ -81,8 +82,13 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private discussUtilitySvc: DiscussUtilsService,
     public router: Router,
     private reviewDataService: ReviewComponentDataService,
-    private handleClaimService: HandleClaimService
-  ) { }
+    private handleClaimService: HandleClaimService,
+    private resetRatingsService: ResetRatingsService
+  ) {
+    this.resetRatingsService.resetRatings$.subscribe((_res: any) => {
+      this.fetchRatingSummary()
+    })
+  }
 
   @Input() condition: any
   @Input() kparray: any
