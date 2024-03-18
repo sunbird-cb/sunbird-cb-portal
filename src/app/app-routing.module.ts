@@ -37,6 +37,7 @@ import { AppTourComponent } from './component/app-tour/app-tour.component'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
+import { SurveyPocComponent } from './component/survey-poc/survey-poc.component'
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
 // 😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵
@@ -994,6 +995,10 @@ const routes: Routes = [
     data: {
       pageId: 'app-tour',
     },
+  },
+  {
+    path: 'surveyml',
+    component: SurveyPocComponent,
   },
   {
     path: '**',
