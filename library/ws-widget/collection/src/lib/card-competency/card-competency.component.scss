@@ -16,7 +16,7 @@
     width: 100%;
     max-width: 344px;
     min-width: 320px;
-    height: 80px;
+    height: 88px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
@@ -47,8 +47,9 @@
         .chip {
             border: 1px solid $text-primary;
             color: $text-primary;
-            line-height: 12px;
+            line-height: 14px;
             padding: 4px 8px;
+            white-space: normal;
         }
     }
 }

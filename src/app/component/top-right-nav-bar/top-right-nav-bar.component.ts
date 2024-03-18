@@ -83,17 +83,8 @@ export class TopRightNavBarComponent implements OnInit {
     this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
       this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res)
     })
-
-    // setTimeout(() => {
-    //   this.callXMLRequest(this.zohoHtml)
-    // }, 2000);
-
   }
-  // ngOnChanges() {}
-  // openDialog(): void {
-  //   this.dialogRef = this.dialog.open(DialogBoxComponent, {
-  //     width: '1000px',
-  //   })
+
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }

@@ -9,6 +9,7 @@ import { NSSearch } from './widget-search.model'
 // tslint:disable
 import _ from 'lodash'
 import {  viewerRouteGenerator } from './viewer-route-util'
+import moment from 'moment'
 // tslint:enable
 
 // TODO: move this in some common place
@@ -444,46 +445,69 @@ export class WidgetContentService {
   }
 
   async getResourseLink(content: any) {
-    let urlData: any
-    let enrolledCourseData: any = this.getEnrolledData(content.identifier)
+    const enrolledCourseData: any = this.getEnrolledData(content.identifier)
     if (enrolledCourseData) {
-      if (enrolledCourseData.completionPercentage  === 100) {
-        return this.gotoTocPage(enrolledCourseData)
+      if (enrolledCourseData.content.courseCategory ===  NsContent.ECourseCategory.BLENDED_PROGRAM ||
+        enrolledCourseData.content.courseCategory ===  NsContent.ECourseCategory.INVITE_ONLY_PROGRAM ||
+        enrolledCourseData.content.courseCategory ===  NsContent.ECourseCategory.MODERATED_PROGRAM ||
+        enrolledCourseData.content.primaryCategory ===  NsContent.EPrimaryCategory.BLENDED_PROGRAM ||
+        enrolledCourseData.content.primaryCategory ===  NsContent.EPrimaryCategory.PROGRAM) {
+          if (!this.isBatchInProgress(enrolledCourseData.batch)) {
+            return this.gotoTocPage(content)
+          }
+          const data =  await this.checkForDataToFormUrl(content, enrolledCourseData)
+          return data
+      }  {
+        const data =  await this.checkForDataToFormUrl(content, enrolledCourseData)
+        return data
       }
-      if (enrolledCourseData.lrcProgressDetails && enrolledCourseData.lrcProgressDetails.mimeType) {
-        enrolledCourseData  = {
-          ...enrolledCourseData,
-          identifier: enrolledCourseData.collectionId,
-          primaryCategory: enrolledCourseData.content.primaryCategory,
-          name: enrolledCourseData.content.name,
-        }
-        return this.getResourseDataWithData(enrolledCourseData,
-                                            enrolledCourseData.lastReadContentId,
-                                            enrolledCourseData.lrcProgressDetails.mimeType)
-      }
-        if (enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId) {
-          const doId = enrolledCourseData.firstChildId || enrolledCourseData.lastReadContentId
-          const responseData = await this.fetchProgramContent(doId).toPromise().then(async (res: any) => {
-            if (res && res.result && res.result.content) {
-              const contentData: any = res.result.content
-              enrolledCourseData  = {
-                ...enrolledCourseData,
-                identifier: enrolledCourseData.collectionId,
-                primaryCategory: enrolledCourseData.content.primaryCategory,
-                name: enrolledCourseData.content.name,
-              }
-              urlData =  this.getResourseDataWithData(enrolledCourseData, contentData.identifier, contentData.mimeType)
-              if (urlData) {
-                return urlData
-              }
-            }
-          })
-          return responseData ? responseData : this.gotoTocPage(content)
-        }
-          return this.gotoTocPage(content)
 
     }
-      return this.gotoTocPage(content)
+    return this.gotoTocPage(content)
+
+  }
+  async checkForDataToFormUrl(content: any, enrollData: any) {
+    let urlData: any
+    if (enrollData.completionPercentage  === 100) {
+      return this.gotoTocPage(enrollData)
+    }
+    if (enrollData.lrcProgressDetails && enrollData.lrcProgressDetails.mimeType) {
+      const modifyEnrollData  = {
+        ...enrollData,
+        identifier: enrollData.collectionId,
+        primaryCategory: enrollData.content.primaryCategory,
+        name: enrollData.content.name,
+      }
+      if (modifyEnrollData.lastReadContentId) {
+        return this.getResourseDataWithData(modifyEnrollData,
+                                            enrollData.lastReadContentId, enrollData.lrcProgressDetails.mimeType)
+      }
+      if (modifyEnrollData.firstChildId) {
+        return this.getResourseDataWithData(modifyEnrollData,
+                                            enrollData.firstChildId,
+                                            enrollData.lrcProgressDetails.mimeType)
+      }
+    }
+      if (enrollData.firstChildId || enrollData.lastReadContentId) {
+        const doId = enrollData.firstChildId || enrollData.lastReadContentId
+        const responseData = await this.fetchProgramContent(doId).toPromise().then(async (res: any) => {
+          if (res && res.result && res.result.content) {
+            const contentData: any = res.result.content
+            const modifyEnrollData  = {
+              ...enrollData,
+              identifier: enrollData.collectionId,
+              primaryCategory: enrollData.content.primaryCategory,
+              name: enrollData.content.name,
+            }
+            urlData =  this.getResourseDataWithData(modifyEnrollData, contentData.identifier, contentData.mimeType)
+            if (urlData) {
+              return urlData
+            }
+          }
+        })
+        return responseData ? responseData : this.gotoTocPage(content)
+      }
+        return this.gotoTocPage(content)
 
   }
 
@@ -512,5 +536,19 @@ export class WidgetContentService {
       urlData.queryParams = { ...urlData.queryParams, planType: 'cbPlan', endDate: content.endDate }
     }
     return urlData
+  }
+  isBatchInProgress(batchData: any) {
+    // if (this.content && this.content['batches']) {
+    // const batches = this.content['batches'] as NsContent.IBatch
+    if (batchData && batchData.endDate) {
+      const now = moment().format('YYYY-MM-DD')
+      const startDate = moment(batchData.startDate).format('YYYY-MM-DD')
+      const endDate = batchData.endDate ? moment(batchData.endDate).format('YYYY-MM-DD') : now
+          return (
+            // batch.status &&
+            moment(startDate).isSameOrBefore(now)
+            && moment(endDate).isSameOrAfter(now)
+          )
+    } return true
   }
 }

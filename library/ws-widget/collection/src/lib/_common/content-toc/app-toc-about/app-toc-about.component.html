@@ -195,7 +195,7 @@
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1 font-bold">{{ 'apptocsinglepage.summary' | translate }}</div>
-            <div [ngClass]="{'desc-ellipsis': summary.ellipsis}" #summaryElem>
+            <div [ngClass]="{'mob-desc-ellipsis': summary.ellipsis && isMobile, 'desc-ellipsis': summary.ellipsis && !isMobile}" #summaryElem>
                 <span class="mob-text">{{ handleCapitalize(content?.description) }}</span>
                 <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="summary.viewLess"
                     (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
@@ -221,7 +221,7 @@
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1">{{ 'apptocsinglepage.description' | translate }}</div>
-            <div class="desc" [ngClass]="{'desc-ellipsis': description.ellipsis}" #descElem>
+            <div class="desc" [ngClass]="{'mob-desc-ellipsis': description.ellipsis}" #descElem>
                 <span [innerHTML]="content?.instructions" class="mob-text"></span>
                 <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="description.viewLess"
                     (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>

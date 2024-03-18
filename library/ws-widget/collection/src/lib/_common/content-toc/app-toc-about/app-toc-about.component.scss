@@ -152,16 +152,23 @@ $title-line-count: 3;
     white-space: break-spaces;
     position: relative;
     overflow: hidden;
-    text-overflow: clip ;
+    text-overflow: clip;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: $title-line-count;
     word-break: break-word;
 }
 
 .desc-ellipsis {
     @extend .text-ellipsis;
     min-height: $title-line-count * 24px;
+    -webkit-line-clamp: $title-line-count;
+}
+
+$mob-title-line-count: 2;
+.mob-desc-ellipsis {
+    @extend .text-ellipsis;
+    min-height: $mob-title-line-count * 24px;
+    -webkit-line-clamp: $mob-title-line-count;
 }
 
 .tags-ellipsis {
@@ -437,7 +444,7 @@ $title-line-count: 3;
 
 .chip-ellipsis {
     white-space: nowrap;
-    max-width: 92px;
+    max-width: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
