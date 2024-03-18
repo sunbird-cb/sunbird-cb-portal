@@ -997,7 +997,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'surveyml',
+    path: 'surveyml/:id',
     component: SurveyPocComponent,
   },
   {
