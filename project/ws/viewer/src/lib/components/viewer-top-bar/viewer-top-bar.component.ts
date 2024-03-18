@@ -10,6 +10,7 @@ import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
+import { ViewerHeaderSideBarToggleService } from './../../viewer-header-side-bar-toggle.service'
 /* tslint:disable*/
 import _ from 'lodash'
 
@@ -65,6 +66,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
   rootOrgId: any
   canShare = false
   primaryCategory = NsContent.EPrimaryCategory
+  assessmentStart = false;
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -80,6 +82,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
     private ratingSvc: RatingService,
     private loggerSvc: LoggerService,
     private events: EventService,
+    private assessmentStartCheckService: ViewerHeaderSideBarToggleService
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -191,6 +194,14 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
+
+    this.assessmentStartCheckService.visibilityStatus.subscribe((visibilityStatus)=>{
+      if(!visibilityStatus) {
+        this.assessmentStart = true
+      } else {
+        this.assessmentStart = false
+      }
+    })
 
   }
 

@@ -1,11 +1,11 @@
-<div mat-dialog-content>
+<div mat-dialog-content class="confirmation-dialog-container">
     <div class="dialog-header">
         <h1 class="mr-2" mat-dialog-title>{{data.title}}</h1>
-        <mat-icon class="mat-icon notranslate material-icons close-icon" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon>
+        <!-- <mat-icon class="mat-icon notranslate material-icons close-icon" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon> -->
     </div>
-  <p>{{data.message}}</p>
+  <p class="message">{{data.message}}</p>
 </div>
 <div class="flex btn-wrapper" mat-dialog-actions>
-  <button class="blue-border mat-stroked-button mat-accent" mat-button [mat-dialog-close]="false" >{{data.cancelButton}}</button>
+  <button class="blue-border mat-stroked-button mat-accent cancelButton" mat-button [mat-dialog-close]="false" >{{data.cancelButton}}</button>
   <button class="mat-button mat-button-base text-white acceptbtn" mat-button [mat-dialog-close]="data" cdkFocusInitial>{{data.acceptButton}}</button>
 </div>

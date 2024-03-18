@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isMobile">
 <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">
   <div class="flex flex-1">
-    <ws-widget-btn-page-back-nav *ngIf="!isPreview && !needToHide" [widgetData]="{
+    <ws-widget-btn-page-back-nav [assessmentStart]="assessmentStart" *ngIf="!isPreview && !needToHide" [widgetData]="{
         url: isTypeOfCollection
           ? collectionType === 'Playlist'
             ? '/app/playlist/me/' + collectionId
@@ -14,7 +14,7 @@
           : {}
         : {primaryCategory: resourcePrimaryCategory}
       }"></ws-widget-btn-page-back-nav> 
-    <ws-widget-btn-page-back-nav *ngIf="needToHide" [widgetData]="{
+    <ws-widget-btn-page-back-nav  [assessmentStart]="assessmentStart" *ngIf="needToHide" [widgetData]="{
         url: '/app/competencies/home',
         titles: []
       }"></ws-widget-btn-page-back-nav>

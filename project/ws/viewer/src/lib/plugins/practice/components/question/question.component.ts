@@ -142,10 +142,19 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
-    const config = new MatSnackBarConfig()
-    config.panelClass = ['show-answer-alert-class']
-    config.duration = duration
-    this.snackBar.open(primaryMsg, '', config)
+    if (window.innerWidth <= 1200) {
+      const config = new MatSnackBarConfig()
+      config.panelClass = ['show-answer-alert-class']
+      config.duration = duration
+      config.verticalPosition = 'top'
+      config.horizontalPosition = 'center',
+      this.snackBar.open(primaryMsg, '', config)
+    } else {
+      const config = new MatSnackBarConfig()
+      config.panelClass = ['show-answer-alert-class']
+      config.duration = duration
+      this.snackBar.open(primaryMsg, '', config)
+    }
   }
 
 }
