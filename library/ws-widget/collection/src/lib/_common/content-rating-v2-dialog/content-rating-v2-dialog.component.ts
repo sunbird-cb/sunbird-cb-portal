@@ -13,6 +13,7 @@ import { Router } from '@angular/router'
   templateUrl: './content-rating-v2-dialog.component.html',
   styleUrls: ['./content-rating-v2-dialog.component.scss'],
 })
+
 export class ContentRatingV2DialogComponent implements OnInit {
   @Input() ccuserRating: any
   @Input() navigatetoTOC: any
@@ -55,6 +56,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
       }
       this.data = dataobj
     }
+
     if (this.data.userRating) {
       this.feedbackForm.patchValue({
         review: this.data.userRating.review,
@@ -67,6 +69,7 @@ export class ContentRatingV2DialogComponent implements OnInit {
         this.formDisabled = false
       }
     }
+
     if (this.data.content) {
       this.content = this.data.content
     }
@@ -109,7 +112,6 @@ export class ContentRatingV2DialogComponent implements OnInit {
           } else {
             this.showSuccessScreen = true
           }
-          // this.dialogRef.close(true)
         },
         (err: any) => {
           this.loggerSvc.error('ADD OR UPDATE USER RATING ERROR >', err)
@@ -125,19 +127,20 @@ export class ContentRatingV2DialogComponent implements OnInit {
   }
 
   raiseFeedbackTelemetry(feedbackForm: any) {
-      this.events.raiseFeedbackTelemetry(
-        {
-          type: this.data.content.primaryCategory,
-          subType: 'rating',
-          id: this.data.content.identifier || '',
-        },
-        {
+    this.events.raiseFeedbackTelemetry(
+      {
+        type: this.data.content.primaryCategory,
+        subType: 'rating',
+        id: this.data.content.identifier || '',
+      },
+      {
         id: this.data.content.identifier || '',
         rating: this.userRating,
         version: `${this.data.content.version}${''}`,
         // tslint:disable-next-line: no-non-null-assertion
         commenttxt: feedbackForm.value.review || '',
-      })
+      }
+    )
   }
 
   addRating(index: number) {
