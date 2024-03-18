@@ -61,6 +61,7 @@ export class AppTocContentCardV2Component implements OnInit {
   }
   defaultThumbnail = ''
   viewChildren = false
+  primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private events: EventService,
     private dialog: MatDialog,
