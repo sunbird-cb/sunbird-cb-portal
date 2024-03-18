@@ -15,7 +15,6 @@ export class SurveyPocComponent implements OnInit {
 
   ngOnInit() {
     this.solutionId = this.route.snapshot.paramMap.get('id');
-    // console.log('test',65eeb928fa030d0007864e96)
     this.iframeUrl =  this.sanitized.bypassSecurityTrustResourceUrl(this.hostUrl+'/mligot/mlsurvey/'+this.solutionId);
   }
 
