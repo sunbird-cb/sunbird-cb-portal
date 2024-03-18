@@ -180,6 +180,10 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       this.fetchRatingSummary()
       this.loadCompetencies()
     }
+
+    if (this.content) {
+      this.content['subTheme'] = this.getSubThemes()
+    }
   }
 
   ngAfterViewInit(): void {
@@ -249,6 +253,18 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         }
       }
     }
+  }
+
+  getSubThemes(): any[] {
+    const subThemeArr: any[] = []
+    if (this.content && this.content.competencies_v5 && this.content.competencies_v5.length) {
+      this.content.competencies_v5.forEach((_competencyObj: any) => {
+        if (subThemeArr.indexOf(_competencyObj.competencySubTheme) === -1) {
+          subThemeArr.push(_competencyObj.competencySubTheme)
+        }
+      })
+    }
+    return subThemeArr
   }
 
   loadCompetencies(): void {
