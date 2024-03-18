@@ -2,50 +2,43 @@ import { Component, OnDestroy, OnInit, AfterViewInit, AfterViewChecked,
   HostListener, ElementRef, ViewChild, ViewEncapsulation, Input } from '@angular/core'
 import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, Data, Router, NavigationEnd } from '@angular/router'
-import {
-  NsContent,
-  WidgetContentService,
-  WidgetUserService,
-  viewerRouteGenerator,
-  NsPlaylist,
-  NsGoal,
-} from '@sunbird-cb/collection'
+import { FormControl, Validators } from '@angular/forms'
+import { HttpErrorResponse } from '@angular/common/http'
+import { MatDialog, MatSnackBar } from '@angular/material'
+import { TranslateService } from '@ngx-translate/core'
+import { Subscription, Observable } from 'rxjs'
+import { share } from 'rxjs/operators'
+import dayjs from 'dayjs'
+// tslint:disable-next-line
+import _ from 'lodash'
+dayjs.extend(isSameOrBefore)
+import moment from 'moment'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+
+import { NsContent, WidgetContentService, WidgetUserService,
+  viewerRouteGenerator, NsPlaylist, NsGoal } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService,
   LoggerService, MultilingualTranslationsService,
   NsPage, TFetchStatus, TelemetryService,
   UtilityService, WsEvents } from '@sunbird-cb/utils'
-import { FormControl, Validators } from '@angular/forms'
-import { HttpErrorResponse } from '@angular/common/http'
-import { MatDialog, MatSnackBar } from '@angular/material'
-import { Subscription, Observable } from 'rxjs'
-import { share } from 'rxjs/operators'
-
-import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
-import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
-import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
-import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
 
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
 import { AccessControlService } from '@ws/author/src/public-api'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
 import { HandleClaimService } from '@sunbird-cb/collection/src/lib/_common/content-toc/content-services/handle-claim.service'
-import dayjs from 'dayjs'
-// tslint:disable-next-line
-import _ from 'lodash'
-import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
 import { ActionService } from '../../services/action.service'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
-import { TranslateService } from '@ngx-translate/core'
 import { LoadCheckService } from '../../services/load-check.service'
+import { ResetRatingsService } from './../../services/reset-ratings.service'
 
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-dayjs.extend(isSameOrBefore)
-import moment from 'moment'
-
-// import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
+import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/app-toc-dialog-intro-video.component'
+import { ConfirmationModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/confirmation-modal/confirmation-modal.component'
+import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
+import { EnrollModalComponent } from '@sunbird-cb/collection/src/lib/_common/content-toc/enroll-modal/enroll-modal.component'
+import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
 import { environment } from 'src/environments/environment'
 
 export enum ErrorType {
@@ -251,7 +244,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private events: EventService,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService,
-    private handleClaimService: HandleClaimService
+    private handleClaimService: HandleClaimService,
+    private resetRatingsService: ResetRatingsService
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -267,13 +261,17 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (document.getElementById('ratingsDiv')) {
         setTimeout(() => {
           const ratingsDiv = document.getElementById('ratingsDiv') as any
-          this.scrollLimit = ratingsDiv && ratingsDiv.getBoundingClientRect().bottom as any
+          if (ratingsDiv) {
+            this.scrollLimit = ratingsDiv.getBoundingClientRect().bottom as any
+          }
         },         500)
       }
 
       if (document.getElementById('contentContainer')) {
         const contentDiv = document.getElementById('contentContainer') as any
-        this.scrollLimit = contentDiv && contentDiv.getBoundingClientRect().bottom as any
+        if (contentDiv) {
+          this.scrollLimit = contentDiv.getBoundingClientRect().bottom as any
+        }
       }
     })
 
@@ -1071,7 +1069,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.userSvc.resetTime('enrollmentService')
             if (programType === NsContent.ECourseCategory.MODERATED_PROGRAM && batchData.endDate) {
               this.batchData = {
-                content: this.selectedBatchData,
+                content: [batchData],
                 enrolled: true,
               }
                 this.router.navigate(
@@ -1376,7 +1374,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     )
   }
 
-  private getResumeDataFromList(type?: string) {
+  private getResumeDataFromList(type?: string): any | void {
     const resumeCopy = [...this.resumeData]
     if (!type) {
       // tslint:disable-next-line:max-line-length
@@ -1602,13 +1600,15 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   openFeedbackDialog(content: any): void {
     const dialogRef = this.dialog.open(ContentRatingV2DialogComponent, {
-      width: '770px',
+      width: '768px',
       data: { content, userId: this.userId, userRating: this.userRating },
     })
+
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.getUserRating(true)
         this.getUserEnrollmentList()
+        this.resetRatingsService.setRatingServiceUpdate(true)
       }
     })
   }
@@ -1835,6 +1835,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.resumeDataSubscription.unsubscribe()
     }
   }
+
   programEnrollCall(batchData: any) {
     this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, batchData)
   }
