@@ -11,7 +11,7 @@ export class SurveyPocComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('test')
+    // console.log('test')
   }
 
 }
