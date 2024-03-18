@@ -44,7 +44,7 @@ export class AppTocService {
   setBatchDataSubject: Subject<any> = new Subject()
   getSelectedBatch: Subject<any> = new Subject()
   setWFDataSubject: Subject<any> = new Subject()
-  resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
+  resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<any>()
   private showSubtitleOnBanners = false
   private canShowDescription = false
   resumeDataSubscription: Subscription | null = null
@@ -60,7 +60,13 @@ export class AppTocService {
   contentLoader$ = this.contentLoader.asObservable()
   public hashmap: any = {}
 
-  constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) { }
+  constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) {
+    // this resume data subscription is for on load
+    this.resumeDataSubscription = this.resumeData.subscribe(
+      (_dataResult: any) => {
+
+      })
+   }
 
   get subtitleOnBanners(): boolean {
     return this.showSubtitleOnBanners

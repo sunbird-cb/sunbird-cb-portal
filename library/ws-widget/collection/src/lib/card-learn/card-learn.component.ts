@@ -144,18 +144,27 @@ export class CardLearnComponent extends WidgetBaseComponent
       },
     }
 
+    if (this.configSvc && this.configSvc.unMappedUser &&
+      this.configSvc.unMappedUser.profileDetails &&
+      !this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+      moderatedCoursesRequestBody.request.filters = {
+        ...moderatedCoursesRequestBody.request.filters,
+        'secureSettings.isVerifiedKarmayogi': 'No',
+      }
+    }
     this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
       let contentList = []
       if (results && results.result && results.result.content && results.result.content.length) {
-        if (this.configSvc && this.configSvc.unMappedUser &&
-               this.configSvc.unMappedUser.profileDetails &&
-               this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
-          contentList = results.result.content
-        } else {
-          contentList = results.result.content.filter((ele: any) => {
-            return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
-          })
-        }
+        // if (this.configSvc && this.configSvc.unMappedUser &&
+        //        this.configSvc.unMappedUser.profileDetails &&
+        //        this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+        //   contentList = results.result.content
+        // } else {
+        //   contentList = results.result.content.filter((ele: any) => {
+        //     return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
+        //   })
+        // }
+        contentList = results.result.content
       }
       this.showModeratedCourseTab = Boolean(contentList.length > 0)
     })
