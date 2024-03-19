@@ -243,9 +243,9 @@
                   !isQuestionAttempted(question?.questionId) &&
                   currentTheme !== 'black-theme'
         -->
-        <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1">
+        <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1 question-box-auto-height">
           <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
-          <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box"
+          <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box quest_num_box"
             *ngIf="fetchingQuestionsStatus === 'done'">
             <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
               <div (click)="scroll(i + 1)" [ngClass]="{
@@ -277,11 +277,11 @@
             </div>
           </div>
         </div>
-        <div class="final-submit" *ngIf="(currentQuestionIndex + 1) === totalQCount" (click)="proceedToSubmit()">
+        <!-- <div class="final-submit" *ngIf="(currentQuestionIndex + 1) === totalQCount" (click)="proceedToSubmit()">
            <div class="final-submit-cta">
               <img src="assets/icons/final-assessment/correct_arrow.svg"> <span class="cta-label">{{ 'practiceoverview.finishAssessment' | translate }}</span>
            </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -529,7 +529,7 @@
 
             <div *ngIf="!isSubmitted && viewState === 'attempt' && !expandFalse"  class="flex flex-1">
               <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
-              <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box"
+              <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box quest_num_box_mobile"
                 *ngIf="fetchingQuestionsStatus === 'done'">
                 <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
                   <div (click)="scroll(i + 1)" [ngClass]="{

@@ -1,6 +1,6 @@
 <mat-card *ngIf="!(question?.questionType === 'mtf' || question?.questionType === 'ftb')"
   class="flex flex-1 respo margin-bottom-m no-shadow">
-  <div class="flex flex-column width-100">
+  <div class="flex flex-column width-100 mobile-responsive-question-container">
     <div class="flex flex-row width-100 justify-between">
       <div>
         <p class="margin-bottom-m">
@@ -104,7 +104,7 @@
 <!-- created a duplicate as design changed -->
 <mat-card *ngIf="(question?.questionType === 'mtf' || question?.questionType === 'ftb')"
   class="flex flex-1 respo margin-bottom-m no-shadow">
-  <div class="flex flex-column width-100">
+  <div class="flex flex-column width-100 mobile-responsive-question-container">
   <!-- <div class="mtf-flag">
     <button aria-label="flag" i18n-aria-label mat-icon-button (click)="markQuestion()" class="rounded-flag">
       <mat-icon *ngIf="!isQuestionMarked()" matTooltip="{{'playerbrief.flagToolTip' | translate}}">outlined_flag</mat-icon>

@@ -24,8 +24,17 @@ export class ResultComponent implements OnChanges {
   mode = 'determinate'
   value = 45
   showText = 'Rating'
+  isMobile = false;
   constructor(private langtranslations: MultilingualTranslationsService) {
 
+  }
+
+  ngOnInit() {
+    if (window.innerWidth < 768) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
   }
 
   ngOnChanges() {

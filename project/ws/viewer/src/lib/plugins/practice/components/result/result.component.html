@@ -166,7 +166,7 @@
             <div class="stats-label">
               <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
               <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
-              <div class="ml-2"> {{'playerbrief.totalQuestions' | translate}}: </div>
+              <div class="ml-2"> {{'practiceoverview.totalQuestions' | translate}} </div>
             </div>
             <div class="stats-label">
               <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
@@ -272,7 +272,6 @@
 <ng-template #incorrectDetail let-data="data" >
   <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data,'wrong')">
     <div class="flex">
-      <!-- <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon> -->
       <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
     </div>
@@ -285,7 +284,6 @@
 <ng-template #detail let-data="data" >
   <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data,'blank')">
     <div class="flex">
-      <!-- <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon> -->
       <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
     </div>
@@ -297,8 +295,6 @@
 <ng-template #testdetail let-data="data" >
   <mat-card class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" (click)="getQuestionCount(data,'answer')">
     <div class="flex">
-      <!-- <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon> -->
-      <!-- <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs"> -->
       <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
     </div>
