@@ -16,7 +16,7 @@
     width: 100%;
     max-width: 344px;
     min-width: 320px;
-    height: 88px;
+    height: 92px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
@@ -38,9 +38,10 @@
     position: relative;
     top: 4px;
     height: inherit;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 
     &>div {
-        padding: 8px 16px 16px 16px;
+        padding: 12px 16px 16px 16px;
     }
 
     .chip-container {
