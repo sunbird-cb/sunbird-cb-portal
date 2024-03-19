@@ -140,9 +140,9 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.renderer.listen('window', 'click', (event) => {
       let infoToolTip:any = document.getElementById('toolTipSection');
-      if(!infoToolTip.contains(event.target)) {
+      if(infoToolTip && !infoToolTip.contains(event.target)) {
         this.showToolTip = false;
-      }      
+      }
     });
   }
 
@@ -875,7 +875,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
       },         5000)
     }
-    
+
     this.isSubmitted = true
     this.ngOnDestroy()
     if (!this.quizJson.isAssessment) {

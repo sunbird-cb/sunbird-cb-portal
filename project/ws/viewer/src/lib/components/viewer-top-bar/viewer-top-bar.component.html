@@ -13,7 +13,7 @@
           ? {}
           : {}
         : {primaryCategory: resourcePrimaryCategory}
-      }"></ws-widget-btn-page-back-nav> 
+      }"></ws-widget-btn-page-back-nav>
     <ws-widget-btn-page-back-nav  [assessmentStart]="assessmentStart" *ngIf="needToHide" [widgetData]="{
         url: '/app/competencies/home',
         titles: []
@@ -47,12 +47,12 @@
               <ws-widget-skeleton-loader [width]="'30%'" [height]="'16px'"  [bindingClass]="'rounded mb-2'"></ws-widget-skeleton-loader>
             </span>
           </div>
-  
+
          <span class="mat-body-2  ws-mat-white-text">
            <ws-widget-skeleton-loader [width]="'20px'" [height]="'16px'"  [bindingClass]="'rounded mb-2'"></ws-widget-skeleton-loader>
           </span>
         </div>
-  
+
         <ws-widget-skeleton-loader [width]="'100%'" [height]="'4px'"  [bindingClass]="'rounded mb-2'"></ws-widget-skeleton-loader>
       </div>
     </ng-container>
@@ -75,7 +75,7 @@
         <span> {{'apptocsinglepage.editRating' | translate}} </span>
       </ng-container>
     </div>
-    <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
+    <div (click)="onClickOfShare()" *ngIf="canShare" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
       <mat-icon class="blue-color">share</mat-icon>
       <span class="blue-color">{{'apptocsinglepage.share' | translate}}</span>
     </div>
@@ -84,7 +84,7 @@
 </ng-container>
 
 <ng-container *ngIf="isMobile">
-  <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">   
+  <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">
     <div class="flex justify-around items-end width-100">
       <div class="flex flex-1 flex-col  margin-right-l progress-container">
         <div class="flex flex-row justify-between w-full ws-mat-black-text">
@@ -92,10 +92,10 @@
             <span class="mat-body-2 mr-2">{{'playerbrief.items' | translate}} ({{currentDataFromEnrollList?.progress}}/{{currentDataFromEnrollList?.leafNodesCount}})</span>
             <mat-icon class="cursor-pointer ws-mat-black-text infoIcon" matTooltip="{{'playerbrief.topProgress' | translate}}">info_outline</mat-icon>
           </div>
-  
+
          <span class="mat-body-2  ws-mat-black-text"> {{currentDataFromEnrollList?.completionPercentage}}%</span>
         </div>
-  
+
          <ws-widget-content-progress
            [contentId]="currentDataFromEnrollList?.identifier" [progress]="currentDataFromEnrollList?.completionPercentage" [progressType]="'percentage'" [customClassName]="'viewer-progress'">
          </ws-widget-content-progress>
@@ -106,7 +106,7 @@
           <ng-container *ngIf="!userRating">
             <span class="mr-1 blue-color">{{'apptocsinglepage.rateNow' | translate}}</span>
             <!-- <span class="lowercase">
-    
+
               <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
                 {{content?.primaryCategory}}
               </ng-container>
@@ -120,7 +120,7 @@
             <span> {{'apptocsinglepage.editRating' | translate}}  </span>
           </ng-container>
         </div>
-      </div>     
+      </div>
       <!-- <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
         <mat-icon class="blue-color">share</mat-icon>
       </div> -->
