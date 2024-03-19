@@ -99,11 +99,7 @@
       </div>
       <ng-container *ngIf="contentMIMEType !== 'application/vnd.sunbird.questionset'">
         <div class="flex nexPrevContainerMobile">
-          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status === 2 && activatedRoute?.snapshot?.queryParams?.batchId">
-            <div class="completed blue-color">
-            <img src="assets/icons/final-assessment/correct_arrow.svg"/><span>{{ 'playerbrief.completed' | translate }}  </span>  
-            </div>
-          </ng-container>
+         
           <a mat-icon-button class="margin-left-16" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
             accesskey="<">
@@ -116,6 +112,11 @@
             queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
               <span class="mat-body-2 font-bold-imp">{{ 'playerbrief.markAsComplete' | translate }}</span>
             </a>
+          </ng-container>
+          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status === 2 && activatedRoute?.snapshot?.queryParams?.batchId">
+            <div class="completed blue-color">
+            <img src="assets/icons/final-assessment/correct_arrow.svg"/><span>{{ 'playerbrief.completed' | translate }}  </span>  
+            </div>
           </ng-container>
          
           <!-- <a  mat-icon-button class="margin-left-16 width-auto text-center blue-rounded-btn"  *ngIf="contentMIMEType === 'application/pdf'">
