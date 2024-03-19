@@ -1,24 +1,21 @@
 <div [ngClass]="mobileTopHeaderVisibilityStatus ? 'mobile-download-app-top-header' : 'mobile-download-app-without-top-header'" *ngIf="mobileTopHeaderVisibilityStatus">
-        <ng-container>
-        <div class="cross-mobile-download-app" (click)="hideMobileTopHeader()">
-            <span>X</span>
-        </div>
-        <div class="kb-symbol">
-            <img src="/assets/icons/top-nav/KB-Symbol_icon.svg">
-        </div>
-        <div class="mobile-download-app-desc">
-            <p class="mobile-download-app-desc-heading">iGot Karmayogi</p>
-            <p class="mobile-download-app-desc-sub-heading">Download the mobile app</p>
-        </div>
-        <div class="flex-1 flex justify-end pr-4">
-            <li class="download-app-chip-top-header" (click)="downloadApp()">
-                <span>Download App </span>
-            </li>
-        </div>
-    </ng-container>
+    <div class="cross-mobile-download-app" (click)="hideMobileTopHeader()">
+        <span>X</span>
+    </div>
+    <div class="kb-symbol">
+        <img src="/assets/icons/top-nav/KB-Symbol_icon.svg">
+    </div>
+    <div class="mobile-download-app-desc">
+        <p class="mobile-download-app-desc-heading">iGot Karmayogi</p>
+        <p class="mobile-download-app-desc-sub-heading">Download the mobile app</p>
+    </div>
+    <div class="flex-1 flex justify-end pr-4">
+        <li class="download-app-chip-top-header" (click)="downloadApp()">
+            <span>Download App </span>
+        </li>
+    </div>
 </div>
 <ws-app-nav-bar *ngIf="isNavBarRequired" [ngClass]="mobileTopHeaderVisibilityStatus ? 'top-nav-bar':'top-nav-bar-without-mobile-header'" [mode]="mode" [headerFooterConfigData]="headerFooterConfigData"></ws-app-nav-bar>
 <div *ngIf="showHubs" [ngClass]="mobileTopHeaderVisibilityStatus ? 'height-on-top':'height-on-top-without-mobile-header'">
-    <ws-widget-grid-layout [widgetData]="widgetData">
-    </ws-widget-grid-layout>
+    <ws-widget-grid-layout [widgetData]="widgetData"></ws-widget-grid-layout>
 </div>
