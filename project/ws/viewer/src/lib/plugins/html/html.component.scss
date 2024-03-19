@@ -67,9 +67,9 @@
   
   @media only screen and (max-width:469px) {
     width: 100%;
-    top: 10px;
-    left: 10px;
-    right: 10px;
+    top: 30px;
+    left: 0px;
+    right: 0px;
   }
 }
 .play-btn {
@@ -88,4 +88,14 @@
 
 .fw-700 {
   font-weight: 700;
+}
+
+
+@media screen and (min-width: 280px) and (max-width: 912px) { 
+  .html-viewer-container {
+    height:166px;
+    box-shadow: none !important;
+    background: rgb(27, 33, 51) !important;
+    padding: 0 !important;
+  }
 }

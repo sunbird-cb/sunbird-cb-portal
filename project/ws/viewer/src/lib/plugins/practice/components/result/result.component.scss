@@ -512,7 +512,7 @@
 
 @media only screen and (max-width: 768px) {
     .box-height {
-        height: calc(100vh - 150px);
+        height: calc(100vh - 100px);
         margin: 0;
     }
     .summary-detail ul li {
@@ -528,7 +528,7 @@
 
     .start-assessment-cta {
         position: fixed;
-        bottom: 6%;
+        bottom: 3%;
         width: 92%;
         justify-content: center;
         // left: 25%;

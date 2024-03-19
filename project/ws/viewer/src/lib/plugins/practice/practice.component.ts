@@ -156,7 +156,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   init() {
 
-    if (window.innerWidth <= 1200) {
+    if (window.innerWidth < 768) {
       this.isMobile = true
     } else {
       this.isMobile = false
@@ -868,13 +868,17 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   async submitQuiz() {
     this.raiseTelemetry('quiz', null, 'submit')
-    if (!this.ePrimaryCategory.PRACTICE_RESOURCE) {
+    if(this.quizJson.timeLimit) {
       this.showOverlay = true
       setTimeout(() => {
         this.showOverlay = false
         this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
       },         5000)
+    } else {
+      this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
     }
+     
+    
 
     this.isSubmitted = true
     this.ngOnDestroy()

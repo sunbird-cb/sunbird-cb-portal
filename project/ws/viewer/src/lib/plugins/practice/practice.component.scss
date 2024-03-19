@@ -494,7 +494,7 @@ $nav-height: 40px;
 
   .fixed-question-control {
     position: fixed;
-    bottom: 6%;
+    bottom: 3%;
     width: 100%;
     background: white;
   }
@@ -782,4 +782,14 @@ $nav-height: 40px;
     font-family: 'Lato';
   }
   
+}
+
+.question-box-auto-height {
+  overflow-y: auto;
+  max-height: calc(100vh - 250px);
+}
+
+.quest_num_box_mobile {
+  overflow-y: auto;
+  height: 130px;
 }
