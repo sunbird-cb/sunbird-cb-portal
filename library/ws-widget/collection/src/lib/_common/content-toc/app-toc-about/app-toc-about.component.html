@@ -77,7 +77,7 @@
 
 <div class="flex flex-col gap-10 my-4 px-4" [class.mt60]="sticky">
     <ng-container *ngIf="content?.completionStatus === 2 || content?.certificateObj?.certData">
-        <div class="certificate-container">
+        <div class="certificate-container" *ngIf="!skeletonLoader">
             <div class="flex flex-row earned-certificate-container">
                 <div class="ribbon"></div>
                 <div class="certificate-background">
@@ -91,7 +91,7 @@
             </div>
         </div>
     
-        <div class="mobile-certificate-container">
+        <div class="mobile-certificate-container" *ngIf="!skeletonLoader">
             <div class="earned-certificate-container">
                 <div class="flex flex-row">
                     <div class="ribbon"></div>
@@ -102,6 +102,10 @@
                 </div>
             </div>
         </div>
+    </ng-container>
+
+    <ng-container *ngIf="skeletonLoader">
+        <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [height]="'148px'"></ws-widget-skeleton-loader>
     </ng-container>
 
     <ng-container *ngIf="fromViewer || router.url.includes('/viewer/pdf/do_')">
@@ -242,9 +246,9 @@
                 </ng-container>
             </div>
             <div class="flex flex-row gap-4">
-                <ws-widget-skeleton-loader [width]="'40%'" [height]="'80px'"
+                <ws-widget-skeleton-loader [width]="'250px'" [height]="'80px'"
                     [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
-                <ws-widget-skeleton-loader [width]="'40%'" [height]="'80px'"
+                <ws-widget-skeleton-loader [width]="'250px'" [height]="'80px'"
                     [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
             </div>
         </div>
