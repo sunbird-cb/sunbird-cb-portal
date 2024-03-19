@@ -184,9 +184,7 @@ export class ShareTocComponent implements OnInit {
     let coursePosterImageUrl = ''
     let courseProvider = ''
     let primaryCategory = ''
-    if (this.configSvc.userProfile) {
-      courseProvider = this.configSvc.userProfile.rootOrgName || ''
-    }
+    courseProvider = this.content.organisation[0] || this.content.source
     if (this.content) {
         courseId = this.content.identifier,
         courseName = this.content.name,
