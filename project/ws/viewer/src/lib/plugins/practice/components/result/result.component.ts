@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core'
 import { NsContent, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { MatAccordion } from '@angular/material/expansion'
@@ -7,7 +7,7 @@ import { MatAccordion } from '@angular/material/expansion'
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
 })
-export class ResultComponent implements OnChanges {
+export class ResultComponent implements OnInit, OnChanges {
   @Input() percentage = 0
   @Input() levelText!: string
   @Input() isPassed = false
@@ -24,7 +24,7 @@ export class ResultComponent implements OnChanges {
   mode = 'determinate'
   value = 45
   showText = 'Rating'
-  isMobile = false;
+  isMobile = false
   constructor(private langtranslations: MultilingualTranslationsService) {
 
   }

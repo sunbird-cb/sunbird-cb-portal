@@ -67,7 +67,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   hierarchyMapData: any
   pathSet: any
   tocConfig: any = null
-  isAssessmentScreen = false;
+  isAssessmentScreen = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -94,10 +94,10 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isMobile = false
     }
 
-    if(window.location.href.includes('practice')) {
-      this.isAssessmentScreen = true;
+    if (window.location.href.includes('practice')) {
+      this.isAssessmentScreen = true
     } else {
-      this.isAssessmentScreen = false;
+      this.isAssessmentScreen = false
     }
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
