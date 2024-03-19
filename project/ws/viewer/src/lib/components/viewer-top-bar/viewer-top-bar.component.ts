@@ -205,6 +205,18 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
       }
     })
 
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
+    }
+
   }
 
   ngOnChanges(props: SimpleChanges) {

@@ -218,7 +218,7 @@
         </a>
       </ng-container>
       <!-- STANDALONE_ASSESSMENT enrolled black -->
-      <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled">
+      <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled && !enrollBtnLoading">
         <a class="flex action-button justify-center resume" [routerLink]="firstResourceLink?.url"
           [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
           {{ 'apptochome.takeTest' | translate }}

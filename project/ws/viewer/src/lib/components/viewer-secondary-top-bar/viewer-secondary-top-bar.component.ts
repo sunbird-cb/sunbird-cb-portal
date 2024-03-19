@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
-// import { NsContent } from '@sunbird-cb/collection'
+import { NsContent } from '@sunbird-cb/collection'
 import { ConfigurationsService, EventService, NsPage, ValueService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
@@ -57,6 +57,8 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   toggleSideBarFlag = true
   enableShare = false
   pdfContentProgressData: any = { status: 1 }
+  canShare = false
+  rootOrgId: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -191,6 +193,18 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
+
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
+    }
   }
 
   updateProgress(status: number, resourceId: any) {
@@ -379,7 +393,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
       } else {
         this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
       }
-      
+
     }
   }
 }

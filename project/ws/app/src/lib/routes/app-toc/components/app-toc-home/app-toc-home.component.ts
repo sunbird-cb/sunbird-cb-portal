@@ -1102,7 +1102,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             //   })
             this.navigateToPlayerPage(batchId)
           }
-          this.enrollBtnLoading = false
+          // this.enrollBtnLoading = false
         }
       )
     }
@@ -1110,6 +1110,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
   navigateToPlayerPage(batchId: string) {
     if (this.content) {
+      this.enrollBtnLoading = true
       const firstPlayableContent = this.contentSvc.getFirstChildInHierarchy(this.content)
         let primaryCategory
         if (this.content.secureSettings !== undefined) {

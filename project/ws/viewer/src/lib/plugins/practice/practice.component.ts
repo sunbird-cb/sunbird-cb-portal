@@ -138,12 +138,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     if (environment.assessmentBuffer) {
       this.assessmentBuffer = environment.assessmentBuffer
     }
-    this.renderer.listen('window', 'click', event => {
-      const infoToolTip: any = document.getElementById('toolTipSection')
-      if (!infoToolTip.contains(event.target)) {
-        this.showToolTip = false
+    this.renderer.listen('window', 'click', (event) => {
+      let infoToolTip:any = document.getElementById('toolTipSection');
+      if(infoToolTip && !infoToolTip.contains(event.target)) {
+        this.showToolTip = false;
       }
-    })
+    });
   }
 
   toggleToolTip() {
