@@ -868,7 +868,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   async submitQuiz() {
     this.raiseTelemetry('quiz', null, 'submit')
-    if(this.quizJson.timeLimit) {
+    if (this.quizJson.timeLimit) {
       this.showOverlay = true
       setTimeout(() => {
         this.showOverlay = false
@@ -877,8 +877,6 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
     }
-     
-    
 
     this.isSubmitted = true
     this.ngOnDestroy()
