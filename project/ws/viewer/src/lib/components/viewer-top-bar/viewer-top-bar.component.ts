@@ -11,6 +11,7 @@ import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { ViewerHeaderSideBarToggleService } from './../../viewer-header-side-bar-toggle.service'
+import { ResetRatingsService } from '@ws/app/src/lib/routes/app-toc/services/reset-ratings.service'
 /* tslint:disable*/
 import _ from 'lodash'
 
@@ -82,7 +83,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
     private ratingSvc: RatingService,
     private loggerSvc: LoggerService,
     private events: EventService,
-    private assessmentStartCheckService: ViewerHeaderSideBarToggleService
+    private assessmentStartCheckService: ViewerHeaderSideBarToggleService,
+    private resetRatingsService: ResetRatingsService
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -389,6 +391,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.getUserRating(false)
+        this.resetRatingsService.setRatingServiceUpdate(true)
       }
     })
   }
