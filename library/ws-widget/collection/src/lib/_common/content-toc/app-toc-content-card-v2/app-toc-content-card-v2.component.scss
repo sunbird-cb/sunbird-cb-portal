@@ -285,7 +285,16 @@ span.optional-span {
 :nth-child(1 of .resourceCard) .resource{
   margin-top: 16px !important;
 }
+// fallback css for above 
+.resourceCard:nth-child(1) .resource {
+  margin-top: 16px !important;
+}
+
 :nth-child(1 of .resourceCard) .activeResource{
+  margin-top: 0 !important;
+}
+// fallback css for above 
+.resourceCard:nth-child(1) .activeResource {
   margin-top: 0 !important;
 }
 
