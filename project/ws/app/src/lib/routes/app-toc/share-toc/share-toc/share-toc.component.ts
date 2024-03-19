@@ -184,10 +184,8 @@ export class ShareTocComponent implements OnInit {
     let coursePosterImageUrl = ''
     let courseProvider = ''
     let primaryCategory = ''
-    if (this.configSvc.userProfile) {
-      courseProvider = this.configSvc.userProfile.rootOrgName || ''
-    }
     if (this.content) {
+        courseProvider = this.content.organisation[0] || this.content.source
         courseId = this.content.identifier,
         courseName = this.content.name,
         coursePosterImageUrl = this.content.posterImage || 'assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg',
