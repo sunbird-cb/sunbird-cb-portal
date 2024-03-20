@@ -302,7 +302,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
               NsContent.ECourseCategory.MODERATED_PROGRAM,
               NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
             ].includes(this.content.courseCategory)) {
-              if( this.completedCount === this.leafNodesCount){
+              if (this.completedCount === this.leafNodesCount) {
                 this.showCompletionPopUp()
               } else {
                 this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
@@ -326,7 +326,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     }
   }
 
-  showCompletionPopUp(){
+  showCompletionPopUp() {
     const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
       autoFocus: false,
       data: {

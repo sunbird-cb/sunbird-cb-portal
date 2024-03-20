@@ -143,7 +143,6 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.hierarchyData = contentData.result.content
       this.manipulateHierarchyData()
       this.resetAndFetchTocStructure()
-      debugger
       this.leafNodesCount = contentData.result.content.leafNodesCount
     }
     if (this.collectionId && this.enrollmentList) {
@@ -332,8 +331,6 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
   updateCount(event: any) {
-    debugger
     this.completedCount = event
-    console.log(event,'.............')
   }
 }
