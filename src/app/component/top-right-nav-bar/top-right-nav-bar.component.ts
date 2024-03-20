@@ -89,6 +89,10 @@ export class TopRightNavBarComponent implements OnInit {
     // }, 2000);
 
   }
+
+  ngOnChanges() {
+    this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig
+  }
   // ngOnChanges() {}
   // openDialog(): void {
   //   this.dialogRef = this.dialog.open(DialogBoxComponent, {
