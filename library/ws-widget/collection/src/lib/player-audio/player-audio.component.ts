@@ -25,7 +25,7 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
-  autoplay: false,
+  autoplay: true,
   preload: 'auto',
   fluid: false,
   techOrder: ['html5'],
@@ -52,6 +52,10 @@ export class PlayerAudioComponent extends WidgetBaseComponent
   @ViewChild('audioTag', { static: true }) audioTag!: ElementRef<HTMLAudioElement>
   private player: videoJs.Player | null = null
   private dispose: null | (() => void) = null
+  audioEnd = false
+  timerInterval: any
+  // video: any
+  replayAudioFlag = false
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
@@ -73,7 +77,48 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     if (this.widgetData.url) {
       this.initializePlayer()
     }
+    const audioTag: any =   document.getElementsByTagName('audio')[0]
+    if (audioTag) {
+      audioTag.onended = () => {
+        this.audioEnd = true
+        const audioTagElement: any = document.getElementById('audioTag')
+        const autoPlayAudio: any = document.getElementById('auto-play-audio')
+        if (audioTagElement) {
+          if (autoPlayAudio) {
+            autoPlayAudio.style.opacity = '0.8'
+          }
+          audioTagElement.style.filter = 'blur(2px)'
+
+        }
+        let counter = 1
+        this.timerInterval =   setInterval(() => {
+            if (counter <= 30) {
+                this.updateProgress(counter)
+            }
+            if (counter > 30) {
+              if (audioTag) {
+                audioTag.style.filter = 'blur(0px)'
+              }
+              if (autoPlayAudio) {
+                autoPlayAudio.style.opacity = '1'
+              }
+              this.viewerSvc.autoPlayNextAudio.next(true)
+              counter = 0
+              clearInterval(this.timerInterval)
+            }
+            counter = counter + 1
+          },                               1000)
+
+      }
+    }
   }
+
+  updateProgress(value: any) {
+    const progress: any = document.querySelector('.circular-progress')
+    progress.style.setProperty('--percentage', `${value * 12}deg`)
+    // progress.innerText = `${value}%`
+  }
+  
   ngOnDestroy() {
     if (this.player) {
       this.player.dispose()
@@ -183,6 +228,27 @@ export class PlayerAudioComponent extends WidgetBaseComponent
       const url = this.viewerSvc.getPublicUrl(content.posterImage || content.appIcon)
       this.widgetData.posterImage = url
       await this.contentSvc.setS3Cookie(this.widgetData.identifier || '').toPromise()
+    }
+  }
+
+  closeAutoPlay() {
+    this.audioEnd = false
+    this.replayAudioFlag = true
+    clearInterval(this.timerInterval)
+  }
+
+  replayAudio() {
+    this.replayAudioFlag = false
+    const audioTag: any = document.getElementById('audioTag')
+    if (audioTag) {
+      audioTag.style.filter = 'blur(0px)'
+    }
+    const autoPlayVideo: any = document.getElementById('auto-play-audio')
+    if (autoPlayVideo) {
+      autoPlayVideo.style.opacity = '1'
+    }
+    if (this.player) {
+      this.player.play()
     }
   }
 }

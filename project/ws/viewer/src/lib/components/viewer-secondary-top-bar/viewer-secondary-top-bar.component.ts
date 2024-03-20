@@ -108,6 +108,13 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
         }
       }
     })
+    this.viewerSvc.autoPlayNextAudio.subscribe((autoPlayVideoData: any) => {
+      if (autoPlayVideoData) {
+        if (this.isTypeOfCollection && this.nextResourceUrl && this.nextResourceUrlParams && this.nextResourceUrlParams.queryParams) {
+          this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams })
+        }
+      }
+    })
 
     if (window.location.href.includes('/channel/')) {
       this.forChannel = true

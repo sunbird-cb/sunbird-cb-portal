@@ -1,4 +1,35 @@
-<audio #audioTag class="video-js vjs-default-skin vjs-big-play-centered">
+<audio #audioTag class="video-js vjs-default-skin vjs-big-play-centered" autoplay muted id="audioTag">
   <track kind="captions" *ngIf="widgetData.subtitles" [src]="widgetData?.subtitles[0]?.url" srclang="en" label="English"
     default>
 </audio>
+
+<div class="auto-play-audio" id="auto-play-audio" *ngIf="audioEnd">
+  <div class="up-next">
+    <div>Up &nbsp; Next</div>
+  </div>
+  <div class="circular-progress-container">
+    <div class="circular-progress">
+      <div class="play_arrow">
+        <mat-icon>play_arrow</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="cancel-auto-progress" (click)="closeAutoPlay()">
+    <span>Cancel</span>
+  </div>
+</div>
+
+<div class="auto-play-audio" id="auto-play-audio" *ngIf="replayAudioFlag" (click)="replayAudio()">
+  <div class="cursor-pointer">
+  <div class="replay">
+    <div>Replay</div>
+  </div>
+  <div class="circular-progress-container">
+    <div class="circular-progress">
+      <div class="play_arrow">
+        <mat-icon>replay</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
