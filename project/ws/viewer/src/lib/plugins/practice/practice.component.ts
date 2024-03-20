@@ -118,7 +118,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   questionAttemptedCount = 0
   expandFalse = true
   showOverlay = false
-  showToolTip = false 
+  showToolTip = false
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -509,7 +509,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.sideNav.close()
       }
     }
-   
+
     // const questionElement = document.getElementById(`question${qIndex}`)
     // if (questionElement) {
     //   questionElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -1177,8 +1177,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
     }
   }
-  toggleExpandforMobile() {    
-    this.expandFalse = !this.expandFalse;
+  toggleExpandforMobile() {
+    this.expandFalse = !this.expandFalse
   }
 
   ngOnDestroy() {
@@ -1250,5 +1250,4 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     return this.sanitized.bypassSecurityTrustHtml(newText)
   }
 
- 
 }

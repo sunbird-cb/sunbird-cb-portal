@@ -62,7 +62,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   private runnerSubs: Subscription | null = null
   private routerSubs: Subscription | null = null
   public isInFullScreen = false
-  public isMobile = false;
+  public isMobile = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,

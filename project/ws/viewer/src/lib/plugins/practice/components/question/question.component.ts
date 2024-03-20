@@ -55,8 +55,8 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   unTouchedBlank: boolean[] = []
   matchHintDisplay: NSPractice.IOption[] = []
   isMobile = false
-  @Input() mobileQuestionSetExpand:any = false;
-  expandedQuestionSetSubscription:any
+  @Input() mobileQuestionSetExpand: any = false
+  expandedQuestionSetSubscription: any
   constructor(
     // private domSanitizer: DomSanitizer,
     // private elementRef: ElementRef,
@@ -70,7 +70,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     } else {
       this.isMobile = false
     }
-    
+
     this.init()
   }
 

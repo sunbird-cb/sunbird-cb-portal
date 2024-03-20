@@ -122,7 +122,7 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     progress.style.setProperty('--percentage', `${value * 12}deg`)
     // progress.innerText = `${value}%`
   }
-  
+
   ngOnDestroy() {
     if (this.player) {
       this.player.dispose()

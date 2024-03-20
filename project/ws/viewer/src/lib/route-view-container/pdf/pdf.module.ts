@@ -60,7 +60,7 @@ import { RouterModule } from '@angular/router'
     UserContentRatingModule,
     BtnContentFeedbackV2Module,
     PlayerBriefModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     PdfComponent,

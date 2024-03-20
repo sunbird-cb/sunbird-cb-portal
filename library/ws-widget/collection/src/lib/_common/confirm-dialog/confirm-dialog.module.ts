@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core'
     ReactiveFormsModule,
     MatDialogModule,
     MatIconModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     ConfirmDialogComponent,

@@ -28,7 +28,7 @@ import { RouterModule } from '@angular/router'
     MatIconModule,
     RouterModule,
     MatTooltipModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     HtmlComponent,

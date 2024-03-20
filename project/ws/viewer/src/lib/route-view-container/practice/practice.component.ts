@@ -27,7 +27,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
     @Input() isPreviewMode = false
     isTypeOfCollection = false
     collectionId: string | null = null
-    isMobile = false;
+    isMobile = false
     constructor(private activatedRoute: ActivatedRoute) {
         if (this.quizData) {
             this.quizJson.timeLimit = this.quizData.expectedDuration
