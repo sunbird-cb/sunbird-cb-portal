@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnChanges, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component'
 import { TranslateService } from '@ngx-translate/core'
@@ -35,7 +35,7 @@ const rightNavConfig = [
   templateUrl: './top-right-nav-bar.component.html',
   styleUrls: ['./top-right-nav-bar.component.scss'],
 })
-export class TopRightNavBarComponent implements OnInit {
+export class TopRightNavBarComponent implements OnInit, OnChanges {
   @Input() item: any
   @Input() rightNavConfig: any
   dialogRef: any
