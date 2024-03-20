@@ -102,15 +102,19 @@ export class PlayerAudioComponent extends WidgetBaseComponent
               if (autoPlayAudio) {
                 autoPlayAudio.style.opacity = '1'
               }
-              this.viewerSvc.autoPlayNextAudio.next(true)
               counter = 0
-              clearInterval(this.timerInterval)
+              this.clearTimeInterval()
+              this.viewerSvc.autoPlayNextAudio.next(true)
             }
             counter = counter + 1
           },                               1000)
 
       }
     }
+  }
+
+  clearTimeInterval() {
+    clearInterval(this.timerInterval)
   }
 
   updateProgress(value: any) {
@@ -126,7 +130,7 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     if (this.dispose) {
       this.dispose()
     }
-
+    this.clearTimeInterval()
   }
   private initializePlayer() {
     const dispatcher: telemetryEventDispatcherFunction = event => {
