@@ -79,7 +79,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
           if (this.condition && !this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
             this.getKPData('Start again')
           }
-  
+
           if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
             this.getKPData('Start again')
           }
