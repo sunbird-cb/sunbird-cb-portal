@@ -44,20 +44,15 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
      && !this.condition.content.completionPercentage
      || (this.condition.content && this.condition.content.completionPercentage < 100))
       && !this.condition.certData) {
-        // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
-        //   this.getKPData('ACBP')
-        // }
 
         if (this.condition.isAcbpClaim) {
           this.getKPData('ACBP')
         }
 
-        // if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
-        //   this.getKPData('Resume')
-        // }
-
-        if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
-          this.getKPData('Resume')
+        if (this.condition.content.primaryCategory === this.condition.primaryCategory.COURSE) {
+          if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+            this.getKPData('Resume')
+          }
         }
     }
 
@@ -68,7 +63,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
         content.children.length === 0 && !content.artifactUrl.length
       ) &&
       !(content.primaryCategory === this.condition.primaryCategory.COURSE &&
-      !this.condition.batchData.enrolled) &&
+      !this.condition && this.condition.batchData && this.condition.batchData.enrolled) &&
       !(content.primaryCategory === this.condition.primaryCategory.RESOURCE && !content.artifactUrl) &&
       !(content.primaryCategory === this.condition.primaryCategory.MANDATORY_COURSE_GOAL) &&
       !(content.primaryCategory === this.condition.primaryCategory.PROGRAM && this.condition.currentCourseBatchId)) {
@@ -80,16 +75,14 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
           this.btnCategory = 'claim'
         }
 
-        // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
-        //   this.getKPData('ACBP COMPLETED')
-        // }
-
-        if (this.condition && !this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
-          this.getKPData('Start again')
-        }
-
-        if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
-          this.getKPData('Start again')
+        if (this.condition.content.primaryCategory === this.condition.primaryCategory.COURSE) {
+          if (this.condition && !this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
+            this.getKPData('Start again')
+          }
+  
+          if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
+            this.getKPData('Start again')
+          }
         }
       }
     }
@@ -117,20 +110,15 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
       && (this.condition.content && this.condition.content.hasOwnProperty('completionPercentage')
     && !this.condition.content.completionPercentage
     || (this.condition.content && this.condition.content.completionPercentage < 100))) {
-        // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim) {
-        //   this.getKPData('ACBP')
-        // }
 
         if (this.condition.isAcbpClaim) {
           this.getKPData('ACBP')
         }
 
-        // if (!this.condition.isAcbpCourse && !this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
-        //   this.getKPData('Resume')
-        // }
-
-        if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
-          this.getKPData('Resume')
+        if (this.condition.content.primaryCategory === this.condition.primaryCategory.COURSE) {
+          if (!this.condition.isAcbpClaim && !this.condition.monthlyCapExceed) {
+            this.getKPData('Resume')
+          }
         }
       }
 
@@ -141,16 +129,14 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
         this.btnCategory = 'claim'
       }
 
-      // if (this.condition.isAcbpCourse && this.condition.isAcbpClaim && this.condition.isClaimed) {
-      //   this.getKPData('ACBP COMPLETED')
-      // }
+      if (this.condition.content.primaryCategory === this.condition.primaryCategory.COURSE) {
+        if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
+          this.getKPData('Start again')
+        }
 
-      if (!this.condition.isAcbpCourse && !this.condition.monthlyCapExceed) {
-        this.getKPData('Start again')
-      }
-
-      if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
-        this.getKPData('Start again')
+        if (!this.condition.isAcbpCourse && this.condition.monthlyCapExceed && !this.condition.isCompletedThisMonth) {
+          this.getKPData('Start again')
+        }
       }
     }
 
