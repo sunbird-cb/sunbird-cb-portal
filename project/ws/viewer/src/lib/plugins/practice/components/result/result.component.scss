@@ -206,6 +206,7 @@
         font-weight: 400;
         line-height: 16px;
         letter-spacing: 0.25px;
+        font-weight: 700;
     }
 }
 .flex-jc-space-between {
@@ -267,7 +268,7 @@
     display: block;
 }
 .display-ques {
-    padding-top: 16px;
+    // padding-top: 16px;
     margin-bottom: 0;
     font-size: 12px;
     font-weight: 400;
@@ -528,10 +529,14 @@
 
     .start-assessment-cta {
         position: fixed;
-        bottom: 3%;
-        width: 92%;
+        bottom: 0;
+        width: 94%;
         justify-content: center;
-        // left: 25%;
+        padding: 15px;
+        background: #fff;
+        overflow: hidden;
+        right: 0;
+        left: 0;
     }
 
     .quest_btn{

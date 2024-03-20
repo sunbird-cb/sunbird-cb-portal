@@ -51,9 +51,10 @@
   }
 }
 
-.video-player {
+.video-player-desktop {
   width: 100%;
-  height: calc(100vh);
+  height: 100vh;
+  // height: calc(100vh);
   // height: 75vh;
   // @include breakpoint-lt-xl {
   //   height: 80vh;
@@ -70,6 +71,10 @@
   // @include breakpoint-xs {
   //   display: none;
   // }
+}
+
+.video-player-mobile {
+  width: 100%;
 }
 
 .video-player-m {

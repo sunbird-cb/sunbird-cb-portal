@@ -509,6 +509,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         this.sideNav.close()
       }
     }
+
     // const questionElement = document.getElementById(`question${qIndex}`)
     // if (questionElement) {
     //   questionElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -868,7 +869,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   async submitQuiz() {
     this.raiseTelemetry('quiz', null, 'submit')
-    if (this.quizJson.timeLimit) {
+    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
       this.showOverlay = true
       setTimeout(() => {
         this.showOverlay = false
@@ -1176,6 +1177,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       primaryCategory: NsContent.EPrimaryCategory.PRACTICE_RESOURCE,
     }
   }
+  toggleExpandforMobile() {
+    this.expandFalse = !this.expandFalse
+  }
+
   ngOnDestroy() {
     this.clearStorage()
     if (this.attemptSubscription) {
@@ -1244,4 +1249,5 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     newText += `</ul>`
     return this.sanitized.bypassSecurityTrustHtml(newText)
   }
+
 }
