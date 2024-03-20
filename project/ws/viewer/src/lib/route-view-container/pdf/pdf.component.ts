@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { NsContent, NsDiscussionForum } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
@@ -9,7 +9,7 @@ import { PdfScormDataService } from '../../pdf-scorm-data-service'
   templateUrl: './pdf.component.html',
   styleUrls: ['./pdf.component.scss'],
 })
-export class PdfComponent implements OnInit {
+export class PdfComponent implements OnInit, OnDestroy {
   @Input() isFetchingDataComplete = false
   @Input() pdfData: NsContent.IContent | null = null
   @Input() forPreview = false
@@ -61,5 +61,9 @@ export class PdfComponent implements OnInit {
   openPdf() {
     this.playPdfContentFlag = true
     this.pdfScormDataService.handleBackFromPdfScormFullScreen.next(true)
+  }
+
+  ngOnDestroy() {
+    this.pdfScormDataService.handleBackFromPdfScormFullScreen.next(false)
   }
 }

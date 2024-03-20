@@ -494,9 +494,10 @@ $nav-height: 40px;
 
   .fixed-question-control {
     position: fixed;
-    bottom: 3%;
+    bottom: 0%;
     width: 100%;
     background: white;
+    padding:15px 0;
   }
 
   .expand-icon {
