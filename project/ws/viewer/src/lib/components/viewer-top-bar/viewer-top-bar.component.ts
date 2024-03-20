@@ -24,6 +24,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() frameReference: any
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
+  @Output() completedCountOutput = new EventEmitter()
   @Input() leafNodesCount: any
   @Input() content: any
   @Input() hierarchyMapData: any = {}
@@ -248,6 +249,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
       // tslint:disable
       const completedItems = _.filter(this.hierarchyMapData[identifier].leafNodes, r => this.hierarchyMapData[r].completionStatus === 2 || this.hierarchyMapData[r].completionPercentage === 100)
       this.completedCount = completedItems.length
+      this.completedCountOutput.emit(this.completedCount)
       this.overallLeafNodes = _.toInteger(_.get(this.hierarchyMapData[identifier], 'leafNodesCount')) || 1
       // tslint:disable
       this.hierarchyMapData[identifier]['completionPercentage'] = Number(((completedItems.length / this.overallLeafNodes) * 100).toFixed())

@@ -43,6 +43,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   status: TStatus = 'none'
   error: any | null = null
   isNotEmbed = true
+  completedCount: any = 0
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
     widgetSubType: 'errorResolver',
@@ -142,6 +143,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.hierarchyData = contentData.result.content
       this.manipulateHierarchyData()
       this.resetAndFetchTocStructure()
+      this.leafNodesCount = contentData.result.content.leafNodesCount
     }
     if (this.collectionId && this.enrollmentList) {
       const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
@@ -327,5 +329,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
     }
+  }
+  updateCount(event: any) {
+    this.completedCount = event
   }
 }
