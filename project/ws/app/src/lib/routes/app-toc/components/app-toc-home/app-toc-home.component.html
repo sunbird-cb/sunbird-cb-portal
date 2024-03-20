@@ -338,7 +338,7 @@
               <div class="text-sm sm:text-base source-text font-semibold break-words" #contentSource [ngClass]="{'sourceEllipsis': sourceEllipsis}" title="{{content?.source}}">{{ 'cardcontentv2.by' | translate }} {{ content?.source }}</div>
             </ng-container>
           </div>
-          <div class="flex gap-4 items-center ">
+          
             <ng-container *ngIf="skeletonLoader">
               <ws-widget-skeleton-loader [width]="'120px'" [height]="'40px'"
                 [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
@@ -346,22 +346,23 @@
                 [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
             </ng-container>
             <ng-container *ngIf="!skeletonLoader">
-              <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" >
-                <div class="flex flex-row gap-1 items-center">
-                  <mat-icon>grade</mat-icon>
-                  <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
+              <div class="flex gap-4 items-center" *ngIf="content?.averageRating || content?.additionalTags?.length">
+                <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()"  *ngIf="content?.averageRating">
+                  <div class="flex flex-row gap-1 items-center">
+                    <mat-icon>grade</mat-icon>
+                    <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
                 </div>
-                <div class="separator"></div>
-                <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
-              </div>
-              <div class="flex items-center" *ngIf="content?.additionalTags?.length">
-                <div class="most-enrolled-chip text-xs leading-3">
-                  <span *ngIf="content?.additionalTags?.includes('mostTrending')">{{ 'cardcontentv2.mostTrending' | translate }}</span>
-                  <span *ngIf="content?.additionalTags?.includes('mostEnrolled')">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
+                <div class="flex items-center" *ngIf="content?.additionalTags?.length">
+                  <div class="most-enrolled-chip text-xs leading-3">
+                    <span *ngIf="content?.additionalTags?.includes('mostTrending')">{{ 'cardcontentv2.mostTrending' | translate }}</span>
+                    <span *ngIf="content?.additionalTags?.includes('mostEnrolled')">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
+                  </div>
                 </div>
               </div>
             </ng-container>
-          </div>
           <ng-container *ngIf="skeletonLoader">
             <ws-widget-skeleton-loader [width]="'180px'" [height]="'20px'"
               [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
