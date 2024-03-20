@@ -131,15 +131,19 @@ export class PlayerVideoComponent extends WidgetBaseComponent
               if (autoPlayVideo) {
                 autoPlayVideo.style.opacity = '1'
               }
-              this.viewerSvc.autoPlayNextVideo.next(true)
               counter = 0
-              clearInterval(this.timerInterval)
+              this.clearTimeInterval()
+              this.viewerSvc.autoPlayNextVideo.next(true)
             }
             counter = counter + 1
           },                               1000)
 
       }
     }
+  }
+
+  clearTimeInterval() {
+    clearInterval(this.timerInterval)
   }
 
   updateProgress(value: any) {
@@ -155,6 +159,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     if (this.dispose) {
       this.dispose()
     }
+    this.clearTimeInterval()
   }
   private initializeVPlayer() {
     // alert()
