@@ -62,6 +62,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   private runnerSubs: Subscription | null = null
   private routerSubs: Subscription | null = null
   public isInFullScreen = false
+  public isMobile = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -161,6 +162,12 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         }
       }
     })
+
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
   }
   ngOnChanges() {
     // if (this.widgetData !== this.oldData) {

@@ -722,6 +722,159 @@ $nav-height: 40px;
 }
 
 @media only screen and (min-width: 280px) and (max-width: 767px) {
+ 
+
+  .outer-border-box {
+    border-top: 1px solid #d8d8d8;
+  }
+  
+  .label-source-box {
+    padding: 0;
+    margin-top: -0.8em;
+    text-align: center;
+  }
+  
+  .question-info {
+    margin-left:5px;
+    vertical-align: middle;
+  }
+
+  .box-title {
+    background: white none repeat scroll 0 0;
+    padding: 0;
+    font-weight: 700;
+    font-size: 12px;
+    font-family: 'Lato';
+  }
+  
+}
+
+.question-box-auto-height {
+  overflow-y: auto;
+  max-height: calc(100vh - 250px);
+}
+
+.quest_num_box_mobile {
+  overflow-y: auto;
+  height: 130px;
+}
+
+@media only screen and (min-width: 280px) and (max-width: 360px) {
+  .info-hover {
+    display: block;
+    background: rgb(102,102,102);
+    width: 249px;
+    height: 156px;
+    border-radius: 10px;
+    color: #fff;
+    position: absolute;
+    margin-left: -17px;
+    margin-top: 10px;
+    z-index: 1;
+  }
+  .seperate-text span{
+    padding:0 
+  }
+
+  .info-hover::after {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .info-hover::before {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+}
+@media only screen and (min-width: 375px) and (max-width: 375px) {
+  .info-hover {
+    display: block;
+    background: rgb(102,102,102);
+    width: 249px;
+    height: 156px;
+    border-radius: 10px;
+    color: #fff;
+    position: absolute;
+    margin-left: -9px;
+    margin-top: 10px;
+    z-index: 1;
+  }
+  .seperate-text span{
+    padding:0 
+  }
+
+  .info-hover::after {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .info-hover::before {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+}
+@media only screen and (min-width: 390px) and (max-width: 393px) {
+  .info-hover {
+    display: block;
+    background: rgb(102,102,102);
+    width: 249px;
+    height: 156px;
+    border-radius: 10px;
+    color: #fff;
+    position: absolute;
+    margin-left: -2px;
+    margin-top: 10px;
+    z-index: 1;
+  }
+  .seperate-text span{
+    padding:0 
+  }
+
+  .info-hover::after {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .info-hover::before {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+}
+
+@media only screen and (min-width: 411px) and (max-width: 414px) {
   .info-hover {
     display: block;
     background: rgb(102,102,102);
@@ -758,38 +911,42 @@ $nav-height: 40px;
     position: absolute;
     pointer-events: none;
   }
-
-  .outer-border-box {
-    border-top: 1px solid #d8d8d8;
-  }
-  
-  .label-source-box {
-    padding: 0;
-    margin-top: -0.8em;
-    text-align: center;
-  }
-  
-  .question-info {
-    margin-left:5px;
-    vertical-align: middle;
-  }
-
-  .box-title {
-    background: white none repeat scroll 0 0;
-    padding: 0;
-    font-weight: 700;
-    font-size: 12px;
-    font-family: 'Lato';
-  }
-  
 }
+@media only screen and (min-width: 540px) and (max-width: 540px) {
+  .info-hover {
+    display: block;
+    background: rgb(102,102,102);
+    width: 249px;
+    height: 156px;
+    border-radius: 10px;
+    color: #fff;
+    position: absolute;
+    margin-left: 70px;
+    margin-top: 10px;
+    z-index: 1;
+  }
+  .seperate-text span{
+    padding:0 
+  }
 
-.question-box-auto-height {
-  overflow-y: auto;
-  max-height: calc(100vh - 250px);
-}
-
-.quest_num_box_mobile {
-  overflow-y: auto;
-  height: 130px;
+  .info-hover::after {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .info-hover::before {
+    bottom: 100%;
+    top:-18%;
+    left: 84%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
 }
