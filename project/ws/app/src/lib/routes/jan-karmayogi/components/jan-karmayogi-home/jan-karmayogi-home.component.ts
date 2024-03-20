@@ -40,7 +40,6 @@ export class JanKarmayogiHomeComponent implements OnInit {
               'identifier': this.pageData.doIdList,
           },
           'query': '',
-          'limit': '5',
           'sort_by': {
               'lastUpdatedOn': 'desc',
           },
