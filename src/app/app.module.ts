@@ -97,7 +97,8 @@ import { SocialLinkComponent } from './component/social-link/social-link.compone
 import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component'
 import { AppLogoComponent } from './component/app-logo/app-logo.component'
 import { ProfileV3Module } from '@ws/app/src/lib/routes/profile-v3/profile-v3.module'
-import { NoDataComponent } from './component/no-data/no-data.component'
+import { NoDataComponent } from './component/no-data/no-data.component';
+import { SurveyShikshaComponent } from './component/survey-shiksha/survey-shiksha.component'
 
 @Injectable()
 export class HammerConfig extends GestureConfig {
@@ -149,6 +150,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SocialLinkComponent,
     FooterSectionComponent,
     AppLogoComponent,
+    SurveyShikshaComponent,
   ],
   imports: [
     FormsModule,
