@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core'
     CommonModule,
     PipePublicURLModule,
     MatIconModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [PlayerVideoComponent],
   entryComponents: [PlayerVideoComponent],
