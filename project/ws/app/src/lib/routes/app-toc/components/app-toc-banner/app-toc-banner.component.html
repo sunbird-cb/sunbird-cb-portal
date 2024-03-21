@@ -283,7 +283,7 @@
         <mat-select #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)"  panelClass="batch-dropdown">
           <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
           [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
-            <div class="flex flex-row items-center gap-2 h-10">
+            <div class="flex flex-row items-center gap-2">
               <div class="flex-1 text-sm batch-timings">
                   {{ batch.name }} ( {{ batch.startDate | date: 'd MMM, yyyy' }} - {{ batch.endDate | date: 'd MMM, yyyy' || 'present' }} )
               </div>

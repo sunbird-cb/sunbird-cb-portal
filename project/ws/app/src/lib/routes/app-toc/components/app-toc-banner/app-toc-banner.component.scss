@@ -53,6 +53,11 @@
 
 ::ng-deep .batch-dropdown {
     margin-top: 3rem !important;
+
+    .mat-option {
+        height: fit-content !important;
+        padding: 12px 16px !important;
+    }
 }
 
 ::ng-deep .batch-form-field {
