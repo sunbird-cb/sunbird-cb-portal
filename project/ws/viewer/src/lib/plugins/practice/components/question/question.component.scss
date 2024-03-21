@@ -36,11 +36,13 @@
 }
 
 .correct-option {
-  color: #357a38 !important;
+  color: #000 !important;
+  font-weight: 700 !important;
 }
 
 .incorrect-option {
-  color: #f0506e;
+  color: #000;
+  font-weight: 700 !important;
 }
 
 .question {
