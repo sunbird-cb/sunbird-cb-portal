@@ -221,7 +221,8 @@
       <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled && !enrollBtnLoading">
         <a class="flex action-button justify-center resume" [routerLink]="firstResourceLink?.url"
           [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
-          {{ 'apptochome.takeTest' | translate }}
+          <ng-container *ngIf="content.completionPercentage === 100">{{ 'apptochome.takeTestAgain' | translate }}</ng-container>
+          <ng-container *ngIf="content.completionPercentage < 100">{{ 'apptochome.takeTest' | translate }}</ng-container>
         </a>
       </ng-container>
       <!-- BLENDED_PROGRAM block -->
@@ -283,7 +284,7 @@
         </div>
       </div>
 
-      <ng-container *ngIf="resumeData">
+      <ng-container *ngIf="resumeData || content?.completionPercentage">
         <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
           <mat-icon>star_purple500</mat-icon>
           <ng-container *ngIf="!userRating">
@@ -347,7 +348,7 @@
             </ng-container>
             <ng-container *ngIf="!skeletonLoader">
               <div class="flex gap-4 items-center" *ngIf="content?.averageRating || content?.additionalTags?.length">
-                <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()"  *ngIf="content?.averageRating">
+                <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" *ngIf="content?.averageRating">
                   <div class="flex flex-row gap-1 items-center">
                     <mat-icon>grade</mat-icon>
                     <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
@@ -404,7 +405,7 @@
               <div class="flex items-center gap-4 justify-between" [ngClass]="{'justify-between': scrolled, 'justify-end': !scrolled}">
                 <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2" *ngIf="scrolled">
                   <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-                  <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
+                  <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
                 </div>
                 <div (click)="onClickOfShare()" class="flex flex-row items-center justify-end gap-2 share-tag" *ngIf="canShare">
                   <mat-icon>share</mat-icon>

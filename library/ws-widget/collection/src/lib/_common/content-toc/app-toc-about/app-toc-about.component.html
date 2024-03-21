@@ -225,7 +225,7 @@
         </ng-container>
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1">{{ 'apptocsinglepage.description' | translate }}</div>
-            <div class="desc" [ngClass]="{'mob-desc-ellipsis': description.ellipsis}" #descElem>
+            <div class="desc" [ngClass]="{'mob-desc-ellipsis': description.ellipsis && isMobile, 'desc-ellipsis': description.ellipsis && !isMobile}" #descElem>
                 <span [innerHTML]="content?.instructions" class="mob-text"></span>
                 <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="description.viewLess"
                     (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
