@@ -722,9 +722,9 @@ mat-divider {
 }
 
 .disable-start-btn {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
 }
 
 // .certificate-text {  
