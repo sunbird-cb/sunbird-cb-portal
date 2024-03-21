@@ -23,7 +23,7 @@
 </video>
 <div class="auto-play-video" id="auto-play-video" *ngIf="videoEnd">
   <div class="up-next">
-    <div>Up &nbsp; Next</div>
+    <div>{{'playerbrief.up' | translate}} &nbsp; {{'playerbrief.next' | translate}}</div>
   </div>
   <div class="circular-progress-container">
     <div class="circular-progress">
@@ -33,14 +33,14 @@
     </div>
   </div>
   <div class="cancel-auto-progress" (click)="closeAutoPlay()">
-    <span>Cancel</span>
+    <span>{{'playerbrief.cancel' | translate}}</span>
   </div>
 </div>
 
 <div class="auto-play-video" id="auto-play-video" *ngIf="replayVideoFlag" (click)="replayVideo()">
   <div class="cursor-pointer">
   <div class="replay">
-    <div>Replay</div>
+    <div>{{'playerbrief.replay' | translate}}</div>
   </div>
   <div class="circular-progress-container">
     <div class="circular-progress">
