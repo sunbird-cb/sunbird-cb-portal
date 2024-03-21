@@ -1,5 +1,5 @@
 <ng-template #certificateCard>
-    <div class="certificate-outer-div">
+    <div class="certificate-outer-div">        
         <div class="certificate-card">
             <div class="flex flex-col certificate-info p-4 gap-3">
                 <div class="flex flex-row">
@@ -42,6 +42,7 @@
                             </div>
                         </div>
                         <ng-container *ngIf="content?.certificateObj?.certData">
+                            <img class="celebration-animation" src="assets/images/animation/leaderboard_animation.gif"/>
                             <img class="ceritificate-image"
                                 [src]="content?.certificateObj?.certData | pipeSafeSanitizer: 'url'"
                                 alt="certificate image" />
@@ -97,6 +98,7 @@
                     <div class="ribbon"></div>
                     <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
                 </div>
+               
                 <div class="certificate-background">
                     <ng-container [ngTemplateOutlet]="certificateCard"></ng-container>
                 </div>

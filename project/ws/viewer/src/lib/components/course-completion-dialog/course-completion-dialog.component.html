@@ -63,12 +63,15 @@
 <mat-card class="no-shadow" *ngIf="showRating">
 <ws-widget-content-rating-v2-dialog [ccuserRating]="userRating"  [navigatetoTOC]="true"></ws-widget-content-rating-v2-dialog>
 </mat-card> -->
-<div class="congrats-container" *ngIf="!showRating">
+<div class="congrats-container" *ngIf="!showRating">    
+ 
     <div class="header">
       <div><img src="assets/icons/final-assessment/congrats_badge.svg"/></div>
+      
       <div class="heading-text"><span i18n>{{ translateLabels('congratulations', 'coursecompletiondialog') }}</span></div>
       <div class="subheading-text"><span i18n>{{ 'coursecompletiondialog.yourCertificateAvailableShortly' | translate }}</span></div>
     </div>
+    
     <div class="seperator"></div>
     <div class="rating-panel">
         <div class="" (click)="$event.stopPropagation();">
@@ -85,7 +88,8 @@
           </ng-container>
       </div>
       <div class="subheading-text-bold">Rate this course</div>
-    </div></div>
+    </div>
+  </div>
 <div>
 <mat-card class="no-shadow" *ngIf="showRating">
   <ws-widget-content-rating-v2-dialog [isEditMode]="isEditMode" [ccuserRating]="userRating"  [navigatetoTOC]="true"></ws-widget-content-rating-v2-dialog>
