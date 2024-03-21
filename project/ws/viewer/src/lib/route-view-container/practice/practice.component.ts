@@ -27,6 +27,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
     @Input() isPreviewMode = false
     isTypeOfCollection = false
     collectionId: string | null = null
+    isMobile = false
     constructor(private activatedRoute: ActivatedRoute) {
         if (this.quizData) {
             this.quizJson.timeLimit = this.quizData.expectedDuration
@@ -34,6 +35,11 @@ export class PracticeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        if (window.innerWidth <= 1200) {
+            this.isMobile = true
+          } else {
+            this.isMobile = false
+          }
         this.isTypeOfCollection = this.activatedRoute.snapshot.queryParams.collectionType ? true : false
         if (this.isTypeOfCollection) {
             this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId

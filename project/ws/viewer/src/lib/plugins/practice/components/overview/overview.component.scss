@@ -226,10 +226,11 @@
 
 @media only screen and (max-width: 767px) {
     .box-height {
-        min-height: 100%;
+        // min-height: 100%;
         margin-top: 68px;
         margin-left: 0;
         margin-right: 0;
+        height: calc(100vh - 60px);
     }
     .assessment-container {
         margin: 0 16px 0 24px;

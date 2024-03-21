@@ -22,5 +22,17 @@
                 "84:A9:6F:15:03:29:AA:E0:4A:2E:D6:7D:B0:7A:25:52:8E:CD:76:7F:28:D3:68:CB:8A:F5:5B:89:5C:44:99:F0"
             ]
         }
+    },
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.igot.karmayogibharat",
+            "sha256_cert_fingerprints": [
+                "D1:97:AC:3D:F7:D5:7E:28:B1:FF:DD:A7:D9:F4:86:E0:9F:F3:D5:F5:59:82:FA:4D:28:34:7D:51:EF:11:95:B1"
+            ]
+        }
     }
 ]

@@ -22,6 +22,7 @@ export class ViewerUtilService {
   authoringBase = '/apis/authContent/'
   markAsCompleteSubject = new Subject()
   autoPlayNextVideo = new Subject()
+  autoPlayNextAudio = new Subject()
   constructor(
     private http: HttpClient,
     private configservice: ConfigurationsService,

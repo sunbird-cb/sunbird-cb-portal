@@ -67,9 +67,9 @@
   
   @media only screen and (max-width:469px) {
     width: 100%;
-    top: 10px;
-    left: 10px;
-    right: 10px;
+    top: 30px;
+    left: 0px;
+    right: 0px;
   }
 }
 .play-btn {
@@ -88,4 +88,87 @@
 
 .fw-700 {
   font-weight: 700;
+}
+
+
+@media screen and (min-width: 280px) and (max-width: 375px) { 
+  .html-viewer-container {
+    height:150px;
+    box-shadow: none !important;
+    background: rgb(27, 33, 51) !important;
+    padding: 0 !important;
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 360px) { 
+  .html-viewer-container {
+    height:166px;
+    box-shadow: none !important;
+    background: rgb(27, 33, 51) !important;
+    padding: 0 !important;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 411px) { 
+  .html-viewer-container {
+    height:200px;
+    box-shadow: none !important;
+    background: rgb(27, 33, 51) !important;
+    padding: 0 !important;
+  }
+  .content-instruction-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    width: 85%;
+    margin: 0 auto;
+    position: absolute;
+    left: 0%;
+    top: 30%;
+  }
+}
+@media screen and (min-width: 411px) and (max-width: 414px) { 
+  .html-viewer-container {
+    height:205px;
+    box-shadow: none !important;
+    background: rgb(27, 33, 51) !important;
+    padding: 0 !important;
+  }
+  .content-instruction-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    width: 85%;
+    margin: 0 auto;
+    position: absolute;
+    left: 0%;
+    top: 28%;
+  }
+}
+@media screen and (min-width: 540px) and (max-width: 540px) { 
+  .html-viewer-container {
+    height:166px;
+    box-shadow: none !important;
+    background: rgb(27, 33, 51) !important;
+    padding: 0 !important;
+  }
+  .content-instruction-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    width: 69%;
+    margin: 0 auto;
+    position: absolute;
+    left: 15%;
+    top: 26%;
+  }
 }
