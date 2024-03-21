@@ -110,9 +110,8 @@
         {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate | date: 'dd-MM-yyyy'}} - {{batchData?.workFlow?.batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
       </p>
       <ng-container>
-        <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white"
-          (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
-            <ng-container i18n> Withdraw your request </ng-container>
+        <button class="withdraw-batch" (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
+            <ng-container i18n> {{ 'apptocbanner.withDrawYourRequest' | translate }} </ng-container>
         </button>
       </ng-container>
     </ng-container>
