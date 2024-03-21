@@ -76,6 +76,7 @@ export class BtnPageBackNavComponent extends WidgetBaseComponent
           cancelButton: 'Cancel',
           acceptButton: 'Confirm',
           message: 'Are you sure you want to exit the assessment',
+          from: 'assessment'
         },
       })
       dialogRef.afterClosed().subscribe(result => {

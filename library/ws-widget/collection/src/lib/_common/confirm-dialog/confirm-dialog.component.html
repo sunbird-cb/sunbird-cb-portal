@@ -1,4 +1,19 @@
-<div mat-dialog-content class="confirmation-dialog-container">
+<ng-container *ngIf="data?.from !== 'assessment'">
+  <div mat-dialog-content>
+    <div class="dialog-header">
+        <h1 class="mr-2" mat-dialog-title>{{data.title}}</h1>
+        <mat-icon class="mat-icon notranslate material-icons close-icon" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon>
+    </div>
+  <p>{{data.message}}</p>
+  </div>
+  <div class="flex btn-wrapper" mat-dialog-actions>
+  <button class="blue-border mat-stroked-button mat-accent cancelButton" mat-button [mat-dialog-close]="false" >{{data.cancelButton}}</button>
+  <button class="mat-button mat-button-base text-white acceptbtn" mat-button [mat-dialog-close]="data" cdkFocusInitial>{{data.acceptButton}}</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data?.from === 'assessment'">
+  <div mat-dialog-content class="confirmation-dialog-container">
     <div class="dialog-header">
         <h1 class="mr-2" mat-dialog-title></h1>
         <!-- <mat-icon class="mat-icon notranslate material-icons close-icon" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon> -->
@@ -9,3 +24,4 @@
   <button class="blue-border mat-stroked-button mat-accent cancelButton" mat-button [mat-dialog-close]="false" >{{'playerbrief.assessmentBackCancelBtn' | translate}}</button>
   <button class="mat-button mat-button-base text-white acceptbtn" mat-button [mat-dialog-close]="data" cdkFocusInitial>{{'playerbrief.assessmentBackConfirmBtn' | translate}}</button>
 </div>
+</ng-container>
