@@ -23,6 +23,7 @@
 
 .congrats-container {
  text-align: center;
+ background: url('~/assets/images/animation/leaderboard_animation.gif') no-repeat center;
 }
 
 ::ng-deep .mat-dialog-container {
@@ -86,4 +87,15 @@
 
 #app-bg {
   filter: blur(10px)
+}
+
+
+@media screen and (max-width: 767px) {
+  .celebration-animation {
+    position: absolute;
+    left: 0%;
+    top: 25%;
+    z-index: 9999;
+    width: 100%;
+  }
 }
