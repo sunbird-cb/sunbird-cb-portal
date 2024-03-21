@@ -31,6 +31,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
   ) {
     this.reviewDataService.getReviewData().subscribe((_review: any) => {
       this.reviews = _review
+      this.data.reviews = _review
     })
   }
 
