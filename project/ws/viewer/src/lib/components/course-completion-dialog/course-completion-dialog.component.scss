@@ -10,14 +10,14 @@
       box-shadow: none !important;
   }
 
-  ::ng-deep .mat-dialog-container{
+  ::ng-deep  .course-completion-dialog .mat-dialog-container{
     padding: 24px 0px;
   }
-  ::ng-deep .mat-card-actions {
+  ::ng-deep  .course-completion-dialog.mat-card-actions {
     padding: 18px 7px;
   }
 
-  ::ng-deep .mat-card>.mat-card-actions:last-child {
+  ::ng-deep .course-completion-dialog .mat-card>.mat-card-actions:last-child {
     margin-bottom: -15px;
 }
 
@@ -26,7 +26,7 @@
  background: url('~/assets/images/animation/leaderboard_animation.gif') no-repeat center;
 }
 
-::ng-deep .mat-dialog-container {
+::ng-deep .course-completion-dialog .mat-dialog-container {
   box-shadow: none !important;
   background: transparent !important;
   color: white !important;
