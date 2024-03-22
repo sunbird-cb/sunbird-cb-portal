@@ -33,6 +33,7 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() kparray: any
   @Input() selectedBatchData: any
   @Input() config: any
+  @Input() componentName!: string
   sticky = false
   menuPosition: any
   isMobile = false
@@ -47,6 +48,11 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
     if (this.route.snapshot.data.pageData && this.route.snapshot.data.pageData.data) {
       this.config = this.route.snapshot.data.pageData.data
+    }
+    const batchId = this.route.snapshot.queryParams.batchId ?
+      this.route.snapshot.queryParams.batchId : ''
+    if (batchId) {
+      this.selectedTabIndex = 1
     }
   }
 
