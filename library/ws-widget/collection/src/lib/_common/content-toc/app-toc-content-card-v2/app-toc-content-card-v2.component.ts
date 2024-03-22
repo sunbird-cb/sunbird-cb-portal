@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, Renderer2, SimpleChanges } from '@angular/core'
 import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
 import { NsAppToc } from '../models/app-toc.model'
-import { EventService } from '@sunbird-cb/utils/src/public-api'
+import { EventService, WsEvents } from '@sunbird-cb/utils/src/public-api'
 import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 import { MatDialog } from '@angular/material'
 import { animate, style, transition, trigger } from '@angular/animations'
 /* tslint:disable*/
 import _ from 'lodash'
 import moment from 'moment'
+import { CertificateService } from '@ws/app/src/lib/routes/certificate/services/certificate.service'
 
 @Component({
   selector: 'ws-widget-app-toc-content-card-v2',
@@ -39,6 +40,7 @@ export class AppTocContentCardV2Component implements OnInit {
   @Input() hierarchyMapData: any = {}
   @Input() batchData: /**NsContent.IBatchListResponse */ any | null = null
   hasContentStructure = false
+  downloadCertificateLoading = false
   enumContentTypes = NsContent.EDisplayContentTypes
   contentStructure: NsAppToc.ITocStructure = {
     assessment: 0,
@@ -66,7 +68,8 @@ export class AppTocContentCardV2Component implements OnInit {
   constructor(
     private events: EventService,
     private dialog: MatDialog,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private certificateService: CertificateService,
   ) { }
 
   ngOnInit() {
@@ -412,6 +415,33 @@ export class AppTocContentCardV2Component implements OnInit {
       // }
     }catch (err) {
 
+    }
+  }
+
+  downloadCertificate(certificateData: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: 'view-certificate',
+        subType: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      },
+      {
+        id: certificateData,   // id of the certificate
+        type: WsEvents.EnumInteractSubTypes.CERTIFICATE,
+      })
+    if(certificateData) {
+      this.downloadCertificateLoading = true
+      let certData: any = certificateData
+      this.certificateService.downloadCertificate_v2(certData).subscribe((res: any)=>{
+        this.downloadCertificateLoading = false
+        const cet = res.result.printUri
+        this.dialog.open(CertificateDialogComponent, {
+          width: '1300px',
+          data: { cet, certId: certData.identifier },
+        })
+      })
+    } else {
+      this.downloadCertificateLoading = false
     }
   }
 }

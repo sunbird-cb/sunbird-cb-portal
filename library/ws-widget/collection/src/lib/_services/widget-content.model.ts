@@ -546,14 +546,15 @@ export namespace NsContent {
   }
 
   export const UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS: string[] = [
-    EMimeTypes.QUIZ,
-    EMimeTypes.APPLICATION_JSON,
-    EMimeTypes.WEB_MODULE_EXERCISE,
+    // this is comment now for enabling links in the toc page for enrolled users
+    // EMimeTypes.QUIZ,
+    // EMimeTypes.APPLICATION_JSON,
+    // EMimeTypes.WEB_MODULE_EXERCISE,
 
   ]
   export const PUBLIC_SUPPORTED_CONTENT_TYPES: EMimeTypes[] = [
-    // EMimeTypes.APPLICATION_JSON,
-    // EMimeTypes.FINAL_ASSESSMENT,
+    EMimeTypes.APPLICATION_JSON,
+    EMimeTypes.FINAL_ASSESSMENT,
     EMimeTypes.HTML,
     EMimeTypes.HTML_TEXT,
     EMimeTypes.ZIP,

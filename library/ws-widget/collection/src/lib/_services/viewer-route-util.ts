@@ -9,8 +9,8 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
     case NsContent.EMimeTypes.COLLECTION:
       return 'html'
     case NsContent.EMimeTypes.CHANNEL:
-    // case 'application/json' as any:
-    //   return 'channel'
+    case 'application/json' as any:
+      return 'channel'
     case NsContent.EMimeTypes.CERTIFICATION:
       return 'certification'
     case NsContent.EMimeTypes.HTML_TEXT:
