@@ -1104,6 +1104,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.navigateToPlayerPage(batchId)
           }
           // this.enrollBtnLoading = false
+        },
+        (_error: any) => {
+          this.enrollBtnLoading = false
         }
       )
     }

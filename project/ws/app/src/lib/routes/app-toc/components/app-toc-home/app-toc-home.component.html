@@ -220,7 +220,8 @@
       <ng-container *ngIf="content?.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT && batchData?.enrolled && !enrollBtnLoading">
         <a class="flex action-button justify-center resume" [routerLink]="firstResourceLink?.url"
           [queryParams]="(resumeData && !certData) ? generateQuery('RESUME') : generateQuery('START')">
-          {{ 'apptochome.takeTest' | translate }}
+          <ng-container *ngIf="content.completionPercentage === 100">{{ 'apptochome.takeTestAgain' | translate }}</ng-container>
+          <ng-container *ngIf="content.completionPercentage < 100">{{ 'apptochome.takeTest' | translate }}</ng-container>
         </a>
       </ng-container>
       <!-- BLENDED_PROGRAM block -->
@@ -274,7 +275,7 @@
         </div>
       </div>
 
-      <ng-container *ngIf="resumeData">
+      <ng-container *ngIf="resumeData || content?.completionPercentage">
         <button mat-stroked-button color="accent" type="button" class="rate-button" (click)="openFeedbackDialog(content)">
           <mat-icon>star_purple500</mat-icon>
           <ng-container *ngIf="!userRating">
@@ -303,7 +304,12 @@
               <div class="flex flex-row gap-2">
                 <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
                   <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-                  <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                  <ng-container *ngIf="content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                  </ng-container>
+                  <ng-container *ngIf="!content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
+                  </ng-container>
                 </div>
                 <div class="flex items-center" *ngIf="cbPlanEndDate">
                   <div class="flex items-center due-tag text-xs leading-3">
@@ -329,7 +335,7 @@
               <div class="text-sm sm:text-base source-text font-semibold break-words" #contentSource [ngClass]="{'sourceEllipsis': sourceEllipsis}" title="{{content?.source}}">{{ 'cardcontentv2.by' | translate }} {{ content?.source }}</div>
             </ng-container>
           </div>
-          <div class="flex gap-4 items-center ">
+          
             <ng-container *ngIf="skeletonLoader">
               <ws-widget-skeleton-loader [width]="'120px'" [height]="'40px'"
                 [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
@@ -337,22 +343,23 @@
                 [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
             </ng-container>
             <ng-container *ngIf="!skeletonLoader">
-              <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" >
-                <div class="flex flex-row gap-1 items-center">
-                  <mat-icon>grade</mat-icon>
-                  <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
+              <div class="flex gap-4 items-center" *ngIf="content?.averageRating || content?.additionalTags?.length">
+                <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" *ngIf="content?.averageRating">
+                  <div class="flex flex-row gap-1 items-center">
+                    <mat-icon>grade</mat-icon>
+                    <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
+                  </div>
+                  <div class="separator"></div>
+                  <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
                 </div>
-                <div class="separator"></div>
-                <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
-              </div>
-              <div class="flex items-center" *ngIf="content?.additionalTags?.length">
-                <div class="most-enrolled-chip text-xs leading-3">
-                  <span *ngIf="content?.additionalTags?.includes('mostTrending')">{{ 'cardcontentv2.mostTrending' | translate }}</span>
-                  <span *ngIf="content?.additionalTags?.includes('mostEnrolled')">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
+                <div class="flex items-center" *ngIf="content?.additionalTags?.length">
+                  <div class="most-enrolled-chip text-xs leading-3">
+                    <span *ngIf="content?.additionalTags?.includes('mostTrending')">{{ 'cardcontentv2.mostTrending' | translate }}</span>
+                    <span *ngIf="content?.additionalTags?.includes('mostEnrolled')">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
+                  </div>
                 </div>
               </div>
             </ng-container>
-          </div>
           <ng-container *ngIf="skeletonLoader">
             <ws-widget-skeleton-loader [width]="'180px'" [height]="'20px'"
               [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
@@ -377,7 +384,7 @@
 
         <ws-widget-content-toc [content]="content" [componentName]="'toc'"  [pathSet]="pathSet" [tocStructure]="tocStructure" 
         [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader" 
-        [changeTab]="changeTab" [hierarchyMapData]="tocSvc?.hashmap" [selectedBatchData]="selectedBatchData" [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}" [kparray]="kparray"></ws-widget-content-toc>
+        [changeTab]="changeTab" [hierarchyMapData]="tocSvc?.hashmap" [selectedBatchData]="selectedBatchData" [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory, currentCourseBatchId: currentCourseBatchId}" [kparray]="kparray"></ws-widget-content-toc>
       </div>
     </div>
 
@@ -394,7 +401,12 @@
               <div class="flex items-center gap-4 justify-between" [ngClass]="{'justify-between': scrolled, 'justify-end': !scrolled}">
                 <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2" *ngIf="scrolled">
                   <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-                  <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
+                  <ng-container *ngIf="content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                  </ng-container>
+                  <ng-container *ngIf="!content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
+                  </ng-container>
                 </div>
                 <div (click)="onClickOfShare()" class="flex flex-row items-center justify-end gap-2 share-tag" *ngIf="canShare">
                   <mat-icon>share</mat-icon>
@@ -483,7 +495,7 @@
 
             <div class="karma-points-div">
               <ws-widget-karma-points [btntype]="" [data]="kparray" [btnCategory]="" (clickClaimKarmaPoints)="onClickOfClaim($event)"
-                [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}"></ws-widget-karma-points>
+                [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, isCompletedThisMonth: isCompletedThisMonth, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory, currentCourseBatchId: currentCourseBatchId}"></ws-widget-karma-points>
             </div>
           </ng-container>
 
@@ -603,3 +615,5 @@
   </div>
 
 </ng-template>
+
+<ng-template #authView i18n>{{'apptochome.view' | translate}}</ng-template>

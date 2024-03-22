@@ -10,16 +10,16 @@
     'ws-mat-accent-border-active ': (btn.checked)
   }" [value]="option.optionId" (change)="updateParent(option.optionId)" [checked]="isSelected(option)">
             <span class="wrap-mat-radio-label">
-                <mat-error *ngIf="showAns && !option?.isCorrect && isSelected(option)">
+                <span class="mat-body-2 font-700" *ngIf="showAns && !option?.isCorrect && isSelected(option)">
                     {{ option?.text }}
-                </mat-error>
-                <div [ngClass]="{
+                </span>
+                <span [ngClass]="{
         'correct-option':
           (showAns && option?.isCorrect && isSelected(option)) ||
           (showAns && option?.isCorrect)
       }" [hidden]="showAns && !option?.isCorrect && isSelected(option)">
-                    <span class="mat-body-2"></span> {{ option?.text }}
-                </div>
+                    <span class="mat-body-2 font-700"></span> {{ option?.text }}
+                </span>
             </span>
         </mat-radio-button>
         <div class="background-well padding-left-m padding-xs"

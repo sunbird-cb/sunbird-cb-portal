@@ -10,6 +10,7 @@
     cursor: pointer;
     text-align: center;
 }
+
 .request-batch{
     // background-color: white;
 }
@@ -41,6 +42,7 @@
         border: 1px solid $text-primary;
         background-color: #FFF;
         width: 100%;
+        margin-top: 16px;
     }
 
     .enroll-button {
@@ -53,6 +55,11 @@
 
 ::ng-deep .batch-dropdown {
     margin-top: 3rem !important;
+
+    .mat-option {
+        height: fit-content !important;
+        padding: 12px 16px !important;
+    }
 }
 
 ::ng-deep .batch-form-field {
@@ -469,24 +476,6 @@
                 padding-bottom: 16px;
             }
         }
-    }
-}
-
-.withdrawButton {
-    height: 52px;
-    min-width: 160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent !important;
-    box-shadow: none !important;
-    width: fit-content !important;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    color: #0074B6 !important;
-    ::ng-deep.mat-button-wrapper {
-        letter-spacing: 0px;
-        color: #FFFFFF;
-        text-transform: capitalize;
     }
 }
 

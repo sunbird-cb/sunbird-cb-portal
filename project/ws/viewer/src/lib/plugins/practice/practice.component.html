@@ -162,7 +162,7 @@
                 </div>
             </div>
             
-            <div class="timer" *ngIf="quizJson?.timeLimit">
+            <div class="timer" *ngIf="primaryCategory !== ePrimaryCategory.PRACTICE_RESOURCE">
               <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
                   <!-- <ng-container [ngTemplateOutlet]="timer"></ng-container> -->
                   <div *ngIf="timeLeft" class="flex flex-1 flex-center">
@@ -392,7 +392,7 @@
             <span class="subheading-back">{{resourceName}}</span>
             
           </div>
-          <div class="timer" *ngIf="quizJson?.timeLimit">
+          <div class="timer" *ngIf="primaryCategory !== ePrimaryCategory.PRACTICE_RESOURCE">
             <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
               <div *ngIf="timeLeft" class="flex flex-1 flex-center">
                 <img src="assets/icons/final-assessment/timer.svg">
@@ -565,7 +565,7 @@
             
           </div>
           <div class="exapnd-collapse">
-            <div class="expand-icon" (click)="expandFalse = !expandFalse;">
+            <div class="expand-icon" (click)="toggleExpandforMobile()">
               <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">
                 <span *ngIf="expandFalse">expand_more</span>
                 <span *ngIf="!expandFalse">expand_less</span>
@@ -591,7 +591,8 @@
               [totalQCount]="totalQCount"
               (itemSelected)="fillSelectedItems(current_Question, $event)"
               [showAnswer]="showAnswer"
-              [currentQuestion]="current_Question">
+              [currentQuestion]="current_Question"
+              [mobileQuestionSetExpand]="!expandFalse">
             </viewer-question>
           </ng-container>
           <div class="flex flex-1">

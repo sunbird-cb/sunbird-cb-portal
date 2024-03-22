@@ -47,14 +47,17 @@ a.download_btn {
 .close-button {
     float: right;
     top: -16px;
-    right: -16px;
+    right: -12px;
     height: 30px;
     width: 30px;
     line-height: 30px;
+    background: #000 !important;
+    color: #fff !important;
 }
 
 .close-icon {
     transition: 1s ease-in-out;
+    color:#fff !important
 }
 
 .close-icon:hover {
