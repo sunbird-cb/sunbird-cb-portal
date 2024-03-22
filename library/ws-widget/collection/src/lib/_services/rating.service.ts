@@ -30,9 +30,8 @@ export class RatingService {
       return this.http.get<any>(
         API_END_POINTS.GET_RATING(contentId, contentType, userId)
       )
-    } else {
-      return Observable.of({})
     }
+      return Observable.of({})
   }
 
   addOrUpdateRating(req: NsAppRating.IRating): Observable<any> {
@@ -47,9 +46,8 @@ export class RatingService {
       return this.http.get<any>(
         API_END_POINTS.GET_RATING_SUMMARY(contentId, contentType)
       )
-    } else {
-      return Observable.of({})
     }
+    return Observable.of({})
   }
 
   getRatingLookup(req: NsAppRating.ILookupRequest): Observable<any> {
@@ -64,9 +62,8 @@ export class RatingService {
       return this.http.post<any>(
         API_END_POINTS.POST_AUTHOR_REPLY, req
       )
-    } else {
-      return Observable.of({})
     }
+      return Observable.of({})
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {
