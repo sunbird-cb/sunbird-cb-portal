@@ -99,7 +99,6 @@
             </ng-container> -->
           </ng-container>
           <ng-container *ngIf="((content?.primaryCategory !== primaryCategory.RESOURCE)  && !enrollBtnLoading) && contentReadData?.batches[0].endDate">
-            <!-- {{contentReadData?.batches|json}} -->
             <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
             [userEnrollmentList]="userEnrollmentList"  [analytics]="analytics" (programEnrollCall)="programEnrollCall($event)"
             [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
@@ -256,16 +255,8 @@
       <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
         <a [href]="content?.registrationUrl" target="_blank" class="flex action-button justify-center" i18n>{{ 'apptochome.register' | translate }}</a>
       </ng-container>
+      
     </div>
-  
-    <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-      <div class="hideAbove1200">
-        <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
-          [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
-          [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
-        </ws-app-toc-banner>
-      </div>
-    </ng-container>
   </ng-template>
 
   <ng-template #progressFunctionality>
@@ -384,7 +375,7 @@
         </div>
         <!-- Overall progress functionality -->
 
-        <ws-widget-content-toc [content]="content" [pathSet]="pathSet" [tocStructure]="tocStructure" 
+        <ws-widget-content-toc [content]="content" [componentName]="'toc'"  [pathSet]="pathSet" [tocStructure]="tocStructure" 
         [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader" 
         [changeTab]="changeTab" [hierarchyMapData]="tocSvc?.hashmap" [selectedBatchData]="selectedBatchData" [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory}" [kparray]="kparray"></ws-widget-content-toc>
       </div>
@@ -420,7 +411,7 @@
         </ng-container>
 
         <div class="flex flex-col gap-4 p-5 border-bottom">
-          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && isMobile">
             <div class="flex flex-row gap-3 justify-around">
               <div class="batch-info">
                 <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}</div>
@@ -435,11 +426,12 @@
                 <div class="batch-label">{{ 'apptoc.totalEnrolled' | translate }}</div>
               </div>
             </div>
-
-            <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+            <ng-container *ngIf="!mobile1200">
+              <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
               [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
               [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
             </ws-app-toc-banner>
+            </ng-container>
           </div>
 
           <ng-container *ngIf="skeletonLoader">
@@ -579,9 +571,19 @@
         </div>
       </div>
     </div>
+    
   </div>
 
   <div class="mobile-enroll-div">
+    <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM ">
+      <div *ngIf="mobile1200">
+        <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+          [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
+          [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
+        </ws-app-toc-banner>
+    
+      </div>
+    </ng-container>
     <ng-container [ngTemplateOutlet]="enrollFunctionality"></ng-container>
   </div>
 

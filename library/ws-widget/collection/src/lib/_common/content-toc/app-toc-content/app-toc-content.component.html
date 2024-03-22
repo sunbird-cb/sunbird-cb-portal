@@ -29,7 +29,7 @@
                 <div class="content-card " *ngFor="let card of content?.children; trackBy: contentTrackBy; let i = index;" 
                 [ngClass]="{ 'content-active': pathSet && pathSet.has(card.identifier)  && isEnrolled}">
                     <!-- {{card|json}} -->
-                    <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [expandActive]="true" [rootId]="contextId" [batchId]="batchId"
+                    <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [componentName]="componentName" [expandActive]="true" [rootId]="contextId" [batchId]="batchId"
                     [rootContentType]="contextPath" [content]="card" [index]="i+1" [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData" [batchData]="batchData"></ws-widget-app-toc-content-card-v2>
                 </div>
             </ng-container>

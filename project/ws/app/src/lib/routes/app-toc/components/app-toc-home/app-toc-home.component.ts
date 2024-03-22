@@ -194,6 +194,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   enableShare = false
   rootOrgId: any
   certId: any
+  mobile1200: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -281,6 +282,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngOnInit() {
+    this.mobile1200 = window.innerWidth < 1201
     this.configSvc.languageTranslationFlag.subscribe((data: any) => {
       if (data) {
         if (localStorage.getItem('websiteLanguage')) {
@@ -290,7 +292,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       }
     })
-
     this.getServerDateTime()
 
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -1366,7 +1367,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const resumeCopy = [...this.resumeData]
     if (!type) {
       // tslint:disable-next-line:max-line-length
-      const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+
+      const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) =>
+      new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
       return {
         identifier: lastItem.contentId,
         mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,

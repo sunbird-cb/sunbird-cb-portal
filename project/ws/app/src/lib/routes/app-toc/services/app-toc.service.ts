@@ -706,6 +706,24 @@ export class AppTocService {
       // if (!parentContent.completionPercentage) {
         content.completionPercentage = Math.floor((totalCount / leafnodeCount) * 100)
         content.completionStatus = content.completionPercentage <= 100 ? 1 : 2
+      if (content.completionPercentage === 100 && inprogressDataCheck && inprogressDataCheck.length === 0 && !firstUncompleteCourse) {
+        const firstChildData = this.widgetSvc.getFirstChildInHierarchy(content)
+        const childEnrollmentData = enrolmentList.find((el: any) =>
+        el.collectionId === content.children[0].identifier)
+        const resumeData = [{
+          contentId: firstChildData.identifier,
+          batchId: childEnrollmentData.batchId,
+          completedCount: 1,
+          completionPercentage: 100,
+          progress: 2,
+          viewCount: 1,
+          courseId: childEnrollmentData.courseId,
+          collectionId: childEnrollmentData.courseId,
+          status: 2,
+        }]
+        inprogressDataCheck = resumeData
+        this.updateResumaData(inprogressDataCheck)
+      }
       // // } else {
       //   content.completionPercentage = parentContent.completionPercentage
       // // }

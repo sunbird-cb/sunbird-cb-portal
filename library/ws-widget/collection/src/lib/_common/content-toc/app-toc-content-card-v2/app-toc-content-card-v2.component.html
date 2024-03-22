@@ -65,7 +65,7 @@
                 [ngClass]="{'ml-3': isEnrolled}"
                 [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
                 [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null">
-                <span [ngClass]="{'resource-active': pathSet?.has(content?.identifier) && isEnrolled}"></span>
+                <div [ngClass]="{'resource-active': pathSet?.has(content?.identifier) && isEnrolled}"></div>
                 <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled && isEnrolled}"
                     (click)="content.viewChildren = !content.viewChildren; raiseTelemetry()">
                     <div class="flex flex-col sm:flex-row flex-wrap">
@@ -228,6 +228,7 @@
                                         [showBackground]="false"></circle-progress>
                                 </ng-template>
                             </ng-container>
+                            <div [ngClass]="{'collection-active-class': pathSet?.has(content?.identifier) && isEnrolled}"></div>
                             <p class="margin-remove text-truncate mat-subheading-1 flex-auto font-bold"
                                 [ngClass]="{'text-active': pathSet?.has(content.identifier) && isEnrolled}">
                                 {{index}}. {{ content?.name }}
@@ -340,7 +341,7 @@
             'module': isModule}"
             [@panelInOut]>
             <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">
-                <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
+                <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [componentName]="componentName" [content]="child" [expandAll]="expandAll"
                     [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1"
                     [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData" [batchData]="batchData"
                     *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
