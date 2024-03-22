@@ -348,8 +348,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
                   courseName: this.activatedRoute.snapshot.queryParams.courseName,
                   userId: this.userid,
                   identifier: this.identifier,
-                  primaryCategory: this.collectionType,
+                  primaryCategory: this.collectionType                  
                 },
+                panelClass: 'course-completion-dialog'
               })
               dialogRef.afterClosed().subscribe(result => {
                 if (result === true) {
