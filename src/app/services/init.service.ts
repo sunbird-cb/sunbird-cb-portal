@@ -222,7 +222,11 @@ export class InitService {
     //   .catch(() => {
     //     // throw new DataResponseError('COOKIE_SET_FAILURE')
     //   })
-    if (!(window.location.href.includes('/public/') || window.location.href.includes('/certs'))) {
+    if (
+      !(window.location.href.includes('/public/') ||
+      window.location.href.includes('/certs') ||
+      window.location.href.includes('/viewer') )
+    ) {
       this.logFirstLogin()
     }
     return true
