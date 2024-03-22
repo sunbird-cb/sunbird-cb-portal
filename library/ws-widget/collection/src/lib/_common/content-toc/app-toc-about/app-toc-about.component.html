@@ -1,5 +1,5 @@
 <ng-template #certificateCard>
-    <div class="certificate-outer-div">
+    <div class="certificate-outer-div">        
         <div class="certificate-card">
             <div class="flex flex-col certificate-info p-4 gap-3">
                 <div class="flex flex-row">
@@ -14,13 +14,13 @@
                                 (content?.completedOn | date: 'd MMM, y') : 'NA' }}</div>
                         </ng-container>
                     </div>
-                    <div class="flex justify-center">
+                    <div class="flex justify-center download-section">
                         <ng-container *ngIf="skeletonLoader">
                             <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'24px'"
                                 [height]="'24px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!skeletonLoader && content?.certificateObj?.certData">
-                            <mat-icon class="icon cursor-pointer"
+                            <mat-icon class="icon cursor-pointer "
                                 (click)="handleOpenCertificateDialog()">arrow_downward</mat-icon>
                         </ng-container>
                     </div>
@@ -42,6 +42,7 @@
                             </div>
                         </div>
                         <ng-container *ngIf="content?.certificateObj?.certData">
+                            <img class="celebration-animation" src="assets/images/animation/leaderboard_animation.gif"/>
                             <img class="ceritificate-image"
                                 [src]="content?.certificateObj?.certData | pipeSafeSanitizer: 'url'"
                                 alt="certificate image" />
@@ -97,6 +98,7 @@
                     <div class="ribbon"></div>
                     <div class="earned-certificate">{{ 'apptocsinglepage.certificateEarned' | translate }}</div>
                 </div>
+               
                 <div class="certificate-background">
                     <ng-container [ngTemplateOutlet]="certificateCard"></ng-container>
                 </div>
@@ -391,49 +393,57 @@
             [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
     </ng-container>
     <ng-container *ngIf="!skeletonLoader">
-        <div class="flex flex-col ratings-div gap-10" id="ratingsDiv">
-            <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
-    
-            <div class="flex flex-col gap-3">
-                <div class="flex flex-row gap-4">
-                    <div class="flex-1 mat-subheading-1" id="reviewContainer">{{ 'apptocsinglepage.topReviews' | translate }}</div>
-                    <ng-container *ngIf="ratingSummaryProcessed?.avgRating">
-                        <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()">{{ 'msg.showAll' | translate }}</div>
-                    </ng-container>
-                </div>
-                <ng-container *ngIf="topRatingReviews && topRatingReviews?.length">
-                    <div class="flex gap-5" [ngClass]="isMobile ? 'horizontal-strip' : 'flex-wrap'">
-                        <div class="comment-div" *ngFor="let eachReview of topRatingReviews | slice:0:4; let i = index">
-                            <div class="p-4 flex flex-col gap-6">
-                                <div class="flex flex-row gap-4">
-                                    <div class="flex-1">
-                                        <div class="text-left desc-ellipsis" title="{{ eachReview?.review }}">{{ handleCapitalize(eachReview?.review) }}</div>
-                                    </div>
-                                    <div class="flex flex-row gap-2 rating-start-value">
-                                        <mat-icon>star</mat-icon>
-                                        <div>{{ eachReview?.rating }}</div>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row gap-2 items-center text-sm">
-                                    <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''" [name]="eachReview?.firstName"></ws-widget-avatar-photo>
-                                    <div class="flex flex-wrap">
-                                        <div>{{ handleCapitalize(eachReview?.firstName.toLowerCase(), 'name') }}</div>
-                                        <div class="flex items-center mx-2">
-                                            <span class="period"></span>
+        <!-- <ng-container *ngIf="content?.averageRating"> -->
+            <div class="flex flex-col ratings-div gap-10" id="ratingsDiv">
+                <ws-widget-rating-summary [ratingSummary]="ratingSummaryProcessed"></ws-widget-rating-summary>
+        
+                <div class="flex flex-col gap-3">
+                    <div class="flex flex-row gap-4">
+                        <div class="flex-1 mat-subheading-1" id="reviewContainer">{{ 'apptocsinglepage.topReviews' | translate }}</div>
+                        <ng-container *ngIf="ratingSummaryProcessed?.avgRating">
+                            <div class="ws-mat-default-text cursor-pointer" (click)="handleOpenReviewModal()">{{ 'msg.showAll' | translate }}</div>
+                        </ng-container>
+                    </div>
+                    <ng-container *ngIf="topRatingReviews && topRatingReviews?.length">
+                        <div class="flex gap-5" [ngClass]="isMobile ? 'horizontal-strip' : 'flex-wrap'">
+                            <div class="comment-div" *ngFor="let eachReview of topRatingReviews | slice:0:4; let i = index">
+                                <div class="p-4 flex flex-col gap-6">
+                                    <div class="flex flex-row gap-4">
+                                        <div class="flex-1">
+                                            <div class="text-left desc-ellipsis" title="{{ eachReview?.review }}">{{ handleCapitalize(eachReview?.review) }}</div>
                                         </div>
-                                        <div>{{ eachReview?.date | pipeRelativeTime }}</div>
+                                        <div class="flex flex-row gap-2 rating-start-value">
+                                            <mat-icon>star</mat-icon>
+                                            <div>{{ eachReview?.rating }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-row gap-2 items-center text-sm">
+                                        <ws-widget-avatar-photo [randomColor]="true" [datalen]="1" [size]="'round-m'" [photoUrl]="eachReview?.photo || ''" [name]="eachReview?.firstName"></ws-widget-avatar-photo>
+                                        <div class="flex flex-wrap">
+                                            <div>{{ handleCapitalize(eachReview?.firstName.toLowerCase(), 'name') }}</div>
+                                            <div class="flex items-center mx-2">
+                                                <span class="period"></span>
+                                            </div>
+                                            <div>{{ eachReview?.date | pipeRelativeTime }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </ng-container>
-                <div *ngIf="!topRatingReviews || !topRatingReviews?.length">
-                    <div class="flex flex-col text-center items-center justify-center bg-white p-4 rounded-md">
-                        <div class="font-base font-bold">{{ 'apptocsinglepage.noReviewsFound' | translate }}</div>
+                    </ng-container>
+                    <div *ngIf="!topRatingReviews || !topRatingReviews?.length">
+                        <div class="flex flex-col text-center items-center justify-center bg-white p-4 rounded-md">
+                            <div class="font-base font-bold">{{ 'apptocsinglepage.noReviewsFound' | translate }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <!-- </ng-container> -->
+        <!-- <ng-container *ngIf="!content?.averageRating">
+            <div class="flex flex-col gap-3 justify-center ratings-div">
+                <img src="/assets/icons/toc/no-certificate.svg" alt="no ratings image" />
+                <div class="text-lg font-bol">Be the first one to rate this course and your <br/> learning experience</div>
+            </div>
+        </ng-container> -->
     </ng-container>
 </div>

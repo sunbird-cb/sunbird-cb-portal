@@ -22,7 +22,7 @@ const videoJsOptions: videoJs.PlayerOptions = {
   fluid: false,
   muted: true,
   techOrder: ['html5'],
-  playbackRates: [0.75, 0.85, 1, 1.25, 2, 3],
+  playbackRates: [1, 1.5],
   poster: '',
   html5: {
     hls: {

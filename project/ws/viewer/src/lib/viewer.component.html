@@ -30,7 +30,7 @@
 
     <mat-sidenav-content #scrollableContent [ngClass]="isAssessmentScreen? 'isAssessmentScreen':''">
       
-      <ng-container *ngIf="viewerHeaderSideBarToggleFlag && !isPreview">
+      <ng-container *ngIf="viewerHeaderSideBarToggleFlag">
         <!-- *ngIf="fullScreenContainer" -->
         <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType" [completedCount]="completedCount"
           [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [content]="content">
@@ -81,7 +81,7 @@
       <section *ngIf="status === 'pending'">
         <mat-spinner></mat-spinner>
       </section>
-      <div *ngIf="isPreview" class="flex flex-1 flex-column">
+      <div *ngIf="isPreview" class="flex flex-1 flex-column mb-3">
         <div class="flex flex-1 flex-row-reverse">
           <a *ngIf="show" class="padding-right-s padding-top-xs" role="button" (click)="show=false">
             <mat-icon class="cursor-pointer ws-mat-default-text">close</mat-icon>
@@ -131,7 +131,7 @@
         </div>
         <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <div class="pb-4 lg:py-4">
-            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [fromViewer]="true" [componentName]="'viewer'"  [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap" [pathSet]="pathSet" [config]="tocConfig"></ws-widget-content-toc>
           </div>
         </div>
@@ -139,7 +139,7 @@
       <ng-container *ngIf="!isMobile">
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
           <div class="pb-4 lg:py-4 pl-4 pr-4">
-            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [fromViewer]="true" [componentName]="'viewer'" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap" [pathSet]="pathSet" [config]="tocConfig"></ws-widget-content-toc>
           </div>
         </div>

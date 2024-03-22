@@ -19,11 +19,11 @@
             class="flex action-button justify-center">
             <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
               <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                {{ resumeData ? translateLabels('resume', 'apptochome') : translateLabels('start', 'apptochome') }}
+                {{ resumeData ? translateLabels('resume', 'apptochome') : translateLabels('resume', 'apptochome') }}
               </ng-container>
             </ng-container>
             <ng-container *ngIf="content.completionPercentage === 100 || certData">
-              {{ resumeData ? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome') }}
+              {{ resumeData ? translateLabels('Start again', 'apptochome') : translateLabels('resume', 'apptochome') }}
             </ng-container>
           </a>
 
@@ -99,7 +99,6 @@
             </ng-container> -->
           </ng-container>
           <ng-container *ngIf="((content?.primaryCategory !== primaryCategory.RESOURCE)  && !enrollBtnLoading) && contentReadData?.batches[0].endDate">
-            <!-- {{contentReadData?.batches|json}} -->
             <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
             [userEnrollmentList]="userEnrollmentList"  [analytics]="analytics" (programEnrollCall)="programEnrollCall($event)"
             [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
@@ -177,7 +176,7 @@
       </ng-container>
 
       <ng-container
-        *ngIf="isBatchInProgress && (content?.primaryCategory === primaryCategory.CURATED_PROGRAM && batchData?.enrolled)">
+        *ngIf="isBatchInProgress && (content?.primaryCategory === primaryCategory.CURATED_PROGRAM && batchData?.enrolled) && !enrollBtnLoading">
         <a *ngIf="showStart.show && !isPostAssessment"
           [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
           [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
@@ -185,11 +184,11 @@
           <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
             <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
               {{ resumeData && (content.completionPercentage < 100 && content.completionPercentage> 0) ? translateLabels('resume', 'apptochome') :
-                translateLabels('start', 'apptochome') }}
+                translateLabels('resume', 'apptochome') }}
             </ng-container>
           </ng-container>
           <ng-container *ngIf="content.completionPercentage === 100">
-            {{ resumeData || content.completionPercentage === 100 ? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome') }}
+            {{ resumeData || content.completionPercentage === 100 ? translateLabels('Start again', 'apptochome') : translateLabels('resume', 'apptochome') }}
           </ng-container>
         </a>
       </ng-container>
@@ -257,16 +256,8 @@
       <ng-container *ngIf="actionBtnStatus == 'reject' && content?.registrationUrl">
         <a [href]="content?.registrationUrl" target="_blank" class="flex action-button justify-center" i18n>{{ 'apptochome.register' | translate }}</a>
       </ng-container>
-    </div>
 
-    <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-      <div class="hideAbove1200">
-        <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
-          [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
-          [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
-        </ws-app-toc-banner>
-      </div>
-    </ng-container>
+    </div>
   </ng-template>
 
   <ng-template #progressFunctionality>
@@ -313,7 +304,12 @@
               <div class="flex flex-row gap-2">
                 <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
                   <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-                  <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                  <ng-container *ngIf="content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                  </ng-container>
+                  <ng-container *ngIf="!content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
+                  </ng-container>
                 </div>
                 <div class="flex items-center" *ngIf="cbPlanEndDate">
                   <div class="flex items-center due-tag text-xs leading-3">
@@ -348,13 +344,13 @@
             </ng-container>
             <ng-container *ngIf="!skeletonLoader">
               <div class="flex gap-4 items-center" *ngIf="content?.averageRating || content?.additionalTags?.length">
-                <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" *ngIf="content?.averageRating">
-                  <div class="flex flex-row gap-1 items-center">
+                <div class="flex flex-row rating-chip py-2 items-center cursor-pointer" (click)="handleNavigateToReviews()" *ngIf="content?.averageRating">
+                  <div class="flex flex-row gap-1 margin-left-s items-center">
                     <mat-icon>grade</mat-icon>
                     <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
                   </div>
                   <div class="separator"></div>
-                  <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
+                  <div class="text-white text-sm leading-4 margin-right-m">{{ content?.totalRating | pipeCountTransform }}</div>
                 </div>
                 <div class="flex items-center" *ngIf="content?.additionalTags?.length">
                   <div class="most-enrolled-chip text-xs leading-3">
@@ -386,7 +382,7 @@
         </div>
         <!-- Overall progress functionality -->
 
-        <ws-widget-content-toc [content]="content" [pathSet]="pathSet" [tocStructure]="tocStructure"
+        <ws-widget-content-toc [content]="content" [componentName]="'toc'"  [pathSet]="pathSet" [tocStructure]="tocStructure"
         [forPreview]="false" [resumeData]="resumeData" [batchData]="selectedBatchData" [skeletonLoader]="skeletonLoader"
         [changeTab]="changeTab" [hierarchyMapData]="tocSvc?.hashmap" [selectedBatchData]="selectedBatchData" [condition]="{isPostAssessment: isPostAssessment, content: content, isAcbpCourse: isAcbpCourse, isClaimed: isClaimed, monthlyCapExceed: monthlyCapExceed, isCompletedThisMonth: isCompletedThisMonth, showTakeAssessment: showTakeAssessment, userEnrollmentList: userEnrollmentList, resumeData: resumeData, userRating: userRating, enrollBtnLoading: enrollBtnLoading, primaryCategory: primaryCategory, currentCourseBatchId: currentCourseBatchId}" [kparray]="kparray"></ws-widget-content-toc>
       </div>
@@ -405,7 +401,12 @@
               <div class="flex items-center gap-4 justify-between" [ngClass]="{'justify-between': scrolled, 'justify-end': !scrolled}">
                 <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2" *ngIf="scrolled">
                   <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
-                  <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                  <ng-container *ngIf="content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                  </ng-container>
+                  <ng-container *ngIf="!content?.courseCategory">
+                    <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
+                  </ng-container>
                 </div>
                 <div (click)="onClickOfShare()" class="flex flex-row items-center justify-end gap-2 share-tag" *ngIf="canShare">
                   <mat-icon>share</mat-icon>
@@ -422,7 +423,7 @@
         </ng-container>
 
         <div class="flex flex-col gap-4 p-5 border-bottom">
-          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && isMobile">
             <div class="flex flex-row gap-3 justify-around">
               <div class="batch-info">
                 <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}</div>
@@ -437,11 +438,12 @@
                 <div class="batch-label">{{ 'apptoc.totalEnrolled' | translate }}</div>
               </div>
             </div>
-
-            <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+            <ng-container *ngIf="!mobile1200">
+              <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
               [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
               [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
             </ws-app-toc-banner>
+            </ng-container>
           </div>
 
           <ng-container *ngIf="skeletonLoader">
@@ -581,9 +583,19 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="mobile-enroll-div">
+    <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM ">
+      <div *ngIf="mobile1200">
+        <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
+          [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
+          [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
+        </ws-app-toc-banner>
+
+      </div>
+    </ng-container>
     <ng-container [ngTemplateOutlet]="enrollFunctionality"></ng-container>
   </div>
 

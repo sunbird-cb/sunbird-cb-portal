@@ -194,6 +194,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   enableShare = false
   rootOrgId: any
   certId: any
+  mobile1200: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -281,6 +282,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngOnInit() {
+    this.mobile1200 = window.innerWidth < 1201
     this.configSvc.languageTranslationFlag.subscribe((data: any) => {
       if (data) {
         if (localStorage.getItem('websiteLanguage')) {
@@ -290,7 +292,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }
       }
     })
-
     this.getServerDateTime()
 
     this.selectedBatchSubscription = this.tocSvc.getSelectedBatch.subscribe(batchData => {
@@ -691,9 +692,10 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         break
       }
     }
-
-    this.getUserRating(false)
-    this.getUserEnrollmentList()
+    if (!this.forPreview) {
+      this.getUserRating(false)
+      this.getUserEnrollmentList()
+    }
     this.body = this.domSanitizer.bypassSecurityTrustHtml(
       this.content && this.content.body
         ? this.forPreview
@@ -1016,22 +1018,26 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public handleAutoBatchAssign() {
-    this.enrollBtnLoading = true
-    this.changeTab = !this.changeTab
-    this.userSvc.resetTime('enrollmentService')
-    const batchData = this.contentReadData && this.contentReadData.batches[0]
-    if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
-      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM, batchData)
-    } else if (this.content && this.content.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
-      let moderatedBatchData: any
-      if (this.batchData && this.batchData.content && this.batchData.content.length > 1) {
-        moderatedBatchData = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0]
-      } else {
-        moderatedBatchData = this.batchData && this.batchData.content && this.batchData.content[0]
-      }
-      this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, moderatedBatchData)
+    if (this.forPreview) {
+      this.navigateToPlayerPage('')
     } else {
-      this.autoAssignEnroll()
+      this.enrollBtnLoading = true
+      this.changeTab = !this.changeTab
+      this.userSvc.resetTime('enrollmentService')
+      const batchData = this.contentReadData && this.contentReadData.batches[0]
+      if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM) {
+        this.autoEnrollCuratedProgram(NsContent.ECourseCategory.CURATED_PROGRAM, batchData)
+      } else if (this.content && this.content.courseCategory === NsContent.ECourseCategory.MODERATED_PROGRAM) {
+        let moderatedBatchData: any
+        if (this.batchData && this.batchData.content && this.batchData.content.length > 1) {
+          moderatedBatchData = this.selectedBatchData && this.selectedBatchData.content && this.selectedBatchData.content[0]
+        } else {
+          moderatedBatchData = this.batchData && this.batchData.content && this.batchData.content[0]
+        }
+        this.autoEnrollCuratedProgram(NsContent.ECourseCategory.MODERATED_PROGRAM, moderatedBatchData)
+      } else {
+        this.autoAssignEnroll()
+      }
     }
   }
 
@@ -1368,7 +1374,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     const resumeCopy = [...this.resumeData]
     if (!type) {
       // tslint:disable-next-line:max-line-length
-      const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) => new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
+
+      const lastItem = resumeCopy && resumeCopy.sort((a: any, b: any) =>
+      new Date(b.lastAccessTime).getTime() - new Date(a.lastAccessTime).getTime()).shift()
       return {
         identifier: lastItem.contentId,
         mimeType: lastItem.progressdetails && lastItem.progressdetails.mimeType,
