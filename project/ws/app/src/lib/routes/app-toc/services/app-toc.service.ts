@@ -572,12 +572,13 @@ export class AppTocService {
             completedLeafNodes = [...completedLeafNodes, ...parentChild.leafNodes]
             if (foundContent.issuedCertificates.length > 0) {
               const certId: any = foundContent.issuedCertificates[0].identifier
-              const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
-                this.contentLoader.next(false)
-              })
-              if (certData && certData.result) {
-                parentChild.issuedCertificatesSVG = certData.result.printUri
-              }
+              parentChild.issuedCertificatesId = certId
+              // const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
+              //   this.contentLoader.next(false)
+              // })
+              // if (certData && certData.result) {
+              //   parentChild.issuedCertificatesSVG = certData.result.printUri
+              // }
               this.contentLoader.next(false)
             }
             parentChild.completionPercentage = 100

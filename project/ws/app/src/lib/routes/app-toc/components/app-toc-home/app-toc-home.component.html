@@ -19,11 +19,11 @@
             class="flex action-button justify-center">
             <ng-container *ngIf="(!content.completionPercentage || content.completionPercentage < 100) && !certData">
               <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
-                {{ resumeData ? translateLabels('resume', 'apptochome') : translateLabels('start', 'apptochome') }}
+                {{ resumeData ? translateLabels('resume', 'apptochome') : translateLabels('resume', 'apptochome') }}
               </ng-container>
             </ng-container>
             <ng-container *ngIf="content.completionPercentage === 100 || certData">
-              {{ resumeData ? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome') }}
+              {{ resumeData ? translateLabels('Start again', 'apptochome') : translateLabels('resume', 'apptochome') }}
             </ng-container>
           </a>
 
@@ -176,7 +176,7 @@
       </ng-container>
 
       <ng-container
-        *ngIf="isBatchInProgress && (content?.primaryCategory === primaryCategory.CURATED_PROGRAM && batchData?.enrolled)">
+        *ngIf="isBatchInProgress && (content?.primaryCategory === primaryCategory.CURATED_PROGRAM && batchData?.enrolled) && !enrollBtnLoading">
         <a *ngIf="showStart.show && !isPostAssessment"
           [routerLink]="resumeData ? resumeDataLink?.url : firstResourceLink?.url"
           [queryParams]="resumeData ? generateQuery('RESUME') : generateQuery('START')"
@@ -184,11 +184,11 @@
           <ng-container *ngIf="!content.completionPercentage || content.completionPercentage < 100">
             <ng-container *ngIf="!forPreview || isInIFrame; else authView" i18n>
               {{ resumeData && (content.completionPercentage < 100 && content.completionPercentage> 0) ? translateLabels('resume', 'apptochome') :
-                translateLabels('start', 'apptochome') }}
+                translateLabels('resume', 'apptochome') }}
             </ng-container>
           </ng-container>
           <ng-container *ngIf="content.completionPercentage === 100">
-            {{ resumeData || content.completionPercentage === 100 ? translateLabels('Start again', 'apptochome') : translateLabels('start', 'apptochome') }}
+            {{ resumeData || content.completionPercentage === 100 ? translateLabels('Start again', 'apptochome') : translateLabels('resume', 'apptochome') }}
           </ng-container>
         </a>
       </ng-container>

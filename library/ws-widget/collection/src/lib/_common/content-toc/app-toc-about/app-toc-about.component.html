@@ -14,13 +14,13 @@
                                 (content?.completedOn | date: 'd MMM, y') : 'NA' }}</div>
                         </ng-container>
                     </div>
-                    <div class="flex justify-center">
+                    <div class="flex justify-center download-section">
                         <ng-container *ngIf="skeletonLoader">
                             <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'24px'"
                                 [height]="'24px'"></ws-widget-skeleton-loader>
                         </ng-container>
                         <ng-container *ngIf="!skeletonLoader && content?.certificateObj?.certData">
-                            <mat-icon class="icon cursor-pointer"
+                            <mat-icon class="icon cursor-pointer "
                                 (click)="handleOpenCertificateDialog()">arrow_downward</mat-icon>
                         </ng-container>
                     </div>

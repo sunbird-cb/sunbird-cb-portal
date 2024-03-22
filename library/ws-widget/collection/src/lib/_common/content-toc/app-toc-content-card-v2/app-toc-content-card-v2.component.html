@@ -287,12 +287,16 @@
                                             [progressType]="'percentage'" [customClassName]="'viewer-progress'">
                                         </ws-widget-content-progress>
                                     </div>
-                                    <ng-container *ngIf="content.issuedCertificatesSVG">
+                                    <ng-container *ngIf="content?.issuedCertificatesId">
                                         <a class="ml-5 certificate-btn"
-                                            (click)="openCertificateDialog(content.issuedCertificatesSVG)">
+                                        [ngClass]="{'disable-btn': downloadCertificateLoading || content?.issuedCertificatesId}" 
+                                        (click)="!downloadCertificateLoading && downloadCertificate(content?.issuedCertificatesId);$event.stopPropagation()">
                                             <!-- <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24"> -->
                                             <span>Certificate</span>
-                                            <mat-icon class="ml-2">arrow_downward</mat-icon>
+                                            <mat-icon  *ngIf="!downloadCertificateLoading" class="ml-2">arrow_downward</mat-icon>
+                                            <div class="center flex flex-middle certificate-loader"  *ngIf="downloadCertificateLoading">
+                                                <mat-spinner strokeWidth="2" stroke="'white'" class="white-spinner" [diameter]="16"></mat-spinner>
+                                              </div>
                                         </a>
                                     </ng-container>
                                 </div>
@@ -320,12 +324,16 @@
                                             [progressType]="'percentage'" [customClassName]="'viewer-progress'">
                                         </ws-widget-content-progress>
                                     </div>
-                                    <ng-container *ngIf="content.issuedCertificatesSVG">
-                                        <a class="ml-5  certificate-btn"
-                                            (click)="openCertificateDialog(content.issuedCertificatesSVG)">
+                                    <ng-container *ngIf="content?.issuedCertificatesId">
+                                        <a class="ml-5 certificate-btn"
+                                        [ngClass]="{'disable-btn': downloadCertificateLoading || content?.issuedCertificatesId}" 
+                                        (click)="!downloadCertificateLoading && downloadCertificate(content?.issuedCertificatesId);$event.stopPropagation()">
                                             <!-- <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24"> -->
                                             <span>Certificate</span>
-                                            <mat-icon class="ml-2">arrow_downward</mat-icon>
+                                            <mat-icon  *ngIf="!downloadCertificateLoading" class="ml-2">arrow_downward</mat-icon>
+                                            <div class="center flex flex-middle certificate-loader"  *ngIf="downloadCertificateLoading">
+                                                <mat-spinner strokeWidth="2" stroke="'white'" class="white-spinner" [diameter]="16"></mat-spinner>
+                                              </div>
                                         </a>
                                     </ng-container>
                                 </div>
