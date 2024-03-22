@@ -693,7 +693,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         break
       }
     }
-    if(!this.forPreview) {
+    if (!this.forPreview) {
       this.getUserRating(false)
       this.getUserEnrollmentList()
     }
@@ -1019,7 +1019,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   public handleAutoBatchAssign() {
-    if(this.forPreview) {
+    if (this.forPreview) {
       this.navigateToPlayerPage('')
     } else {
       this.enrollBtnLoading = true
