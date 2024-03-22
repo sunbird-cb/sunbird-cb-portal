@@ -336,6 +336,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   showCompletionPopUp() {
     const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
       autoFocus: false,
+      panelClass: 'course-completion-dialog',
       data: {
         courseName: this.activatedRoute.snapshot.queryParams.courseName,
         userId: this.userid,
