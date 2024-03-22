@@ -86,18 +86,26 @@
         <ng-container>
           <div class="flex flex-1 custom margin-0 margin-top-m bottom-fix mob" role="link" tabindex="0">
             <div class="flex flex-1">
-              <span class="flex margin-right-l mobile">
+              <span class="flex flex-col margin-right-l mobile center-item" *ngIf="isCurrentUser">
+                <span class="ws-mat-default-text items-center flex">
+                  <img class="karmapoints-icon-mob" alt="karma points" src="/assets/icons/karma-point-logo.jpg">
+                  <span class="ws-mat-default-text">
+                    {{ countdata }}</span>
+                </span>
+                <span class="pad-4 small-text"> {{ 'profileView.karmaPoints' | translate }}</span>
+              </span>
+              <span class="flex margin-right-l mobile flex-col items-center">
                 <span class="ws-mat-default-text">{{
                   connectionRequests?.length
                   }}</span>
-                <span class="pad-4">Connections</span>
+                <span class="pad-4 small-text">Connections</span>
               </span>
-              <span class="flex margin-right-l mobile">
+              <span class="flex margin-right-l mobile flex-col items-center">
                 <!-- {{discussProfileData | json}} -->
                 <span class="ws-mat-default-text">{{
                   Math.abs(discussProfileData?.topiccount || 0)
                   }}</span>
-                <span class="pad-4">Discussions</span>
+                <span class="pad-4 small-text">Discussions</span>
               </span>
             </div>
             <!-- <div class="flex flex-1" class="text-right mobile2">
@@ -168,7 +176,7 @@
         <ng-container>
           <div class="flex flex-1 custom margin-0 margin-top-m bottom-fix mob" role="link" tabindex="0">
             <div class="flex flex-1">
-              <span class="flex margin-right-l mobile">
+              <span class="flex margin-right-l mobile" *ngIf="isCurrentUser">
                 <span class="ws-mat-default-text">
                   <img class="karmapoints-icon" alt="karma points" src="/assets/icons/karma-point-logo.jpg">
                 </span>

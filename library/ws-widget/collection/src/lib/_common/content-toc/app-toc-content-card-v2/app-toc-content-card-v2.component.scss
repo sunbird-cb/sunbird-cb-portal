@@ -46,7 +46,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -100,7 +100,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -191,7 +191,11 @@ span.optional-span {
     & .customicon .mat-icon {
       color: #fff;
     }
-    
+    .progress-container {
+      span {
+        color: white !important;
+      }
+    }
   }
 }
 
@@ -281,7 +285,16 @@ span.optional-span {
 :nth-child(1 of .resourceCard) .resource{
   margin-top: 16px !important;
 }
+// fallback css for above 
+.resourceCard:nth-child(1) .resource {
+  margin-top: 16px !important;
+}
+
 :nth-child(1 of .resourceCard) .activeResource{
+  margin-top: 0 !important;
+}
+// fallback css for above 
+.resourceCard:nth-child(1) .activeResource {
   margin-top: 0 !important;
 }
 
@@ -492,7 +505,7 @@ span.optional-span {
 
 .certificate-btn {
   height: 24px;
-  background: black;
+  background: #1a4ca1;
   display: flex;
   justify-content: center;
   align-items: center;

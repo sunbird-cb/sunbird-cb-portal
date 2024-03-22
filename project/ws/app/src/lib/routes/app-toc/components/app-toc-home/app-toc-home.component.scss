@@ -348,12 +348,15 @@ a.action-button {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1201px) {
   .mobile-enroll-div, .mob-share {
     display: none !important;
   }
-}
 
+  .hideAbove1200 {
+    display: none;
+  }
+}
 
 .mobile-progress {
   padding: 16px;
@@ -363,6 +366,18 @@ a.action-button {
   .mobile-progress {
     display: none;
   }
+}
+
+$title-line-count: 2;
+.sourceEllipsis {
+  white-space: break-spaces;
+  position: relative;
+  overflow: hidden;
+  text-overflow: clip;
+  display: -webkit-box;
+  -webkit-line-clamp: $title-line-count;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
 }
 
 //////////////................... New TOC page css.................///////////////

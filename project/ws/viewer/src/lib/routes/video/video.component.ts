@@ -86,6 +86,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           this.widgetResolverVideoData.widgetData.primaryCategory = this.videoData.primaryCategory
           this.widgetResolverVideoData.widgetData.version = `${this.videoData.version}${''}`
           this.widgetResolverVideoData.widgetData.channel = this.channelId
+          this.widgetResolverVideoData.widgetData.size = this.videoData.duration
         }
         this.isFetchingDataComplete = true
         // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
@@ -140,7 +141,7 @@ export class VideoComponent implements OnInit, OnDestroy {
               ? this.viewerSvc.getAuthoringUrl(this.videoData.artifactUrl)
               : this.viewerSvc.getPublicUrl(this.videoData.artifactUrl) || this.videoData.artifactUrl
             : ''
-          this.widgetResolverVideoData.widgetData.resumePoint = this.getResumePoint(this.videoData)
+          // this.widgetResolverVideoData.widgetData.resumePoint = this.getResumePoint(this.videoData)
           this.widgetResolverVideoData.widgetData.identifier = this.videoData
             ? this.videoData.identifier
             : ''
@@ -149,6 +150,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           this.widgetResolverVideoData.widgetData.primaryCategory = data.content.data.primaryCategory
           this.widgetResolverVideoData.widgetData.channel = this.channelId
           this.widgetResolverVideoData.widgetData.version = `${data.content.data.version}${''}`
+          this.widgetResolverVideoData.widgetData.size = data.content.data.duration
           if (data.content.data.length > 0 && data.content.data.subTitles[0]) {
 
             let subTitlesUrl = ''
@@ -306,9 +308,15 @@ export class VideoComponent implements OnInit, OnDestroy {
                 content.progressdetails.current &&
                 this.widgetResolverVideoData
               ) {
-                this.widgetResolverVideoData.widgetData.resumePoint = Number(
-                  content.progressdetails.current.pop(),
-                )
+                if (content.progress === 100 || content.status === 2) {
+                  // if its completed then resume from starting
+                  this.widgetResolverVideoData.widgetData.resumePoint = 0
+                } else {
+                  // resume from last played point
+                  this.widgetResolverVideoData.widgetData.resumePoint = Number(
+                    content.progressdetails.current.pop(),
+                  )
+                }
               }
             }
           }

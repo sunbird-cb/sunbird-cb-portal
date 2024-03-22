@@ -284,6 +284,12 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           limit : 20,
         },
       }
+      if (!this.veifiedKarmayogi) {
+        moderatedCoursesRequestBody.request.filters = {
+          ...moderatedCoursesRequestBody.request.filters,
+          'secureSettings.isVerifiedKarmayogi': 'No',
+        }
+      }
 
       this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
         const showViewMore = Boolean(
@@ -291,13 +297,14 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
         )
         let contentList: any = []
         if (results && results.result && results.result.content && results.result.content.length) {
-          if (this.veifiedKarmayogi) {
-            contentList = results.result.content
-          } else {
-            contentList = results.result.content.filter((ele: any) => {
-              return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
-            })
-          }
+          contentList = results.result.content
+          // if (this.veifiedKarmayogi) {
+          //   contentList = results.result.content
+          // } else {
+          //   contentList = results.result.content.filter((ele: any) => {
+          //     return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
+          //   })
+          // }
         }
         const viewMoreUrl = showViewMore
             ? {

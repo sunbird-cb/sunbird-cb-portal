@@ -43,6 +43,26 @@
   .mat-pseudo-checkbox-checked {
     background-color: rgb(29, 137, 35) !important;
   }
+  .mat-pseudo-checkbox-checked::after {
+    border-color: #1d8923 !important;
+    content: "\2714";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    background: #1d8923;
+    border-radius: 15%;
+    color: #fff;
+    z-index: 1;
+    overflow: hidden;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    font-size: 24px;
+  }
 }
 
 .incorrect-answer {
@@ -52,6 +72,28 @@
   }
   .mat-pseudo-checkbox-checked {
     background-color: #f44336 !important;
+  }
+  .mat-pseudo-checkbox-checked::after {
+    border-color: #f44336 !important;
+    content: "✕";
+    position: absolute;
+    left: 47%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    background: #f44336;
+    border-radius: 15%;
+    color: #fff;
+    z-index: 1;
+    overflow: hidden;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin-left: 0;
+    text-align: left;
+    font-size: 24px;
   }
 }
 

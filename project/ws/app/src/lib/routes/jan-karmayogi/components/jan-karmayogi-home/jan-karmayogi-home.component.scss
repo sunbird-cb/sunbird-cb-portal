@@ -13,6 +13,19 @@
   }
 }
 
+
+@media only screen and (max-width: 768px) {
+  ::ng-deep .jan-karmayogi {
+    .cbpwidth{
+      width: calc(100vw - 50px)!important;
+    }
+  }
+}
+
+.jan-title {
+  margin-bottom: 0px;
+}
+
 .container-balanced-banner {
   @extend %page-center;
   height: auto;

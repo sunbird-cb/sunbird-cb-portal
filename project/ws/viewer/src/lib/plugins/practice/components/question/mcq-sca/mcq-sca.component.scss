@@ -69,6 +69,24 @@
         .mat-radio-outer-circle {
           border-color: rgb(29, 137, 35) !important;
         }
+
+        .mat-radio-outer-circle:after {
+            border-color: #1d8923 !important;
+            content: '\2714';
+            position: absolute;
+            padding-bottom: 4px;
+            left: -4px;
+            top: -4px;
+            width: 24px;
+            height: 20px;
+            text-align: center;
+            background: #1d8923;
+            border-radius: 50%;
+            color: #fff;
+            z-index: 1;
+            overflow: hidden;
+            font-size: 24px;
+        }
       }
 }
 
@@ -85,6 +103,24 @@
 
         .mat-radio-outer-circle {
           border-color: rgb(209, 57, 36) !important;
+        }
+
+        .mat-radio-outer-circle:after {
+            border-color: red !important;
+            content: '\2715';
+            position: absolute;
+            left: -4px;
+            padding-bottom: 4px;
+            top: -4px;
+            width: 24px;
+            height: 20px;
+            text-align: center;
+            background: red;
+            border-radius: 50%;
+            color: #fff;
+            z-index: 1;
+            overflow: hidden;
+            font-size: 24px;
         }
       }
 }
@@ -105,13 +141,16 @@
         background-color: rgb(245,245,245) !important;
     }
 
-    @media only screen and (max-width: 768px) {
-        .more-than-five-option{
-            display: inline-flex;
-            flex-direction: column;
-            width: 100%;
-            height: 90%;
-            overflow: scroll;
-        }
-    }
+    // @media only screen and (min-width: 375px) {
+    //     .responsive-options-height{
+    //         display: inline-flex;
+    //         flex-direction: column;
+    //         width: 100%;
+    //         // height: 73%;
+    //         // overflow-y: auto;
+    //     }
+    // }
 
+    .font-700 {
+        font-weight: 700;
+    }

@@ -83,11 +83,6 @@ export class TopRightNavBarComponent implements OnInit, OnChanges {
     this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
       this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res)
     })
-
-    // setTimeout(() => {
-    //   this.callXMLRequest(this.zohoHtml)
-    // }, 2000);
-
   }
 
   ngOnChanges() {

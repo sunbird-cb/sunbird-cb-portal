@@ -1,16 +1,16 @@
 <section *ngIf="isNotEmbed" id="viewer-conatiner-backdrop">
   <ng-container *ngIf="!isMobile">
-    <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+    <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" (completedCountOutput)="updateCount($event)" [frameReference]="fullScreenContainer"
       (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [hierarchyMapData]="tocSvc?.hashmap">
     </viewer-viewer-top-bar>
-    <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+    <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" [forPreview]="forPreview" (completedCountOutput)="updateCount($event)" [frameReference]="fullScreenContainer"
       (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [hierarchyMapData]="tocSvc?.hashmap">
     </viewer-viewer-top-bar>
   </ng-container>
   
   <mat-sidenav-container autosize class="viewer-sidenav-container">
     
-    <mat-sidenav *ngIf="isTypeOfCollection" [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
+    <mat-sidenav id="side-nav-drawer-state" *ngIf="isTypeOfCollection" [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">
       <!-- <mat-tab-group>
         <mat-tab *ngIf="isTypeOfCollection" i18n-label label="{{'viewercomponent.contents' | translate}}">
@@ -22,18 +22,18 @@
         </mat-tab>
       </mat-tab-group> -->
       <ng-container *ngIf="isTypeOfCollection">
-        <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" 
-        [batchData]="batchData" (hidenav)="minimizeBar()"  [hierarchyMapData]="tocSvc?.hashmap">
+        <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" [config]="tocConfig"
+        [batchData]="batchData" (hidenav)="minimizeBar()"  [hierarchyMapData]="tocSvc?.hashmap" (pathSetEvent)="updatePathSet($event)">
         </viewer-viewer-toc>
       </ng-container> 
     </mat-sidenav>
 
-    <mat-sidenav-content #scrollableContent>
+    <mat-sidenav-content #scrollableContent [ngClass]="isAssessmentScreen? 'isAssessmentScreen':''">
       
       <ng-container *ngIf="viewerHeaderSideBarToggleFlag && !isPreview">
         <!-- *ngIf="fullScreenContainer" -->
-        <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType"
-          [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
+        <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType" [completedCount]="completedCount"
+          [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [content]="content">
         </viewer-viewer-secondary-top-bar>
       </ng-container>
       <section *ngIf="status === 'error'">
@@ -121,10 +121,10 @@
       <ng-container *ngIf="isMobile">
         <div class="mobile-top-bar-container" *ngIf="!(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <ng-container>
-            <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+            <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" (completedCountOutput)="updateCount($event)" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
               (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
             </viewer-viewer-top-bar>
-            <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+            <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" (completedCountOutput)="updateCount($event)" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
               (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
             </viewer-viewer-top-bar>
           </ng-container>
@@ -132,7 +132,7 @@
         <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <div class="pb-4 lg:py-4">
             <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
-            [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap"></ws-widget-content-toc>
+            [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap" [pathSet]="pathSet" [config]="tocConfig"></ws-widget-content-toc>
           </div>
         </div>
       </ng-container>
@@ -140,7 +140,7 @@
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
           <div class="pb-4 lg:py-4 pl-4 pr-4">
             <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
-            [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap"></ws-widget-content-toc>
+            [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap" [pathSet]="pathSet" [config]="tocConfig"></ws-widget-content-toc>
           </div>
         </div>
       </ng-container>

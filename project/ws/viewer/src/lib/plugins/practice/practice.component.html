@@ -147,7 +147,7 @@
             <div class="flex flex-row">
                 <div>
                   <p class="mat-subheading-1">
-                    {{ 'playerbrief.questions' | translate }}
+                    {{ 'playerbrief.questions' | translate | titlecase}}
                   </p>
                 </div>
                 <div class="question-info">
@@ -162,7 +162,7 @@
                 </div>
             </div>
             
-            <div class="timer" *ngIf="quizJson?.timeLimit">
+            <div class="timer" *ngIf="primaryCategory !== ePrimaryCategory.PRACTICE_RESOURCE">
               <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
                   <!-- <ng-container [ngTemplateOutlet]="timer"></ng-container> -->
                   <div *ngIf="timeLeft" class="flex flex-1 flex-center">
@@ -213,7 +213,7 @@
             </div>
           </div>
           <div class="seperate-text">
-            <span>{{ 'practiceoverview.questions' | translate }}</span>
+            <span>{{ 'practiceoverview.questions' | translate | titlecase}}</span>
           </div>
           <!-- <div class="flex flex-row justify-between">
 
@@ -243,9 +243,9 @@
                   !isQuestionAttempted(question?.questionId) &&
                   currentTheme !== 'black-theme'
         -->
-        <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1">
+        <div *ngIf="!isSubmitted && !isXsmall && viewState === 'attempt'" class="flex flex-1 question-box-auto-height">
           <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
-          <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box"
+          <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box quest_num_box"
             *ngIf="fetchingQuestionsStatus === 'done'">
             <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
               <div (click)="scroll(i + 1)" [ngClass]="{
@@ -277,11 +277,11 @@
             </div>
           </div>
         </div>
-        <div class="final-submit" *ngIf="(currentQuestionIndex + 1) === totalQCount" (click)="proceedToSubmit()">
+        <!-- <div class="final-submit" *ngIf="(currentQuestionIndex + 1) === totalQCount" (click)="proceedToSubmit()">
            <div class="final-submit-cta">
               <img src="assets/icons/final-assessment/correct_arrow.svg"> <span class="cta-label">{{ 'practiceoverview.finishAssessment' | translate }}</span>
            </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -379,9 +379,10 @@
 </div>
 
 <!-- Mobile -->
+
 <div #quizContainer class="quiz-container" *ngIf="viewState !== 'initial' && isMobile && fetchingQuestionsStatus === 'done'">
   <div class="flex flex-column"
-    *ngIf="fetchingQuestionsStatus === 'done' && viewState !== 'detail' && !(viewState === 'answer') && !isSubmitted">
+    *ngIf="!isSubmitted">
       <div>
         <div class="flex flex-row justify-around align-end mobile-question-header">
           <div (click)="back()">
@@ -391,7 +392,7 @@
             <span class="subheading-back">{{resourceName}}</span>
             
           </div>
-          <div class="timer" *ngIf="quizJson?.timeLimit">
+          <div class="timer" *ngIf="primaryCategory !== ePrimaryCategory.PRACTICE_RESOURCE">
             <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
               <div *ngIf="timeLeft" class="flex flex-1 flex-center">
                 <img src="assets/icons/final-assessment/timer.svg">
@@ -442,22 +443,35 @@
                   </div> -->
                 </div>
               </div>
-              <div class="seperate-text">
-                <span>{{'playerbrief.questions' | translate}}</span><span><img (click)="showToolTip=!showToolTip" class="question-info" src="assets/icons/final-assessment/question_info.svg"/></span>
-                <!-- <div class="question-info">
-                  <img src="assets/icons/final-assessment/question_info.svg"/>
-                </div>
-               
-              </div> -->
-              <div class="info-hover" *ngIf="showToolTip">
-                <div class="info-tooltip-container">
-                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{'playerbrief.answered' | translate}}</span></div>
-                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{'playerbrief.notAnswered' | translate}}</span></div>
-                    <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{'playerbrief.flagged' | translate}}</span></div>
+              <div class="outer-border-box" id="toolTipSection">
+                <div class="label-source-box">
+                  <span class="box-title">{{'playerbrief.questions' | translate | titlecase}} 
+                    <img (click)="showToolTip=!showToolTip" class="question-info"  src="assets/icons/final-assessment/question_info.svg"/>
+                  </span>               
+                  <div class="info-hover" id="infoToolTip" *ngIf="showToolTip">
+                    <div class="info-tooltip-container">
+                        <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{'playerbrief.answered' | translate}}</span></div>
+                        <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{'playerbrief.notAnswered' | translate}}</span></div>
+                        <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{'playerbrief.flagged' | translate}}</span></div>
+                    </div>
+                  </div>   
                 </div>
               </div>
+              <!-- <div class="seperate-text" id="toolTipSection">
+                <span>{{'playerbrief.questions' | translate | titlecase}}</span>
+                <span>
+                <img (click)="showToolTip=!showToolTip" class="question-info"  src="assets/icons/final-assessment/question_info.svg"/>
+                <div class="info-hover" id="infoToolTip" *ngIf="showToolTip">
+                  <div class="info-tooltip-container">
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/blue-check-box.svg"><span>{{'playerbrief.answered' | translate}}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/not-answered-checkbox.svg"><span>{{'playerbrief.notAnswered' | translate}}</span></div>
+                      <div class="info-tooltip-container-item"><img src="assets/icons/final-assessment/flag-check-box.svg"><span>{{'playerbrief.flagged' | translate}}</span></div>
+                  </div>
+                </div>
               
-          </div>
+              </span>            
+              
+          </div> -->
             
           </div>   
           <div [ngClass]="!expandFalse ? 'my-2':''">
@@ -515,7 +529,7 @@
 
             <div *ngIf="!isSubmitted && viewState === 'attempt' && !expandFalse"  class="flex flex-1">
               <ng-template *ngIf="fetchingQuestionsStatus === 'fetching'" [ngTemplateOutlet]="showLoading"></ng-template>
-              <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box"
+              <div class="flex flex-wrap margin-right-s margin-left-s quest_num_box quest_num_box_mobile"
                 *ngIf="fetchingQuestionsStatus === 'done'">
                 <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
                   <div (click)="scroll(i + 1)" [ngClass]="{
@@ -551,7 +565,7 @@
             
           </div>
           <div class="exapnd-collapse">
-            <div class="expand-icon" (click)="expandFalse = !expandFalse;">
+            <div class="expand-icon" (click)="toggleExpandforMobile()">
               <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">
                 <span *ngIf="expandFalse">expand_more</span>
                 <span *ngIf="!expandFalse">expand_less</span>
@@ -577,7 +591,8 @@
               [totalQCount]="totalQCount"
               (itemSelected)="fillSelectedItems(current_Question, $event)"
               [showAnswer]="showAnswer"
-              [currentQuestion]="current_Question">
+              [currentQuestion]="current_Question"
+              [mobileQuestionSetExpand]="!expandFalse">
             </viewer-question>
           </ng-container>
           <div class="flex flex-1">
@@ -602,6 +617,7 @@
         </div>
       </div>
      
+    </div>
   </div>
   <div class="fixed-question-control" *ngIf="!isSubmitted">
     <div>
