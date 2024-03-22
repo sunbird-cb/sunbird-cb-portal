@@ -32,6 +32,7 @@ export class AppTocContentCardV2Component implements OnInit {
   @Input() rootContentType!: string
   @Input() forPreview = false
   @Input() batchId!: string
+  @Input() componentName: string = 'toc'
   @Input() index!:number
   @Input() pathSet!: any
   @Input() expandActive = true
@@ -74,17 +75,28 @@ export class AppTocContentCardV2Component implements OnInit {
     //     this.defaultThumbnail = data.configData.data.logos.defaultContent
     //   }
     // )
-    setTimeout(()=>{
-      this.scrollView()
-    },700)
   }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
       if (property === 'expandAll') {
         this.viewChildren = this.expandAll
       }
-      if(property === 'pathSet') {
-        this.scrollView()
+      if(property === 'pathSet' && changes['pathSet']) {
+        let currentValue = changes['pathSet'].currentValue
+        let previousValue = changes['pathSet'].previousValue
+        if(currentValue && previousValue){
+          const eqSet = (xs: any, ys: any) =>
+          xs.size === ys.size &&
+          [...xs].every((x) => ys.has(x));
+          if(!eqSet(previousValue, currentValue)){
+            this.scrollView()
+          }
+        }
+        if(previousValue === undefined){
+          setTimeout(()=>{
+            this.scrollView()
+          },700)
+        }
       }
       if (property === 'hierarchyMapData') {
         if(_.isEmpty(changes['hierarchyMapData'].currentValue)){
@@ -141,7 +153,6 @@ export class AppTocContentCardV2Component implements OnInit {
         const now = moment().format('YYYY-MM-DD')
         const startDate = moment(batchData.startDate).format('YYYY-MM-DD')
         const endDate = batchData.endDate ? moment(batchData.endDate).format('YYYY-MM-DD') : now
-        console.log(now,startDate,endDate)
             return (
               // batch.status &&
               moment(startDate).isSameOrBefore(now)
@@ -382,10 +393,24 @@ export class AppTocContentCardV2Component implements OnInit {
   }
   scrollView(){
     try {
-      const errorField = this.renderer.selectRootElement('.resource-container .resource-active');
-      // errorField.scrollIntoView();
-      errorField.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-    } catch (err) {
+      let errorField: any = this.renderer.selectRootElement('.resource-container .resource-active');
+      if(errorField){
+        errorField.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      }
+      if(this.componentName === 'toc') { 
+          if(errorField) {
+            const rect = errorField.getBoundingClientRect();
+            if(rect.top-420 > 0){
+              window.scroll(420,rect.top-148)
+            }
+          }
+      } 
+      // else {
+      //   errorField.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      //   const rect = errorField.getBoundingClientRect();
+      //   errorField.scroll(0,rect.top-56)
+      // }
+    }catch (err) {
 
     }
   }
