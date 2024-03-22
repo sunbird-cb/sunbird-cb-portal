@@ -24,6 +24,7 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() config: any
   @Input() hierarchyMapData: any = {}
   @Input() pathSet: any
+  @Input() componentName!: string
   isPlayable = false
   contentPlayWidgetConfig: NsWidgetResolver.IRenderConfigWithTypedData<any> | null = null
   defaultThumbnail = ''

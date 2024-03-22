@@ -125,6 +125,10 @@
 
   .mat-drawer-content {
     overflow: auto !important;
+    // overflow-y: hidden !important;
+  }
+  .mat-drawer-content.isAssessmentScreen {
+    overflow: auto !important;
     overflow-y: hidden !important;
   }
 }

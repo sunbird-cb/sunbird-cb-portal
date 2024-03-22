@@ -15,6 +15,14 @@
   height: 24px;
   margin-right: 5px;
 }
+.karmapoints-icon-mob {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+.center-item {
+  align-items: center;
+}
 
 .verified {
   margin-left: $size-xs;
@@ -497,4 +505,7 @@ span.profile-badge {
   width: 60px;
   color: #000000 !important;
   height: 60px;
+}
+.small-text {
+  font: 400 13px/20px Lato;
 }

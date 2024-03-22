@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { ConfirmDialogComponent } from './confirm-dialog.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatDialogModule, MatIconModule } from '@angular/material'
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [ConfirmDialogComponent],
   imports: [
@@ -11,6 +12,7 @@ import { MatDialogModule, MatIconModule } from '@angular/material'
     ReactiveFormsModule,
     MatDialogModule,
     MatIconModule,
+    TranslateModule,
   ],
   exports: [
     ConfirmDialogComponent,

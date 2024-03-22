@@ -1,9 +1,9 @@
 <section *ngIf="isNotEmbed" id="viewer-conatiner-backdrop">
   <ng-container *ngIf="!isMobile">
-    <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+    <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" (completedCountOutput)="updateCount($event)" [frameReference]="fullScreenContainer"
       (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [hierarchyMapData]="tocSvc?.hashmap">
     </viewer-viewer-top-bar>
-    <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+    <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" [forPreview]="forPreview" (completedCountOutput)="updateCount($event)" [frameReference]="fullScreenContainer"
       (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [hierarchyMapData]="tocSvc?.hashmap">
     </viewer-viewer-top-bar>
   </ng-container>
@@ -28,11 +28,11 @@
       </ng-container> 
     </mat-sidenav>
 
-    <mat-sidenav-content #scrollableContent>
+    <mat-sidenav-content #scrollableContent [ngClass]="isAssessmentScreen? 'isAssessmentScreen':''">
       
       <ng-container *ngIf="viewerHeaderSideBarToggleFlag && !isPreview">
         <!-- *ngIf="fullScreenContainer" -->
-        <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType"
+        <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType" [completedCount]="completedCount"
           [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [content]="content">
         </viewer-viewer-secondary-top-bar>
       </ng-container>
@@ -121,17 +121,17 @@
       <ng-container *ngIf="isMobile">
         <div class="mobile-top-bar-container" *ngIf="!(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <ng-container>
-            <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+            <viewer-viewer-top-bar *ngIf="fullScreenContainer" [content]="content" (completedCountOutput)="updateCount($event)" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
               (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
             </viewer-viewer-top-bar>
-            <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
+            <viewer-viewer-top-bar *ngIf="!fullScreenContainer" [content]="content" (completedCountOutput)="updateCount($event)" [forPreview]="forPreview" [frameReference]="fullScreenContainer"
               (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount">
             </viewer-viewer-top-bar>
           </ng-container>
         </div>
         <div [ngClass]="isMobile ? 'toc-container-mobile' : 'toc-container'" *ngIf="viewerHeaderSideBarToggleFlag && !(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <div class="pb-4 lg:py-4">
-            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [fromViewer]="true" [componentName]="'viewer'"  [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap" [pathSet]="pathSet" [config]="tocConfig"></ws-widget-content-toc>
           </div>
         </div>
@@ -139,7 +139,7 @@
       <ng-container *ngIf="!isMobile">
         <div class='toc-container' *ngIf="viewerHeaderSideBarToggleFlag">
           <div class="pb-4 lg:py-4 pl-4 pr-4">
-            <ws-widget-content-toc [fromViewer]="true" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
+            <ws-widget-content-toc [fromViewer]="true" [componentName]="'viewer'" [contentTabFlag]="isMobile" [tocStructure]="tocStructure" [content]="batchId ? hierarchyData : content" [initialRouteData]="initialrouteData" [forPreview]="false"
             [resumeData]="resumeData" [batchData]="batchData" [hierarchyMapData]="tocSvc?.hashmap" [pathSet]="pathSet" [config]="tocConfig"></ws-widget-content-toc>
           </div>
         </div>

@@ -14,7 +14,7 @@ import {
 import { TFetchStatus, UtilityService, ConfigurationsService, LoggerService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
 import { AccessControlService } from '@ws/author'
-import { Subscription, timer } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/app-toc-analytics.model'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
@@ -116,7 +116,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   minutes: any
   seconds: any
   serverDateSubscription: any
-  serverDate: any
+  serverDate: any = new Date()
   canShare = false
   enableShare = false
   rootOrgId: any
@@ -137,7 +137,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   userProfile: any
   maxEmailsLimit = 30
   showLoader = false
-  timerInterval: any
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
@@ -188,17 +187,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete | undefined
 
   ngOnInit() {
+    // this.serverDate = new Date().getTime()
     this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
       this.serverDate = serverDate
-      if (this.serverDate) {
-        this.timerInterval = timer(1000, 1000)
-        if (this.timerIntervalClear) {
-          this.timerIntervalClear.unsubscribe()
-        }
-        this.timerIntervalClear = this.timerInterval.subscribe((t: any) => this.timerFunc(serverDate + t * 1000))
-      }
+      this.clearAndCallTimer()
     })
-
     this.route.data.subscribe(data => {
       this.tocConfig = data.pageData.data
       if (this.content && this.isPostAssessment) {
@@ -658,6 +651,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public batchChange(event: any) {
+    this.clearAndCallTimer()
     if (event && event.value) {
       const batchData = {
         content: [event.value],
@@ -762,6 +756,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
         }
       }
     }
+  }
+  clearAndCallTimer() {
+    if (this.timerIntervalClear) {
+      clearInterval(this.timerIntervalClear)
+    }
+    this.callTimer()
   }
 
   // setting batch start date
@@ -1194,6 +1194,53 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
     const color = this.tagSvc.getContrast(bgColor)
     return { color, 'background-color': bgColor }
   }
+  getTargetTime() {
+    if (this.selectedBatch.startDate) {
+      this.targetDate = new Date(this.selectedBatch.startDate)
+      const convertedDate = dayjs(this.selectedBatch.startDate).format('YYYY-MM-DD HH:mm:ss')
+      return new Date(convertedDate).getTime()
+    }
+    // this.targetTime = ''
+    return ''
+  }
+  callTimer() {
+    // this.targetTime = this.getTargetTime()
+    if (this.serverDate) {
+      // let timerInterval = timer(1000, 1000)
+      // setTimeout(()=>{
+      //   if (this.timerIntervalClear) {
+      //     this.timerIntervalClear.unsubscribe()
+      //   }
+      //   this.timerIntervalClear = timerInterval.subscribe((t: any) => {
+
+      //     console.log(this.selectedBatch.startDate,'----')
+      //     console.log(this.batchControl.value.startDate,'hiiii')
+      //     this.targetDate = new Date(this.selectedBatch.startDate)
+      //     const convertedDate = dayjs(this.selectedBatch.startDate).format('YYYY-MM-DD HH:mm:ss')
+      //     this.targetTime = ''
+      //     this.targetTime=new Date(convertedDate).getTime()
+      //     this.timerFunc(t,this.serverDate + t * 1000)
+
+      //   })
+      // },100)
+      let t = 0
+      if (this.timerIntervalClear) {
+            clearInterval(this.timerIntervalClear)
+      }
+      this.timerIntervalClear =  setInterval(() => {
+        this.targetTime = ''
+      if (this.selectedBatch && this.selectedBatch.startDate) {
+        this.targetDate = new Date(this.selectedBatch.startDate)
+        const convertedDate = dayjs(this.selectedBatch.startDate).format('YYYY-MM-DD HH:mm:ss')
+
+        this.targetTime = new Date(convertedDate).getTime()
+      }
+        this.timerFunc(this.serverDate + t * 1000)
+        t = t + 1
+      },                                     1000)
+
+    }
+  }
 
   timerFunc(serverDate: any) {
     // serverDate = serverDate + timeer
@@ -1444,8 +1491,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.selectedBatchSubscription.unsubscribe()
     }
     if (this.timerIntervalClear) {
-      // clearInterval(this.timerIntervalClear);
-      this.timerIntervalClear.unsubscribe()
+      clearInterval(this.timerIntervalClear);
+      // this.timerIntervalClear.unsubscribe()
       this.targetTime=''
     }
   }

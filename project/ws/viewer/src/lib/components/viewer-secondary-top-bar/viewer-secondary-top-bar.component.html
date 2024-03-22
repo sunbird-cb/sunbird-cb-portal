@@ -5,14 +5,14 @@
               {{ resourceName }}
             </h1>
       </div>
-      
+
       <ng-container>
       <div class="flex nexPrevContainer">
         <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status === 2 && activatedRoute?.snapshot?.queryParams?.batchId">
           <div class="completed blue-color">
             <img src="assets/icons/final-assessment/correct_arrow.svg"/><span>{{ 'playerbrief.completed' | translate }}  </span>
           </div>
-          
+
         </ng-container>
           <a mat-icon-button class="width-auto " [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
@@ -25,17 +25,17 @@
           [queryParams]="nextResourceUrlParams?.queryParams"
           queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
             <span *ngIf="logo" class="mat-body-2 font-bold-imp">{{ 'playerbrief.markAsComplete' | translate }}</span>
-          </a>          
+          </a>
           </ng-container>
-         
+
           <!-- [disabled]="!nextResourceUrl" -->
           <!-- {{nextResourceUrl}} -->
           <a mat-icon-button class="width-auto mr-10 " [routerLink]="nextResourceUrl"
             [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
             queryParamsHandling="" accesskey=">" (click)="checkForNextOfflineOnlineSession()">
             <!-- <span *ngIf="optionalLink"></span>  -->
-            <span *ngIf="logo" class="mat-body-2 font-bold-imp">{{ optionalLink ? ('playerbrief.skip' | translate) : ('playerbrief.next' | translate) }} </span> 
-            
+            <span *ngIf="logo" class="mat-body-2 font-bold-imp">{{ optionalLink ? ('playerbrief.skip' | translate) : ('playerbrief.next' | translate) }} </span>
+
             <!-- {{ optionalLink }} -->
             <mat-icon class="blue-color vertical-middle">navigate_next</mat-icon>
           </a>
@@ -48,8 +48,8 @@
           <!-- <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"
             [widgetData]="{ fsContainer: frameReference }"></ws-widget-btn-fullscreen> -->
           <!-- </a> -->
-          
-         
+
+
       </div>
       </ng-container>
       <div>
@@ -59,15 +59,15 @@
         <mat-icon class="flex align-center blue-color" *ngIf="!toggleSideBarFlag">navigate_before</mat-icon>
       </a>
       </div>
-  </ng-container>  
-  
+  </ng-container>
+
   <ng-container *ngIf="isMobile">
     <div class="flex flex-1 mobile-viewer-header justify-between">
           <div class="cross-icon">
             <div *ngIf="handleBackFromPdfScormFullScreenFlag" (click)="backToPrev()">
               <img src="assets/icons/final-assessment/mobile-cross.svg"/>
             </div>
-            <div *ngIf="!handleBackFromPdfScormFullScreenFlag"> 
+            <div *ngIf="!handleBackFromPdfScormFullScreenFlag">
               <ws-widget-btn-page-back-nav *ngIf="!isPreview && !needToHide" [widgetData]="{
                 url: isTypeOfCollection
                   ? collectionType === 'Playlist'
@@ -86,24 +86,20 @@
                 titles: []
               }"></ws-widget-btn-page-back-nav>
             </div>
-           
+
           </div>
           <div class="resource-name">
             <p class="width-expand heading  text-truncate">
               {{ resourceName }}
             </p>
-          </div>          
-          <div (click)="onClickOfShare()" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag">
+          </div>
+          <div (click)="onClickOfShare()" *ngIf="canShare" class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag">
             <mat-icon class="">share</mat-icon>
           </div>
       </div>
       <ng-container *ngIf="contentMIMEType !== 'application/vnd.sunbird.questionset'">
         <div class="flex nexPrevContainerMobile">
-          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status === 2 && activatedRoute?.snapshot?.queryParams?.batchId">
-            <div class="completed blue-color">
-            <img src="assets/icons/final-assessment/correct_arrow.svg"/><span>{{ 'playerbrief.completed' | translate }}  </span>  
-            </div>
-          </ng-container>
+         
           <a mat-icon-button class="margin-left-16" [routerLink]="prevResourceUrl" *ngIf="isTypeOfCollection && prevResourceUrl"
             [disabled]="!prevResourceUrl" queryParamsHandling="" [queryParams]="prevResourceUrlParams?.queryParams"
             accesskey="<">
@@ -112,12 +108,17 @@
           </a>
           <ng-container *ngIf="handleBackFromPdfScormFullScreenFlag && contentMIMEType === 'application/pdf' && pdfContentProgressData?.status !== 2  && activatedRoute?.snapshot?.queryParams?.batchId">
             <a  mat-icon-button class="margin-left-16 width-auto text-center blue-rounded-btn" [routerLink]="nextResourceUrl"
-            [queryParams]="nextResourceUrlParams?.queryParams" 
+            [queryParams]="nextResourceUrlParams?.queryParams"
             queryParamsHandling="" accesskey=">" (click)="markAsComplete()">
               <span class="mat-body-2 font-bold-imp">{{ 'playerbrief.markAsComplete' | translate }}</span>
             </a>
           </ng-container>
-         
+          <ng-container *ngIf="contentMIMEType === 'application/pdf' && pdfContentProgressData?.status === 2 && activatedRoute?.snapshot?.queryParams?.batchId">
+            <div class="completed blue-color">
+            <img src="assets/icons/final-assessment/correct_arrow.svg"/><span>{{ 'playerbrief.completed' | translate }}  </span>
+            </div>
+          </ng-container>
+
           <!-- <a  mat-icon-button class="margin-left-16 width-auto text-center blue-rounded-btn"  *ngIf="contentMIMEType === 'application/pdf'">
             <span class="mat-body-2 font-bold-imp">Mark as Complete</span>
           </a> -->
@@ -127,8 +128,8 @@
             [queryParams]="nextResourceUrlParams?.queryParams" *ngIf="isTypeOfCollection && nextResourceUrl"
             queryParamsHandling="" accesskey=">">
             <!-- <span *ngIf="optionalLink"></span>  -->
-            <span class="mat-body-2 font-bold-imp">{{ optionalLink ? ('playerbrief.skip' | translate) : ('playerbrief.next' | translate) }} </span> 
-            
+            <span class="mat-body-2 font-bold-imp">{{ optionalLink ? ('playerbrief.skip' | translate) : ('playerbrief.next' | translate) }} </span>
+
             <!-- {{ optionalLink }} -->
             <!-- <mat-icon color="accent">navigate_next</mat-icon> -->
           </a>
@@ -147,8 +148,8 @@
           </a> -->
       </div>
       </ng-container>
-    
-  </ng-container> 
+
+  </ng-container>
   </mat-toolbar>
 
 <ws-app-share-toc *ngIf="enableShare" [rootOrgId]="rootOrgId" [content]="content" (resetEnableShare)="resetEnableShare($event)"></ws-app-share-toc>

@@ -11,6 +11,7 @@ import { ViewerUtilService } from '../../viewer-util.service'
 import { CourseCompletionDialogComponent } from '../course-completion-dialog/course-completion-dialog.component'
 import { ContentRatingV2DialogComponent, RatingService } from '@sunbird-cb/collection/src/public-api'
 import { ViewerHeaderSideBarToggleService } from './../../viewer-header-side-bar-toggle.service'
+import { ResetRatingsService } from '@ws/app/src/lib/routes/app-toc/services/reset-ratings.service'
 /* tslint:disable*/
 import _ from 'lodash'
 
@@ -23,6 +24,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() frameReference: any
   @Input() forPreview = false
   @Output() toggle = new EventEmitter()
+  @Output() completedCountOutput = new EventEmitter()
   @Input() leafNodesCount: any
   @Input() content: any
   @Input() hierarchyMapData: any = {}
@@ -82,7 +84,8 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
     private ratingSvc: RatingService,
     private loggerSvc: LoggerService,
     private events: EventService,
-    private assessmentStartCheckService: ViewerHeaderSideBarToggleService
+    private assessmentStartCheckService: ViewerHeaderSideBarToggleService,
+    private resetRatingsService: ResetRatingsService
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -203,6 +206,18 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
       }
     })
 
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
+    }
+
   }
 
   ngOnChanges(props: SimpleChanges) {
@@ -234,6 +249,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
       // tslint:disable
       const completedItems = _.filter(this.hierarchyMapData[identifier].leafNodes, r => this.hierarchyMapData[r].completionStatus === 2 || this.hierarchyMapData[r].completionPercentage === 100)
       this.completedCount = completedItems.length
+      this.completedCountOutput.emit(this.completedCount)
       this.overallLeafNodes = _.toInteger(_.get(this.hierarchyMapData[identifier], 'leafNodesCount')) || 1
       // tslint:disable
       this.hierarchyMapData[identifier]['completionPercentage'] = Number(((completedItems.length / this.overallLeafNodes) * 100).toFixed())
@@ -332,8 +348,9 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
                   courseName: this.activatedRoute.snapshot.queryParams.courseName,
                   userId: this.userid,
                   identifier: this.identifier,
-                  primaryCategory: this.collectionType,
+                  primaryCategory: this.collectionType                  
                 },
+                panelClass: 'course-completion-dialog'
               })
               dialogRef.afterClosed().subscribe(result => {
                 if (result === true) {
@@ -389,6 +406,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.getUserRating(false)
+        this.resetRatingsService.setRatingServiceUpdate(true)
       }
     })
   }

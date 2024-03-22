@@ -1,13 +1,31 @@
 <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs marg margin-bottom-xs">
   <mat-card class="flex-custom">
     <mat-card-content>
-      <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
+      <!-- <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
         {{ 'profileKarmapoints.karmaPoints' | translate }}
-      </span>
-      <a class="flex-4 mobile-margin show-all" [routerLink]="['/public/faq']" fragment="KarmaPoints">
+      </span> -->
+      <!-- <a class="flex-4 mobile-margin show-all" [routerLink]="['/public/faq']" fragment="KarmaPoints"> -->
         <!-- <img class="info-icon" alt="info" src="/assets/icons/info.svg"> -->
-        <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="translateLabels('tooltip', 'profileKarmapoints', '')">info_outline</mat-icon>
-      </a>
+        <!-- <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="translateLabels('tooltip', 'profileKarmapoints', '')">info_outline</mat-icon>
+      </a> -->
+
+      <div class="flex flex-row flex-1 justify-between mobile-margin items-center">
+        <div class="flex">
+          <span class="mat-subheading-1 flex-4 mobile-margin" role="link">
+            {{ 'profileKarmapoints.karmaPoints' | translate }}
+          </span>
+          </div>
+          <div class="flex">
+            <a class="flex-4 mobile-margin show-all" [routerLink]="['/public/faq']" fragment="KarmaPoints">
+              <!-- <img class="info-icon" alt="info" src="/assets/icons/info.svg"> -->
+              <mat-icon class="cursor-pointer ws-mat-black60-text" [matTooltip]="translateLabels('tooltip', 'profileKarmapoints', '')">info_outline</mat-icon>
+            </a>
+        </div>
+      </div>
+        <div class="flex mobile-margin">
+          <!-- <span class="flex-4">Karma Points history is available for last 3 months only.</span> -->
+          <span class="flex-4">{{ 'profileKarmapoints.karmaPointHistoryMessage' | translate}}</span>
+      </div>
     </mat-card-content>
     <ng-container *ngIf="karmaPointsHistory.length > 0">
       <div class="karmapoints-container">

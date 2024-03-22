@@ -1,12 +1,30 @@
 <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs marg margin-bottom-xs">
   <mat-card class="flex-custom" [attr.id]="widgetData?.key">
     <mat-card-content>
-      <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
-        {{translateName(widgetData.name)}}
-      </span>
-      <a class="flex-4 mobile-margin show-all" (click)="navigateTo()" *ngIf="widgetData?.data?.length">
+      <div class="flex flex-row flex-1 justify-between mobile-margin items-center">
+        <div class="flex">
+          <span class="mat-subheading-1 flex-4 nextline-history" role="link">
+            {{translateName(widgetData.name)}}
+          </span>
+          </div>
+          <div class="flex">
+          <a class="flex-4 show-all" (click)="navigateTo()" *ngIf="widgetData?.data?.length">
+            {{ 'profileKarmapoints.showAll' | translate}} &nbsp;&nbsp; >
+          </a>
+        </div>
+      </div>
+        <div class="flex mobile-margin">
+          <!-- <span class="flex-4">Karma Points history is available for last 3 months only.</span> -->
+          <span class="flex-4">{{ 'profileKarmapoints.karmaPointHistoryMessage' | translate}}</span>
+      </div>
+      
+     
+     
+      
+      
+      <!-- <a class="flex-4 mobile-margin show-all" (click)="navigateTo()" *ngIf="widgetData?.data?.length">
         {{ 'profileKarmapoints.showAll' | translate}} &nbsp;&nbsp; >
-      </a>
+      </a> -->
     </mat-card-content>
     <ng-container *ngIf="widgetData?.data?.length">
       <ng-container *ngFor="let karmapoints of widgetData.data">

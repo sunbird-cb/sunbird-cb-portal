@@ -43,6 +43,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   status: TStatus = 'none'
   error: any | null = null
   isNotEmbed = true
+  completedCount: any = 0
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
     widgetSubType: 'errorResolver',
@@ -67,6 +68,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   hierarchyMapData: any
   pathSet: any
   tocConfig: any = null
+  isAssessmentScreen = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -91,6 +93,12 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isMobile = true
     } else {
       this.isMobile = false
+    }
+
+    if (window.location.href.includes('practice')) {
+      this.isAssessmentScreen = true
+    } else {
+      this.isAssessmentScreen = false
     }
     this.rootSvc.showNavbarDisplay$.next(false)
     this.abc.mobileTopHeaderVisibilityStatus.next(false)
@@ -135,6 +143,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.hierarchyData = contentData.result.content
       this.manipulateHierarchyData()
       this.resetAndFetchTocStructure()
+      this.leafNodesCount = contentData.result.content.leafNodesCount
     }
     if (this.collectionId && this.enrollmentList) {
       const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
@@ -150,7 +159,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     })
 
     this.viewerHeaderSideBarToggleService.visibilityStatus.subscribe((data: any) => {
-      let sideNavBarDrawerState:any = document.getElementById('side-nav-drawer-state');
+      const sideNavBarDrawerState: any = document.getElementById('side-nav-drawer-state')
       if (data) {
         if (this.isMobile) {
           this.sideNavBarOpened = false
@@ -159,15 +168,15 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.sideNavBarOpened = true
           this.viewerHeaderSideBarToggleFlag = data
         }
-        if(sideNavBarDrawerState) {
-          sideNavBarDrawerState.style.display = 'block';
+        if (sideNavBarDrawerState) {
+          sideNavBarDrawerState.style.display = 'block'
         }
-        
+
       } else {
         this.sideNavBarOpened = false
         this.viewerHeaderSideBarToggleFlag = data
-        if(sideNavBarDrawerState) {
-          sideNavBarDrawerState.style.display = 'none';
+        if (sideNavBarDrawerState) {
+          sideNavBarDrawerState.style.display = 'none'
         }
       }
 
@@ -320,5 +329,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
     }
+  }
+  updateCount(event: any) {
+    this.completedCount = event
   }
 }
