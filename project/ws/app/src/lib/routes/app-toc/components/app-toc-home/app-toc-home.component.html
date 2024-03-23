@@ -423,7 +423,7 @@
         </ng-container>
 
         <div class="flex flex-col gap-4 p-5 border-bottom">
-          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && isMobile">
+          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
             <div class="flex flex-row gap-3 justify-around">
               <div class="batch-info">
                 <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}</div>

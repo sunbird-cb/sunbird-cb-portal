@@ -263,13 +263,17 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
 
   fetchModeratedCourses(strip: NsContentStripMultiple.IContentStripUnit, calculateParentStatus = true) {
     if (strip.request && strip.request.moderatedCourses && Object.keys(strip.request.moderatedCourses).length) {
-
+      let orgId: string = ''
+      if(this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId){
+        orgId = this.configSvc.userProfile.rootOrgId
+      }
       const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
         request: {
           query: '',
           filters: {
             courseCategory: [NsContent.ECourseCategory.MODERATED_COURSE,
               NsContent.ECourseCategory.MODERATED_PROGRAM, NsContent.ECourseCategory.MODERATED_ASSESSEMENT],
+              'secureSettings.organisation': orgId,
             contentType: ['Course'],
               status: [
                   'Live',
@@ -290,6 +294,7 @@ export class ContentStripMultipleComponent extends WidgetBaseComponent
           'secureSettings.isVerifiedKarmayogi': 'No',
         }
       }
+      
 
       this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
         const showViewMore = Boolean(
