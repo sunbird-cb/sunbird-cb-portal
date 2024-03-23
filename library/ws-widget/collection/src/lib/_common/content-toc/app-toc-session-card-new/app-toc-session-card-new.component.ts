@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '@sunbird-cb/utils/src/public-api'
 import { viewerRouteGenerator } from '../../../_services/viewer-route-util'
 import { Router } from '@angular/router'
+import moment from 'moment'
 @Component({
   selector: 'ws-widget-app-toc-session-card-new',
   templateUrl: './app-toc-session-card-new.component.html',
@@ -93,5 +94,21 @@ export class AppTocSessionCardNewComponent implements OnInit {
       return url
     }
     return { url: '', queryParams: {} }
+  }
+  get isBatchInProgess() {
+    if (this.batchData && (this.batchData.content && this.batchData.content.length) && this.batchData.enrolled) {
+      const batchData = this.batchData.content[0]
+      if (batchData && batchData.endDate) {
+        const now = moment().format('YYYY-MM-DD')
+        const startDate = moment(batchData.startDate).format('YYYY-MM-DD')
+        const endDate = batchData.endDate ? moment(batchData.endDate).format('YYYY-MM-DD') : now
+            return (
+              // batch.status &&
+              moment(startDate).isSameOrBefore(now)
+              && moment(endDate).isSameOrAfter(now)
+            )
+      } return true
+    }
+    return false
   }
 }

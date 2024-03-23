@@ -105,7 +105,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   helpEmail = ''
   selectedBatchSubscription: any
   selectedBatchData: any
-
+  batchControlUnsubscribe: any
   date: any
   now: any
   targetDate: any
@@ -401,7 +401,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
 
-    this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
+    this.batchControlUnsubscribe = this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       this.selectedBatch = batch
       if (batch) {
         if (this.checkRejected(batch)) {
@@ -1229,9 +1229,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.timerIntervalClear =  setInterval(() => {
         this.targetTime = ''
-      if (this.selectedBatch && this.selectedBatch.startDate) {
-        this.targetDate = new Date(this.selectedBatch.startDate)
-        const convertedDate = dayjs(this.selectedBatch.startDate).format('YYYY-MM-DD HH:mm:ss')
+      if (this.batchControl && this.batchControl.value && this.batchControl.value.startDate) {
+
+        // console.log(this.selectedBatch.startDate,'----')
+        this.targetDate = new Date(this.batchControl.value.startDate)
+        const convertedDate = dayjs(this.batchControl.value.startDate).format('YYYY-MM-DD HH:mm:ss')
 
         this.targetTime = new Date(convertedDate).getTime()
       }
@@ -1495,6 +1497,13 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
       // this.timerIntervalClear.unsubscribe()
       this.targetTime=''
     }
+
+    if (this.selectedBatchSubscription) {
+      this.batchControlUnsubscribe.unsubscribe()
+    }
+    this.batchControl.setValue({})
+    this.batchControl.updateValueAndValidity()
+    this.selectedBatch = {}
   }
   
   translateLabel(label: string, type: any) {
