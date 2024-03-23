@@ -30,7 +30,7 @@
 
     <mat-sidenav-content #scrollableContent [ngClass]="isAssessmentScreen? 'isAssessmentScreen':''">
       
-      <ng-container *ngIf="viewerHeaderSideBarToggleFlag && !isPreview">
+      <ng-container *ngIf="viewerHeaderSideBarToggleFlag">
         <!-- *ngIf="fullScreenContainer" -->
         <viewer-viewer-secondary-top-bar [forPreview]="forPreview" [contentMIMEType]="contentMIMEType" [completedCount]="completedCount"
           [frameReference]="fullScreenContainer" (toggle)="toggleSideBar()" [leafNodesCount]="leafNodesCount" [content]="content">
@@ -81,7 +81,7 @@
       <section *ngIf="status === 'pending'">
         <mat-spinner></mat-spinner>
       </section>
-      <div *ngIf="isPreview" class="flex flex-1 flex-column">
+      <div *ngIf="isPreview" class="flex flex-1 flex-column mb-3">
         <div class="flex flex-1 flex-row-reverse">
           <a *ngIf="show" class="padding-right-s padding-top-xs" role="button" (click)="show=false">
             <mat-icon class="cursor-pointer ws-mat-default-text">close</mat-icon>

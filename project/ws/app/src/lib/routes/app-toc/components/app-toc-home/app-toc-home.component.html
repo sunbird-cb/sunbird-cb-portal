@@ -344,13 +344,13 @@
             </ng-container>
             <ng-container *ngIf="!skeletonLoader">
               <div class="flex gap-4 items-center" *ngIf="content?.averageRating || content?.additionalTags?.length">
-                <div class="flex flex-row rating-chip py-2 px-3 items-center cursor-pointer" (click)="handleNavigateToReviews()" *ngIf="content?.averageRating">
-                  <div class="flex flex-row gap-1 items-center">
+                <div class="flex flex-row rating-chip py-2 items-center cursor-pointer" (click)="handleNavigateToReviews()" *ngIf="content?.averageRating">
+                  <div class="flex flex-row gap-1 margin-left-s items-center">
                     <mat-icon>grade</mat-icon>
                     <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
                   </div>
                   <div class="separator"></div>
-                  <div class="text-white text-sm leading-4">{{ content?.totalRating | pipeCountTransform }}</div>
+                  <div class="text-white text-sm leading-4 margin-right-m">{{ content?.totalRating | pipeCountTransform }}</div>
                 </div>
                 <div class="flex items-center" *ngIf="content?.additionalTags?.length">
                   <div class="most-enrolled-chip text-xs leading-3">
