@@ -123,12 +123,17 @@ export class CardLearnComponent extends WidgetBaseComponent
   }
 
   callModeratedFunc() {
+    let orgId = ''
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) {
+      orgId = this.configSvc.userProfile.rootOrgId
+    }
     const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
       request: {
         query: '',
         filters: {
           courseCategory: [NsContent.ECourseCategory.MODERATED_COURSE,
             NsContent.ECourseCategory.MODERATED_PROGRAM, NsContent.ECourseCategory.MODERATED_ASSESSEMENT],
+            'secureSettings.organisation': orgId,
           contentType: ['Course'],
             status: [
                 'Live',

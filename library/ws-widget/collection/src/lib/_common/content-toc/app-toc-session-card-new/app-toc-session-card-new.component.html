@@ -11,7 +11,7 @@
   </ng-container>
     <div *ngIf="isResource" class="resource-container mt-4">
        <div class="resource flex flex-wrap sm:flex-col flex-start width-expand w-100  sm:w-auto">
-          <a class="w-full" [class.disabled]="(forPreview || !isEnabled) ? true : null"
+          <a class="w-full" [class.disabled]="(forPreview || !isEnabled || !isBatchInProgess) ? true : null"
           (click)="redirectToPage()">
           <div class="text-truncate1 " [ngClass]="{'cursor-pointer': !isEnabled}"
           (click)="viewChildren = !viewChildren; raiseTelemetry();">

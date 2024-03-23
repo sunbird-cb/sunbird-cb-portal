@@ -423,7 +423,7 @@
         </ng-container>
 
         <div class="flex flex-col gap-4 p-5 border-bottom">
-          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && isMobile">
+          <div class="flex flex-col gap-4" *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
             <div class="flex flex-row gap-3 justify-around">
               <div class="batch-info">
                 <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}</div>
@@ -586,9 +586,9 @@
     
   </div>
 
-  <div class="mobile-enroll-div">
+  <div class="mobile-enroll-div" [ngClass]="{'bg-white': content?.primaryCategory === primaryCategory.BLENDED_PROGRAM }">
     <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM ">
-      <div *ngIf="mobile1200">
+      <div class="mb-2" *ngIf="mobile1200">
         <ws-app-toc-banner role="banner" [banners]="banners" [forPreview]="forPreview" [content]="content"
           [userEnrollmentList]="userEnrollmentList" (withdrawOrEnroll)="withdrawOrEnroll($event)" [analytics]="analytics"
           [resumeData]="resumeData" [batchData]="batchData" [contentReadData]="contentReadData">
