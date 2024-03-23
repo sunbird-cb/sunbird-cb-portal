@@ -1,8 +1,8 @@
-<div class="">
-    <div class="py-6 content-container" id="contentContainer">
+<div class="bggrey">
+    <div class="py-4 content-container" id="contentContainer">
         <div class="main-container flex flex-col gap-4">
             <ng-container *ngIf="content?.primaryCategory === nsContent?.EPrimaryCategory?.BLENDED_PROGRAM">
-                <div class="flex gap-4 tab-list" >
+                <div class="padding-left-m flex gap-4 tab-list" >
                     <ng-container *ngFor="let type of typesOfContent">  
                         <div class="tab-data" (click)="!type.disabled && selectedTabType = type.id" [ngClass]="{'active-tab': selectedTabType === type.id, 'disabled':type.disabled}">
                             <span>{{type.name}}</span>
@@ -29,8 +29,8 @@
                 <div class="content-card " *ngFor="let card of content?.children; trackBy: contentTrackBy; let i = index;" 
                 [ngClass]="{ 'content-active': pathSet && pathSet.has(card.identifier)  && isEnrolled}">
                     <!-- {{card|json}} -->
-                    <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [expandActive]="true" [rootId]="contextId" [batchId]="batchId"
-                    [rootContentType]="contextPath" [content]="card" [index]="i+1" [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData"></ws-widget-app-toc-content-card-v2>
+                    <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [expandAll]="expandAll" [componentName]="componentName" [expandActive]="true" [rootId]="contextId" [batchId]="batchId"
+                    [rootContentType]="contextPath" [content]="card" [index]="i+1" [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData" [batchData]="batchData"></ws-widget-app-toc-content-card-v2>
                 </div>
             </ng-container>
             <ng-template #noChildren>

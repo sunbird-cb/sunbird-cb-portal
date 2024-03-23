@@ -23,6 +23,8 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() tocStructure: any
   @Input() config: any
   @Input() hierarchyMapData: any = {}
+  @Input() pathSet: any
+  @Input() componentName!: string
   isPlayable = false
   contentPlayWidgetConfig: NsWidgetResolver.IRenderConfigWithTypedData<any> | null = null
   defaultThumbnail = ''
@@ -40,7 +42,6 @@ export class AppTocContentComponent implements OnInit, OnDestroy, OnChanges {
   selectedTabType: any = 'content'
   nsContent: any =  NsContent
   otherResourse = 0
-  @Input() pathSet = new Set()
 
   constructor(
     private route: ActivatedRoute,

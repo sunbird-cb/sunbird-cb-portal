@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router'
 import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
-// import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
+import { ConfigurationsService, EventService, NsPage, ValueService, WsEvents } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerUtilService } from '../../viewer-util.service'
@@ -20,9 +20,11 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
   @Input() frameReference: any
   @Input() forPreview = false
+  @Input() content: any
   @Output() toggle = new EventEmitter()
   @Input() leafNodesCount: any
   @Input() contentMIMEType: any
+  @Input() completedCount: any
   private viewerDataServiceSubscription: Subscription | null = null
   private paramSubscription: Subscription | null = null
   private viewerDataServiceResourceSubscription: Subscription | null = null
@@ -54,7 +56,10 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   isMobile = false
   handleBackFromPdfScormFullScreenFlag = false
   toggleSideBarFlag = true
+  enableShare = false
   pdfContentProgressData: any = { status: 1 }
+  canShare = false
+  rootOrgId: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -67,7 +72,8 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     private router: Router,
     private widgetServ: WidgetContentService,
     private viewerSvc: ViewerUtilService,
-    private pdfScormDataService: PdfScormDataService
+    private pdfScormDataService: PdfScormDataService,
+    private events: EventService,
   ) {
     this.valueSvc.isXSmall$.subscribe(isXSmall => {
       this.logo = !isXSmall
@@ -96,6 +102,13 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     })
 
     this.viewerSvc.autoPlayNextVideo.subscribe((autoPlayVideoData: any) => {
+      if (autoPlayVideoData) {
+        if (this.isTypeOfCollection && this.nextResourceUrl && this.nextResourceUrlParams && this.nextResourceUrlParams.queryParams) {
+          this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams })
+        }
+      }
+    })
+    this.viewerSvc.autoPlayNextAudio.subscribe((autoPlayVideoData: any) => {
       if (autoPlayVideoData) {
         if (this.isTypeOfCollection && this.nextResourceUrl && this.nextResourceUrlParams && this.nextResourceUrlParams.queryParams) {
           this.router.navigate([this.nextResourceUrl], { queryParams: this.nextResourceUrlParams.queryParams })
@@ -188,6 +201,18 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
         this.resourcePrimaryCategory = this.viewerDataSvc.resource ? this.viewerDataSvc.resource.primaryCategory : ''
       },
     )
+
+    if (this.content && ![
+      NsContent.ECourseCategory.MODERATED_COURSE,
+      NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+      NsContent.ECourseCategory.MODERATED_PROGRAM,
+      NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+    ].includes(this.content.courseCategory)) {
+      this.canShare = true
+      if (this.configSvc.userProfile) {
+        this.rootOrgId = this.configSvc.userProfile.rootOrgId
+      }
+    }
   }
 
   updateProgress(status: number, resourceId: any) {
@@ -277,40 +302,55 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
         }
         this.widgetServ.fetchContentHistoryV2(req).subscribe(
           (data: any) => {
-
             this.contentProgressHash = data.result.contentList
-
-            if (this.leafNodesCount === this.contentProgressHash.length) {
-              const ipStatusCount = this.contentProgressHash.filter((item: any) => item.status === 1)
-
-              if (ipStatusCount.length === 0) {
-                const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
-                  autoFocus: false,
-                  data: {
-                    courseName: this.activatedRoute.snapshot.queryParams.courseName,
-                    userId: this.userid,
-                    identifier: this.identifier,
-                    primaryCategory: this.collectionType,
-                  },
-                })
-                dialogRef.afterClosed().subscribe(result => {
-                  const app: any = document.getElementById('viewer-conatiner-backdrop')
-                  app.style.filter = 'blur(0px)'
-                  if (result === true) {
-                    this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
-                  }
-                })
+            if (this.content && ![
+              NsContent.ECourseCategory.MODERATED_COURSE,
+              NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
+              NsContent.ECourseCategory.MODERATED_PROGRAM,
+              NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
+            ].includes(this.content.courseCategory)) {
+              if (this.completedCount === this.leafNodesCount) {
+                this.showCompletionPopUp()
               } else {
-                this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
+                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
               }
             } else {
-              this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
+              if (this.leafNodesCount === this.contentProgressHash.length) {
+                const ipStatusCount = this.contentProgressHash.filter((item: any) => item.status === 1)
+                if (ipStatusCount.length === 0) {
+                  this.showCompletionPopUp()
+                } else {
+                  this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+                }
+              } else {
+                this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+              }
             }
           })
       }
     } else {
       this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
     }
+  }
+
+  showCompletionPopUp() {
+    const dialogRef = this.dialog.open(CourseCompletionDialogComponent, {
+      autoFocus: false,
+      panelClass: 'course-completion-dialog',
+      data: {
+        courseName: this.activatedRoute.snapshot.queryParams.courseName,
+        userId: this.userid,
+        identifier: this.identifier,
+        primaryCategory: this.collectionType,
+      },
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      const app: any = document.getElementById('viewer-conatiner-backdrop')
+      app.style.filter = 'blur(0px)'
+      if (result === true) {
+        this.router.navigateByUrl(`app/toc/${this.identifier}/overview`)
+      }
+    })
   }
 
   markAsComplete() {
@@ -337,6 +377,47 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
 
     ) {
       this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
+    }
+  }
+
+  onClickOfShare() {
+    this.enableShare = true
+    this.raiseTelemetryForShare('shareContent')
+  }
+
+  /* tslint:disable */
+  raiseTelemetryForShare(subType: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType,
+        id: this.content ? this.content.identifier : '',
+      },
+      {
+        id: this.content ? this.content.identifier : '',
+        type: this.content ? this.content.primaryCategory : '',
+      },
+      {
+        pageIdExt: `btn-${subType}`,
+        module: WsEvents.EnumTelemetrymodules.CONTENT,
+      }
+    )
+  }
+
+  resetEnableShare() {
+    this.enableShare = false
+  }
+
+  backToPrev() {
+    if(this.prevResourceUrl) {
+      this.router.navigate([this.prevResourceUrl], { queryParams: this.prevResourceUrlParams.queryParams })
+    } else {
+      if(!this.forPreview) {
+        this.router.navigateByUrl(`app/toc/${this.collectionId}/overview`)
+      } else {
+        this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+      }
+
     }
   }
 }

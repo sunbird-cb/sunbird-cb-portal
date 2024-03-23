@@ -3,7 +3,7 @@
 .customicon {
   position: absolute;
   top: -0.5em;
-  right: 0;
+  right: -4px;
 }
 
 a.disabled {
@@ -166,7 +166,8 @@ span.optional-span {
 
   .resource-container {
     margin-bottom: 20px;
-    margin-right: 8px;
+    margin-right: 0px;
+
 
     // background-color: #fff;
     .card-thumbnail {

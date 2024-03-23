@@ -22,7 +22,7 @@ const videoJsOptions: videoJs.PlayerOptions = {
   fluid: false,
   muted: true,
   techOrder: ['html5'],
-  playbackRates: [0.75, 0.85, 1, 1.25, 2, 3],
+  playbackRates: [1, 1.5],
   poster: '',
   html5: {
     hls: {
@@ -54,7 +54,9 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   private player: videoJs.Player | null = null
   private dispose: (() => void) | null = null
   videoEnd = false
+  timerInterval: any
   video: any
+  replayVideoFlag = false
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
@@ -90,6 +92,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   // }
 
   async ngAfterViewInit() {
+
     this.widgetData = {
       ...this.widgetData,
     }
@@ -117,8 +120,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
 
         }
         let counter = 1
-
-          setInterval(() => {
+        this.timerInterval =   setInterval(() => {
             if (counter <= 30) {
                 this.updateProgress(counter)
             }
@@ -129,13 +131,19 @@ export class PlayerVideoComponent extends WidgetBaseComponent
               if (autoPlayVideo) {
                 autoPlayVideo.style.opacity = '1'
               }
-            this.viewerSvc.autoPlayNextVideo.next(true)
+              counter = 0
+              this.clearTimeInterval()
+              this.viewerSvc.autoPlayNextVideo.next(true)
             }
             counter = counter + 1
-          },          1000)
+          },                               1000)
 
       }
     }
+  }
+
+  clearTimeInterval() {
+    clearInterval(this.timerInterval)
   }
 
   updateProgress(value: any) {
@@ -151,6 +159,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     if (this.dispose) {
       this.dispose()
     }
+    this.clearTimeInterval()
   }
   private initializeVPlayer() {
     // alert()
@@ -245,6 +254,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   }
 
   private initializePlayer() {
+
     const dispatcher: telemetryEventDispatcherFunction = event => {
       if (this.widgetData.identifier) {
         this.eventSvc.dispatchEvent(event)
@@ -320,6 +330,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       enableTelemetry,
       this.widgetData,
       this.widgetData.mimeType,
+      this.widgetData.size
     )
     this.player = initObj.player
     this.dispose = initObj.dispose
@@ -341,8 +352,20 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       }
       if (this.widgetData.url) {
         initObj.player.src(this.viewerSvc.getCdnUrl(this.widgetData.url))
+
       }
     })
+
+    // const player = this.player;
+    // console.log('player', this.player)
+    // if(player) {
+    //   if(player.controlBar.options_.children) {
+    //     console.log('player', player);
+    //     let seelBar:any = player.controlBar;
+    //     seelBar.progressControl['children'][0]['SeekBar']['enabled_'] = false;
+    //     console.log('seelBar', seelBar.progressControl)
+    //   }
+    // }
   }
   async fetchContent() {
     const content = await this.contentSvc
@@ -360,6 +383,12 @@ export class PlayerVideoComponent extends WidgetBaseComponent
 
   closeAutoPlay() {
     this.videoEnd = false
+    this.replayVideoFlag = true
+    clearInterval(this.timerInterval)
+  }
+
+  replayVideo() {
+    this.replayVideoFlag = false
     const videoTag: any = document.getElementById('videoTag') || document.getElementById('realvideoTag')
     if (videoTag) {
       videoTag.style.filter = 'blur(0px)'
@@ -367,6 +396,9 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     const autoPlayVideo: any = document.getElementById('auto-play-video')
     if (autoPlayVideo) {
       autoPlayVideo.style.opacity = '1'
+    }
+    if (this.player) {
+      this.player.play()
     }
   }
 }

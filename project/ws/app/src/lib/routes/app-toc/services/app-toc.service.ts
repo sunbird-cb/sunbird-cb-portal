@@ -44,7 +44,7 @@ export class AppTocService {
   setBatchDataSubject: Subject<any> = new Subject()
   getSelectedBatch: Subject<any> = new Subject()
   setWFDataSubject: Subject<any> = new Subject()
-  resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<NsContent.IContinueLearningData | null>()
+  resumeData: Subject<NsContent.IContinueLearningData | null> = new Subject<any>()
   private showSubtitleOnBanners = false
   private canShowDescription = false
   resumeDataSubscription: Subscription | null = null
@@ -60,7 +60,13 @@ export class AppTocService {
   contentLoader$ = this.contentLoader.asObservable()
   public hashmap: any = {}
 
-  constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) { }
+  constructor(private http: HttpClient, private configSvc: ConfigurationsService, private widgetSvc: WidgetContentService) {
+    // this resume data subscription is for on load
+    this.resumeDataSubscription = this.resumeData.subscribe(
+      (_dataResult: any) => {
+
+      })
+   }
 
   get subtitleOnBanners(): boolean {
     return this.showSubtitleOnBanners
@@ -102,31 +108,43 @@ export class AppTocService {
     this.serverDate.next(state)
   }
 
-  mapSessionCompletionPercentage(batchData: any) {
-    this.resumeDataSubscription = this.resumeData.subscribe(
-      (dataResult: any) => {
-        if (dataResult && dataResult.length && batchData.content && batchData.content.length) {
-          if (batchData && batchData.content[0] &&
-            batchData.content[0].batchAttributes &&
-            batchData.content[0].batchAttributes.sessionDetails_v2
-          ) {
-            batchData.content[0].batchAttributes.sessionDetails_v2.map((sd: any) => {
-              const foundContent = dataResult.find((el: any) => el.contentId === sd.sessionId)
-              if (foundContent) {
-                sd.completionPercentage = foundContent.completionPercentage
-                sd.completionStatus = foundContent.status
-                sd.lastCompletedTime = foundContent.lastCompletedTime
-              }
-            })
+  mapSessionCompletionPercentage(batchData: any, resumeDataPass?: any) {
+    if (resumeDataPass && resumeDataPass.length) {
+      if (resumeDataPass && resumeDataPass.length && batchData.content && batchData.content.length) {
+        this.sessionCompletionPercentage(batchData, resumeDataPass)
+      }
+    } else {
+      this.resumeDataSubscription = this.resumeData.subscribe(
+        (dataResult: any) => {
+          if (dataResult && dataResult.length && batchData.content && batchData.content.length) {
+            this.sessionCompletionPercentage(batchData, dataResult)
           }
-        }
+        },
+        () => {
+          // tslint:disable-next-line: no-console
+          console.log('error on resumeDataSubscription')
+          this.contentLoader.next(false)
+        })
+    }
+
+  }
+  sessionCompletionPercentage(batchData: any, resumeDataPass: any) {
+    if (resumeDataPass && resumeDataPass.length) {
+      if (batchData && batchData.content[0] &&
+        batchData.content[0].batchAttributes &&
+        batchData.content[0].batchAttributes.sessionDetails_v2
+      ) {
+        batchData.content[0].batchAttributes.sessionDetails_v2.map((sd: any) => {
+          const foundContent = resumeDataPass.find((el: any) => el.contentId === sd.sessionId)
+          if (foundContent) {
+            sd.completionPercentage = foundContent.completionPercentage
+            sd.completionStatus = foundContent.status
+            sd.lastCompletedTime = foundContent.lastCompletedTime
+          }
+        })
         this.contentLoader.next(false)
-      },
-      () => {
-        // tslint:disable-next-line: no-console
-        console.log('error on resumeDataSubscription')
-        this.contentLoader.next(false)
-      })
+      }
+    }
   }
 
   showStartButton(content: NsContent.IContent | null): { show: boolean; msg: string } {
@@ -206,6 +224,19 @@ export class AppTocService {
     }
   }
 
+  mapModuleCount(content: NsContent.IContent) {
+    if (content && content.children) {
+      content.children.map(child => {
+        if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
+          content['moduleCount'] = content['moduleCount'] ? content['moduleCount'] + 1 : 1
+        }
+        if (child.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+          this.mapModuleCount(child)
+        }
+      })
+    }
+  }
+
   getMimeType(content: NsContent.IContent, identifier: string): NsContent.EMimeTypes {
     if (content.identifier === identifier) {
       return content.mimeType
@@ -229,7 +260,7 @@ export class AppTocService {
       }
       getAllItemsPerChildren(content)
       const chld = _.first(_.filter(flatList, { identifier }))
-      return chld.mimeType
+      return (chld &&  chld.mimeType) || ''
     }
     // return chld.mimeType
     return NsContent.EMimeTypes.UNKNOWN
@@ -523,7 +554,7 @@ export class AppTocService {
     let leafnodeCount = 0
     let completedLeafNodes: any = []
     let firstUncompleteCourse: any = ''
-    let inprogressDataCheck: any = ''
+    let inprogressDataCheck: any = []
     if (content && content.children) {
       leafnodeCount = content.leafNodesCount
       this.contentLoader.next(true)
@@ -541,10 +572,13 @@ export class AppTocService {
             completedLeafNodes = [...completedLeafNodes, ...parentChild.leafNodes]
             if (foundContent.issuedCertificates.length > 0) {
               const certId: any = foundContent.issuedCertificates[0].identifier
-              const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
-                this.contentLoader.next(false)
-              })
-              parentChild.issuedCertificatesSVG = certData.result.printUri
+              parentChild.issuedCertificatesId = certId
+              // const certData: any = await this.dowonloadCertificate(certId).toPromise().catch(_error => {
+              //   this.contentLoader.next(false)
+              // })
+              // if (certData && certData.result) {
+              //   parentChild.issuedCertificatesSVG = certData.result.printUri
+              // }
               this.contentLoader.next(false)
             }
             parentChild.completionPercentage = 100
@@ -573,28 +607,13 @@ export class AppTocService {
                   const completedCount = data.result.contentList.filter((ele: any) => ele.progress === 100)
                   this.checkCompletedLeafnodes(completedLeafNodes, completedCount)
                   totalCount = completedLeafNodes.length
-                  inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
+                  inprogressDataCheck = [...inprogressDataCheck, ...data.result.contentList]
+                  // inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
                   this.updateResumaData(inprogressDataCheck)
                   this.mapCompletionPercentage(parentChild, data.result.contentList)
+                  this.mapModuleCount(parentChild)
                 } else {
-                  if (firstUncompleteCourse) {
-                    const firstChildData = this.widgetSvc.getFirstChildInHierarchy(firstUncompleteCourse)
-                    const childEnrollmentData = enrolmentList.find((el: any) =>
-                    el.collectionId === firstUncompleteCourse.identifier)
-                    const resumeData = [{
-                      contentId: firstChildData.identifier,
-                      batchId: childEnrollmentData.batchId,
-                      completedCount: 1,
-                      completionPercentage: 0.0,
-                      progress: 0,
-                      viewCount: 1,
-                      courseId: childEnrollmentData.courseId,
-                      collectionId: childEnrollmentData.courseId,
-                      status: 1,
-                    }]
-                    inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck : resumeData
-                    this.updateResumaData(inprogressDataCheck)
-                  }
+                    this.mapModuleCount(parentChild)
                 }
                 return progressdata
               })
@@ -656,7 +675,8 @@ export class AppTocService {
             const completedCount = data.result.contentList.filter((ele: any) => ele.progress === 100)
             this.checkCompletedLeafnodes(completedLeafNodes, completedCount)
             totalCount = completedLeafNodes.length
-            inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
+            inprogressDataCheck = [...inprogressDataCheck, ...data.result.contentList]
+            // inprogressDataCheck = inprogressDataCheck ? inprogressDataCheck :  data.result.contentList
             this.updateResumaData(inprogressDataCheck)
             this.mapCompletionPercentage(content, data.result.contentList)
           }
@@ -664,10 +684,47 @@ export class AppTocService {
           return progressdata
         })
       }
+
+      if (inprogressDataCheck && inprogressDataCheck.length === 0 && firstUncompleteCourse) {
+        const firstChildData = this.widgetSvc.getFirstChildInHierarchy(firstUncompleteCourse)
+        const childEnrollmentData = enrolmentList.find((el: any) =>
+        el.collectionId === firstUncompleteCourse.identifier)
+        const resumeData = [{
+          contentId: firstChildData.identifier,
+          batchId: childEnrollmentData.batchId,
+          completedCount: 1,
+          completionPercentage: 0.0,
+          progress: 0,
+          viewCount: 1,
+          courseId: childEnrollmentData.courseId,
+          collectionId: childEnrollmentData.courseId,
+          status: 1,
+        }]
+        inprogressDataCheck = resumeData
+        this.updateResumaData(inprogressDataCheck)
+      }
       // const parentContent = enrolmentList.find((el: any) => el.collectionId === content.identifier)
       // if (!parentContent.completionPercentage) {
         content.completionPercentage = Math.floor((totalCount / leafnodeCount) * 100)
         content.completionStatus = content.completionPercentage <= 100 ? 1 : 2
+      if (content.completionPercentage === 100 && inprogressDataCheck && inprogressDataCheck.length === 0 && !firstUncompleteCourse) {
+        const firstChildData = this.widgetSvc.getFirstChildInHierarchy(content)
+        const childEnrollmentData = enrolmentList.find((el: any) =>
+        el.collectionId === content.children[0].identifier)
+        const resumeData = [{
+          contentId: firstChildData.identifier,
+          batchId: childEnrollmentData.batchId,
+          completedCount: 1,
+          completionPercentage: 100,
+          progress: 2,
+          viewCount: 1,
+          courseId: childEnrollmentData.courseId,
+          collectionId: childEnrollmentData.courseId,
+          status: 2,
+        }]
+        inprogressDataCheck = resumeData
+        this.updateResumaData(inprogressDataCheck)
+      }
       // // } else {
       //   content.completionPercentage = parentContent.completionPercentage
       // // }
@@ -698,7 +755,7 @@ export class AppTocService {
   mapCompletionChildPercentageProgram(course: any) {
     if (course && course.children) {
       course.children.map((courseChild: any) => {
-          if ((courseChild && courseChild.children) || courseChild.primaryCategory === 'Course Unit') {
+          if ((courseChild && courseChild.children) || courseChild.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
             this.mapCompletionChildPercentageProgram(courseChild)
             course['moduleCount'] = course['moduleCount'] ? course['moduleCount'] + 1 : 1
           } else {

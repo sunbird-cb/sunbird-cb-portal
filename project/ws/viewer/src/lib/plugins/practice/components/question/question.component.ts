@@ -55,11 +55,13 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   unTouchedBlank: boolean[] = []
   matchHintDisplay: NSPractice.IOption[] = []
   isMobile = false
+  @Input() mobileQuestionSetExpand: any = false
+  expandedQuestionSetSubscription: any
   constructor(
     // private domSanitizer: DomSanitizer,
     // private elementRef: ElementRef,
     private practiceSvc: PracticeService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -68,6 +70,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     } else {
       this.isMobile = false
     }
+
     this.init()
   }
 
@@ -142,10 +145,19 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
-    const config = new MatSnackBarConfig()
-    config.panelClass = ['show-answer-alert-class']
-    config.duration = duration
-    this.snackBar.open(primaryMsg, '', config)
+    if (window.innerWidth <= 1200) {
+      const config = new MatSnackBarConfig()
+      config.panelClass = ['show-answer-alert-class']
+      config.duration = duration
+      config.verticalPosition = 'top'
+      config.horizontalPosition = 'center',
+      this.snackBar.open(primaryMsg, '', config)
+    } else {
+      const config = new MatSnackBarConfig()
+      config.panelClass = ['show-answer-alert-class']
+      config.duration = duration
+      this.snackBar.open(primaryMsg, '', config)
+    }
   }
 
 }

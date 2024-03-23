@@ -23,7 +23,7 @@
             {{ 'playerbrief.finish' | translate }}
           </a>
         </div> -->
-        </ng-container> 
+        </ng-container>
         <!-- <ng-container
         *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
         <div class="text-white  quest_btn_finish">
@@ -32,9 +32,9 @@
           </a>
         </div>
         </ng-container>        -->
-      </div>    
-    </div>   
-  </div>  
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="flex auto-w result_main">
@@ -105,7 +105,7 @@
           <span class="mat-heading" i18n>{{ 'quizresult.pleaseContactSystemAdmin' | translate }}</span>
         </div>
       </ng-container>
-      <ng-container>  
+      <ng-container>
         <div *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
           <div class="flex flex-col justify-center align-center success-message-result">
               <div><img src="assets/icons/final-assessment/practice-assessment-badge.svg"></div>
@@ -114,8 +114,8 @@
         </div>
         <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory && quizResponse" class="flex flex-col justify-center align-center success-message-result">
           <ng-container *ngIf="isPassed && percentage === 100">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
-              
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="120">
+
               <path  class="progress-clr" d="M55,90
                       A55,55 0 1,1 140,90"
                     style="fill:none;stroke-width:8px"
@@ -128,8 +128,8 @@
             <div class="mat-subheading-2 message">{{'quizresult.passMsg1' | translate}}</div>
           </ng-container>
           <ng-container *ngIf="isPassed && percentage < 100">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
-              
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="108">
+
               <path  class="progress-clr" d="M55,90
                       A55,55 0 1,1 140,90"
                     style="fill:none;stroke-width:8px"
@@ -137,13 +137,13 @@
             </svg>
             <div style="position:relative; top: -60px; left: 0px;">
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
-                <div class="level-text">{{levelText || 'Passed'}}</div>
+                <div class="level-text">{{levelText || ('playerbrief.passed' | translate)}}</div>
             </div>
             <div class="mat-subheading-2 message">{{'quizresult.passMsg2' | translate}}</div>
           </ng-container>
           <ng-container *ngIf="!isPassed  && quizResponse">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="92" height="92">
-              
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="108">
+
               <path  class="progress-red-clr" d="M55,90
                       A55,55 0 1,1 140,90"
                     style="fill:none;stroke-width:8px"
@@ -156,60 +156,69 @@
             </div> -->
             <div style="position:relative; top: -60px; left: 0px;">
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
-                <div class="level-text">{{levelText || 'Failed'}}</div>
+                <div class="level-text">{{levelText || ('playerbrief.failed' | translate)}}</div>
             </div>
             <div class="mat-subheading-2 message">{{'playerbrief.tryAgainMessage' | translate}}</div>
           </ng-container>
-        </div>     
+        </div>
         <mat-card class="result_box_time_container" *ngIf="quizResponse">
-          <div class="flex flex-row justify-between response_box">        
+          <div class="flex flex-row justify-between response_box">
             <div class="stats-label">
               <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
               <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
-              <div class="ml-2"> {{'playerbrief.totalQuestions' | translate}}: </div>
+              <div class="ml-2"> {{'practiceoverview.totalQuestions' | translate}} </div>
             </div>
             <div class="stats-label">
               <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
               <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
             </div>
           </div>
-        </mat-card> 
+        </mat-card>
         <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
           <mat-card *ngIf="_parts" class="result_box">
             <mat-card-title class="section-title">
               <span class="mat-subheading-1" *ngIf="!isOnlySection">{{'Section ' + (i+1)}}</span>
-              <span class="mat-subheading-2" *ngIf="isOnlySection">{{'Your Performance Summary'}}</span> 
+              <span class="mat-subheading-2" *ngIf="isOnlySection">{{'playerbrief.performanceSummary' | translate}}</span>
             </mat-card-title>
             <mat-card-content class="flex flex-1 flex-column">
               <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
                 <ng-container *ngIf="_parts[_result]">
-                  <ng-container *ngIf="_result == 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{data: {
+                  <ng-container *ngIf="_result && _result === 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{data: {
                 icon: 'done',
                 isSVG: false,
                 imgIcon: 'correct_arrow',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] + ' '+translateLabels(' questionCorrectAnswered', 'playerbrief'),
+                text: (_parts[_result] &&_parts[_result] === 1 ?
+                  _parts[_result] + ' '+translateLabels(' questionCorrectAnswered', 'playerbrief') :
+                  _parts[_result] + ' '+translateLabels(' questionsCorrectAnswered', 'playerbrief')
+                ),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']}
               }"></ng-container>
-                  <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="incorrectDetail"
+                  <ng-container *ngIf="_result && _result === 'inCorrect' || _result && _result ===  'incorrect'" [ngTemplateOutlet]="incorrectDetail"
                     [ngTemplateOutletContext]="{ data:{
                 icon: 'done',
                 isSVG: false,
                 imgIcon: 'blue-cross',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] + ' '+translateLabels(' questionWrongAnswered', 'playerbrief'),
+                text: (_parts[_result] &&_parts[_result] === 1 ?
+                  _parts[_result] + ' '+translateLabels(' questionWrongAnswered', 'playerbrief') :
+                  _parts[_result] + ' '+translateLabels(' questionsWrongAnswered', 'playerbrief')
+                ) ,
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']
               }}"></ng-container>
-                  <ng-container *ngIf="_result == 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{data:{
+                  <ng-container *ngIf="_result && _result === 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{data:{
                 icon: 'done',
                 isSVG: false,
                 imgIcon: 'blue-question',
                 colorClass: 'rgb(27, 76, 161)',
-                text: _parts[_result] +' '+translateLabels(' questionUnAnswered', 'playerbrief'),
+                text: (_parts[_result] && _parts[_result] === 1 ?
+                  _parts[_result] +' '+translateLabels(' questionUnAnswered', 'playerbrief') :
+                  _parts[_result] +' '+translateLabels(' questionsUnAnswered', 'playerbrief')
+                ),
                 type: _result,
                 sectionType: 'Section' + (i)+_result,
                 children:_parts['children']
@@ -263,7 +272,6 @@
 <ng-template #incorrectDetail let-data="data" >
   <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data,'wrong')">
     <div class="flex">
-      <!-- <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon> -->
       <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
     </div>
@@ -276,7 +284,6 @@
 <ng-template #detail let-data="data" >
   <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data,'blank')">
     <div class="flex">
-      <!-- <mat-icon [style.color]="data.colorClass">{{data.icon}}</mat-icon> -->
       <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
     </div>
@@ -288,8 +295,6 @@
 <ng-template #testdetail let-data="data" >
   <mat-card class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" (click)="getQuestionCount(data,'answer')">
     <div class="flex">
-      <!-- <mat-icon [style.color]="data.colorClass" *ngIf="!data.isSVG">{{data.icon}}</mat-icon> -->
-      <!-- <img *ngIf="data.isSVG" [style.color]="data.colorClass" [src]="data.icon" alt="Assessment" class="margin-right-xs"> -->
       <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
       <span class="mat-body-2 margin-left-xs">{{data.text}}</span>
     </div>

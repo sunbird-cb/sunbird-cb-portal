@@ -99,53 +99,9 @@
     </div>
   </div>
 </div>
-
 <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
   <div class="batch-div">
-    <form class="flex flex-col gap-4">
-      <ng-container *ngIf="batchData && !batchData?.enrolled
-        && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED))
-        && batchData?.content?.length">
-        <mat-form-field appearance="outline" class="w-full batch-form-field">
-          <mat-select #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)"  panelClass="batch-dropdown">
-            <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
-            [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
-              <div class="flex flex-row items-center gap-2 h-10">
-                <div class="flex-1 text-sm batch-timings">
-                    {{ batch.name }} ( {{ batch.startDate | date: 'd MMM, yyyy' }} - {{ batch.endDate | date: 'd MMM, yyyy' || 'present' }} )
-                </div>
-                <div class="expired" *ngIf="!handleEnrollmentEndDate(batch) || disableEnrollBtn">
-                  Expired
-                </div>
-              </div>
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
-        </mat-form-field>
-        <div class="flex flex-wrap gap-3">
-          <ng-container *ngIf="!showRejected">
-            <div class="flex-1">
-              <div class="flex flex-col gap-1" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
-                <p class="text-xs leading-4 mb-0">Last enroll date</p>
-                <p class="font-bold mb-0">{{ selectedBatch.enrollmentEndDate | date: 'd MMM, y' }}</p>
-              </div>
-            </div>
-            <div class="flex flex-row justify-center items-center">
-              <button class="enroll-button" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }" [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
-                <ng-container i18n>
-                  Request to enroll
-                </ng-container>
-              </button>
-            </div>
-
-          </ng-container>
-          <ng-container *ngIf="showRejected">
-            <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
-              Your enrollment request is {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.</h3>
-          </ng-container>
-        </div>
-      </ng-container>
-    </form>
+    <ng-container *ngIf="content" [ngTemplateOutlet]="batchDropdown"></ng-container>
     <ng-container *ngIf="batchData && !batchData?.enrolled  && batchData?.workFlow?.wfInitiated &&
       (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REJECTED) && (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.REMOVED) &&
       (batchData?.workFlow?.wfItem?.currentStatus !== WFBlendedProgramStatus.WITHDRAWN) &&
@@ -154,9 +110,8 @@
         {{batchData?.workFlow?.batch.name}} - ({{batchData?.workFlow?.batch.startDate | date: 'dd-MM-yyyy'}} - {{batchData?.workFlow?.batch.endDate | date: 'dd-MM-yyyy' || 'present'}})
       </p>
       <ng-container>
-        <button class="mat-button mat-raised-button withdrawButton  margin-top-s width-1-1 text-white"
-          (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
-            <ng-container i18n> Withdraw your request </ng-container>
+        <button class="withdraw-batch" (click)="!disableWithdrawnBtn && requestToWithdrawDialog()" [disabled]="disableWithdrawnBtn" [ngClass]="{ 'disable-btn': disableWithdrawnBtn }" >
+            <ng-container i18n> {{ 'apptocbanner.withDrawYourRequest' | translate }} </ng-container>
         </button>
       </ng-container>
     </ng-container>
@@ -174,7 +129,13 @@
   </div>
   <ng-container *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length" [ngTemplateOutlet]="statusMsg"></ng-container>
 </ng-container>
-
+<ng-container *ngIf="content?.courseCategory === nsContent.ECourseCategory.MODERATED_PROGRAM">
+  <div class="request-batch">
+    <div class="batch-div">
+      <ng-container *ngIf="content" [ngTemplateOutlet]="batchDropdown"></ng-container>
+    </div>
+  </div>
+</ng-container>  
 <!-- <div class="header-synopsis fixed-width margin-top-l" [ngClass]="{ 'header-synopsis-gradient': bannerUrl }" *ngIf="content && batchControl?.value?.batchAttributes?.batchLocationDetails">
   <ng-container *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
     <h2>{{'apptocbanner.batchLocation' | translate}}</h2>
@@ -212,15 +173,13 @@
 </ng-template>
 <ng-template #authView i18n>{{'apptocbanner.view' | translate}}</ng-template>
 <ng-template #statusMsg>
-  <div class="status-container mt-5" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
+  <div class="status-container mt-4" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
     <div class="flex" *ngIf="showMsg">
       <ng-container *ngIf="showIcon">
-        <mat-icon class="mr-3" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
-        <mat-icon class="mr-3 ws-mat-red-text"  style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
+        <mat-icon class="mr-4" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>
+        <mat-icon class="mr-4 ws-mat-red-text" style="transform: rotate(180deg);" *ngIf="WFIcon === 'info'">info</mat-icon>
       </ng-container>
-      <div class="mat-body-1">
-        <p class="margin-remove-bottom ">{{getWFMsg}}</p>
-      </div>
+      <div class="mat-body-1">{{ getWFMsg }}</div>
     </div>
   </div>
   <div class="status-container mt-5"
@@ -312,5 +271,50 @@
       </div>
     </div>
   </div>
-
 </div>
+
+<ng-template #batchDropdown>
+  <form class="flex flex-col gap-4">
+    <ng-container *ngIf="batchData && !batchData?.enrolled
+      && (!batchData.workFlow?.wfInitiated || (batchData.workFlow?.wfInitiated && batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REJECTED ||  batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.WITHDRAWN || batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED))
+      && batchData?.content?.length">
+      <mat-form-field appearance="outline" class="w-full batch-form-field">
+        <mat-select #batchControlData [formControl]="batchControl" required autoSelctFirstOption (selectionChange)="batchChange($event)"  panelClass="batch-dropdown">
+          <mat-option *ngFor="let batch of batchData.content; let i=index" [value]="batch" selected="index === 0"
+          [disabled]="!handleEnrollmentEndDate(batch) || disableEnrollBtn ">
+            <div class="flex flex-row items-center gap-2">
+              <div class="flex-1 text-sm batch-timings">
+                  {{ batch.name }} ( {{ batch.startDate | date: 'd MMM, yyyy' }} - {{ batch.endDate | date: 'd MMM, yyyy' || 'present' }} )
+              </div>
+              <div class="expired" *ngIf="!handleEnrollmentEndDate(batch) || disableEnrollBtn">
+                Expired
+              </div>
+            </div>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="batchControl.hasError('required')">Please choose a batch to start course</mat-error>
+      </mat-form-field>
+      <div class="flex flex-wrap gap-3">
+        <ng-container *ngIf="!showRejected">
+          <div class="flex-1">
+            <div class="flex flex-col gap-1" *ngIf="selectedBatch && selectedBatch.enrollmentEndDate ">
+              <p class="text-xs leading-4 mb-0">Last enroll date</p>
+              <p class="font-bold mb-0">{{ selectedBatch.enrollmentEndDate | date: 'd MMM, y' }}</p>
+            </div>
+          </div>
+          <div class="flex flex-row justify-center items-center">
+            <button class="enroll-button" [ngClass]="{ 'disable-btn': disableEnrollBtn || batchControl.hasError('required') || !handleEnrollmentEndDate(selectedBatch) }" [disabled]="disableEnrollBtn || batchControl.hasError('required')|| !handleEnrollmentEndDate(selectedBatch)" (click)="requestToEnrollDialog()">
+              <ng-container i18n>
+                Request to enroll
+              </ng-container>
+            </button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="showRejected && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+          <h3 class="margin-remove-bottom mat-body-2 ws-default-text" i18n>
+            Your enrollment request is {{batchData?.workFlow?.wfItem?.currentStatus === WFBlendedProgramStatus.REMOVED ?'removed':'rejected'}}.</h3>
+        </ng-container>
+      </div>
+    </ng-container>
+  </form>
+</ng-template>

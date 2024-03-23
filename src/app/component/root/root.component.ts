@@ -292,9 +292,13 @@ export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
             this.showHubs = true
           }
         }
+
         if (event.url.includes('/viewer')) {
           this.viewerPage = true
+        } else {
+          this.viewerPage = false
         }
+
         this.routeChangeInProgress = true
         this.changeDetector.detectChanges()
       } else if (

@@ -6,10 +6,12 @@
         <mat-card class="html-viewer-container" [ngClass]="{'padding-remove': isLtMedium}">
           <mat-card-content>
             <div id="fullScreenContainer" [ngClass]="{ 'video-player': htmlData?.isIframeSupported != 'no' }">
-              <viewer-plugin-html [htmlContent]="htmlData" *ngIf="playScormContentFlag">
+              <viewer-plugin-html [htmlContent]="htmlData">
               </viewer-plugin-html>
+              <!-- <viewer-plugin-html [htmlContent]="htmlData" *ngIf="playScormContentFlag">
+              </viewer-plugin-html> -->
               
-               <div class="start-scorm-content-container" *ngIf="!playScormContentFlag">
+               <!-- <div class="start-scorm-content-container" *ngIf="!playScormContentFlag">
                   <div class="flex flex-around flex-wrapped">
                     <div class="w-full">
                       <div #htmlContainer>
@@ -35,7 +37,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
             </div>
             <div class="flex justify-end mt-3" *ngIf="!isMobile">
               <ws-widget-btn-fullscreen [widgetType]="'actionButton'" [widgetSubType]="'actionButtonFullscreen'"

@@ -31,11 +31,13 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('stickyMenu', { static: false }) tabElement!: MatTabGroup
   @Input() condition: any
   @Input() kparray: any
+  @Input() selectedBatchData: any
+  @Input() config: any
+  @Input() componentName!: string
   sticky = false
   menuPosition: any
   isMobile = false
   selectedTabIndex = 0
-  config: any
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +48,11 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
     if (this.route.snapshot.data.pageData && this.route.snapshot.data.pageData.data) {
       this.config = this.route.snapshot.data.pageData.data
+    }
+    const batchId = this.route.snapshot.queryParams.batchId ?
+      this.route.snapshot.queryParams.batchId : ''
+    if (batchId) {
+      this.selectedTabIndex = 1
     }
   }
 
@@ -73,8 +80,8 @@ export class ContentTocComponent implements OnInit, AfterViewInit, OnChanges {
   handleTabChange(event: MatTabChangeEvent): void {
     this.tabChangeValue = event.tab
     this.selectedTabIndex = event.index
-    if (this.selectedTabIndex === 1) {
+    // if (this.selectedTabIndex === 1) {
       this.loadCheckService.componentLoaded(true)
-    }
+    // }
   }
 }

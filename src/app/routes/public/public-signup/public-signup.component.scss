@@ -984,3 +984,31 @@ a.terms-text{
   margin-left: -1em !important;
   max-height: 505px !important;
 }
+
+a.help-icon {
+  cursor: pointer;
+} 
+
+.zoho-form-box {
+  text-align: right;
+  padding-right: 30px;
+  position: fixed;
+  right: 0;
+}
+.tooltiptext {
+  visibility: hidden;
+  width: 90px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px 0;
+  position: absolute;
+  z-index: 1;
+  top: 25px;
+  left: -32px;
+  font-size: 12px;
+}
+a.help-icon:hover .tooltiptext {
+  visibility: visible;
+}

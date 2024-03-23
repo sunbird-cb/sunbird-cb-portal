@@ -25,6 +25,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
 import { ReviewComponentDataService } from '../content-services/review-component-data.service'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { ResetRatingsService } from '@ws/app/src/lib/routes/app-toc/services/reset-ratings.service'
 
 import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
 import { CertificateDialogComponent } from '../../certificate-dialog/certificate-dialog.component'
@@ -79,10 +80,15 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private tocSvc: AppTocService,
     private configService: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router,
+    public router: Router,
     private reviewDataService: ReviewComponentDataService,
-    private handleClaimService: HandleClaimService
-  ) { }
+    private handleClaimService: HandleClaimService,
+    private resetRatingsService: ResetRatingsService
+  ) {
+    this.resetRatingsService.resetRatings$.subscribe((_res: any) => {
+      this.fetchRatingSummary()
+    })
+  }
 
   @Input() condition: any
   @Input() kparray: any
@@ -96,8 +102,10 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   @Input() forPreview = false
   @Input() batchData: any
   @Input() fromViewer = false
+  @Input() selectedBatchData: any
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
+  @ViewChild('tagsElem', { static: false }) tagsElem !: ElementRef
   primaryCategory = NsContent.EPrimaryCategory
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
   summary = {
@@ -108,6 +116,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     ellipsis: false,
     viewLess: false,
   }
+  tagsEllipsis = false
   competencySelected = ''
   ratingSummary: any
   authReplies: any
@@ -129,6 +138,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   competenciesObject: any = []
   private destroySubject$ = new Subject<any>()
   viewMoreTags = false
+  timerUnsubscribe: any
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -139,7 +149,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       icon: '',
     },
     sliderConfig: {
-      showNavs : false,
+      showNavs : true,
       showDots: false,
     },
     loader: true,
@@ -170,10 +180,14 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       this.fetchRatingSummary()
       this.loadCompetencies()
     }
+
+    if (this.content) {
+      this.content['subTheme'] = this.getSubThemes()
+    }
   }
 
   ngAfterViewInit(): void {
-    this.timerService.getTimerData()
+    this.timerUnsubscribe = this.timerService.getTimerData()
     .pipe(takeUntil(this.destroySubject$))
     .subscribe((_timer: any) => {
       this.timer = _timer
@@ -185,12 +199,26 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
 
-        if (this.summaryElem.nativeElement.offsetHeight > 72) {
-          this.summary.ellipsis = true
+        if (!this.isMobile) {
+          if (this.summaryElem.nativeElement.offsetHeight > 72) {
+            this.summary.ellipsis = true
+          }
+
+          if (this.descElem.nativeElement.offsetHeight > 72) {
+            this.description.ellipsis = true
+          }
+        } else {
+          if (this.summaryElem.nativeElement.offsetHeight > 48) {
+            this.summary.ellipsis = true
+          }
+
+          if (this.descElem.nativeElement.offsetHeight > 48) {
+            this.description.ellipsis = true
+          }
         }
 
-        if (this.descElem.nativeElement.offsetHeight > 72) {
-          this.description.ellipsis = true
+        if (this.tagsElem && this.tagsElem.nativeElement.offsetHeight > 64) {
+          this.tagsEllipsis = true
         }
       },         500)
     }
@@ -225,6 +253,18 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         }
       }
     }
+  }
+
+  getSubThemes(): any[] {
+    const subThemeArr: any[] = []
+    if (this.content && this.content.competencies_v5 && this.content.competencies_v5.length) {
+      this.content.competencies_v5.forEach((_competencyObj: any) => {
+        if (subThemeArr.indexOf(_competencyObj.competencySubTheme) === -1) {
+          subThemeArr.push(_competencyObj.competencySubTheme)
+        }
+      })
+    }
+    return subThemeArr
   }
 
   loadCompetencies(): void {
@@ -625,6 +665,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
 
   ngOnDestroy(): void {
     this.destroySubject$.unsubscribe()
+    this.timerUnsubscribe.unsubscribe()
   }
 
 }

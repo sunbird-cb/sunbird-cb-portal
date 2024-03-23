@@ -206,6 +206,7 @@
         font-weight: 400;
         line-height: 16px;
         letter-spacing: 0.25px;
+        font-weight: 700;
     }
 }
 .flex-jc-space-between {
@@ -220,22 +221,22 @@
     .mat-body-2 {
         font-weight: 700;
     }
-    
+
 }
 .question-list-green {
-    height: 375px;
+    height: 370px;
     overflow-y: auto;
     background: rgb(246,250,246);
     border-left: 4px solid rgb(29, 137, 35);
 }
 .question-list-red {
-    height: 375px;
+    height: 370px;
     overflow-y: auto;
     background: rgb(253,247,246);
     border-left: 4px solid rgb(209, 57, 36);
 }
 .question-list-gray {
-    height: 375px;
+    height: 370px;
     overflow-y: auto;
     background: rgb(245,245,245);
     border-left: 4px solid rgba(0, 0, 0, 0.4);
@@ -267,7 +268,7 @@
     display: block;
 }
 .display-ques {
-    padding-top: 16px;
+    // padding-top: 16px;
     margin-bottom: 0;
     font-size: 12px;
     font-weight: 400;
@@ -289,9 +290,9 @@
     overflow-y: auto;
     background-color: #fff;
     .small-screen {
-    @include breakpoint-xs {
-        display: none !important;
-    } 
+        @include breakpoint-xs {
+            display: none !important;
+        }
     }
 }
 
@@ -401,7 +402,7 @@
 }
 
 .border-blue {
-    
+
     border-radius: 63px;
     width: 123px;
 }
@@ -411,7 +412,7 @@
     padding-bottom: 16px;
 }
 
-::ng-deep .mat-card:not([class*=mat-elevation-z]) {   
+::ng-deep .mat-card:not([class*=mat-elevation-z]) {
     box-shadow: none !important;
 }
 
@@ -453,14 +454,14 @@
 
 .progress-clr {
     stroke: rgb(29, 137, 35);
-    stroke-dasharray: 248;
+    // stroke-dasharray: 248;
     // stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
     stroke-dashoffset: var(--i);
 }
 
-.progress-red-clr {    
+.progress-red-clr {
     stroke: #d13924;
-    stroke-dasharray: 248;
+    // stroke-dasharray: 248;
     // stroke-dashoffset: calc(247 - ((247 * var(--i))/100));
     stroke-dashoffset: var(--i);
 }
@@ -494,7 +495,7 @@
     margin: 0 32px;
 }
 
-@media only screen and (min-width: 280px) and (max-width: 280px) { 
+@media only screen and (min-width: 280px) and (max-width: 280px) {
     .message {
         width:280px;
         text-align: center;
@@ -502,9 +503,9 @@
     }
 }
 
-@media only screen and (min-width: 281px) and (max-width: 767px) { 
+@media only screen and (min-width: 281px) and (max-width: 767px) {
     .message {
-        width:384px;
+        width:380px;
         text-align: center;
         margin-top: -40px;
     }
@@ -512,7 +513,7 @@
 
 @media only screen and (max-width: 768px) {
     .box-height {
-        min-height: 100%;
+        height: calc(100vh - 100px);
         margin: 0;
     }
     .summary-detail ul li {
@@ -528,10 +529,14 @@
 
     .start-assessment-cta {
         position: fixed;
-        bottom: 6%;
-        width: 92%;
+        bottom: 0;
+        width: 94%;
         justify-content: center;
-        // left: 25%;
+        padding: 15px;
+        background: #fff;
+        overflow: hidden;
+        right: 0;
+        left: 0;
     }
 
     .quest_btn{
@@ -558,6 +563,21 @@
     .section-title {
         padding:16px;
     }
+
+    .top-margin-63 {
+        margin-top: 0px;
+    }
+
+    .display-ques {
+        padding-top: 0px;
+        margin-bottom: 0;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0.25px;
+    }
+
+
 }
 
 .blue-bg {
@@ -574,7 +594,7 @@
     align-items: center;
     justify-content: center;
     font-size: 1.5em;
-    background: 
+    background:
       linear-gradient(#000, #000) content-box no-repeat,
       conic-gradient(transparent var(--percentage, 0), gray var(--percentage, 0)) border-box,
       conic-gradient(var(--passPercentage) 120deg, var(--passPercentage) 120deg 240deg, var(--passPercentage) 240deg) border-box;

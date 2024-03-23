@@ -46,7 +46,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -100,7 +100,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -191,7 +191,11 @@ span.optional-span {
     & .customicon .mat-icon {
       color: #fff;
     }
-    
+    .progress-container {
+      span {
+        color: white !important;
+      }
+    }
   }
 }
 
@@ -278,10 +282,19 @@ span.optional-span {
 
 
 // for giving top margin to last level, first child resource
-:nth-child(1 of .resourceCard) .resource{
+// :nth-child(1 of .resourceCard) .resource{
+//   margin-top: 16px !important;
+// }
+// fallback css for above 
+.first.resourceCard:nth-child(1) .resource {
   margin-top: 16px !important;
 }
-:nth-child(1 of .resourceCard) .activeResource{
+
+// :nth-child(1 of .resourceCard) .activeResource{
+//   margin-top: 0 !important;
+// }
+// fallback css for above 
+.first.resourceCard:nth-child(1) .activeResource {
   margin-top: 0 !important;
 }
 
@@ -492,14 +505,16 @@ span.optional-span {
 
 .certificate-btn {
   height: 24px;
-  background: black;
+  background: #1a4ca1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 4px 11px;
   color: #fff;
   border-radius: 20px;
+  border: 1px solid white;
   font: 400 12px/16px Lato;
+  cursor: pointer;
 
   .mat-icon {
     fill: #fff;
@@ -565,4 +580,12 @@ span.optional-span {
 // resource in course
 .course  .resource-container .resource{
   padding-left: 24px
+}
+
+
+::ng-deep .white-spinner{
+  stroke:white !important;
+}
+.certificate-loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #ffffff;
 }

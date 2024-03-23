@@ -1,4 +1,4 @@
-<mat-radio-group class="flex flex-1 flex-column quiz-radio-group" [ngClass]="question?.options?.length > 3 ? 'more-than-five-option' : ''">
+<mat-radio-group class="flex flex-1 flex-column quiz-radio-group responsive-options-height">
     <div *ngFor="let option of question?.options">
         <!-- =={{option?.isCorrect}}=={{showAns}} -->
         <mat-radio-button disableRipple  #btn class="flex flex-1 padding-s quiz-radio-button margin-top-s b-r" [ngClass]="{
@@ -10,16 +10,16 @@
     'ws-mat-accent-border-active ': (btn.checked)
   }" [value]="option.optionId" (change)="updateParent(option.optionId)" [checked]="isSelected(option)">
             <span class="wrap-mat-radio-label">
-                <mat-error *ngIf="showAns && !option?.isCorrect && isSelected(option)">
+                <span class="mat-body-2 font-700" *ngIf="showAns && !option?.isCorrect && isSelected(option)">
                     {{ option?.text }}
-                </mat-error>
-                <div [ngClass]="{
+                </span>
+                <span [ngClass]="{
         'correct-option':
           (showAns && option?.isCorrect && isSelected(option)) ||
           (showAns && option?.isCorrect)
       }" [hidden]="showAns && !option?.isCorrect && isSelected(option)">
-                    <span class="mat-body-2"></span> {{ option?.text }}
-                </div>
+                    <span class="mat-body-2 font-700"></span> {{ option?.text }}
+                </span>
             </span>
         </mat-radio-button>
         <div class="background-well padding-left-m padding-xs"

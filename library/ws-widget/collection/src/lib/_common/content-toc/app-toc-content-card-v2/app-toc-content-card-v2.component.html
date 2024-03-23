@@ -61,11 +61,11 @@
                 </ng-container>
             </div>
             <!-- deactivated as per NIC CEO requirement to access course wthout login -->
-            <a class="" [class.disabled]="(forPreview || !isEnabled || !isEnrolled) ? true : null"
+            <a class="" [class.disabled]="(forPreview || !isEnabled || !isEnrolled || !isBatchInProgess) ? true : null"
                 [ngClass]="{'ml-3': isEnrolled}"
                 [routerLink]="(isAllowed && !forPreview && isEnabled) ? resourceLink.url : null"
                 [queryParams]="(isAllowed && !forPreview && isEnabled)  ? resourceLink.queryParams : null">
-                <span [ngClass]="{'resource-active': pathSet?.has(content?.identifier) && isEnrolled}"></span>
+                <div [ngClass]="{'resource-active': pathSet?.has(content?.identifier) && isEnrolled}"></div>
                 <div class="text-truncate " [ngClass]="{'cursor-pointer': !isEnabled && isEnrolled}"
                     (click)="content.viewChildren = !content.viewChildren; raiseTelemetry()">
                     <div class="flex flex-col sm:flex-row flex-wrap">
@@ -101,10 +101,21 @@
                                 *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
                             <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs"
                                 alt="offline sessions" *ngIf="content.mimeType === 'application/offline'">
-                            <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
-                                hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
-                                'hms'
-                                }}</span>
+                            <ng-container *ngIf="content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE">
+                                <span class="resourceDuration ws-mat-black60-text">{{ content?.maxQuestions }} questions</span>
+                            </ng-container>
+                            <ng-container *ngIf="!(content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE)">
+                                <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
+                                    hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
+                                    'hms'
+                                    }}</span>
+                            </ng-container>
                         </div>
                     </ng-container>
 
@@ -133,10 +144,21 @@
                                 *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
                             <img src="/assets/icons/content/white/module.svg" class="float-left margin-right-xs"
                                 alt="offline sessions" *ngIf="content.mimeType === 'application/offline'">
-                            <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
-                                hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
-                                'hms'
-                                }}</span>
+                            <ng-container *ngIf="content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE">
+                                <span class="resourceDuration ws-mat-black60-text">{{ content?.maxQuestions }} questions</span>
+                            </ng-container>
+                            <ng-container *ngIf="!(content.primaryCategory === primaryCategory.FINAL_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.COMP_ASSESSMENT ||
+                            content.primaryCategory === primaryCategory.STANDALONE_ASSESSMENT || 
+                            content.primaryCategory === primaryCategory.PRACTICE_RESOURCE)">
+                                <span class="resourceDuration ws-mat-black60-text">{{ (content?.duration||
+                                    hierarchyMapData[content?.identifier]?.expectedDuration || 0)| pipeDurationTransform:
+                                    'hms'
+                                    }}</span>
+                            </ng-container>
                         </div>
                     </ng-container>
                 </div>
@@ -164,10 +186,10 @@
             <div class="card-collection w-auto sm:w-100 padding-right-xl">
                 <!-- <img class="card-thumbnail ws-mat-primary-lite-background" [src]="content?.appIcon" alt="Thumbnail"
             (click)="content.viewChildren = !content.viewChildren" [wsUtilsDefaultThumbnail]="defaultThumbnail" /> -->
-                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 sm:pr-4 sm:w-auto">
+                <div class="flex flex-col flex-wrap flex-between width-expand pr-0 w-100 ">
                     <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}"
                         (click)="content.viewChildren = !content.viewChildren">
-                        <div class="flex flex-col sm:flex-row flex-wrap">
+                        <div class="flex sm:flex-row flex-wrap">
                             <ng-container *ngIf="isModule && isEnrolled">
                                 <ng-container
                                     *ngIf="!forPreview && content?.identifier && getCompletionPercentage(content?.identifier) ; else elseBlock">
@@ -206,18 +228,11 @@
                                         [showBackground]="false"></circle-progress>
                                 </ng-template>
                             </ng-container>
+                            <div [ngClass]="{'collection-active-class': pathSet?.has(content?.identifier) && isEnrolled}"></div>
                             <p class="margin-remove text-truncate mat-subheading-1 flex-auto font-bold"
                                 [ngClass]="{'text-active': pathSet?.has(content.identifier) && isEnrolled}">
                                 {{index}}. {{ content?.name }}
                             </p>
-                            <ng-container *ngIf="content.issuedCertificatesSVG">
-                                <a class="certificate-btn"
-                                    (click)="openCertificateDialog(content.issuedCertificatesSVG)">
-                                    <!-- <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24"> -->
-                                    <span>Certificate</span>
-                                    <mat-icon class="ml-2">arrow_downward</mat-icon>
-                                </a>
-                            </ng-container>
                             <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
                                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
                                 <span>Resource</span>
@@ -260,16 +275,30 @@
                         <ng-container
                             *ngIf="!forPreview && content?.identifier && getCompletionPercentage(content?.identifier) && content.primaryCategory === 'Course'">
                             <ng-container *ngIf="getCompletionStatus(content?.identifier) == 2">
-                                <div class="mt-2 flex flex-1 flex-col  progress-container">
-                                    <div class="flex flex-row justify-end w-full ">
-                                        <span class="mat-body-2  ">
-                                            {{getCompletionPercentage(content?.identifier)}}%</span>
+                                <div class="flex flex-1">
+                                    <div class="mt-2 mr-4  flex flex-1 flex-col  progress-container">
+                                        <div class="flex flex-row justify-end w-full ">
+                                            <span class="mat-body-2  ">
+                                                {{getCompletionPercentage(content?.identifier)}}%</span>
+                                        </div>
+    
+                                        <ws-widget-content-progress [contentId]="content?.progress"
+                                            [progress]="getCompletionPercentage(content?.identifier)"
+                                            [progressType]="'percentage'" [customClassName]="'viewer-progress'">
+                                        </ws-widget-content-progress>
                                     </div>
-
-                                    <ws-widget-content-progress [contentId]="content?.progress"
-                                        [progress]="getCompletionPercentage(content?.identifier)"
-                                        [progressType]="'percentage'" [customClassName]="'viewer-progress'">
-                                    </ws-widget-content-progress>
+                                    <ng-container *ngIf="content?.issuedCertificatesId">
+                                        <a class="ml-5 certificate-btn"
+                                        [ngClass]="{'disable-btn': downloadCertificateLoading || content?.issuedCertificatesId}" 
+                                        (click)="!downloadCertificateLoading && downloadCertificate(content?.issuedCertificatesId);$event.stopPropagation()">
+                                            <!-- <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24"> -->
+                                            <span>Certificate</span>
+                                            <mat-icon  *ngIf="!downloadCertificateLoading" class="ml-2">arrow_downward</mat-icon>
+                                            <div class="center flex flex-middle certificate-loader"  *ngIf="downloadCertificateLoading">
+                                                <mat-spinner strokeWidth="2" stroke="'white'" class="white-spinner" [diameter]="16"></mat-spinner>
+                                              </div>
+                                        </a>
+                                    </ng-container>
                                 </div>
                                 <!-- <circle-progress class="flex items-center progress" [percent]="100" [radius]="12"
                                     [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3"
@@ -283,16 +312,30 @@
                                 </circle-progress> -->
                             </ng-container>
                             <ng-container *ngIf="getCompletionStatus(content?.identifier) < 2">
-                                <div class="mt-2 flex flex-1 flex-col  progress-container">
-                                    <div class="flex flex-row justify-end w-full ws-mat-black-text">
-                                        <span class="mat-body-2  ws-mat-black-text">
-                                            {{getCompletionPercentage(content?.identifier)}}%</span>
+                                <div class="flex flex-1">
+                                    <div class="mt-2 mr-4  flex flex-1 flex-col  progress-container">
+                                        <div class="flex flex-row justify-end w-full ws-mat-black-text">
+                                            <span class="mat-body-2  ws-mat-black-text">
+                                                {{getCompletionPercentage(content?.identifier)}}%</span>
+                                        </div>
+    
+                                        <ws-widget-content-progress [contentId]="content?.progress"
+                                            [progress]="getCompletionPercentage(content?.identifier)"
+                                            [progressType]="'percentage'" [customClassName]="'viewer-progress'">
+                                        </ws-widget-content-progress>
                                     </div>
-
-                                    <ws-widget-content-progress [contentId]="content?.progress"
-                                        [progress]="getCompletionPercentage(content?.identifier)"
-                                        [progressType]="'percentage'" [customClassName]="'viewer-progress'">
-                                    </ws-widget-content-progress>
+                                    <ng-container *ngIf="content?.issuedCertificatesId">
+                                        <a class="ml-5 certificate-btn"
+                                        [ngClass]="{'disable-btn': downloadCertificateLoading || content?.issuedCertificatesId}" 
+                                        (click)="!downloadCertificateLoading && downloadCertificate(content?.issuedCertificatesId);$event.stopPropagation()">
+                                            <!-- <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24"> -->
+                                            <span>Certificate</span>
+                                            <mat-icon  *ngIf="!downloadCertificateLoading" class="ml-2">arrow_downward</mat-icon>
+                                            <div class="center flex flex-middle certificate-loader"  *ngIf="downloadCertificateLoading">
+                                                <mat-spinner strokeWidth="2" stroke="'white'" class="white-spinner" [diameter]="16"></mat-spinner>
+                                              </div>
+                                        </a>
+                                    </ng-container>
                                 </div>
                             </ng-container>
                         </ng-container>
@@ -318,9 +361,9 @@
             'module': isModule}"
             [@panelInOut]>
             <div class="children-container" [ngClass]="{'module': isModule, '': !isModule}">
-                <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [content]="child" [expandAll]="expandAll"
+                <ws-widget-app-toc-content-card-v2 [forPreview]="forPreview" [componentName]="componentName" [content]="child" [expandAll]="expandAll"
                     [rootId]="rootId" [batchId]="batchId" [rootContentType]="rootContentType" [index]="j+1"
-                    [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData"
+                    [pathSet]="pathSet" [hierarchyMapData]="hierarchyMapData" [batchData]="batchData"
                     *ngFor="let child of content?.children; trackBy: contentTrackBy; let j= index;let isFirst = first"
                     [ngClass]="{'moduleCard': checkIsModule(child), 'resourceCard': !checkIsModule(child), 'first': isFirst}">
                 </ws-widget-app-toc-content-card-v2>

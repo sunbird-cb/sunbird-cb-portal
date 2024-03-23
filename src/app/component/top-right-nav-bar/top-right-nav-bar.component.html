@@ -21,8 +21,17 @@
             <ws-font-setting></ws-font-setting>
         </li>
         <li *ngIf="item.type === 'langSelect' && rnc.section === 'language' && rnc.active && isMultiLangEnabled" class="langdiv">
+            <img src="/assets/icons/top-nav/translate_icon.svg" [matMenuTriggerFor]="language" alt="Language image" class="mob-lang-img mx-2" />
+            <mat-menu #language="matMenu" xPosition="before">
+                <ng-container *ngFor="let lang of multiLang">
+                    <button mat-menu-item class="px-3" (click)="selectLanguage(lang.key)" *ngIf="lang.active">
+                        <div [ngClass]="{'checkmark active': lang.key === selectedLanguage}">{{ lang.value }}</div>
+                    </button>
+                </ng-container>
+            </mat-menu>
+
             <mat-form-field class="custom-lang">
-                <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
+                <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language image" class="lang-img margin-right-xs" />
                 <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)" class="language-select">
                     <span *ngFor="let lang of multiLang">
                         <mat-option *ngIf="lang.active" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">{{lang.value}}</mat-option>
