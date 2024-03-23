@@ -363,11 +363,11 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
     if (data.request.filters.courseCategory.includes(NsContent.ECourseCategory.MODERATED_COURSE) ||
       data.request.filters.courseCategory.includes(NsContent.ECourseCategory.MODERATED_ASSESSEMENT) ||
       data.request.filters.courseCategory.includes(NsContent.ECourseCategory.MODERATED_PROGRAM)) {
-        let orgId: string = ''
+        let orgId = ''
         if (!this.veifiedKarmayogi) {
           data.request.filters = { ...data.request.filters, 'secureSettings.isVerifiedKarmayogi': 'No' }
         }
-        if(this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId){
+        if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) {
           orgId = this.configSvc.userProfile.rootOrgId
         }
         data.request.filters = { ...data.request.filters, 'secureSettings.organisation': orgId }

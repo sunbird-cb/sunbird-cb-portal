@@ -173,7 +173,7 @@
 </ng-template>
 <ng-template #authView i18n>{{'apptocbanner.view' | translate}}</ng-template>
 <ng-template #statusMsg>
-  <div class="status-container mt-4" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
+  <div class="status-container mt-2 mb-2" *ngIf="content?.primaryCategory === primaryCategory.BLENDED_PROGRAM && batchData?.workFlow?.wfInitiated">
     <div class="flex" *ngIf="showMsg">
       <ng-container *ngIf="showIcon">
         <mat-icon class="mr-4" [ngClass]="iconColor" *ngIf="WFIcon === 'circle'">check_circle</mat-icon>

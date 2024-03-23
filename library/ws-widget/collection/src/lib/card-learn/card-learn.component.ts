@@ -46,7 +46,6 @@ export class CardLearnComponent extends WidgetBaseComponent
 
     super()
     if (this.configSvc.userProfile) {
-      debugger
       this.givenName = this.configSvc.userProfile.givenName
       this.userEmail = this.configSvc.userProfile.email
     }
@@ -124,8 +123,8 @@ export class CardLearnComponent extends WidgetBaseComponent
   }
 
   callModeratedFunc() {
-    let orgId : string = ''
-    if(this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId){
+    let orgId = ''
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) {
       orgId = this.configSvc.userProfile.rootOrgId
     }
     const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
