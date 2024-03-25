@@ -674,6 +674,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
     this.content = initData.content
+
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
       case NsAppToc.EWsTocErrorCode.API_FAILURE: {
@@ -816,6 +817,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           (res: any) => {
             if (res && res.result && res.result.response) {
               this.userRating = res.result.response
+              console.log('this.userRating - ', this.userRating)
               if (fireUpdate) {
                 this.tocSvc.changeUpdateReviews(true)
               }

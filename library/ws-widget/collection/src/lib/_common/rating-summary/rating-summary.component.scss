@@ -21,7 +21,11 @@
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.08);
 }
-  
+
+.ratingColor {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
 .rating-bar {
   & .mat-progress-bar-fill::after {
     background: red;

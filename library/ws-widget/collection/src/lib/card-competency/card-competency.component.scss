@@ -56,7 +56,7 @@
 }
 
 .chip-ellipsis {
-    white-space: nowrap;
+    white-space: nowrap !important;
     max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
