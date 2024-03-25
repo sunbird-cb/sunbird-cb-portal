@@ -565,7 +565,7 @@
                 </div>
               </div>
             </div>
-            <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
+            <!-- <div class="flex flex-col gap-3" *ngIf="handleParseJsonData(content?.creatorContacts)?.length">
               <div class="text-base font-bold">{{ 'apptocsinglepage.curators' | translate }}</div>
               <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
                 <div class="flex items-center justify-center">
@@ -576,6 +576,18 @@
                 <div class="flex flex-col gap-1 justify-center">
                   <div class="font-bold">{{ handleCapitalize(creator?.name, 'name') }}</div>
                   <div class="text-xs leading-3">{{ 'apptocsinglepage.curator' | translate }}</div>
+                </div>
+              </div>
+            </div> -->
+            <div class="flex flex-col gap-3" *ngIf="content?.source">
+              <div class="text-base font-bold">{{ 'apptocsinglepage.provider' | translate }}</div>
+              <div class="flex flex-row gap-4" *ngFor="let creator of handleParseJsonData(content?.creatorContacts)">
+                <div class="flex items-center justify-center imgdiv">
+                  <img *ngIf="!content.creatorLogo" class="mat-icon" src="/assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg" alt="{{ 'apptocsinglepage.provider' | translate }}" />
+                  <img *ngIf="content.creatorLogo" [src]="widgetData.content.creatorLogo | pipePublicURL" class="mat-icon">
+                </div>
+                <div class="flex flex-col gap-1 justify-center">
+                  <div class="text-xs leading-3">{{ handleCapitalize(content?.source, 'source') }}</div>
                 </div>
               </div>
             </div>
