@@ -39,13 +39,13 @@
             </div>
             <div class="flex podium-rank-change"
               *ngIf="currentUserId === rank2?.userId && rank2?.rank !== rank2?.previous_rank">
-              <ng-container *ngIf="rank2?.rank < rank2?.previous_rank">
+              <ng-container *ngIf="rank2?.previous_rank !== 0 && rank2?.rank < rank2?.previous_rank">
                 <div class="change-rank-icon green">
                   <mat-icon>arrow_drop_up</mat-icon>
                 </div>
                 <div class="change-rank green">{{rank2?.previous_rank - rank2?.rank}}</div>
               </ng-container>
-              <ng-container *ngIf="rank2.rank > rank2?.previous_rank">
+              <ng-container *ngIf="rank2?.previous_rank !== 0 && rank2.rank > rank2?.previous_rank">
                 <div class="change-rank-icon red">
                   <mat-icon>arrow_drop_down</mat-icon>
                 </div>
@@ -71,13 +71,13 @@
           </div>
           <div class="flex podium-rank-change"
             *ngIf="currentUserId === rank1?.userId && rank1?.rank !== rank1?.previous_rank">
-            <ng-container *ngIf="rank1?.rank < rank1?.previous_rank">
+            <ng-container *ngIf="rank1?.previous_rank !== 0 &&  rank1?.rank < rank1?.previous_rank">
               <div class="change-rank-icon green">
                 <mat-icon>arrow_drop_up</mat-icon>
               </div>
               <div class="change-rank green">{{rank1?.previous_rank - rank1?.rank}}</div>
             </ng-container>
-            <ng-container *ngIf="rank1?.rank > rank1?.previous_rank">
+            <ng-container *ngIf="rank1?.previous_rank !== 0 && rank1?.rank > rank1?.previous_rank">
               <div class="change-rank-icon red">
                 <mat-icon>arrow_drop_down</mat-icon>
               </div>
@@ -101,13 +101,13 @@
           </div>
           <div class="flex podium-rank-change"
             *ngIf="currentUserId === rank3?.userId && rank3?.rank !== rank3?.previous_rank">
-            <ng-container *ngIf="rank3?.rank < rank3?.previous_rank">
+            <ng-container *ngIf="rank3?.previous_rank !== 0 && rank3?.rank < rank3?.previous_rank">
               <div class="change-rank-icon green">
                 <mat-icon>arrow_drop_up</mat-icon>
               </div>
               <div class="change-rank green">{{rank3?.previous_rank - rank3?.rank}}</div>
             </ng-container>
-            <ng-container *ngIf="rank3?.rank > rank3?.previous_rank">
+            <ng-container *ngIf="rank3?.previous_rank !== 0 && rank3?.rank > rank3?.previous_rank">
               <div class="change-rank-icon red">
                 <mat-icon>arrow_drop_down</mat-icon>
               </div>
@@ -149,14 +149,14 @@
           *ngIf="currentUserId === otherUser?.userId && otherUser?.rank !== otherUser?.previous_rank">
           <div class="user-info">
             <div class="user-rank-change">
-              <ng-container *ngIf="otherUser?.rank < otherUser?.previous_rank">
+              <ng-container *ngIf="otherUser?.previous_rank !== 0 && otherUser?.rank < otherUser?.previous_rank">
                 <div class="flex green">
                   <div class="change-rank-icon">
                     <mat-icon>arrow_drop_up</mat-icon></div>
                   <div class="change-rank">{{otherUser?.previous_rank - otherUser?.rank}}</div>
                 </div>
               </ng-container>
-              <ng-container *ngIf="otherUser?.rank > otherUser?.previous_rank">
+              <ng-container *ngIf="otherUser?.previous_rank !== 0 && otherUser?.rank > otherUser?.previous_rank">
                 <div class="flex red">
                   <div class="change-rank-icon">
                     <mat-icon>arrow_drop_down</mat-icon></div>
@@ -164,7 +164,7 @@
                 </div>
               </ng-container>
             </div>
-            <div class="user-note">
+            <div class="user-note" *ngIf="otherUser?.previous_rank !== 0">
               {{'learnerLeaderboard.yourAreIn' | translate}}
               {{otherUser?.previous_rank | pipeOrdinal}}
               {{'learnerLeaderboard.positionMastMonth' | translate}}
