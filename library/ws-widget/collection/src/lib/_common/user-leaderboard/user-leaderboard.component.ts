@@ -90,7 +90,7 @@ export class UserLeaderboardComponent implements OnInit {
     this.updateMotivationalMessagestatus()
     setTimeout(() => {
       this.showOverlay = false
-    },         15000)
+    },         5000)
   }
 
   translateLabels(label: string, type: any) {
