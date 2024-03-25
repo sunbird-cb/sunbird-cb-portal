@@ -24,6 +24,9 @@ export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
   selector: 'viewer-plugin-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
+  /* tslint:disable */
+  host: { class: 'h-inherit' },
+  /* tslint:enable */
 })
 export class QuizComponent implements OnInit, OnChanges, OnDestroy {
 
