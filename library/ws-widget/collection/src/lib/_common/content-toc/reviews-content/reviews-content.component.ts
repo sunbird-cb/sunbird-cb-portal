@@ -59,7 +59,7 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
         if (text) {
           this.reviews = Object.values(this.reviews).filter((_obj: any) => {
-            return _obj.review && _obj.review.toLowerCase().includes(text.toLowerCase()) 
+            return _obj.review && _obj.review.toLowerCase().includes(text.toLowerCase())
             || _obj.firstName && _obj.firstName.toLowerCase().includes(text.toLowerCase())
           })
         } else {
