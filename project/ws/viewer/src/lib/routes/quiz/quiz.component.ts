@@ -12,6 +12,9 @@ import { ViewerUtilService } from '../../viewer-util.service'
   selector: 'viewer-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
+  /* tslint:disable */
+  host: { class: 'h-inherit inline-block w-full', style: 'height:  inherit;' },
+  /* tslint:enable */
 })
 export class QuizComponent implements OnInit, OnDestroy {
   private dataSubscription: Subscription | null = null
