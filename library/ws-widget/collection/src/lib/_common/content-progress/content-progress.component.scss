@@ -16,8 +16,7 @@
 }
 
 ::ng-deep.theme-igot.day-mode .mat-progress-bar-buffer {
-  // background-color: #EDEDED !important;
-  background-color: rgba(0, 0, 0, 0.04) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 ::ng-deep .content-progress .mat-progress-bar-fill::after {
@@ -25,13 +24,11 @@
 }
 
 ::ng-deep.theme-igot.day-mode .viewer-progress .mat-progress-bar-background {
-  // fill: rgba(255, 255, 255, 0) !important;
-  fill: rgba(0, 0, 0, 0.04) !important;
+  fill: rgba(0, 0, 0, 0.1) !important;
 }
 
 ::ng-deep.theme-igot.day-mode .viewer-progress .mat-progress-bar-buffer {
-  // background-color: rgba(0, 0, 0, 0.16) !important;
-  background-color: rgba(0, 0, 0, 0.04) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 ::ng-deep.mat-progress-bar.viewer-progress {
