@@ -206,12 +206,12 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
       }
     })
 
-    if (this.content && ![
+    if (this.currentDataFromEnrollList && this.currentDataFromEnrollList.content && ![
       NsContent.ECourseCategory.MODERATED_COURSE,
       NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
       NsContent.ECourseCategory.MODERATED_PROGRAM,
       NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
-    ].includes(this.content.courseCategory)) {
+    ].includes(this.currentDataFromEnrollList.content.courseCategory)) {
       this.canShare = true
       if (this.configSvc.userProfile) {
         this.rootOrgId = this.configSvc.userProfile.rootOrgId
@@ -348,7 +348,7 @@ export class ViewerTopBarComponent implements OnInit, OnDestroy, OnChanges {
                   courseName: this.activatedRoute.snapshot.queryParams.courseName,
                   userId: this.userid,
                   identifier: this.identifier,
-                  primaryCategory: this.collectionType                  
+                  primaryCategory: this.collectionType
                 },
                 panelClass: 'course-completion-dialog'
               })
