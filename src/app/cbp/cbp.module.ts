@@ -35,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { FilterComponent } from '../component/filter/filter.component'
 import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.module'
 import { TranslateModule } from '@ngx-translate/core'
+import { UserLeaderboardModule } from '@sunbird-cb/collection/src/lib/_common/user-leaderboard/user-leaderboard.module'
 @NgModule({
   declarations: [CbpPlanComponent, CbpPlanStatsComponent, MyCompetencyPassbookComponent,
     UpcomingTimelineComponent,
@@ -59,6 +60,7 @@ import { TranslateModule } from '@ngx-translate/core'
     SharedModule,
     MatTabsModule,
     ProfileCardStatsModule,
+    UserLeaderboardModule,
     MatIconModule,
     SkeletonLoaderModule,
     PipeRelativeTimeModule,

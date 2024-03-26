@@ -1,0 +1,338 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.user-leaderboard-wrapper {
+  position: relative;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 1;
+    background-color: white;
+
+    .podium-img {
+      width: 100%;
+      margin-top: -25px;
+    }
+
+    .podium-content-skelton {
+      padding: 16px;
+      border-top-right-radius: 16px;
+      border-top-left-radius: 16px;
+    }
+
+    .podium-content {
+      background-color: #1B4CA1;
+      padding: 16px;
+      border-top-right-radius: 16px;
+      border-top-left-radius: 16px;
+    }
+    .podium-title {
+      color: rgba(255, 255, 255, 0.95);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      .month {
+        color: #F3962F;
+      }
+    }
+    .podium {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      padding-top: 15px;
+
+      .rank {
+        width: 30%;
+        height: 135px;
+        text-align: center;
+        background-color: white;
+        border-radius: 10px;
+        z-index: 100
+      }
+      .rank-left {
+        margin-top: 20px;
+      }
+      .rank-right {
+        margin-top: 20px;
+      }
+      .podium-rank-content {
+        padding: 20px 16px 0px 16px;
+      }
+      .rank1 {
+        padding-top: 2px!important;
+      }
+    }
+
+    .first-rank {
+      margin-top: -10px;
+    }
+
+    .rank-user-img {
+      font-weight: 600;
+      font-size: 12px;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      flex-direction: column;
+
+      .crown-img {
+        z-index: 10;
+
+      }
+
+    }
+    .change-rank {
+      margin-left: -1.5px;
+      font-size: 10px;
+    }
+    .change-rank-icon {
+      margin-left: -5px;
+    }
+    .green {
+      color: green;
+    }
+    .red {
+      color: red;
+    }
+
+    // .custom-line-height {
+    //   line-height: 1.4;
+    // }
+
+    .info-icon {
+      font-size: 16px;
+      text-align: right;
+    }
+
+    .rank-user-name {
+      font-family: Lato;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 37px;
+      line-height: 14px;
+      min-height: 20px;
+      height: fit-content;
+      padding-top: 2px;
+    }
+    .rank-user-points {
+      font-family: Montserrat;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 19px;
+      align-items: center;
+    }
+
+
+   .user-list-wrapper {
+      margin-top: -20px;
+    .high-light {
+      font-weight: 600;
+    }
+    .reduce-padding {
+      padding-bottom: 5px!important;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      padding: 7px 0px 0px 0px;
+      font-weight: 400;
+      font-family: Lato;
+      font-size: 10px;
+      font-style: normal;
+      .rank-change {
+        width: 10%;
+      }
+      .user-note {
+        width: 90%;
+        padding-left: 10px;
+        font-family: Lato;
+        font-size: 10px;
+        font-weight: 400;
+      }
+
+    }
+    .user {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 16px;
+        color: rgba(0, 0, 0, 0.87);
+        font-family: Lato;
+        font-size: 14px;
+        font-style: normal;
+        .user-rank {
+          width: 10%;
+          font-weight: 700;
+        }
+        .user-img {
+          width: 13%;
+        }
+        .user-name {
+          width: 55%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+        .user-points {
+          width: 22%;
+        }
+
+        .medium {
+          .user-rank {
+            width: 12%;
+          }
+         .user-name {
+            width: 53%;
+          }
+        }
+
+        .large {
+          .user-rank {
+            width: 16%;
+          }
+         .user-name {
+            width: 50%;
+          }
+        }
+
+
+
+        .circle {
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgb(0, 100, 0);
+        }
+
+        .initial{
+          color: #ffffff;
+          font-size: 12px;
+          line-height: 12px;
+          letter-spacing: 0.2625px;
+        }
+
+        ::ng-deep .circle-l-xs .initials {
+          font-weight: 600;
+        }
+      }
+   }
+
+   .podium-karmapoints-icon {
+    width: 22px;
+    height: 22px;
+    padding-right: 3px;
+   }
+
+   .karmapoints-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 5px
+    }
+
+    ::ng-deep .circle-l-xs {
+      width: 32px;
+      height: 32px;
+    }
+
+    .user-center {
+      align-items: center;
+    }
+
+    .user-points {
+      align-items: center;
+      justify-content: end;
+    }
+
+    .podium-rank-change {
+      justify-content: center;
+    }
+
+}
+
+
+
+.current-user {
+  background-color: rgba(239, 149, 30, 0.16) !important;
+}
+
+.reduce-opacity {
+  opacity: 0.7;
+}
+.default-opacity {
+  opacity: 1;
+}
+
+.leaderboard-overlay {
+    opacity: .7;
+    z-index: 200;
+    background: black;
+    width: 100%;
+    height: -webkit-fill-available;
+    position: absolute;
+    border-radius: 12px;
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      height: -webkit-fill-available;
+      padding: 0 25px;
+      flex-direction: column;
+      text-align: center;
+      font-family: Lato;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+    }
+    .message {
+      padding: 0 25px;
+    }
+
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      width: 30px;
+    }
+
+    .gif-image {
+      z-index: 100;
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      top: 20px;
+    }
+
+    .animation-image {
+      width: 60px;
+      height: 60px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+}
+
+.exta-bottom-radius {
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+

@@ -46,6 +46,7 @@ import { RecentRequestsModule } from '@sunbird-cb/collection/src/lib/_common/rec
 import { PendingRequestModule } from '@sunbird-cb/collection/src/lib/_common/pending-request/pending-request.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profile-karmapoints.component'
+import { UserLeaderboardModule } from '@sunbird-cb/collection/src/lib/_common/user-leaderboard/user-leaderboard.module'
 // import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
@@ -95,6 +96,7 @@ import { ProfileKarmapointsComponent } from './routes/profile-karmapoints/profil
     SkeletonLoaderModule,
     ProfileCardStatsModule,
     WeeklyClapsModule,
+    UserLeaderboardModule,
     UpdatePostsModule,
     DiscussionsModule,
     RecentRequestsModule,

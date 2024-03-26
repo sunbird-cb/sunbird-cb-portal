@@ -60,6 +60,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
   pdfContentProgressData: any = { status: 1 }
   canShare = false
   rootOrgId: any
+  currentDataFromEnrollList: any
   // primaryCategory = NsContent.EPrimaryCategory
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -192,6 +193,8 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId') as string
       this.isPreview = params.get('preview') === 'true' ? true : false
+      const enrollList: any = JSON.parse(localStorage.getItem('enrollmentMapData') || '{}')
+      this.currentDataFromEnrollList =  enrollList[this.collectionId]
     })
 
     this.viewerDataServiceResourceSubscription = this.viewerDataSvc.changedSubject.subscribe(
@@ -202,12 +205,12 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
       },
     )
 
-    if (this.content && ![
+    if (this.currentDataFromEnrollList && this.currentDataFromEnrollList.content && ![
       NsContent.ECourseCategory.MODERATED_COURSE,
       NsContent.ECourseCategory.MODERATED_ASSESSEMENT,
       NsContent.ECourseCategory.MODERATED_PROGRAM,
       NsContent.ECourseCategory.INVITE_ONLY_PROGRAM,
-    ].includes(this.content.courseCategory)) {
+    ].includes(this.currentDataFromEnrollList.content.courseCategory)) {
       this.canShare = true
       if (this.configSvc.userProfile) {
         this.rootOrgId = this.configSvc.userProfile.rootOrgId

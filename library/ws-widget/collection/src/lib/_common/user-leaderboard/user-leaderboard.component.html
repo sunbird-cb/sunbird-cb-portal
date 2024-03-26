@@ -1,0 +1,215 @@
+
+<div class="user-leaderboard-wrapper"
+  [ngClass]="showOverlay ? 'reduce-opacity' : 'default-opacity'" *ngIf="!loading && rank1">
+  <div class="leaderboard-overlay" *ngIf="showOverlay">
+    <div class="content">
+        <img class="gif-image" src="/assets/icons/leaderboard_animation.gif" height="200" width="200">
+        <div class="animation-image">
+          <img class="image" src="/assets/icons/leaderboard.svg">
+        </div>
+        <span> {{overLayText}} </span>
+    </div>
+  </div>
+  <div class="podium-wrapper">
+    <div class="podium-content">
+      <div class="podium-title">
+        <div class="flex justify-between">
+          <div class="">{{'learnerLeaderboard.title' | translate}}
+            <span class="month">{{monthName}} {{rank1.year}}</span>
+          </div>
+          <div>
+            <mat-icon class="cursor-pointer info-icon"
+              matTooltip="{{'learnerLeaderboard.toolTip' | translate}}">info_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="podium">
+        <div class="rank rank-left">
+          <div class="podium-rank-content"
+            *ngIf="rank2" [ngClass]="{'current-user': currentUserId === rank2?.userId}">
+            <div class="rank-user-img">
+              <ws-widget-avatar-photo
+                [name]="rank2?.fullname" [photoUrl]="rank2?.profile_image" size="l-xs">
+              </ws-widget-avatar-photo>
+            </div>
+            <div class="rank-user-name">{{rank2?.fullname}}</div>
+            <div class="rank-user-points flex">
+              <img class="podium-karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+              {{rank2?.total_points ? rank2?.total_points : 0}}
+            </div>
+            <div class="flex podium-rank-change"
+              *ngIf="currentUserId === rank2?.userId && rank2?.rank !== rank2?.previous_rank">
+              <ng-container *ngIf="rank2?.previous_rank !== 0 && rank2?.rank < rank2?.previous_rank">
+                <div class="change-rank-icon green">
+                  <mat-icon>arrow_drop_up</mat-icon>
+                </div>
+                <div class="change-rank green">{{rank2?.previous_rank - rank2?.rank}}</div>
+              </ng-container>
+              <ng-container *ngIf="rank2?.previous_rank !== 0 && rank2.rank > rank2?.previous_rank">
+                <div class="change-rank-icon red">
+                  <mat-icon>arrow_drop_down</mat-icon>
+                </div>
+                <div class="change-rank red">{{rank2?.rank - rank2?.previous_rank}}</div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="rank rank-center">
+          <div class="podium-rank-content rank1"
+            *ngIf="rank1" [ngClass]="{'current-user': currentUserId === rank1?.userId}">
+            <div class="rank-user-img">
+              <img class="crown-img" src="/assets/icons/Crown.svg">
+              <ws-widget-avatar-photo
+                [name]="rank1?.fullname" [photoUrl]="rank1?.profile_image" size="l-xs" class="first-rank">
+              </ws-widget-avatar-photo>
+            </div>
+          <div class="rank-user-name">{{rank1?.fullname}}</div>
+          <div class="rank-user-points flex">
+            <img class="podium-karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+            {{rank1?.total_points ? rank1?.total_points : 0}}
+          </div>
+          <div class="flex podium-rank-change"
+            *ngIf="currentUserId === rank1?.userId && rank1?.rank !== rank1?.previous_rank">
+            <ng-container *ngIf="rank1?.previous_rank !== 0 &&  rank1?.rank < rank1?.previous_rank">
+              <div class="change-rank-icon green">
+                <mat-icon>arrow_drop_up</mat-icon>
+              </div>
+              <div class="change-rank green">{{rank1?.previous_rank - rank1?.rank}}</div>
+            </ng-container>
+            <ng-container *ngIf="rank1?.previous_rank !== 0 && rank1?.rank > rank1?.previous_rank">
+              <div class="change-rank-icon red">
+                <mat-icon>arrow_drop_down</mat-icon>
+              </div>
+              <div class="change-rank red">{{rank1?.rank - rank1?.previous_rank}}</div>
+            </ng-container>
+          </div>
+          </div>
+        </div>
+        <div class="rank rank-right">
+          <div class="podium-rank-content"
+            *ngIf="rank3" [ngClass]="{'current-user': currentUserId === rank3?.userId}">
+            <div class="rank-user-img">
+              <ws-widget-avatar-photo
+                [name]="rank3?.fullname" [photoUrl]="rank3?.profile_image" size="l-xs">
+              </ws-widget-avatar-photo>
+            </div>
+          <div class="rank-user-name">{{rank3?.fullname}}</div>
+          <div class="rank-user-points flex">
+            <img class="podium-karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+            {{rank3?.total_points ? rank3?.total_points : 0}}
+          </div>
+          <div class="flex podium-rank-change"
+            *ngIf="currentUserId === rank3?.userId && rank3?.rank !== rank3?.previous_rank">
+            <ng-container *ngIf="rank3?.previous_rank !== 0 && rank3?.rank < rank3?.previous_rank">
+              <div class="change-rank-icon green">
+                <mat-icon>arrow_drop_up</mat-icon>
+              </div>
+              <div class="change-rank green">{{rank3?.previous_rank - rank3?.rank}}</div>
+            </ng-container>
+            <ng-container *ngIf="rank3?.previous_rank !== 0 && rank3?.rank > rank3?.previous_rank">
+              <div class="change-rank-icon red">
+                <mat-icon>arrow_drop_down</mat-icon>
+              </div>
+              <div class="change-rank red">{{rank3?.rank - rank3?.previous_rank}}</div>
+            </ng-container>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <img class="podium-img" src="/assets/icons/Podium.svg">
+    </div>
+
+    <div class="user-list-wrapper">
+
+      <div class="user"
+        [ngClass]="{'current-user high-light': currentUserId === otherUser?.userId,
+          'exta-bottom-radius': i === (otherUsers.length - 1),
+          'reduce-padding': currentUserId === otherUser?.userId && otherUser?.rank !== otherUser?.previous_rank}"
+        *ngFor="let otherUser of otherUsers; let i = index">
+        <div class="flex user-center"
+          [ngClass]="{'medium': (maxLength >= 3 && maxLength < 5),
+          'large': maxLength >= 5}">
+          <div class="user-rank">{{otherUser?.rank}}</div>
+          <div class="user-img">
+            <ws-widget-avatar-photo
+              [name]="otherUser?.fullname" [photoUrl]="otherUser?.profile_image" size="l-xs">
+            </ws-widget-avatar-photo>
+          </div>
+          <div class="user-name">{{otherUser?.fullname}}</div>
+          <div class="user-points flex">
+            <img class="karmapoints-icon" alt="karma points" src="/assets/icons/home/karma-badge.svg">
+            {{otherUser?.total_points ? otherUser.total_points : 0}}
+          </div>
+        </div>
+        <ng-container
+          *ngIf="currentUserId === otherUser?.userId && otherUser?.rank !== otherUser?.previous_rank">
+          <div class="user-info">
+            <div class="user-rank-change">
+              <ng-container *ngIf="otherUser?.previous_rank !== 0 && otherUser?.rank < otherUser?.previous_rank">
+                <div class="flex green">
+                  <div class="change-rank-icon">
+                    <mat-icon>arrow_drop_up</mat-icon></div>
+                  <div class="change-rank">{{otherUser?.previous_rank - otherUser?.rank}}</div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="otherUser?.previous_rank !== 0 && otherUser?.rank > otherUser?.previous_rank">
+                <div class="flex red">
+                  <div class="change-rank-icon">
+                    <mat-icon>arrow_drop_down</mat-icon></div>
+                  <div class="change-rank">{{otherUser?.rank - otherUser?.previous_rank}}</div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="user-note" *ngIf="otherUser?.previous_rank !== 0">
+              {{'learnerLeaderboard.yourAreIn' | translate}}
+              {{otherUser?.previous_rank | pipeOrdinal}}
+              {{'learnerLeaderboard.positionMastMonth' | translate}}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="user-leaderboard-wrapper margin-top-m" *ngIf="loading">
+  <div>
+    <div class="podium-wrapper">
+      <div class="podium-content-skelton">
+        <div class="podium-title">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"></ws-widget-skeleton-loader>
+        </div>
+        <div class="podium">
+          <div class="rank rank-left">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'145px'"></ws-widget-skeleton-loader>
+          </div>
+          <div class="rank rank-center">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'145px'"></ws-widget-skeleton-loader>
+          </div>
+          <div class="rank rank-right">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'145px'"></ws-widget-skeleton-loader>
+          </div>
+        </div>
+        <div style="margin-top: 25px;">
+          <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
+        </div>
+        <div class="user-list-wrapper">
+          <div style="margin-top: 25px;">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
+          </div>
+          <div style="margin-top: 5px;">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
+          </div>
+          <div style="margin-top: 5px;">
+            <ws-widget-skeleton-loader [width]="'100%'" [height]="'25px'"></ws-widget-skeleton-loader>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
