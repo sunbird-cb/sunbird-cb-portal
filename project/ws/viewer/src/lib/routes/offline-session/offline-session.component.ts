@@ -305,7 +305,13 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.OFFLINE_SESSION,
         url: data ? data.artifactUrl : null,
-        object: { id: data ? data.identifier : null, type: data ? data.primaryCategory : '' },
+        object: {
+          id: data ? data.identifier : null,
+          type: data ? data.primaryCategory : '',
+          rollup: {
+            l1: this.widgetResolverOfflineSessionData.widgetData.collectionId || '',
+          }
+        },
       },
     }
     this.eventSvc.dispatchEvent(event)
