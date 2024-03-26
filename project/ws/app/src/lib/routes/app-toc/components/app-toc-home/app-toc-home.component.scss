@@ -778,8 +778,15 @@ mat-divider {
   background-color: white;
 }
 
-.imgdiv {
+.provider-logo-div {
   border: 1px solid #d6d6d6;
   border-radius: 4px;
-  padding: 5px;
+  padding: 4px;
+
+  img {
+    display: flex;
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+  }
 }
