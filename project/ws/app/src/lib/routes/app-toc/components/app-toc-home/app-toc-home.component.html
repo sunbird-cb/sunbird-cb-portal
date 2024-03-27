@@ -311,8 +311,9 @@
                     <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.primaryCategory, 'searchfilters') }}</div>
                   </ng-container>
                 </div>
+                
                 <div class="flex items-center" *ngIf="cbPlanEndDate">
-                  <div class="flex items-center due-tag text-xs leading-3">
+                  <div class="flex items-center due-tag text-xs leading-3" [ngClass]="{'due-warning': cbPlanDuration === nsCardContentData.UPCOMING, 'due-overdue': cbPlanDuration === nsCardContentData.OVERDUE, 'due-success': cbPlanDuration === nsCardContentData.SUCCESS}" >
                     {{ 'common.dueBy' | translate }} - &nbsp;<span class="font-bold">{{ cbPlanEndDate | date: 'd MMM, y'}}</span>
                   </div>
                 </div>

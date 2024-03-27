@@ -22,10 +22,23 @@
 
     .due-tag {
       padding: 4px;
-      background-color: $colorOrange;
-      border: 1px solid $colorOrange;
       color: #FFF;
       border-radius: 4px;
+    }
+
+    .due-warning {
+      background-color: $colorOrange;
+      border: 1px solid $colorOrange;
+    }
+
+    .due-overdue {
+      background-color: $colorRed;
+      border: 1px solid $colorRed;
+    }
+
+    .due-success {
+      background-color: $colorGreen;
+      border: 1px solid $colorGreen;
     }
   
     .rating-chip {

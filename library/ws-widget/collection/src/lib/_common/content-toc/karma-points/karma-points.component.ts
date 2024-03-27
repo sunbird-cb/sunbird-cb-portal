@@ -33,7 +33,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
   karmaPointsSlider: any
 
   ngOnInit() {
-    this.constructNudgeData()
+    // this.constructNudgeData()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -72,7 +72,6 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
           this.getKPData('Start again')
         }
       }
-
     }
 
     if (this.condition && this.condition.isPostAssessment
@@ -142,6 +141,8 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
         this.getKPData('Edit rating')
       }
     }
+
+    this.constructNudgeData()
   }
 
   getKPData(btnType: string): void {
@@ -172,6 +173,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
       'dot-active': 'dot-active',
     }
 
+    nudgeData.sliderData = []
     nudgeData.sliderData = this.kpArray
     this.karmaPointsSlider = nudgeData
   }
