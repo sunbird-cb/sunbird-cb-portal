@@ -550,7 +550,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         return _str.charAt(0).toUpperCase() + _str.slice(1)
       }).join(' ')
     } else {
-      returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+      returnValue = str && (str.charAt(0).toUpperCase() + str.slice(1))
     }
     return returnValue
   }
