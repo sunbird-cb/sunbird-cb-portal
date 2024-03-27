@@ -77,7 +77,7 @@
                       {{ 'weeklyclaps.leaderboard' | translate }}
                     </p>
                   </div>
-                  <div class="flex justify-center align-center">
+                  <div class="flex justify-center align-center" (click)="redirectTo('my-leaderboard-section')">
                     <img class="margin-right-s cursor-pointer" width="30" height="30" src="/assets/icons/leaderboard.svg" >
                     <span class="my-rank">{{currentUserRank?.rank | pipeOrdinal }} {{ 'learnerLeaderboard.rank' | translate }}</span>
                   </div>
@@ -89,7 +89,7 @@
                       <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
                   </p>
                   </div>
-                  <div class="flex justify-center">
+                  <div class="flex justify-center" (click)="redirectTo('my-weekly-claps')">
                     <p class="flex weeks-count  flex-middle  margin-remove">
                       <img class="margin-right-s cursor-pointer" width="30" height="30" [src]="insightsData?.weeklyClaps?.total_claps ? 'assets/icons/home/clap_icon.svg' : 'assets/icons/home/clap_disable_icon.svg'" >
                       <span *ngIf="insightsData?.weeklyClaps?.total_claps > 1 else elseWeeklyClaps">{{insightsData?.weeklyClaps?.total_claps}} Weeks</span>

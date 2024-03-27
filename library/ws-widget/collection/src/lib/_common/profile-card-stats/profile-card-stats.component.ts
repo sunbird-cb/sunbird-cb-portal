@@ -190,4 +190,8 @@ export class ProfileCardStatsComponent implements OnInit {
         }
       })
   }
+
+  redirectTo(name: string) {
+    this.router.navigateByUrl(`app/person-profile/me?tab=1#${name}`)
+  }
 }

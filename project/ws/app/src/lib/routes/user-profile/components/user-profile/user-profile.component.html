@@ -315,8 +315,9 @@
                         </div> -->
                         </mat-form-field>
                         <div class="input-wrapper margin-top-s margin-bottom-s">
-                          <div class="flex flex-middle">
-                            <mat-checkbox aria-label="This is my official email" id="officialEmail"
+                          <div class="flex flex-middle justify-between">
+                            <div>
+                              <mat-checkbox aria-label="This is my official email" id="officialEmail"
                               [checked]="isOfficialEmail" (change)="officialEmailCheck()" i18n-aria-label
                               aria-label="This is my official email checkbox">
                               <label class="margin-left-xs margin-remove-bottom" i18n-aria-label
@@ -324,10 +325,13 @@
                                 {{'userProfile.officialEmail' | translate }}
                               </label>
                             </mat-checkbox>
+                            </div>
+                            <div><a class="pos-hint ws-mat-black60-text" id="org-field">
+                              <span
+                              class="pt-1 float-right ws-mat-accent-text cursor-pointer font-bold"
+                              (click)="onClickshowUpdateEmail()">{{'userProfile.updatePrimaryEmail' | translate }}</span></a>
+                            </div>
                           </div>
-                        </div>
-                        <div class="update-primary-email" (click)="onClickshowUpdateEmail()">
-                          {{'userProfile.updatePrimaryEmail' | translate }}
                         </div>
                       </div>
                       <div class="m-auto update-primary-email-section" *ngIf="showUpdateEmail">
@@ -367,7 +371,7 @@
                               (click)="sendOtpToEmail()"
                               class="ws-mat-primary-background flex-auto-display mat-stroked-button send-otp-btn">
                               <a class="text-white" i18n>
-                                {{'userProfile.sendOTP' | translate }}
+                                {{'userProfile.getOTP' | translate }}
                               </a>
                             </button>
                           </div>
@@ -383,7 +387,7 @@
                                   placeholder="{{'userProfile.enterOTP' | translate }}"
                                   [formControl]="emailOtp" i18n-aria-label aria-label="OTP input"
                                   [disabled]="disableVerifyEmailBtn"
-                                  onKeyPress="if(this.value.length === 8) return false;">
+                                  onKeyPress="if(this.value.length === 6) return false;">
                                 <mat-hint *ngIf="emailTimeLeftforOTP > 0" class="custom-error">
                                   <span>{{'userProfile.resendOTPafter' | translate }} {{emailTimeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
                                 </mat-hint>
