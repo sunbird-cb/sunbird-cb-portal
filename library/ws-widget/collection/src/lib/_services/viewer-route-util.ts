@@ -100,7 +100,7 @@ export function viewerRouteGenerator(
   if (forPreview) {
     queryParams = { ...queryParams, preview: true }
   }
-  if(forcreator) {
+  if (forcreator) {
     queryParams = { ...queryParams, editMode: true }
   }
   return {

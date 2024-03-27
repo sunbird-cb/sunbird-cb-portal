@@ -118,9 +118,9 @@ export class WidgetContentService {
         url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
       } else {
         const forcreator = window.location.href.includes('editMode=true')
-        if(forcreator) {
+        if (forcreator) {
           url = `apis/proxies/v8/action/content/v3/hierarchy/${contentId}?mode=edit`
-        } else{
+        } else {
           url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
         }
       }
@@ -138,7 +138,7 @@ export class WidgetContentService {
   fetchAuthoringContent(contentId: string): Observable<NsContent.IContent> {
     const forcreator = window.location.href.includes('editMode=true')
     let url = ''
-    if(forcreator) {
+    if (forcreator) {
       url = `apis/proxies/v8/action/content/v3/hierarchy/${contentId}?mode=edit`
     } else {
       url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}?hierarchyType=detail`
