@@ -154,7 +154,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
             viewMode: data.prevResource.viewMode,
             preview: this.forPreview,
             channelId: this.channelId,
-            ...(window.location.href.includes('editMode=true') ? {editMode: true}: {})
+            ...(window.location.href.includes('editMode=true') ? { editMode: true } : {}),
           },
           fragment: '',
         }
@@ -176,7 +176,7 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
             courseName: this.courseName,
             preview: this.forPreview,
             channelId: this.channelId,
-            ...(window.location.href.includes('editMode=true') ? {editMode: true}: {})
+            ...(window.location.href.includes('editMode=true') ? { editMode: true } : {}),
           },
           fragment: '',
         }
