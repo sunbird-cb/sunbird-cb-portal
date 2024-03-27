@@ -142,6 +142,13 @@ export class WebModuleComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.WEB_MODULE,
         url: data ? data.artifactUrl : null,
+        object: {
+          id: data ? data.identifier : null,
+          type: data ? data.primaryCategory : '',
+          rollup: {
+            l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
+          },
+        },
       },
     }
     this.eventSvc.dispatchEvent(event)
