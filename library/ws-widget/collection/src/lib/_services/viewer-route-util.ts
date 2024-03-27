@@ -81,6 +81,7 @@ export function viewerRouteGenerator(
   const url = `/viewer/${VIEWER_ROUTE_FROM_MIME(mimeType)}/${id}`
   // tslint:disable-next-line
   // console.log(url,'========>Route from MIME TYPE<==========')
+  const forcreator = window.location.href.includes('editMode=true')
   let queryParams = {}
   if (primaryCategory) {
     queryParams = {
@@ -98,6 +99,9 @@ export function viewerRouteGenerator(
   }
   if (forPreview) {
     queryParams = { ...queryParams, preview: true }
+  }
+  if(forcreator) {
+    queryParams = { ...queryParams, editMode: true }
   }
   return {
     queryParams,

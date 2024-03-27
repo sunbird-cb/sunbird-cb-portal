@@ -1662,7 +1662,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
         }).join(' ')
       } else {
 
-        returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+        returnValue = str && (str.charAt(0).toUpperCase() + str.slice(1))
       }
     }
     return returnValue

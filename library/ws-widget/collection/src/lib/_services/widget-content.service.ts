@@ -117,7 +117,12 @@ export class WidgetContentService {
       if (!forPreview) {
         url = `/apis/proxies/v8/action/content/v3/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
       } else {
-        url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+        const forcreator = window.location.href.includes('editMode=true')
+        if(forcreator) {
+          url = `apis/proxies/v8/action/content/v3/hierarchy/${contentId}?mode=edit`
+        } else{
+          url = `/api/course/v1/hierarchy/${contentId}?hierarchyType=${hierarchyType}`
+        }
       }
     }
     // return this.http
@@ -131,7 +136,13 @@ export class WidgetContentService {
     // }
   }
   fetchAuthoringContent(contentId: string): Observable<NsContent.IContent> {
-    const url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}?hierarchyType=detail`
+    const forcreator = window.location.href.includes('editMode=true')
+    let url = ''
+    if(forcreator) {
+      url = `apis/proxies/v8/action/content/v3/hierarchy/${contentId}?mode=edit`
+    } else {
+      url = `${API_END_POINTS.AUTHORING_CONTENT}/${contentId}?hierarchyType=detail`
+    }
     return this.http.get<NsContent.IContent>(url).pipe(shareReplay(1), r => r)
   }
   fetchMultipleContent(ids: string[]): Observable<NsContent.IContent[]> {
