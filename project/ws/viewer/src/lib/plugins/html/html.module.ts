@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-
+import { TranslateModule } from '@ngx-translate/core'
 import {
   MatCardModule,
   MatButtonModule,
@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router'
     MatIconModule,
     RouterModule,
     MatTooltipModule,
+    TranslateModule,
   ],
   exports: [
     HtmlComponent,

@@ -9,7 +9,7 @@
           <div *ngIf="republicDayData.backgroupImage"><img [src]="republicDayData.backgroupImage" class="backgroud-image"></div>
           <div class="flex flex-col aligncenter">
             <div class="greet-text" [ngStyle]="{color: republicDayData.textColor}">
-              {{translateLabels(republicDayData.greet, 'profileNudge')}} {{userName}}!
+              {{translateLabels(republicDayData.greet, 'profileNudge')}}, {{userName}}!
             </div>
             <div class="center-image">
               <img *ngIf="republicDayData.centerImage" [src]="republicDayData.centerImage">
@@ -27,7 +27,7 @@
             </div>
             <div class="mobile-info">
               <div class="mobile-greet" [ngStyle]="{color: republicDayData.textColor}">
-                {{translateLabels(republicDayData.greet, 'profileNudge')}} {{userName}}!
+                {{translateLabels(republicDayData.greet, 'profileNudge')}}, {{userName}}!
               </div>
               <div class="mobile-info-text" [ngStyle]="{color: republicDayData.textColor}">
                 {{translateLabels(republicDayData.info, 'profileNudge')}}
@@ -69,7 +69,38 @@
             <div class="user-insights block md:hidden" *ngIf="insightsData.sliderData">
 
             <hr class="divider margin-remove-top">
-              <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
+
+              <div class="flex weekly-caps-section" *ngIf="currentUserRank">
+                <div class="flex flex-1 flex-column justify-center custom-border">
+                  <div class="flex justify-center padding-bottom-xs">
+                    <p class="flex-align-start weekly-title flex flex-middle margin-remove title">
+                      {{ 'weeklyclaps.leaderboard' | translate }}
+                    </p>
+                  </div>
+                  <div class="flex justify-center align-center">
+                    <img class="margin-right-s cursor-pointer" width="30" height="30" src="/assets/icons/leaderboard.svg" >
+                    <span class="my-rank">{{currentUserRank?.rank | pipeOrdinal }} {{ 'learnerLeaderboard.rank' | translate }}</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-1 flex-column justify-center">
+                  <div class="flex justify-center padding-bottom-xs">
+                    <p class="flex-align-start weekly-title flex flex-middle margin-remove title">{{ 'weeklyclaps.weeklyClapsTitle' | translate }}
+                      <img class="margin-left-s cursor-pointer" (click)="openInfo(myDialog)" width="20px" height="20px" src="assets/icons/home/help_icon.svg" >
+                  </p>
+                  </div>
+                  <div class="flex justify-center">
+                    <p class="flex weeks-count  flex-middle  margin-remove">
+                      <img class="margin-right-s cursor-pointer" width="30" height="30" [src]="insightsData?.weeklyClaps?.total_claps ? 'assets/icons/home/clap_icon.svg' : 'assets/icons/home/clap_disable_icon.svg'" >
+                      <span *ngIf="insightsData?.weeklyClaps?.total_claps > 1 else elseWeeklyClaps">{{insightsData?.weeklyClaps?.total_claps}} Weeks</span>
+                      <ng-template #elseWeeklyClaps>{{insightsData?.weeklyClaps?.total_claps || 0}} {{ 'weeklyclaps.weeks' | translate }}</ng-template>
+                  </p>
+                  </div>
+                </div>
+              </div>
+              <ng-container *ngIf="!currentUserRank">
+                <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="profileData.weeklyClaps" [isLoading]="false"></ws-widget-weekly-claps>
+              </ng-container>
             </div>
         </div>
         </div>
@@ -144,4 +175,40 @@
   <div class="user-insights " *ngIf="insightsData?.sliderData" [ngClass]="{'hidden md:block': !isMobile}">
     <ws-widget-sliders-dynamic [widgetData]="insightsData?.sliderData"></ws-widget-sliders-dynamic>
 </div>
+</ng-template>
+
+
+
+<ng-template #myDialog>
+  <div class="clap-info-wrapper">
+      <div class="clap-info-center flex-wrapped flex flex-middle flex-center">
+          <img class="" src="assets/icons/home/clap_icon.svg" width="42" height="42" alt="">
+          <p class="w-full clap-ques">{{ 'weeklyclaps.whatIsWeeklyClaps' | translate }}</p>
+          <p class="w-full clap-ans">{{ 'weeklyclaps.weeklyClapsDesc' | translate }}</p>
+      </div>
+      <div class="clap-info-qus-list flex flex-middle">
+          <div class="img-clap-block">
+              <img class="" width="28px" height="28px" src="assets/icons/home/clap_icon.svg" alt="">
+          </div>
+          <div class="clap-qus-ans">
+              <p class="clap-qus">{{ 'weeklyclaps.whatToDo' | translate }}</p>
+              <p class="clap-ans">{{ 'weeklyclaps.spendAtLeast' | translate }}
+                  <span class="clap-highlight"><b>{{ 'weeklyclaps.60mins' | translate }}</b></span>,
+                  {{ 'weeklyclaps.engageWithPlatform' | translate }}</p>
+          </div>
+      </div>
+      <div class="clap-info-qus-list flex flex-middle">
+          <div class="img-clap-block">
+              <img class="" width="28px" height="28px" src="assets/icons/home/clap_disable_icon.svg" alt="">
+          </div>
+          <div class="clap-qus-ans">
+              <p class="clap-qus">{{ 'weeklyclaps.whyDidILoose' | translate }}</p>
+              <p class="clap-ans">{{ 'weeklyclaps.ifYouFallShort' | translate }}
+                  <span class="clap-highlight"><b>{{ 'weeklyclaps.60mins' | translate }}</b></span>
+                  {{ 'weeklyclaps.engageRequired' | translate }}
+              </p>
+          </div>
+      </div>
+  </div>
+
 </ng-template>

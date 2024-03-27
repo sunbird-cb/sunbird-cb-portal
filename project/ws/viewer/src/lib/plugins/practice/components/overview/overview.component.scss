@@ -145,6 +145,10 @@
     }
 }
 
+.summary-detail-list {
+    margin-left: 16px !important;
+}
+
 .summary-label {
     margin-top: 24px;
     color: rgba(113,113,113);
@@ -171,13 +175,17 @@
 .summary-detail ul li {
     color: rgba(0, 0, 0, 0.87);
     letter-spacing: 0.12;
-    line-height: 40px;
+    line-height: 24px;
     font-weight: 600;
     font-family: 'Montserrat';
     list-style: none;
     margin-top: 40px;
+    list-style: disc;
 }
 
+.summary-detail ul li::marker {
+    color: orange
+}
 .summary-detail ul {
     margin: 0;
     padding: 0;
@@ -213,15 +221,16 @@
 }
 
 .summary-list-label {
-    margin-left: 16px;
+    // margin-left: 16px;
 }
 
 @media only screen and (max-width: 767px) {
     .box-height {
-        min-height: 100%;
+        // min-height: 100%;
         margin-top: 68px;
         margin-left: 0;
         margin-right: 0;
+        height: calc(100vh - 60px);
     }
     .assessment-container {
         margin: 0 16px 0 24px;
@@ -235,6 +244,7 @@
         list-style: none;
         margin-top: 24px;
         font-size: 14px;
+        list-style: disc;
     }
 
     .start-assessment-cta {
@@ -246,7 +256,7 @@
     }
 
     .start-assessment-cta button {
-        width: 92%;
+        width: 98%;
     }
 }
 

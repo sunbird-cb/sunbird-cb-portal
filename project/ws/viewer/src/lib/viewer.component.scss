@@ -113,10 +113,23 @@
   .viewer-player-container {
     height: auto;
     min-height: 23%;
+    // background-color: #000;
   }
 
   .viewer-sidenav-container {
     height: calc(100vh);
+  }
+  ::ng-deep .mat-sidenav  {
+    display: none !important;
+  }
+
+  .mat-drawer-content {
+    overflow: auto !important;
+    // overflow-y: hidden !important;
+  }
+  .mat-drawer-content.isAssessmentScreen {
+    overflow: auto !important;
+    overflow-y: hidden !important;
   }
 }
 
@@ -134,6 +147,7 @@
 //   background-color: rgb(27, 76, 161);
 //   border-radius: 180px;
 // }
+
 
 ::ng-deep .mat-drawer.mat-drawer-side{
   z-index: 0 !important;

@@ -2,8 +2,8 @@
 
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top' && isHubEnable"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
-    class="mat-elevation-z3 custom mobile">
-    <div class="fix-ww" id="root-tool-bar">
+    class="mat-elevation-z3 custom mobile-height" [ngClass]="{'mobile': isHubEnable}">
+    <div class="fix-ww" id="root-tool-bar" *ngIf="isHubEnable">
       <ng-container *ngIf="mode === 'top'">
         <a [routerLink]="!isforPreview ? '/page/home' : '/static-home'" class="logo-dim  items-center hidden md:flex" role="link" title="Home" i18n-aria-title i18n-aria-label>
           <ng-container *ngIf="jan26Data && jan26Data.isEnabled; else normalLogo">
@@ -31,7 +31,8 @@
             *ngFor="let item of primaryNavbarConfig?.mediumScreen?.left">
           </ng-container>
           <ng-container *ngIf="!isforPreview">
-            <ws-app-search-input-home placeHolder="{{ 'appnavbar.searchforLearningContents' | translate}}" class="my-search flex-1" [ref]="'home'"></ws-app-search-input-home>
+            <ws-app-search-input-home placeHolder="{{ 'appnavbar.searchforLearningContents' | translate}}" class="my-search flex-1" [ref]="'home'">
+            </ws-app-search-input-home>
           </ng-container>
           <span class="spacer"></span>
           <div *ngIf="!isforPreview" ngClass="search-small-logo">
@@ -184,7 +185,7 @@
       </p>
     </div>
   </div>
-
+  
   <div class="flex items-center arrow-back" [class.hideForNav]="!hideKPOnNav" (click)="handleNavigateBack()" >
     <mat-icon>arrow_back</mat-icon>
   </div>

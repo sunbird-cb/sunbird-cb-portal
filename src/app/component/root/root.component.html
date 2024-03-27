@@ -9,28 +9,26 @@
 </p> -->
 <!-- <ws-app-public-nav-bar *ngIf=""></ws-app-public-nav-bar> -->
 <!-- <ws-widget-sticky-header> -->
-<!-- <ws-app-nav-bar class="top-nav-bar" *ngIf="
-navBarRequired && (isXSmall$ | async) === false
-  " [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar> -->
-<ws-header *ngIf="navBarRequired" [hidden]="!isShowNavbar" [mode]="'top'" [headerFooterConfigData]="headerFooterConfigData" [showHubs]="showHubs"></ws-header>
+<!-- <ws-app-nav-bar class="top-nav-bar" *ngIf="navBarRequired && (isXSmall$ | async) === false" [hidden]="!isShowNavbar" [mode]="'top'"></ws-app-nav-bar> -->
+<ws-header *ngIf="navBarRequired" [hidden]="!isShowNavbar" [mode]="'top'" [headerFooterConfigData]="headerFooterConfigData" [showHubs]="showHubs">
+</ws-header>
 <!-- </ws-widget-sticky-header> -->
 <div class="height-adjust" [ngClass]="{
-    'height-on-bottom custom-scroll':
-      (isXSmall$ | async) === true &&  true && isShowNavbar,
-      'height-adjust-setup' : isSetupPage,
-    'height-on-top':
-      (isXSmall$ | async) === false &&
-      isShowNavbar &&
-      navBarRequired &&
-      !isCustomHeight
-  }">
-  <div [ngClass]="mobileTopHeaderVisibilityStatus && showHubs ? 'container-margin' : (!viewerPage ? 'container-margin-without-nav': '')">
-      <router-outlet></router-outlet>
-    
+  'height-on-bottom custom-scroll':
+    (isXSmall$ | async) === true &&  true && isShowNavbar,
+    'height-adjust-setup' : isSetupPage,
+  'height-on-top':
+    (isXSmall$ | async) === false &&
+    isShowNavbar &&
+    navBarRequired &&
+    !isCustomHeight
+}">
+  <div class="abc" [ngClass]="{'margin186': mobileTopHeaderVisibilityStatus && showHubs, 'mt-0': !mobileTopHeaderVisibilityStatus && showHubs, 'mt-136': mobileTopHeaderVisibilityStatus && !viewerPage, 'mt-4': !mobileTopHeaderVisibilityStatus && !showHubs && !viewerPage }">
+    <router-outlet></router-outlet>
   </div>
 </div>
-<!-- <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar">
-</ws-app-footer> -->
+
+<!-- <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar"></ws-app-footer> -->
 <ws-app-chatbot></ws-app-chatbot>
 <ws-app-footer class="app-footer" *ngIf="showNavbar && showFooter && headerFooterConfigData" [headerFooterConfigData]="headerFooterConfigData">
 </ws-app-footer>
@@ -40,7 +38,6 @@ navBarRequired && (isXSmall$ | async) === false
 </ws-app-nav-bar>
 
 <ng-container #previewContainer></ng-container>
-
 <input #appUpdateTitle type="hidden" i18n-value value="App Update" />
 <input #appUpdateBody type="hidden" i18n-value value="App has been updated. Do you want to load new version?" />
 <div #skipper tabindex="-1"></div>

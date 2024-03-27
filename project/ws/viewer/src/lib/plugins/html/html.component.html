@@ -71,7 +71,7 @@
   Please wait! Content requested is loading
 </h2> -->
 
-<div class="margin-top-m text-center" *ngIf="pageFetchStatus !== 'done'">
+<div class="text-center" *ngIf="pageFetchStatus !== 'done'">
   <h2 *ngIf="pageFetchStatus === 'error'" i18n>
     Error loading page. Please try refreshing page.
   </h2>
@@ -87,8 +87,39 @@
     htmlContent?.isIframeSupported !== 'No' &&
     (!htmlContent?.isInIntranet || (htmlContent?.isInIntranet && isUserInIntranet)) &&
     (!isIntranetUrl || (isIntranetUrl && isUserInIntranet))"-->
-  <iframe #iframeElem title=" HTML Content Viewer" i18n-title [src]="iframeUrl"
-    (load)="onIframeLoadOrError('load',iframeElem,$event)" (error)="onIframeLoadOrError('error')" [name]="iframeName"
-    allow="fullscreen; accelerometer; autoplay; encrypted-media; gyroscope; microphone; camera;"
-    class="html-iframe"></iframe>
+  <ng-container *ngIf="playScormContentFlag !== scormLMSStatus.LMSNegative">
+    <iframe #iframeElem title=" HTML Content Viewer" i18n-title [src]="iframeUrl"
+      (load)="onIframeLoadOrError('load',iframeElem,$event)" (error)="onIframeLoadOrError('error')" [name]="iframeName"
+      allow="fullscreen; accelerometer; autoplay; encrypted-media; gyroscope; microphone; camera;"
+      class="html-iframe"></iframe>
+  </ng-container>
+  <ng-container *ngIf="playScormContentFlag === scormLMSStatus.LMSNegative">
+    <div class="start-scorm-content-container floating-overlay" >
+      <div class="flex flex-around flex-wrapped">
+        <div class="w-full">
+          <div #htmlContainer>
+            <mat-card class="html-viewer-container">
+              <mat-card-content class="content-instruction-container">
+                <div class="content-instruction">
+                  <div>
+                    <p class="content-instruction-desc">{{'playerbrief.openScorm' | translate}}</p>
+                  </div>
+                  <div class="flex cursor-pointer justify-center">
+                    <button color="secondary" class="play-btn flex mat-body-2 flex-middle font-bold-imp px-2" (click)="playScormContentFlag=true">
+                      <ng-container>
+                        <span class="mr-1">
+                          <mat-icon class="vertical-align-middle">play_circle_filled</mat-icon>
+                          <span class="fw-700">Play</span>
+                        </span>
+                      </ng-container>                
+                    </button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

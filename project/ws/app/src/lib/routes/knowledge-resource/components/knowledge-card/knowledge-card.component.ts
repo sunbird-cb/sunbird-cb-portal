@@ -7,8 +7,6 @@ import { environment } from 'src/environments/environment'
   selector: 'ws-app-knowledge-card',
   templateUrl: './knowledge-card.component.html',
   styleUrls: ['./knowledge-card.component.scss'],
-  // tslint:disable-next-line
-  host: { class: 'flex flex-1 knowledge_card_full w-full' },
 })
 export class KnowledgeCardComponent implements OnInit {
   environment: any
@@ -96,5 +94,13 @@ itemCount(items: NSKnowledgeResource.IUrl[]) {
     return fName.split(/_(.*)/s)[1]
   }
   return name
+ }
+
+ getImage() {
+    if (this.resource && this.resource.name) {
+      const name = this.resource.name.split(' ').join('')
+      return `/assets/instances/eagle/banners/hubs/knowledgeresource/thumbnails/${name}.png`
+    }
+    return ''
  }
 }

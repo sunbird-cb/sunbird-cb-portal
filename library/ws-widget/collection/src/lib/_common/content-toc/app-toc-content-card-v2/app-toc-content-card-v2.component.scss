@@ -46,7 +46,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -75,6 +75,7 @@ span.optional-span {
 
   .resource {
     padding: 16px;
+    padding-left: 0;
   }
 
   .card-thumbnail {
@@ -99,7 +100,7 @@ span.optional-span {
 
   @media only screen and (max-width:469px) {
     flex-direction: column;
-    margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
+    // margin: $size-xs $size-xs $size-xs*2 $size-xs  !important;
     align-items: flex-start !important;
 
     .card-thumbnail {
@@ -190,7 +191,11 @@ span.optional-span {
     & .customicon .mat-icon {
       color: #fff;
     }
-    
+    .progress-container {
+      span {
+        color: white !important;
+      }
+    }
   }
 }
 
@@ -205,7 +210,7 @@ span.optional-span {
 .activeResource {
   background-color: #1a4ca1;
   color: #fff;
-  padding-left: 32px !important;
+  // padding-left: 32px !important;
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
 
@@ -263,7 +268,7 @@ span.optional-span {
     // margin-right: 8px;
 
     .resource {
-      padding: 4px;
+      padding: 0;
     }
 
     // background-color: #fff;
@@ -277,8 +282,24 @@ span.optional-span {
 
 
 // for giving top margin to last level, first child resource
-:nth-child(1 of .resourceCard) .resource{
+// :nth-child(1 of .resourceCard) .resource{
+//   margin-top: 16px !important;
+// }
+// fallback css for above 
+.first.resourceCard:nth-child(1) .resource {
   margin-top: 16px !important;
+}
+
+// :nth-child(1 of .resourceCard) .activeResource{
+//   margin-top: 0 !important;
+// }
+// fallback css for above 
+.first.resourceCard:nth-child(1) .activeResource {
+  margin-top: 0 !important;
+}
+
+.children-container .resourceCard:last-child .resource-container:has(.activeResource)  {
+  margin-bottom: 0 !important;
 }
 
 
@@ -326,6 +347,14 @@ span.optional-span {
     border-bottom: 4px solid rgba(0, 0, 0, 0.08);
     border-radius: 0;
   }
+}
+
+.collection-wrapper.open.module + .child-wrapper.open {
+  background-color: #eff3f9;
+  border-radius: 0 0 8px 8px;
+  // border-bottom: 4px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+  padding-bottom: 8px;
 }
 
 // .collection-wrapper.open.course + .child-wrapper.open:has(.collection-wrapper.open.module + .child-wrapper.open) {
@@ -476,14 +505,16 @@ span.optional-span {
 
 .certificate-btn {
   height: 24px;
-  background: black;
+  background: #1a4ca1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 4px 11px;
   color: #fff;
   border-radius: 20px;
+  border: 1px solid white;
   font: 400 12px/16px Lato;
+  cursor: pointer;
 
   .mat-icon {
     fill: #fff;
@@ -509,16 +540,52 @@ span.optional-span {
   padding: 8px;
 }
 
-.content-active.module {
-  padding-left:24px !important;
+// .children-container .content-active.module {
+//   padding-left:24px !important;
+// }
+// .children-container .collection-wrapper.module {
+//   padding-left:24px !important;
+// }
 
+// .content-active.resource {
+//   padding-left:32px !important;
+
+// }
+// .content-not-active-resource {
+//   padding-left:32px !important;
+// }
+
+
+.collection-wrapper.course,
+.collection-wrapper.module,
+.resource-container .resource  {
+  padding-left: 16px;
 }
 
-.content-active.resource {
-  padding-left:32px !important;
-
+// resource in module
+.children-container.module  .resource-container .resource {
+  padding-left: 24px;
 }
 
-.content-not-active-resource {
-  padding-left:32px !important;
+// module in course
+.course .collection-wrapper.module  {
+  padding-left: 24px;
+}
+
+// resource in module in course
+.course .children-container.module  .resource-container .resource{
+  padding-left: 32px
+}
+
+// resource in course
+.course  .resource-container .resource{
+  padding-left: 24px
+}
+
+
+::ng-deep .white-spinner{
+  stroke:white !important;
+}
+.certificate-loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #ffffff;
 }

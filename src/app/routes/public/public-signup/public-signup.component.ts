@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core'
-import { Subscription, Observable, interval, of } from 'rxjs'
+import { Subscription, Observable, interval } from 'rxjs'
 import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms'
 import { SignupService } from './signup.service'
 import { LoggerService, ConfigurationsService, NsInstanceConfig, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
-import { startWith, map, pairwise, catchError } from 'rxjs/operators'
+import { startWith, map, pairwise } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { ReCaptchaV3Service } from 'ng-recaptcha'
@@ -15,6 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
 import { TranslateService } from '@ngx-translate/core'
 import { HttpClient } from '@angular/common/http'
+import { DomSanitizer } from '@angular/platform-browser'
+import { DialogBoxComponent as ZohoDialogComponent } from '@ws/app/src/lib/routes/profile-v3/components/dialog-box/dialog-box.component'
 
 // export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
 //   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -130,6 +132,8 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   heirarchyObject: any
   hideOrg = false
   emailPattern = `^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`
+  zohoHtml: any
+  zohoUrl: any = '/assets/static-data/zoho-code.html'
 
   private subscriptionContact: Subscription | null = null
   private recaptchaSubscription!: Subscription
@@ -145,7 +149,6 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     private signupSvc: SignupService,
     private loggerSvc: LoggerService,
     private configSvc: ConfigurationsService,
-    private http: HttpClient,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -154,7 +157,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
     private translate: TranslateService,
-    private langtranslations: MultilingualTranslationsService
+    private langtranslations: MultilingualTranslationsService,
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
   ) {
     if (localStorage.getItem('websiteLanguage')) {
       this.translate.setDefaultLang('en')
@@ -194,15 +199,9 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       organisation: new FormControl('', [Validators.required]),
       // recaptchaReactive: new FormControl(null, [Validators.required]),
     })
-
-    this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
-      const topnavconfig = sectionData.data.topRightNavConfig
-      topnavconfig.forEach((item: any) => {
-        if (item.section === 'language') {
-          this.isMultiLangEnabled = item.active
-        }
-      })
-    })
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
   }
 
   ngOnInit() {
@@ -224,12 +223,15 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (instanceConfig) {
       this.telemetryConfig = instanceConfig.telemetryConfig
       this.portalID = `${this.telemetryConfig.pdata.id}`
-      this.multiLang = instanceConfig.webistelanguages
+      this.multiLang = instanceConfig.websitelanguages
     }
 
     if (isPlatformBrowser(this._platformId)) {
       this._document.body.classList.add('cs-recaptcha')
     }
+    this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
+      this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res)
+    })
   }
 
   get typeValueStartCase() {
@@ -312,7 +314,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         if (err.error && err.error.params && err.error.params.errmsg) {
           this.openSnackbar(err.error.params.errmsg)
         } else {
-          this.openSnackbar('Something went wrong, please try again later!')
+          this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
         }
       })
   }
@@ -320,7 +322,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
   async searchOrgs(searchValue: string) {
     this.searching = true
     if (!searchValue) {
-      this.openSnackbar('Please enter your organisation name')
+      this.openSnackbar(this.translateLabels('enterOrganisationName', 'publicsignup'))
       this.searching = false
       return
     }
@@ -411,14 +413,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
 
@@ -429,7 +431,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-          alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -437,7 +439,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
 
@@ -447,7 +449,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
 
     if (otp && otp.value) {
       if (otp && otp.value.length < 4) {
-        this.snackBar.open('Please enter a valid OTP.')
+        this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
@@ -480,7 +482,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         })
       }
     } else {
-      this.snackBar.open('Please enter a valid OTP.')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
     }
   }
   startCountDown() {
@@ -514,14 +516,14 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     if (email && email.value && email.valid) {
       this.signupSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your email address (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email address.')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -531,7 +533,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
       this.signupSvc.resendOtp(email.value, 'email').subscribe((res: any) => {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
-          alert('An OTP has been sent to your email address (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
@@ -539,7 +541,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email address.')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -548,7 +550,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     const email = this.registrationForm.get('email')
     if (otp && otp.value) {
       if (otp && otp.value.length < 4) {
-        this.snackBar.open('Please enter a valid OTP.')
+        this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
       } else if (email && email.value && email.valid) {
         this.signupSvc.verifyOTP(otp.value, email.value, 'email').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
@@ -578,7 +580,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
         })
       }
     } else {
-      this.snackBar.open('Please enter a valid OTP.')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
     }
   }
   startCountDownEmail() {
@@ -678,7 +680,7 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
               if (err.error && err.error.params && err.error.params.errmsg) {
                 this.openSnackbar(err.error.params.errmsg)
               } else {
-                this.openSnackbar('Something went wrong, please try again later!')
+                this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
               }
             }
           )
@@ -768,12 +770,54 @@ export class PublicSignupComponent implements OnInit, OnDestroy {
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 
-  getHeaderFooterConfiguration() {
-    const baseUrl = this.configSvc.sitePath
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
+  }
+  getZohoForm() {
+    const dialogRef = this.dialog.open(ZohoDialogComponent, {
+      width: '45%',
+      data: {
+        view: 'zohoform',
+        value: this.zohoHtml,
+      },
+    })
+    dialogRef.afterClosed().subscribe(() => {
+    })
+    setTimeout(() => {
+      this.callXMLRequest()
+    },         0)
+  }
+
+  callXMLRequest() {
+    let webFormxhr: any = {}
+    webFormxhr = new XMLHttpRequest()
     // tslint:disable-next-line: prefer-template
-    return this.http.get(baseUrl + '/page/home.json').pipe(
-      map(data => ({ data, error: null })),
-      catchError(err => of({ data: null, error: err })),
-    )
+    webFormxhr.open('GET', 'https://desk.zoho.in/support/GenerateCaptcha?action=getNewCaptcha&_=' + new Date().getTime(), true)
+    webFormxhr.onreadystatechange = () => {
+      if (webFormxhr.readyState === 4 && webFormxhr.status === 200) {
+        try {
+          const response = (webFormxhr.responseText != null) ? JSON.parse(webFormxhr.responseText) : ''
+          const zsCaptchaUrl: any = document.getElementById('zsCaptchaUrl')
+          if (zsCaptchaUrl) {
+            zsCaptchaUrl.src = response.captchaUrl
+            zsCaptchaUrl.style.display = 'block'
+          }
+          const xJdfEaS: any = document.getElementsByName('xJdfEaS')[0]
+          xJdfEaS.value = response.captchaDigest
+          const zsCaptchaLoading: any = document.getElementById('zsCaptchaLoading')
+          zsCaptchaLoading.style.display = 'none'
+          const zsCaptcha: any = document.getElementById('zsCaptcha')
+          zsCaptcha.style.display = 'block'
+          const refreshCaptcha: any = document.getElementById('refreshCaptcha')
+          if (refreshCaptcha) {
+            refreshCaptcha.addEventListener('click', () => {
+              this.callXMLRequest()
+            })
+          }
+        } catch (e) {
+        }
+      }
+    }
+    webFormxhr.send()
   }
 }

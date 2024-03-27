@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
 import { PipeDurationTransformPipe } from '@sunbird-cb/utils/src/public-api'
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component'
+import { MatDialog } from '@angular/material'
+import { HomePageService } from 'src/app/services/home-page.service'
 
 @Component({
   selector: 'ws-widget-profile-card-stats',
@@ -28,13 +31,18 @@ export class ProfileCardStatsComponent implements OnInit {
   interval = 0
   profileDelay = 0
   userName = ''
+  currentUserRank: any
+  currentUserId: any
   constructor(private configSvc: ConfigurationsService,
               private router: Router,
               private pipDuration: PipeDurationTransformPipe,
-              private langtranslations: MultilingualTranslationsService) { }
+              private langtranslations: MultilingualTranslationsService,
+              private homePageSvc: HomePageService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.userInfo =  this.configSvc && this.configSvc.userProfile
+    this.currentUserId = this.configSvc.unMappedUser.id
     if (this.userInfo) {
       this.userName = this.userInfo.firstName
       if (this.userName.length > 18) {
@@ -61,6 +69,13 @@ export class ProfileCardStatsComponent implements OnInit {
     setTimeout(() => {
         this.showrepublicBanner = false
       },       ((1000 * timeInterval) + pDelayTime))
+
+      this.homePageSvc.getLearnerLeaderboard().subscribe((res: any) => {
+        if (res && res.result && res.result.result) {
+          this.currentUserRank = res.result.result.find((rankDetails: any) => rankDetails.userId === this.currentUserId)
+        }
+      })
+
   }
 
   getTimelyNudge() {
@@ -72,15 +87,21 @@ export class ProfileCardStatsComponent implements OnInit {
       const defaultData = this.configSvc.profileTimelyNudges.data[this.configSvc.profileTimelyNudges.data.length - 1]
       if (defaultData) {
         this.republicDayData['backgroupImage'] = defaultData.backgroupImage
-        this.republicDayData['info'] = defaultData['info'][rand]
+        this.republicDayData['info'] = defaultData['webInfo'][rand]
         this.republicDayData['centerImage'] = defaultData['centerImage'][rand]
         this.republicDayData['textColor'] = defaultData['textColor']
-        this.republicDayData['greet'] = defaultData['greet']
-        // let userName = this.userInfo.firstName
-        // if (userName.length > 18) {
-        //   userName = `${this.userInfo.firstName.slice(0, 18)}...`
-        // }
-        // this.republicDayData['greet'] = defaultData['greet'].replace('<userName>', userName)
+        let userName = this.userInfo.firstName
+        if (userName) {
+          const userNameFW = userName.split(' ')
+          if (userNameFW && userNameFW.length && userNameFW[0] && userNameFW[0].length >= 2) {
+            userName = `${userNameFW[0]}`
+          }
+          if (userName.length > 18) {
+            userName = `${this.userInfo.firstName.slice(0, 18)}...`
+          }
+          this.republicDayData['greet'] = defaultData['webGreet']
+        }
+
         // this.showrepublicBanner = true
         // setTimeout(() => {
         //   this.showrepublicBanner = false
@@ -89,9 +110,24 @@ export class ProfileCardStatsComponent implements OnInit {
       this.configSvc.profileTimelyNudges.data.filter((data: any) => {
         if (hours >= data.startTime && hours < data.endTime) {
           this.republicDayData['backgroupImage'] = data.backgroupImage
-          this.republicDayData['info'] = data['info'][rand]
+          this.republicDayData['info'] = data['webInfo'][rand]
           this.republicDayData['centerImage'] = data['centerImage'][rand]
-          this.republicDayData['greet'] = data['greet']
+          // let userName = this.userInfo.firstName
+          // if (userName.length > 18) {
+          //   userName = `${this.userInfo.firstName.slice(0, 18)}...`
+          // }
+          // this.republicDayData['greet'] = data['greet'].replace('<userName>', userName)
+          let userName = this.userInfo.firstName
+          if (userName) {
+            const userNameFW = userName.split(' ')
+            if (userNameFW && userNameFW.length && userNameFW[0] && userNameFW[0].length >= 2) {
+              userName = `${userNameFW[0]}`
+            }
+            if (userName.length > 18) {
+              userName = `${this.userInfo.firstName.slice(0, 18)}...`
+            }
+            this.republicDayData['greet'] = data['webGreet']
+          }
           this.republicDayData['textColor'] = data['textColor']
           // let userName = this.userInfo.firstName
           // if (userName.length > 18) {
@@ -140,5 +176,18 @@ export class ProfileCardStatsComponent implements OnInit {
   }
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateActualLabel(label, type, '')
+  }
+
+  openInfo(myDialog: any) {
+    const confirmDialog = this.dialog.open(InfoDialogComponent, {
+        width: '613px',
+        panelClass: 'custom-info-dialog',
+        backdropClass: 'info-dialog-backdrop',
+        data: {  template:  myDialog },
+      })
+      confirmDialog.afterClosed().subscribe((result: any) => {
+        if (result) {
+        }
+      })
   }
 }

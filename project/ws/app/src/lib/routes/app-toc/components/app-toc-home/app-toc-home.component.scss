@@ -66,6 +66,12 @@
   }
 }
 
+.text-info-div {
+  padding: 8px;
+  background-color: #FFF;
+  border-radius: 64px;
+}
+
 .tag-div {
   border: 1px solid $colorOrange;
   background-color: rgba($color: #000000, $alpha: 0.5);
@@ -168,8 +174,7 @@
     top: 132px;
     width: 384px;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.5),
-      0 -1px 2px -2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.5), 0 -4px 4px -2px rgba(0, 0, 0, 0.5)
   }
 
   .border-bottom {
@@ -216,32 +221,6 @@
   }
 }
 
-.certificate_box {
-  width: 100%;
-  height: 160px;
-  border-radius: 12px;
-  position: relative;
-
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 12px;
-  }
-
-  .certificate_overlay {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, .69));
-    top: 0;
-    left: 0;
-    z-index: 1;
-    border-radius: 8px;
-  }
-}
-
 .button {
   border-radius: 64px;
   letter-spacing: 0.25px;
@@ -253,6 +232,35 @@
 
 @media screen and (max-width: 1200px) {
   .right-container {
+    display: none;
+  }
+
+  .action-button::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: inherit;
+    filter: blur(10px);
+    z-index: -1;
+  }
+
+  .action-button::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    box-shadow: 0 0 -4px -4px rgba(255, 255, 255, 0.6);
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .karma-points-div {
     display: none;
   }
 }
@@ -340,39 +348,14 @@ a.action-button {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1201px) {
   .mobile-enroll-div, .mob-share {
     display: none !important;
   }
 
-}
-
-.action-button::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: inherit;
-  filter: blur(10px);
-  /* Adjust the blur radius as needed */
-  z-index: -1;
-}
-
-.action-button::after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  // box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 -4px -4px rgba(255, 255, 255, 0.6);
-  /* Adjust the blur radius and shadow spread as needed */
-  border-radius: inherit;
-  z-index: -1;
+  .hideAbove1200 {
+    display: none;
+  }
 }
 
 .mobile-progress {
@@ -383,6 +366,18 @@ a.action-button {
   .mobile-progress {
     display: none;
   }
+}
+
+$title-line-count: 2;
+.sourceEllipsis {
+  white-space: break-spaces;
+  position: relative;
+  overflow: hidden;
+  text-overflow: clip;
+  display: -webkit-box;
+  -webkit-line-clamp: $title-line-count;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
 }
 
 //////////////................... New TOC page css.................///////////////
@@ -727,9 +722,9 @@ mat-divider {
 }
 
 .disable-start-btn {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
 }
 
 // .certificate-text {  
@@ -778,4 +773,13 @@ mat-divider {
     color: rgba(255,255,255,1) !important;
     opacity: 1;
   }
+}
+.bg-white {
+  background-color: white;
+}
+
+.imgdiv {
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  padding: 5px;
 }

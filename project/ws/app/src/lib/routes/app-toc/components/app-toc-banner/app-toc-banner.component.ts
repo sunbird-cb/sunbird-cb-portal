@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router'
@@ -36,6 +36,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { ENTER } from '@angular/cdk/keycodes'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { TimerService } from '../../services/timer.service'
+
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
@@ -46,7 +47,7 @@ dayjs.extend(isSameOrAfter)
   providers: [AccessControlService, DatePipe],
 })
 
-export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy {
   show = false
   @Input() banners: NsAppToc.ITocBanner | null = null
   @Input() content: NsContent.IContent | null = null
@@ -58,6 +59,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Output() withdrawOrEnroll = new EventEmitter<string>()
   @Input() contentReadData: NsContent.IContent | null = null
   @Input() clickToShare = false
+  @Output() programEnrollCall = new EventEmitter<any>()
+  timer: any
+  nsContent = NsContent
   batchControl = new FormControl('', Validators.required)
   primaryCategory = NsContent.EPrimaryCategory
   WFBlendedProgramStatus = NsContent.WFBlendedProgramStatus
@@ -101,7 +105,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   helpEmail = ''
   selectedBatchSubscription: any
   selectedBatchData: any
-
+  batchControlUnsubscribe: any
   date: any
   now: any
   targetDate: any
@@ -112,10 +116,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   minutes: any
   seconds: any
   serverDateSubscription: any
-  serverDate: any
+  serverDate: any = new Date()
   canShare = false
   enableShare = false
   rootOrgId: any
+  timerIntervalClear: any
 
   // share content
   shareForm: FormGroup | undefined
@@ -132,7 +137,6 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   userProfile: any
   maxEmailsLimit = 30
   showLoader = false
-
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
@@ -183,11 +187,11 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete | undefined
 
   ngOnInit() {
+    // this.serverDate = new Date().getTime()
     this.serverDateSubscription = this.tocSvc.serverDate.subscribe(serverDate => {
       this.serverDate = serverDate
-      this.ngAfterViewInit()
+      this.clearAndCallTimer()
     })
-
     this.route.data.subscribe(data => {
       this.tocConfig = data.pageData.data
       if (this.content && this.isPostAssessment) {
@@ -203,9 +207,9 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
 
       if (this.content && this.content.identifier) {
-        this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
-          this.contentReadData = res.result.content
-        })
+        // this.tocSvc.fetchGetContentData(this.content.identifier).subscribe(res => {
+        //   this.contentReadData = res.result.content
+        // })
       }
     })
 
@@ -397,7 +401,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.actionSVC.setUpdateCompGroupO = this.resumeDataLink
     }
 
-    this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
+    this.batchControlUnsubscribe = this.batchControl.valueChanges.subscribe((batch: NsContent.IBatch) => {
       this.selectedBatch = batch
       if (batch) {
         if (this.checkRejected(batch)) {
@@ -452,61 +456,66 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   public requestToEnrollDialog() {
-    // conflicts check start
+
     const batchData = this.batchControl.value
-    const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
-      if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-        if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) &&
-        dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) ||
-        dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) &&
-        dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
-          return true
-        }
-        return false
-      }
-      return false
-    })
-
-    // conflicts check end
-    if (userList && userList.length === 0) {
-      if (this.content && this.content.wfSurveyLink) {
-        const sID = this.content.wfSurveyLink.split('surveys/')
-        const surveyId = sID[1]
-        const courseId = this.content.identifier
-        const courseName = this.content.name
-        const apiData = {
-          // tslint:disable-next-line:prefer-template
-          getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
-          // tslint:disable-next-line:prefer-template
-          postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
-          getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
-          customizedHeader: {},
-        }
-        const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
-          width: '920px',
-          maxHeight: '85vh',
-          data: {
-            surveyId,
-            courseId,
-            courseName,
-            apiData,
-
-          },
-          disableClose: false,
-          panelClass: ['animate__animated', 'animate__slideInLeft'],
+    if (this.content && this.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+        // conflicts check start
+        const userList: any = this.userEnrollmentList && this.userEnrollmentList.filter(ele => {
+          if (ele.content.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+            if (!(dayjs(batchData.startDate).isBefore(dayjs(ele.batch.startDate)) &&
+            dayjs(batchData.endDate).isBefore(dayjs(ele.batch.startDate)) ||
+            dayjs(batchData.startDate).isAfter(dayjs(ele.batch.endDate)) &&
+            dayjs(batchData.endDate).isAfter(dayjs(ele.batch.endDate)))) {
+              return true
+            }
+            return false
+          }
+          return false
         })
-        enrollQuestionnaire.afterClosed().subscribe(result => {
-          if (result) {
+
+        // conflicts check end
+        if (userList && userList.length === 0) {
+          if (this.content && this.content.wfSurveyLink) {
+            const sID = this.content.wfSurveyLink.split('surveys/')
+            const surveyId = sID[1]
+            const courseId = this.content.identifier
+            const courseName = this.content.name
+            const apiData = {
+              // tslint:disable-next-line:prefer-template
+              getAPI: '/apis/proxies/v8/forms/getFormById?id=' + surveyId,
+              // tslint:disable-next-line:prefer-template
+              postAPI: '/apis/proxies/v8/forms/v1/saveFormSubmit',
+              getAllApplications: '/apis/proxies/v8/forms/getAllApplications',
+              customizedHeader: {},
+            }
+            const enrollQuestionnaire = this.dialog.open(EnrollQuestionnaireComponent, {
+              width: '920px',
+              maxHeight: '85vh',
+              data: {
+                surveyId,
+                courseId,
+                courseName,
+                apiData,
+
+              },
+              disableClose: false,
+              panelClass: ['animate__animated', 'animate__slideInLeft'],
+            })
+            enrollQuestionnaire.afterClosed().subscribe(result => {
+              if (result) {
+                this.openRequestToEnroll(batchData)
+              }
+            })
+          } else {
             this.openRequestToEnroll(batchData)
           }
-        })
-      } else {
-        this.openRequestToEnroll(batchData)
-      }
+        } else {
+          if (userList && userList.length > 0) {
+            this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
+          }
+        }
     } else {
-      if (userList && userList.length > 0) {
-        this.openSnackbar(`You cannot enroll in this blended program because it conflicts with your existing blended program.`)
-      }
+      this.programEnrollCall.emit(batchData)
     }
   }
 
@@ -642,6 +651,7 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   public batchChange(event: any) {
+    this.clearAndCallTimer()
     if (event && event.value) {
       const batchData = {
         content: [event.value],
@@ -702,7 +712,8 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   public setBatchControl() {
     // on first load select first value in the batch list if its having valid enrollment Date
-    if (this.content && this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM) {
+    if (this.content && (this.content.primaryCategory === this.primaryCategory.BLENDED_PROGRAM ||
+        this.content.primaryCategory === this.primaryCategory.PROGRAM)) {
       if (this.batchData && this.batchData.content.length) {
         if (!this.batchData.workFlow || (this.batchData.workFlow && !this.batchData.workFlow.wfInitiated)) {
           const batch = this.batchData.content.find((el: any) => {
@@ -745,6 +756,12 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
       }
     }
+  }
+  clearAndCallTimer() {
+    if (this.timerIntervalClear) {
+      clearInterval(this.timerIntervalClear)
+    }
+    this.callTimer()
   }
 
   // setting batch start date
@@ -1177,41 +1194,87 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     const color = this.tagSvc.getContrast(bgColor)
     return { color, 'background-color': bgColor }
   }
-
-  ngAfterViewInit() {
-    let serverDate = this.serverDate
+  getTargetTime() {
+    if (this.selectedBatch.startDate) {
+      this.targetDate = new Date(this.selectedBatch.startDate)
+      const convertedDate = dayjs(this.selectedBatch.startDate).format('YYYY-MM-DD HH:mm:ss')
+      return new Date(convertedDate).getTime()
+    }
+    // this.targetTime = ''
+    return ''
+  }
+  callTimer() {
+    // this.targetTime = this.getTargetTime()
     if (this.serverDate) {
-      setInterval(() => {
-        let timer = {
-          days: 0,
-          hours: 0,
-          min: 0,
-          seconds: 0,
-        }
-        serverDate = serverDate  +  1000
-        this.date = new Date(serverDate)
-        this.now = this.date.getTime()
-        this.difference = this.targetTime - this.now
-        this.difference = this.difference / (1000 * 60 * 60 * 24)
+      // let timerInterval = timer(1000, 1000)
+      // setTimeout(()=>{
+      //   if (this.timerIntervalClear) {
+      //     this.timerIntervalClear.unsubscribe()
+      //   }
+      //   this.timerIntervalClear = timerInterval.subscribe((t: any) => {
 
-        this.days = Math.floor(this.difference)
-        this.hours = 23 - this.date.getHours()
-        this.minutes = 60 - this.date.getMinutes()
-        this.seconds = 60 - this.date.getSeconds()
-        Number(this.hours)
-        !isNaN(this.days)
-          ? (this.days = Math.floor(this.difference))
-          : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
+      //     console.log(this.selectedBatch.startDate,'----')
+      //     console.log(this.batchControl.value.startDate,'hiiii')
+      //     this.targetDate = new Date(this.selectedBatch.startDate)
+      //     const convertedDate = dayjs(this.selectedBatch.startDate).format('YYYY-MM-DD HH:mm:ss')
+      //     this.targetTime = ''
+      //     this.targetTime=new Date(convertedDate).getTime()
+      //     this.timerFunc(t,this.serverDate + t * 1000)
 
-        timer = {
-          days: this.days,
-          hours: this.hours,
-          min: this.minutes,
-          seconds: this.seconds,
-        }
-        this.timerService.setTimerData(timer)
+      //   })
+      // },100)
+      let t = 0
+      if (this.timerIntervalClear) {
+            clearInterval(this.timerIntervalClear)
+      }
+      this.timerIntervalClear =  setInterval(() => {
+        this.targetTime = ''
+      if (this.batchControl && this.batchControl.value && this.batchControl.value.startDate) {
 
-      },          1000)
+        // console.log(this.selectedBatch.startDate,'----')
+        this.targetDate = new Date(this.batchControl.value.startDate)
+        const convertedDate = dayjs(this.batchControl.value.startDate).format('YYYY-MM-DD HH:mm:ss')
+
+        this.targetTime = new Date(convertedDate).getTime()
+      }
+        this.timerFunc(this.serverDate + t * 1000)
+        t = t + 1
+      },                                     1000)
+
+    }
+  }
+
+  timerFunc(serverDate: any) {
+    // serverDate = serverDate + timeer
+    if (serverDate && this.targetTime) {
+      let timerLocal = {
+        days: 0,
+        hours: 0,
+        min: 0,
+        seconds: 0,
+      }
+      // serverDate = serverDate  +  1000
+      this.date = new Date(serverDate)
+      this.now = this.date.getTime()
+      this.difference = this.targetTime - this.now
+      this.difference = this.difference / (1000 * 60 * 60 * 24)
+
+      this.days = Math.floor(this.difference)
+      this.hours = 23 - this.date.getHours()
+      this.minutes = 60 - this.date.getMinutes()
+      this.seconds = 60 - this.date.getSeconds()
+      Number(this.hours)
+      !isNaN(this.days)
+        ? (this.days = Math.floor(this.difference))
+        : (this.days = `<img src="https://i.gifer.com/VAyR.gif" />`)
+
+      timerLocal = {
+        days: this.days,
+        hours: this.hours,
+        min: this.minutes,
+        seconds: this.seconds,
+      }
+      this.timerService.setTimerData(timerLocal)
     }
   }
 
@@ -1429,6 +1492,18 @@ export class AppTocBannerComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.selectedBatchSubscription) {
       this.selectedBatchSubscription.unsubscribe()
     }
+    if (this.timerIntervalClear) {
+      clearInterval(this.timerIntervalClear);
+      // this.timerIntervalClear.unsubscribe()
+      this.targetTime=''
+    }
+
+    if (this.selectedBatchSubscription) {
+      this.batchControlUnsubscribe.unsubscribe()
+    }
+    this.batchControl.setValue({})
+    this.batchControl.updateValueAndValidity()
+    this.selectedBatch = {}
   }
   
   translateLabel(label: string, type: any) {

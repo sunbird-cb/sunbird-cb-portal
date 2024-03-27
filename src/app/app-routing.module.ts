@@ -37,6 +37,7 @@ import { AppTourComponent } from './component/app-tour/app-tour.component'
 import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
 import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
 import { AppContentResolverService } from './services/app-content-read-resolver.service'
+import { SurveyShikshaComponent } from './component/survey-shiksha/survey-shiksha.component'
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 // Please declare routes in alphabetical order
 // 😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵😵
@@ -99,41 +100,41 @@ const routes: Routes = [
   //   loadChildren: () => import('./routes/route-admin.module').then(u => u.RouteAdminModule),
   //   canActivate: [GeneralGuard],
   // },
-  {
-    path: 'app/careers',
-    loadChildren: () =>
-      import('./routes/route-careers.module').then(u => u.RouteCareerHubModule),
-    canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'career',
-      pageId: 'app/careers',
-      module: 'Careers',
-    },
-    resolve: {
-      pageData: PageResolve,
-    },
-  },
+  // {
+  //   path: 'app/careers',
+  //   loadChildren: () =>
+  //     import('./routes/route-careers.module').then(u => u.RouteCareerHubModule),
+  //   canActivate: [GeneralGuard],
+  //   data: {
+  //     pageType: 'feature',
+  //     pageKey: 'career',
+  //     pageId: 'app/careers',
+  //     module: 'Careers',
+  //   },
+  //   resolve: {
+  //     pageData: PageResolve,
+  //   },
+  // },
   // {
   //   path: 'app/channels',
   //   loadChildren: () => import('./routes/route-channels.module').then(u => u.RouteChannelsModule),
   //   canActivate: [GeneralGuard],
   // },
-  {
-    path: 'app/competencies',
-    loadChildren: () =>
-      import('./routes/route-competencie.module').then(u => u.RouteCompetenciesModule),
-    canActivate: [GeneralGuard],
-    data: {
-      pageType: 'feature',
-      pageKey: 'competencie',
-      pageId: 'app/competencies',
-      module: 'Competency',
-    },
-    resolve: {
-      pageData: PageResolve,
-    },
-  },
+  // {
+  //   path: 'app/competencies',
+  //   loadChildren: () =>
+  //     import('./routes/route-competencie.module').then(u => u.RouteCompetenciesModule),
+  //   canActivate: [GeneralGuard],
+  //   data: {
+  //     pageType: 'feature',
+  //     pageKey: 'competencie',
+  //     pageId: 'app/competencies',
+  //     module: 'Competency',
+  //   },
+  //   resolve: {
+  //     pageData: PageResolve,
+  //   },
+  // },
   {
     path: 'app/content-assignment',
     loadChildren: () =>
@@ -183,6 +184,20 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'knowledge-resource',
       pageId: 'app/knowledge-resource',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
+    path: 'app/jan-karmayogi',
+    loadChildren: () =>
+    import('./routes/route-jan-karmayogi.module').then(u => u.RouteJanKarmayogiModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'jan-karmayogi',
+      pageId: 'app/jan-karmayogi',
       module: 'Knowledge Resources',
     },
     resolve: {
@@ -994,6 +1009,10 @@ const routes: Routes = [
     data: {
       pageId: 'app-tour',
     },
+  },
+  {
+    path: 'surveyml/:id',
+    component: SurveyShikshaComponent,
   },
   {
     path: '**',

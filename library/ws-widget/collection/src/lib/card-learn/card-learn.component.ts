@@ -2,7 +2,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
-import { NSSearch } from '@sunbird-cb/collection'
+import { NSSearch, NsContent } from '@sunbird-cb/collection'
 import { SearchApiService } from '../_services/search-api.service'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -114,23 +114,27 @@ export class CardLearnComponent extends WidgetBaseComponent
       //   this.snackBar.open('Failed to load activities', 'X')
       // })
     }
-    if (this.configSvc && this.configSvc.unMappedUser &&
-        this.configSvc.unMappedUser.profileDetails &&
-        this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+    // if (this.configSvc && this.configSvc.unMappedUser &&
+    //     this.configSvc.unMappedUser.profileDetails &&
+    //     this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
       this.callModeratedFunc()
-    }
+    // }
 
   }
 
   callModeratedFunc() {
+    let orgId = ''
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) {
+      orgId = this.configSvc.userProfile.rootOrgId
+    }
     const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
       request: {
-        secureSettings: true,
         query: '',
         filters: {
-            primaryCategory: [
-                'Course',
-            ],
+          courseCategory: [NsContent.ECourseCategory.MODERATED_COURSE,
+            NsContent.ECourseCategory.MODERATED_PROGRAM, NsContent.ECourseCategory.MODERATED_ASSESSEMENT],
+            'secureSettings.organisation': orgId,
+          contentType: ['Course'],
             status: [
                 'Live',
             ],
@@ -145,8 +149,29 @@ export class CardLearnComponent extends WidgetBaseComponent
       },
     }
 
-    this.searchApiService.getSearchV6Results(moderatedCoursesRequestBody).subscribe(results => {
-      this.showModeratedCourseTab = Boolean(results.result.content && results.result.content.length > 0)
+    if (this.configSvc && this.configSvc.unMappedUser &&
+      this.configSvc.unMappedUser.profileDetails &&
+      !this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+      moderatedCoursesRequestBody.request.filters = {
+        ...moderatedCoursesRequestBody.request.filters,
+        'secureSettings.isVerifiedKarmayogi': 'No',
+      }
+    }
+    this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
+      let contentList = []
+      if (results && results.result && results.result.content && results.result.content.length) {
+        // if (this.configSvc && this.configSvc.unMappedUser &&
+        //        this.configSvc.unMappedUser.profileDetails &&
+        //        this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+        //   contentList = results.result.content
+        // } else {
+        //   contentList = results.result.content.filter((ele: any) => {
+        //     return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
+        //   })
+        // }
+        contentList = results.result.content
+      }
+      this.showModeratedCourseTab = Boolean(contentList.length > 0)
     })
   }
 

@@ -4,8 +4,6 @@
     flex-direction: row;
     overflow-x: scroll;
     width: 100%;
-    align-items: center;
-    text-align: center;
 }
 
 .horizontal-strip::-webkit-scrollbar {
@@ -25,8 +23,12 @@
 
 .horizontal-strip {
     .kpi-values {
-        margin: 0 12px;
         min-width: 72px;
+        gap: 4px;
+
+        div {
+            font-weight: bold;
+        }
     }
 }
 

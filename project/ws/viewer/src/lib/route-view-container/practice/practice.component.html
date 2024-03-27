@@ -4,7 +4,7 @@
         <div class>
           <div class="no-border">
             <!-- <mat-card-content> -->
-              <div id="fullScreenContainer" class="video-player">
+              <div id="fullScreenContainer" [ngClass]="!isMobile ? 'video-player-desktop':'video-player-mobile'">
                 <ng-container *ngIf="isFetchingDataComplete">
                   <viewer-plugin-practice [identifier]="quizData?.identifier" [artifactUrl]="quizData?.artifactUrl"
                     [name]="quizData?.name" [learningObjective]="quizData?.name"

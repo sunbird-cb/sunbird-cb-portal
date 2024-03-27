@@ -9,7 +9,6 @@ import {
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { Subscription } from 'rxjs'
 import { IWidgetsPlayerOfflineSessionData } from './player-offline-session.model'
-import { ViewerDataService } from '@ws/viewer/src/lib/viewer-data.service'
 import { WidgetContentService } from '../_services/widget-content.service'
 
 @Component({
@@ -25,16 +24,18 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
   content: any
   enableTelemetry = false
   tocConfig = null
+  tocConfigSubscription: Subscription | null = null
 
   constructor(
-    private viewerDataSvc: ViewerDataService,
     private widgetContentSvc: WidgetContentService,
   ) {
     super()
   }
 
   ngOnInit() {
-    this.tocConfig  = this.widgetContentSvc.tocConfigData
+    this.tocConfigSubscription = this.widgetContentSvc.tocConfigData.subscribe((data: any) => {
+        this.tocConfig = data
+    })
     // TODO:When player is fully implemented put initial functions here
   }
 
@@ -48,8 +49,6 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
     if (this.widgetData.content) {
       this.content = this.widgetData.content
     }
-    this.viewerDataServiceSubscription = this.viewerDataSvc.changedSubject.subscribe(_data => {
-    })
   }
 
   ngOnDestroy() {
@@ -58,6 +57,9 @@ export class PlayerOfflineSessionComponent extends WidgetBaseComponent
 
       // this.saveContinueLearning(this.identifier)
       // this.fireRealTimeProgress(this.identifier)
+    }
+    if (this.tocConfigSubscription) {
+      this.tocConfigSubscription.unsubscribe()
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnChanges, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DialogBoxComponent } from './../dialog-box/dialog-box.component'
 import { TranslateService } from '@ngx-translate/core'
@@ -35,7 +35,7 @@ const rightNavConfig = [
   templateUrl: './top-right-nav-bar.component.html',
   styleUrls: ['./top-right-nav-bar.component.scss'],
 })
-export class TopRightNavBarComponent implements OnInit {
+export class TopRightNavBarComponent implements OnInit, OnChanges {
   @Input() item: any
   @Input() rightNavConfig: any
   dialogRef: any
@@ -43,6 +43,7 @@ export class TopRightNavBarComponent implements OnInit {
   multiLang: any = []
   zohoHtml: any
   zohoUrl: any = '/assets/static-data/zoho-code.html'
+  isMultiLangEnabled: any
 
   constructor(public dialog: MatDialog, public homePageService: HomePageService,
               private configSvc: ConfigurationsService,
@@ -69,7 +70,8 @@ export class TopRightNavBarComponent implements OnInit {
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.multiLang = instanceConfig.webistelanguages
+      this.multiLang = instanceConfig.websitelanguages
+      this.isMultiLangEnabled = instanceConfig.isMultilingualEnabled
     }
     this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig
     this.homePageService.closeDialogPop.subscribe((data: any) => {
@@ -81,11 +83,10 @@ export class TopRightNavBarComponent implements OnInit {
     this.http.get(this.zohoUrl, { responseType: 'text' }).subscribe(res => {
       this.zohoHtml = this.sanitizer.bypassSecurityTrustHtml(res)
     })
+  }
 
-    // setTimeout(() => {
-    //   this.callXMLRequest(this.zohoHtml)
-    // }, 2000);
-
+  ngOnChanges() {
+    this.rightNavConfig = this.rightNavConfig.topRightNavConfig ? this.rightNavConfig.topRightNavConfig : rightNavConfig
   }
   // ngOnChanges() {}
   // openDialog(): void {

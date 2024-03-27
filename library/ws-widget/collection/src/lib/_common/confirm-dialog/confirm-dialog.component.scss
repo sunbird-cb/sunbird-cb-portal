@@ -22,22 +22,56 @@
     margin-right: 16px;
 }
 .close-icon {
-    // font-size: 36px;
+    //font-size: 36px;
     cursor: pointer;
-    position: absolute;
-    right: 0;
-    // top: -7px;
+    //position: absolute;
+    //right: 0;
+    //top: -7px;
+    //visibility: hidden;
 }
 .acceptbtn {
-    background: no-repeat padding-box #0074b6!important;
-    border-radius: 4px;
+    background: no-repeat padding-box #1b4ca1!important;
+    border-radius: 63px;
     max-width: auto!important;
-    height: 38px!important;
+    height: 40px !important;
+    color: #fff !important;
+    width:182px !important;
+    font-family: 'Lato';
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
 }
+
+.cancelButton {
+    background: no-repeat padding-box white!important;
+    border-radius: 63px;
+    max-width: auto!important;
+    height: 40px !important;
+    color: #1b4ca1 !important;
+    width:182px !important;
+    border: 1px solid #1b4ca1 !important;
+    font-family: 'Lato';
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.message {
+    font-family: 'Montserrat';
+    font-size: 16px;
+    letter-spacing: 0.12px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.87);
+    text-align: center;
+    font-weight: 600;
+
+}
+
 .btn-wrapper {
     align-items: center;
-    justify-content: end;
+    justify-content: center;
     gap: 16px;
+    margin-bottom: 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -47,6 +81,10 @@
         position: absolute !important;
         bottom: 0 !important;
      }
+}
+
+::ng-deep  .mat-dialog-container {
+    border-radius: 8px !important;
 }
 
 // ::ng-deep .cdk-overlay-pane {

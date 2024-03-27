@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { Component, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core'
+import { NsContent, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { NSPractice } from '../../practice.model'
 import { MatAccordion } from '@angular/material/expansion'
-
 @Component({
   selector: 'viewer-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
 })
-export class ResultComponent implements OnChanges {
+export class ResultComponent implements OnInit, OnChanges {
   @Input() percentage = 0
   @Input() levelText!: string
   @Input() isPassed = false
@@ -25,8 +24,17 @@ export class ResultComponent implements OnChanges {
   mode = 'determinate'
   value = 45
   showText = 'Rating'
-  constructor() {
+  isMobile = false
+  constructor(private langtranslations: MultilingualTranslationsService) {
 
+  }
+
+  ngOnInit() {
+    if (window.innerWidth < 768) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
   }
 
   ngOnChanges() {
@@ -61,5 +69,9 @@ export class ResultComponent implements OnChanges {
     progress.style.setProperty('--percentage', `${value * 3.6}deg`)
     progress.style.setProperty('--passPercentage', value)
     progress.innerText = `${value}%`
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

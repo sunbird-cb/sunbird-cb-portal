@@ -24,11 +24,20 @@
       <mat-form-field class="custom-lang float-right margin-right-xl">
         <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
         <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
-            <mat-option *ngFor="let lang of multiLang" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">
+            <!-- <mat-option *ngFor="let lang of multiLang" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">
                 {{lang.value}}
-            </mat-option>
+            </mat-option> -->
+            <span *ngFor="let lang of multiLang">
+              <mat-option *ngIf="lang.active" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">{{lang.value}}</mat-option>
+            </span>
         </mat-select>
       </mat-form-field>
+    </div>
+    <div class="zoho-form-box">
+      <a  (click)="getZohoForm()" class="help-icon" id="help-icon">
+        <img  src="/assets/icons/top-nav/help_icon.svg">
+        <span class="tooltiptext">Need Help</span>
+      </a>
     </div>
     <div class="right_inner_container profile-box">
       <div class="flex">
@@ -44,6 +53,7 @@
         <h1 class="mat-h1 margin-remove inline-block ng-star-inserted">
           {{ 'publicsignup.register' | translate }}
         </h1>
+       
       </div>
       <form [formGroup]="registrationForm">
         <div class="margin-top-l new-mobile">

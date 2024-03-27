@@ -16,8 +16,8 @@
               </a>
             </ng-container>
             <ng-container *ngIf="hub.hubname != 'Discuss' && hub.active">
-              <a class="simple-hubs-link" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path" (click)="trackTelemetry(hub.hubname)"
-                [attr.accesskey]="hub.accessKey" [ngClass]="{'gyaan-icon': hub.hubname === 'Gyaan Karmayogi'}">
+              <a class="simple-hubs-link" [id]="hub.hubname" i18n-aria-label role="menuitem" [routerLink]="hub.path"  (click)="trackTelemetry(hub.hubname)"
+                [attr.accesskey]="hub.accessKey" [ngClass]="{'gyaan-icon': hub.hubname === 'Gyaan Karmayogi' || hub.hubname === 'Jan Karmayogi'}">
                 <img [ngClass]="activeRoute === hub.hubname ? 'active-icon': 'mat-icon-disable'" src="/assets/icons/hubs/{{hub?.icon}}.svg" id="draft" alt="draft" title="draft" />
                 <span [ngClass]="activeRoute === hub.hubname ? 'active-text margin-8 text-gray': 'margin-8 text-gray'">  {{ translateLabels(hub.hubname, 'common') }}</span>
               </a>
@@ -58,18 +58,7 @@
           <h4 class="mat-h4 nav_sub_heading">{{ 'cardshublist.doMore' | translate }}</h4>
         </div>
         <div class="flex flex-1">
-          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">
-            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/competencies']"
-              (click)="trackTelemetry('Competency')">
-              <div class="icon ws-mat-primary-tags">
-                <img class="m-auto mat-icon" src="/assets/icons/hubs/extension.svg">
-              </div>
-              <div class="width-expand padding-left-xs cursor-pointer">
-                <div class="margin-0 mat-subheading-2">{{ 'cardshublist.competency' | translate }}</div>
-                <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.identifyYourCompetency' | translate }}
-                </div>
-              </div>
-            </a>
+          <div class="grid grid-cols-1 margin-xs sm:grid-cols-2 md:grid-cols-3 md:grid-cols-4 col-gap-2">            
 
             <a  *ngIf="showDashboardIcon" class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()"
               (click)="trackTelemetry('Dashboard')" [routerLink]="['/app/my-dashboard']">
@@ -189,8 +178,20 @@
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.exploreOpportunities' | translate }}</div>
               </div>
             </a>
+            <a class="flex flex-wrap mb-4 mobile" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/competencies']"
+              (click)="trackTelemetry('Competency')">
+              <div class="icon ws-mat-primary-tags">
+                <img class="m-auto mat-icon" src="/assets/icons/hubs/extension.svg">
+              </div>
+              <div class="width-expand padding-left-xs cursor-pointer">
+                <div class="margin-0 mat-subheading-2">{{ 'cardshublist.competency' | translate }}</div>
+                <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.identifyYourCompetency' | translate }}
+                </div>
+              </div>
+            </a>
           </div>
         </div>
+       
 
         <div class="text-center">
           <mat-spinner [strokeWidth]="3" *ngIf="hubsList.length === 0" [diameter]="40" class="display-inline-block">

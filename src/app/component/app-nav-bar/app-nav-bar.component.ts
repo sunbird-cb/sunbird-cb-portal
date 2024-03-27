@@ -1,10 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+import { Router, NavigationStart, NavigationEnd } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
+
 import { IBtnAppsConfig, CustomTourService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, MultilingualTranslationsService, NsInstanceConfig, NsPage, WsEvents } from '@sunbird-cb/utils'
-import { Router, NavigationStart, NavigationEnd } from '@angular/router'
-import { TranslateService } from '@ngx-translate/core'
+
+import { UrlService } from 'src/app/shared/url.service'
 
 @Component({
   selector: 'ws-app-nav-bar',
@@ -54,6 +57,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   // defaultLogo: false
   animationDuration: number | undefined
   isHubEnable!: boolean
+  previousUrl = ''
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -63,6 +67,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     private translate: TranslateService,
     private events: EventService,
     private langtranslations: MultilingualTranslationsService,
+    private urlService: UrlService
   ) {
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     if (this.configSvc.restrictedFeatures) {
@@ -107,9 +112,13 @@ export class AppNavBarComponent implements OnInit, OnChanges {
             const route = localStorage.getItem('activeRoute')
             this.activeRoute = route ? route.toLowerCase().toString() : ''
           }
+
           if (event.url.includes('/app/toc/do') && window.screen.availWidth < 768) {
             this.hideKPOnNav = true
+          } else {
+            this.hideKPOnNav = false
           }
+
           if (event.url.includes('/page/home')) {
             this.activeRoute = 'home'
           } else if (event.url.includes('/page/explore')) {
@@ -125,8 +134,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     })
 
     if (this.configSvc.userProfile && this.configSvc.userProfile.userId) {
-        this.isLoggedIn = true
+      this.isLoggedIn = true
     }
+
     if (this.configSvc.instanceConfig) {
       this.appIcon = this.domSanitizer.bypassSecurityTrustResourceUrl(
         this.configSvc.instanceConfig.logos.app,
@@ -145,9 +155,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       this.pageNavbar = this.configSvc.pageNavBar
       this.primaryNavbarConfig = this.configSvc.primaryNavBarConfig
     }
+
     if (this.configSvc.appsConfig) {
       this.featureApps = Object.keys(this.configSvc.appsConfig.features)
     }
+
     this.configSvc.tourGuideNotifier.subscribe(canShow => {
       if (
         this.configSvc.restrictedFeatures &&
@@ -157,11 +169,16 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.popupTour = this.tourService.createPopupTour()
       }
     })
+
     this.startTour()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
     // tslint:disable-next-line
     }, 1000)
+
+    this.urlService.previousUrl$.subscribe((previousUrl: string) => {
+      this.previousUrl = previousUrl
+    })
   }
 
   displayLogo() {
@@ -171,6 +188,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       // tslint:disable-next-line
     }, animationDur)
   }
+
   routeSubs(e: NavigationEnd) {
     // this.router.events.subscribe((e: Event) => {
     //   if (e instanceof NavigationEnd) {
@@ -201,6 +219,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     //   }
     // })
   }
+
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
       if (property === 'mode') {
@@ -238,13 +257,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     //   }
     // })
   }
+
   cancelTour() {
     if (this.popupTour) {
       this.tourService.cancelPopupTour()
       this.isTourGuideClosed = false
     }
-
   }
+
   bindUrl(path: string) {
     if (path) {
       // console.log(path)
@@ -253,20 +273,25 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       }
     }
   }
+
   get stillOnHomePage(): boolean {
     this.isPublicHomePage = window.location.href.includes('/public/home')
     return this.isPublicHomePage
   }
+
   get fullMenuDispaly(): boolean {
     this.isPlayerPage = window.location.href.includes('/viewer/')
     return !(this.isPlayerPage || this.stillOnHomePage)
   }
+
   get sShowAppNavBar(): boolean {
     return this.showAppNavBar
   }
+
   get needToHide(): boolean {
     return this.currentRoute.includes('all/assessment/')
   }
+
   // parichay changes
   get isforPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/')
@@ -274,12 +299,14 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     || window.location.href.includes('/certs')
     return this.forPreview
   }
+
   get isenableLang(): boolean {
     if (window.location.href.includes('/public/faq') || window.location.href.includes('/public/contact')) {
       return true
     }
     return false
   }
+
   get isThisSetUpPage(): boolean {
     if (window.location.pathname.includes('/app/setup')) {
       this.isSetUpPage = true
@@ -292,6 +319,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
+
   redirectToPath(pathConfig: any) {
     if (pathConfig && pathConfig.key) {
       this.router.navigate([pathConfig.path], { queryParams: { key: pathConfig.key } })
@@ -339,7 +367,9 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   handleNavigateBack(): void {
-    window.history.back()
+    if (this.previousUrl.includes('/app/toc/do_') || this.previousUrl.includes('/viewer/pdf/do_')) {
+      this.router.navigateByUrl('/page/home')
+    }
   }
 
   public getItem(item: any) {

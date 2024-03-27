@@ -16,7 +16,10 @@
       <div class="flex">
         <div class="flex-wrapped" *ngIf="isMultiLangEnabled">
           <mat-radio-group aria-label="Select an option" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
-            <mat-radio-button *ngFor="let lang of multiLang" [value]="lang.key">{{lang.value}}</mat-radio-button>
+            <!-- <mat-radio-button *ngFor="let lang of multiLang" [value]="lang.key">{{lang.value}}</mat-radio-button> -->
+            <span *ngFor="let lang of multiLang">
+              <mat-radio-button *ngIf="lang.active" [value]="lang.key">{{lang.value}}</mat-radio-button>
+            </span>
           </mat-radio-group>
         </div>
 
@@ -26,12 +29,6 @@
           </mat-radio-group>
         </div>
       </div>
-        <!-- <div ngFor="let lang of multiLang | keyvalue; let i = index">
-          <span mat-line class="radio-select">{{lang[i].value}}
-            <mat-radio-group><mat-radio-button></mat-radio-button></mat-radio-group>
-          </span>
-        </div> -->
-       
       <!-- <mat-form-field class="language-drop-down-width">
          <mat-select [value]="appLanguage" (selectionChange)="langChanged($event)">
            <mat-option value="en" *ngIf="isLocaleAvailable('')" [disabled]="!isLocaleEnabled('')">
@@ -208,7 +205,7 @@
 
               </span> <br />
               <img src="/assets/images/profile/theme.svg" class="theme-img" alt="Photo of a Shiba Inu">
-        <div class="col-md-4 mt-10">
+        <div class="col-md-4 mt-10 margin-bottom-l">
           <span class="comming-soon">
             <mat-icon>info</mat-icon>{{ 'settings.supportThemes' | translate }}
           </span> 

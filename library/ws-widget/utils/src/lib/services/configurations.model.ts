@@ -25,6 +25,7 @@ export namespace NsInstanceConfig {
     defaultThemeClass: string
     defaultLocale: string
     disablePidCheck?: boolean
+    isMultilingualEnabled?: boolean
     fontSizes: IFontSize[]
     isContentDownloadAvailable: boolean
     indexHtmlMeta: IIndexHtmlMeta
@@ -64,7 +65,7 @@ export namespace NsInstanceConfig {
     courseContentPath?: string
     portalUrls: IPortalUrls | undefined
     positions: any
-    webistelanguages: any[]
+    websitelanguages: any[]
     profileTimelyNudges: any
   }
   export interface IPortalUrls {

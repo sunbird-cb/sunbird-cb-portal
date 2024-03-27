@@ -68,6 +68,9 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   @Input() batchData: any
   @Input() tocStructure: any
   @Input() hierarchyMapData: any = {}
+  @Input() config: any
+
+  @Output() pathSetEvent = new EventEmitter()
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -98,7 +101,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   nestedDataSource: MatTreeNestedDataSource<IViewerTocCard>
   defaultThumbnail: SafeUrl | null = null
   isFetching = true
-  pathSet = new Set()
+  pathSet: any
   contentProgressHash: { [id: string]: number } | null = null
   errorWidgetData: NsWidgetResolver.IRenderConfigWithTypedData<any> = {
     widgetType: 'errorResolver',
@@ -140,7 +143,11 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
       this.defaultThumbnail = this.domSanitizer.bypassSecurityTrustResourceUrl(logo)
     }
 
-    this.getEnrollmentList()
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      this.getEnrollmentList()
+    }
+
     this.paramSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
       this.collectionId = params.get('collectionId')
       this.collectionType = params.get('collectionType') || 'course'
@@ -520,8 +527,8 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   private processCollectionForTree() {
     if (this.collection && this.collection.children) {
       this.nestedDataSource.data = this.collection.children
-      this.pathSet = new Set()
-      if (this.resourceId && this.tocMode === 'TREE') {
+      // this.pathSet = new Set()
+      // if (this.resourceId && this.tocMode === 'TREE') {
         if (this.resourceId) {
           of(true)
             .pipe(delay(2000))
@@ -529,7 +536,7 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
               this.expandThePath()
             })
         }
-      }
+      // }
     }
   }
 
@@ -537,9 +544,10 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
     if (this.collection && this.resourceId) {
       const path = this.utilitySvc.getPath(this.collection, this.resourceId)
       this.pathSet = new Set(path.map((u: { identifier: any }) => u.identifier))
-      path.forEach((node: IViewerTocCard) => {
-        this.nestedTreeControl.expand(node)
-      })
+      this.pathSetEvent.emit({ pathSet: this.pathSet })
+      // path.forEach((node: IViewerTocCard) => {
+      //   this.nestedTreeControl.expand(node)
+      // })
     }
   }
 

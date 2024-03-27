@@ -62,6 +62,9 @@ export class LogoutComponent implements OnInit {
     if (sessionStorage.getItem('hideUpdateProfilePopUp')) {
       sessionStorage.removeItem('hideUpdateProfilePopUp')
     }
+    if (localStorage.getItem('motivationalMessage')) {
+      localStorage.removeItem('motivationalMessage')
+    }
   }
 
   get isDownloadable() {

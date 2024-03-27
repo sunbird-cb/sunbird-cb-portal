@@ -68,6 +68,8 @@ export namespace NSSearch {
         contentType?: string[]
         status: string[]
         organisation?: any
+        'secureSettings.isVerifiedKarmayogi'?: string
+        'secureSettings.organisation'?: string
       },
       query: string,
       sort_by: { lastUpdatedOn: string },

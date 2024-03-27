@@ -27,10 +27,10 @@
           i18n-aria-label>
           <mat-icon>zoom_in</mat-icon>
         </button>
-        <button mat-icon-button (click)="refresh()" aria-label="refresh" i18n-aria-label>
+        <button *ngIf="!isMobile" mat-icon-button (click)="refresh()" aria-label="refresh" i18n-aria-label>
           <mat-icon>refresh</mat-icon>
         </button>
-        <ws-widget-btn-fullscreen (fsState)="fullScreenState($event)" (click)="refresh()"
+        <ws-widget-btn-fullscreen *ngIf="!isMobile" (fsState)="fullScreenState($event)" (click)="refresh()"
           [widgetData]="{ fsContainer: fullScreenContainer }">
         </ws-widget-btn-fullscreen>
       </div>

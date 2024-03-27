@@ -24,6 +24,7 @@
                             [value]="rating?.percent" class="rating-bar"
                             [attr.aria-labelledby]="'m-c-'+ contentId"
                             [ngClass]="{ 'visibility-0': rating === undefined, 'thick': className}"
+                            [color]="ratingColor"
                             i18n-aria-label>
                             {{rating?.percent}} %
                         </mat-progress-bar>

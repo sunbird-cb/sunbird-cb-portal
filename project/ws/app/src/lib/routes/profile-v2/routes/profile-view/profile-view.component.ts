@@ -86,6 +86,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     loadSkeleton: false,
   }
   certificatesData: any
+  showCreds = false
+  credMessage = 'View my credentials'
+  assessmentsData: any
+  isCurrentUser!: boolean
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -145,8 +149,20 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
       /** // for loged in user only */
       if (user === this.currentUser.userId) {
+        this.isCurrentUser = true
+        this.tabsData.map(ele => {
+          if (ele.key === 'karmaPoints') {
+            ele.enabled = true
+          }
+        })
         this.currentUsername = this.configSvc.userProfile && this.configSvc.userProfile.userName
       } else {
+        this.isCurrentUser = false
+        this.tabsData.map(ele => {
+          if (ele.key === 'karmaPoints') {
+            ele.enabled = false
+          }
+        })
         this.currentUsername = this.portalProfile.personalDetails && this.portalProfile.personalDetails !== null
           ? this.portalProfile.personalDetails.userName
           : this.portalProfile.userName
@@ -174,6 +190,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
     })
     this.getPendingRequestData()
+    // this.getAssessmentData()
     this.enrollInterval = setInterval(() => {
       this.getKarmaCount()
     },                                1000)
@@ -298,7 +315,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.networkV2Service.fetchAllConnectionEstablishedById(wid).subscribe(
       (data: any) => {
         this.connectionRequests = data.result.data
-      },
+              },
       (_err: any) => {
         // this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
       })
@@ -452,5 +469,47 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.defaultSideNavBarOpenedSubscription) {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
+  }
+
+  toggleCreds() {
+    this.showCreds = !this.showCreds
+    if (this.showCreds) {
+      this.credMessage = 'Hide my credentials'
+    } else {
+      this.credMessage = 'View my credentials'
+    }
+  }
+
+  copyToClipboard(text: string) {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    // textArea.focus()
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    this.openSnackbar('copied')
+  }
+
+  getAssessmentData() {
+    this.homeSvc.getAssessmentinfo().subscribe(
+      (res: any) => {
+        if (res && res.result && res.result.response) {
+          this.assessmentsData = res.result.response
+        }
+      },
+      (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          // tslint:disable-next-line
+          console.log(error)
+        }
+      }
+    )
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.matSnackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }

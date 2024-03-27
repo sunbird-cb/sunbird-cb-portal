@@ -1,8 +1,9 @@
 @import "ws-mixins";
 
 ::ng-deep .theme-igot.day-mode .viewer-top.mat-toolbar.mat-primary {
-  background: rgba(27, 33, 51, 1);
-  color: #fff !important;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.87) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
 }
 
 ::ng-deep .theme-igot.day-mode .viewer-top-secondary.mat-toolbar.mat-primary {
@@ -64,25 +65,31 @@
 
 @media only screen and (min-width: 360px) and (max-width: 360px) {
   .progress-container {
-    min-width: 160px;
+    min-width: auto;
   }
 }
 
 @media only screen and (min-width: 361px) and (max-width: 375px) {
   .progress-container {
-    min-width: 175px;
+    min-width: auto;
   }
 }
 
 @media only screen and (min-width: 390px) and (max-width: 393px) {
   .progress-container {
-    min-width: 190px;
+    min-width: auto;
   }
 }
 
 @media only screen and (min-width: 394px) and (max-width: 767px) {
   .progress-container {
-    min-width: 220px;
+    min-width: auto;
+  }
+}
+
+@media only screen and (max-width: 360px){
+  .progress-container {
+    min-width: auto;
   }
 }
 
@@ -95,4 +102,8 @@
 
 .mat-icon-button {
   width: 50px !important;
+}
+
+.blue-color {
+  color: rgb(27, 76, 161);
 }

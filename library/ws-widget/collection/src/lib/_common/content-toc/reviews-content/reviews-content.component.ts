@@ -31,11 +31,14 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
   ) {
     this.reviewDataService.getReviewData().subscribe((_review: any) => {
       this.reviews = _review
+      this.data.reviews = _review
     })
   }
 
   ngOnInit() {
-    this.reviews = Object.values(this.data.reviews)
+    if (this.data && this.data.reviews) {
+      this.reviews = Object.values(this.data.reviews)
+    }
   }
 
   ngAfterViewInit(): void {
@@ -56,7 +59,8 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
 
         if (text) {
           this.reviews = Object.values(this.reviews).filter((_obj: any) => {
-            return _obj.review.toLowerCase().includes(text.toLowerCase()) || _obj.firstName.toLowerCase().includes(text.toLowerCase())
+            return _obj.review && _obj.review.toLowerCase().includes(text.toLowerCase())
+            || _obj.firstName && _obj.firstName.toLowerCase().includes(text.toLowerCase())
           })
         } else {
           this.reviews = Object.values(this.data.reviews)
@@ -78,13 +82,23 @@ export class ReviewsContentComponent implements OnInit, AfterViewInit {
     this.reviews = Object.values(this.data.reviews)
   }
 
-  handleCapitalize(str: string): string {
-    return str && str.charAt(0).toUpperCase() + str.slice(1)
+  handleCapitalize(str: string, type?: string): string {
+
+    let returnValue = ''
+    if (str && type === 'name') {
+      returnValue = str.split(' ').map(_str => {
+        return _str.charAt(0).toUpperCase() + _str.slice(1)
+      }).join(' ')
+    } else {
+      returnValue = str && (str.charAt(0).toUpperCase() + str.slice(1))
+    }
+    return returnValue
   }
 
   handleReviewsFilter(str: string): void {
     this.showFilterIndicator = str
     this.loadLatestReviews.emit(str)
+    this.handleClear()
   }
 
   handleLoadMore(): void {

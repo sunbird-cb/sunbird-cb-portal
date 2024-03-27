@@ -1,29 +1,34 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'
+import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
+
 // tslint:disable-next-line
 import _ from 'lodash'
 import dayjs from 'dayjs'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import { NsWidgetResolver } from '@sunbird-cb/resolver'
-
-import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
-import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
-import { LoggerService } from '@sunbird-cb/utils/src/public-api'
-import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
-import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
-import { ReviewComponentDataService } from '../content-services/review-component-data.service'
-
-import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
-import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
-import { Router } from '@angular/router'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content-strip-with-tabs.model'
+
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
+import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
+import { LoggerService } from '@sunbird-cb/utils/src/public-api'
+import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
+import { HandleClaimService } from '../content-services/handle-claim.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
+import { ReviewComponentDataService } from '../content-services/review-component-data.service'
+import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
+import { ResetRatingsService } from '@ws/app/src/lib/routes/app-toc/services/reset-ratings.service'
+
+import { ReviewsContentComponent } from '../reviews-content/reviews-content.component'
+import { CertificateDialogComponent } from '../../certificate-dialog/certificate-dialog.component'
 
 interface IStripUnitContentData {
   key: string
@@ -75,12 +80,18 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     private tocSvc: AppTocService,
     private configService: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
-    private router: Router,
-    private reviewDataService: ReviewComponentDataService
+    public router: Router,
+    private reviewDataService: ReviewComponentDataService,
+    private handleClaimService: HandleClaimService,
+    private resetRatingsService: ResetRatingsService
   ) {
-
+    this.resetRatingsService.resetRatings$.subscribe((_res: any) => {
+      this.fetchRatingSummary()
+    })
   }
 
+  @Input() condition: any
+  @Input() kparray: any
   @Input() content: NsContent.IContent | null = null
   @Input() skeletonLoader = false
   @Input() sticky = false
@@ -91,8 +102,10 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   @Input() forPreview = false
   @Input() batchData: any
   @Input() fromViewer = false
+  @Input() selectedBatchData: any
   @ViewChild('summaryElem', { static: false }) summaryElem !: ElementRef
   @ViewChild('descElem', { static: false }) descElem !: ElementRef
+  @ViewChild('tagsElem', { static: false }) tagsElem !: ElementRef
   primaryCategory = NsContent.EPrimaryCategory
   stripsResultDataMap!: { [key: string]: IStripUnitContentData }
   summary = {
@@ -103,6 +116,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     ellipsis: false,
     viewLess: false,
   }
+  tagsEllipsis = false
   competencySelected = ''
   ratingSummary: any
   authReplies: any
@@ -124,6 +138,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   competenciesObject: any = []
   private destroySubject$ = new Subject<any>()
   viewMoreTags = false
+  timerUnsubscribe: any
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -134,7 +149,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       icon: '',
     },
     sliderConfig: {
-      showNavs : false,
+      showNavs : true,
       showDots: false,
     },
     loader: true,
@@ -148,9 +163,6 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       viewMoreText: 'Show all',
       queryParams: '',
     },
-    // loaderConfig: {
-    //   cardSubType: 'card-portrait-click-skeleton',
-    // },
     tabs: [],
     filters: [],
   }
@@ -163,14 +175,19 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     } else {
       this.isMobile = false
     }
+
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
       this.loadCompetencies()
     }
+
+    if (this.content) {
+      this.content['subTheme'] = this.getSubThemes()
+    }
   }
 
   ngAfterViewInit(): void {
-    this.timerService.getTimerData()
+    this.timerUnsubscribe = this.timerService.getTimerData()
     .pipe(takeUntil(this.destroySubject$))
     .subscribe((_timer: any) => {
       this.timer = _timer
@@ -182,12 +199,26 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       setTimeout(() => {
         this.loadCheckService.componentLoaded(true)
 
-        if (this.summaryElem.nativeElement.offsetHeight > 72) {
-          this.summary.ellipsis = true
+        if (!this.isMobile) {
+          if (this.summaryElem.nativeElement.offsetHeight > 72) {
+            this.summary.ellipsis = true
+          }
+
+          if (this.descElem.nativeElement.offsetHeight > 72) {
+            this.description.ellipsis = true
+          }
+        } else {
+          if (this.summaryElem.nativeElement.offsetHeight > 48) {
+            this.summary.ellipsis = true
+          }
+
+          if (this.descElem.nativeElement.offsetHeight > 48) {
+            this.description.ellipsis = true
+          }
         }
 
-        if (this.descElem.nativeElement.offsetHeight > 72) {
-          this.description.ellipsis = true
+        if (this.tagsElem && this.tagsElem.nativeElement.offsetHeight > 64) {
+          this.tagsEllipsis = true
         }
       },         500)
     }
@@ -222,6 +253,18 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
         }
       }
     }
+  }
+
+  getSubThemes(): any[] {
+    const subThemeArr: any[] = []
+    if (this.content && this.content.competencies_v5 && this.content.competencies_v5.length) {
+      this.content.competencies_v5.forEach((_competencyObj: any) => {
+        if (subThemeArr.indexOf(_competencyObj.competencySubTheme) === -1) {
+          subThemeArr.push(_competencyObj.competencySubTheme)
+        }
+      })
+    }
+    return subThemeArr
   }
 
   loadCompetencies(): void {
@@ -480,11 +523,13 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
       if (this.content) {
         this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
       }
+
       ratingSummaryPr.latest50Reviews = modifiedReviews
       this.ratingReviews = modifiedReviews
       this.topRatingReviews = modifiedReviews
-      this.reviewDataService.setReviewData(this.ratingReviews)
     }
+    // To pass data to the review content
+    this.reviewDataService.setReviewData(this.ratingReviews)
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
       ratingSummaryPr.avgRating =
@@ -498,8 +543,16 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     return ratingSummaryPr
   }
 
-  handleCapitalize(str: string): string {
-    return str && str.charAt(0).toUpperCase() + str.slice(1)
+  handleCapitalize(str: string, type?: string): string {
+    let returnValue = ''
+    if (str && type === 'name') {
+      returnValue = str.split(' ').map(_str => {
+        return _str.charAt(0).toUpperCase() + _str.slice(1)
+      }).join(' ')
+    } else {
+      returnValue = str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    return returnValue
   }
 
   handleOpenReviewModal(): void {
@@ -598,8 +651,21 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     this.router.navigate(['/app/discussion-forum'], { queryParams: { page: 'home' }, queryParamsHandling: 'merge' })
   }
 
+  handleClickOfClaim(event: any): void {
+    this.handleClaimService.setClaimData(event)
+  }
+
+  handleOpenCertificateDialog() {
+    const cet = this.content && this.content.certificateObj.certData
+    this.dialog.open(CertificateDialogComponent, {
+      width: '1200px',
+      data: { cet, certId: this.content && this.content.certificateObj.certId },
+    })
+  }
+
   ngOnDestroy(): void {
     this.destroySubject$.unsubscribe()
+    this.timerUnsubscribe.unsubscribe()
   }
 
 }

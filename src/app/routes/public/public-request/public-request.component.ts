@@ -5,8 +5,8 @@ import { MatDialog, MatSnackBar } from '@angular/material'
 import { environment } from 'src/environments/environment'
 // tslint:disable-next-line: import-name
 import _ from 'lodash'
-import { Subscription, Observable, interval, of } from 'rxjs'
-import { catchError, map, pairwise, startWith } from 'rxjs/operators'
+import { Subscription, Observable, interval } from 'rxjs'
+import { map, pairwise, startWith } from 'rxjs/operators'
 import { SignupService } from '../public-signup/signup.service'
 import { RequestService } from './request.service'
 import { RequestSuccessDialogComponent } from './request-success-dialog/request-success-dialog.component'
@@ -14,7 +14,6 @@ import { v4 as uuid } from 'uuid'
 import { Location } from '@angular/common'
 import { TranslateService } from '@ngx-translate/core'
 import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
-import { HttpClient } from '@angular/common/http'
 
 export function forbiddenNamesValidatorPosition(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -82,7 +81,6 @@ export class PublicRequestComponent implements OnInit {
               private requestSvc: RequestService,
               private _location: Location,
               private configSvc: ConfigurationsService,
-              private http: HttpClient,
               private langtranslations: MultilingualTranslationsService,
               private translate: TranslateService) {
     const navigation = this.router.getCurrentNavigation()
@@ -138,20 +136,15 @@ export class PublicRequestComponent implements OnInit {
       this.translate.setDefaultLang('en')
       localStorage.setItem('websiteLanguage', 'en')
     }
-    this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
-      const topnavconfig = sectionData.data.topRightNavConfig
-      topnavconfig.forEach((item: any) => {
-        if (item.section === 'language') {
-          this.isMultiLangEnabled = item.active
-        }
-      })
-    })
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
    }
 
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {
-      this.multiLang = instanceConfig.webistelanguages
+      this.multiLang = instanceConfig.websitelanguages
     }
 
     this.onPhoneChange()
@@ -216,14 +209,14 @@ export class PublicRequestComponent implements OnInit {
     if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
       this.signupSvc.sendOtp(mob.value, 'phone').subscribe(() => {
         this.otpSend = true
-        alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
         this.startCountDown()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
   resendOTP() {
@@ -233,8 +226,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpSend = true
           this.disableVerifyBtn = false
-
-          alert('An OTP has been sent to your mobile number (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToMobile', 'publicsignup'))
           this.startCountDown()
         }
         // tslint:disable-next-line: align
@@ -242,7 +234,7 @@ export class PublicRequestComponent implements OnInit {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidMobileNumber', 'publicsignup'))
     }
   }
 
@@ -251,7 +243,7 @@ export class PublicRequestComponent implements OnInit {
     const mob = this.requestForm.get('mobile')
     if (otp && otp.value) {
       if (otp && otp.value.length < 4) {
-        this.snackBar.open('Please enter a valid OTP.')
+        this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
       } else if (mob && mob.value && Math.floor(mob.value) && mob.valid) {
         this.signupSvc.verifyOTP(otp.value, mob.value, 'phone').subscribe((res: any) => {
           if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
@@ -268,7 +260,7 @@ export class PublicRequestComponent implements OnInit {
         })
       }
     } else {
-      this.snackBar.open('Please enter a valid OTP.')
+      this.snackBar.open(this.translateLabels('pleaseEnterValidOtp', 'publicsignup'))
     }
   }
 
@@ -325,14 +317,14 @@ export class PublicRequestComponent implements OnInit {
     if (email && email.value && email.valid) {
       this.requestSvc.sendOtp(email.value, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your email address (valid for 15 minutes)')
+        alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -343,7 +335,7 @@ export class PublicRequestComponent implements OnInit {
         if ((_.get(res, 'result.response')).toUpperCase() === 'SUCCESS') {
           this.otpEmailSend = true
           this.disableEmailVerifyBtn = false
-          alert('An OTP has been sent to your email address (valid for 15 minutes)')
+          alert(this.translateLabels('anOtpHasBeenSentToEmail', 'publicsignup'))
           this.startCountDownEmail()
         }
         // tslint:disable-next-line: align
@@ -351,7 +343,7 @@ export class PublicRequestComponent implements OnInit {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid email')
+      this.snackBar.open(this.translateLabels('validEmail', 'publicsignup'))
     }
   }
 
@@ -430,7 +422,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -461,7 +453,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -491,7 +483,7 @@ export class PublicRequestComponent implements OnInit {
           if (err.error && err.error.params && err.error.params.errmsg) {
             this.openSnackbar(err.error.params.errmsg)
           } else {
-            this.openSnackbar('Something went wrong, please try again later!')
+            this.openSnackbar(this.translateLabels('somethingWentWrong', 'common'))
           }
         }
       )
@@ -543,16 +535,11 @@ export class PublicRequestComponent implements OnInit {
     this.langtranslations.updatelanguageSelected(true, this.selectedLanguage, '')
   }
 
-  translateLabels(label: string, type: any) {
+  translateLabel(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
   }
 
-  getHeaderFooterConfiguration() {
-    const baseUrl = this.configSvc.sitePath
-    // tslint:disable-next-line: prefer-template
-    return this.http.get(baseUrl + '/page/home.json').pipe(
-      map(data => ({ data, error: null })),
-      catchError(err => of({ data: null, error: err })),
-    )
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
   }
 }
