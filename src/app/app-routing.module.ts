@@ -176,6 +176,20 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/gyaan-karmayogi',
+    loadChildren: () =>
+      import('./routes/route-gyaan-karmayogi.module').then(u => u.RouteGyaanKarmayogiModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'knowledge-resource',
+      pageId: 'app/knowledge-resource',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/jan-karmayogi',
     loadChildren: () =>
     import('./routes/route-jan-karmayogi.module').then(u => u.RouteJanKarmayogiModule),
