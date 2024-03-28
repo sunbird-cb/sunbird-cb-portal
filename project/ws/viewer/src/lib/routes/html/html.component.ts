@@ -370,7 +370,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
           type: data ? data.primaryCategory : '',
           rollup: {
             l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
-          },
+          }
         },
       },
     }

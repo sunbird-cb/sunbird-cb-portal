@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils/src/public-api'
 import { TranslateService } from '@ngx-translate/core'
-import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-network-connection-requests',
@@ -102,21 +101,10 @@ export class NetworkConnectionRequestsComponent implements OnInit {
       label,
       index,
     }
-    this.eventSvc.raiseInteractTelemetry(
-      {
-        type: WsEvents.EnumInteractTypes.CLICK,
-        subType: WsEvents.EnumInteractSubTypes.NETWORK_TAB,
-        id: `${_.camelCase(data.label)}-tab`,
-      },
-      {},
-      {
-        module: WsEvents.EnumTelemetrymodules.NETWORK,
-      }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
+      data,
     )
-    // this.eventSvc.handleTabTelemetry(
-    //   WsEvents.EnumInteractSubTypes.NETWORK_TAB,
-    //   data,
-    // )
   }
 
 }

@@ -196,7 +196,7 @@ export class PdfComponent implements OnInit, OnDestroy {
           type: data ? data.primaryCategory : '',
           rollup: {
             l1: this.widgetResolverPdfData.widgetData.collectionId || '',
-          },
+          }
         },
       },
     }
