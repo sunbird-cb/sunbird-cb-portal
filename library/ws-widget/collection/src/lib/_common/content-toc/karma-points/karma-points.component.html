@@ -1,12 +1,10 @@
 <ws-widget-sliders-dynamic [widgetData]="karmaPointsSlider"></ws-widget-sliders-dynamic>
 
-<ng-container *ngIf="!condition?.isPostAssessment && (condition?.content?.completionPercentage === 100 || condition?.certData)">
-    <ng-container *ngIf="condition?.isAcbpCourse && condition?.isAcbpClaim && !condition?.isClaimed">
-        <button class="claim-button" (click)="onClickOfClaim()" *ngIf="btnCategory === 'claim'">
-            <img src="/assets/icons/home/karma-badge.svg" width="28px" class="mr-2" alt="karma-points image" />
-            <div>{{ kpData.textBeforeIcon }}</div>
-            <div>{{ kpData.points }} {{ translateLabels(kpData.textAfterPoints, 'appKarmapointsPanel') }}</div>
-            <div *ngIf="kpData?.textAfterIcon">{{ translateLabels(kpData.textAfterIcon, 'appKarmapointsPanel') }}</div>
-        </button>
-    </ng-container>
+<ng-container *ngIf="btnCategory === 'claim'">
+    <button class="flex flex-wrap gap-1 claim-button" (click)="onClickOfClaim()" >
+        <img src="/assets/icons/home/karma-badge.svg" width="28px" class="mr-2" alt="karma-points image" />
+        <div>{{ btnKPData.textBeforeIcon }}</div>
+        <div>{{ btnKPData.points }} {{ translateLabels(btnKPData.textAfterPoints, 'appKarmapointsPanel') }}</div>
+        <div *ngIf="btnKPData?.textAfterIcon">{{ translateLabels(btnKPData.textAfterIcon, 'appKarmapointsPanel') }}</div>
+    </button>
 </ng-container>

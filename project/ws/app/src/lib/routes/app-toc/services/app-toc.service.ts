@@ -691,13 +691,13 @@ export class AppTocService {
         el.collectionId === firstUncompleteCourse.identifier)
         const resumeData = [{
           contentId: firstChildData.identifier,
-          batchId: childEnrollmentData.batchId,
+          batchId: childEnrollmentData && childEnrollmentData.batchId,
           completedCount: 1,
           completionPercentage: 0.0,
           progress: 0,
           viewCount: 1,
-          courseId: childEnrollmentData.courseId,
-          collectionId: childEnrollmentData.courseId,
+          courseId: childEnrollmentData && childEnrollmentData.courseId,
+          collectionId: childEnrollmentData && childEnrollmentData.courseId,
           status: 1,
         }]
         inprogressDataCheck = resumeData
@@ -713,13 +713,13 @@ export class AppTocService {
         el.collectionId === content.children[0].identifier)
         const resumeData = [{
           contentId: firstChildData.identifier,
-          batchId: childEnrollmentData.batchId,
+          batchId: childEnrollmentData && childEnrollmentData.batchId,
           completedCount: 1,
           completionPercentage: 100,
           progress: 2,
           viewCount: 1,
-          courseId: childEnrollmentData.courseId,
-          collectionId: childEnrollmentData.courseId,
+          courseId: childEnrollmentData && childEnrollmentData.courseId,
+          collectionId: childEnrollmentData && childEnrollmentData.courseId,
           status: 2,
         }]
         inprogressDataCheck = resumeData

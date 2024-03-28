@@ -28,6 +28,7 @@ export enum ErrorType {
   templateUrl: './viewer.component.html',
   styleUrls: ['./viewer.component.scss'],
 })
+
 export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   fullScreenContainer: HTMLElement | null = null
   content: NsContent.IContent | null = null
@@ -118,6 +119,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     })
   }
+
   getAuthDataIdentifer() {
     const collectionId = this.activatedRoute.snapshot.queryParams.collectionId
     this.widgetServ.fetchAuthoringContent(collectionId).subscribe((data: any) => {
@@ -134,17 +136,15 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     && this.activatedRoute.snapshot.data.hierarchyData.data || ''
     this.enrollmentList = this.activatedRoute.snapshot.data.enrollmentData
     && this.activatedRoute.snapshot.data.enrollmentData.data || ''
-    // const contentRead = this.activatedRoute.snapshot.data.contentRead
     && this.activatedRoute.snapshot.data.contentRead.data || ''
-    // if (contentRead.result && contentRead.result.content) {
-    //   this.contentSvc.currentContentReadMetaData = contentRead.result.content
-    // }
+
     if (contentData && contentData.result && contentData.result.content) {
       this.hierarchyData = contentData.result.content
       this.manipulateHierarchyData()
       this.resetAndFetchTocStructure()
       this.leafNodesCount = contentData.result.content.leafNodesCount
     }
+
     if (this.collectionId && this.enrollmentList) {
       const enrolledCourseData = this.widgetServ.getEnrolledData(this.collectionId)
       this.enrolledCourseData = enrolledCourseData
@@ -154,6 +154,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
       this.tocSvc.mapSessionCompletionPercentage(this.batchData)
     }
+
     this.pdfScormDataService.handleBackFromPdfScormFullScreen.subscribe((data: any) => {
       this.handleBackFromPdfScormFullScreenFlag = data
     })
@@ -171,7 +172,6 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
         if (sideNavBarDrawerState) {
           sideNavBarDrawerState.style.display = 'block'
         }
-
       } else {
         this.sideNavBarOpened = false
         this.viewerHeaderSideBarToggleFlag = data
@@ -179,8 +179,8 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
           sideNavBarDrawerState.style.display = 'none'
         }
       }
-
     })
+
     this.getAuthDataIdentifer()
     // this.getEnrollmentList()
     this.isNotEmbed = !(
@@ -193,6 +193,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.sideNavBarOpened = isSmall ? false : true
       this.mode = isSmall ? 'over' : 'side'
     })
+
     this.resourceChangeSubscription = this.dataSvc.changedSubject.subscribe(_ => {
       this.status = this.dataSvc.status
       this.error = this.dataSvc.error
@@ -229,6 +230,13 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (this.error && this.error.errorType === this.errorType.previewUnAuthorised) {
       }
     })
+
+    if (this.collectionId) {
+      const enrollCourseData = JSON.parse((localStorage.getItem('enrollmentMapData') as any))[this.collectionId]
+      if (enrollCourseData.completionPercentage === 100 || enrollCourseData.status === 2) {
+        this.downloadCertificate(enrollCourseData)
+      }
+    }
   }
 
   ngAfterViewChecked() {
@@ -250,6 +258,25 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.resourceChangeSubscription) {
       this.resourceChangeSubscription.unsubscribe()
     }
+  }
+
+  downloadCertificate(courseData: any): void {
+    const certificateId = courseData.issuedCertificates[0].identifier
+    this.widgetServ.downloadCert(certificateId).subscribe((response: any) => {
+      if (this.content) {
+        this.content['certificateObj'] = {
+          certData: response.result.printUri,
+          certId: certificateId,
+        }
+      }
+
+      if (this.hierarchyData) {
+        this.hierarchyData['certificateObj'] = {
+          certData: response.result.printUri,
+          certId: certificateId,
+        }
+      }
+    })
   }
 
   getTocConfig() {
@@ -281,6 +308,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.sideNavBarOpened = false
     }
   }
+
   get isPreview(): boolean {
     this.forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
     return this.forPreview
@@ -296,6 +324,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
     // this.hierarchyMapData = this.tocSvc.callHirarchyProgressHashmap(this.hierarchyData)
   }
+
   resetAndFetchTocStructure() {
     this.tocStructure = {
       assessment: 0,
@@ -330,6 +359,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     }
   }
+
   updateCount(event: any) {
     this.completedCount = event
   }

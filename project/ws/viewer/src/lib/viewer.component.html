@@ -9,7 +9,6 @@
   </ng-container>
   
   <mat-sidenav-container autosize class="viewer-sidenav-container">
-    
     <mat-sidenav id="side-nav-drawer-state" *ngIf="isTypeOfCollection" [ngClass]="isTypeOfCollection?'viewer-sidenav':'viewer-sidenav-standalone'" position="end"
       [opened]="sideNavBarOpened" [mode]="mode">
       <!-- <mat-tab-group>
@@ -112,12 +111,11 @@
           </div>
         </div>
       </div>
-      <div class="viewer-player-container" [ngClass]="contentMIMEType == 'application/vnd.sunbird.questionset' ? 'sidenavContent':''">
 
+      <div class="viewer-player-container" [ngClass]="contentMIMEType == 'application/vnd.sunbird.questionset' ? 'sidenavContent':''">
         <router-outlet (activate)="getContentData($event)"></router-outlet>
-        
-        
-      </div>      
+      </div>
+
       <ng-container *ngIf="isMobile">
         <div class="mobile-top-bar-container" *ngIf="!(contentMIMEType == 'application/vnd.sunbird.questionset') && !handleBackFromPdfScormFullScreenFlag">
           <ng-container>
@@ -144,10 +142,10 @@
           </div>
         </div>
       </ng-container>
-      
     </mat-sidenav-content>
   </mat-sidenav-container>
 </section>
+
 <div class="full-height-width-iframe" *ngIf="!isNotEmbed" id="viewer-conatiner-backdrop">
   <router-outlet></router-outlet>
 </div>
