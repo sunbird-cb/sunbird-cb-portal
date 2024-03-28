@@ -22,15 +22,14 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
     }
   }
 
-  @Input() btntype: any
   @Input() data: any = []
-  @Input() btnCategory = ''
   @Input() pCategory = ''
   @Input() condition: any
   @Output() clickClaimKarmaPoints = new EventEmitter<string>()
   kpData: any
-
+  @Input() btnCategory = ''
   karmaPointsSlider: any
+  btnKPData: any
 
   ngOnInit() {
     this.constructNudgeData()
@@ -72,7 +71,6 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
           this.getKPData('Start again')
         }
       }
-
     }
 
     if (this.condition && this.condition.isPostAssessment
@@ -142,21 +140,26 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
         this.getKPData('Edit rating')
       }
     }
+
   }
 
   getKPData(btnType: string): void {
     this.data.forEach((item: any) => {
-      if (item.displayButton === btnType) {
+      if (item.displayButton === btnType && item.displayButton !== 'ACBP CLAIM') {
         this.kpData = item
         if (this.kpArray.findIndex((_obj: any) => _obj.displayButton ===  item.displayButton) === -1) {
           this.kpArray.push(this.kpData)
         }
+      }
+      if (item.displayButton === 'ACBP CLAIM') {
+        this.btnKPData = item
       }
     })
   }
 
   onClickOfClaim() {
     this.clickClaimKarmaPoints.emit('claim')
+    this.btnCategory = ''
   }
 
   constructNudgeData() {
@@ -172,6 +175,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
       'dot-active': 'dot-active',
     }
 
+    nudgeData.sliderData = []
     nudgeData.sliderData = this.kpArray
     this.karmaPointsSlider = nudgeData
   }
