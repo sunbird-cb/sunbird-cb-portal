@@ -203,21 +203,10 @@ export class SeeAllHomeComponent implements OnInit, OnDestroy {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
     }
-    this.eventSvc.raiseInteractTelemetry(
-      {
-        type: WsEvents.EnumInteractTypes.CLICK,
-        subType: WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
-        id: `${_.camelCase(data.label)}-tab`,
-      },
-      {},
-      {
-        module: WsEvents.EnumTelemetrymodules.HOME,
-      }
+    this.eventSvc.handleTabTelemetry(
+      WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
+      data,
     )
-    // this.eventSvc.handleTabTelemetry(
-    //   WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
-    //   data,
-    // )
     const currentTabFromMap = stripMap.tabs && stripMap.tabs[tabEvent.index]
     const currentStrip = stripMap
     if (currentStrip && currentTabFromMap && !currentTabFromMap.computeDataOnClick) {
