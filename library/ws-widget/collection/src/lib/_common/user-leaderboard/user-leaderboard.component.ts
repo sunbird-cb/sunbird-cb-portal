@@ -62,8 +62,9 @@ export class UserLeaderboardComponent implements OnInit {
           this.monthName = moment().month(Number(this.currentUserRank.month) - 1).format('MMMM')
         }
         if (this.currentUserRank && this.currentUserRank.rank < this.currentUserRank.previous_rank) {
+          const rankDiff = this.currentUserRank.previous_rank - this.currentUserRank.rank
           // tslint:disable-next-line: max-line-length
-          this.overLayText = `${this.translateLabels('overlayText1', 'learnerLeaderboard')} ${this.ordinalPipe.transform(this.currentUserRank.rank)} ${this.translateLabels('overlayText2', 'learnerLeaderboard')} ${this.ordinalPipe.transform(this.currentUserRank.previous_rank - this.currentUserRank.rank)} ${this.translateLabels('overlayText3', 'learnerLeaderboard')}`
+          this.overLayText = `${this.translateLabels('overlayText1', 'learnerLeaderboard')} ${this.ordinalPipe.transform(this.currentUserRank.rank)} ${this.translateLabels('overlayText2', 'learnerLeaderboard')} ${(this.currentUserRank.previous_rank - this.currentUserRank.rank)} ${this.translateLabels((rankDiff === 1 ?  'overlayText3WithSingular' : 'overlayText3'), 'learnerLeaderboard')}`
           const isMessageShown = localStorage.getItem('motivationalMessage')
           if (!isMessageShown) {
             this.showOverlayMessage()
