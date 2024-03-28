@@ -310,7 +310,7 @@ export class OfflineSessionComponent implements OnInit, OnDestroy {
           type: data ? data.primaryCategory : '',
           rollup: {
             l1: this.widgetResolverOfflineSessionData.widgetData.collectionId || '',
-          }
+          },
         },
       },
     }

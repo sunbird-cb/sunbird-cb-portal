@@ -490,9 +490,20 @@ export class CompetenceAllComponent implements OnInit {
       label,
       index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
+        id: `${_.camelCase(data.label)}-tab`
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.COMPETENCY
+      }
     )
+    // this.eventSvc.handleTabTelemetry(
+    //   WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
+    //   data,
+    // )
   }
 }
