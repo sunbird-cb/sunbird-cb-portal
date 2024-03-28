@@ -8,6 +8,7 @@ import { ConfigurationsService, WsEvents, EventService as EventServiceGlobal } f
 import { MatTabChangeEvent } from '@angular/material'
 import { environment } from 'src/environments/environment'
 import { TranslateService } from '@ngx-translate/core'
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-events',
@@ -312,9 +313,20 @@ export class EventsComponent implements OnInit {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
     }
-    this.eventService.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.EVENTS_TAB,
-      data,
+    this.eventService.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.EVENTS_TAB,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.EVENTS,
+      }
     )
+    // this.eventService.handleTabTelemetry(
+    //   WsEvents.EnumInteractSubTypes.EVENTS_TAB,
+    //   data,
+    // )
   }
 }

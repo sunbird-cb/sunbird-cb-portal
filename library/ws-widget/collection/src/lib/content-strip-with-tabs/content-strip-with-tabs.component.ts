@@ -878,10 +878,21 @@ export class ContentStripWithTabsComponent extends WidgetBaseComponent
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME,
+      }
     )
+    // this.eventSvc.handleTabTelemetry(
+    //   WsEvents.EnumInteractSubTypes.HOME_PAGE_STRIP_TABS,
+    //   data,
+    // )
     const currentTabFromMap: any = stripMap.tabs && stripMap.tabs[tabEvent.index]
     const currentStrip = this.widgetData.strips.find(s => s.key === stripKey)
     if (this.stripsResultDataMap[stripKey] && currentTabFromMap) {

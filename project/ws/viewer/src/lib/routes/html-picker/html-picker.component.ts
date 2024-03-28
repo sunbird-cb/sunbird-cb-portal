@@ -110,7 +110,7 @@ export class HtmlPickerComponent implements OnInit, OnDestroy {
             type: data ? data.primaryCategory : '',
             rollup: {
               l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
-            }
+            },
           },
         },
       }

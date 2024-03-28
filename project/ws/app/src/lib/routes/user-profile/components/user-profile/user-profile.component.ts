@@ -1805,10 +1805,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       label: `${tabEvent.tab.textLabel}`,
       index: tabEvent.index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.PROFILE,
+      }
     )
+    // this.eventSvc.handleTabTelemetry(
+    //   WsEvents.EnumInteractSubTypes.PROFILE_EDIT_TAB,
+    //   data,
+    // )
 
   }
   translateTo(menuName: string): string {
