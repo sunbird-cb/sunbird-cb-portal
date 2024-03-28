@@ -114,13 +114,16 @@
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
-      overflow: hidden;
       text-overflow: ellipsis;
-      max-height: 37px;
+      max-height: 30px;
       line-height: 14px;
       min-height: 20px;
       height: fit-content;
       padding-top: 2px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     .rank-user-points {
       font-family: Montserrat;

@@ -33,6 +33,7 @@ export class UserLeaderboardComponent implements OnInit {
   currentUserProfile: any
   rankLengthsArray = []
   maxLength = 2
+  tooltipDelay: any = 1000
   constructor(private configSvc: ConfigurationsService,
               private homePageSvc: HomePageService,
               private userProfileSvc: UserProfileService,
