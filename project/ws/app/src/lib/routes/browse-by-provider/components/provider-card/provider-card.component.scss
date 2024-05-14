@@ -33,16 +33,16 @@
 // Remove this when card 2 is not needed
 .card2.single_provider_card {
         // height: 315px;
-        height: auto;
-        width: 275px;
-        padding: 24px 24px;
+        height: 161px;
+        width: 282px;
+        padding:16px;
         box-sizing: border-box;
         flex-direction: row;
         align-items: center;
         justify-content: center;
     .name-container {
         // height: 70px;
-        height: 92px;
+        
         overflow: hidden;
         width: 100%;
         text-align: left;
@@ -64,6 +64,30 @@
     }
     .mat-subheading-1 {
         margin: 0;
-    }
+    }   
 
+}
+.name-provider {
+    text-overflow: ellipsis;
+    max-height: 61px;
+    min-height: 39px;
+    height: fit-content;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-family: Lato;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16.8px;
+    text-align: center;
+}
+
+.p-logo {
+    max-height: 62px; 
+    max-width: 250px;
+}
+
+::ng-deep .mat-drawer-content  {
+    overflow: hidden!important;
 }

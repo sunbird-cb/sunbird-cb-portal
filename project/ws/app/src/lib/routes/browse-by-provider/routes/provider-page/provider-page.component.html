@@ -1,0 +1,142 @@
+<div class="container-fluid" id="section-micro-sites">
+    <div class="flex flex-col flex-1">
+        <ng-container *ngFor="let section of sectionList">
+            <ng-container *ngIf="section.enabled">
+                <section id="{{section.key}}" class="w-full grid grid-cols-12 gap-4">
+                    <ng-container *ngFor="let column of section.column">
+                        <div id="{{column.key}}" class="col-span-{{column.colspan || 12}} ">
+                            <ng-container *ngIf="column.enabled" [ngSwitch]="column.key">
+                                <ng-container *ngSwitchCase="'topSection'" [ngTemplateOutlet]="topSection"
+                                    [ngTemplateOutletContext]="{data: column.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'infra'" [ngTemplateOutlet]="infra"
+                                    [ngTemplateOutletContext]="{infra: column.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'contentFeaturedStrip'" [ngTemplateOutlet]="contentStrip"
+                                    [ngTemplateOutletContext]="{contentStrip: column?.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'contentTopStrip'" [ngTemplateOutlet]="contentStrip"
+                                    [ngTemplateOutletContext]="{contentStrip: column.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'calendar'" [ngTemplateOutlet]="calendar"
+                                    [ngTemplateOutletContext]="{calendar: column.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'bmetrics'" [ngTemplateOutlet]="bmetrics"
+                                    [ngTemplateOutletContext]="{bmetrics: column}"></ng-container>  
+                                <ng-container *ngSwitchCase="'competency'" [ngTemplateOutlet]="competency"
+                                    [ngTemplateOutletContext]="{competency: column}"></ng-container>                          
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </section>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="container-fluid" *ngIf="navList.length">
+    <div class="flex sticky-navigator gap-4">
+        <mat-icon class="nav-up-arrow cursor-pointer" (click)="scrollToSection('section-micro-sites')">arrow_upwards</mat-icon>
+        <ng-container *ngFor="let section of navList">
+            <div class="nav-button" (click)="scrollToSection(section.key)">{{section.title}}</div>
+        </ng-container>
+    </div>
+
+</div>
+
+
+<ng-template #topSection let-data="data">
+    <!-- <div class="w-full grid grid-cols-12 gap-4"> -->
+        <div class="col-span-12 christy">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12 md:col-span-8">
+                    <div class="slider h-full" *ngIf="data?.sliderData?.sliders">
+                        <sb-uic-sliders [title]="providerName" [widgetData]="data?.sliderData?.sliders" [styleData]="data?.sliderData?.styleData"></sb-uic-sliders>
+                    </div>
+                </div>
+                <div class="hidden md:block col-span-4 {{data?.metrics?.background}}" >
+                    <sb-uic-data-points  [providerId]="providerId" [fetchDataFromApi]="true" [objectData]="data?.metrics?.data" [layoutType]="'multipleRows'"></sb-uic-data-points>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-12 title-section px-5 md:py-5">
+            <div class="container flex flex-col md:flex-row">
+                <div class="mr-4 logo-box-container">
+                    <div class="flex logo-box-rounded top mr-4">
+                        <img alt="Application Logo" class="logo-img" [src]="data?.logo">
+                    </div>
+                </div>
+                <div class="flex-1 flex flex-col">
+                    <h1>{{data?.title || providerName}}</h1>
+                    <p>{{data?.description}}</p>
+                    <div class="block md:hidden overflow-y-auto mb-3">
+                        <sb-uic-data-points [providerId]="providerId" [fetchDataFromApi]="true"  [objectData]="data?.metrics?.data" [layoutType]="'singleRow'"></sb-uic-data-points>
+                    </div>
+                    <button  [routerLink]="[data?.contentButton?.redirectUrl, providerName, providerId, 'all-CBP']" mat-button type="button" class="view-btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display">
+                        <span class="mat-heading-1 bold ws-mat-default-text" i18n>
+                            {{data?.contentButton?.title}}
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+</ng-template>
+
+<ng-template #contentStrip let-contentStrip="contentStrip">
+    <ng-container *ngIf="!contentStrip?.hideSection">
+        <div class="flex justify-center relative mt-8 mb-8">
+            <img class="absolute {{contentStrip?.sectionImagePosition}}" src="{{contentStrip?.sectionImage}}" alt="">
+            <div class="container ">
+                <div class="w-full">
+                    <sb-uic-content-strip-with-tabs (emptyResponse)="hideContentStrip($event, contentStrip)" [providerId]="providerId" [widgetData]="contentStrip"></sb-uic-content-strip-with-tabs>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #infra let-infra="infra">
+    <div class="infra-background px-5" [style.background]="infra?.background">
+        <div class="container">
+            <div class="grid grid-cols-12 gap-4 infra-sec padding-top-l">
+                <div class="col-span-12 md:col-span-4 infra-sec-desc">
+                    <div class="infra-box flex flex-col">
+                        <div class="infra-title hidden md:block">
+                            {{infra.detaulTitle}}
+                        </div>
+                        <div class="infra-title2 hidden md:block">
+                            {{infra.myTitle}}
+                        </div>
+                        <div class="block md:hidden">
+                            <span class="infra-title">{{infra.detaulTitle}}</span> <span class="infra-title2"> {{infra.myTitle}}</span>
+                        </div>
+                        <div class="infra-description padding-top-s">
+                            {{infra.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <sb-uic-data-points [objectData]="infra" [layoutType]="'gridLayout'"></sb-uic-data-points>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="infra-background slider-background" [style.background]="infra?.background">
+    </div>
+    <div class="slider-background1">
+        <div class="container-balanced w-full slider-background-2">
+            <div class="info-slider">
+                <sb-uic-sliders [widgetData]="infra?.sliderData?.sliders" [styleData]="infra?.sliderData?.styleData"></sb-uic-sliders>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- Start Competencies -->
+<ng-template #competency let-competency="competency">
+    <div class="padding-top-l padding-bottom-l relative"  [style.background]="competency?.background" *ngIf="!hideCompetencyBlock">
+        <div class="w-full container-balanced">
+            <div class="pl-4 pr-4 md:pl-0 md:pr-0">
+                <sb-uic-competency-passbook (emptyResponse)="hideCompetency($event)" [objectData]="competency" [providerId]="providerId"></sb-uic-competency-passbook>         
+            </div>
+            
+        </div>
+        <img class="absolute " src="assets/icons/microsite/competency.svg" alt="">
+    </div>
+</ng-template>
+<!-- End Competencies -->

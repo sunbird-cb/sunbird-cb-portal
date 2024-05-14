@@ -11,7 +11,12 @@ $banner-min-height: 243px;
   margin: auto;
   border-radius: 12px;
   padding-bottom: 40px;
+  &.inline{
+    padding-bottom: 0 !important;
+  }
 }
+
+
 
 
 .banner-overlay {
@@ -60,6 +65,14 @@ $banner-min-height: 243px;
   border-radius: 12px;
   transform: translateX(-50%);
   box-sizing: border-box;
+  &.left {
+    left: 0;
+    transform: translateX(0);
+  }
+  &.right{
+    left: 100%;
+    transform: translateX(-100%);
+  }
 
   .banner-title {
     color: #f2f2f2;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { BrowseByProviderRoutingModule } from './browse-by-provider-routing.module'
-import { BtnPageBackModule, CardContentModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, CardContentModule, ContentStripWithTabsModule, SlidersModule } from '@sunbird-cb/collection'
 import {
   PipeFilterModule,
   PipeHtmlTagRemovalModule,
@@ -42,7 +42,12 @@ import { ProviderCardComponent } from './components/provider-card/provider-card.
 import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
 import { HttpClient } from '@angular/common/http'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpLoaderFactory } from 'src/app/app.module';
+import { ProviderPageComponent } from './routes/provider-page/provider-page.component'
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import {CompetencyPassbookModule, ContentStripWithTabsLibModule, DataPointsModule, SlidersLibModule} from '@sunbird-cb/consumption'
+import { ProviderFormResolverService } from './services/provider-form-resolver.service'
+import { FormExtService } from 'src/app/services/form-ext.service'
 
 @NgModule({
   declarations: [
@@ -54,6 +59,7 @@ import { HttpLoaderFactory } from 'src/app/app.module'
     ProviderLeftMenuComponent,
     PopularProviderCardComponent,
     ProviderCardComponent,
+    ProviderPageComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +93,13 @@ import { HttpLoaderFactory } from 'src/app/app.module'
     WidgetResolverModule,
     CardContentModule,
     CardContentV2Module,
+    SlidersModule,
+    ContentStripWithTabsModule,
+    ContentStripWithTabsModule,
+    ContentStripWithTabsLibModule,
+    CompetencyPassbookModule,
+    DataPointsModule,
+    SlidersLibModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -95,6 +108,7 @@ import { HttpLoaderFactory } from 'src/app/app.module'
       },
     }),
   ],
-  providers: [BrowseProviderService],
+  providers: [BrowseProviderService, ProviderFormResolverService,FormExtService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BrowseByProviderModule { }

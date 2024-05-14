@@ -19,9 +19,10 @@ export class ProviderDetailsComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   panelOpenState = false
   provider = ''
+  orgId = ''
   titles = [
-    { title: 'Learn', url: '/page/learn', icon: 'school' },
-    { title: `All providers`, url: `/app/learn/browse-by/provider/all-providers`, icon: '' },
+    { title: 'Learn', url: '/page/learn', icon: 'school', disableTranslate: false },
+    { title: `All providers`, url: `/app/learn/browse-by/provider/all-providers`, icon: '', disableTranslate: false },
     // { title: `${this.provider}`, url: `none`, icon: '' },
   ]
   unread = 0
@@ -68,8 +69,11 @@ export class ProviderDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.paramSubscription = this.activatedRoute.params.subscribe(async params => {
       this.provider = _.get(params, 'provider')
+      this.orgId = _.get(params, 'orgId')
+      let urlTomicrosite = `/app/learn/browse-by/provider/${this.provider}/${this.orgId}/micro-sites`
+      this.titles.push({ title: this.provider, icon: '', url: urlTomicrosite, disableTranslate: true})
+      this.titles.push({ title: 'All CBPs', icon: '', url: 'none', disableTranslate: false })
       this.initializeTabs()
-      this.titles.push({ title: this.provider, icon: '', url: 'none' })
     })
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
@@ -86,13 +90,12 @@ export class ProviderDetailsComponent implements OnInit, OnDestroy {
       // this.titles.push({ title: this.provider, icon: '', url: 'none' })
       switch (path) {
         case 'overview':
-          this.titles.push({ title: 'Provider overview', icon: '', url: 'none' })
+          this.titles.push({ title: 'Provider overview', icon: '', url: 'none', disableTranslate: false })
           break
         case 'all-CBP':
-          this.titles.push({ title: 'All CBPs', icon: '', url: 'none' })
           break
         case 'insights':
-          this.titles.push({ title: 'Insights', icon: '', url: 'none' })
+          this.titles.push({ title: 'Insights', icon: '', url: 'none', disableTranslate: false })
           break
         default:
           break

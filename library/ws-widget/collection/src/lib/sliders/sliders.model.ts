@@ -4,7 +4,10 @@ export interface ICarousel {
   openInNewTab?: string,
   banners: IBannerUnit,
   mailTo?: string,
-  queryParams?: any
+  queryParams?: any,
+  bannerMetaClass?: "inline", 
+  bannerMetaAlign?: "right" | "left",
+  navigationArrows?: "hidden"
 }
 
 interface IBannerUnit {

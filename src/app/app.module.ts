@@ -1,7 +1,7 @@
 import { FullscreenOverlayContainer, OverlayContainer } from '@angular/cdk/overlay'
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common'
 import { HttpClient, HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { APP_INITIALIZER, Injectable, NgModule, ErrorHandler } from '@angular/core'
+import { APP_INITIALIZER, Injectable, NgModule, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import {
   GestureConfig,
   MatButtonModule,
@@ -98,6 +98,9 @@ import { NoDataComponent } from './component/no-data/no-data.component'
 import { SurveyShikshaComponent } from './component/survey-shiksha/survey-shiksha.component'
 import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-policy.component'
 
+import {
+WIDGET_REGISTERED_LIB_MODULES, WIDGET_REGISTRATION_LIB_CONFIG
+} from '@sunbird-cb/consumption'
 @Injectable()
 export class HammerConfig extends GestureConfig {
   buildHammer(element: HTMLElement) {
@@ -164,7 +167,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     KeycloakAngularModule,
     AppRoutingModule,
     ...WIDGET_REGISTERED_MODULES,
-    WidgetResolverModule.forRoot(WIDGET_REGISTRATION_CONFIG),
+    ...WIDGET_REGISTERED_LIB_MODULES,
+    WidgetResolverModule.forRoot([...WIDGET_REGISTRATION_CONFIG,...WIDGET_REGISTRATION_LIB_CONFIG]),
     StickyHeaderModule,
     ErrorResolverModule,
     // Material Imports
@@ -269,7 +273,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
+    { provide: 'environment', useValue: environment },
     GuidedTourService,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

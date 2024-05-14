@@ -1,7 +1,7 @@
 <ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
 </ws-widget-btn-page-back>
 <div class="container-balanced main_content_box">
-    <div class="top_card_container">
+    <!-- <div class="top_card_container">
         <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allproviderscomponent.popularProviders' | translate }}</h2>
         <div class="top_card_inner_box flex">
             <ng-container *ngFor="let p of allProviders | slice:0:8; let i=index">
@@ -14,11 +14,11 @@
         <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
         </div>
-    </div>
+    </div> -->
 
     <!--===========  All competencies section ============= -->
     <div class="all_provider_box">
-        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allproviderscomponent.allProviders' | translate }}</h2>
+        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allproviderscomponent.allProviders' | translate }} ({{allProviders.length}})</h2>
         <div class="all_provider_inner">
             <!-- search box and dropdown-->
             <form [formGroup]="searchForm">

@@ -1,133 +1,226 @@
-<div class="container-balanced">
-    <div class="flex flex-col flex-1 gap-6">
+<div class="container-fluid" id="section-micro-sites">
+    <div class="flex flex-col flex-1">
         <ng-container *ngFor="let section of sectionList">
             <ng-container *ngIf="section.enabled">
                 <section id="{{section.key}}" class="w-full grid grid-cols-12 gap-4">
                     <ng-container *ngFor="let column of section.column">
-                        <div class="col-span-{{column.colspan || 12}}">
+                        <div id="{{column.key}}" class="col-span-{{column.colspan || 12}} christy1  {{column?.background}}">
                             <ng-container *ngIf="column.enabled" [ngSwitch]="column.key">
+                                <ng-container *ngSwitchCase="'topSection'" [ngTemplateOutlet]="topSection"
+                                    [ngTemplateOutletContext]="{data: column.data}"></ng-container>
                                 <ng-container *ngSwitchCase="'banner'" [ngTemplateOutlet]="banner"
                                     [ngTemplateOutletContext]="{data: column.data}"></ng-container>
-                                <ng-container *ngSwitchCase="'stats'" [ngTemplateOutlet]="stats"
-                                    [ngTemplateOutletContext]="{stats: column.data}"></ng-container>
-                                <ng-container *ngSwitchCase="'contentStrip'" [ngTemplateOutlet]="contentStrip"
+                                <ng-container *ngSwitchCase="'topProviders'" [ngTemplateOutlet]="topProviders"
+                                    [ngTemplateOutletContext]="{data: column.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'infra'" [ngTemplateOutlet]="infra"
+                                    [ngTemplateOutletContext]="{infra: column.data}"></ng-container>
+                                    <ng-container *ngSwitchCase="'contentFeaturedStrip'" [ngTemplateOutlet]="contentStrip"
+                                        [ngTemplateOutletContext]="{contentStrip: column.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'contentTopStrip'" [ngTemplateOutlet]="contentStrip"
                                     [ngTemplateOutletContext]="{contentStrip: column.data}"></ng-container>
                                 <ng-container *ngSwitchCase="'calendar'" [ngTemplateOutlet]="calendar"
                                     [ngTemplateOutletContext]="{calendar: column.data}"></ng-container>
-                                <ng-container *ngSwitchCase="'users'" [ngTemplateOutlet]="users"
-                                    [ngTemplateOutletContext]="{users: column.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'bmetrics'" [ngTemplateOutlet]="bmetrics"
+                                    [ngTemplateOutletContext]="{bmetrics: column}"></ng-container>   
                                 <ng-container *ngSwitchCase="'competency'" [ngTemplateOutlet]="competency"
-                                    [ngTemplateOutletContext]="{competency: column.data}"></ng-container>
+                                    [ngTemplateOutletContext]="{competency: column}"></ng-container>
+                                    <ng-container *ngSwitchCase="'contentSearch'" [ngTemplateOutlet]="contentWithSearch"
+                                        [ngTemplateOutletContext]="{competency: column}"></ng-container>                            
                             </ng-container>
                         </div>
                     </ng-container>
                 </section>
             </ng-container>
         </ng-container>
-        <!-- <section>
-            <div class="slider" *ngIf="sliderData">
-                <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
-            </div>
-        </section>
-        <section>
-            <div class="flex justify-between banner-container">
-                <div class="flex flex-1 logo-box">
-                    <img _ngcontent-xdw-c7="" alt="Application Logo" class="app-logo w-full" [src]="banner2.logo">
-                </div>
-                <div class="flex-1 flex flex-col">
-                    <h1>{{banner2.title}}</h1>
-                    <p>{{banner2.description}}</p>
-                </div>
-                <div class="slider slider-box" *ngIf="sliderData">
-                    <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
-                </div>
-            </div>
-        </section>
-        <section >
-            Stats
-            <div class="stats-container">
-                <ng-container *ngFor="let stat of stats">
-                    <div class="stats-item flex-1 ws-mat-primary-background mr-2">
-                        <div  class="icon mr-5">
-                           <mat-icon class="text-white">{{stat.icon}}</mat-icon>
-                        </div>
-                        <div class="stat-data">
-                            <h1 class="text-white">{{stat.value}}</h1>
-                            <p class="text-white fw-normal mt-2">{{stat.label}}</p>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-        </section>
-        <section>
-            Recently added content
-            <ws-widget-content-strip-with-tabs [widgetData]="contentStrip"></ws-widget-content-strip-with-tabs>
-        </section>
-        <section>
-            Top content
-        </section>
-        <section>
-            what our learners saying?
-        </section> -->
     </div>
 </div>
-
-<ng-template #banner let-data="data">
-    <div class="flex justify-between banner-container">
-        <div class="flex flex-1 logo-box">
-            <img alt="Application Logo" class="app-logo w-full" [src]="data.logo">
-        </div>
-        <div class="flex-1 flex flex-col">
-            <h1>{{data.title}}</h1>
-            <p>{{data.description}}</p>
-        </div>
-        <div class="slider slider-box" *ngIf="data.sliders">
-            <ws-widget-sliders [widgetData]="data.sliders"></ws-widget-sliders>
-        </div>
-    </div>
-</ng-template>
-
-
-<ng-template #stats let-stats="stats">
-    <!-- <div class="stats-container w-full grid grid-cols-12 gap-4"> -->
-    <div class="stats-container">
-        <ng-container *ngFor="let stat of stats">
-            <!-- <div class="col-span-{{stat.colspan || 12}}"> -->
-                <div class="stats-item flex-1 ws-mat-primary-background mr-2">
-                    <div class="icon mr-5">
-                        <mat-icon class="text-white">{{stat.icon}}</mat-icon>
-                    </div>
-                    <div class="stat-data flex-1">
-                        <h1 class="text-white">{{stat.value}}</h1>
-                        <p class="text-white fw-normal mt-2">{{stat.label}}</p>
-                    </div>
-                </div>
-            <!-- </div> -->
+<div class="container-fluid" *ngIf="navList.length">
+    <div class="flex sticky-navigator gap-4">
+        <mat-icon class="nav-up-arrow cursor-pointer" (click)="scrollToSection('section-micro-sites')">arrow_upwards</mat-icon>
+        <ng-container *ngFor="let section of navList">
+            <div class="nav-button" (click)="scrollToSection(section.key)">{{section.title}}</div>
         </ng-container>
     </div>
+
+</div>
+
+
+<ng-template #topSection let-data="data">
+    <!-- <div class="w-full grid grid-cols-12 gap-4"> -->
+        <div class="col-span-12 christy">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12 md:col-span-8">
+                    <div class="slider" *ngIf="data?.sliderData?.sliders?.length;else defaultData">
+                        <sb-uic-sliders [widgetData]="data?.sliderData?.sliders" [styleData]="data?.sliderData?.styleData"></sb-uic-sliders>
+                    </div>
+                    <ng-template #defaultData>
+                        <div class="slider default-slider h-full">
+                            <div class="relative h-full">
+                                <img class="h-full" src="assets/icons/home/default-slider-image.svg" alt="">
+                                <div class="default-title">
+                                    <p>test</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="hidden md:block col-span-4 {{data?.metrics?.background}}" >
+                    <sb-uic-data-points [objectData]="data?.metrics?.data" [layoutType]="'multipleRows'"></sb-uic-data-points>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-12 title-section px-5 md:py-5">
+            <div class="container flex flex-col md:flex-row">
+                <div class="mr-4 logo-box-container">
+                    <div class="flex logo-box-rounded top mr-4">
+                        <img alt="Application Logo" class="logo-img" [src]="data?.logo">
+                    </div>
+                </div>
+                <div class="flex-1 flex flex-col">
+                    <h1>{{data?.title}}</h1>
+                    <p>{{data?.description}}</p>
+                    <div class="block md:hidden overflow-y-auto mb-3">
+                        <sb-uic-data-points [objectData]="data?.metrics?.data" [layoutType]="'singleRow'"></sb-uic-data-points>
+                    </div>
+                    <button  mat-button type="button" class="view-btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display">
+                        <span class="mat-heading-1 bold ws-mat-default-text" i18n>
+                        View all contents
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
     <!-- </div> -->
 </ng-template>
 
 <ng-template #contentStrip let-contentStrip="contentStrip">
-    <div class="w-full">
-        <ws-widget-content-strip-with-tabs [widgetData]="contentStrip"></ws-widget-content-strip-with-tabs>
+    <div class="flex justify-center">
+        <div class="container ">
+            <div class="w-full">
+                <!-- <ws-widget-content-strip-with-tabs [widgetData]="contentStrip"></ws-widget-content-strip-with-tabs> -->
+                <sb-uic-content-strip-with-tabs  [widgetData]="contentStrip"></sb-uic-content-strip-with-tabs>
+            </div>
+        </div>
     </div>
 </ng-template>
 
-<ng-template #calendar let-calendar="calendar">
-    <div class="w-full">
-        <h1 class="text-center">Calendar coming soon...</h1>
+<ng-template #topProviders   let-data="data">
+    <div class="{{data.background}} px-5">
+        <div class="container">
+            <div class="grid grid-cols-12 gap-4 infra-sec padding-top-l">
+                <div class="col-span-12 md:col-span-4 infra-sec-desc">
+                    <div class="infra-box flex flex-col">
+                        <div class="infra-title hidden md:block">
+                            {{data.detaulTitle}}
+                        </div>
+                        <div class="infra-title2 hidden md:block">
+                            {{data.myTitle}}
+                        </div>
+                        <div class="block md:hidden">
+                            <span class="infra-title">{{data.detaulTitle}}</span> <span class="infra-title2"> {{data.myTitle}}</span>
+                        </div>
+                        <div class="infra-description padding-top-s">
+                            {{data.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <div *ngFor="let user of data?.users" class="mb-8">
+                        <sb-uic-cards [widgetData]="{
+                            user: user,
+                            cardSubType: 'user-card'
+                        }">
+                        </sb-uic-cards>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="{{infra.background}} slider-background">
+    </div>
+    <div class="slider-background1">
+        <div class="container-balanced w-full slider-background-2">
+            <div class="info-slider">
+                <sb-uic-sliders [widgetData]="infra?.sliderData?.sliders" [styleData]="infra?.sliderData?.styleData"></sb-uic-sliders>
+            </div>
+        </div>
     </div>
 </ng-template>
 
-<ng-template #users let-users="users">
-    <div class="w-full">
-        <h1 class="">users coming soon...</h1>
+<ng-template #infra let-infra="infra">
+    <div class="{{infra.background}} px-5">
+        <div class="container">
+            <div class="grid grid-cols-12 gap-4 infra-sec padding-top-l">
+                <div class="col-span-12 md:col-span-4 infra-sec-desc">
+                    <div class="infra-box flex flex-col">
+                        <div class="infra-title hidden md:block">
+                            {{infra.detaulTitle}}
+                        </div>
+                        <div class="infra-title2 hidden md:block">
+                            {{infra.myTitle}}
+                        </div>
+                        <div class="block md:hidden">
+                            <span class="infra-title">{{infra.detaulTitle}}</span> <span class="infra-title2"> {{infra.myTitle}}</span>
+                        </div>
+                        <div class="infra-description padding-top-s">
+                            {{infra.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <sb-uic-data-points [objectData]="infra" [layoutType]="'gridLayout'"></sb-uic-data-points>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="{{infra.background}} slider-background">
+    </div>
+    <div class="slider-background1">
+        <div class="container-balanced w-full slider-background-2">
+            <div class="info-slider">
+                <sb-uic-sliders [widgetData]="infra?.sliderData?.sliders" [styleData]="infra?.sliderData?.styleData"></sb-uic-sliders>
+            </div>
+        </div>
     </div>
 </ng-template>
-
+<!-- Start Competencies -->
 <ng-template #competency let-competency="competency">
-    <div class="w-full">
-        <h1 class="">Competency coming soon...</h1>
+    <div class="w-full container-balanced">
+        <div class="mt-10 mb-10">
+            <sb-uic-competency-passbook [objectData]="competency"></sb-uic-competency-passbook>         
+        </div>
+    </div>
+</ng-template>
+<!-- End Competencies -->
+<!-- banner start -->
+<ng-template #banner let-data="data">
+    <div class="flex justify-between container-balanced  pt-8 pb-8">
+        <div class="flex-1 flex flex-col mr-4 text-white">
+            <h1 >{{data.title}}</h1>
+            <p>{{data.description}}</p>
+        </div>
+        <div class="slider slider-box" *ngIf="data.sliders">
+            <sb-uic-sliders [widgetData]="data.sliders"></sb-uic-sliders>
+        </div>
+    </div>
+</ng-template>
+<!-- banner end -->
+<!-- karma program data with search -->
+<ng-template #contentWithSearch let-data="data">
+    <div class="container-balanced  pt-8 pb-8">
+        <div class="flex-1 flex flex-col mr-4 text-white">
+            <div class="w-full">
+                  <mat-form-field appearance="outline"  class="w-full pl-1 mat-form-search">
+                    <input name="search"  (keyup.enter)="handleSearchQuery($event)"   matInput placeholder="Search">
+                  </mat-form-field>
+              </div>
+        </div>
+       <ng-container *ngIf="contentDataList?.length">
+            <div class="flex flex-row flex-wrap content-container mt-10 mb-10 ng-star-inserted">
+                <div class="mr-2 mb-5 flex" *ngFor="let c of contentDataList">
+                    <sb-uic-cards [widgetData]="c.widgetData"> </sb-uic-cards>
+                </div>
+            </div>
+       </ng-container>
     </div>
 </ng-template>

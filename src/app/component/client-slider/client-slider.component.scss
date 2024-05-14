@@ -1,6 +1,5 @@
 .client-box {
     width: 100%;
-    margin-top: 60px;
 }
 
 .customer-logos {
@@ -28,7 +27,17 @@
 .slider-item {
     animation: animate 40s linear infinite;
 }
+.clients-bg-info  {
+    width: 32%;
+}
+.clients-bg-primary{
+    width: 68%;
+ }
 
+.clients-container {
+    max-width: 1260px;
+    margin-top: 60px;
+}
 @keyframes animate {
 	0% {transform: translateX(0);}
   100% {transform: translatex(-3500px)}
