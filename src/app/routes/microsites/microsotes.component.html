@@ -4,7 +4,7 @@
             <ng-container *ngIf="section.enabled">
                 <section id="{{section.key}}" class="w-full grid grid-cols-12 gap-4">
                     <ng-container *ngFor="let column of section.column">
-                        <div id="{{column.key}}" class="col-span-{{column.colspan || 12}} christy1  {{column?.background}}">
+                        <div id="{{column.key}}" class="col-span-{{column.colspan || 12}}   {{column?.background}}">
                             <ng-container *ngIf="column.enabled" [ngSwitch]="column.key">
                                 <ng-container *ngSwitchCase="'topSection'" [ngTemplateOutlet]="topSection"
                                     [ngTemplateOutletContext]="{data: column.data}"></ng-container>
@@ -47,7 +47,7 @@
 
 <ng-template #topSection let-data="data">
     <!-- <div class="w-full grid grid-cols-12 gap-4"> -->
-        <div class="col-span-12 christy">
+        <div class="col-span-12">
             <div class="grid grid-cols-12">
                 <div class="col-span-12 md:col-span-8">
                     <div class="slider" *ngIf="data?.sliderData?.sliders?.length;else defaultData">
@@ -125,12 +125,21 @@
                     </div>
                 </div>
                 <div class="col-span-12 md:col-span-8">
-                    <div *ngFor="let user of data?.users" class="mb-8">
+                    <div *ngFor="let user of data?.users" class="mb-8 flex">
                         <sb-uic-cards [widgetData]="{
-                            user: user,
+                            content: user,
                             cardSubType: 'user-card'
                         }">
                         </sb-uic-cards>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <div *ngFor="let channel of data?.channels" class="mb-8 flex">
+                        <sb-uic-card-mdo-channel [widgetData]="{
+                            content: channel,
+                            cardSubType: 'user-card'
+                        }">
+                        </sb-uic-card-mdo-channel>
                     </div>
                 </div>
             </div>

@@ -24,6 +24,7 @@ import {
   MatTooltipModule,
   MatChipsModule,
   MatCheckboxModule,
+  MatMenuModule,
 } from '@angular/material'
 
 import {
@@ -35,6 +36,7 @@ import { MultipleChoiseQuesComponent } from './components/question/mcq-mca/mcq-m
 import { SingleChoiseQuesComponent } from './components/question/mcq-sca/mcq-sca.component'
 import { MatchTheFollowingQuesComponent } from './components/question/mtf/mtf.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { FinalAssessmentPopupComponent } from './components/final-assessment-popup/final-assessment-popup.component'
 
 @NgModule({
   declarations: [
@@ -47,8 +49,12 @@ import { TranslateModule } from '@ngx-translate/core'
     ResultComponent,
     SingleChoiseQuesComponent,
     SubmitQuizDialogComponent,
+    FinalAssessmentPopupComponent,
   ],
-  entryComponents: [SubmitQuizDialogComponent],
+  entryComponents: [
+    SubmitQuizDialogComponent,
+    FinalAssessmentPopupComponent,
+  ],
   imports: [
     CommonModule,
     PipeDurationTransformModule,
@@ -71,6 +77,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatChipsModule,
     SkeletonLoaderModule,
     TranslateModule,
+    MatMenuModule,
   ],
   exports: [
     PracticeComponent,

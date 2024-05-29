@@ -789,6 +789,32 @@ export class MicrosotesComponent implements OnInit {
               },
 
             ],
+            'channels': [
+              {
+                // tslint:disable-next-line:max-line-length
+                'appIcon': 'https://static.karmayogiprod.nic.in/igotqa/collection/do_1140612307621969921232/artifact/do_1140144030484480001206_1710742559879_capture391710742560259.thumb.png',
+                // tslint:disable-next-line:max-line-length
+                'posterImage': 'https://portal.karmayogiqa.nic.in/content-store/content/do_1140144030484480001206/artifact/do_1140144030484480001206_1710742559879_capture391710742560259.png',
+                'identifier' : 'do_1140612307621969921232',
+                'name': 'National Institute of Ayurveda',
+              },
+              {
+                // tslint:disable-next-line:max-line-length
+                'appIcon': 'https://static.karmayogiprod.nic.in/igotqa/collection/do_1140612307621969921232/artifact/do_1140144030484480001206_1710742559879_capture391710742560259.thumb.png',
+                // tslint:disable-next-line:max-line-length
+                'posterImage': 'https://portal.karmayogiqa.nic.in/content-store/content/do_1140144030484480001206/artifact/do_1140144030484480001206_1710742559879_capture391710742560259.png',
+                'identifier' : 'do_1140612307621969921232',
+                'name': 'Ministry of External Affairs',
+              },
+              {
+                // tslint:disable-next-line:max-line-length
+                'appIcon': 'https://static.karmayogiprod.nic.in/igotqa/collection/do_1140612307621969921232/artifact/do_1140144030484480001206_1710742559879_capture391710742560259.thumb.png',
+                // tslint:disable-next-line:max-line-length
+                'posterImage': 'https://portal.karmayogiqa.nic.in/content-store/content/do_1140144030484480001206/artifact/do_1140144030484480001206_1710742559879_capture391710742560259.png',
+                'identifier' : 'do_1140612307621969921232',
+                'name': 'The National Fisheries Development Board (NFDB',
+              },
+            ],
           },
         },
       ],

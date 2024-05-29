@@ -1,0 +1,84 @@
+@import 'ws-mixins';
+@import 'ws-common';
+
+.container-balanced {
+    @extend %page-center;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.banner-container {
+    align-items: center;
+    background: #eee;
+    padding: 16px;
+    gap: 2.5rem;
+    justify-content: center;
+}
+
+.logo-square {
+    width: 167px;
+    height: 107px;
+    border-radius: 12px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    max-height: 107px;
+    box-sizing: border-box;
+}
+
+.logo-img {
+    object-fit: contain;
+    max-height: 70px;
+}
+
+.metrics {
+    border: 3px solid #fff;
+    border-radius: 10px;
+    align-items: center;
+    display: flex;
+    padding: 0 50px;
+}
+
+.mob-metrics {
+    overflow: auto;
+}
+
+.metrics-section {
+    margin-top: -30px;
+}
+.empty-div {
+    height: 15px;
+}
+.mob-metrics-sec {
+    padding-top: 3.4rem;
+}
+
+
+// Announcement modal
+
+.announcements-container {
+    position: fixed;
+    height: calc(100vh - 67px);
+    background: #131313a3;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.close-announcements-dialog {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+.close-icon {
+    color: #fff;
+    border-radius: 15px;
+    float: right;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}

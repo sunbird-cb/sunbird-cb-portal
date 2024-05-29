@@ -253,8 +253,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
       //   data: { type: 'pending' },
       // ...this.configSuccess,
       // })
+      if ((this.pendingApprovalList && this.pendingApprovalList.length)) {
 
-      this.handleUpdateMobileNudge()
+      } else {
+        this.handleUpdateMobileNudge()
+      }
+
     },         (error: HttpErrorResponse) => {
       if (!error.ok) {
         this.matSnackBar.open('Unable to fetch pending approval list')
@@ -268,7 +272,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         const profilePopUp = sessionStorage.getItem('hideUpdateProfilePopUp')
 
         if (_obj.profileDetails) {
-          if (!(_obj.profileDetails.profileStatus !== 'VERIFIED') && (this.pendingApprovalList && this.pendingApprovalList.length)
+          if (!(_obj.profileDetails.profileStatus === 'VERIFIED')
             && (profilePopUp === 'true' || profilePopUp === null)) {
             this.isNudgeOpen = true
           } else {

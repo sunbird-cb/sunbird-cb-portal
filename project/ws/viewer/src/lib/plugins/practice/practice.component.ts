@@ -27,6 +27,7 @@ import { environment } from 'src/environments/environment'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ViewerDataService } from '../../viewer-data.service'
 import { ViewerHeaderSideBarToggleService } from './../../viewer-header-side-bar-toggle.service'
+// import { FinalAssessmentPopupComponent } from './components/final-assessment-popup/final-assessment-popup.component'
 // import { ViewerDataService } from '../../viewer-data.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 @Component({
@@ -120,6 +121,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   expandFalse = true
   showOverlay = false
   showToolTip = false
+
+  currentSetNumber = 0
+  noOfQuestionsPerSet = 2
+  totalQuestionsCount = 0
   constructor(
     private events: EventService,
     public dialog: MatDialog,
@@ -330,7 +335,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       return []
     }
     const qq = _.filter(this.quizJson.questions, { section: this.selectedSection.identifier })
-    return qq
+    this.totalQuestionsCount = qq ? qq.length : 0
+    const setStartIndex = this.noOfQuestionsPerSet * this.currentSetNumber
+    const setEndIndex = setStartIndex + this.noOfQuestionsPerSet
+    const secQuestions = qq.slice(setStartIndex, setEndIndex)
+    return secQuestions
+  }
+
+  getQuestionIndex(index: number): number {
+    return (this.noOfQuestionsPerSet * this.currentSetNumber) + index + 1
+  }
+
+  get hasNextSet(): boolean {
+    return this.totalQuestionsCount > this.noOfQuestionsPerSet * (this.currentSetNumber + 1)
   }
   nextSection(section: NSPractice.IPaperSection) {
     this.quizSvc.currentSection.next(section)
@@ -1133,7 +1150,8 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   checkAns(quesIdx: number) {
-    if (quesIdx > 0 && quesIdx <= this.totalQCount && this.current_Question.editorState && this.current_Question.editorState.options) {
+    if (quesIdx > 0 && quesIdx <= this.totalQuestionsCount &&
+        this.current_Question.editorState && this.current_Question.editorState.options) {
       this.showAnswer = true
       this.quizSvc.shCorrectAnswer(true)
     }
@@ -1280,5 +1298,77 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.events.dispatchEvent(event)
   }
+
+  // openSectionPopup() {
+  //   const tableColumns: any[] = [
+  //     { header: 'Section', key: 'section' },
+  //     { header: 'No of Questions', key: 'NoOfQuestions' },
+  //     { header: 'Answered', key: 'answered' },
+  //     { header: 'Not answered', key: 'notAnswered' },
+  //     { header: 'Marked for Review', key: 'markedForReview' },
+  //     { header: 'Not Visited', key: 'notVisited' },
+  //   ]
+
+  //   const tableData: any = [
+  //     {
+  //       section: 'Section A',
+  //       NoOfQuestions: '20',
+  //       answered: '5',
+  //       notAnswered: '5',
+  //       markedForReview: '5',
+  //       notVisited: '5',
+  //     },
+  //     {
+  //       section: 'Section B',
+  //       NoOfQuestions: '20',
+  //       answered: '5',
+  //       notAnswered: '5',
+  //       markedForReview: '5',
+  //       notVisited: '5',
+  //     },
+  //     {
+  //       section: 'Section C',
+  //       NoOfQuestions: '20',
+  //       answered: '5',
+  //       notAnswered: '5',
+  //       markedForReview: '5',
+  //       notVisited: '5',
+  //     },
+  //   ]
+  //   const popupData = {
+  //     headerText: 'Final Assessment',
+  //     tableDetails: {
+  //       tableColumns: tableColumns,
+  //       tableData: tableData,
+  //     },
+  //     warningNote: 'Do you want to submit your test finally. After submitting test, you will have to start the test from beginning.',
+  //     buttonsList: [
+  //       {
+  //         response: 'yes',
+  //         text: 'Yes',
+  //         classes: 'blue-outline'
+  //       },
+  //       {
+  //         response: 'no',
+  //         text: 'No',
+  //         classes: 'blue-full'
+  //       },
+  //       // {
+  //       //   response: 'Back',
+  //       //   text: 'back',
+  //       //   classes: 'gray-full'
+  //       // },
+  //     ]
+  //   }
+
+  //   this.dialog.open(FinalAssessmentPopupComponent, {
+  //     data: popupData,
+  //     width: '1000px',
+  //     maxWidth: '90vw',
+  //     height: 'auto',
+  //     maxHeight: '90vh',
+  //     panelClass: 'final-assessment'
+  //   })
+  // }
 
 }

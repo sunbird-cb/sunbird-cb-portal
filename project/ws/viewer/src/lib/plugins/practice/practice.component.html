@@ -146,7 +146,7 @@
           <div class="flex flex-row justify-between ques_stats_container_box">
             <div class="flex flex-row">
                 <div>
-                  <p class="mat-subheading-1">
+                  <p class="mat-subheading-1 questions">
                     {{ 'playerbrief.questions' | translate | titlecase}}
                   </p>
                 </div>
@@ -195,11 +195,11 @@
               </mat-chip></mat-chip-list>
             </div>
           </div>
-          <div class="seperator"></div>
-          <div class="mb-24">
+          <!-- <div class="seperator"></div> -->
+          <div class="mb-24 mt-4">
             <div class="flex flex-row justify-around">
               <div class="flex flex-col align-center">
-                <div class="ques-count">{{totalQCount - questionAttemptedCount}}</div>
+                <div class="ques-count">{{totalQuestionsCount - questionAttemptedCount}}</div>
                 <div class="stats-label">{{ 'playerbrief.notAnswered' | translate }}</div>
               </div>
               <div class="flex flex-col align-center">
@@ -249,30 +249,66 @@
             *ngIf="fetchingQuestionsStatus === 'done'">
             <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
               <div (click)="scroll(i + 1)" [ngClass]="{
-                'marked-question': isQuestionMarked(question?.questionId),
-                'attempted-question':
+                'marked-question marked-question-background': isQuestionMarked(question?.questionId),
+                'attempted-question attempted-question-background':
                   !isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId)               
-              }" class="margin-side-8">
+              }" class="margin-side-8 not-visited-question not-visited-background flex justify-center items-center">
                 <div *ngIf="!isQuestionMarked(question?.questionId) &&
-                  isQuestionAttempted(question?.questionId)"  class="light-blue-small" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'">
-                  <img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/>
+                  isQuestionAttempted(question?.questionId)"  [ngClass]="(currentQuestionIndex + 1) === getQuestionIndex(i) ? 'current-question': 'dark-border'">
+                  {{ getQuestionIndex(i) }}
+                  <!-- <img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/> -->
                 </div>
                 <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId))">                  
-                  <mat-chip-list class="question-flag">
-                    <mat-chip class="orange-small">
-                      <ng-container *ngIf="!isQuestionAttempted(question?.questionId)">{{ i + 1 }}</ng-container>
-                      <ng-container *ngIf="isQuestionAttempted(question?.questionId)"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></ng-container>
+                  <!-- <mat-chip-list class="question-flag">
+                    <mat-chip class="orange-small"> -->
+                      <ng-container *ngIf="!isQuestionAttempted(question?.questionId)">{{ getQuestionIndex(i) }}</ng-container>
+                      <!-- <ng-container *ngIf="isQuestionAttempted(question?.questionId)"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></ng-container>
                     </mat-chip>
-                  </mat-chip-list>
+                  </mat-chip-list> -->
                 </div>
                 <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                   isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
-                  class="ovel question-number" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'"><span [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'mat-body-2-bold': 'mat-body-2'">
-                    {{ i + 1 }}
+                  class="ovel question-number" [ngClass]="(currentQuestionIndex + 1) === getQuestionIndex(i) ? 'current-question': 'dark-border'"><span [ngClass]="(currentQuestionIndex + 1) === getQuestionIndex(i) ? 'mat-body-2-bold': 'mat-body-2'">
+                    {{ getQuestionIndex(i) }}
                   </span>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <ng-container >
+            <div class="flex justify-end items-center mt-1 mb-4 gap-3 margin-right-s">
+                <mat-icon [ngClass]="currentSetNumber <= 0 ? 'questions-navigate-disable' : 'questions-navigate-enable' " (click)="currentSetNumber = currentSetNumber - 1">keyboard_arrow_left</mat-icon>
+                <mat-icon [ngClass]="hasNextSet ? 'questions-navigate-enable' : 'questions-navigate-disable' " (click)="currentSetNumber = currentSetNumber + 1">keyboard_arrow_right</mat-icon>
+            </div>
+          </ng-container>
+        <div class="seperate-text">
+          <span>legend</span>
+        </div>
+        <div class="my-8 mx-6">
+          <div class="flex justify-between">
+            <div class="gap-4 flex flex-col">
+              <div class="flex gap-2">
+                <div class="flex justify-center items-center attempted-question-background question-guide">1</div>
+                <div class="question-guide-text">Answered</div>
+              </div>
+              <div class="flex gap-2">
+                <div class="flex justify-center items-center question-guide marked-question-background">3</div>
+                <div class="question-guide-text">Marked</div>
+              </div>
+            </div>
+
+            <div class="gap-4 flex flex-col">
+              <div class="flex gap-2">
+                <div class="flex justify-center items-center question-guide not-answered-background">2</div>
+                <div class="question-guide-text">Not Answered</div>
+              </div>
+    
+              <div class="flex gap-2">
+                <div class="flex justify-center items-center question-guide not-visited-background">4</div>
+                <div class="question-guide-text">Not Visited</div>
               </div>
             </div>
           </div>
@@ -425,8 +461,66 @@
           </div>
         </div> 
         <div class="flex flex-column justify-between align-center assessment-header">           
-          <div class="question-list">
-            <div class="ques_stats_container">            
+          <div class="question-list-mweb mb-10">
+            <div class="ques_stats_container">
+              <div class="flex flex-row justify-between ques_stats_container_box">
+                <div class="flex flex-row">
+                    <div>
+                      <p class="mat-subheading-1 questions">
+                        {{ 'playerbrief.questions' | translate | titlecase}}
+                      </p>
+                    </div>
+                </div>
+                
+                <div class="timer" *ngIf="primaryCategory !== ePrimaryCategory.PRACTICE_RESOURCE">
+                  <mat-chip-list><mat-chip class="light-blue"><span class="chip-text">
+                      <div *ngIf="timeLeft" class="flex flex-1 flex-center">
+                        <img src="assets/icons/final-assessment/timer.svg">
+                        &nbsp;&nbsp; 
+                        
+                        <ng-container *ngIf="quizJson.timeLimit >= 3600">
+                          
+                          <div *ngIf="timeLeft > 120">
+                            <span class="time-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+                          </div>
+                          <div *ngIf="timeLeft <= 120" class="ws-mat-red-text">
+                            <span class="time-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2H' }}</span>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="quizJson.timeLimit < 3600">
+                          <div *ngIf="timeLeft > 120">
+                            <span class="time-title ws-mat-default-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+                          </div>
+                          <div *ngIf="timeLeft <= 120" class="ws-mat-red-text">
+                            <span class="time-title ws-mat-red-text"> {{ timeLeft | pipeDurationTransform: 'hms2M' }}</span>
+                          </div>
+                        </ng-container>
+                    
+                        <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" i18n>
+                          <span class="time-title ws-mat-default-text"> (Submitted)</span>
+                        </div>
+                      </div>
+                    </span>
+                  </mat-chip></mat-chip-list>
+                </div>
+              </div>
+              <div class="mb-24 mt-4">
+                <div class="flex flex-row gap-10">
+                  <div class="flex flex-col align-center">
+                    <div class="ques-count">{{totalQuestionsCount - questionAttemptedCount}}</div>
+                    <div class="stats-label">{{ 'playerbrief.notAnswered' | translate }}</div>
+                  </div>
+                  <div class="flex flex-col align-center">
+                    <div class="ques-count">{{questionAttemptedCount ? questionAttemptedCount  : 0}}</div>
+                    <div class="stats-label">{{ 'playerbrief.answered' | translate }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="seperate-text">
+                <span>{{ 'practiceoverview.questions' | translate | titlecase}}</span>
+              </div>
+            </div>
+            <!-- <div class="ques_stats_container">            
               <div class="mb-24">
                 <div class="flex flex-row justify-around">
                   <div class="flex flex-col align-center">
@@ -436,12 +530,12 @@
                   <div class="flex flex-col align-center">
                     <div class="ques-count">{{questionAttemptedCount ? questionAttemptedCount  : 0}}</div>
                     <div class="stats-label">{{'playerbrief.answered' | translate}}</div>
-                  </div>
+                  </div> -->
                   <!-- <div class="flex flex-col align-center">
                     <div class="ques-count">{{markedQuestions.size}}</div>
                     <div class="stats-label">Skipped</div>
                   </div> -->
-                </div>
+                <!-- </div>
               </div>
               <div class="outer-border-box" id="toolTipSection">
                 <div class="label-source-box">
@@ -456,7 +550,7 @@
                     </div>
                   </div>   
                 </div>
-              </div>
+              </div> -->
               <!-- <div class="seperate-text" id="toolTipSection">
                 <span>{{'playerbrief.questions' | translate | titlecase}}</span>
                 <span>
@@ -473,7 +567,7 @@
               
           </div> -->
             
-          </div>   
+          <!-- </div>    -->
           <div [ngClass]="!expandFalse ? 'my-2':''">
             
             <!-- <div class="flex flex-row justify-between" *ngIf="!expandFalse">                  
@@ -533,42 +627,83 @@
                 *ngIf="fetchingQuestionsStatus === 'done'">
                 <div class="col question-list-item" *ngFor="let question of secQuestions; let i = index">
                   <div (click)="scroll(i + 1)" [ngClass]="{
-                    'marked-question': isQuestionMarked(question?.questionId),
-                    'attempted-question':
+                    'marked-question marked-question-background': isQuestionMarked(question?.questionId),
+                    'attempted-question attempted-question-background':
                       !isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId)               
-                  }" class="margin-side-8">
+                  }" class="margin-side-8 not-visited-question not-visited-background flex justify-center items-center">
                     <div *ngIf="!isQuestionMarked(question?.questionId) &&
-                      isQuestionAttempted(question?.questionId)"  class="light-blue-small" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'">
-                      <img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/>
+                      isQuestionAttempted(question?.questionId)"  [ngClass]="(currentQuestionIndex + 1) === getQuestionIndex(i) ? 'current-question': 'dark-border'">
+                      {{ getQuestionIndex(i) }}
+                      <!-- <img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/> -->
                     </div>
                     <div *ngIf="isQuestionMarked(question?.questionId) && !(!isQuestionMarked(question?.questionId) &&
-                      isQuestionAttempted(question?.questionId))">
-                      <mat-chip-list class="question-flag">
-                        <mat-chip class="orange-small">
-                          <ng-container *ngIf="!isQuestionAttempted(question?.questionId)">{{ i + 1 }}</ng-container>
-                          <ng-container *ngIf="isQuestionAttempted(question?.questionId)"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></ng-container>
+                      isQuestionAttempted(question?.questionId))">                  
+                      <!-- <mat-chip-list class="question-flag">
+                        <mat-chip class="orange-small"> -->
+                          <ng-container *ngIf="!isQuestionAttempted(question?.questionId)">{{ getQuestionIndex(i) }}</ng-container>
+                          <!-- <ng-container *ngIf="isQuestionAttempted(question?.questionId)"><img class="margin-center" src="assets/icons/final-assessment/correct_arrow.svg"/></ng-container>
                         </mat-chip>
-                      </mat-chip-list>
-                      
+                      </mat-chip-list> -->
                     </div>
                     <div *ngIf="!(!isQuestionMarked(question?.questionId) &&
                       isQuestionAttempted(question?.questionId)) && (!isQuestionMarked(question?.questionId))"
-                      class="ovel question-number" [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'current-question': 'dark-border'"><span [ngClass]="(currentQuestionIndex + 1) === i+1 ? 'mat-body-2-bold': 'mat-body-2'">
-                        {{ i + 1 }}
+                      class="ovel question-number" [ngClass]="(currentQuestionIndex + 1) === getQuestionIndex(i) ? 'current-question': 'dark-border'"><span [ngClass]="(currentQuestionIndex + 1) === getQuestionIndex(i) ? 'mat-body-2-bold': 'mat-body-2'">
+                        {{ getQuestionIndex(i) }}
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <ng-container *ngIf="!expandFalse">
+              <ng-container>
+                <div class="flex justify-end items-center mt-1 mb-4 gap-3 margin-right-s">
+                  <mat-icon [ngClass]="currentSetNumber <= 0 ? 'questions-navigate-disable' : 'questions-navigate-enable' "
+                    (click)="currentSetNumber = currentSetNumber - 1">keyboard_arrow_left</mat-icon>
+                  <mat-icon [ngClass]="hasNextSet ? 'questions-navigate-enable' : 'questions-navigate-disable' "
+                    (click)="currentSetNumber = currentSetNumber + 1">keyboard_arrow_right</mat-icon>
+                </div>
+              </ng-container>
+              <div class="seperate-text">
+                <span>legend</span>
+              </div>
+              <div class="my-8 mx-6">
+                <div class="flex justify-between">
+                  <div class="gap-4 flex flex-col">
+                    <div class="flex gap-2">
+                      <div class="flex justify-center items-center attempted-question-background question-guide">1</div>
+                      <div class="question-guide-text">Answered</div>
+                    </div>
+                    <div class="flex gap-2">
+                      <div class="flex justify-center items-center question-guide marked-question-background">3</div>
+                      <div class="question-guide-text">Marked</div>
+                    </div>
+                  </div>
+            
+                  <div class="gap-4 flex flex-col">
+                    <div class="flex gap-2">
+                      <div class="flex justify-center items-center question-guide not-answered-background">2</div>
+                      <div class="question-guide-text">Not Answered</div>
+                    </div>
+            
+                    <div class="flex gap-2">
+                      <div class="flex justify-center items-center question-guide not-visited-background">4</div>
+                      <div class="question-guide-text">Not Visited</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <button (click)="openSectionPopup()" >preview</button> -->
+              </div>
+            </ng-container>
             
           </div>
           <div class="exapnd-collapse">
             <div class="expand-icon" (click)="toggleExpandforMobile()">
               <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">
-                <span *ngIf="expandFalse">expand_more</span>
-                <span *ngIf="!expandFalse">expand_less</span>
+                <span *ngIf="expandFalse">arrow_downward</span>
+                <span *ngIf="!expandFalse">arrow_upward</span>
               </mat-icon>
             </div>
           </div> 

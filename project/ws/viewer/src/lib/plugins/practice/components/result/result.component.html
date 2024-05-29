@@ -1,9 +1,9 @@
-<div class="blue-bg">
+<!-- <div class="blue-bg">
 <div class="flex flex-col box-height">
   <div class="assessment-container">
   <div class="assessment-stats-count">
     <div class="flex flex-row justify-end">
-      <div class="start-assessment-cta flex flex-row butto_box end">
+      <div class="start-assessment-cta flex flex-row butto_box end"> -->
         <!-- <ng-container
         *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
         <div class="quest_btn">
@@ -12,18 +12,18 @@
           </a>
         </div>
         </ng-container>  -->
-        <ng-container>
+        <!-- <ng-container>
         <div class="quest_btn" *ngIf="quizResponse">
           <a mat-button (click)="action('retake')">
             {{ 'playerbrief.tryAgain' | translate }}
           </a>
-        </div>
+        </div> -->
         <!-- <div class="quest_btn-blue">
           <a mat-button (click)="action('retake')">
             {{ 'playerbrief.finish' | translate }}
           </a>
         </div> -->
-        </ng-container>
+        <!-- </ng-container> -->
         <!-- <ng-container
         *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
         <div class="text-white  quest_btn_finish">
@@ -32,12 +32,12 @@
           </a>
         </div>
         </ng-container>        -->
-      </div>
+      <!-- </div>
     </div>
   </div>
 </div>
 
-<div class="flex auto-w result_main">
+<div class="flex auto-w result_main"> -->
   <!-- <div class="flex flex-1 max-w relative result_image_box">
     <div class="flex percent-div">
       <div class="flex flex-1 flex-column flex-center center">
@@ -76,18 +76,18 @@
     </div>
     <img class="flex-1 result_image" [src]="staticImage" alt="exam image" />
   </div> -->
-  <div class="flex flex-1 flex-column result_text_box border-custom">
-    <div class="flex flex-1 flex-column flex-wrap margin-top-m">
+  <!-- <div class="flex flex-1 flex-column result_text_box border-custom">
+    <div class="flex flex-1 flex-column wrap-mweb margin-top-m"> -->
       <!-- <ng-container *ngIf="!(quizResponse)">
         <div class="flex flex-1 flex-center text-center flex-middle">
           <span class="mat-heading" i18n>{{ 'quizresult.bePatienWhileWeCalculate' | translate }}</span>
           <mat-spinner></mat-spinner>
         </div>
       </ng-container> -->
-      <ng-container *ngIf="quizResponse && quizResponse?.isInProgress">
-        <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
+      <!-- <ng-container *ngIf="quizResponse && quizResponse?.isInProgress">
+        <div class="flex flex-row flex-center text-center flex-middle margin-top-xl"> -->
           <!-- <span class="mat-heading" i18n>We are not able to fetch the result</span> -->
-          <span class="mat-heading" i18n>{{ 'quizresult.submittedSucessfull' | translate }}</span>
+          <!-- <span class="mat-heading" i18n>{{ 'quizresult.submittedSucessfull' | translate }}</span>
         </div>
         <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
           <button mat-button  class="ws-mat-primary-background text-white m-w padding-xs" (click)="retryResult()">
@@ -148,13 +148,13 @@
                       A55,55 0 1,1 140,90"
                     style="fill:none;stroke-width:8px"
                     />
-            </svg>
+            </svg> -->
             <!-- <div class="circular-progress-container">
               <div class="circular-progress">
                 {{updateProgress(percentage)}}
               </div>
             </div> -->
-            <div style="position:relative; top: -60px; left: 0px;">
+            <!-- <div style="position:relative; top: -60px; left: 0px;">
                 <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
                 <div class="level-text">{{levelText || ('playerbrief.failed' | translate)}}</div>
             </div>
@@ -163,14 +163,14 @@
         </div>
         <mat-card class="result_box_time_container" *ngIf="quizResponse">
           <div class="flex flex-row justify-between response_box">
-            <div class="stats-label">
+            <div class="stats-label"> -->
               <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
-              <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
+              <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
               <div class="ml-2"> {{'practiceoverview.totalQuestions' | translate}} </div>
             </div>
-            <div class="stats-label">
+            <div class="stats-label"> -->
               <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
-              <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
+              <!-- <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
             </div>
           </div>
         </mat-card>
@@ -229,7 +229,7 @@
           </mat-card>
         </ng-container>
       </ng-container>
-    </div>
+    </div> -->
     <!-- <ng-container
       *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
       <div class="flex flex-1 flex-center">
@@ -238,7 +238,7 @@
         </a>
       </div>
     </ng-container> -->
-  </div>
+  <!-- </div>
   <div class="flex flex-1 top-margin-63">
     <div class="p-4 w-full" [ngClass]="activeQuestionSet === 'answer' ? 'question-list-green' : (activeQuestionSet === 'wrong') ? 'question-list-red' : 'question-list-gray'" *ngIf="selectedQuestionData">
       <p class="question-section">{{selectedQuestionData.text}} </p>
@@ -305,7 +305,213 @@
     <mat-icon *ngIf="selectedQuestionData?.sectionType !== data.sectionType">add</mat-icon>
     <mat-icon *ngIf="selectedQuestionData?.sectionType === data.sectionType">remove</mat-icon>
   </mat-card>
-</ng-template>
+</ng-template> -->
+
+
+<div class="results flex flex-col gap-6 px-10 py-4">
+  <div class="header-text flex flex-col">
+    My Overall performance summary
+    <span class="mt-1"></span>
+  </div>
+
+  <div class="flex wrap-mweb gap-4 mt-6 mb-6">
+    <ng-container *ngFor="let summary of overAllSummary">
+      <div class="results-card flex">
+        <div class="flex gap-4 justify-center items-center mx-4">
+          <div class="result-icons-bg flex justify-center items-center" [ngClass]="summary.class">
+            <ng-container *ngIf="summary.imgType === 'icon'">
+              <mat-icon class="icons">{{summary.imgPath}}</mat-icon>
+            </ng-container>
+            <ng-container *ngIf="summary.imgType === 'img'">
+              <img [src]="summary.imgPath">
+            </ng-container>
+          </div>
+          <div class="flex flex-col w-full">
+            <div class="results-persentsge">
+              {{summary.summary}}
+            </div>
+            <div class="result-section-text">
+              {{summary.summaryType}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="header-text flex flex-col">
+    My Secrtionwise summary
+    <span class="mt-1"></span>
+  </div>
+
+  <div>
+    <table
+      mat-table
+      [dataSource]="summaryTableDataSource"
+      class="w-full">
+        <ng-container
+            *ngFor="let disCol of summaryTableDisplayeColumns; let colIndex = index">
+            <ng-container matColumnDef="{{ disCol.key }}" >
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ disCol.header }}
+                </th>
+
+                <td
+                    mat-cell
+                    *matCellDef="let element; let rowIndex = index;"
+                >
+                    <span>{{ element[disCol.key] }}</span>
+                </td>
+            </ng-container>
+        </ng-container>
+
+        <tr class="mat-row" *matNoDataRow>
+            <span class="mat-cell" colspan="10">No data found</span>
+        </tr>
+      
+        <tr mat-header-row *matHeaderRowDef="getFinalColumns(summaryTableDisplayeColumns)"></tr>
+      
+        <tr mat-row *matRowDef="let row; columns: getFinalColumns(summaryTableDisplayeColumns)"></tr>
+    </table>
+  </div>
+  <div class="header-text flex flex-col">
+    Competitive Analysis
+    <span class="mt-1"></span>
+  </div>
+
+  <div>
+    <table
+      mat-table
+      [dataSource]="competitiveTableDataSource"
+      class="w-full">
+        <ng-container
+            *ngFor="let disCol of competitiveTableDisplayedColumns; let colIndex = index">
+            <ng-container matColumnDef="{{ disCol.key }}" >
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ disCol.header }}
+                </th>
+
+                <td
+                    mat-cell
+                    *matCellDef="let element; let rowIndex = index;"
+                >
+                    <span>{{ element[disCol.key] }}</span>
+                </td>
+            </ng-container>
+        </ng-container>
+
+        <tr class="mat-row" *matNoDataRow>
+            <span class="mat-cell" colspan="10">No data found</span>
+        </tr>
+      
+        <tr mat-header-row *matHeaderRowDef="getFinalColumns(competitiveTableDisplayedColumns)"></tr>
+      
+        <tr mat-row *matRowDef="let row; columns: getFinalColumns(competitiveTableDisplayedColumns)"></tr>
+    </table>
+  </div>
+
+
+  <div class="flex overAllScore justify-center items-center">
+    <div class="flex justify-center items-center totalScore w-full">
+      Your SCORE
+    </div>
+    <div class="separator"></div>
+    <div class="flex justify-center items-center totalScore w-full">
+      -2.25/100
+    </div>
+  </div>
+
+  <div class="flex wrap-mweb gap-4 mt-6 mb-6">
+    <ng-container *ngFor="let summary of scoreSummary">
+      <div class="results-card flex">
+        <div class="flex gap-4 justify-center items-center mx-4">
+          <div class="result-icons-bg flex justify-center items-center" [ngClass]="summary.class">
+            <ng-container *ngIf="summary.imgType === 'icon'">
+              <mat-icon class="icons">{{summary.imgPath}}</mat-icon>
+            </ng-container>
+            <ng-container *ngIf="summary.imgType === 'img'">
+              <img [src]="summary.imgPath">
+            </ng-container>
+          </div>
+          <div class="flex flex-col w-full">
+            <div class="results-persentsge">
+              {{summary.summary}}
+            </div>
+            <div class="result-section-text">
+              {{summary.summaryType}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div>
+    <button mat-button [matMenuTriggerFor]="sectionsMenu" class="btn-outline flex justify-center items-center px-4"><span>All</span>
+      <mat-icon class="arrow-down">arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #sectionsMenu="matMenu" yPosition="below">
+      <ng-container *ngFor="let section of sectionsList">
+        <button mat-menu-item class="questionType-btn">{{section.sectionName}} </button>
+      </ng-container>
+    </mat-menu>
+  </div>
+
+  <div class="flex wrap-mweb gap-4">
+    <button mat-button class="btn-full flex justify-center items-center px-4 gap-2">All</button>
+    <button mat-button class="btn-outline flex justify-center items-center px-4">Correct</button>
+    <button mat-button class="btn-outline flex justify-center items-center px-4">Wrong</button>
+    <button mat-button class="btn-outline flex justify-center items-center px-4">Unattempted</button>
+  </div>
+
+  <div class="questions-table-section">
+    <div class="questions-table">
+      <table
+        mat-table
+        [dataSource]="questionStatuTableDataSource"
+        class="w-full">
+          <ng-container
+              *ngFor="let disCol of questionStatuTableColumns; let colIndex = index">
+              <ng-container matColumnDef="{{ disCol.key }}" >
+                  <th mat-header-cell *matHeaderCellDef>
+                      {{ disCol.header }}
+                  </th>
+
+                  <td
+                      mat-cell
+                      *matCellDef="let element; let rowIndex = index;"
+                  >
+                      <span [ngClass]="{'correct': element[disCol.key] === 'Correct', 'wrong': element[disCol.key] === 'Wrong'}">{{ element[disCol.key] }}</span>
+                  </td>
+              </ng-container>
+          </ng-container>
+
+          <tr class="mat-row" *matNoDataRow>
+              <span class="mat-cell" colspan="10">No data found</span>
+          </tr>
+        
+          <tr mat-header-row *matHeaderRowDef="getFinalColumns(questionStatuTableColumns)"></tr>
+        
+          <tr mat-row *matRowDef="let row; columns: getFinalColumns(questionStatuTableColumns)"></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer flex justify-center items-center gap-2">
+  <ng-container>
+    <button mat-button class="flex justify-center items-center px-4 inSight gap-2">
+      <img class="mr-2" src="/assets/icons/final-assessment/insight.svg">
+      <span>Insights</span>
+      <mat-icon class="plus">add</mat-icon>
+    </button>
+    <button mat-button class="flex justify-center items-center px-4 reAttempt gap-2">
+      <img src="/assets/icons/final-assessment/reattempt.svg">
+      <span> Reattempt Test</span>
+    </button>
+  </ng-container>
+</div>
 
 
 

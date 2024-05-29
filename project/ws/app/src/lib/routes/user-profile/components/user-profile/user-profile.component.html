@@ -146,7 +146,7 @@
                             </mat-radio-button>
                           </span>
                           <span class="mx-2">
-                            <mat-radio-button matInput class="my-1" [value]="eUserGender.OTHER">
+                            <mat-radio-button matInput class="my-1" [value]="eUserGender.OTHERS">
                               Others
                             </mat-radio-button>
                           </span>
@@ -162,9 +162,9 @@
                               [value]="eUserGender.FEMALE" i18n-aria-label [attr.aria-label]="eUserGender.FEMALE">
                             <label for="{{eUserGender.FEMALE}}" i18n-aria-label>{{translateTo(eUserGender.FEMALE.toLowerCase())}}</label>
 
-                            <input type="radio" id="{{eUserGender.OTHER}}" name="gender" formControlName="gender"
-                              [value]="eUserGender.OTHER" i18n-aria-label [attr.aria-label]="eUserGender.OTHER">
-                            <label for="{{eUserGender.OTHER}}" i18n-aria-label>{{translateTo(eUserGender.OTHER.toLowerCase())}}</label>
+                            <input type="radio" id="{{eUserGender.OTHERS}}" name="gender" formControlName="gender"
+                              [value]="eUserGender.OTHERS" i18n-aria-label [attr.aria-label]="eUserGender.OTHERS">
+                            <label for="{{eUserGender.OTHERS}}" i18n-aria-label>{{translateTo(eUserGender.OTHERS.toLowerCase())}}</label>
                           </div>
                         </fieldset>
 

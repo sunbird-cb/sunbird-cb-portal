@@ -356,7 +356,7 @@
               </div>
               <div class="info-div">
                 <div class="label">{{ 'profileInfo.gender' | translate }}</div>
-                <div class="info-value" *ngIf="!editDetails">{{ portalProfile?.personalDetails?.gender || 'NA' }}</div>
+                <div class="info-value" *ngIf="!editDetails">{{ (portalProfile?.personalDetails?.gender | titlecase) || 'NA' }}</div>
                 <div class="flex" *ngIf="editDetails">
                   <mat-form-field class="profile-form-field">
                     <mat-select formControlName="gender">

@@ -1,0 +1,121 @@
+::ng-deep .final-assessment {
+    .mat-dialog-container {
+      border-radius: 16px;
+      overflow: visible;
+    }
+
+    table {
+        thead {
+            background-color: #1B4CA1 !important;
+    
+            th.mat-header-cell {
+                color: #ffffff !important;
+                font-size: 14px;
+            }
+        }
+
+        td.mat-cell {
+            color: #7d7d7d !important;
+            font-size: 14px;
+        } 
+    }
+}
+
+.finalAssessment {
+    position: relative;
+
+    .close-button {
+        border-radius: 50%;
+        border: 0.5px solid #6a6868;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: -38px;
+        right: -37px;
+        background-color: white;
+    
+        .close-icon {
+          font-size: 20px;
+          margin-bottom: 12px;
+          margin-left: 1px;
+          color: #7c7b7b;
+        }
+      }
+
+    .assessment-results {
+        .header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #212529;
+            font-family: 'Roboto Slab';
+            border-bottom: 1px solid #DEE2E6;
+        }
+
+        .table-section {
+            overflow-x: auto;
+            border-top: 1px solid #DEE2E6;
+
+            .results-table {
+                min-width: 700px;
+            }
+        }
+
+        .warning {
+            color: #000000;
+            font-size: 16px;
+
+            .warning-icon {
+                color: #666;
+            }
+        }
+
+        .footer {
+            .footer-buttons {
+                justify-content: flex-end;
+            }
+
+            .legend {
+                width: calc(100% + 48px);
+                border-bottom: 1px solid #DEE2E6; 
+                line-height: 0.1em;
+                margin-left: -24px;
+            }
+
+            .blue-full {
+                height: 40px;
+                padding: 0px 16px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: 700;
+                background-color: #1B4CA1;
+                color: #ffffff;
+            }
+
+            .blue-outline {
+                height: 40px;
+                padding: 0px 16px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: 700;
+                border: 1px solid #1B4CA1;
+                color: #1B4CA1;
+            }
+
+            .gray-full {
+                height: 40px;
+                padding: 0px 16px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: 700;
+                background-color: #6C757D;
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+@media (max-width: 768) {
+    .footer-buttons {
+        justify-content: center;
+    }
+}

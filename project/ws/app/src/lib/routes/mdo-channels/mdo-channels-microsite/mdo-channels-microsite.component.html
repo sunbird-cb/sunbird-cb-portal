@@ -1,0 +1,211 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles, textClass:'ws-mat-black60-text' }">
+</ws-widget-btn-page-back>
+
+<div class="container-fluid" id="section-micro-sites">
+    <div class="flex flex-col flex-1">
+        <ng-container *ngIf="sectionList?.length">
+            <ng-container *ngFor="let section of sectionList">
+                <ng-container *ngIf="section?.enabled">
+                    <section id="{{section?.key}}" class="w-full grid grid-cols-12 gap-4" [ngClass]="{'container': section.wrapperClass}">
+                        <ng-container *ngFor="let column of section.column">
+                            <div id="{{column?.key}}" class="col-span-{{column.colspan || 12}} ">
+                                <ng-container *ngIf="column?.enabled" [ngSwitch]="column?.key">
+                                    <ng-container *ngSwitchCase="'topSection'" [ngTemplateOutlet]="topSection"
+                                        [ngTemplateOutletContext]="{data: column?.data}"></ng-container>
+                                    <ng-container *ngSwitchCase="'metrics'" [ngTemplateOutlet]="metrics"
+                                        [ngTemplateOutletContext]="{data: column?.data}"></ng-container>
+                                    <ng-container *ngSwitchCase="'mainContent'" [ngTemplateOutlet]="mainContent"
+                                        [ngTemplateOutletContext]="{data: column?.data}"></ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </section>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+
+
+<ng-template #topSection let-data="data">
+    <div class="flex  items-center justify-center" [ngStyle]="{'background': data.background}">
+        <div class="container">
+            <div class="grid grid-cols-12 gap-4 padding-top-l mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <div class="flex-1 flex flex-col mr-4 ws-mat-black-text">
+                        <div class="flex items-center logo-square ">
+                            <img alt="Application Logo" class="logo-img" [src]="data?.logo">
+                        </div>
+                        <div class="mt-6 pt-6">
+                            <h1 >{{data.title}}</h1>
+                            <p>{{data.description}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <div class="slider slider-box" *ngIf="data.sliderData && data.sliderData.sliders">
+                        <sb-uic-sliders [widgetData]="data.sliderData.sliders" [styleData]="data.sliderData.styleData" ></sb-uic-sliders>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden md:block">
+        <ng-container>
+            <div class="flex items-center justify-center empty-div" [ngStyle]="{'background': data.background}"></div>    
+        </ng-container>
+        
+    </div>
+    <div class="flex items-center justify-center">
+        <div class="container metrics-section" >
+            <div class="hidden md:block">
+                <div class="metrics"
+                    [ngStyle]="{'background': data?.metrics?.background}">
+                    <sb-uic-data-points
+                        [providerId]="orgId"
+                        [fetchDataFromApi]="true"
+                        [objectData]="data?.metrics?.data"
+                        [layoutType]="'singleFlexeRow'"
+                        [pageLayout]="'mdo'">
+                    </sb-uic-data-points>
+                </div>
+            </div>
+            <div class="block md:hidden  pt-14 px-4">
+                <div class="mob-metrics mob-metrics-sec">
+                    <sb-uic-data-points
+                        [providerId]="orgId"
+                        [fetchDataFromApi]="true"
+                        [objectData]="data?.metrics?.data"
+                        [layoutType]="'singleRow'"
+                        [pageLayout]="'mdo'">
+                    </sb-uic-data-points>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #mainContent let-data="data">
+    <div class="flex  items-center justify-center" [ngStyle]="{'background': data.background}">
+        <div class="container">
+            <div class="block md:hidden col-span-12 mt-6">
+                <sb-uic-announcements
+                    [layoutType]="'mobile'"
+                    (openDialog)="triggerOpenDialog($event)"
+                    [objectData]="data?.announcementSection?.data">
+                </sb-uic-announcements>
+                <div class="announcements-container" *ngIf="showModal">
+                    <div class="cursor-pointer close-share-dialog">
+                        <mat-icon (click)="onClose()" class="close-icon">close</mat-icon>
+                    </div>
+                    <div class="share-modal px-3 pt-8">
+                        <sb-uic-announcements
+                            [layoutType]="'web'"
+                            (openDialog)="triggerOpenDialog($event)"
+                            [objectData]="data?.announcementSection?.data"
+                            [mobileHeight]="true">
+                        </sb-uic-announcements>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 padding-top-l mb-6">
+                <div class="col-span-12 md:col-span-{{data.tabSection.colspan}}">
+                    <!-- Tabs Section -->
+                    <mat-tab-group animationDuration="0ms" class="mat-tab-labels w-full"
+                        [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index; tabClicked($event)">
+                        <mat-tab label="Content" >
+                            <ng-template mat-tab-label i18n>
+                                Content
+                            </ng-template>
+                            <div>
+                                <ng-container [ngTemplateOutlet]="columnSectionDisplay"
+                                    [ngTemplateOutletContext]="{data: data.tabSection.contentTab}"></ng-container>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Core Areas">
+                            <ng-template mat-tab-label i18n>
+                                Core Areas
+                            </ng-template>
+                            <div>
+                                <ng-container [ngTemplateOutlet]="columnSectionDisplay"
+                                    [ngTemplateOutletContext]="{data: data.tabSection.coreAreasTab}"></ng-container>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+                <div class="hidden md:block col-span-12 md:col-span-{{data.announcementSection.colspan}}" 
+                    *ngIf="data?.announcementSection?.data">
+                    <div class="pt-4">
+                        <sb-uic-announcements
+                            [layoutType]="'web'"
+                            [objectData]="data?.announcementSection?.data">
+                        </sb-uic-announcements>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- 
+<ng-template #announcement let-data="data">
+    <div class="flex  items-center justify-center" [ngStyle]="{'background': data.background}">
+        <div class="w-full">
+            Announcement Section -->
+            <!-- <h1>Announcement</h1>
+        </div>
+    </div>
+</ng-template> -->
+
+
+<ng-template #columnSectionDisplay  let-data="data">
+    <ng-container *ngIf="data?.length">
+        <ng-container *ngFor="let section of data">
+            <ng-container *ngIf="section?.enabled">
+                <section id="{{section?.key}}" class="w-full grid grid-cols-12 gap-4" [ngClass]="{'container': section.wrapperClass}">
+                    <ng-container *ngFor="let column of section.column">
+                        <div id="{{column?.key}}" class="col-span-{{column.colspan || 12}} ">
+                            <ng-container *ngIf="column?.enabled" [ngSwitch]="column?.key">
+                                <ng-container *ngSwitchCase="'competency'" [ngTemplateOutlet]="competency"
+                                [ngTemplateOutletContext]="{competency: column}"></ng-container>
+                                <ng-container *ngSwitchCase="'contentRecommendedProgramStrip'" [ngTemplateOutlet]="contentStrip"
+                                [ngTemplateOutletContext]="{contentStrip: column?.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'contentRecommendedCoursesStrip'" [ngTemplateOutlet]="contentStrip"
+                                [ngTemplateOutletContext]="{contentStrip: column?.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'contentFeaturedStrip'" [ngTemplateOutlet]="contentStrip"
+                                [ngTemplateOutletContext]="{contentStrip: column?.data}"></ng-container>
+                                <ng-container *ngSwitchCase="'contentcertificationsOfWeekStrip'" [ngTemplateOutlet]="contentStrip"
+                                [ngTemplateOutletContext]="{contentStrip: column?.data}"></ng-container>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </section>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+
+<!-- Start Competencies -->
+<ng-template #competency let-competency="competency">
+    <div class="padding-top-l padding-bottom-l relative"  [style.background]="competency?.background" *ngIf="!hideCompetencyBlock">
+        <div class="w-full container-balanced">
+            <div class="pl-4 pr-4 md:pl-0 md:pr-0">
+                <sb-uic-competency-passbook [dynamicColor]="'#999999'" [dynamicAlignPills]="'start'" [cardDisplayCount]="2" (emptyResponse)="hideCompetency($event)" [objectData]="competency" [providerId]="providerId"></sb-uic-competency-passbook>         
+            </div>
+        </div>
+        <!-- <img class="absolute comp-back-img" src="assets/icons/microsite/competency.svg" alt=""> -->
+    </div>
+</ng-template>
+<!-- End Competencies -->
+
+<ng-template #contentStrip let-contentStrip="contentStrip">
+    <ng-container *ngIf="!contentStrip?.hideSection">
+        <div class="flex  mt-8 mb-8">
+            <div class="w-full">
+                <sb-uic-content-strip-with-tabs [emitViewAll]="true" (viewAllResponse)="showAllContent($event)"  
+                (emptyResponse)="hideContentStrip($event, contentStrip)" [providerId]="'01381906916850892825'" [widgetData]="contentStrip"></sb-uic-content-strip-with-tabs>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
