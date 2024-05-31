@@ -47,7 +47,7 @@
         "@project-sunbird/sb-styles": "0.0.7",
         "@project-sunbird/sunbird-quml-player": "0.0.6",
         "@project-sunbird/telemetry-sdk": "0.0.26",
-        "@sunbird-cb/consumption": "0.0.24",
+        "@sunbird-cb/consumption": "0.0.26",
         "@sunbird-cb/design-system": "0.0.2",
         "@sunbird-cb/discussions-ui-v8": "2.1.3",
         "@sunbird-cb/micro-surveys": "^2.0.17",
