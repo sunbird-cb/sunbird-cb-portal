@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common'
 import {  Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { EventService, WsEvents } from '@sunbird-cb/utils'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-provider-page',
@@ -25,9 +27,10 @@ export class ProviderPageComponent implements OnInit  {
 
   descriptionMaxLength = 1000
   expanded = false
+  isTelemetryRaised = false
 
   constructor(private route: ActivatedRoute,
-              public router: Router, private datePipe: DatePipe) {
+              public router: Router, private datePipe: DatePipe, private events: EventService) {
 
   }
 
@@ -101,7 +104,63 @@ export class ProviderPageComponent implements OnInit  {
     }
   }
 
+  raiseTelemetryInteratEvent(event: any) {
+    if (event && event.viewMoreUrl) {
+      this.raiseTelemetry(`${event.stripTitle} ${event.viewMoreUrl.viewMoreText}`)
+    }
+    if (event && !event.viewMoreUrl && !this.isTelemetryRaised) {
+      this.events.raiseInteractTelemetry(
+        {
+          type: 'click',
+          subType: 'ATI/CTI',
+          id: `${_.kebabCase(event.typeOfTelemetry.toLocaleLowerCase())}-card`,
+        },
+        {
+          id: event.identifier,
+          type: event.primaryCategory,
+        },
+        {
+          pageIdExt: `${_.kebabCase(event.primaryCategory.toLocaleLowerCase())}-card`,
+          module: WsEvents.EnumTelemetrymodules.LEARN
+        }
+      )
+      this.isTelemetryRaised = true
+    }
+  }
+
   viewMoreOrLess() {
     this.expanded = !this.expanded
+  }
+
+  raiseCompetencyTelemetry(name: string) {
+    this.raiseTelemetry(`${name} core expertise`)
+  }
+
+  raiseTelemetry(name: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'ATI/CTI',
+        id: `${_.kebabCase(name).toLocaleLowerCase()}`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.LEARN,
+      }
+    )
+  }
+
+  raiseNavTelemetry(name: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        subType: 'ATI/CTI',
+        id: `${_.kebabCase(name).toLocaleLowerCase()}-navigation`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.LEARN,
+      }
+    )
   }
 }

@@ -28,7 +28,7 @@
                 <mat-form-field class="profile-form-field">
                     <mat-select formControlName="designation">
                         <mat-option value="" disabled>{{ 'profileInfo.chooseADesignation' | translate }}</mat-option>
-                        <mat-option *ngFor="let designation of data?.profileMetaData?.designations?.designations" value="{{ designation.name }}">{{ designation.name }}</mat-option>
+                        <mat-option *ngFor="let designation of data?.designationsMeta" value="{{ designation?.name }}">{{ designation?.name }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

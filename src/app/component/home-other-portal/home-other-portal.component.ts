@@ -97,8 +97,13 @@ export class HomeOtherPortalComponent implements OnInit {
 
   getPortalLinks() {
     this.featuresConfig.forEach((feature: any) => {
-      if (feature.id === 'portal_admin' && feature.featureWidgets.length > 0) {        
-        feature.featureWidgets.forEach((fw: any) => {
+      if (feature.id === 'portal_admin' && feature.featureWidgets.length > 0) {   
+          const unique = [...new Set(feature.featureWidgets.filter((item:any) => {
+            if(item && item.widgetData && item.widgetData.actionBtn && item.widgetData.actionBtn.name) {
+              return item.widgetData.actionBtn.name
+            }
+          }))];
+        unique.forEach((fw: any) => {
           this.portalLinks.push(fw)
         })
       }

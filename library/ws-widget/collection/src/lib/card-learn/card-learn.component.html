@@ -28,7 +28,8 @@
   <mat-card-actions align="left" class="marg">
 
     <ng-container *ngFor="let btn of exploreBtns; let i = index">
-      <button *ngIf="i===0" mat-button type="button" class="explore_btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display"
+      <button *ngIf="i===0" mat-button type="button" (click)="raiseTelemetry(btn.name)"
+        class="explore_btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display"
         [routerLink]="btn.route">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}
@@ -37,7 +38,8 @@
           {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
-      <button *ngIf="i>=1 && btn.name !== 'Moderated contents'" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+      <button *ngIf="i>=1 && btn.name !== 'Moderated contents'" mat-button type="button" (click)="raiseTelemetry(btn.name)"
+        class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
         [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}
@@ -46,7 +48,8 @@
           {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
-      <button *ngIf="i>=1 && btn.name === 'Moderated contents' && showModeratedCourseTab" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+      <button *ngIf="i>=1 && btn.name === 'Moderated contents' && showModeratedCourseTab" mat-button type="button" (click)="raiseTelemetry(btn.name)"
+        class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
         [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}

@@ -40,7 +40,7 @@
     <div class="flex sticky-navigator gap-4">
         <mat-icon class="nav-up-arrow cursor-pointer" (click)="scrollToSection('section-micro-sites')">arrow_upwards</mat-icon>
         <ng-container *ngFor="let section of navList">
-            <div class="nav-button" (click)="scrollToSection(section?.key)">{{section?.title}}</div>
+            <div class="nav-button" (click)="scrollToSection(section?.key);raiseNavTelemetry(section?.title)">{{section?.title}}</div>
         </ng-container>
     </div>
 
@@ -79,8 +79,10 @@
                     <div class="block md:hidden overflow-y-auto mb-3">
                         <sb-uic-data-points [providerId]="providerId" [fetchDataFromApi]="true"  [objectData]="data?.metrics?.data" [layoutType]="'singleRow'"></sb-uic-data-points>
                     </div>
-                    <button [routerLink]="[data?.contentButton?.redirectUrl, providerName, providerId, 'all-CBP']" mat-button type="button"
-                     class="view-btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display">
+                    <button
+                        (click)="raiseTelemetry(data?.contentButton?.title)"
+                        [routerLink]="[data?.contentButton?.redirectUrl, providerName, providerId, 'all-CBP']" mat-button type="button"
+                        class="view-btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display">
                         <span class="mat-heading-1 bold ws-mat-default-text" i18n>
                             {{data?.contentButton?.title}}
                         </span>
@@ -97,8 +99,14 @@
             <img class="absolute {{contentStrip?.sectionImagePosition}}" src="{{contentStrip?.sectionImage}}" alt="">
             <div class="container ">
                 <div class="w-full">
-                    <sb-uic-content-strip-with-tabs [emitViewAll]="true" (viewAllResponse)="showAllContent($event,contentStrip)"  
-                    (emptyResponse)="hideContentStrip($event, contentStrip)" [providerId]="providerId" [widgetData]="contentStrip"></sb-uic-content-strip-with-tabs>
+                    <sb-uic-content-strip-with-tabs
+                        [emitViewAll]="true"
+                        (viewAllResponse)="showAllContent($event,contentStrip)"
+                        (emptyResponse)="hideContentStrip($event, contentStrip)"
+                        (telemtryResponse)="raiseTelemetryInteratEvent($event)"
+                        [providerId]="providerId"
+                        [widgetData]="contentStrip">
+                    </sb-uic-content-strip-with-tabs>
                 </div>
             </div>
         </div>
@@ -177,7 +185,12 @@
     <div class="padding-top-l padding-bottom-l relative"  [style.background]="competency?.background" *ngIf="!hideCompetencyBlock">
         <div class="w-full container-balanced">
             <div class="pl-4 pr-4 md:pl-0 md:pr-0">
-                <sb-uic-competency-passbook (emptyResponse)="hideCompetency($event)" [objectData]="competency" [providerId]="providerId"></sb-uic-competency-passbook>         
+                <sb-uic-competency-passbook
+                    (emptyResponse)="hideCompetency($event)"
+                    (temeletryResponse)="raiseCompetencyTelemetry($event)"
+                    [objectData]="competency"
+                    [providerId]="providerId">
+                </sb-uic-competency-passbook>
             </div>
             
         </div>
@@ -202,6 +215,7 @@
             </div>
             <div class="flex item-center justify-center">
                 <button mat-button type="button"
+                    (click)="raiseTelemetry(trainingCalendar?.contentButton?.title)"
                     [routerLink]="[trainingCalendar?.contentButton?.redirectUrl, providerName, providerId, 'training-calendar']"
                     class="view-btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display">
                     <span class="mat-heading-1 bold ws-mat-default-text" i18n>
@@ -224,6 +238,7 @@
         </div>
         <div class="col-span-12 flex item-center justify-center">
             <button mat-button type="button"
+                (click)="raiseTelemetry(trainingCalendar?.contentButton?.title)"
                 [routerLink]="[trainingCalendar?.contentButton?.redirectUrl, providerName, providerId, 'training-calendar']"
                 class="view-btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display">
                 <span class="mat-heading-1 bold ws-mat-default-text" i18n>

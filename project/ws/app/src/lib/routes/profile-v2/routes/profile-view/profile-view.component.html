@@ -158,8 +158,8 @@
                     <mat-form-field class="profile-form-field">
                       <mat-select formControlName="designation">
                         <mat-option value="" disabled>{{ 'profileInfo.chooseADesignation' | translate }}</mat-option>
-                        <mat-option *ngFor="let designation of profileMetaData?.designations?.designations"
-                          value="{{ designation.name }}">{{ designation.name }}</mat-option>
+                        <mat-option *ngFor="let designation of designationsMeta"
+                          value="{{ designation?.name }}">{{ designation?.name }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <!-- Later I will delete it -->
@@ -262,8 +262,7 @@
           <div class="flex flex-row gap-4" *ngIf="editProfile">
             <button class="outline-button" (click)="editProfile = !editProfile">{{ 'profileInfo.cancel' | translate
               }}</button>
-              <!-- [disabled]="enableEditBtn" [ngClass]="{'disable-button': !enableEditBtn}"-->
-              <button class="save-button" (click)="handleSendApproval()">{{ 'profileInfo.sendForApproval' | translate
+              <button [disabled]="!enableEditBtn" [ngClass]="{'disable-button': !enableEditBtn}" class="save-button" (click)="handleSendApproval()">{{ 'profileInfo.sendForApproval' | translate
               }}</button>
           </div>
         </div>
@@ -378,7 +377,7 @@
                 </div>
                 <div class="info-value" *ngIf="editDetails">
                   <mat-form-field class="profile-form-field">
-                    <input matInput class="input-text icon-include-input" [matDatepicker]="picker" readonly
+                    <input matInput class="input-text icon-include-input" [max]="currentDate" [matDatepicker]="picker" readonly
                       formControlName="dob" />
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -594,7 +593,7 @@
           </div>
         </div>
         <div class="flex flex-row gap-4 items-center" *ngIf="!editName"> 
-          <div class="name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</div>
+          <div class="name">{{ portalProfile?.personalDetails?.firstname }}</div>
           <mat-icon class="profile-verified-check" *ngIf="portalProfile?.profileStatus === 'VERIFIED'">check_circle</mat-icon>
           <mat-icon class="cursor-pointer" (click)="editName = !editName">edit</mat-icon>
         </div>

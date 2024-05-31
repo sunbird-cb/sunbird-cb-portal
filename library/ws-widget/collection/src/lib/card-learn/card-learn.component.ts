@@ -1,10 +1,11 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, WsEvents } from '@sunbird-cb/utils'
 import { NSSearch, NsContent } from '@sunbird-cb/collection'
 import { SearchApiService } from '../_services/search-api.service'
 import { TranslateService } from '@ngx-translate/core'
+import * as _ from 'lodash'
 
 // import { ActivitiesService } from '@ws/app/src/lib/routes/activities/services/activities.service'
 // import { IActivity, IActivityCard, IChallenges } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
@@ -40,6 +41,7 @@ export class CardLearnComponent extends WidgetBaseComponent
     private searchApiService: SearchApiService,
     private langtranslations: MultilingualTranslationsService,
     private translate: TranslateService,
+    private events: EventService,
     // private activitiesSvc: ActivitiesService,
     // private snackBar: MatSnackBar,
   ) {
@@ -181,6 +183,19 @@ export class CardLearnComponent extends WidgetBaseComponent
 
   translateLabels(label: string, type: any) {
     return this.langtranslations.translateLabel(label, type, '')
+  }
+
+  raiseTelemetry(name: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        id: `${_.kebabCase(name).toLocaleLowerCase()}`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.LEARN,
+      }
+    )
   }
 
 }
