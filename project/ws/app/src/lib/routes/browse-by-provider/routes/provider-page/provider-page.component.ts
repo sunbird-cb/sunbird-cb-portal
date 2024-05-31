@@ -155,7 +155,7 @@ export class ProviderPageComponent implements OnInit  {
       {
         type: 'click',
         subType: 'ATI/CTI',
-        id: `nav-${_.kebabCase(name).toLocaleLowerCase()}`,
+        id: `${_.kebabCase(name).toLocaleLowerCase()}-navigation`,
       },
       {},
       {
