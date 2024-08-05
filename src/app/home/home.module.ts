@@ -41,6 +41,7 @@ import { HttpClient } from '@angular/common/http'
 import { UserLeaderboardModule } from '@sunbird-cb/collection/src/lib/_common/user-leaderboard/user-leaderboard.module'
 import { MatTooltipModule } from '@angular/material'
 import { ContentStripWithTabsLibModule, ContentStripWithTabsPillsModule } from '@sunbird-cb/consumption'
+import { SurveyFormModule } from '@sunbird-cb/collection/src/lib/_common/survey-form-left-section/survey-form/survey-form.module'
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { ContentStripWithTabsLibModule, ContentStripWithTabsPillsModule } from '
       },
     }),
     MatTooltipModule,
+    SurveyFormModule
   ],
   exports: [
     HeaderModule,

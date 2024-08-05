@@ -9,6 +9,9 @@
 
 
 <section class="hidden md:block" style="position: relative;" [ngClass]="{'':!collapsed, 'margin-bottom-m': collapsed}">
+    <div class="collapsible margin-top-m" [@collapse]="collapsed" *ngIf="surveyForm && surveyForm.active">
+        <ws-widget-survey-form-section [surveyFormData]="surveyForm.surveyFormData"></ws-widget-survey-form-section>
+    </div>
     <div class="assessment-box  collapsible" [@collapse]="collapsed"
         [ngClass]="{'margin-bottom-remove margin-top-remove':collapsed,'margin-top-l':!collapsed}">
         <ng-container [ngTemplateOutlet]="loadNewStrips"></ng-container>

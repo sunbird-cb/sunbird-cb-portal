@@ -94,6 +94,7 @@
 }
 .profile-wrapper {
   margin-top: 32px;
+  position: relative;
   z-index: 10;
 
     @include breakpoint-xs {
@@ -267,6 +268,7 @@
     right: 50%;
     top: -16px;
     cursor: pointer;
+    z-index: 99;
 }
 
 .republic-wrapper .collapse-expand-icon {
