@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
   selector: 'ws-widget-survey-form-section',
   templateUrl: './survey-form-section.component.html',
-  styleUrls: ['./survey-form-section.component.scss']
+  styleUrls: ['./survey-form-section.component.scss'],
 })
 export class SurveyFormSectionComponent implements OnInit {
-  isVisible: boolean = true
+  isVisible = true
   @Input() surveyFormData: any
   surveyData: any
 
@@ -17,6 +17,6 @@ export class SurveyFormSectionComponent implements OnInit {
   }
 
   closeCard() {
-    this.isVisible = false;
+    this.isVisible = false
   }
 }

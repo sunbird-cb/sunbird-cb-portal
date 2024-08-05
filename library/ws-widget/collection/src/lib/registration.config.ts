@@ -274,7 +274,7 @@ export const WIDGET_REGISTERED_MODULES = [
   CardEventHubModule,
   CardCompetencyModule,
   TipsForLearnerModule,
-  SurveyFormModule
+  SurveyFormModule,
 ]
 
 export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] = [
@@ -689,5 +689,5 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.card._type,
     widgetSubType: ROOT_WIDGET_CONFIG.card.card_competency,
     component: CardCompetencyComponent,
-  }
+  },
 ]

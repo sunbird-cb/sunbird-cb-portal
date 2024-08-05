@@ -83,7 +83,7 @@ import { SurveyFormModule } from '@sunbird-cb/collection/src/lib/_common/survey-
       },
     }),
     MatTooltipModule,
-    SurveyFormModule
+    SurveyFormModule,
   ],
   exports: [
     HeaderModule,

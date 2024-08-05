@@ -69,7 +69,7 @@ export class KarmaProgramsMicrositeV2Component implements OnInit {
     }
 
   }
- 
+
   richTextContent(content: any) {
     return this.sanitizer.bypassSecurityTrustHtml(content)
   }

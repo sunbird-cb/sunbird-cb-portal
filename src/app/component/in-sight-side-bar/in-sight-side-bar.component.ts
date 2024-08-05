@@ -78,7 +78,7 @@ export class InsightSideBarComponent implements OnInit {
   learnAdvisoryData: any
   randomlearnAdvisoryObj: any
   learnAdvisoryDataLength: any
-  surveyForm:any
+  surveyForm: any
   constructor(
     private homePageSvc: HomePageService,
     private configSvc: ConfigurationsService,
