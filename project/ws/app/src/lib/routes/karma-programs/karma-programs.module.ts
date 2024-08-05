@@ -1,21 +1,25 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { KarmaProgramsComponent } from './karma-programs/karma-programs.component'
-import { KarmaProgramsMicrositeComponent } from './karma-programs-microsite/karma-programs-microsite.component'
+import { KarmaProgramsMicrositeV1Component } from './karma-programs-microsite-v1/karma-programs-microsite-v1.component'
 import { KarmaProgramsRoutingModule } from './karma-programs-routing.module'
 import { CardsModule, CommonMethodsService, SlidersLibModule } from '@sunbird-cb/consumption'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatProgressSpinnerModule, MatSelectModule, MatSidenavModule } from '@angular/material'
 import { KarmaProgramsService } from './service/karma-programs.service'
-import { PipeFilterV2Module, PipeOrderByModule } from '@sunbird-cb/utils-v2'
+import { ImageResponsiveModule, PipeFilterV2Module, PipeOrderByModule } from '@sunbird-cb/utils-v2'
 import { BtnPageBackModule } from '@sunbird-cb/collection/src/public-api'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { HttpClient } from '@angular/common/http'
 import { HttpLoaderFactory } from 'src/app/app.module'
 import { KarmaProgramDataService } from './service/karma-program-data.service'
+import { KarmaProgramsComponent } from './karma-programs/karma-programs.component'
+import { KarmaProgramsMicrositeV2Component } from './karma-programs-microsite-v2/karma-programs-microsite-v2.component'
 
 @NgModule({
-  declarations: [KarmaProgramsComponent, KarmaProgramsMicrositeComponent],
+  declarations: [
+    KarmaProgramsComponent,
+    KarmaProgramsMicrositeV1Component,
+    KarmaProgramsMicrositeV2Component],
   imports: [
     CommonModule,
     FormsModule,
@@ -34,6 +38,7 @@ import { KarmaProgramDataService } from './service/karma-program-data.service'
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    ImageResponsiveModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

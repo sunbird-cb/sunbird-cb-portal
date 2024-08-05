@@ -4,13 +4,14 @@ import { CommonMethodsService } from '@sunbird-cb/consumption'
 import { KarmaProgramsService } from '../service/karma-programs.service'
 import { EventService, WsEvents, MultilingualTranslationsService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { TranslateService } from '@ngx-translate/core'
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
-  selector: 'ws-app-karma-programs-microsite',
-  templateUrl: './karma-programs-microsite.component.html',
-  styleUrls: ['./karma-programs-microsite.component.scss'],
+  selector: 'ws-app-karma-programs-microsite-v2',
+  templateUrl: './karma-programs-microsite-v2.component.html',
+  styleUrls: ['./karma-programs-microsite-v2.component.scss'],
 })
-export class KarmaProgramsMicrositeComponent implements OnInit {
+export class KarmaProgramsMicrositeV2Component implements OnInit {
   programName = ''
   playListKey = ''
   orgId = ''
@@ -28,13 +29,16 @@ export class KarmaProgramsMicrositeComponent implements OnInit {
   ]
   loadContentSearch = false
   descriptionMaxLength = 750
+  bannerImages: any
+  currentImageUrl: any
   constructor(private route: ActivatedRoute,
               public contentSvc: KarmaProgramsService,
               private translate: TranslateService,
               private langtranslations: MultilingualTranslationsService,
               public eventSvc: EventService,
               private configSvc: ConfigurationsService,
-              public commonSvc: CommonMethodsService) {
+              public commonSvc: CommonMethodsService,
+              private sanitizer: DomSanitizer) {
                 this.langtranslations.languageSelectedObservable.subscribe(() => {
                   if (localStorage.getItem('websiteLanguage')) {
                     this.translate.setDefaultLang('en')
@@ -61,10 +65,13 @@ export class KarmaProgramsMicrositeComponent implements OnInit {
       && this.route.snapshot.data.formData.data.result.form.data.sectionList
     ) {
       this.sectionList = this.route.snapshot.data.formData.data.result.form.data.sectionList
-
       this.getDataFromSearch()
     }
 
+  }
+ 
+  richTextContent(content: any) {
+    return this.sanitizer.bypassSecurityTrustHtml(content)
   }
 
   async getDataFromSearch(requestData?: any) {
