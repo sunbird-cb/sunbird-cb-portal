@@ -63,7 +63,7 @@
     font-family: Lato;
     font-size: 14px;
     z-index: 10;
-    line-height: 20px;
+    line-height: 16.8px;
   }
   
   .tip-count {
@@ -110,7 +110,7 @@
     background-color: white;
     justify-content: center;
     width: 100px;
-    height: 56px;
+    height: 51px;
     border-radius: 5px;
     text-align: center;
   }  
@@ -131,10 +131,11 @@
   }
   
   .card-title {
-    font-weight: bold;
-    width: 80%;
+    font-weight: 600;
+    width: 85%;
+    font-family: 'Montserrat';
     font-size: 16px;
-    line-height: 1.2;
+    line-height: 19.5px;
   }
   
   .close-button {
@@ -147,6 +148,10 @@
     background-color: #1b4ca1;
     border-radius: 16px;
     padding: 8px 16px;
-    font-weight: 400;
+    font-weight: 700;
+    font-size: 14px;
+    width: 102px;
+    text-align: center;
+    margin-bottom: 7px;
     
   }
