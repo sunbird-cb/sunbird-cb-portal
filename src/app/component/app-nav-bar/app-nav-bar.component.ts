@@ -187,8 +187,8 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   checkInfoBlockStatus() {
-    let comperDate = 1723825800000 - new Date().getTime()
-    this.infoBlockEnable  = comperDate > 0 ? true: false
+    const comperDate = 1723825800000 - new Date().getTime()
+    this.infoBlockEnable  = comperDate > 0 ? true : false
   }
 
   displayLogo() {

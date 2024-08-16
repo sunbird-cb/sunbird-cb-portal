@@ -1,4 +1,4 @@
-<div [ngClass]="mobileTopHeaderVisibilityStatus ? 'mobile-download-app-top-header' : 'mobile-download-app-without-top-header'" *ngIf="mobileTopHeaderVisibilityStatus && !infoBlockEnable">
+<div [ngClass]="mobileTopHeaderVisibilityStatus ? 'mobile-download-app-top-header' : 'mobile-download-app-without-top-header'" *ngIf="mobileTopHeaderVisibilityStatus">
     <div class="cross-mobile-download-app" (click)="hideMobileTopHeader()">
         <span>X</span>
     </div>

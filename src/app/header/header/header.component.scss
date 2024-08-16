@@ -184,6 +184,11 @@ ws-app-nav-bar {
 
 }
 
+
+.height-top-info {
+  margin-top: 112px !important;
+}
+
 @media (min-width : 360px) and (max-width : 360px){  
   .mobile-download-app-desc {
     margin-left:8px;
@@ -327,7 +332,10 @@ ws-app-nav-bar {
   }
 }
 
-
-.height-top-info {
-  margin-top: 112px !important;
+@media only screen and (max-width: 768px) {
+  .height-top-info {
+    margin-top: 132px !important;
+  }
 }
+
+
