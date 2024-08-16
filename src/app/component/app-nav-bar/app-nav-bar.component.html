@@ -1,5 +1,15 @@
+<div class="info-block" *ngIf="infoBlockEnable">
+  <div class="flex container-balanced items-center justify-between info-wrapper">
+      <div class="flex  items-center">
+          <span class="material-icons mat-icon text-white margin-right">warning</span>
+          <span class="info-txt text-white">Dear Karmayogi, our portal will be undergoing a technology upgrade from 10 PM today till 18th August, 10 PM to improve your learning experience.</span>
+      </div>
+      <div>
+          <a  (click)="infoBlockActionMethod()" class="ok-btn text-white">OK</a>
+      </div>
+  </div>
+</div>
 <ng-container *ngIf="fullMenuDispaly">
-
   <mat-toolbar *ngIf="sShowAppNavBar && !needToHide && mode == 'top' && isHubEnable"
     [color]="primaryNavbarBackground?.color" [ngStyle]="primaryNavbarBackground?.styles"
     class="mat-elevation-z3 custom mobile-height" [ngClass]="{'mobile': isHubEnable}">
@@ -223,3 +233,4 @@
   </div>
 
 </mat-menu>
+

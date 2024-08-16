@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
@@ -17,6 +17,10 @@ import { UrlService } from 'src/app/shared/url.service'
 export class AppNavBarComponent implements OnInit, OnChanges {
   @Input() mode: 'top' | 'bottom' = 'top'
   @Input() headerFooterConfigData: any
+// tslint:disable-next-line:indent
+	@Output() infoBlockAction = new EventEmitter()
+
+  infoBlockEnable = true
   hideKPOnNav = false
   basicBtnAppsConfig: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig> = {
     widgetType: 'actionButton',
@@ -374,6 +378,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
 
   public getItem(item: any) {
     return { ...item, forPreview: !this.isforPreview, enableLang: this.enableLang }
+  }
+
+  infoBlockActionMethod() {
+    this.infoBlockEnable = !this.infoBlockEnable
+    this.infoBlockAction.emit(this.infoBlockEnable)
   }
 
 }

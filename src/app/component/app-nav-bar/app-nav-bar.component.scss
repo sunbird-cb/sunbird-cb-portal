@@ -1,5 +1,11 @@
 @import 'ws-mixins';
 @import 'ws-vars';
+@import 'ws-common';
+
+
+.container-balanced {
+  @extend %page-center;
+}
 
 .hideForNav {
   display: none !important;
@@ -426,5 +432,42 @@
         transform: rotate(0);
       }
     }
+  }
+}
+
+
+.info-block {
+  width: 100%;
+  // height: 48px;
+  background: linear-gradient(90.15deg, #266EEB 0.87%, #133F8B 161.81%);
+  .info-wrapper {
+      padding: 16px 0;
+      .margin-right {
+          margin-right: 8px;
+      }
+      .info-txt {
+          //styleName: Caption;
+          font-family: Lato;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 14.4px;
+          text-align: left;
+
+      }
+      .ok-btn {
+          border: 1px solid white;
+          cursor: pointer;
+          padding: 4px 16px;
+          gap: 8px;
+          border-radius: 12px;
+          //styleName: Button;
+          font-family: Lato;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 16.8px;
+          text-align: center;
+
+
+      }
   }
 }

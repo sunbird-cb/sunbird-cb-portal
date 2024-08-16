@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   isNavBarRequired = true
   showNavbar = true
   widgetData = {}
+  infoBlockEnable = true
   mobileTopHeaderVisibilityStatus = true
   @Input() mode: any
   @Input() headerFooterConfigData: any
@@ -75,5 +76,9 @@ export class HeaderComponent implements OnInit {
   hideMobileTopHeader() {
     this.mobileTopHeaderVisibilityStatus = false
     this.mobileAppsService.mobileTopHeaderVisibilityStatus.next(this.mobileTopHeaderVisibilityStatus)
+  }
+
+  infoBlockAction(eventData: any) {
+    this.infoBlockEnable = eventData
   }
 }

@@ -1,8 +1,11 @@
 @import 'ws-vars';
 @import 'ws-mixins';
-
+@import 'ws-common';
 ws-app-nav-bar {
   z-index: 1000;
+}
+.container-balanced {
+  @extend %page-center;
 }
 
 .route-change {
@@ -322,4 +325,9 @@ ws-app-nav-bar {
     padding: 5px 5px !important;
     list-style: none;
   }
+}
+
+
+.height-top-info {
+  margin-top: 112px !important;
 }
