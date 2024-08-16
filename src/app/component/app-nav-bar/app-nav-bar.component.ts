@@ -99,6 +99,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.checkInfoBlockStatus()
     if (this.configSvc) {
       this.jan26Data = this.configSvc.overrideThemeChanges
       this.logoDisplayTime = this.jan26Data.desktop.logoDisplayTime
@@ -183,6 +184,11 @@ export class AppNavBarComponent implements OnInit, OnChanges {
     this.urlService.previousUrl$.subscribe((previousUrl: string) => {
       this.previousUrl = previousUrl
     })
+  }
+
+  checkInfoBlockStatus() {
+    let comperDate = 1723825800000 - new Date().getTime()
+    this.infoBlockEnable  = comperDate > 0 ? true: false
   }
 
   displayLogo() {
