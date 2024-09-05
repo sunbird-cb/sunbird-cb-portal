@@ -25,7 +25,9 @@ export class TransferRequestComponent implements OnInit, OnDestroy {
     designation: new FormControl('', [Validators.required]),
   })
   departmentData: any[] = []
+  designationData: any[] = []
   otherDetails = false
+
   private destroySubject$ = new Subject()
 
   constructor(
@@ -44,17 +46,18 @@ export class TransferRequestComponent implements OnInit, OnDestroy {
     }
 
     this.transferRequestForm.get('organization')!.valueChanges
-    .subscribe((value: string) => {
-      if (value !== this.data.portalProfile.employmentDetails.departmentName) {
-        this.otherDetails = true
-      } else {
-        this.otherDetails = false
-      }
-    })
+      .subscribe((value: string) => {
+        if (value !== this.data.portalProfile.employmentDetails.departmentName) {
+          this.otherDetails = true
+        } else {
+          this.otherDetails = false
+        }
+      })
   }
 
   ngOnInit() {
     this.getAllDeptData()
+    this.searchDesignation('')
   }
 
   handleCloseModal(): void {
@@ -62,7 +65,7 @@ export class TransferRequestComponent implements OnInit, OnDestroy {
   }
 
   organizationSearch(value: string) {
-      const filterVal = value.toLowerCase()
+    const filterVal = value.toLowerCase()
     return this.departmentData.filter(option => option.toLowerCase().includes(filterVal))
   }
 
@@ -71,6 +74,24 @@ export class TransferRequestComponent implements OnInit, OnDestroy {
       this.departmentData = this.organizationSearch(value)
     } else {
       this.getAllDeptData()
+    }
+  }
+
+  designationSearch(value: any) {
+    let filterDesignation: any
+    const designonData = this.data && this.data.designationsMeta
+    const filterVal = value && value.toLowerCase()
+    filterDesignation = designonData.filter((val: any) =>
+      val && val.name.toLowerCase().includes(filterVal)
+    )
+    return filterDesignation
+  }
+
+  searchDesignation(value: any) {
+    if (value && value.length && value.length > 0) {
+      this.designationData = this.designationSearch(value)
+    } else {
+      this.designationData = this.data && this.data.designationsMeta
     }
   }
 
@@ -93,31 +114,31 @@ export class TransferRequestComponent implements OnInit, OnDestroy {
     }
     postData.request.profileDetails.professionalDetails.push(data)
     this.userProfileService.editProfileDetails(postData)
-    .pipe(takeUntil(this.destroySubject$))
-    .subscribe((_res: any) => {
-      this.matSnackBar.open('Your transfer request has been sent for approval')
-      // this.matSnackBar.open(this.handleTranslateTo('transferRequestSent'))
-      this.enableWithdraw.emit(true)
-      this.handleCloseModal()
-    },         (error: HttpErrorResponse) => {
-      if (!error.ok) {
-        this.matSnackBar.open(this.handleTranslateTo('transferRequestFailed'))
-      }
-    })
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((_res: any) => {
+        this.matSnackBar.open('Your transfer request has been sent for approval')
+        // this.matSnackBar.open(this.handleTranslateTo('transferRequestSent'))
+        this.enableWithdraw.emit(true)
+        this.handleCloseModal()
+      },         (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.matSnackBar.open(this.handleTranslateTo('transferRequestFailed'))
+        }
+      })
   }
 
   getAllDeptData(): void {
     this.userProfileService.getAllDepartments()
-    .pipe(takeUntil(this.destroySubject$))
-    .subscribe((res: any) => {
-      this.departmentData = res.sort((a: any, b: any) => {
-        return a.toLowerCase().localeCompare(b.toLowerCase())
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((res: any) => {
+        this.departmentData = res.sort((a: any, b: any) => {
+          return a.toLowerCase().localeCompare(b.toLowerCase())
+        })
+      },         (error: HttpErrorResponse) => {
+        if (!error.ok) {
+          this.matSnackBar.open(this.handleTranslateTo('orgFetchDataFailed'))
+        }
       })
-    },         (error: HttpErrorResponse) => {
-      if (!error.ok) {
-        this.matSnackBar.open(this.handleTranslateTo('orgFetchDataFailed'))
-      }
-    })
   }
 
   handleTranslateTo(menuName: string): string {

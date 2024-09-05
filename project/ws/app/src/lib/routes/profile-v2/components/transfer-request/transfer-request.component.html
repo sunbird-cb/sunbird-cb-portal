@@ -31,8 +31,11 @@
                 <div class="text-sm font-bold required">{{ 'profileInfo.designation' | translate }}</div>
                 <mat-form-field class="profile-form-field">
                     <mat-select formControlName="designation">
+                        <span class="search-box-span">
+                            <input (keyup)="searchDesignation($event.target.value)" class="dept-seach-input" placeholder="Search designation">
+                        </span>
                         <mat-option value="" disabled>{{ 'profileInfo.chooseADesignation' | translate }}</mat-option>
-                        <mat-option *ngFor="let designation of data?.designationsMeta" value="{{ designation?.name }}">{{ designation?.name }}</mat-option>
+                        <mat-option *ngFor="let designation of designationData" value="{{ designation?.name }}">{{ designation?.name }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
