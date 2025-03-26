@@ -850,3 +850,51 @@ mat-divider {
     padding: 4px;
   }
 }
+
+.location-details {
+  background-color: rgba(27, 76, 161, 0.08);
+  padding: 16px;
+  border-radius: 4px;
+
+  .location-icon, .event-icon {
+    color: rgb(27, 76, 161);
+    height: 20px;
+    width: 14px;
+    font-size: 22px;
+  }
+
+  .loc-desc {
+    font-family: Lato;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25;
+  }
+}
+
+// Batch time CSS...
+.batch-timer {
+  .underline {
+      border-top: 1.5px solid rgba($color: #000000, $alpha: 0.16);
+      margin: 16px 0px;
+  }
+
+  .timer-label {
+      font-size: 12px;
+      padding: 4px 8px;
+      border: 1px solid rgba($color: #000000, $alpha: 0.16);
+      border-radius: 16px;
+      color: rgba($color: #000000, $alpha: 0.87);
+  }
+
+  .counter {
+      color: rgba($color: #000000, $alpha: 0.87);
+  }
+
+  .counter-label {
+      color: rgba($color: #000000, $alpha: 0.4);
+      text-transform: uppercase;
+      font-size: 12px;
+      line-height: 16px;
+  }
+}

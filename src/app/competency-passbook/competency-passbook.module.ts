@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { MatIconModule, MatMenuModule, MatTabsModule } from '@angular/material'
+import { MatIconModule, MatMenuModule, MatProgressSpinnerModule, MatTabsModule } from '@angular/material'
 import { CbpFiltersModule } from '@sunbird-cb/collection/src/lib/_common/cbp-filters/cbp-filters.module'
 
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
@@ -15,6 +15,7 @@ import { CompetencyCardDetailsComponent } from './competency-card-details/compet
 import { CompetencyPassbookSideBarComponent } from './../component/competency-passbook-side-bar/competency-passbook-side-bar.component'
 import { CompetencySearchComponent } from './competency-search/competency-search.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { DialogComponentsModule } from '@sunbird-cb/consumption'
 
 @NgModule({
   declarations: [
@@ -30,11 +31,13 @@ import { TranslateModule } from '@ngx-translate/core'
     MatIconModule,
     MatMenuModule,
     MatTabsModule,
+    MatProgressSpinnerModule,
     CompetencyPassbookRoutingModule,
     SkeletonLoaderModule,
     PipeSafeSanitizerModule,
     CbpFiltersModule,
     TranslateModule,
+    DialogComponentsModule,
   ],
   exports: [
     TranslateModule,

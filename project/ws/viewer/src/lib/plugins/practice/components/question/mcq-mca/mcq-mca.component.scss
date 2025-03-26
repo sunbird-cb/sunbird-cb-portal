@@ -111,6 +111,7 @@
   }
 }
 
+
 @media only screen and (min-width : 360px) and (max-width: 390px) { 
   .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
     width:auto !important;
@@ -118,4 +119,10 @@
     height: auto !important;
     word-wrap: break-word;
   }
+}
+
+@media only screen and (min-width : 240px) and (max-width: 767px) { 
+ video {
+  width: 98% !important;
+ }
 }

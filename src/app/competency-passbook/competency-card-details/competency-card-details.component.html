@@ -69,19 +69,33 @@
                                         <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'32px'" [height]="'32px'"></ws-widget-skeleton-loader>
                                     </ng-container>
                                     <ng-container *ngIf="!eachCert?.loading && !eachCert.error && eachCert?.identifier">
-                                        <mat-icon class="icon cursor-pointer" (click)="handleDownloadCertificatePDF(eachCert?.printURI)" >arrow_downward</mat-icon>
-                                        <mat-icon class="icon cursor-pointer share-icon" (click)="shareCertificate(eachCert?.identifier)">share</mat-icon>
+                                        <mat-icon class="icon cursor-pointer" (click)="getCertificateSVG(eachCert, 'DOWNLOAD')" >arrow_downward</mat-icon>
+                                        <mat-icon class="icon cursor-pointer share-icon" (click)="getCertificateSVG(eachCert, 'SHARE')">share</mat-icon>
                                     </ng-container>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <ng-container *ngIf="eachCert?.loading">
+                                <!-- <ng-container *ngIf="eachCert?.loading">
                                     <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'280px'" [height]="'160px'"></ws-widget-skeleton-loader>
-                                </ng-container>
-                                <ng-container *ngIf="!eachCert?.loading">
+                                </ng-container> -->
+                                <ng-container >
                                     <ng-container *ngIf="!eachCert.error && eachCert?.identifier">
-                                        <div class="flex justify-center items-center img-div">
-                                            <img [src]="eachCert?.printURI | pipeSafeSanitizer: 'url'" alt="{{ eachCert?.courseName }} certificate" />
+                                        <div class="flex justify-center items-center img-div img-container">
+                                            <!-- [src]="eachCert?.printURI | pipeSafeSanitizer: 'url'" -->
+                                             <ng-container  *ngIf="!eachCert?.printURI">
+                                                <img [src]="'/assets/icons/toc/no-certificate.svg'"  alt="{{ eachCert?.courseName }} certificate" />
+                                             </ng-container>
+                                             <ng-container  *ngIf="!eachCert?.loading && eachCert?.printURI">
+                                                <img [src]="eachCert?.printURI | pipeSafeSanitizer: 'url'"  alt="{{ eachCert?.courseName }} certificate" />
+                                             </ng-container>
+                                            <div [ngClass]="{'view-certificate': eachCert?.loading, 'view-cert': !eachCert?.loading}">
+                                                <button type="button" (click)="getCertificateSVG(eachCert)">
+                                                    <span *ngIf="!eachCert?.loading">{{ 'apptoccontentcard.viewCertificate' | translate }}</span>
+                                                    <div *ngIf="eachCert?.loading" class="uploader-status">
+                                                        <mat-spinner></mat-spinner>
+                                                    </div>
+                                                </button>
+                                            </div>
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="eachCert?.error || !eachCert?.identifier">

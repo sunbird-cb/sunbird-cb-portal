@@ -56,6 +56,7 @@ export class CardHubsListComponent extends WidgetBaseComponent
   public activeRoute = ''
   public showDashboardIcon = true
   isHubEnable!: boolean
+  isMentor = false
   // private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
 
   constructor(
@@ -117,6 +118,12 @@ export class CardHubsListComponent extends WidgetBaseComponent
          // console.log(true);
         this.showDashboardIcon = false
       }
+
+    }
+
+    if (this.configSvc && this.configSvc.userRoles) {
+      // tslint:disable-next-line:max-line-length
+      this.isMentor = (this.configSvc.userRoles.has('MENTOR') || this.configSvc.userRoles.has('mentor') || this.configSvc.userRoles.has('Mentor')) ? true : false
     }
 
     if (instanceConfig) {
@@ -268,6 +275,9 @@ export class CardHubsListComponent extends WidgetBaseComponent
         module: WsEvents.EnumTelemetrymodules.HOME,
       }
     )
+  }
+  routeToMentorship() {
+    window.open(`${environment.contentHost}/mentorship`, '_blank')
   }
 
 }

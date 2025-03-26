@@ -26,6 +26,8 @@ app.use('/healthcheck', healthcheck({
   },
 }))
 
+app.engine('html', require('ejs').renderFile);
+
 // Add required helmet configurations
 app.use(
   helmet({
@@ -81,6 +83,11 @@ uiHostCreator('/zh-CN', 'zh-CN')
 uiHostCreator('/ja', 'ja')
 uiHostCreator('', 'en')
 app.use(haltOnTimedOut)
+
+app.use((err, req, res, next) => {
+  //check what error happened here ... 
+  res.status(404).render(path.join(__dirname, `404.html`))
+})
 
 const port = CONSTANTS.PORTAL_PORT
 app.listen(port, '0.0.0.0', err => {

@@ -38,6 +38,17 @@ export namespace NSProfileDataV2 {
     additionalProperties: any
     verifiedKarmayogi: boolean
     profileStatus: string
+    cadreDetails: ICadreDetails
+  }
+
+  export interface ICadreDetails {
+    isCadre: boolean
+    typeOfCivilService: string
+    civilServiceName: string
+    civilServiceType: string
+    cadreName: string
+    cadreBatch: string
+    cadreControllingAuthorityName: string
   }
 
   export interface IKarmapoints {
@@ -118,6 +129,12 @@ export namespace NSProfileDataV2 {
     telephone: string
     userName: string
     phoneVerified: boolean
+    isCadre: boolean
+    typeOfCivilService: string
+    serviceType: string
+    cadre: string
+    batch: number
+    cadreControllingAuthority: string
   }
   export interface IProfessionalDetails {
     additionalAttributes: { osid: string }

@@ -352,7 +352,12 @@ export class ViewerSecondaryTopBarComponent implements OnInit, OnDestroy {
           })
       }
     } else {
-      this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+      if (window.location.href.includes('editMode=true')) {
+        this.router.navigateByUrl(`public/toc/${this.collectionId}/overview?editMode=true`)
+      } else {
+        this.router.navigateByUrl(`public/toc/${this.collectionId}/overview`)
+      }
+
     }
   }
 

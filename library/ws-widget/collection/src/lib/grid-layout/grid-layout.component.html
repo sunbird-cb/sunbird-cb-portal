@@ -6,48 +6,60 @@
   </div>
 </div>
 <!-- *ngIf="isNPSOpen" -->
-<div id="grid-container" class="nps-footer" *ngIf="isNPSOpen">
-  <span class="closeicon cursor-pointer" (click)="closeNPS(); raiseInteractTelemetry('close')"><mat-icon>close_small</mat-icon></span>
-  <div class="center-box padding-bottom-l padding-top-s" *ngIf="!onSuccessRating">
-    <span *ngIf="!ratingGiven" class="ratingtitle">{{ 'platformrating.howLikelyRecommend' | translate }}</span>
-    <div class="margin-bottom-m margin-top-m rating-div flex items-center" *ngIf="!isMobile || npsCategory === 'NPS'">
-      <span class="cstext mat-body-2">{{ 'platformrating.notLikely' | translate }}</span>
-      <ul>
-        <li *ngFor="let rating of ratingList; let i=index">
-          <div (click)="toggleImg(rating)" (mouseout)="unshowPRImage(rating)" >
-            <div class="rating mat-body-2 cursor-pointer" (mouseenter)="showPRImage(rating)" *ngIf="!rating.showImage">{{rating.value}}</div>
-            <div class="rating-img cursor-pointer" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></div>
-          </div>
-        </li>
-      </ul>
-      <span class="cstext mat-body-2">{{ 'platformrating.extremelyLikely' | translate }}</span>
+  <div id="grid-container" class="nps-footer" *ngIf="isNPSOpen" [ngClass]="fromHeader ? 'header-nps-non-success':'page-nps'">
+    <span class="closeicon cursor-pointer" (click)="closeNPS(); raiseInteractTelemetry('close')"><mat-icon>close_small</mat-icon></span>
+    <div class="center-box padding-bottom-l padding-top-s" *ngIf="!onSuccessRating">
+      <span *ngIf="!ratingGiven" class="ratingtitle">{{ 'platformrating.howLikelyRecommend' | translate }}</span>
+      <div class="margin-bottom-m margin-top-m rating-div flex items-center" *ngIf="!isMobile || npsCategory === 'NPS'">
+        <span class="cstext mat-body-2">{{ 'platformrating.notLikely' | translate }}</span>
+        <ul>
+          <li *ngFor="let rating of ratingList; let i=index">
+            <div (click)="toggleImg(rating)" (mouseout)="unshowPRImage(rating)" >
+              <div class="rating mat-body-2 cursor-pointer" (mouseenter)="showPRImage(rating)" *ngIf="!rating.showImage">{{rating.value}}</div>
+              <div class="rating-img cursor-pointer" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></div>
+            </div>
+          </li>
+        </ul>
+        <span class="cstext mat-body-2">{{ 'platformrating.extremelyLikely' | translate }}</span>
+      </div>
+      <div class="margin-bottom-m margin-top-m margin-right-m margin-left-m rating-div" *ngIf="isMobile && npsCategory === 'NPS2'">   
+        <div class="flex flex-row mweb-left-extreme"><span class="cstext mat-body-2">{{ 'platformrating.notLikely' | translate }}</span></div> 
+        <div class="flex flex-row">
+        <ul>
+          <!-- <div class="flex mweb-left-extreme"><span class="cstext mat-body-2">{{ 'platformrating.notLikely' | translate }}</span></div> -->
+          <li *ngFor="let rating of ratingList; let i=index">
+            <div (click)="toggleImg(rating)" (mouseout)="unshowPRImage(rating)" >
+              <div class="rating mat-body-2 cursor-pointer" (mouseenter)="showPRImage(rating)" *ngIf="!rating.showImage">{{rating.value}}</div>
+              <div class="rating-img cursor-pointer" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></div>
+            </div>
+          </li>
+          <!-- <div class="flex mweb-right-extreme"><span class="cstext mat-body-2">{{ 'platformrating.extremelyLikely' | translate }}</span></div> -->
+        </ul>      
+        </div>  
+        <div class="flex flex-row mweb-right-extreme"><span class="cstext mat-body-2">{{ 'platformrating.extremelyLikely' | translate }}</span></div>
+      </div>
+      <div class="reviewdiv" *ngIf="ratingGiven">
+        <textarea #textArea (keyup)="getReviewCommentLength()" class="reviewbox display-block" name="review" id="review" cols="30" rows="2" maxlength="500" placeholder="{{phtext}}" maxlength="500"></textarea>
+        <div class="w-100 feedback-count mt-2">
+          <span id="current">{{reviewCommentLength}}/ 500</span>
+        </div>
+        <button mat-stroked-button type="submit" class="display-block text-white ws-mat-primary-background margin-top-m sbmt-btn" [disabled]="submitBtnClick"
+        (click)="submitRating(textArea.value); raiseInteractTelemetry('submit')"><span class="text-white" i18n>{{ 'platformrating.submit' | translate }}</span>
+        </button>
+      </div>
     </div>
-    <div class="margin-bottom-m margin-top-m margin-right-m margin-left-m rating-div" *ngIf="isMobile && npsCategory === 'NPS2'">   
-      <div class="flex flex-row mweb-left-extreme"><span class="cstext mat-body-2">{{ 'platformrating.notLikely' | translate }}</span></div> 
-      <div class="flex flex-row">
-      <ul>
-        <!-- <div class="flex mweb-left-extreme"><span class="cstext mat-body-2">{{ 'platformrating.notLikely' | translate }}</span></div> -->
-        <li *ngFor="let rating of ratingList; let i=index">
-          <div (click)="toggleImg(rating)" (mouseout)="unshowPRImage(rating)" >
-            <div class="rating mat-body-2 cursor-pointer" (mouseenter)="showPRImage(rating)" *ngIf="!rating.showImage">{{rating.value}}</div>
-            <div class="rating-img cursor-pointer" *ngIf="rating.showImage"><img src="{{rating.image}}" alt="Rating {{i+1}}"></div>
-          </div>
-        </li>
-        <!-- <div class="flex mweb-right-extreme"><span class="cstext mat-body-2">{{ 'platformrating.extremelyLikely' | translate }}</span></div> -->
-      </ul>      
-      </div>  
-      <div class="flex flex-row mweb-right-extreme"><span class="cstext mat-body-2">{{ 'platformrating.extremelyLikely' | translate }}</span></div>
-    </div>
-    <div class="reviewdiv" *ngIf="ratingGiven">
-      <textarea #textArea class="reviewbox display-block" name="review" id="review" cols="30" rows="2" placeholder="{{phtext}}" maxlength="500"></textarea>
-      <button mat-stroked-button type="submit" class="display-block text-white ws-mat-primary-background margin-top-m sbmt-btn" [disabled]="submitBtnClick"
-      (click)="submitRating(textArea.value); raiseInteractTelemetry('submit')"><span class="text-white" i18n>{{ 'platformrating.submit' | translate }}</span>
-      </button>
-    </div>
+    <!-- <div *ngIf="onSuccessRating" class="margin-top-xl">
+      <p class="mat-body-2 padding-top-l thankyou-text">{{ 'platformrating.thanksForFeedback' | translate }}</p>
+    </div> -->
+    <img class="karmasahayogi" src="/assets/images/nps/Karmasahayogi@2x.svg" alt="karmasahayogi" />
   </div>
-  <div *ngIf="onSuccessRating" class="margin-top-xl">
-    <p class="mat-body-2 padding-top-l thankyou-text">{{ 'platformrating.thanksForFeedback' | translate }}</p>
+  <ng-container *ngIf="onSuccessRating" >
+    <div id="grid-container" class="nps-footer" [ngClass]="fromHeader ? 'header-nps-success':'page-nps'">
+    <span class="closeicon cursor-pointer" (click)="closeNPS(); raiseInteractTelemetry('close')"><mat-icon>close_small</mat-icon></span>
+    <div class="margin-top-xl">
+      <p class="mat-body-2 thankyou-text">{{ 'platformrating.thanksForFeedback' | translate }}</p>
+    </div>
+    <img class="karmasahayogi" src="/assets/images/nps/Karmasahayogi@2x.svg" alt="karmasahayogi" />
   </div>
-  <img class="karmasahayogi" src="/assets/images/nps/Karmasahayogi@2x.svg" alt="karmasahayogi" />
-</div>
+  </ng-container>
 

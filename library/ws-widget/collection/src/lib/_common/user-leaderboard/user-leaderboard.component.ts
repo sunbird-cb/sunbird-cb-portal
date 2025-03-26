@@ -60,6 +60,8 @@ export class UserLeaderboardComponent implements OnInit {
         this.maxLength = Math.max(...this.rankLengthsArray)
         if (this.currentUserRank) {
           this.monthName = moment().month(Number(this.currentUserRank.month) - 1).format('MMMM')
+        } else if (!this.currentUserRank) {
+          this.monthName = moment().month(Number(this.rank1.month) - 1).format('MMMM')
         }
         if (this.currentUserRank && this.currentUserRank.rank < this.currentUserRank.previous_rank) {
           const rankDiff = this.currentUserRank.previous_rank - this.currentUserRank.rank

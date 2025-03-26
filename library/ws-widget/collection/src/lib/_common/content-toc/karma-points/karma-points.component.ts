@@ -36,7 +36,7 @@ export class KarmaPointsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.condition = changes.condition.currentValue
+    this.condition = changes.condition && changes.condition.currentValue || null
 
     if (!this.condition) { return }
     if (!this.condition.isPostAssessment && (this.condition.content && this.condition.content.hasOwnProperty('completionPercentage')

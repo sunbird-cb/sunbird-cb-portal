@@ -64,7 +64,7 @@ export class OverviewComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.forPreview) {
       if (this.canAttempt && (this.canAttempt.attemptsMade >= this.canAttempt.attemptsAllowed) &&
           this.questionTYP.FINAL_ASSESSMENT === this.primaryCategory) {
-        if (!this.maxAttempPopup) {
+        if (!this.maxAttempPopup && this.selectedAssessmentCompatibilityLevel > 6) {
           this.showAssessmentPopup()
         }
       }
@@ -111,9 +111,9 @@ export class OverviewComponent implements OnInit, OnChanges, OnDestroy {
 
   checkForAssessmentSubmitAlready(identifier: any) {
     if (this.selectedAssessmentCompatibilityLevel) {
-      if (this.selectedAssessmentCompatibilityLevel < 7) {
+      if (this.selectedAssessmentCompatibilityLevel < 7 && this.questionTYP.FINAL_ASSESSMENT === this.primaryCategory) {
         this.quizSvc.canAttend(identifier).subscribe(response => {
-          if (response && response.attemptsMade > 0) {
+          if (response && response.attemptsMade > 0 && response.attemptsMade < response.attemptsAllowed) {
             this.quizSvc.checkAlreadySubmitAssessment.next(true)
           }
         })

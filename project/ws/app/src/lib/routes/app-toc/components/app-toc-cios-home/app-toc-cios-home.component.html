@@ -82,9 +82,9 @@
 <div *ngIf="isMobile">
     <ng-container  *ngIf="(userExtCourseEnroll | json) !== '{}' && userExtCourseEnroll.issued_certificates?.length ===  0 
     && userExtCourseEnroll?.progress <= 100">
-    <div class="no-certificate-found mt-2 mb-2 mx-2">
+    <div class="no-certificate-found mt-6 mb-4 mx-2">
      <div> 
-      <p>Progress and certificates for Cornell courses are visible only after you complete the course and pass the assessment.</p></div>
+      <span>Progress and certificates for Cornell courses are visible only after you complete the course and pass the assessment.</span></div>
     </div>
   </ng-container>
     <div class="flex flex-col gap-4 p-5 border-bottom position-bottom">
@@ -183,7 +183,7 @@
             </div>
         </ng-container>
 
-        <div class="flex flex-col gap-4 p-5 border-bottom">
+        <div class="flex flex-col gap-3 p-3 border-bottom">
             <!-- <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}'">
                 <div class="flex flex-row justify-end w-full ws-mat-black-text">
                     <span class="mat-body-2  ws-mat-black-text">
@@ -211,7 +211,7 @@
               && userExtCourseEnroll?.progress <= 100">
               <div class="no-certificate-found">
                <div> 
-                <p>Progress and certificates for Cornell courses are visible only after you complete the course and pass the assessment.</p></div>
+                <span>Progress and certificates for Cornell courses are visible only after you complete the course and pass the assessment.</span></div>
               </div>
             </ng-container>
               <!-- <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}' && userExtCourseEnroll.issued_certificates?.length > 0 

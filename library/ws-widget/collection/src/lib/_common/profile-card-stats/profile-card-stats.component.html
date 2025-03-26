@@ -1,7 +1,7 @@
 <div *ngIf="!profileData?.displayOnlyStats">
   <div class="profile-wrapper" *ngIf="!isLoading">
-    <div *ngIf="!showrepublicBanner" class="expand-icon invisible md:visible">
-        <mat-icon (click)="toggle()" class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
+    <div *ngIf="!showrepublicBanner" class="expand-icon invisible md:visible" (click)="toggle()">
+        <mat-icon class="">{{ collapsed ?'expand_more': 'expand_less'}}</mat-icon>
     </div>
     <div class="position-absolute" *ngIf="showrepublicBanner" [ngClass]="showrepublicBanner ? 'fade-in default-public-banner' : 'fade-out hide-default-public-banner' ">
       <ng-container *ngIf="!isLoading">
@@ -117,7 +117,7 @@
   </div>
 </div>
 
-<div class="profile-wrapper" *ngIf="isLoading">
+<div class="profile-wrapper profile-loading-wrapper" *ngIf="isLoading">
   <div class="profile-user-details flex flex-middle padding-12">
       <div class="progress-bar">
         <span class="skeleton-box" style="width:64px;height:64px;border-radius: 50%"></span>

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit, Input, OnDestroy } from '@angular/core'
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { ConfigurationsService, EventService, WsEvents, NPSGridService  } from '@sunbird-cb/utils-v2'
 import { IUserProfileDetailsFromRegistry } from '@ws/app/src/lib/routes/user-profile/models/user-profile.model'
@@ -15,6 +15,7 @@ import {
 } from './grid-layout.model'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { MatSnackBar } from '@angular/material'
 
 const API_END_POINTS = {
   fetchProfileById: (id: string) => `/apis/proxies/v8/api/user/v2/read/${id}`,
@@ -34,11 +35,13 @@ export class GridLayoutComponent extends WidgetBaseComponent
     private configSvc: ConfigurationsService,
     private http: HttpClient,
     private npsService: NPSGridService,
+    private snackBar: MatSnackBar,
   ) {
     super()
   }
 
   @Input() widgetData!: IGridLayoutDataMain
+  @Input() fromHeader = false
   containerClass = ''
   processed: IGridLayoutProcessedData[][] = []
   isNudgeOpen = true
@@ -114,6 +117,9 @@ export class GridLayoutComponent extends WidgetBaseComponent
   ]
   fullMenuHeight = false
   isMobile = false
+  reviewCommentLength = 0
+  @ViewChild('textArea', { static: false }) textArea!: ElementRef
+  noHtmlCharacter = new RegExp(/<[^>]*>|(function[^\s]+)|(javascript:[^\s]+)/i)
   ngOnInit() {
     this.npsCategory = localStorage.getItem('npsCategory') ? localStorage.getItem('npsCategory') : 'NPS'
     if (window.innerWidth < 540) {
@@ -376,7 +382,10 @@ export class GridLayoutComponent extends WidgetBaseComponent
         // tslint:disable-next-line
         console.log(resp)
         localStorage.setItem('platformRatingSubmit', 'true')
-        this.isNPSOpen = false
+        setTimeout(() => {
+          this.isNPSOpen = false
+          this.onSuccessRating = false
+        },         4000)
           const feedIDN = JSON.parse(this.feedID).map((item: any) => {
             return item.replace(/\"/g, '')
            })
@@ -515,5 +524,26 @@ export class GridLayoutComponent extends WidgetBaseComponent
         module: WsEvents.EnumTelemetrySubType.PlatformRating,
       }
     )
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 2000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
+  }
+
+  getReviewCommentLength() {
+    if (this.textArea && this.textArea.nativeElement && this.textArea.nativeElement.value) {
+      this.reviewCommentLength = this.textArea.nativeElement.value.length
+      if (this.textArea.nativeElement.value.match(this.noHtmlCharacter)) {
+        this.submitBtnClick = true
+        this.openSnackbar('HTML or Js is not allowed')
+      } else {
+        this.submitBtnClick = false
+      }
+    } else {
+      this.reviewCommentLength = 0
+    }
+
   }
 }

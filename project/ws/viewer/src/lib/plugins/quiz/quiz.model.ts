@@ -23,7 +23,8 @@ export namespace NSQuiz {
     questionLevel: string
     questionType?: TQuizQuestionType
     rhsChoices?: any[],
-    marks: number
+    marks: number,
+    choices?: IChoiceOptions[]
   }
 
   export interface IOption {
@@ -64,4 +65,7 @@ export namespace NSQuiz {
     total: number
   }
 
+  export interface IChoiceOptions {
+    options?: any[]
+  }
 }

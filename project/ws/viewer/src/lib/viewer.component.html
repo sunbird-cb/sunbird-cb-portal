@@ -21,9 +21,11 @@
         </mat-tab>
       </mat-tab-group> -->
       <ng-container *ngIf="isTypeOfCollection">
-        <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" [config]="tocConfig"
-        [batchData]="batchData" (hidenav)="minimizeBar()"  [hierarchyMapData]="tocSvc?.hashmap" (pathSetEvent)="updatePathSet($event)">
-        </viewer-viewer-toc>
+        <ng-container *ngIf="!loadAllHierarchyData">
+          <viewer-viewer-toc [forPreview]="forPreview" [contentData]="hierarchyData" [tocStructure]="tocStructure" [config]="tocConfig"
+          [batchData]="batchData" (hidenav)="minimizeBar()"  [hierarchyMapData]="tocSvc?.hashmap" (pathSetEvent)="updatePathSet($event)">
+          </viewer-viewer-toc>
+        </ng-container>
       </ng-container> 
     </mat-sidenav>
 
@@ -79,12 +81,13 @@
       <section *ngIf="status === 'pending'">
         <mat-spinner></mat-spinner>
       </section>
-      <div *ngIf="isPreview" class="flex flex-1 flex-column mb-3">
+      <div *ngIf="isPreview" class="flex flex-1 flex-column">
         <div *ngIf="!viewerHeaderSideBarToggleFlag">
           <a i18n-aria-label aria-label="Back"  (click)="navigateToBack()" mat-icon-button>
             <mat-icon>arrow_back</mat-icon>
           </a>
         </div>
+        <div class="display-none">
         <div class="flex flex-1 flex-row-reverse">
           <a *ngIf="show" class="padding-right-s padding-top-xs" role="button" (click)="show=false">
             <mat-icon class="cursor-pointer ws-mat-default-text">close</mat-icon>
@@ -97,13 +100,7 @@
         </div>
         <div class="flex flex-1 flex-column" *ngIf="show">
           <div class="flex flex-1 flex-row-c">
-            <!-- <div class="flex flex-1">
-              <a i18n (click)="show=false" mat-button
-                class="flex text-center margin-left-s flex-end ws-mat-accent-border ws-mat-primary-text">No,
-                continue viewing
-                <mat-icon>arrow_right_alt</mat-icon>
-              </a>
-            </div> -->
+            
             <div class="flex flex-1 flex-center">
               <a i18n mat-button [href]="'/protected/v8/resource?redirect_uri=/app/toc/'+ collectionId +'/overview'"
                 class="flex text-center margin-right-s flex-end  ws-mat-default-text ws-mat-accent-border-active">
@@ -114,6 +111,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       <div class="viewer-player-container" [ngClass]="contentMIMEType == 'application/vnd.sunbird.questionset' && compatibilityLevel < 7 ? 'sidenavContent':'standaloneSidenavContent'">

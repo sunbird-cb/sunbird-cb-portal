@@ -17,5 +17,5 @@
 </div>
 <ws-app-nav-bar *ngIf="isNavBarRequired" [ngClass]="mobileTopHeaderVisibilityStatus ? 'top-nav-bar':'top-nav-bar-without-mobile-header'" [mode]="mode" [headerFooterConfigData]="headerFooterConfigData"></ws-app-nav-bar>
 <div *ngIf="showHubs" [ngClass]="mobileTopHeaderVisibilityStatus ? 'height-on-top':'height-on-top-without-mobile-header'">
-    <ws-widget-grid-layout [widgetData]="widgetData"></ws-widget-grid-layout>
+    <ws-widget-grid-layout [widgetData]="widgetData" [fromHeader]="true"></ws-widget-grid-layout>
 </div>

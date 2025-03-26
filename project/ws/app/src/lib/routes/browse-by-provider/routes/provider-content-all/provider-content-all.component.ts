@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { CommonMethodsService } from '@sunbird-cb/consumption'
 import { NsContentStripWithTabs } from '@sunbird-cb/consumption/lib/_common/content-strip-with-tabs-lib/content-strip-with-tabs-lib.model'
@@ -6,19 +6,21 @@ import { NsContentStripWithTabs } from '@sunbird-cb/consumption/lib/_common/cont
 import { BrowseProviderService } from '../../services/browse-provider.service'
 import { UtilityService } from '@sunbird-cb/utils-v2'
 import { environment } from 'src/environments/environment'
+import { FormExtService } from 'src/app/services/form-ext.service'
 
 @Component({
   selector: 'ws-app-provider-content-all',
   templateUrl: './provider-content-all.component.html',
   styleUrls: ['./provider-content-all.component.scss'],
 })
-export class ProviderContentAllComponent implements OnInit {
+export class ProviderContentAllComponent implements OnInit, OnDestroy {
 
   providerName = ''
   providerId = ''
   seeAllPageConfig: any = {}
   keyData: any
   contentDataList: any = []
+  tabSelected: any = ''
   originalContentlist: any = []
   isMobile = false
   requestData: any
@@ -31,42 +33,66 @@ export class ProviderContentAllComponent implements OnInit {
   constructor(public commonSvc: CommonMethodsService,
               public activatedRoute: ActivatedRoute,
               public contentSvc: BrowseProviderService,
-              public utilitySvc: UtilityService
+              public utilitySvc: UtilityService,
+              public formExtSvc: FormExtService
   ) {
-
    }
 
   ngOnInit( ) {
-
     this.activatedRoute.params.subscribe(params => {
       this.providerName = params['provider']
       this.providerId = params['orgId']
-      if (this.activatedRoute.snapshot.queryParams && this.activatedRoute.snapshot.queryParams.stripData) {
-        const data  = JSON.parse(this.activatedRoute.snapshot.queryParams.stripData)
-        this.isMobile = this.utilitySvc.isMobile || false
-        if (this.isMobile) {
-          data['stripConfig']['cardSubType'] = 'card-wide-lib'
-          data['loaderConfig']['cardSubType'] = 'card-wide-lib-skeleton'
-        } else {
-          data['stripConfig']['cardSubType'] = 'card-wide-v2'
-          data['loaderConfig']['cardSubType'] = 'card-wide-v2-skeleton'
-        }
-        this.seeAllPageConfig = data
-        const urlTomicrosite = `/app/learn/browse-by/provider/${this.providerName}/${this.providerId}/micro-sites`
-        this.titles.push({ title: this.providerName, icon: '', url: urlTomicrosite,  disableTranslate: true })
-        this.titles.push({ title: this.seeAllPageConfig.title, icon: '', url: 'none', disableTranslate: false })
-        this.contentDataList = this.commonSvc.transformSkeletonToWidgets(data)
-      }
+      this.activatedRoute.queryParams.subscribe(queryparams => {
+        this.tabSelected = queryparams.tabSelected || ''
+        this.getFormData(queryparams)
+      })
+
     })
-    this.callApi()
+  }
+  getFormData(queryparams: any) {
+    if (this.providerName && this.providerId) {
+      const requestData: any = {
+        'request': {
+            'type': 'ATI-CTI',
+            'subType': 'microsite-v2',
+            'action': 'page-configuration',
+            'component': 'portal',
+            'rootOrgId': this.providerId,
+        },
+      }
+      this.formExtSvc.formReadData(requestData).subscribe((res: any) => {
+        if (res && res.result && res.result.form && res.result.form.data && res.result.form.data.sectionList) {
+          const filterData = res.result.form.data.sectionList.filter((ele: any) => ele.key === queryparams.key)
+          if (filterData && filterData[0] && filterData[0].column[0]  && filterData[0].column[0].data.strips) {
+            const data  = filterData[0].column[0].data.strips[0]
+            this.isMobile = this.utilitySvc.isMobile || false
+            if (this.isMobile) {
+              data['stripConfig']['cardSubType'] = 'card-wide-lib'
+              data['loaderConfig']['cardSubType'] = 'card-wide-lib-skeleton'
+            } else {
+              data['stripConfig']['cardSubType'] = 'card-wide-v2'
+              data['loaderConfig']['cardSubType'] = 'card-wide-v2-skeleton'
+            }
+            this.seeAllPageConfig = data
+            const urlTomicrosite = `/app/learn/browse-by/provider/${this.providerName}/${this.providerId}/micro-sites`
+            this.titles.push({ title: this.providerName, icon: '', url: urlTomicrosite,  disableTranslate: true })
+            this.titles.push({ title: this.seeAllPageConfig.title, icon: '', url: 'none', disableTranslate: false })
+            this.contentDataList = this.commonSvc.transformSkeletonToWidgets(data)
+            this.callApi()
+          }
+        }
+      },                                                  (_err: any) => {
+        this.contentDataList = []
+      })
+    }
   }
 
   callApi(query?: any) {
     let tabData: any
-    if (this.seeAllPageConfig.viewMoreUrl.queryParams && this.seeAllPageConfig.viewMoreUrl.queryParams.tabSelected) {
+    if (this.tabSelected) {
       tabData = this.seeAllPageConfig.tabs.find((
         el: any
-      ) => el.label.toLowerCase() === this.seeAllPageConfig.viewMoreUrl.queryParams.tabSelected.toLowerCase())
+      ) => el.label.toLowerCase() === this.tabSelected.toLowerCase())
       this.seeAllPageConfig.request = tabData.request
       this.selectedTab = tabData
     } else {
@@ -227,7 +253,7 @@ export class ProviderContentAllComponent implements OnInit {
     if (filters.organisation &&
       filters.organisation.indexOf('<orgID>') >= 0
     ) {
-      filters.organisation = this.providerId
+      filters.organisation = filters.organisation.replace('<orgID>', this.providerId)
     }
     return filters
   }
@@ -244,6 +270,10 @@ export class ProviderContentAllComponent implements OnInit {
     const filterValue = searchText.toLowerCase()
     const filteredData = data.filter((p: any) => p &&  p.name && p.name.toLowerCase().includes(filterValue))
     this.contentDataList  = this.commonSvc.transformContentsToWidgets(filteredData, this.seeAllPageConfig)
+  }
+
+  ngOnDestroy(): void {
+      localStorage.removeItem('stripData')
   }
 
 }

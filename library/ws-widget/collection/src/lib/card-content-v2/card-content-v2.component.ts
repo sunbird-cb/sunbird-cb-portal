@@ -436,10 +436,10 @@ export class CardContentV2Component extends WidgetBaseComponent
             {
               queryParams: urlData.queryParams
             })
-    } else {
-      // const contentType = urlData;
-      this.snackBar.open(`This ${contentCategory} has been archived and is no longer available.`, 'X', { duration: 2000 });
-    }
+        } else {
+          // const contentType = urlData;
+          this.snackBar.open(`This ${contentCategory} has been archived and is no longer available.`, 'X', { duration: 2000 });
+        }
     }
     
   }

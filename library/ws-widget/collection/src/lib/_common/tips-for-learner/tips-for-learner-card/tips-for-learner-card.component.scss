@@ -29,14 +29,14 @@
     z-index: 10;
   }
   
-  .tips-header h3 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #000000;
-    font-family: Montserrat;
-    font-size: 16px;
-    z-index: 10;
-  }
+  // .tips-header h3 {
+  //   margin: 0;
+  //   font-size: 1.2em;
+  //   color: #000000;
+  //   font-family: Montserrat;
+  //   font-size: 16px;
+  //   z-index: 10;
+  // }
   
   .tips-header button {
     background: none;
@@ -53,16 +53,18 @@
     // justify-content: space-between;
     z-index: 10;
     padding-top: 6px;
-    margin-bottom: 8px;
+    // margin-bottom: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
   }
   
   .tip-content p {
-    margin-left: 8px;
+    // margin-left: 8px;
     color: #000000;
     font-family: Lato;
     font-size: 14px;
     z-index: 10;
-    padding: 0px 4px;
+    // padding: 0px 4px;
     line-height: 20px;
   }
   
@@ -83,6 +85,9 @@
   // .tip-data {
   //   width: calc(100% - 110px);
   // }
+  .tip-data {
+    margin-left: 12px;
+  }
 
 
   .background-circle {
@@ -125,4 +130,7 @@
 
   .view-more:hover {
     background-color: #DCDFE5;
+  }
+  .margin-bottom-none {
+    margin-bottom: 0!important;
   }

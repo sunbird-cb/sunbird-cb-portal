@@ -19,9 +19,10 @@
                             <ws-widget-skeleton-loader [bindingClass]="'flex rounded'" [width]="'24px'"
                                 [height]="'24px'"></ws-widget-skeleton-loader>
                         </ng-container>
-                        <ng-container *ngIf="!skeletonLoader && content?.certificateObj?.certData">
-                            <mat-icon class="icon cursor-pointer "
+                        <ng-container >
+                            <mat-icon class="icon cursor-pointer " *ngIf="!downloadCertificateBool"
                                 (click)="handleOpenCertificateDialog()">arrow_downward</mat-icon>
+                            <mat-spinner *ngIf="downloadCertificateBool" strokeWidth="2" [diameter]="20"></mat-spinner>
                         </ng-container>
                     </div>
                 </div>
@@ -31,8 +32,9 @@
                             [height]="'148px'"></ws-widget-skeleton-loader>
                     </ng-container>
                     <ng-container *ngIf="!skeletonLoader">
-                        <div class="certificate_box" *ngIf="!content?.certificateObj?.certData">
-                            <img src="/assets/icons/toc/no-certificate.svg" alt="No certificate image" />
+                        <div class="certificate_box" *ngIf="!content?.certificateObj?.certId">
+                            <img *ngIf="!fromMarketPlace" src="/assets/icons/toc/no-certificate.svg" alt="No certificate image" />
+                            <img *ngIf="fromMarketPlace" src="/assets/icons/toc/no-certificate-market-place.svg" alt="No certificate image" />
                             <div class="flex items-center certificate_overlay">
                                 <div class="flex flex-col text-center gap-1 p-4 text-white mt-4">
                                     <div>{{'apptochome.certificationTakesTime' | translate }}</div>
@@ -41,12 +43,32 @@
                                 </div>
                             </div>
                         </div>
-                        <ng-container *ngIf="content?.certificateObj?.certData">
+                        <ng-container *ngIf="content?.certificateObj?.certId">
+                            <div class="img-container">
+                                <img class="celebration-animation" src="assets/images/animation/leaderboard_animation.gif"/>
+                            <img *ngIf="!fromMarketPlace" class="ceritificate-image"
+                                [src]="'/assets/icons/toc/no-certificate.svg'"
+                                alt="certificate image" />
+                                <img *ngIf="fromMarketPlace" class="ceritificate-image"
+                                [src]="'/assets/icons/toc/no-certificate-market-place.svg'"
+                                alt="certificate image" />
+                                
+                                <div [ngClass]="{'view-certificate': downloadCertificateBool, 'view-cert': !downloadCertificateBool}">
+                                    <button type="button" (click)="handleOpenCertificateDialog()">
+                                        <span *ngIf="!downloadCertificateBool">{{ 'apptoccontentcard.viewCertificate' | translate }}</span>
+                                        <div *ngIf="downloadCertificateBool" class="uploader-status">
+                                            <mat-spinner></mat-spinner>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <!-- <ng-container *ngIf="content?.certificateObj?.certData">
                             <img class="celebration-animation" src="assets/images/animation/leaderboard_animation.gif"/>
                             <img class="ceritificate-image"
                                 [src]="content?.certificateObj?.certData | pipeSafeSanitizer: 'url'"
                                 alt="certificate image" />
-                        </ng-container>
+                        </ng-container> -->
                     </ng-container>
                 </div>
             </div>
@@ -77,7 +99,7 @@
 </ng-template>
 
 <div class="flex flex-col my-4 px-4" [class.mt60]="sticky" [ngClass]="isMobile ? '' : 'gap-10'">
-    <ng-container *ngIf="(content?.completionStatus === 2 || content?.certificateObj?.certData) && !fromMarketPlace">
+    <ng-container *ngIf="(content?.completionStatus === 2 || content?.certificateObj?.certId) && !fromMarketPlace">
         <div class="certificate-container" *ngIf="!skeletonLoader">
             <div class="flex flex-row earned-certificate-container">
                 <div class="ribbon"></div>
@@ -145,8 +167,26 @@
         </div>
     </ng-container>
 
+    <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
+        <div class="flex flex-row gap-3 justify-around hideAbove1200">
+            <div class="batch-info">
+                <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}
+                </div>
+                <div class="batch-label">{{ 'apptoc.batchSize' | translate }}</div>
+            </div>
+            <div class="batch-info">
+                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.totalApplied || '0' }}</div>
+                <div class="batch-label">{{ 'apptoc.totalApplied' | translate }}</div>
+            </div>
+            <div class="batch-info">
+                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.enrolled || '0' }}</div>
+                <div class="batch-label">{{ 'apptoc.totalEnrolled' | translate }}</div>
+            </div>
+        </div>
+    </ng-container>
+
     <ng-container *ngIf="timer.days >= 0 && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-        <div class="flex flex-col gap-6 batch-timer">
+        <div class="flex flex-col gap-6 my-5 batch-timer hideAbove1200">
             <div class="flex flex-row">
                 <div class="flex-1">
                     <div class="flex underline"></div>
@@ -182,24 +222,6 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="content && content?.primaryCategory === primaryCategory.BLENDED_PROGRAM">
-        <div class="flex flex-row gap-3 justify-around hideAbove1200">
-            <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.content[0]?.batchAttributes?.currentBatchSize || '0' }}
-                </div>
-                <div class="batch-label">{{ 'apptoc.batchSize' | translate }}</div>
-            </div>
-            <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.totalApplied || '0' }}</div>
-                <div class="batch-label">{{ 'apptoc.totalApplied' | translate }}</div>
-            </div>
-            <div class="batch-info">
-                <div class="font-base font-bold">{{ selectedBatchData?.userCount?.enrolled || '0' }}</div>
-                <div class="batch-label">{{ 'apptoc.totalEnrolled' | translate }}</div>
-            </div>
-        </div>
-    </ng-container>
-
     <div class="flex flex-col" *ngIf="fromViewer || isMobile">
         <ng-container *ngIf="skeletonLoader">
             <div class="flex flex-row gap-3">
@@ -229,7 +251,7 @@
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1 font-bold">{{ 'apptocsinglepage.summary' | translate }}</div>
             <div [ngClass]="{'mob-desc-ellipsis': summary.ellipsis && isMobile, 'desc-ellipsis': summary.ellipsis && !isMobile}" #summaryElem>
-                <span class="mob-text" [innerHtml]="handleCapitalize(content?.description)"></span>
+                <div class="mob-text" [innerHtml]="handleCapitalize(content?.description | replaceNbsp)"></div>
                 <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="summary.viewLess" (click)="summary.ellipsis = !summary.ellipsis; summary.viewLess = !summary.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>
             <div class="ws-mat-default-text font-bold text-sm" *ngIf="summary.ellipsis">
@@ -254,7 +276,8 @@
         <ng-container *ngIf="!skeletonLoader">
             <div class="mat-subheading-1">{{ 'apptocsinglepage.description' | translate }}</div>
             <div class="desc" [ngClass]="{'mob-desc-ellipsis': description.ellipsis && isMobile, 'desc-ellipsis': description.ellipsis && !isMobile}" #descElem>
-                <span [innerHTML]="content?.instructions" class="mob-text"></span>
+              
+                <div [innerHTML]="this.content?.instructions | replaceNbsp" class="mob-text break-words"></div>
                 <div class="ws-mat-default-text font-bold cursor-pointer text-sm" *ngIf="description.viewLess"
                     (click)="description.ellipsis = !description.ellipsis; description.viewLess = !description.viewLess">&nbsp;{{ 'apptocsinglepage.viewLess' | translate }}</div>
             </div>

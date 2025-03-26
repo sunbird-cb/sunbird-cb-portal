@@ -298,21 +298,24 @@ export class ViewerTocComponent implements OnInit, OnDestroy {
   ): Promise<IViewerTocCard | null> {
     try {
       let  content: NsContent.IContentResponse | NsContent.IContent
-      if (this.hierarchyData) {
-        content =  this.hierarchyData
-      } else {
-        content = await (this.forPreview
-                ? this.contentSvc.fetchAuthoringContent(collectionId)
-                : this.contentSvc.fetchContent(collectionId, 'detail', [], _collectionType)
-              ).toPromise()
+      if (collectionId) {
+        if (this.hierarchyData) {
+          content =  this.hierarchyData
+        } else {
+          content = await (this.forPreview
+                  ? this.contentSvc.fetchAuthoringContent(collectionId)
+                  : this.contentSvc.fetchContent(collectionId, 'detail', [], _collectionType)
+                ).toPromise()
+        }
+        const contentData = content.result.content
+        this.collection = content.result.content
+        this.contentSvc.currentMetaData = contentData
+        this.collectionCard = this.createCollectionCard(contentData)
+        const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
+        this.isFetching = false
+        return viewerTocCardContent
       }
-      const contentData = content.result.content
-      this.collection = content.result.content
-      this.contentSvc.currentMetaData = contentData
-      this.collectionCard = this.createCollectionCard(contentData)
-      const viewerTocCardContent = this.convertContentToIViewerTocCard(contentData)
-      this.isFetching = false
-      return viewerTocCardContent
+      return null
     } catch (err) {
       switch (err && err.status) {
         case 403: {

@@ -13,7 +13,7 @@ import {
 } from '@sunbird-cb/collection'
 import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 import { ProfileCardStatsModule } from '@sunbird-cb/collection/src/lib/_common/profile-card-stats/profile-card-stats.module'
-import { PipeRelativeTimeModule } from '@sunbird-cb/utils-v2'
+import { PipeRelativeTimeModule, ImageResponsiveModule } from '@sunbird-cb/utils-v2'
 import { WeeklyClapsModule } from '@sunbird-cb/collection/src/lib/_common/weekly-claps/weekly-claps.module'
 import { TipsForLearnerModule } from '@sunbird-cb/collection/src/lib/_common/tips-for-learner/tips-for-learner.module'
 import { UpdatePostsModule } from '@sunbird-cb/collection/src/lib/_common/update-posts/update-posts.module'
@@ -41,13 +41,15 @@ import { HttpClient } from '@angular/common/http'
 import { UserLeaderboardModule } from '@sunbird-cb/collection/src/lib/_common/user-leaderboard/user-leaderboard.module'
 import { MatTooltipModule } from '@angular/material'
 import { ContentStripWithTabsLibModule, ContentStripWithTabsPillsModule } from '@sunbird-cb/consumption'
+import { SurveyFormModule } from '@sunbird-cb/collection/src/lib/_common/survey-form-left-section/survey-form/survey-form.module'
+import { SurveyFormComponent } from '../component/app-survey/survey-form/survey-form.component'
 
 @NgModule({
   declarations: [
     HomeComponent, FeedListComponent, InsightSideBarComponent,
     PageContainerComponent, DiscussionInfoComponent, ClientSliderComponent,
     HomeOtherPortalComponent, HomeContainerComponent, DiscussHubComponent,
-    NetworkHubComponent, NotificationComponent],
+    NetworkHubComponent, NotificationComponent, SurveyFormComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -70,6 +72,7 @@ import { ContentStripWithTabsLibModule, ContentStripWithTabsPillsModule } from '
     RecentRequestsModule,
     SkeletonLoaderModule,
     PipeRelativeTimeModule,
+    ImageResponsiveModule,
     AvatarPhotoModule,
     PendingRequestModule,
     ContentStripWithTabsLibModule,
@@ -82,6 +85,7 @@ import { ContentStripWithTabsLibModule, ContentStripWithTabsPillsModule } from '
       },
     }),
     MatTooltipModule,
+    SurveyFormModule,
   ],
   exports: [
     HeaderModule,

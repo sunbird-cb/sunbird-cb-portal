@@ -83,6 +83,18 @@
                 <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.settingSubtitle' | translate }}</div>
               </div>
             </a>
+            <a class="flex flex-wrap mb-4 mobile" *ngIf="!isMentor" role="menuitem" (click)="toggleVisibility()"
+            (click)="trackTelemetry('discover-mentors'); routeToMentorship()">
+            <div class="icon ws-mat-primary-tags">
+              <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                aria-hidden="true">search</mat-icon>
+            </div>
+            <div class="width-expand padding-left-xs cursor-pointer">
+              <div class="margin-0 mat-subheading-2"> {{ 'cardshublist.discoverMentors' | translate }} </div>
+              <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.discoverMentorsTagline' | translate }}</div>
+              <!-- <div class="mat-caption cohorts-desc ws-mat-black60-text">{{ 'cardshublist.settingSubtitle' | translate }}</div> -->
+            </div>
+          </a>
             <!-- <a class="flex flex-wrap mb-4" role="menuitem" (click)="toggleVisibility()" [routerLink]="['/app/setup']">
               <div class="icon ws-mat-primary-tags">
                 <mat-icon class=" m-auto mat-icon notranslate material-icons mat-icon-no-color" role="img"

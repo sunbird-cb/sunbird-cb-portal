@@ -18,7 +18,7 @@ import { NsContentStripWithTabs } from '../../../content-strip-with-tabs/content
 
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { NsContent, RatingService } from '@sunbird-cb/collection/src/public-api'
-import { LoggerService, ConfigurationsService } from '@sunbird-cb/utils-v2'
+import { LoggerService, ConfigurationsService, WidgetContentService } from '@sunbird-cb/utils-v2'
 import { TimerService } from '@ws/app/src/lib/routes/app-toc/services/timer.service'
 import { HandleClaimService } from '../content-services/handle-claim.service'
 import { LoadCheckService } from '@ws/app/src/lib/routes/app-toc/services/load-check.service'
@@ -82,7 +82,8 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
     public router: Router,
     private reviewDataService: ReviewComponentDataService,
     private handleClaimService: HandleClaimService,
-    private resetRatingsService: ResetRatingsService
+    private resetRatingsService: ResetRatingsService,
+    private contentSvc: WidgetContentService
   ) {
     this.resetRatingsService.resetRatings$.subscribe((_res: any) => {
       this.fetchRatingSummary()
@@ -150,6 +151,7 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   private destroySubject$ = new Subject<any>()
   viewMoreTags = false
   timerUnsubscribe: any
+  downloadCertificateBool = false
 
   strip: NsContentStripWithTabs.IContentStripUnit = {
     key: 'blendedPrograms',
@@ -695,11 +697,30 @@ export class AppTocAboutComponent implements OnInit, OnChanges, AfterViewInit, O
   }
 
   handleOpenCertificateDialog() {
-    const cet = this.content && this.content.certificateObj.certData
-    this.dialog.open(CertificateDialogComponent, {
-      width: '1200px',
-      data: { cet, certId: this.content && this.content.certificateObj.certId },
-    })
+    this.downloadCertificateBool = true
+    const certId = this.content && this.content.certificateObj.certId
+    if (this.content && this.content.certificateObj && !this.content.certificateObj.certData) {
+      this.contentSvc.downloadCert(certId).subscribe(response => {
+        if (this.content) {
+          this.downloadCertificateBool = false
+          this.content['certificateObj']['certData'] = response.result.printUri
+          this.dialog.open(CertificateDialogComponent, {
+            width: '1200px',
+            data: { cet: response.result.printUri, certId: this.content && this.content.certificateObj.certId },
+          })
+        }
+      },                                             (error: any) => {
+        this.downloadCertificateBool = false
+        this.loggerService.error('CERTIFICATE FETCH ERROR >', error)
+        this.matSnackBar.open('Unable to View Certificate, due to some error!')
+      })
+    } else {
+      this.downloadCertificateBool = false
+      this.dialog.open(CertificateDialogComponent, {
+        width: '1200px',
+        data: { cet: this.content && this.content.certificateObj.certData, certId: this.content && this.content.certificateObj.certId },
+      })
+    }
   }
 
   checkValidJSON(str: any) {

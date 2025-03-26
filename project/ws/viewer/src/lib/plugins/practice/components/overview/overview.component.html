@@ -77,7 +77,7 @@
       <div>
         <div class="flex flex-col stats-label ml-2" *ngIf="questionTYP.FINAL_ASSESSMENT === primaryCategory || questionTYP.PRACTICE_RESOURCE === primaryCategory" 
          [ngClass]="selectedAssessmentCompatibilityLevel >= 7 ? 'ml-5':''">
-          <div><img src="assets/icons/final-assessment/timer.svg"></div>
+          <div *ngIf="timeLimit"><img src="assets/icons/final-assessment/timer.svg"></div>
           <div>{{( timeLimit | pipeDurationTransform: 'hms')}}</div>
         </div>
       </div>
@@ -112,7 +112,7 @@
     </div>
     <div class="summary-detail">
      <ul class="summary-detail-list">
-      <li>
+      <li *ngIf="questionTYP.PRACTICE_RESOURCE == primaryCategory">
         <!-- <img src="assets/icons/final-assessment/star_empty.svg"> -->
         <span class="summary-list-label">{{ 'playerbrief.startAssessmentSummary1' | translate }}</span>
       </li>

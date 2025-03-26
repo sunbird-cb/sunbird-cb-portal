@@ -7,6 +7,7 @@ import { AllContentService } from './../service/all-content.service'
 import { EventService, UtilityService, WsEvents, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
 import { environment } from 'src/environments/environment'
 import { TranslateService } from '@ngx-translate/core'
+import { FormExtService } from 'src/app/services/form-ext.service'
 
 @Component({
   selector: 'ws-app-mdo-channels-all-content',
@@ -22,11 +23,13 @@ export class MdoChannelsAllContentComponent implements OnInit {
   contentDataList: any = []
   originalContentlist: any = []
   isMobile = false
+  tabSelected: any = ''
   requestData: any
   selectedTab: any
   titles: any = []
   constructor(public commonSvc: CommonMethodsService,
               public activatedRoute: ActivatedRoute,
+              public formExtSvc: FormExtService,
               public contentSvc: AllContentService,
               private translate: TranslateService,
               private langtranslations: MultilingualTranslationsService,
@@ -47,43 +50,101 @@ export class MdoChannelsAllContentComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.orgName = params['channel']
       this.orgId = params['orgId']
-      if (this.activatedRoute.snapshot.queryParams && this.activatedRoute.snapshot.queryParams.stripData) {
-        const data  = JSON.parse(this.activatedRoute.snapshot.queryParams.stripData)
-        this.isMobile = this.utilitySvc.isMobile || false
-        if (this.isMobile) {
-          data['stripConfig']['cardSubType'] = 'card-wide-lib'
-          data['loaderConfig']['cardSubType'] = 'card-wide-lib-skeleton'
-        } else {
-          data['stripConfig']['cardSubType'] = 'card-wide-v2'
-          data['loaderConfig']['cardSubType'] = 'card-wide-v2-skeleton'
-        }
-        this.seeAllPageConfig = data
-        this.contentDataList = this.commonSvc.transformSkeletonToWidgets(data)
-      }
+      this.tabSelected = this.activatedRoute.snapshot.queryParams.tabSelected || ''
+      this.getFormData(this.activatedRoute.snapshot.queryParams)
+      // if (this.activatedRoute.snapshot.queryParams && this.activatedRoute.snapshot.queryParams.stripData) {
+        // const data  = JSON.parse(this.activatedRoute.snapshot.queryParams.stripData)
+        // this.isMobile = this.utilitySvc.isMobile || false
+        // if (this.isMobile) {
+        //   data['stripConfig']['cardSubType'] = 'card-wide-lib'
+        //   data['loaderConfig']['cardSubType'] = 'card-wide-lib-skeleton'
+        // } else {
+        //   data['stripConfig']['cardSubType'] = 'card-wide-v2'
+        //   data['loaderConfig']['cardSubType'] = 'card-wide-v2-skeleton'
+        // }
+        // this.seeAllPageConfig = data
+        // this.contentDataList = this.commonSvc.transformSkeletonToWidgets(data)
+      // }
     })
-    this.titles = [
-      { title: 'Learn', url: '/page/learn', icon: 'school', disableTranslate: false },
-      { title: `MDO Channels`, url: `/app/learn/mdo-channels/all-channels`, icon: '', disableTranslate: true },
-      {
-        title: this.orgName,
-        url: `/app/learn/mdo-channels/${this.orgName}/${this.orgId}/micro-sites`,
-        disableTranslate: true,
-      },
-      { title: this.seeAllPageConfig.title,
-        icon: '',
-        url: 'none',
-        disableTranslate: false,
-      },
-    ]
-    this.callApi()
+    // this.titles = [
+    //   { title: 'Learn', url: '/page/learn', icon: 'school', disableTranslate: false },
+    //   { title: `MDO Channels`, url: `/app/learn/mdo-channels/all-channels`, icon: '', disableTranslate: true },
+    //   {
+    //     title: this.orgName,
+    //     url: `/app/learn/mdo-channels/${this.orgName}/${this.orgId}/micro-sites`,
+    //     disableTranslate: true,
+    //   },
+    //   { title: this.seeAllPageConfig.title,
+    //     icon: '',
+    //     url: 'none',
+    //     disableTranslate: false,
+    //   },
+    // ]
+    // this.callApi()
+  }
+
+  getFormData(queryparams: any) {
+    if (this.orgName && this.orgId) {
+      const requestData: any = {
+        'request': {
+            'type': 'MDO-channel',
+            'subType': 'microsite-v2',
+            'action': 'page-configuration',
+            'component': 'portal',
+            'rootOrgId': this.orgId,
+        },
+      }
+      this.formExtSvc.formReadData(requestData).subscribe((res: any) => {
+        if (res && res.result && res.result.form && res.result.form.data && res.result.form.data.sectionList) {
+          const mainSectionData = res.result.form.data.sectionList.filter((ele: any) => ele.key === 'sectionMain')
+          if (mainSectionData[0] &&
+            mainSectionData[0].column[0] &&
+            mainSectionData[0].column[0].data &&
+            mainSectionData[0].column[0].data.tabSection &&
+            mainSectionData[0].column[0].data.tabSection.contentTab) {
+            const filterData = mainSectionData[0].column[0].data.tabSection.contentTab.filter((ele: any) => ele.key === queryparams.key)
+            if (filterData && filterData[0] && filterData[0].column[0]  && filterData[0].column[0].data.strips) {
+              const data  = filterData[0].column[0].data.strips[0]
+              this.isMobile = this.utilitySvc.isMobile || false
+              if (this.isMobile) {
+                data['stripConfig']['cardSubType'] = 'card-wide-lib'
+                data['loaderConfig']['cardSubType'] = 'card-wide-lib-skeleton'
+              } else {
+                data['stripConfig']['cardSubType'] = 'card-wide-v2'
+                data['loaderConfig']['cardSubType'] = 'card-wide-v2-skeleton'
+              }
+              this.seeAllPageConfig = data
+              this.contentDataList = this.commonSvc.transformSkeletonToWidgets(data)
+              this.titles = [
+                { title: 'Learn', url: '/page/learn', icon: 'school', disableTranslate: false },
+                { title: `MDO Channels`, url: `/app/learn/mdo-channels/all-channels`, icon: '', disableTranslate: true },
+                {
+                  title: this.orgName,
+                  url: `/app/learn/mdo-channels/${this.orgName}/${this.orgId}/micro-sites`,
+                  disableTranslate: true,
+                },
+                { title: this.seeAllPageConfig.title,
+                  icon: '',
+                  url: 'none',
+                  disableTranslate: false,
+                },
+              ]
+              this.callApi()
+            }
+          }
+        }
+      },                                                  (_err: any) => {
+        this.contentDataList = []
+      })
+    }
   }
 
   callApi(query?: any) {
     let tabData: any
-    if (this.seeAllPageConfig.viewMoreUrl.queryParams && this.seeAllPageConfig.viewMoreUrl.queryParams.tabSelected) {
+    if (this.tabSelected) {
       tabData = this.seeAllPageConfig.tabs.find((
         el: any
-      ) => el.label.toLowerCase() === this.seeAllPageConfig.viewMoreUrl.queryParams.tabSelected.toLowerCase())
+      ) => el.label.toLowerCase() === this.tabSelected.toLowerCase())
       this.seeAllPageConfig.request = tabData.request
       this.selectedTab = tabData
     } else {
@@ -241,7 +302,7 @@ export class MdoChannelsAllContentComponent implements OnInit {
     if (filters.organisation &&
       filters.organisation.indexOf('<orgID>') >= 0
     ) {
-      filters.organisation = this.orgId
+      filters.organisation = filters.organisation.replace('<orgID>', this.orgId)
     }
     return filters
   }

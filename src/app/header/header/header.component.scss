@@ -171,6 +171,7 @@ ws-app-nav-bar {
     list-style: none;
     line-height: 18px;
     margin-right: 16px;
+    box-sizing: border-box;
   }
 
   .top-nav-bar {
@@ -195,6 +196,17 @@ ws-app-nav-bar {
     text-align: center;
     padding: 5px 5px !important;
     list-style: none;
+  }
+}
+@media (min-width : 300px) and (max-width : 358px) {
+  .download-app-chip-top-header {
+    font-size: 10px;
+    vertical-align: middle;
+    margin-right: 12px;
+    line-height: 20px !important;
+  }
+  .mobile-download-app-top-header {
+    padding:16px 12px;
   }
 }
 

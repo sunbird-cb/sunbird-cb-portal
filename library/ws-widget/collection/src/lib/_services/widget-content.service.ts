@@ -114,7 +114,11 @@ export class WidgetContentService {
       if (!forPreview) {
         url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
       } else {
-        url = `/api/content/v1/read/${contentId}`
+        if (window.location.href.includes('editMode=true') && window.location.href.includes('_rc')) {
+          url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+        } else {
+            url = `/api/content/v1/read/${contentId}`
+        }
       }
     } else {
       if (!forPreview) {
@@ -435,7 +439,11 @@ export class WidgetContentService {
         API_END_POINTS.CONTENT_READ(contentId),
       )
     }
-    url = `/api/content/v1/read/${contentId}`
+    if (window.location.href.includes('editMode=true')) {
+      url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    } else {
+        url = `/api/content/v1/read/${contentId}`
+    }
     return this.http.get<NsContent.IContent[]>(url)
     // return this.http.get<NsContent.IContent[]>(API_END_POINTS.CONTENT_READ(contentId))
   }
@@ -482,15 +490,15 @@ export class WidgetContentService {
             if (!this.isBatchInProgress(enrolledCourseData.batch)) {
               return this.gotoTocPage(content)
             }
-        } else {
-          const data =  await this.checkForDataToFormUrl(content, enrolledCourseData)
-          return data
+            const returnData =  await this.checkForDataToFormUrl(content, enrolledCourseData)
+            return returnData
         }
+        const data =  await this.checkForDataToFormUrl(content, enrolledCourseData)
+        return data
       }
       return ''
     }
     return this.gotoTocPage(content)
-
   }
   async checkForDataToFormUrl(content: any, enrollData: any) {
     let urlData: any

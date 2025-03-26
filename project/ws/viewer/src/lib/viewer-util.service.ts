@@ -23,6 +23,7 @@ export class ViewerUtilService {
   markAsCompleteSubject = new Subject()
   autoPlayNextVideo = new Subject()
   autoPlayNextAudio = new Subject()
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   constructor(
     private http: HttpClient,
     private configservice: ConfigurationsService,
@@ -171,31 +172,33 @@ export class ViewerUtilService {
     const tempContentData = this.contentSvc.currentMetaData
     const tempContentReadData = this.contentSvc.currentContentReadMetaData
     const enrollmentList = this.contentSvc.currentBatchEnrollmentList
-    if (tempContentData && tempContentReadData.cumulativeTracking &&
-       (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
-      tempContentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
-      tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM)
-      ) {
-      tempContentData.children.forEach((childList: NsContent.IContent) => {
-        if (childList.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
-          // tslint:disable-next-line: max-line-length
-          const courseEnrollmentList = enrollmentList &&  enrollmentList.filter((v: NsContent.ICourse) => v.contentId === childList.identifier)
-          if (childList.childNodes && childList.childNodes.indexOf(resourceId) !== -1) {
-            if (courseEnrollmentList && courseEnrollmentList.length > 0) {
-              tempData.batchId = courseEnrollmentList[courseEnrollmentList.length - 1].batch.batchId
-              tempData.courseId = childList.identifier
-            }
-          }
-        } else if (tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
-          const bPEnrollmentList = enrollmentList.filter((v: NsContent.ICourse) => v.contentId === tempContentData.identifier)
-          if (tempContentData.childNodes && tempContentData.childNodes.indexOf(resourceId) !== -1) {
-            if (bPEnrollmentList.length > 0) {
-              tempData.batchId = bPEnrollmentList[bPEnrollmentList.length - 1].batch.batchId
-              tempData.courseId = tempContentData.identifier
-            }
-          }
-        }
-      })
+    if (!this.forPreview) {
+      if (tempContentData && tempContentReadData.cumulativeTracking &&
+        (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
+       tempContentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
+       tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM)
+       ) {
+       tempContentData.children.forEach((childList: NsContent.IContent) => {
+         if (childList.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+           // tslint:disable-next-line: max-line-length
+           const courseEnrollmentList = enrollmentList &&  enrollmentList.filter((v: NsContent.ICourse) => v.contentId === childList.identifier)
+           if (childList.childNodes && childList.childNodes.indexOf(resourceId) !== -1) {
+             if (courseEnrollmentList && courseEnrollmentList.length > 0) {
+               tempData.batchId = courseEnrollmentList[courseEnrollmentList.length - 1].batch.batchId
+               tempData.courseId = childList.identifier
+             }
+           }
+         } else if (tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+           const bPEnrollmentList = enrollmentList.filter((v: NsContent.ICourse) => v.contentId === tempContentData.identifier)
+           if (tempContentData.childNodes && tempContentData.childNodes.indexOf(resourceId) !== -1) {
+             if (bPEnrollmentList.length > 0) {
+               tempData.batchId = bPEnrollmentList[bPEnrollmentList.length - 1].batch.batchId
+               tempData.courseId = tempContentData.identifier
+             }
+           }
+         }
+       })
+     }
     }
     return tempData
   }
@@ -242,7 +245,11 @@ export class ViewerUtilService {
     if (!forPreview) {
       url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
     } else {
-      url = `/api/content/v1/read/${contentId}`
+      if (window.location.href.includes('editMode=true')  && window.location.href.includes('_rc')) {
+        url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+      } else {
+          url = `/api/content/v1/read/${contentId}`
+      }
     }
     return this.http.get<NsContent.IContent>(
       // tslint:disable-next-line:max-line-length

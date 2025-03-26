@@ -374,11 +374,14 @@ export class AppTocContentCardV2Component implements OnInit {
         if(localContentData.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
           this.hierarchyMapData[identifier]['duration'] = this.hierarchyMapData[identifier].leafNodes.reduce(
             (sum: any, childID: any) => {
-            return sum + Number(this.hierarchyMapData[childID].duration || this.hierarchyMapData[childID].expectedDuration  || 0)
+              if(this.hierarchyMapData && this.hierarchyMapData[childID]) {
+                return sum + Number(this.hierarchyMapData[childID].duration || this.hierarchyMapData[childID].expectedDuration  || 0)
+              }
+            
             }, 0)
         }
         // tslint:disable
-        const completedItems = _.filter(this.hierarchyMapData[identifier].leafNodes, r => this.hierarchyMapData[r].completionStatus === 2 || this.hierarchyMapData[r].completionPercentage === 100)
+        const completedItems = _.filter(this.hierarchyMapData[identifier].leafNodes, r => (this.hierarchyMapData[r] && (this.hierarchyMapData[r].completionStatus === 2 || this.hierarchyMapData[r].completionPercentage === 100)))
         const totalCount = _.toInteger(_.get(this.hierarchyMapData[identifier], 'leafNodesCount')) || 1
         this.hierarchyMapData[identifier]['completionPercentage'] = Number(((completedItems.length / totalCount) * 100).toFixed())
         this.hierarchyMapData[identifier]['completionStatus'] = (this.hierarchyMapData[identifier].completionPercentage >= 100) ? 2 : 1

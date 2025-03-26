@@ -8,7 +8,7 @@ import { FormExtService } from 'src/app/services/form-ext.service'
 @Injectable({
   providedIn: 'root',
 })
-export class KarmaProgramsFormService implements
+export class KarmaProgramsFormV1Service implements
 Resolve<Observable<IResolveResponse<any>> | IResolveResponse<any>> {
 constructor(
 private formSvc: FormExtService) {}

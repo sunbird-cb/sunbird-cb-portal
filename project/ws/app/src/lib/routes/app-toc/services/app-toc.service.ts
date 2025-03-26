@@ -520,7 +520,11 @@ export class AppTocService {
         API_END_POINTS.GET_CONTENT(contentId),
       )
     }
-      url = `/api/content/v1/read/${contentId}`
+    if (window.location.href.includes('editMode=true') && window.location.href.includes('_rc')) {
+      url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+    } else {
+        url = `/api/content/v1/read/${contentId}`
+    }
       return this.http.get<{ result: any }>(url)
 
   }
@@ -880,6 +884,20 @@ export class AppTocService {
           }
         }
       })
+    }
+  }
+  async fetchCourseHeirarchy(contentData: any) {
+    if (contentData && contentData.children) {
+      for (const ele of contentData.children) {
+        if (ele.primaryCategory === NsContent.ECourseCategory.COURSE) {
+           await this.widgetSvc.fetchContent(ele.identifier).toPromise().then(async (subEle: any) => {
+            if (subEle.result && subEle.result.content
+              &&  subEle.result.content.children &&  subEle.result.content.children.length) {
+                 ele['children'] = subEle.result.content.children
+              }
+          })
+        }
+      }
     }
   }
 }

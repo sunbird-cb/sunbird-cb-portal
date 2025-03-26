@@ -450,24 +450,147 @@
                   </mat-error>
                 </div>
               </div>
-            </div>
 
-            <!-- {{ portalProfile | json }}  // -->
-  
-            <div class="grid-container">
               <div class="info-div">
                 <div class="label">{{ 'profileInfo.eHRMSId' | translate }}</div>
                 <div class="info-value">{{ portalProfile?.additionalProperties?.externalSystemId || 'NA' }}</div>
               </div>
+              <div class="info-div" *ngIf="noCadreDetails">
+                <div class="label">
+                  {{ 'profileInfo.isCadre' | translate }}
+                </div>
+                <div class="info-value" *ngIf="!editDetails">
+                  <span *ngIf="!portalProfile.hasOwnProperty('cadreDetails') || !portalProfile?.personalDetails.hasOwnProperty('isCadre'); else elsCadreDetails">NA</span>
+                  <ng-template #elsCadreDetails>{{ isCadreStatus ? 'Yes' : 'No' }}</ng-template>
+                </div>
+                <div class="flex" *ngIf="editDetails">
+                  <mat-form-field class="profile-form-field">
+                    <mat-select formControlName="isCadre" (selectionChange)="getIsCadreStatus($event.value)">
+                      <mat-option [value]="true">Yes</mat-option>
+                      <mat-option [value]="false">No</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              
+
+              <div class="info-div" *ngIf="otherDetailsForm.get('isCadre').value || !editDetails">
+                <ng-container *ngIf="isCadreStatus">
+                <div class="label">{{ 'profileInfo.typeOfCivilService' | translate }}<span class="asterisk" style="color: red;"> *</span></div>
+                <div class="info-value" *ngIf="!editDetails">
+                  {{ portalProfile?.cadreDetails?.civilServiceType || 'NA'  }}
+                </div>
+              </ng-container>
+                <div class="flex" *ngIf="editDetails && isCadreStatus">
+                  <mat-form-field class="profile-form-field">
+                    <mat-select formControlName="typeOfCivilService" (selectionChange)="getService($event.value)">
+                      <mat-option *ngFor="let service of civilServiceTypes" [value]="service">{{ service }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              
+
+              <div class="info-div" *ngIf="otherDetailsForm.get('typeOfCivilService').value && otherDetailsForm.get('isCadre').value || !editDetails">
+                <ng-container *ngIf="isCadreStatus">
+                <div class="label">{{ 'profileInfo.serviceType' | translate }}<span class="asterisk" style="color: red;"> *</span></div>
+                
+                <div class="info-value" *ngIf="!editDetails">
+                  <span class="flex flex-row gap-2 items-center">
+                    {{ portalProfile?.cadreDetails?.civilServiceName || 'NA' }}
+                  </span>
+                </div>
+              </ng-container>
+                <div class="flex flex-row gap-2" *ngIf="editDetails">
+                  <div class="flex-1">
+                    <div class="flex flex-col">
+                      <mat-form-field class="profile-form-field">
+                        <mat-select formControlName="serviceType" (selectionChange)="onServiceSelect($event)">
+                          <mat-option *ngFor="let service of serviceName" [value]="service">{{ service }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- ((!showBatchForNoCadre) && otherDetailsForm.get('serviceType').value && 
+                                                                      otherDetailsForm.get('isCadre').value 
+                                                                      && otherDetailsForm.get('typeOfCivilService').value) 
+                                                                      || (!editDetails && !showBatchForNoCadre)-->
+              <div class="info-div" *ngIf="otherDetailsForm.get('serviceType').value && 
+              otherDetailsForm.get('isCadre').value 
+              && otherDetailsForm.get('typeOfCivilService').value && (
+                otherDetailsForm.get('serviceType').value === 'Indian Administrative Office (IAS)' || 
+                otherDetailsForm.get('serviceType').value === 'Indian Police Service (IPS)' || 
+                otherDetailsForm.get('serviceType').value === 'Indian Forest Service (IFoS)' 
+              )">
+                <ng-container *ngIf="isCadreStatus">
+                <div class="label">{{ 'profileInfo.cadre' | translate }}<span class="asterisk" style="color: red;"> *</span></div>
+                <div class="info-value" *ngIf="!editDetails">
+                  {{ portalProfile?.cadreDetails?.cadreName || 'NA' }}
+                </div>
+              </ng-container>
+                <div class="flex" *ngIf="editDetails">
+                  <mat-form-field class="profile-form-field">
+                    <mat-select formControlName="cadre" (selectionChange)="onCadreSelect($event.value)">
+                      <mat-option *ngFor="let state of cadre" [value]="state">{{ state }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div> 
+              <!-- showBatchForNoCadre && otherDetailsForm.get('serviceType').value  || otherDetailsForm.get('cadre').value && otherDetailsForm.get('isCadre').value && otherDetailsForm.get('serviceType').value && otherDetailsForm.get('typeOfCivilService').value|| !editDetails && this.cadreStatus -->
+              <div class="info-div" *ngIf="(otherDetailsForm.get('serviceType').value && 
+              otherDetailsForm.get('isCadre').value && otherDetailsForm.get('typeOfCivilService').value && (
+                otherDetailsForm.get('serviceType').value === 'Indian Administrative Office (IAS)' || 
+                otherDetailsForm.get('serviceType').value === 'Indian Police Service (IPS)' || 
+                otherDetailsForm.get('serviceType').value === 'Indian Forest Service (IFoS)' 
+              ) && otherDetailsForm.get('cadre').value)  ? true : ((otherDetailsForm.get('serviceType').value && 
+              otherDetailsForm.get('isCadre').value 
+              && otherDetailsForm.get('typeOfCivilService').value && (
+                otherDetailsForm.get('serviceType').value !== 'Indian Administrative Office (IAS)' && 
+                otherDetailsForm.get('serviceType').value !== 'Indian Police Service (IPS)' && 
+                otherDetailsForm.get('serviceType').value !== 'Indian Forest Service (IFoS)' 
+              ))) ? true : false">
+                <ng-container *ngIf="isCadreStatus">
+                <div class="label">{{ 'profileInfo.batch' | translate }}<span class="asterisk" style="color: red;"> *</span></div>
+              
+                <div class="info-value" *ngIf="!editDetails">
+                  {{ portalProfile?.cadreDetails?.cadreBatch || 'NA' }}
+                </div>
+              </ng-container>
+                <div class="flex" *ngIf="editDetails">
+                  <mat-form-field class="profile-form-field">
+                    <mat-select formControlName="batch">
+                      <mat-option *ngFor="let year of yearArray" [value]="year">{{ year }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+               
+              </div>
+              <!-- showBatchForNoCadre && otherDetailsForm.get('batch').value  || otherDetailsForm.get('cadre').value && otherDetailsForm.get('isCadre').value && otherDetailsForm.get('serviceType').value && otherDetailsForm.get('typeOfCivilService').value&& otherDetailsForm.get('batch').value || !editDetails -->
+               
+              <div class="info-div" *ngIf="otherDetailsForm.get('isCadre').value &&  otherDetailsForm.get('batch').value">
+                <ng-container *ngIf="isCadreStatus">
+                <div class="label">{{ 'profileInfo.cadreControllingAuthority' | translate }}<span class="asterisk" style="color: red;"> *</span></div>
+              
+                <div class="info-value" *ngIf="!editDetails">
+                  {{ this.portalProfile?.cadreDetails?.cadreControllingAuthorityName || 'NA' }}
+                </div>
+              </ng-container>
+                <div class="info-value-c" *ngIf="editDetails">{{ cadreControllingAuthority }}</div>
+              </div>
             </div>
   
             <ng-container *ngIf="editDetails">
-              <div class="flex flex-row gap-4 justify-center sm:justify-start">
+              <div class="flex flex-row gap-4 justify-center sm:justify-end">
                 <button class="outline-button" (click)="handleCancelUpdate()">{{ 'profileInfo.cancel' | translate
                   }}</button>
-                <button class="save-button" [disabled]="otherDetailsForm?.invalid || verifyEmail || verifyMobile"
-                  [ngClass]="{'disable-button': otherDetailsForm?.invalid || verifyEmail || verifyMobile}"
-                  (click)="handleSaveOtherDetails()">{{ 'profileInfo.saveChanges' | translate }}</button>
+                  <!-- [disabled]="(otherDetailsForm?.invalid && !saveChanges) || verifyEmail || verifyMobile"
+                [ngClass]="{'disable-button': (otherDetailsForm?.invalid && !saveChanges)|| verifyEmail || verifyMobile}" -->
+                <button class="save-button" [disabled]="(otherDetailsForm?.invalid && !saveChanges) || verifyEmail || verifyMobile"
+                [ngClass]="{'disable-button': (otherDetailsForm?.invalid && !saveChanges)|| verifyEmail || verifyMobile}" 
+                (click)="handleSaveOtherDetails()">{{ 'profileInfo.saveChanges' | translate }}</button> 
               </div>
             </ng-container>
           </div>
@@ -616,14 +739,29 @@
             <mat-icon>info_outline</mat-icon>
           </div>
         </div>
-        <div class="flex flex-row gap-4 items-center" *ngIf="!editName"> 
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-row gap-4 items-center" *ngIf="!editName"> 
+            <div class="name">{{ portalProfile?.personalDetails?.firstname | titlecase}}</div>
+            <mat-icon class="profile-verified-check" *ngIf="portalProfile?.profileStatus === 'VERIFIED'">check_circle</mat-icon>
+            <mat-icon class="cursor-pointer" *ngIf="isCurrentUser" (click)="editName = !editName">edit</mat-icon>
+            <div *ngIf="isMentor" class="blue-bg-mentor">
+              Mentor
+            </div>
+          </div>
+          <div *ngIf="isMentor" class="flex flex-row gap-2 items-center view-mentor-profile" (click)="viewMentorProfile()">
+            <div class="text-sm blue-background-outline">
+              {{ 'profileInfo.viewMentorProfile' | translate }}
+            </div>          
+          </div> 
+        </div>
+        <!-- <div class="flex flex-row gap-4 items-center" *ngIf="!editName"> 
           <div class="name">{{ portalProfile?.personalDetails?.firstname | titlecase}}</div>
           <mat-icon class="profile-verified-check" *ngIf="portalProfile?.profileStatus === 'VERIFIED'">check_circle</mat-icon>
           <mat-icon class="cursor-pointer" *ngIf="isCurrentUser" (click)="editName = !editName">edit</mat-icon>
-        </div>
+        </div> -->
         <div class="flex flex-row gap-4 items-center edit-name" *ngIf="editName">
           <!--  pattern="/^[a-z0-9._-]+$/i" -->
-          <input #profileNameVar="ngModel" type="text" name="profileNameVar" [(ngModel)]="profileName" class="input-text"/>          
+          <input #profileNameVar="ngModel" type="text" name="profileNameVar" [(ngModel)]="profileName" class="input-text" (input)="validateName($event.target.value)"/>          
           <!-- <div
             *ngIf="profileNameVar.invalid && (profileNameVar.dirty || profileNameVar.touched)"
             class="alert"
@@ -666,6 +804,11 @@
                   </div>
                 </ng-container>
               </ng-container>
+            </div>
+            <div *ngIf="isMentor" class="flex flex-row gap-2 items-center view-mentor-profile-mob" (click)="viewMentorProfile()">
+              <div class="text-sm blue-background-outline">
+                {{ 'profileInfo.viewMentorProfile' | translate }}
+              </div>          
             </div>
           </div>
         </ng-container>

@@ -78,7 +78,7 @@ export class InsightSideBarComponent implements OnInit {
   learnAdvisoryData: any
   randomlearnAdvisoryObj: any
   learnAdvisoryDataLength: any
-
+  surveyForm: any
   constructor(
     private homePageSvc: HomePageService,
     private configSvc: ConfigurationsService,
@@ -100,6 +100,7 @@ export class InsightSideBarComponent implements OnInit {
     if (this.activatedRoute.snapshot.data.pageData && this.activatedRoute.snapshot.data.pageData.data) {
       this.homePageData = this.activatedRoute.snapshot.data.pageData.data
       this.learnAdvisoryData = this.activatedRoute.snapshot.data.pageData.data.learnerAdvisory
+      this.surveyForm = this.activatedRoute.snapshot.data.pageData.data.surveyForm
     }
 
     // this.learnAdvisoryDataLength = this.learnAdvisoryData.length

@@ -468,6 +468,7 @@
   .reviewbox {
     width: 80% !important;
     font: 400 12px/18px Lato !important;
+    resize: none;
   }
 
   textarea::placeholder {
@@ -708,6 +709,7 @@
     .reviewbox {
       width: 80% !important;
       font: 400 12px/18px Lato !important;
+      resize: none;
     }
 
     textarea::placeholder {
@@ -836,6 +838,7 @@
     width: 45%;
     margin: 0 auto;
     padding: 8px;
+    resize: none;
   }
 
   button {
@@ -872,4 +875,22 @@
 .sbmt-btn:disabled,
 .sbmt-btn[disabled]{
   opacity: 0.5;
+}
+
+.feedback-count {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 27%;
+}
+
+::ng-deep .page-nps {
+  display: none !important; 
+}
+
+@media only screen and (max-width : 768px) {
+  .feedback-count {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 8%;
+  }
 }

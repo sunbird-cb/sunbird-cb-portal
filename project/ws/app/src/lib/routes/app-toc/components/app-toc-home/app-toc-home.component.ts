@@ -8,8 +8,8 @@ import { FormControl, Validators } from '@angular/forms'
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { TranslateService } from '@ngx-translate/core'
-import { Subscription, Observable } from 'rxjs'
-import { share } from 'rxjs/operators'
+import { Subscription, Observable, Subject } from 'rxjs'
+import { share, takeUntil } from 'rxjs/operators'
 import dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -44,6 +44,7 @@ import { AppTocDialogIntroVideoComponent } from '../app-toc-dialog-intro-video/a
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
 import { NsCardContent } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.model'
 import { environment } from 'src/environments/environment'
+import { TimerService } from '../../services/timer.service'
 
 export enum ErrorType {
   internalServer = 'internalServer',
@@ -206,8 +207,13 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
   mobile1200: any
   assessmentStrip: any
   learnAdvisoryData: any
+  contentCreatorData: any =  []
   // randomlearnAdvisoryObj: any
   // learnAdvisoryDataLength: any
+
+  private destroySubject$ = new Subject<any>()
+  timerUnsubscribe: any
+  timer: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -259,7 +265,8 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     private matSnackBar: MatSnackBar,
     private loadCheckService: LoadCheckService,
     private handleClaimService: HandleClaimService,
-    private resetRatingsService: ResetRatingsService
+    private resetRatingsService: ResetRatingsService,
+    private timerService: TimerService,
   ) {
     this.historyData = history.state
     this.handleBreadcrumbs()
@@ -332,7 +339,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     if (this.route) {
       this.skeletonLoader = true
-      this.routeSubscription = this.route.data.subscribe((data: Data) => {
+      this.routeSubscription = this.route.data.subscribe(async (data: Data) => {
         if (data && data.content && data.content.data && data.content.data.identifier) {
           this.courseID = data.content.data.identifier
           this.skeletonLoader = false
@@ -343,6 +350,14 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
               this.matSnackBar.open('Unable to fetch content data, due to some error!')
             }
           })
+          const initData = this.tocSvc.initData(data, true)
+          this.content = initData.content
+          if (this.forPreview) {
+            this.tocSvc.contentLoader.next(true)
+            await this.tocSvc.fetchCourseHeirarchy(this.content)
+            this.tocSvc.contentLoader.next(false)
+            this.tocSvc.checkModuleWiseData(this.content)
+          }
           this.initialrouteData = data
           this.banners = data.pageData.data.banners
           this.tocSvc.subtitleOnBanners = data.pageData.data.subtitleOnBanners || false
@@ -431,7 +446,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     if (this.content) {
       const contentName = this.content.name.trim()
-
+      if (this.content.creatorContacts) {
+       this.contentCreatorData =  this.handleParseJsonData(this.content.creatorContacts)
+      }
       if ((contentName).toLowerCase() === this.dakshtaName.toLowerCase()) {
         this.showBtn = true
       } else {
@@ -609,6 +626,12 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       this.rcElem.BottomPos = this.rcElement.nativeElement.offsetTop + this.rcElement.nativeElement.offsetHeight
       this.rcElem.offSetTop = this.rcElement.nativeElement.offsetTop
     }
+    // Get Time for the batch
+    this.timerUnsubscribe = this.timerService.getTimerData()
+    .pipe(takeUntil(this.destroySubject$))
+    .subscribe((_timer: any) => {
+      this.timer = _timer
+    })
   }
 
   handleBreadcrumbs() {
@@ -751,22 +774,25 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       if (batch && this.currentCourseBatchId) {
         this.startDate = (_.get(batch, 'startDate'))
         this.endDate = (_.get(batch, 'endDate'))
-        const startDateTime = this.startDate && new Date(this.startDate).getTime()
-        const endDateTime = this.endDate && new Date(this.endDate).getTime()
-        this.startDateDifference = now - startDateTime
-        this.endDateDifference = endDateTime - now
-        if (this.endDateDifference > 0 && this.startDateDifference > 0 && batch.status !== 2) {
-          return true
+        if (this.endDate) {
+          const startDateTime = this.startDate && new Date(this.startDate).getTime()
+          const endDateTime = this.endDate && new Date(this.endDate).getTime()
+          this.startDateDifference = now - startDateTime
+          this.endDateDifference = endDateTime - now
+          if (this.endDateDifference > 0 && this.startDateDifference > 0 && batch.status !== 2) {
+            return true
+          }
+          return false
         }
-        return false
+        return true
       }
       return false
-    } return false
+    }
+    return false
   }
 
   private initData(data: Data) {
     const initData = this.tocSvc.initData(data, true)
-    this.content = initData.content
     this.errorCode = initData.errorCode
     switch (this.errorCode) {
       case NsAppToc.EWsTocErrorCode.API_FAILURE: {
@@ -909,7 +935,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
           (res: any) => {
             if (res && res.result && res.result.response) {
               this.userRating = res.result.response
-              console.log('this.userRating - ', this.userRating)
               if (fireUpdate) {
                 this.tocSvc.changeUpdateReviews(true)
               }
@@ -979,8 +1004,20 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.tocSvc.checkModuleWiseData(this.content)
             this.enrolledCourseData = enrolledCourse
             this.currentCourseBatchId = enrolledCourse.batchId
-            this.downloadCert(enrolledCourse.issuedCertificates)
-
+            // this.downloadCert(enrolledCourse.issuedCertificates)
+            if (enrolledCourse && enrolledCourse.issuedCertificates &&
+              enrolledCourse.issuedCertificates.length) {
+              const certificate: any = enrolledCourse.issuedCertificates.sort((a: any, b: any) =>
+                 new Date(b.lastIssuedOn).getTime() - new Date(a.lastIssuedOn).getTime())
+              const certId = certificate[0].identifier
+              this.certId = certId
+              if (this.content) {
+                this.content['certificateObj'] = {
+                  certId,
+                  certData: '',
+                }
+              }
+            }
             this.content.completionPercentage = enrolledCourse.completionPercentage || 0
             this.content.completionStatus = enrolledCourse.status || 0
             if (this.contentReadData && this.contentReadData.cumulativeTracking) {
@@ -1098,22 +1135,22 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return batchId
   }
 
-  downloadCert(certIdArr: any) {
-    if (certIdArr && certIdArr.length && certIdArr.length > 0) {
-      certIdArr.sort((a: any, b: any) => new Date(b.lastIssuedOn).getTime() - new Date(a.lastIssuedOn).getTime())
-      const certId = certIdArr[0].identifier
-      this.certId = certId
+  // downloadCert(certIdArr: any) {
+  //   if (certIdArr && certIdArr.length && certIdArr.length > 0) {
+  //     certIdArr.sort((a: any, b: any) => new Date(b.lastIssuedOn).getTime() - new Date(a.lastIssuedOn).getTime())
+  //     const certId = certIdArr[0].identifier
+  //     this.certId = certId
 
-      this.contentSvc.downloadCert(certId).subscribe(response => {
-        if (this.content) {
-          this.content['certificateObj'] = {
-            certData: response.result.printUri,
-            certId: this.certId,
-          }
-        }
-      })
-    }
-  }
+  //     this.contentSvc.downloadCert(certId).subscribe(response => {
+  //       if (this.content) {
+  //         this.content['certificateObj'] = {
+  //           certData: response.result.printUri,
+  //           certId: this.certId,
+  //         }
+  //       }
+  //     })
+  //   }
+  // }
 
   public handleAutoBatchAssign() {
     if (this.forPreview) {
@@ -1516,7 +1553,6 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       } else {
         primaryCategory = firstPlayableContent.primaryCategory || this.content.primaryCategory
       }
-
       this.firstResourceLink = viewerRouteGenerator(
         firstPlayableContent.identifier,
         firstPlayableContent.mimeType,
@@ -1528,7 +1564,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
       )
 
       /* tslint:disable-next-line */
-      console.log(this.firstResourceLink, '=====> home first data link <========')
+
       if (firstPlayableContent.optionalReading && firstPlayableContent.primaryCategory === 'Learning Resource') {
         this.updateProgress(2, firstPlayableContent.identifier)
       }
@@ -1763,7 +1799,7 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     return returnValue
   }
 
-  public handleParseJsonData(s: string) {
+  public handleParseJsonData(s: any) {
     try {
       const parsedString = JSON.parse(s)
       return parsedString
@@ -1904,6 +1940,9 @@ export class AppTocHomeComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
     if (this.resumeDataSubscription) {
       this.resumeDataSubscription.unsubscribe()
+    }
+    if (this.timerUnsubscribe) {
+      this.timerUnsubscribe.unsubscribe()
     }
   }
 

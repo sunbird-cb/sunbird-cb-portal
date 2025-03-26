@@ -225,6 +225,10 @@
                                     <ws-widget-skeleton-loader [bindingClass]="'flex rounded blue-loader'" [width]="'40px'"
                                         [height]="'28px'"></ws-widget-skeleton-loader>
                                 </ng-container>
+                                <!-- {{ elem | json }} ------ "elemmm"
+                                
+                                {{ competency[elem?.name] | json }}
+                                {{ competency[elem?.name].length }} //// -->
                                 <ng-container *ngIf="!competency.skeletonLoading">
                                     <div class="text-xl font-semibold">{{ competency[elem?.name].length || '0' }}</div>
                                 </ng-container>
@@ -243,6 +247,9 @@
                                     [height]="'28px'"></ws-widget-skeleton-loader>
                             </ng-container>
                             <ng-container *ngIf="!competency.skeletonLoading">
+                                <!-- {{ (competency[elem?.name + 'SubTheme']) }} --------
+                                {{ elem.competencySubTheme }}  ++++
+                                {{ elem | json }}/// -->
                                 <div class="text-base font-semibold">{{ (competency[elem?.name + 'SubTheme'] || elem.competencySubTheme) || '0' }}</div>
                             </ng-container>
                         </div>

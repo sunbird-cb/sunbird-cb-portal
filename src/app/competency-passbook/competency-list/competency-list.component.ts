@@ -63,7 +63,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   leftCardDetails: any = [{
     name: this.TYPE_CONST.behavioral.value,
     label: this.TYPE_CONST.behavioral.capsValue,
-    type: 'Behavioral',
+    type: 'Behavioural',
     total: 0,
     competencySubTheme: 0,
     contentConsumed: 0,
@@ -152,6 +152,7 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   getUserEnrollmentList(): void {
+
     const enrollmentMapData = JSON.parse(localStorage.getItem('enrollmentMapData') as any)
     const userId: any = this.configService && this.configService.userProfile && this.configService.userProfile.userId
     this.widgetService.fetchUserBatchList(userId)
@@ -159,13 +160,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: any) => {
           let competenciesV5: any[] = []
-
           response.courses.forEach((eachCourse: any) => {
             // To eliminate In progress or Yet to start courses...
             if (enrollmentMapData[eachCourse.contentId].status !== 2) { return }
 
             if (eachCourse.content && eachCourse.content.competencies_v5) {
               competenciesV5 = [...competenciesV5, ...eachCourse.content.competencies_v5]
+              // console.log(competenciesV5, "competenciesV5------")
             }
 
             const courseDetails = {
@@ -183,7 +184,6 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
             } else {
               eachCourse.issuedCertificates.push(courseDetails)
             }
-
             if ((eachCourse.content.competencies_v5 && eachCourse.content.competencies_v5.length)) {
               const subThemeMapping: any = {}
               eachCourse.content.competencies_v5.forEach((v5Obj: any) => {
@@ -270,13 +270,13 @@ export class CompetencyListComponent implements OnInit, OnDestroy {
   }
 
   getOtherData(): void {
+
     this.competency.all.forEach((allObj: any) => {
       allObj.issuedCertificates = this.certificateMappedObject[allObj.competencyTheme].certificate
       allObj.contentConsumed = this.certificateMappedObject[allObj.competencyTheme].contentConsumed
       allObj.courseSubThemes = this.certificateMappedObject[allObj.competencyTheme].subThemes
       // tslint:disable-next-line: max-line-length
       allObj['latest'] = (this.certificateMappedObject[allObj.competencyTheme].completedOn.length) ? Math.max(...this.certificateMappedObject[allObj.competencyTheme].completedOn) : null
-
       this.leftCardDetails.forEach((_lObj: any) => {
         if (_lObj.type === allObj.competencyArea) {
           _lObj.competencySubTheme += allObj.subTheme.length

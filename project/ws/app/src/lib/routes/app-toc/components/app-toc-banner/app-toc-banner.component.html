@@ -128,7 +128,7 @@
         </h3>
       </ng-container>
     </div>
-    <ng-container *ngIf="batchData && batchData?.content?.length && batchData?.content[0]?.batchAttributes?.batchLocationDetails">
+    <!-- <ng-container *ngIf="batchData && batchData?.content?.length && batchData?.content[0]?.batchAttributes?.batchLocationDetails">
       <div class="flex items-center location-wrapper">
         <div>
           <mat-icon class="location-icon">
@@ -138,7 +138,7 @@
             {{batchData?.content[0]?.batchAttributes?.batchLocationDetails}}
         </div>
       </div>
-    </ng-container>
+    </ng-container> -->
   </div>
   <ng-container *ngIf="batchData && !batchData?.enrolled && batchData?.content?.length" [ngTemplateOutlet]="statusMsg"></ng-container>
 </ng-container>

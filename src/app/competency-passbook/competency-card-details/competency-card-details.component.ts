@@ -11,6 +11,8 @@ import { CompetencyPassbookService } from '../competency-passbook.service'
 import { TranslateService } from '@ngx-translate/core'
 import { MultilingualTranslationsService, EventService, WsEvents  } from '@sunbird-cb/utils-v2'
 import { environment } from 'src/environments/environment'
+import { MatDialog } from '@angular/material'
+import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
 
 @Component({
   selector: 'ws-competency-card-details',
@@ -37,6 +39,7 @@ export class CompetencyCardDetailsComponent implements OnInit, AfterViewInit, On
     private translate: TranslateService,
     private langtranslations: MultilingualTranslationsService,
     private events: EventService,
+    private dialog: MatDialog,
   ) {
     this.langtranslations.languageSelectedObservable.subscribe(() => {
       if (localStorage.getItem('websiteLanguage')) {
@@ -58,8 +61,8 @@ export class CompetencyCardDetailsComponent implements OnInit, AfterViewInit, On
         this.certificateData.forEach((obj: any) => {
           obj.courseName = obj.courseName.charAt(0).toUpperCase() + obj.courseName.slice(1)
           if (obj.identifier) {
-            obj['loading'] = true
-            this.getCertificateSVG(obj)
+            obj['loading'] = false
+            // this.getCertificateSVG(obj)
             this.updatedTime =  this.updatedTime ? (new Date(this.updatedTime) > new Date(obj.lastIssuedOn)) ?
             this.updatedTime : obj.lastIssuedOn : obj.lastIssuedOn
           }
@@ -78,20 +81,35 @@ export class CompetencyCardDetailsComponent implements OnInit, AfterViewInit, On
     })
   }
 
-  getCertificateSVG(obj: any): void {
+  getCertificateSVG(obj: any, type?: string): void {
     // tslint: disable-next-line
-    this.cpService.fetchCertificate(obj.identifier)
-      .pipe(takeUntil(this.destroySubject$))
-      .subscribe(res => {
-        // tslint: disable-next-line
-        obj['printURI'] = res.result.printUri
-        obj['loading'] = false
-      },         (error: HttpErrorResponse) => {
-        if (!error.ok) {
+        obj['loading'] = true
+        if (obj && obj.printURI) {
+          if (type === 'DOWNLOAD') {
+            this.handleDownloadCertificatePDF(obj.printURI)
+          }
+          if (type === 'SHARE') {
+            this.shareCertificate(obj.identifier)
+          }
           obj['loading'] = false
-          obj['error'] = 'Failed to fetch Certificate'
+        } else {
+          this.cpService.fetchCertificate(obj.identifier)
+          .pipe(takeUntil(this.destroySubject$))
+          .subscribe(res => {
+            // tslint: disable-next-line
+            obj['printURI'] = res.result.printUri
+            obj['loading'] = false
+            this.dialog.open(CertificateDialogComponent, {
+              width: '1200px',
+              data: { cet: res.result.printUri, certId: obj.identifier },
+            })
+          },         (error: HttpErrorResponse) => {
+            if (!error.ok) {
+              obj['loading'] = false
+              obj['error'] = 'Failed to fetch Certificate'
+            }
+          })
         }
-      })
   }
 
   async handleDownloadCertificatePDF(uriData: any): Promise<void> {

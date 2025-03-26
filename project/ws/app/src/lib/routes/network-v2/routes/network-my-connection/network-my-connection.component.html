@@ -23,16 +23,16 @@
         </div>
     </div>
     <div class="flex flex-1 mb-4">
-        <mat-card class="flex-1 remove-botton-radius min-height">
+        <mat-card class="flex-1 remove-botton-radius">
             <mat-card-header>
                 <mat-card-title class="w-full margin-l-0 f-medium">
-                    <h2 *ngIf="data && data.length && !enableSearchFeature && data.length > 1 ">{{data.length}}
+                    <h2 *ngIf="filterdData && filterdData.length && !enableSearchFeature && filterdData.length > 1 ">{{filterdData.length}}
                          {{ 'common.connections' | translate }}</h2>
-                    <h2 *ngIf="data && data.length && !enableSearchFeature && data.length === 1">{{data.length}}
+                    <h2 *ngIf="filterdData && filterdData.length && !enableSearchFeature && filterdData.length === 1">{{filterdData.length}}
                         {{ 'common.connection' | translate }}</h2>
-                    <h2 *ngIf="data && data.length && enableSearchFeature">{{data.length}}
+                    <h2 *ngIf="filterdData && filterdData.length && enableSearchFeature">{{filterdData.length}}
                         {{ 'msg.searchResult' | translate }}</h2>
-                    <h4 class="w-full text-center ws-mat-black60-text" *ngIf="data && data.length <= 0">{{ 'msg.noConnectionFound' | translate }}</h4>
+                    <h4 class="w-full text-center ws-mat-black60-text" *ngIf="filterdData && !enableSearchFeature && filterdData.length <= 0">{{ 'msg.noConnectionFound' | translate }}</h4>
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content class="margin-left-m mb-0-imp">
@@ -41,23 +41,25 @@
                         <ws-app-careers-card class="w-fix" [discuss]="discuss"></ws-app-careers-card>
                     </div>
                 </ng-container> -->
-                <ng-container *ngIf="data && data.length && currentFilter !== 'timestamp'">
+                <ng-container *ngIf="filterdData && filterdData.length && currentFilter !== 'timestamp'">
                     <ng-container
-                        *ngFor="let user of data | pipeFilterSearch: searchInput.value: 'fullName':'surname' ">
+                        *ngFor="let user of filterdData">
                         <ws-app-my-connection-card class="mr-4 mb-5" [user]="user" *ngIf="user !== -1">
                         </ws-app-my-connection-card>
                         <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">
                             {{ 'network.noSearchResultFound' | translate }}</h4>
                     </ng-container>
                 </ng-container>
-                <ng-container *ngIf="data && data.length && currentFilter === 'timestamp'">
+                <ng-container *ngIf="filterdData && filterdData.length && currentFilter === 'timestamp'">
                     <ng-container
-                        *ngFor="let user of data | pipeFilterSearch: searchInput.value: 'fullName':'surname' ">
+                        *ngFor="let user of filterdData">
                         <ws-app-my-connection-card class="mr-4 mb-5" [user]="user" *ngIf="user !== -1">
                         </ws-app-my-connection-card>
-                        <h4 class="w-full text-center ws-mat-black60-text" *ngIf="user === -1">{{ 'network.noSearchResultFound' | translate }}
-                        </h4>
                     </ng-container>
+                </ng-container>
+                <ng-container *ngIf="enableSearchFeature && filterdData.length === 0">
+                    <h4 class="w-full text-center ws-mat-black60-text">{{ 'network.noSearchResultFound' | translate }}
+                    </h4>
                 </ng-container>
             </mat-card-content>
             <mat-card-actions align="center">

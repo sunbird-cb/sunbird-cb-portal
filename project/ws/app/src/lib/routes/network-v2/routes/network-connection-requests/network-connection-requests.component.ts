@@ -21,6 +21,8 @@ export class NetworkConnectionRequestsComponent implements OnInit {
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
   datalist: any[] = []
+  filterdData: any[] = []
+  enableSearchFeature = false
   constructor(
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
@@ -40,6 +42,7 @@ export class NetworkConnectionRequestsComponent implements OnInit {
           }
           return v
         })
+        this.filterdData = this.data
       }
       this.langtranslations.languageSelectedObservable.subscribe(() => {
         if (localStorage.getItem('websiteLanguage')) {
@@ -55,6 +58,16 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     if (this.datalist && this.datalist.length > 0) {
       this.filter('timestamp', 'desc')
     }
+
+    this.queryControl.valueChanges.subscribe(val => {
+      if (val.length === 0) {
+        this.filterdData = this.data
+        this.enableSearchFeature = false
+      } else {
+        this.filterdData = this.data.filter((user: any) => user.fullName.toLowerCase().includes(val.toLowerCase()))
+        this.enableSearchFeature = true
+      }
+    })
   }
 
   translateHub(hubName: string): string {
@@ -73,12 +86,12 @@ export class NetworkConnectionRequestsComponent implements OnInit {
       this.currentFilter = key
       this.currentFilterSort = order
       if (this.currentFilter === 'timestamp') {
-        this.data = this.datalist
-        this.data.sort((a: any, b: any) => {
+        // this.filterdData = this.datalist
+        this.filterdData.sort((a: any, b: any) => {
           return a.id.toLowerCase().localeCompare(b.id.toLowerCase())
         })
       } else {
-        this.data.sort((a: any, b: any) => {
+        this.filterdData.sort((a: any, b: any) => {
           return a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
         })
       }

@@ -34,7 +34,7 @@
     </div>
     <div class="flex" *ngIf="isTypeOfCollection">
       <div class="flex flex-1 flex-col  margin-right-l progress-container"
-        *ngIf="collectionId && hierarchyMapData && !loadingOverallPRogress">
+        *ngIf="collectionId && hierarchyMapData && !loadingOverallPRogress && !forPreview">
         <div class="flex flex-row justify-between w-ful">
           <div class="flex items-center mb-2">
             <span class="mat-body-2 mr-2">{{'playerbrief.items' | translate}}
@@ -48,7 +48,7 @@
           [progressType]="'percentage'" [customClassName]="'viewer-progress'">
         </ws-widget-content-progress>
       </div>
-      <ng-container *ngIf="loadingOverallPRogress">
+      <ng-container *ngIf="loadingOverallPRogress && !forPreview">
         <div class="flex flex-1 flex-col  margin-right-l progress-container">
           <div class="flex flex-row justify-between w-full ws-mat-white-text">
             <div class="flex items-center" style="width: 100%;">
@@ -57,7 +57,6 @@
                   [bindingClass]="'rounded mb-2'"></ws-widget-skeleton-loader>
               </span>
             </div>
-
             <span class="mat-body-2  ws-mat-white-text">
               <ws-widget-skeleton-loader [width]="'20px'" [height]="'16px'"
                 [bindingClass]="'rounded mb-2'"></ws-widget-skeleton-loader>
@@ -75,9 +74,9 @@
       </ng-container>
 
       <div color="secondary" class="flex mat-body-2 flex-middle font-bold-imp px-2 cursor-pointer" (click)="openFeedbackDialog()">
-        <mat-icon
+        <mat-icon *ngIf="!forPreview"
           class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2 blue-color">star</mat-icon>
-        <ng-container *ngIf="!userRating">
+        <ng-container *ngIf="!userRating && !forPreview">
           <span class="mr-1 blue-color">{{'apptocsinglepage.rateNow' | translate}}</span>
           <!-- <span class="lowercase">
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
@@ -89,11 +88,11 @@
             </ng-container>
           </span> -->
         </ng-container>
-        <ng-container *ngIf="userRating">
+        <ng-container *ngIf="userRating && !forPreview">
           <span class="mr-1 blue-color"> {{'apptocsinglepage.editRating' | translate}} </span>
         </ng-container>
       </div>
-      <div (click)="onClickOfShare()" *ngIf="canShare"
+      <div (click)="onClickOfShare()" *ngIf="canShare && !forPreview"
         class="flex flex-row cursor-pointer items-center justify-end gap-2 share-tag margin-left-l">
         <mat-icon class="blue-color">share</mat-icon>
         <span class="blue-color">{{'apptocsinglepage.share' | translate}}</span>
@@ -102,7 +101,7 @@
   </mat-toolbar>
 </ng-container>
 
-<ng-container *ngIf="isMobile">
+<ng-container *ngIf="isMobile  && !forPreview">
   <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles" class="mat-primary cheight viewer-top">
     <div class="flex justify-around items-end width-100">
       <div class="flex flex-1 flex-col  margin-right-l progress-container" 
@@ -152,7 +151,7 @@
       <div color="secondary" class="flex mat-body-2 flex-middle font-bold-imp px-2" (click)="openFeedbackDialog()">
         <mat-icon
           class=" icon-margin mat-icon notranslate material-icons mat-icon-no-color mr-2 blue-color">star</mat-icon>
-        <ng-container *ngIf="!userRating">
+        <ng-container *ngIf="!userRating && !forPreview">
           <span class="mr-1 blue-color">{{'apptocsinglepage.rateNow' | translate}}</span>
           <!-- <span class="lowercase">
             <ng-container *ngIf="content?.primaryCategory === primaryCategory.PROGRAM">
@@ -164,7 +163,7 @@
             </ng-container>
           </span> -->
         </ng-container>
-        <ng-container *ngIf="userRating">
+        <ng-container *ngIf="userRating && !forPreview">
           <span> {{'apptocsinglepage.editRating' | translate}} </span>
         </ng-container>
       </div>

@@ -241,6 +241,7 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   applyFilter(filter: any) {
+    // debugger
     // let isFilterCheccked = false
     let isModeratedFilterChecked = false
     if (filter && filter.length > 0) {
@@ -411,11 +412,14 @@ export class LearnSearchComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.extSearchRequestObject.searchString = data.request.query
       const resExtSearch = await this.searchSrvc.fetchSearchDataforCios(this.extSearchRequestObject).toPromise().catch(_error => {})
+      const checkQuey: any = this.activated.queryParams
+      if ((this.myFilters && this.myFilters.length === 0) && (checkQuey && checkQuey._value && checkQuey._value.q)) {
         if (resExtSearch && resExtSearch.data && resExtSearch.data.length > 0) {
           resExtSearch.data.forEach((ele: any) => {
             this.searchResults.unshift(ele)
           })
         }
+      }
       this.totalResults = (response.result.count) ? response.result.count : this.searchResults.length
       // this.facets = response.result.facets
       this.primaryCategoryType = []

@@ -73,6 +73,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
   pageScrollSubscription: Subscription | null = null
   coursePrimaryCategory: any = ''
   compatibilityLevel = 0
+  loadAllHierarchyData = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -134,7 +135,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getTocConfig()
     // for left side player scroll on right side resource click
     // this.pageScrollSubscription = this.tocSvc.updatePageScroll.subscribe((value: boolean) => {
@@ -164,7 +165,7 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.compatibilityLevel = contentData.result.content.children[0]['compatibilityLevel']
       }
       this.hierarchyData = contentData.result.content
-      this.manipulateHierarchyData()
+      await this.manipulateHierarchyData()
       this.resetAndFetchTocStructure()
       this.leafNodesCount = contentData.result.content.leafNodesCount
     }
@@ -177,7 +178,9 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
           content: [enrolledCourseData.batch],
           enrolled: true,
         }
-        this.tocSvc.mapSessionCompletionPercentage(this.batchData)
+        if (!this.forPreview) {
+         this.tocSvc.mapSessionCompletionPercentage(this.batchData)
+        }
       }
 
     }
@@ -209,8 +212,9 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
 
     })
-
-    this.getAuthDataIdentifer()
+    if (this.collectionId) {
+      this.getAuthDataIdentifer()
+    }
     // this.getEnrollmentList()
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
@@ -356,9 +360,18 @@ export class ViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  manipulateHierarchyData() {
-    this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
-    // this.hierarchyMapData = this.tocSvc.callHirarchyProgressHashmap(this.hierarchyData)
+  async manipulateHierarchyData() {
+    if (!this.forPreview) {
+      this.tocSvc.mapCompletionPercentageProgram(this.hierarchyData, this.enrollmentList.courses)
+    } else {
+      this.loadAllHierarchyData = true
+      this.tocSvc.contentLoader.next(true)
+      await this.tocSvc.fetchCourseHeirarchy(this.hierarchyData)
+      this.tocSvc.contentLoader.next(false)
+      this.tocSvc.checkModuleWiseData(this.hierarchyData)
+      this.tocSvc.createHirarchyProgressHashmap(this.hierarchyData)
+      this.loadAllHierarchyData = false
+    }
   }
 
   resetAndFetchTocStructure() {

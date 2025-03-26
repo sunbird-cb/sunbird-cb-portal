@@ -66,6 +66,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
             isCorrect: false,
           },
         ],
+        choices: [],
       },
     ],
     isAssessment: false,
@@ -219,12 +220,12 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       this.isXsmall = isXSmall
     })
 
-    this.quizSvc.checkAlreadySubmitAssessment.subscribe(result => {
-      if (result) {
-        this.isSubmitted = true
-        this.viewState = 'answer' || 'review'
-      }
-    })
+    // this.quizSvc.checkAlreadySubmitAssessment.subscribe(result => {
+    //   if (result) {
+    //     this.isSubmitted = true
+    //     this.viewState = 'answer' || 'review'
+    //   }
+    // })
   }
 
   retakeAssessment() {
@@ -406,6 +407,10 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
     this.markedQuestions = new Set([])
     this.questionAnswerHash = {}
     this.questionVisitedData = []
+    if (this.assessmentType === 'optionalWeightage') {
+      this.quizJson.questions  = []
+    }
+
     this.fetchingSectionsStatus = 'fetching'
     if (this.quizSvc.paperSections && this.quizSvc.paperSections.value
       && _.get(this.quizSvc.paperSections, 'value.questionSet.children')) {
@@ -623,6 +628,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
                 questionLevel: q.questionLevel,
                 marks: q.totalMarks,
                 rhsChoices: this.getRhsValue(q),
+                choices: q.choices ? q.choices : [],
               })
             }
           })
@@ -1387,70 +1393,77 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
   }
   async submitQuiz() {
     this.raiseTelemetry('quiz', null, 'submit')
-    if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
-      this.showOverlay = true
-      setTimeout(() => {
-        this.showOverlay = false
-        this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
-      },         5000)
-    } else {
-      this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
-    }
-
-    this.isSubmitted = true
-    this.ngOnDestroy()
-    if (!this.quizJson.isAssessment) {
-      this.viewState = 'review'
-      // this.calculateResults()
-    } else {
-      this.viewState = 'answer'
-    }
     
-    let allPromiseResolvedCount = 0
-    if(this.paperSections && this.paperSections.length) {
-      for(let i =0 ; i< this.paperSections.length;i++) {
-        let section = this.paperSections[i];
-        const lst = _.chunk(section.childNodes || [], 1000)
-        const prom: any[] = []
-        _.each(lst, l => {
-          prom.push(this.getMultiQuestions(l))
-        })
-        Promise.all(prom).then(qqr => {
-          console.log('qqr', qqr)
-          allPromiseResolvedCount++;
-          const question = { questions: _.flatten(_.map(qqr, 'result.questions')) }
-          const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
-          // console.log(this.quizSvc.secAttempted.value)
-          _.eachRight(question.questions, q => {
-            // const qHtml = document.createElement('div')
-            // qHtml.innerHTML = q.editorState.question
-            if (codes.indexOf(section.identifier) === -1) {
-              this.quizJson.questions.push({
-                section: section.identifier,
-                question: q.body, // qHtml.textContent || qHtml.innerText || '',
-                multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
-                questionType: (q.qType || '').toLowerCase(),
-                questionId: q.identifier,
-                instructions: null,
-                options: this.getOptions(q),
-                editorState: q.editorState,
-                questionLevel: q.questionLevel,
-                marks: q.totalMarks,
-                rhsChoices: this.getRhsValue(q),
-              })
+    if(this.assessmentType !== 'optionalWeightage') {
+      if (this.primaryCategory !== NsContent.EPrimaryCategory.PRACTICE_RESOURCE) {
+        this.showOverlay = true
+        setTimeout(() => {
+          this.showOverlay = false
+          this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
+        },         5000)
+      } else {
+        this.viewerHeaderSideBarToggleService.visibilityStatus.next(true)
+      }
+  
+      this.isSubmitted = true
+      this.ngOnDestroy()
+      if (!this.quizJson.isAssessment) {
+        this.viewState = 'review'
+        // this.calculateResults()
+      } else {
+        this.viewState = 'answer'
+      }
+      
+      let allPromiseResolvedCount = 0
+      if(this.paperSections && this.paperSections.length) {
+        for(let i =0 ; i< this.paperSections.length;i++) {
+          let section = this.paperSections[i];
+          const lst = _.chunk(section.childNodes || [], 1000)
+          const prom: any[] = []
+          _.each(lst, l => {
+            prom.push(this.getMultiQuestions(l))
+          })
+          Promise.all(prom).then(qqr => {
+            console.log('qqr', qqr)
+            allPromiseResolvedCount++;
+            const question = { questions: _.flatten(_.map(qqr, 'result.questions')) }
+            const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
+            // console.log(this.quizSvc.secAttempted.value)
+            _.eachRight(question.questions, q => {
+              // const qHtml = document.createElement('div')
+              // qHtml.innerHTML = q.editorState.question
+              if (codes.indexOf(section.identifier) === -1) {
+                this.quizJson.questions.push({
+                  section: section.identifier,
+                  question: q.body, // qHtml.textContent || qHtml.innerText || '',
+                  multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
+                  questionType: (q.qType || '').toLowerCase(),
+                  questionId: q.identifier,
+                  instructions: null,
+                  options: this.getOptions(q),
+                  editorState: q.editorState,
+                  questionLevel: q.questionLevel,
+                  marks: q.totalMarks,
+                  rhsChoices: this.getRhsValue(q),
+                  choices: q.choices ? q.choices : []
+                })
+              }
+            })
+           
+            
+            if(this.paperSections && this.paperSections.length === allPromiseResolvedCount) {
+              // console.log('this.quizJson',this.quizJson)
+              // console.log('this.generateRequest',this.generateRequest)
+              this.submitAfterAllPromiseResolved();
             }
           })
-         
-          
-          if(this.paperSections && this.paperSections.length === allPromiseResolvedCount) {
-            // console.log('this.quizJson',this.quizJson)
-            // console.log('this.generateRequest',this.generateRequest)
-            this.submitAfterAllPromiseResolved();
-          }
-        })
+        }
+             
       }
-           
+    } else {
+      this.submitQuizForOptionWeightage()
     }
+    
 
     // this.quizSvc.submitQuizV3(this.generateRequest).subscribe(
     //   (res: NSPractice.IQuizSubmitResponseV2) => {
@@ -1496,18 +1509,97 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         }
       }
     } else {
-      const quizV4Res: any = await this.quizSvc.submitQuizV5(this.generateRequest).toPromise().catch(_error => {})
-      if (quizV4Res && quizV4Res.params && quizV4Res.params.status.toLowerCase() === 'success') {
-        if (quizV4Res.result.primaryCategory === 'Course Assessment') {
-          setTimeout(() => {
-            this.getQuizResult()
-          },         environment.quizResultTimeout)
-        } else if (quizV4Res.result.primaryCategory === 'Practice Question Set') {
-          this.assignQuizResult(quizV4Res.result)
+      if(this.selectedAssessmentCompatibilityLevel >=8) {
+        const quizV4Res: any = await this.quizSvc.submitQuizV6(this.generateRequest).toPromise().catch(_error => {})
+        if (quizV4Res && quizV4Res.params && quizV4Res.params.status.toLowerCase() === 'success') {
+          if (quizV4Res.result.primaryCategory === 'Course Assessment') {
+            setTimeout(() => {
+              this.getQuizResult()
+            },         environment.quizResultTimeout)
+          } else if (quizV4Res.result.primaryCategory === 'Practice Question Set') {
+            this.assignQuizResult(quizV4Res.result)
+          }
+        }
+      } else {
+        const quizV4Res: any = await this.quizSvc.submitQuizV5(this.generateRequest).toPromise().catch(_error => {})
+        if (quizV4Res && quizV4Res.params && quizV4Res.params.status.toLowerCase() === 'success') {
+          if (quizV4Res.result.primaryCategory === 'Course Assessment') {
+            setTimeout(() => {
+              this.getQuizResult()
+            },         environment.quizResultTimeout)
+          } else if (quizV4Res.result.primaryCategory === 'Practice Question Set') {
+            this.assignQuizResult(quizV4Res.result)
+          }
         }
       }
+      
     }
   }
+
+  async submitQuizForOptionWeightage() {
+    let allPromiseResolvedCount = 0
+    if(this.paperSections && this.paperSections.length) {
+      for(let i =0 ; i< this.paperSections.length;i++) {
+        let section = this.paperSections[i];
+        const lst = _.chunk(section.childNodes || [], 1000)
+        const prom: any[] = []
+        _.each(lst, l => {
+          prom.push(this.getMultiQuestions(l))
+        })
+        Promise.all(prom).then(qqr => {
+          console.log('qqr', qqr)
+          allPromiseResolvedCount++;
+          const question = { questions: _.flatten(_.map(qqr, 'result.questions')) }
+          const codes = _.compact(_.map(this.quizJson.questions, 'section') || [])
+          // console.log(this.quizSvc.secAttempted.value)
+          _.eachRight(question.questions, q => {
+            // const qHtml = document.createElement('div')
+            // qHtml.innerHTML = q.editorState.question
+            if (codes.indexOf(section.identifier) === -1) {
+              this.quizJson.questions.push({
+                section: section.identifier,
+                question: q.body, // qHtml.textContent || qHtml.innerText || '',
+                multiSelection: ((q.qType || '').toLowerCase() === 'mcq-mca' ? true : false),
+                questionType: (q.qType || '').toLowerCase(),
+                questionId: q.identifier,
+                instructions: null,
+                options: this.getOptions(q),
+                editorState: q.editorState,
+                questionLevel: q.questionLevel,
+                marks: q.totalMarks,
+                rhsChoices: this.getRhsValue(q),
+                choices: q.choices ? q.choices : []
+              })
+            }
+          })
+         
+          
+          if(this.paperSections && this.paperSections.length === allPromiseResolvedCount) {
+            // console.log('this.quizJson',this.quizJson)
+            // console.log('this.generateRequest',this.generateRequest)
+            this.submitAfterAllPromiseResolvedForOptionWeightage();
+          }
+        })
+      }
+           
+    }
+  }
+
+  async submitAfterAllPromiseResolvedForOptionWeightage() {
+    if (this.selectedAssessmentCompatibilityLevel < 7) {
+      await this.quizSvc.submitQuizV4(this.generateRequest).toPromise().catch(_error => {})
+     
+    } else {
+      if (this.selectedAssessmentCompatibilityLevel >= 8) {
+        await this.quizSvc.submitQuizV6(this.generateRequest).toPromise().catch(_error => {}) 
+      } else {
+        await this.quizSvc.submitQuizV5(this.generateRequest).toPromise().catch(_error => {}) 
+      }
+          
+    }
+    this.updateProgress(2)
+  }
+
   showAnswers() {
     this.showMtfAnswers()
     this.showFitbAnswers()
@@ -1685,7 +1777,19 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
         
         // this.init()
         if(this.selectedAssessmentCompatibilityLevel < 7) {
-          this.init()
+          // this.init()
+          if(this.ePrimaryCategory.FINAL_ASSESSMENT == this.primaryCategory) {
+            this.quizSvc.canAttend(this.identifier).subscribe(response => {
+              if (response) {
+                  this.canAttempt = response
+                //  this.canAttempt = {
+                //   attemptsAllowed: 1,
+                //   attemptsMade: 0,
+                // }
+              }
+            })
+          }          
+          this.retakeAssessment()
         } else {      
           if(this.ePrimaryCategory.FINAL_ASSESSMENT == this.primaryCategory) {
             this.quizSvc.canAttendV5(this.identifier).subscribe(response => {
@@ -2020,6 +2124,7 @@ export class PracticeComponent implements OnInit, OnChanges, OnDestroy {
       if(this.secQuestions.length !== Object.keys(this.questionAnswerHash).length) {        
           this.openSnackbar('Please attempt the current question to move on next question.')        
       } else {
+        this.submitQuiz()
         this.showOverlay = true
         setTimeout(() => {
           this.showOverlay = false

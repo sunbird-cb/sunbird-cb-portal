@@ -355,7 +355,7 @@ export class ResultComponent implements OnInit, OnChanges {
         for (let i = 0; i < this.quizResponse.children.length; i++) {
           let sectionName:any = this.quizResponse.children[i]['name'];
               if(this.quizResponse.children.length === 1) {
-                sectionName = 'Default Section'
+                sectionName = sectionName ? sectionName : 'Default Section'
               } else {
                 if(i==0) {
                   sectionName = sectionName ? sectionName :'Section A'

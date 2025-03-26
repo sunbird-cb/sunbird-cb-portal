@@ -18,10 +18,13 @@ export class AppContentResolverService
         _state: RouterStateSnapshot,
     ): Observable<IResolveResponse<any>> {
         const collectionId = _route.queryParams && _route.queryParams.collectionId || ''
-        return this.contentSvc.fetchProgramContent(collectionId).pipe(
-        map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
-        tap((resolveData: any) => of({ error: null, data: resolveData })),
-        catchError((error: any) => of({ error, data: null })),
-        )
+        if (collectionId) {
+            return this.contentSvc.fetchProgramContent(collectionId).pipe(
+                map((rData: any) => ({ data: rData, error: null })), //  (rData.responseData || []).map((p: any) => p.name)
+                tap((resolveData: any) => of({ error: null, data: resolveData })),
+                catchError((error: any) => of({ error, data: null })),
+                )
+        }
+        return  of({ error: 'Collection Id not found', data: null })
     }
 }

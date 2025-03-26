@@ -11,6 +11,7 @@ const API_END_POINTS = {
   ASSESSMENT_SUBMIT_V3: `/apis/protected/v8/user/evaluate/assessment/submit/v3`,
   ASSESSMENT_SUBMIT_V4: `/apis/protected/v8/user/evaluate/assessment/submit/v4`,
   ASSESSMENT_SUBMIT_V5: `/apis/protected/v8/user/evaluate/assessment/submit/v5`,
+  ASSESSMENT_SUBMIT_V6: `/apis/protected/v8/user/evaluate/assessment/submit/v6`,
   ASSESSMENT_RESULT_V4: `/apis/proxies/v8/user/assessment/v4/result`,
   ASSESSMENT_RESULT_V5: `/apis/proxies/v8/user/assessment/v5/result`,
   QUESTION_PAPER_SECTIONS_V4: `/apis/proxies/v8/assessment/read`,
@@ -94,6 +95,12 @@ export class PracticeService {
 
   submitQuizV5(req: NSPractice.IQuizSubmit): Observable<any> {
     return this.http.post<{ result: NSPractice.IQuizSubmitResponseV2 }>(API_END_POINTS.ASSESSMENT_SUBMIT_V5, req).pipe(map(response => {
+      return response
+    }))
+  }
+
+  submitQuizV6(req: NSPractice.IQuizSubmit): Observable<any> {
+    return this.http.post<{ result: NSPractice.IQuizSubmitResponseV2 }>(API_END_POINTS.ASSESSMENT_SUBMIT_V6, req).pipe(map(response => {
       return response
     }))
   }

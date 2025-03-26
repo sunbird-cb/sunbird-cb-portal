@@ -32,7 +32,7 @@
                 <div class="flex flex-col gap-4 items-center p-5">
                     <img src="assets/icons/home/users.svg" alt="users icon img" />
                     <div class="text-center">{{ 'home.networkBuildConn' | translate }}</div>
-                    <button (click)="handleFindConnectionsTelemetry()" class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']" [queryParams]="{page: 'people_connection_request'}" >
+                    <button (click)="handleFindConnectionsTelemetry()" class="network-btn text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer tracking-wide" [routerLink]="['/app/network-v2']" [queryParams]="{page: 'people_connection_request'}" >
                         {{ 'home.networkFindConn' | translate }}
                     </button>
                 </div>

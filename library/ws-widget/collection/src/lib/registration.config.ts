@@ -181,6 +181,7 @@ import { CardEventHubModule } from './card-event-hub/card-event-hub.module'
 import { CardCompetencyComponent } from './card-competency/card-competency.component'
 import { CardCompetencyModule } from './card-competency/card-competency.module'
 import { TipsForLearnerModule } from './_common/tips-for-learner/tips-for-learner.module'
+import { SurveyFormModule } from './_common/survey-form-left-section/survey-form/survey-form.module'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -273,6 +274,7 @@ export const WIDGET_REGISTERED_MODULES = [
   CardEventHubModule,
   CardCompetencyModule,
   TipsForLearnerModule,
+  SurveyFormModule,
 ]
 
 export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] = [

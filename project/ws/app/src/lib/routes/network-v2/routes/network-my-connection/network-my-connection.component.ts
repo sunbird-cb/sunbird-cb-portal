@@ -21,6 +21,7 @@ export class NetworkMyConnectionComponent implements OnInit {
   enableSearchFeature = false
   datalist: any[] = []
   data: any[] = []
+  filterdData: any[] = []
   constructor(
     private route: ActivatedRoute,
     // private connectionHoverService: ConnectionHoverService,
@@ -54,8 +55,10 @@ export class NetworkMyConnectionComponent implements OnInit {
   ngOnInit() {
     this.queryControl.valueChanges.subscribe(val => {
       if (val.length === 0) {
+        this.filterdData = this.data
         this.enableSearchFeature = false
       } else {
+        this.filterdData = this.data.filter((user: any) => user.fullName.toLowerCase().includes(val.toLowerCase()))
         this.enableSearchFeature = true
       }
     })
@@ -73,6 +76,7 @@ export class NetworkMyConnectionComponent implements OnInit {
 
   getFullUserData() {
     this.data = this.datalist
+    this.filterdData = this.datalist
     // this.datalist.forEach((usr: any) => {
       // const userrId = usr.identifier || usr.id
       // if (userrId) {
@@ -102,12 +106,12 @@ export class NetworkMyConnectionComponent implements OnInit {
       this.currentFilter = key
       this.currentFilterSort = order
       if (this.currentFilter === 'timestamp') {
-        this.data = this.datalist
-        this.data.sort((a: any, b: any) => {
+        // this.filterdData = this.datalist
+        this.filterdData.sort((a: any, b: any) => {
           return a.id.toLowerCase().localeCompare(b.id.toLowerCase())
         })
       } else {
-        this.data.sort((a: any, b: any) => {
+        this.filterdData.sort((a: any, b: any) => {
           return a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
         })
       }

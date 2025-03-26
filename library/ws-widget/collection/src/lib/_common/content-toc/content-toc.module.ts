@@ -39,6 +39,7 @@ import { AppTocSessionCardNewComponent } from './app-toc-session-card-new/app-to
 import { AppTocSessionsNewComponent } from './app-toc-sessions-new/app-toc-sessions-new.component'
 import { AppTocContentCardV2SkeletonComponent } from './app-toc-content-card-v2-skeleton/app-toc-content-card-v2-skeleton.component'
 import { TruncatePipe } from './pipes/truncate.pipe'
+import { ReplaceNbspPipe } from './pipes/replace-nbsp.pipe'
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { TruncatePipe } from './pipes/truncate.pipe'
     AppTocSessionsNewComponent,
     AppTocContentCardV2SkeletonComponent,
     TruncatePipe,
+    ReplaceNbspPipe,
   ],
   imports: [
     CommonModule,

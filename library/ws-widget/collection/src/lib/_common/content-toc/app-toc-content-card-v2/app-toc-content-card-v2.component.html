@@ -72,7 +72,7 @@
                         <p class="margin-remove text-truncate mat-body-2 flex-auto font-bold"
                             [ngClass]="{'text-active': pathSet?.has(content?.identifier) && isEnrolled}">
                             <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
-                            {{ content?.name | truncate:8 }}
+                            {{ content?.name | truncate:40 }}
                             
                         </p>
                         <span class="content-type optional-span" *ngIf="content?.optionalReading">{{ 'playerbrief.optional' | translate | titlecase}} </span>
@@ -234,7 +234,7 @@
                             <div [ngClass]="{'collection-active-class': pathSet?.has(content?.identifier) && isEnrolled}"></div>
                             <p class="margin-remove text-truncate mat-subheading-1 flex-auto font-bold"
                                 [ngClass]="{'text-active': pathSet?.has(content.identifier) && isEnrolled}">
-                                {{index}}. {{ content?.name | truncate:8 }}
+                                {{index}}. {{ content?.name | truncate:40 }}
                             </p>
                             <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
                                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>

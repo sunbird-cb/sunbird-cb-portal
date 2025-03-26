@@ -1,4 +1,4 @@
-<mat-tab-group (selectedTabChange)="handleTabChange($event)" #stickyMenu [class.sticky-mat-tabs]="sticky" [selectedIndex]="selectedTabIndex" [ngClass]="fromViewer ? '' : 'content-tabs'">
+<mat-tab-group (selectedTabChange)="handleTabChange($event)" #stickyMenu [class.sticky-mat-tabs]="sticky" [selectedIndex]="selectedTabIndex" [ngClass]="{'content-tabs':!fromViewer,'contentSticky': forPreview}">
     <mat-tab label="{{ 'apptocsinglepage.about' | translate }}">
         <ws-widget-app-toc-about [fromViewer]="fromViewer" [pathSet]="pathSet" [content]="content" [tocStructure]="tocStructure" [config]="config"  [forPreview]="false" [sticky]="sticky" [selectedBatchData]="selectedBatchData" [selectedTabValue]="selectedTabIndex"
         [resumeData]="resumeData" [batchData]="batchData" [skeletonLoader]="skeletonLoader" [condition]="condition" [kparray]="kparray" [showReviews]="'true'"></ws-widget-app-toc-about>

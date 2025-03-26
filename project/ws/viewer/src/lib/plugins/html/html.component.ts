@@ -127,13 +127,17 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
     // this.fireRealTimeProgress()
 
     // call for both LMS and duration calculation content
-    this.fireRealTimeProgress(this.htmlContent)
+    if (!this.forPreview) {
+      this.fireRealTimeProgress(this.htmlContent)
+    }
 
     // if (!this.store.getItem('Initialized')) {
     //   this.fireRealTimeProgress(this.htmlContent)
     //   // this.store.clearAll()
     // }
-    this.sub.unsubscribe()
+    if (this.sub) {
+      this.sub.unsubscribe()
+    }
   }
 
   private fireRealTimeProgress(htmlContent: any) {
@@ -241,6 +245,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       ? this.configSvc.instanceConfig.intranetIframeUrls
       : []
     // For successive scorm resources, when switched to next content -  start
+
     if (!this.oldData) {
       this.oldData = this.htmlContent
     } else {
@@ -249,15 +254,22 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         //   this.fireRealTimeProgress(this.oldData)
         // }
         // call fireRealTimeProgress func for LMS data and non-LMS data also
-        this.fireRealTimeProgress(this.oldData)
-        this.sub.unsubscribe()
+        if (!this.forPreview) {
+          this.fireRealTimeProgress(this.oldData)
+        }
+        if (this.sub) {
+          this.sub.unsubscribe()
+        }
+
         this.ticks = 0
         this.timer = timer(1000, 1000)
         // subscribing to a observable returns a subscription object
         this.sub = this.timer.subscribe((t: any) => this.tickerFunc(t))
         this.oldData = this.htmlContent
         this.scormAdapterService.contentId = this.htmlContent.identifier
-        this.scormAdapterService.loadDataV2()
+        if (!this.forPreview) {
+          this.scormAdapterService.loadDataV2()
+        }
       }
     }
     // For successive scorm resources, when switched to next content - end
@@ -334,7 +346,9 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       //   a.click()
       //   URL.revokeObjectURL(objectUrl)
       // })
-      if (this.htmlContent.mimeType !== 'text/x-url' && this.htmlContent.mimeType !== 'video/x-youtube') {
+      if (this.htmlContent &&
+        this.htmlContent.mimeType !== 'text/x-url' &&
+        this.htmlContent.mimeType !== 'video/x-youtube') {
         // if (this.htmlContent.status === 'Live') {
         //   this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
         //     // `https://igot.blob.core.windows.net/content/content/html/${this.htmlContent.identifier}-latest/index.html`
@@ -348,35 +362,33 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
         //     `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
         //   )
         // }
-        if (this.htmlContent.streamingUrl && this.htmlContent.initFile) {
-          if (this.htmlContent.streamingUrl.includes('latest') && !this.htmlContent.initFile) {
-            this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-              // tslint:disable-next-line:max-line-length
-              `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-latest/index.html?timestamp='${new Date().getTime()}`
-            )
-          } else {
-            // `${this.htmlContent.streamingUrl}/${this.htmlContent.initFile}?timestamp='${new Date().getTime()}`)
+        if (this.htmlContent && this.htmlContent.streamingUrl) {
+        if (this.htmlContent.streamingUrl.includes(environment.azureHost)) {
+          this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.htmlContent.streamingUrl)
+        } else {
+          if (this.htmlContent.streamingUrl && this.htmlContent.initFile) {
             this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
               // tslint:disable-next-line:max-line-length
               `${this.generateUrl(this.htmlContent.streamingUrl)}/${this.htmlContent.initFile}?timestamp='${new Date().getTime()}`
             )
-          }
-        } else {
-          if (environment.production) {
-            this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-              // tslint:disable-next-line: max-line-length
-              // `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
-              // tslint:disable-next-line: max-line-length
-              `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
-            )
           } else {
-            this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-              // tslint:disable-next-line: max-line-length
-              // `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
-              // tslint:disable-next-line: max-line-length
-              `/abcd/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
-            )
+            if (environment.production) {
+              this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+                // tslint:disable-next-line: max-line-length
+                // `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+                // tslint:disable-next-line: max-line-length
+                `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+              )
+            } else {
+              this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
+                // tslint:disable-next-line: max-line-length
+                // `${environment.azureHost}/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+                // tslint:disable-next-line: max-line-length
+                `/abcd/${environment.azureBucket}/content/html/${this.htmlContent.identifier}-snapshot/index.html?timestamp='${new Date().getTime()}`
+              )
+            }
           }
+        }
         }
       } else {
         setTimeout(
@@ -487,39 +499,41 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
 
   raiseTelemetry(data1: any) {
     // if (this.forPreview) { return }
-    let data: any
-    if (this.htmlContent) {
-      if (typeof data1 === 'string' || data1 instanceof String) {
-        data = JSON.parse(data1.toString())
-      } else {
-        data = { ...data1 }
-      }
-      /* tslint:disable-next-line */
-      if (this.activatedRoute.snapshot.queryParams.collectionId) {
-        this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
-      }
-      this.events.raiseInteractTelemetry(
-        {
-          type: data.event || data.type || 'type',
-          subType: 'scorm',
-          id: this.htmlContent.identifier,
-        },
-        {
-          ...data,
-          // contentId: this.htmlContent.identifier,
-          // contentType: this.htmlContent.primaryCategory,
-          id: this.htmlContent.identifier,
-          type: this.htmlContent.primaryCategory,
-          context: this.htmlContent.context,
-          rollup: {
-            l1: this.collectionId || '',
+    if (!this.forPreview) {
+      let data: any
+      if (this.htmlContent) {
+        if (typeof data1 === 'string' || data1 instanceof String) {
+          data = JSON.parse(data1.toString())
+        } else {
+          data = { ...data1 }
+        }
+        /* tslint:disable-next-line */
+        if (this.activatedRoute.snapshot.queryParams.collectionId) {
+          this.collectionId = this.activatedRoute.snapshot.queryParams.collectionId
+        }
+        this.events.raiseInteractTelemetry(
+          {
+            type: data.event || data.type || 'type',
+            subType: 'scorm',
+            id: this.htmlContent.identifier,
           },
-          ver: `${this.htmlContent.version}${''}`,
-        },
-        {
-          pageIdExt: `${_.camelCase(this.htmlContent.primaryCategory)}`,
-          module: _.camelCase(this.htmlContent.primaryCategory),
-        })
+          {
+            ...data,
+            // contentId: this.htmlContent.identifier,
+            // contentType: this.htmlContent.primaryCategory,
+            id: this.htmlContent.identifier,
+            type: this.htmlContent.primaryCategory,
+            context: this.htmlContent.context,
+            rollup: {
+              l1: this.collectionId || '',
+            },
+            ver: `${this.htmlContent.version}${''}`,
+          },
+          {
+            pageIdExt: `${_.camelCase(this.htmlContent.primaryCategory)}`,
+            module: _.camelCase(this.htmlContent.primaryCategory),
+          })
+      }
     }
   }
 
@@ -537,6 +551,7 @@ export class HtmlComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     const newUrl = newLink.join('/')
-    return newUrl
+    return  newUrl
   }
+
 }

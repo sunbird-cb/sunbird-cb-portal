@@ -11,6 +11,11 @@
 
 ::ng-deep.course-survey .lib-container{
     height: 100% !important;
+    @media screen and (max-width: 430px) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 1rem !important;
+      }
 }
 
 ::ng-deep.course-survey .lib-container-2 {
@@ -18,5 +23,10 @@
     min-height: unset !important;
     padding: 0 !important;
     box-shadow: none !important;
+    margin-bottom: 2rem !important;
+    @media screen and (max-width: 430px) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
 
 }

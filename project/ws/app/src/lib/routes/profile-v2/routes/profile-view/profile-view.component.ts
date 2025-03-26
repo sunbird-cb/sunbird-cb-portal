@@ -32,6 +32,8 @@ import { DesignationRequestComponent } from '../../components/designation-reques
 import { HomePageService } from 'src/app/services/home-page.service'
 import { RejectionReasonPopupComponent } from '../../components/rejection-reason-popup/rejection-reason-popup.component'
 import { ConfirmDialogComponent } from '@sunbird-cb/collection/src/lib/_common/confirm-dialog/confirm-dialog.component'
+import { ProfileV2Service } from '../../services/profile-v2.servive'
+import { environment } from 'src/environments/environment'
 
 export const MY_FORMATS = {
   parse: {
@@ -128,6 +130,12 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     countryCode: new FormControl('', []),
     pincode: new FormControl('', [Validators.minLength(6), Validators.maxLength(6), Validators.pattern(PIN_CODE_PATTERN)]),
     category: new FormControl('', []),
+    isCadre: new FormControl(false, []),
+    typeOfCivilService: new FormControl(''),
+    serviceType: new FormControl(''),
+    cadre: new FormControl(''),
+    batch: new FormControl(''),
+    cadreControllingAuthority: new FormControl(''),
   })
   unVerifiedObj = {
     designation: '',
@@ -160,7 +168,36 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   designationApprovedTime = 0
   currentDate = new Date()
   designationsMeta: any
-
+  civilServiceTypes: any
+  civilServiceData: any
+  cadreControllingAuthority: any
+  serviceListData: any
+  serviceName: any
+  cadre: any
+  startBatch: any
+  endBatch: any
+  yearArray: any
+  serviceId: any
+  exclusionYear: any
+  selectedCadreName: any
+  selectedServiceName: any
+  selectedCadre: any
+  selectedService: any
+  civilServiceName: any
+  civilServiceId: any
+  cadreId: any
+  serviceType: any
+  cadreStatus: any
+  excluedYear: any
+  userData: any
+  editingAsWhole: any
+  isMentor = false
+  errorMessage: any
+  isCadreStatus = false
+  showBatchForNoCadre = true
+  noCadreDetails = true
+  saveChanges = false
+  noHtmlCharacter = new RegExp(/<[^>]*>|(function[^\s]+)|(javascript:[^\s]+)/i)
   constructor(
     public dialog: MatDialog,
     private configService: ConfigurationsService,
@@ -172,7 +209,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     private otpService: OtpService,
     private loader: LoaderService,
     private pipeImgUrl: PipeCertificateImageURL,
-    private homeService: HomePageService
+    private homeService: HomePageService,
+    private profileService: ProfileV2Service
   ) {
 
     if (localStorage.getItem('websiteLanguage')) {
@@ -245,6 +283,10 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.pageData = this.route.parent && this.route.parent.snapshot.data.pageData.data
     this.currentUser = this.configService && this.configService.userProfile
+    if (this.configService && this.configService.userRoles) {
+        // tslint:disable-next-line:max-line-length
+      this.isMentor = (this.configService.userRoles.has('MENTOR') || this.configService.userRoles.has('mentor') || this.configService.userRoles.has('Mentor')) ? true : false
+    }
 
     this.route.queryParams.subscribe((params: Params) => {
       this.params = params
@@ -283,7 +325,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.nameInitials = this.currentUser.firstName.charAt(0) + this.currentUser.lastName.charAt(0)}
     this.getInitials()
     this.profileName = this.portalProfile.personalDetails && this.portalProfile.personalDetails.firstname
-
     this.prefillForm()
     this.getMasterNationality()
     this.getMasterLanguage()
@@ -294,7 +335,116 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getRejectedStatus()
     this.getApprovedFields()
     this.getInsightsData()
+    this.fetchCadreData()
     // this.getAssessmentData()
+
+  }
+
+  // Sujith
+  getService(event: any) {
+    const serviceTypeControl = this.otherDetailsForm.get('serviceType')
+    const cadreControl = this.otherDetailsForm.get('cadre')
+    const batchControl = this.otherDetailsForm.get('batch')
+    const cadreControllingAuthorityControl = this.otherDetailsForm.get('cadreControllingAuthority')
+
+    if (serviceTypeControl) { serviceTypeControl.reset() }
+    if (cadreControl) { cadreControl.reset() }
+    if (batchControl) { batchControl.reset() }
+    if (cadreControllingAuthorityControl) { cadreControllingAuthorityControl.reset() }
+
+    this.serviceType = this.civilServiceData.civilServiceTypeList.find((element: any) => element.name === event)
+    if (this.serviceType) {
+      this.serviceListData = this.serviceType.serviceList
+      this.serviceName = this.serviceListData.map((service: any) => service.name)
+      this.serviceId = this.serviceType.id
+      this.errorMessage = ''
+    } else {
+      this.errorMessage = 'Service Type not found'
+    }
+  }
+  // Sujith
+  onServiceSelect(event: any) {
+    const cadreControl = this.otherDetailsForm.get('cadre')
+    const batchControl = this.otherDetailsForm.get('batch')
+    const cadreControllingAuthorityControl = this.otherDetailsForm.get('cadreControllingAuthority')
+    if (cadreControl) { cadreControl.reset() }
+    if (batchControl) { batchControl.reset() }
+    if (cadreControllingAuthorityControl) { cadreControllingAuthorityControl.reset() }
+    this.selectedServiceName = event.value
+    if (this.serviceListData) {
+      this.selectedService = this.serviceListData.find((service: any) => service.name === this.selectedServiceName)
+      this.civilServiceName =  this.selectedService.name
+      this.civilServiceId = this.selectedService.id
+      this.cadre = this.selectedService.cadreList.map((cadre: any) => cadre.name)
+    }
+
+    // if((this.selectedServiceName.trim() === 'Indian Administrative Office (IAS)') ||
+    //                 (this.selectedServiceName.trim() === "Indian Police Service (IPS)") ||
+    //                 (this.selectedServiceName.trim() === "Indian Forest Service (IFoS)") && !this.editDetails) {
+    //                 this.showBatchForNoCadre = false
+    // }
+    if (this.selectedService && this.selectedService.cadreControllingAuthority) {
+      this.cadreControllingAuthority = this.selectedService.cadreControllingAuthority
+    } else {
+      this.cadreControllingAuthority = 'NA'
+    }
+    if (this.selectedService && this.selectedService.cadreList && this.selectedService.cadreList.length === 0) {
+      this.showBatchForNoCadre = true
+      this.startBatch = this.selectedService.commonBatchStartYear
+      this.endBatch = this.selectedService.commonBatchEndYear
+      this.exclusionYear = this.selectedService.commonBatchExclusionYearList
+    // tslint:disable
+    this.yearArray = Array.from({ length: this.endBatch - this.startBatch + 1 }, (_, index) => this.startBatch + index)
+        .filter(year => !this.exclusionYear.includes(year))
+    } else {
+      this.showBatchForNoCadre = false
+    }
+  }
+  // Sujith
+  onCadreSelect(event: any) {
+    const batchControl = this.otherDetailsForm.get('batch')
+    const cadreControllingAuthorityControl = this.otherDetailsForm.get('cadreControllingAuthority')
+
+    if (batchControl) { batchControl.reset() }
+    if (cadreControllingAuthorityControl) { cadreControllingAuthorityControl.reset() }
+    this.selectedCadreName = event
+    if(this.selectedService) {
+      this.selectedCadre = this.selectedService.cadreList.find((cadre: any) => cadre.name === this.selectedCadreName)
+      this.startBatch = this.selectedService.cadreList.find((cadre: any) => cadre.name === this.selectedCadreName).startBatchYear
+      this.endBatch = this.selectedService.cadreList.find((cadre: any) => cadre.name === this.selectedCadreName).endBatchYear
+      this.exclusionYear = this.selectedCadre.exculsionYearList
+      // tslint:disable
+      this.yearArray = Array.from({ length: this.endBatch - this.startBatch + 1 }, (_, index) => this.startBatch + index)
+          .filter(year => !this.exclusionYear.includes(year))
+      this.cadreId = this.selectedCadre.id
+    }
+  
+  }
+  // Sujith
+  fetchCadreData() {
+  if(! this.portalProfile.hasOwnProperty('cadreDetails')) {
+    this.noCadreDetails = true
+    this.saveChanges = true
+  } else if(this.portalProfile.cadreDetails == null) {
+    this.noCadreDetails = false
+  }
+  else {
+    this.noCadreDetails = true
+  }
+   const cadreControllingAuthorityControl = this.otherDetailsForm.get('cadreControllingAuthority')
+
+    if (cadreControllingAuthorityControl) { cadreControllingAuthorityControl.reset() }
+    this.profileService.fetchCadre().subscribe({
+      next: response => {
+        this.civilServiceData = response.result.response.value.civilServiceType
+      this.civilServiceTypes = this.civilServiceData.civilServiceTypeList.map((service: any) => service.name)
+        },
+        error: err => {
+          this.errorMessage = err
+        },
+      })
+    
+    
   }
 
   fetchDiscussionsData(): void {
@@ -439,6 +589,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleEditOtherDetails(): void {
+    this.editingAsWhole = true
     if (this.portalProfile.personalDetails.primaryEmail) {
       if (this.otherDetailsForm.get('primaryEmail')) {
         this.otherDetailsForm.get('primaryEmail')!.setValidators([Validators.required,
@@ -511,7 +662,9 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.userProfileService.handleTranslateTo(menuName)
   }
 
+  // Sujith
   prefillForm(data?: any): void {
+    this.isCadreStatus = this.portalProfile.personalDetails && this.portalProfile.personalDetails.isCadre ? true : false
     if (data) {
       this.portalProfile.personalDetails.gender = data.dataToSubmit.gender
       this.portalProfile.personalDetails.dob = data.dataToSubmit.dob
@@ -519,10 +672,41 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.portalProfile.personalDetails.category = data.dataToSubmit.category
       // this.portalProfile.personalDetails.pincode = data.dataToSubmit.pincode
       this.portalProfile.personalDetails.mobile = data.dataToSubmit.mobile
+      this.portalProfile.personalDetails.phoneVerified = data.dataToSubmit.phoneVerified
       if (this.portalProfile.employmentDetails) {
         this.portalProfile.employmentDetails.employeeCode = data.employeeCode
         this.portalProfile.employmentDetails.pinCode = data.dataToSubmit.pincode
       }
+      if(!this.portalProfile.hasOwnProperty('cadreDetails')) {
+        if(data && data.dataToSubmit) {
+          this.portalProfile['cadreDetails'] = {
+            isCadre : false,
+            civilServiceType: '',
+            civilServiceName:'',
+            cadreName:'',
+            cadreBatch:'',
+            cadreControllingAuthorityName:'',
+            typeOfCivilService:''
+          }
+          this.portalProfile['cadreDetails']['isCadre'] = data.dataToSubmit.isCadre 
+          this.portalProfile['cadreDetails']['civilServiceType'] = data.dataToSubmit.typeOfCivilService 
+          this.portalProfile['cadreDetails']['civilServiceName'] = data.dataToSubmit.serviceType
+          this.portalProfile['cadreDetails']['cadreName'] = data.dataToSubmit.cadre
+          this.portalProfile['cadreDetails']['cadreBatch'] = data.dataToSubmit.batch
+          this.portalProfile['cadreDetails']['cadreControllingAuthorityName'] = this.cadreControllingAuthority
+        }
+      }
+      if(data && data.dataToSubmit) {
+        if (this.portalProfile.cadreDetails) {
+          this.portalProfile.cadreDetails.isCadre = data.dataToSubmit.isCadre        
+          this.portalProfile.cadreDetails.civilServiceType = data.dataToSubmit.typeOfCivilService
+          this.portalProfile.cadreDetails.civilServiceName = data.dataToSubmit.serviceType
+          this.portalProfile.cadreDetails.cadreName = data.dataToSubmit.cadre
+          this.portalProfile.cadreDetails.cadreBatch = data.dataToSubmit.batch
+          this.portalProfile.cadreDetails.cadreControllingAuthorityName = this.cadreControllingAuthority
+        }
+      }
+      
     }
 
     // if (this.portalProfile.personalDetails.dob) {
@@ -532,16 +716,30 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
 
     this.otherDetailsForm.patchValue({
-      employeeCode: this.portalProfile.employmentDetails && this.portalProfile.employmentDetails.employeeCode || '',
+      employeeCode: this.portalProfile.employmentDetails ? this.portalProfile.employmentDetails.employeeCode : '',
       primaryEmail: this.portalProfile.personalDetails.primaryEmail,
-      gender: this.portalProfile.personalDetails.gender && this.portalProfile.personalDetails.gender.toUpperCase(),
+      gender: this.portalProfile.personalDetails.gender ? this.portalProfile.personalDetails.gender.toUpperCase() : '',
       dob: this.getDateFromText(this.portalProfile.personalDetails.dob),
       domicileMedium: this.portalProfile.personalDetails.domicileMedium,
       mobile: this.portalProfile.personalDetails.mobile,
       countryCode: this.portalProfile.personalDetails.countryCode || '+91',
-      pincode: this.portalProfile.employmentDetails && this.portalProfile.employmentDetails.pinCode,
-      category: this.portalProfile.personalDetails.category && this.portalProfile.personalDetails.category.toUpperCase(),
-    })
+      pincode: this.portalProfile.employmentDetails ? this.portalProfile.employmentDetails.pinCode : '',
+      category: this.portalProfile.personalDetails.category ? this.portalProfile.personalDetails.category.toUpperCase() : '',
+      isCadre: this.portalProfile.personalDetails.isCadre
+    });   
+
+    // ...(this.portalProfile.cadreDetails ? {
+    //   typeOfCivilService: this.portalProfile.cadreDetails.civilServiceType,
+    //   serviceType: this.portalProfile.cadreDetails.civilServiceName,
+    //   cadre: this.portalProfile.cadreDetails.cadre,
+    //   batch: this.portalProfile.cadreDetails.batch,
+    //   isCadre: this.portalProfile.personalDetails.isCadre,
+    //   cadreControllingAuthority: this.portalProfile.cadreDetails.cadreControllingAuthority,
+    // } : {})
+    
+    if(this.portalProfile.personalDetails.isCadre) {
+      this.populateValues()
+    }
 
     if ((this.portalProfile.professionalDetails && this.portalProfile.professionalDetails.length)) {
       this.primaryDetailsForm.patchValue({
@@ -554,6 +752,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         designation: '',
       })
     }
+
+    // this.fetchCadreData()
   }
 
   handleCancelUpdate(): void {
@@ -601,6 +801,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
   }
+
+
 
   handleResendOTP(data: any): void {
     let otpValue$: any
@@ -708,6 +910,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       })
   }
 
+  // Sujith
   handleSaveOtherDetails(): void {
     if (this.portalProfile.personalDetails.primaryEmail !== this.otherDetailsForm.value['primaryEmail']) {
       this.updateEmail(this.otherDetailsForm.value['primaryEmail'])
@@ -722,34 +925,59 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     delete dataToSubmit.employeeCode
     delete dataToSubmit.primaryEmail
 
-    const payload = {
+    const payload: any = {
       'request': {
         'userId': this.configService.unMappedUser.id,
         'profileDetails': {
-          'personalDetails': {},
+          'personalDetails': {
+          },
           'employmentDetails': {
             'employeeCode': this.otherDetailsForm.value['employeeCode'],
             'pinCode': this.otherDetailsForm.value['pincode'],
             'mobile': this.otherDetailsForm.value['mobile'],
           },
+          'cadreDetails': {
+                
+          },
         },
       },
     }
     payload.request.profileDetails.personalDetails = dataToSubmit
+    payload.request.profileDetails.personalDetails['phoneVerified'] = this.verifyMobile ? 'false' : 'true';
 
+    if((this.otherDetailsForm.value['typeOfCivilService'] && this.otherDetailsForm.value['serviceType'] && this.otherDetailsForm.value['batch']) || (!this.otherDetailsForm.value['isCadre'])) {
+    if(this.isCadreStatus) {
+      payload.request.profileDetails.cadreDetails = {
+        'civilServiceTypeId': this.serviceId,
+        'civilServiceType': this.otherDetailsForm.value['typeOfCivilService'],
+        'civilServiceId': this.civilServiceId,
+        'civilServiceName': this.otherDetailsForm.value['serviceType'],
+        'cadreId': this.cadreId,
+        'cadreName': this.otherDetailsForm.value['cadre'],
+        'cadreBatch': this.otherDetailsForm.value['batch'],
+        'cadreControllingAuthorityName': this.cadreControllingAuthority
+      }
+    } else {
+      payload.request.profileDetails.cadreDetails = {}
+    }
     this.userProfileService.editProfileDetails(payload)
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((_res: any) => {
         this.matSnackBar.open(this.handleTranslateTo('userDetailsUpdated'))
+        this.portalProfile.personalDetails.isCadre = this.isCadreStatus
         this.editDetails = !this.editDetails
         this.prefillForm({ dataToSubmit, ...{ 'employeeCode': this.otherDetailsForm.value['employeeCode'] } })
       },         (error: HttpErrorResponse) => {
         if (!error.ok) {
           this.matSnackBar.open(this.handleTranslateTo('userDetailsUpdateFailed'))
           this.editDetails = !this.editDetails
-          this.prefillForm()
+          this.prefillForm({ dataToSubmit, ...{ 'employeeCode': this.otherDetailsForm.value['employeeCode'] } })
         }
       })
+    }
+    else {
+      this.matSnackBar.open('Please fill in all mandatory cadre information to update your profile')
+    }
   }
 
   handleTransferRequest(): void {
@@ -1131,6 +1359,13 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleUpdateName(): void {
+
+    const regexMatch = this.profileName.match(this.noHtmlCharacter)
+    if (regexMatch) {
+      this.matSnackBar.open('HTML or Js is not allowed')
+      return 
+    } 
+
     const postData = {
       'request': {
         'userId': this.configService.unMappedUser.id,
@@ -1274,6 +1509,102 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
+  viewMentorProfile() {
+    // window.location.href = 'https://portal.karmayogi.nic.in/mentorship'
+    // this.router.navigateByUrl('mentorship')
+    window.open(`${environment.contentHost}/mentorship`, '_blank')
+  }
+
+  getIsCadreStatus(value:boolean) {
+    this.isCadreStatus = value    
+    if(value) {
+      this.otherDetailsForm.patchValue({
+        typeOfCivilService: '',
+        serviceType: '',
+        cadre: '',
+        batch: '',
+        cadreControllingAuthority: '',
+      });       
+    }
+    else {
+    this.showBatchForNoCadre = false
+    }
+  }
+
+  populateValues() {
+    let cadreValues:any = this.portalProfile.cadreDetails;
+    this.profileService.fetchCadre().subscribe({
+      next: response => {
+        let civilServiceTypeList:any = response.result.response.value.civilServiceType.civilServiceTypeList
+        for (let index = 0; index < civilServiceTypeList.length; index++) {
+          if (civilServiceTypeList[index].id === cadreValues.civilServiceTypeId) {
+            let popCivilServiceType:any = civilServiceTypeList[index];
+            this.civilServiceTypes  = civilServiceTypeList.map((service: any) => service.name)
+            this.serviceId= civilServiceTypeList[index].id       
+            for (let serviceIndex = 0; serviceIndex < popCivilServiceType.serviceList.length; serviceIndex++) {
+              if (popCivilServiceType.serviceList[serviceIndex].id === cadreValues.civilServiceId) {
+                let popServiceType = popCivilServiceType.serviceList[serviceIndex];
+                this.serviceName = popCivilServiceType.serviceList.map((service: any) => service.name)
+                this.serviceListData = popCivilServiceType.serviceList
+                this.civilServiceId = popCivilServiceType.serviceList[serviceIndex].id
+                if(popCivilServiceType.serviceList[serviceIndex] && popCivilServiceType.serviceList[serviceIndex].name) {
+                  let civilServiceName = popCivilServiceType.serviceList[serviceIndex].name
+                  if((civilServiceName.trim() === 'Indian Administrative Office (IAS)') || 
+                    (civilServiceName.trim() === "Indian Police Service (IPS)") ||
+                    (civilServiceName.trim() === "Indian Forest Service (IFoS)")) {
+                    this.showBatchForNoCadre = false
+                  }
+                }
+                
+                  if (!cadreValues.cadreName) {
+                    this.startBatch = popCivilServiceType.serviceList[serviceIndex].commonBatchStartYear
+                    this.endBatch = popCivilServiceType.serviceList[serviceIndex].commonBatchEndYear
+                    this.exclusionYear = popCivilServiceType.serviceList[serviceIndex].commonBatchExclusionYearList
+                    // tslint:disable
+                    this.yearArray = Array.from({ length: this.endBatch - this.startBatch + 1 }, (_, index) => this.startBatch + index)
+                        .filter(year => !this.exclusionYear.includes(year))
+                  } 
+                for (let cadreIndex = 0; cadreIndex < popServiceType.cadreList.length; cadreIndex++) {
+                  if (popServiceType.cadreList[cadreIndex].id === cadreValues.cadreId) {
+                    let popCadre:any = popServiceType.cadreList[cadreIndex];
+                    this.cadre = popServiceType.cadreList.map((cadre: any) => cadre.name)
+                    this.cadreId = popServiceType.cadreList[cadreIndex].id
+                    this.startBatch = popCadre.startBatchYear
+                    this.endBatch = popCadre.endBatchYear
+                    this.exclusionYear = popCadre.exculsionYearList
+                     // tslint:disable
+                    this.yearArray = Array.from({ length: this.endBatch - this.startBatch + 1 }, (_, index) => this.startBatch + index)
+                    .filter(year => !this.exclusionYear.includes(year)) 
+                  for (let index = 0; index < this.yearArray.length; index++) {
+                    if (this.yearArray[index] === cadreValues.cadreBatch) {                     
+                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+        }
+        this.cadreControllingAuthority = cadreValues.cadreControllingAuthorityName
+        if(this.cadreControllingAuthority) {
+          this.otherDetailsForm.patchValue({
+            typeOfCivilService: this.portalProfile.cadreDetails.civilServiceType,
+            serviceType: this.portalProfile.cadreDetails.civilServiceName,
+            cadre: this.portalProfile.cadreDetails.cadreName,
+            batch: this.portalProfile.cadreDetails.cadreBatch,
+            isCadre: this.portalProfile.personalDetails.isCadre,
+            cadreControllingAuthority: this.portalProfile.cadreDetails.cadreControllingAuthorityName,
+          }); 
+        }               
+      },
+      error: err => {
+        this.errorMessage = err
+      },
+    })
+
+   
+    
+  }
   // isEmailAllowed(email: string): boolean {
   //   const domain = this.extractDomain(email);
   //   return this.approvedDomainList.includes(domain);

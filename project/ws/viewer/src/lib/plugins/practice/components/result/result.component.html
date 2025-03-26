@@ -529,7 +529,7 @@
                           mat-cell
                           *matCellDef="let element; let rowIndex = index;"
                       >
-                          <span [ngClass]="{'correct': element[disCol.key] === 'correct', 'wrong': element[disCol.key] === 'wrong', 'blank': element[disCol.key] === 'blank'}"><span [innerHtml]="element[disCol.key]"></span></span>
+                          <span [ngClass]="{'correct': element[disCol.key] === 'correct', 'wrong': element[disCol.key] === 'wrong', 'blank': element[disCol.key] === 'blank'}"><span [innerHtml]="element[disCol.key] | QuestionSafeUrl"></span></span>
                       </td>
                   </ng-container>
               </ng-container>

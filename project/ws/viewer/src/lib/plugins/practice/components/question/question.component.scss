@@ -339,3 +339,13 @@ color: rgb(27, 76, 161)
   }
  
 }
+
+video {
+  width: 360px !important;
+}
+
+@media only screen and (min-width : 240px) and (max-width: 767px) { 
+  video {
+      width: 98% !important;
+  }
+}
