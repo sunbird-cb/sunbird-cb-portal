@@ -1,7 +1,7 @@
 import { Injectable  } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
-import { NsUser, ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
+import { NsUser, ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils-v2'
 
 @Injectable()
 export class ProfileResolverService implements Resolve<Observable<NsUser.IUserProfile>> {

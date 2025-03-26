@@ -5,9 +5,10 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { NsContent, viewerRouteGenerator, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-app-toc-contents',
@@ -34,8 +35,16 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private tocSvc: AppTocService,
     private configSvc: ConfigurationsService,
-    private viewerSVC: ViewerUtilService
-  ) { }
+    private viewerSVC: ViewerUtilService,
+    private translate: TranslateService
+
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+   }
 
   ngOnInit() {
     // this.forPreview = window.location.href.includes('/author/')
@@ -94,7 +103,8 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
       // content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT
       content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE ||
       content.primaryCategory === NsContent.EPrimaryCategory.FINAL_ASSESSMENT ||
-      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT
+      content.primaryCategory === NsContent.EPrimaryCategory.COMP_ASSESSMENT ||
+      content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
     ) {
       switch (content.mimeType) {
         case NsContent.EMimeTypes.M3U8:
@@ -116,6 +126,12 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
         case NsContent.EMimeTypes.PDF:
           this.assignWidgetData(ROOT_WIDGET_CONFIG.player.pdf, {
             pdfUrl: content.artifactUrl,
+          })
+          break
+        case NsContent.EMimeTypes.OFFLINE_SESSION:
+          this.assignWidgetData(ROOT_WIDGET_CONFIG.player.offlineSession, {
+            autoplay: true,
+            posterImage: this.viewerSVC.getPublicUrl(content.appIcon || ''),
           })
           break
         case NsContent.EMimeTypes.YOUTUBE:
@@ -144,7 +160,10 @@ export class AppTocContentsComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${url})`)
   }
   resourceLink(resource: NsContent.IContent): { url: string; queryParams: { [key: string]: any } } {
-    return viewerRouteGenerator(resource.identifier, resource.mimeType)
+    const url = viewerRouteGenerator(resource.identifier, resource.mimeType)
+    /* tslint:disable-next-line */
+    // console.log(url,'=====> toc content resource url link <========')
+    return url
   }
 
   public contentTrackBy(_index: number, content: NsContent.IContent) {

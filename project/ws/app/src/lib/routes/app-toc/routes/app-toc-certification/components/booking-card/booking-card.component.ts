@@ -4,7 +4,7 @@ import { throwError, Subject } from 'rxjs'
 import { takeWhile, switchMap, tap, takeUntil } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TSendStatus, TFetchStatus } from '@sunbird-cb/utils'
+import { TSendStatus, TFetchStatus } from '@sunbird-cb/utils-v2'
 
 import { SnackbarComponent } from '../snackbar/snackbar.component'
 import { CertificationApiService } from '../../apis/certification-api.service'

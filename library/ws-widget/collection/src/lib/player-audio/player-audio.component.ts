@@ -11,7 +11,7 @@ import {
 import videoJs from 'video.js'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils-v2'
 import {
   videoJsInitializer,
   telemetryEventDispatcherFunction,
@@ -25,11 +25,12 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
-  autoplay: false,
+  autoplay: true,
   preload: 'auto',
+  muted: false,
   fluid: false,
   techOrder: ['html5'],
-  playbackRates: [0.75, 0.85, 1, 1.25, 2, 3],
+  playbackRates: [1, 1.5],
   poster: '',
   html5: {
     hls: {
@@ -52,6 +53,10 @@ export class PlayerAudioComponent extends WidgetBaseComponent
   @ViewChild('audioTag', { static: true }) audioTag!: ElementRef<HTMLAudioElement>
   private player: videoJs.Player | null = null
   private dispose: null | (() => void) = null
+  audioEnd = false
+  timerInterval: any
+  // video: any
+  replayAudioFlag = false
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
@@ -73,7 +78,55 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     if (this.widgetData.url) {
       this.initializePlayer()
     }
+    const audioTag: any =   document.getElementsByTagName('audio')[0]
+    if (audioTag) {
+      audioTag.onended = () => {
+        this.audioEnd = true
+        if (this.widgetData && this.widgetData.hideUpNext) {
+          this.replayAudioFlag = this.widgetData.hideUpNext ? true : false
+        }
+        const audioTagElement: any = document.getElementById('audioTag')
+        const autoPlayAudio: any = document.getElementById('auto-play-audio')
+        if (audioTagElement) {
+          if (autoPlayAudio) {
+            autoPlayAudio.style.opacity = '0.8'
+          }
+          audioTagElement.style.filter = 'blur(2px)'
+
+        }
+        let counter = 1
+        this.timerInterval =   setInterval(() => {
+            if (counter <= 5) {
+                this.updateProgress(counter)
+            }
+            if (counter > 5) {
+              if (audioTag) {
+                audioTag.style.filter = 'blur(0px)'
+              }
+              if (autoPlayAudio) {
+                autoPlayAudio.style.opacity = '1'
+              }
+              counter = 0
+              this.clearTimeInterval()
+              this.viewerSvc.autoPlayNextAudio.next(true)
+            }
+            counter = counter + 1
+          },                               1000)
+
+      }
+    }
   }
+
+  clearTimeInterval() {
+    clearInterval(this.timerInterval)
+  }
+
+  updateProgress(value: any) {
+    const progress: any = document.querySelector('.circular-progress')
+    progress.style.setProperty('--percentage', `${value * 72}deg`)
+    // progress.innerText = `${value}%`
+  }
+
   ngOnDestroy() {
     if (this.player) {
       this.player.dispose()
@@ -81,7 +134,7 @@ export class PlayerAudioComponent extends WidgetBaseComponent
     if (this.dispose) {
       this.dispose()
     }
-
+    this.clearTimeInterval()
   }
   private initializePlayer() {
     const dispatcher: telemetryEventDispatcherFunction = event => {
@@ -128,11 +181,11 @@ export class PlayerAudioComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
-      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
-      if (this.widgetData.identifier && identifier && data) {
+      const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                           this.activatedRoute.snapshot.queryParams.batchId, identifier)
+      const collectionId = (resData && resData.courseId) ? resData.courseId : ''
+      const batchId = (resData && resData.batchId) ? resData.batchId : ''
+      if (this.widgetData.identifier && identifier && data && collectionId && batchId) {
         this.viewerSvc
           .realTimeProgressUpdate(identifier, data, collectionId, batchId)
       }
@@ -172,7 +225,7 @@ export class PlayerAudioComponent extends WidgetBaseComponent
         })
       }
       if (this.widgetData.url) {
-        initObj.player.src(this.widgetData.url)
+        initObj.player.src(this.viewerSvc.getCdnUrl(this.widgetData.url))
       }
     })
   }
@@ -183,6 +236,27 @@ export class PlayerAudioComponent extends WidgetBaseComponent
       const url = this.viewerSvc.getPublicUrl(content.posterImage || content.appIcon)
       this.widgetData.posterImage = url
       await this.contentSvc.setS3Cookie(this.widgetData.identifier || '').toPromise()
+    }
+  }
+
+  closeAutoPlay() {
+    this.audioEnd = false
+    this.replayAudioFlag = true
+    clearInterval(this.timerInterval)
+  }
+
+  replayAudio() {
+    this.replayAudioFlag = false
+    const audioTag: any = document.getElementById('audioTag')
+    if (audioTag) {
+      audioTag.style.filter = 'blur(0px)'
+    }
+    const autoPlayVideo: any = document.getElementById('auto-play-audio')
+    if (autoPlayVideo) {
+      autoPlayVideo.style.opacity = '1'
+    }
+    if (this.player) {
+      this.player.play()
     }
   }
 }

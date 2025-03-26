@@ -5,10 +5,10 @@
         <div *ngFor="let option of question.options; let i = index">
           <div style="display: flex;justify-content: space-around;flex-wrap: wrap;  height:auto;">
             <div [class]="'question' + question.questionId + ' question'" [id]="'c1' + question.questionId + (i + 1)">
-              <span class="mat-body-2"> {{ option.text }}</span>
+              <span class="mat-body-2 html-option" [innerHtml]="getSanitizeString(option?.text)"></span>
             </div>
             <div [class]="'answer' + question.questionId + ' answer'" [id]="'c2' + question.questionId + (i + 1)">
-              <span class="mat-body-2">{{ option.matchForView }}</span>
+              <span class="mat-body-2 html-option" [innerHtml]="getSanitizeString(option.matchForView)"></span>
             </div>
           </div>
           <br />
@@ -20,7 +20,6 @@
 </div>
 <div *ngIf="
 showAns &&
-  numConnections &&
   matchHintDisplay.length !== 0
 " style="display: flex;flex-direction: column;">
   <p i18n="option explanation label">Explanation</p>
@@ -29,13 +28,13 @@ showAns &&
       <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Option">
         Option
       </th>
-      <td mat-cell *matCellDef="let element">{{ element.text }}</td>
+      <td mat-cell *matCellDef="let element" [innerHTML]="element.text"></td>
     </ng-container>
     <ng-container matColumnDef="hint">
       <th mat-header-cell *matHeaderCellDef i18n="mtf explanation Hint">
         Hint
       </th>
-      <td mat-cell *matCellDef="let element" [innerHTML]="element.match"></td>
+      <td mat-cell *matCellDef="let element" [innerHTML]="element.hint"></td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="['text', 'hint']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['text', 'hint']"></tr>

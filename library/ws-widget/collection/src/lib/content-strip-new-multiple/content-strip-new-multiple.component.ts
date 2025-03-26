@@ -10,10 +10,10 @@ import {
   EventService,
   ConfigurationsService,
   UtilityService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { WidgetUserService } from '../_services/widget-user.service'
+import { WidgetUserServiceLib } from '@sunbird-cb/consumption'
  // tslint:disable-next-line
 import _ from 'lodash'
 import { HttpClient } from '@angular/common/http'
@@ -80,7 +80,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
     public utilitySvc: UtilityService,
     private http: HttpClient,
     // private searchServSvc: SearchServService,
-    private userSvc: WidgetUserService,
+    private userSvc: WidgetUserServiceLib,
   ) {
     super()
   }
@@ -358,7 +358,8 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
       }
       // tslint:disable-next-line: deprecation
       this.userSvc.fetchUserBatchList(userId, queryParams).subscribe(
-        courses => {
+        (result: any) => {
+          const courses = result && result.courses
           const showViewMore = Boolean(
             courses.length > 5 && strip.stripConfig && strip.stripConfig.postCardForSearch,
           )
@@ -379,7 +380,7 @@ export class ContentStripNewMultipleComponent extends WidgetBaseComponent
             }
             : null
           if (courses && courses.length) {
-            content = courses.map(c => {
+            content = courses.map((c: any) => {
               const contentTemp: NsContent.IContent = c.content
               contentTemp.completionPercentage = c.completionPercentage || c.progress || 0
               contentTemp.completionStatus = c.completionStatus || c.status || 0

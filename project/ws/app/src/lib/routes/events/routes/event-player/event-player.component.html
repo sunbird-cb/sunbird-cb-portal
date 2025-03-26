@@ -1,0 +1,97 @@
+<div class="fixed-width flex flex-col">
+    <!-- main content -->
+    <div>
+        <ws-widget-btn-page-back-nav  [widgetData]="{
+            'url': '/app/event-hub/home/'+ eventId,
+            'titles': []}">
+        </ws-widget-btn-page-back-nav>
+    </div>
+    <div class="player-section">
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div class="meta-section">
+      <div class="flex flex-row margin-top-xl margin-bottom-xl ">
+        <div class="flex flex-row top_banner_box">
+          <div class="flex flex-auto">
+            <div class="flex flex-col flex-auto title_box">
+              <div class="flex mobile-margin text-capitalize mat-h1 margin-bottom-xs">
+                {{eventData?.name}}
+              </div>
+              <div class="margin-top-xs margin-bottom-xs" *ngIf="eventData?.resourceType === 'Karmayogi Talks'">
+                <img src="/assets/icons/karmayogi_TalksLogo.png" alt="Karmayogi Talks" width="153px">
+              </div>
+              <div class="margin-bottom-xs" *ngIf="eventData?.resourceType === 'Webinar'">
+                <button mat-raised-button type="button" class="ws-mat-primary-background"><mat-icon>play_circle_filled</mat-icon> {{ 'event.typoWebinar' | translate }}</button>
+              </div>
+              <!-- <div class="margin-bottom-xs" *ngIf="eventData?.resourceType === 'Karmayogi Saptah'">
+                <button mat-raised-button type="button" class="ws-mat-primary-background"><mat-icon>play_circle_filled</mat-icon> {{ 'event.karmayogiSaptah' | translate }}</button>
+              </div> -->
+              <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2"><mat-icon
+                class="ws-mat-orange-text mat-icon notranslate material-icons mat-icon-no-color" role="img"
+                aria-hidden="true">video_library</mat-icon>
+              <div class="text-xs font-bold text-white leading-3 ng-star-inserted">{{ 'event.karmayogiSaptah' | translate }}</div>
+            </div>
+              <div class="flex flex-col flex-auto mat-body-1 mt-2">
+                <p class="flex margin-bottom-m word-break" role="link" tabindex="0" i18n-aria-label *ngIf="eventData?.instructions">
+                  {{eventData?.instructions}}
+                </p>
+                <!-- <p class="flex mat-error" role="link" tabindex="0" i18n-aria-label *ngIf="currentEvent">
+                  {{eventData?.status}}
+                  
+                </p> -->
+                <div *ngIf="eventData?.resourceType === 'Karmayogi Saptah' && currentEvent">
+                  <button mat-raised-button type="button"
+                    class="ws-mat-red-background"><mat-icon>play_circle_filled</mat-icon> {{ 'event.live' | translate }} </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="flex flex-1 flex-column mt-5">
+        <div class="flex flex-1 filter">
+            <a href="javascript:void(0)" role="button" class="filter-option" mat-button>
+              OVERVIEW
+            </a>
+            <a href="javascript:void(0)" role="button" class="filter-option" mat-button>
+              PARTICIPANTS
+            </a>
+        </div>
+    </div> -->
+      <div class="flex flex-1 flex-column mb-2">
+        <span class="f-medium mat-title">{{ 'event.eventDescription' | translate }} </span>
+      </div>
+      <div class="flex flex-wrap">
+        <ng-container>
+            <div class="flex mb-5">
+                <p class="word-break">{{eventData?.description}}</p>
+            </div>
+        </ng-container>
+      </div>
+      <div class="flex flex-1 flex-column mb-2" *ngIf="eventData?.creatorDetails">
+        <span class="f-medium mat-title margin-bottom-xs">{{ 'event.eventPresenters' | translate }}</span>
+      </div>
+      <div class="flex flex-wrap margn-bottom-l" *ngIf="eventData?.creatorDetails">
+        <ng-container>
+          <div class="flex mobile-width" *ngFor="let user of eventData?.creatorDetails">
+            <app-presenter-card [userData]="user" class="flex presenter_main_box margin-right-l no-right-marging"></app-presenter-card>
+          </div>
+        </ng-container>
+      </div>
+      <div class="flex flex-1 flex-column mb-2">
+        <span class="f-medium mat-title">{{ 'event.eventAgenda' | translate }} </span>
+      </div>
+      <div class="flex flex-1 flex-column margin-top-l margin-bottom-s" *ngIf="eventData?.eventAgenda">
+        <span class="f-medium mat-title">{{ 'event.eventAgenda' | translate }}</span>
+      </div>
+      <div class="flex flex-wrap margin-bottom-xl" *ngIf="eventData?.learningObjective">
+          <ng-container>
+              <div class="flex mb-5">
+                 <p class="word-break">{{eventData?.learningObjective}}</p>
+              </div>
+          </ng-container>
+      </div>
+    </div>
+  </div>

@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { SlidersComponent } from './sliders.component'
 import { RouterModule } from '@angular/router'
-import { NavigationModule, ImageResponsiveModule } from '@sunbird-cb/utils'
+import { NavigationModule, ImageResponsiveModule } from '@sunbird-cb/utils-v2'
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser'
-import * as Hammer from 'hammerjs'
+/* tslint:disable */
+import  Hammer from 'hammerjs'
+/* tslint:enable */
 export class MyHammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
     const mc = new Hammer(element, {

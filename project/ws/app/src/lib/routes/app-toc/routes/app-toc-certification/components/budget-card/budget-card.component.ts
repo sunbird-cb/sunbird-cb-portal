@@ -3,7 +3,7 @@ import { throwError, Subject } from 'rxjs'
 import { takeWhile, tap, switchMap } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TSendStatus } from '@sunbird-cb/utils'
+import { TSendStatus } from '@sunbird-cb/utils-v2'
 
 import { ICertificationMeta, TCertificationRequestType } from '../../models/certification.model'
 import { RequestCancelDialogComponent } from '../request-cancel-dialog/request-cancel-dialog.component'

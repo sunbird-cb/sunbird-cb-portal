@@ -1,0 +1,28 @@
+.offline-wrapper {
+    .content-header {
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font-size: 24px;
+        font-weight: 600;
+        font-style: normal;
+        letter-spacing: 0px;
+        text-align: left;
+        line-height: 36px;
+    }
+    .content-description{
+        opacity: 1;
+        color: rgba(0,0,0,0.87);
+        font-family: "Lato-Regular";
+        font-size: 16px;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.25px;
+        text-align: left;
+        line-height: 24px;
+    }
+    .attach-block {
+        .attach-title {
+            margin-bottom: 8px;
+        }
+    }
+}

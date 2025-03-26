@@ -5,6 +5,7 @@ export namespace NsAppRating {
         activityType: string,
         rating: number,
         review: string,
+        recommended: any
     }
 
     export interface ILookupRequest {

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-network-recommended',
@@ -25,15 +27,30 @@ export class NetworkRecommendedComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private route: ActivatedRoute,
     private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
+
   ) {
-    this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
-    this.data = this.route.snapshot.data.recommendedList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
       }
-      return v
     })
-    this.getFullUserData()
+
+    this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
+    if (this.route.snapshot.data.recommendedList.data
+      && this.route.snapshot.data.recommendedList.data.result) {
+      this.data = this.route.snapshot.data.recommendedList.data.result.data.map(
+        (v: NSNetworkDataV2.INetworkUser) => {
+        if (v && v.personalDetails && v.personalDetails.firstname) {
+          v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+        }
+        return v
+      })
+      this.getFullUserData()
+    }
   }
 
   ngOnInit() {
@@ -46,6 +63,12 @@ export class NetworkRecommendedComponent implements OnInit {
     })
     this.getRecommnededUsers()
   }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
+  }
+
   getFullUserData() {
     const fulldata = this.data
     this.data = []
@@ -71,7 +94,19 @@ export class NetworkRecommendedComponent implements OnInit {
       }
     this.networkV2Service.fetchAllRecommendedUsers(req).subscribe((data: any) => {
       this.data = data.result.data[0].results
+      this.data.forEach((value: any) => {
+        if (value.profileDetails && value.profileDetails.personalDetails) {
+          value.profileDetails.personalDetails.firstname = this.getName(value.profileDetails.personalDetails).toLowerCase()
+
+        } else if (!value.profileDetails && value.personalDetails) {
+          value.personalDetails.firstname = this.getName(value.personalDetails).toLowerCase()
+        }
+       })
     })
+  }
+
+  getName(userDetails: any) {
+    return userDetails.firstName ? userDetails.firstName : userDetails.firstname
   }
 
   updateQuery(key: string) {
@@ -104,9 +139,16 @@ export class NetworkRecommendedComponent implements OnInit {
       label,
       index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.NETWORK_TAB,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.NETWORK,
+      }
     )
   }
 

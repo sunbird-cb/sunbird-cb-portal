@@ -6,7 +6,7 @@ import {
   ROOT_WIDGET_CONFIG,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { NsAnalytics } from '../../models/learning-analytics.model'
 import { AnalyticsResolver } from '../../resolvers/learning-analytics-filters.resolver'

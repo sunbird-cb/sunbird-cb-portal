@@ -30,7 +30,7 @@ import {
   HorizontalScrollerModule,
   DefaultThumbnailModule,
   PipeLimitToModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { TileComponent } from './components/tile/tile.component'
 import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component'
 import { PlansComponent } from './routes/plans/plans.component'

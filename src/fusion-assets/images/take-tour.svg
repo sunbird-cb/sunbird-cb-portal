@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 29@2x</title>
+    <g id="Get-Started---Final-version" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Getstarted-home-screen-Website" transform="translate(-591, -395)">
+            <g id="Group-13" transform="translate(200, 190)">
+                <g id="Group-20" transform="translate(271, 0)">
+                    <g id="Group-17" transform="translate(64, 120)">
+                        <g id="Group-12" transform="translate(16, 85)">
+                            <g id="Group-29" transform="translate(40, 0)">
+                                <rect id="Rectangle-Copy-6" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="48" height="48"></rect>
+                                <g id="directions" transform="translate(6, 7)">
+                                    <path d="M18.5,0 C19.3284271,-1.52179594e-16 20,0.671572875 20,1.5 L20,34 L20,34 L17,34 L17,1.5 C17,0.671572875 17.6715729,1.52179594e-16 18.5,0 Z" id="Rectangle" fill="#373434"></path>
+                                    <path d="M18,0 C19.1045695,-2.02906125e-16 20,0.8954305 20,2 L20,34 L20,34 L18,34 L18,0 Z" id="Rectangle-Copy-30" fill="#373434"></path>
+                                    <rect id="Rectangle-Copy-29" fill="#373434" x="10" y="31" width="16" height="3" rx="1.5"></rect>
+                                    <path d="M34.8292822,8.41788349 L31.5159572,11.8157459 C31.4009281,11.9337649 31.2426871,12 31.0777512,12 L12.537373,12 C11.689566,12 11,11.3177781 11,10.4796026 L11,5.52039741 C11,4.68222189 11.689566,4 12.537373,4 L31.0777512,4 C31.2426871,4 31.4009281,4.06683727 31.5159572,4.1842541 L34.8292822,7.58211651 C35.0569059,7.81514376 35.0569059,8.18485624 34.8292822,8.41788349 Z" id="Path" fill="#1B4CA1" fill-rule="nonzero"></path>
+                                    <path d="M24,18.5203974 L24,23.4796026 C24,24.3177781 23.310434,25 22.462627,25 L3.92224885,25 C3.75731294,25 3.59907186,24.9337649 3.48404276,24.8157459 L0.170717791,21.4178835 C-0.0569059302,21.1848562 -0.0569059302,20.8151438 0.170717791,20.5821165 L3.48404276,17.1842541 C3.59907186,17.0662351 3.75731294,17 3.92224885,17 L22.462627,17 C23.310434,17 24,17.6822219 24,18.5203974 Z" id="Path" fill="#F3962F" fill-rule="nonzero"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

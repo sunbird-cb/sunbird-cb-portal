@@ -1,0 +1,61 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  // min-height: 400px;
+  min-height: calc(100vh - 160px);
+}
+
+.container-balanced-banner {
+  @extend %page-center;
+  height: auto;
+}
+::ng-deep .mat-form-search {
+    width: 98%;
+    .mat-form-field-infix {
+      border-top: 0.2em solid transparent !important;
+    }
+  
+    .mat-form-field-wrapper {
+      padding-bottom: 0
+    }
+    // .mat-form-field-outline {
+    //     border-radius: 50px;
+    // }
+  
+    .mat-select-panel .mat-optgroup-label,
+    .mat-select-panel .mat-option {
+      font-size: inherit;
+      line-height: 3em;
+      height: 4em;
+      padding-top: 8px;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        border: 1px solid transparent !important;
+        border-radius: 20px !important;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline-end {
+        border: 1px solid transparent !important;
+        border-radius: 20px !important;
+    }
+  }
+
+.filter-section {
+    background: white;
+    border: 1px solid #00000029;
+    padding: 24px;
+    gap: 17px;
+    border-radius: 12px;
+    border: 1px;
+}
+
+@media screen and (max-width: 768px) {
+  .mob-padding {
+    padding-left: 15px;
+  }
+
+}
+

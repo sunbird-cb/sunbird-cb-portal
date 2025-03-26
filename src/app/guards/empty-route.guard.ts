@@ -7,7 +7,7 @@ import {
   Router,
   ActivatedRoute,
 } from '@angular/router'
-import { AuthKeycloakService, ConfigurationsService } from '@sunbird-cb/utils' // AuthKeycloakService
+import { AuthKeycloakService, ConfigurationsService } from '@sunbird-cb/utils-v2' // AuthKeycloakService
 import { Observable } from 'rxjs'
 
 @Injectable({

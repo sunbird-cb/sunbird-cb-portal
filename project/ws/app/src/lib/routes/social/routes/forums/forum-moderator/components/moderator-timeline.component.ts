@@ -6,7 +6,7 @@ import {
   ConfigurationsService,
   TFetchStatus,
   ValueService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'
 // import { ForumHandlerService } from '../../service/EmitterService/eventemitter.service'

@@ -13,7 +13,7 @@ import {
   IFeedbackThread,
   IFeedbackSummary,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, IResolveResponse } from '@sunbird-cb/utils'
+import { TFetchStatus, IResolveResponse } from '@sunbird-cb/utils-v2'
 import { MyFeedbackService } from '../../services/my-feedback.service'
 import { FeedbackFilterDialogComponent } from '../feedback-filter-dialog/feedback-filter-dialog.component'
 

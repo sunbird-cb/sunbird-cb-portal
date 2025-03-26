@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
-import { ImageResponsiveModule, NavigationModule } from '@sunbird-cb/utils'
+import { ImageResponsiveModule, NavigationModule } from '@sunbird-cb/utils-v2'
 import { MyHammerConfig } from '../sliders/sliders.module'
 import { SlidersMobComponent } from './sliders-mob.component'
 

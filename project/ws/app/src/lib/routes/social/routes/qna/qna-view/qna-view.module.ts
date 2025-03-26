@@ -24,7 +24,7 @@ import {
   BtnSocialLikeModule,
   UserImageModule,
 } from '@sunbird-cb/collection'
-import { PipeLimitToModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { PipeLimitToModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils-v2'
 
 import { QnaViewComponent } from './components/qna-view/qna-view.component'
 import { QnaReplyComponent } from './components/qna-reply/qna-reply.component'

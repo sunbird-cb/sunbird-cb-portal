@@ -15,7 +15,7 @@ import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 import { OnConnectionBindInfo } from 'jsplumb'
 import { QuizService } from './quiz.service'
-import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
@@ -24,6 +24,9 @@ export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
   selector: 'viewer-plugin-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
+  /* tslint:disable */
+  host: { class: 'h-inherit' },
+  /* tslint:enable */
 })
 export class QuizComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -45,6 +48,8 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
         section: '',
         questionType: undefined,
         questionId: '',
+        questionLevel: '',
+        marks: 0,
         options: [
           {
             optionId: '',
@@ -141,11 +146,20 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     if (this.forPreview) {
       return
     }
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-      this.activatedRoute.snapshot.queryParams.collectionId : ''
-    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-      this.activatedRoute.snapshot.queryParams.batchId : ''
-    this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
+    const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                         this.activatedRoute.snapshot.queryParams.batchId, this.identifier)
+    const collectionId = (resData && resData.courseId) ? resData.courseId : this.activatedRoute.snapshot.queryParams.collectionId ?
+    this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = (resData && resData.batchId) ? resData.batchId : this.activatedRoute.snapshot.queryParams.batchId ?
+    this.activatedRoute.snapshot.queryParams.batchId : ''
+
+    // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+    //   this.activatedRoute.snapshot.queryParams.collectionId : ''
+    // const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+    //   this.activatedRoute.snapshot.queryParams.batchId : ''
+    if (this.identifier && collectionId && batchId) {
+      this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
+    }
   }
 
   startQuiz() {

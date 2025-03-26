@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, OnChanges } from '@angular/core'
 import { NsPlaylist } from '@sunbird-cb/collection'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { PersonProfileService } from '../../services/person-profile.service'
 

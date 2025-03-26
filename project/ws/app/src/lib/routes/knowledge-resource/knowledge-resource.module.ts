@@ -13,8 +13,17 @@ import { BtnPageBackModule } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { KnowledgeDetailComponent } from './routes/knowledge-detail/knowledge-detail.component'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
-import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils-v2'
 import { MatExpansionModule } from '@angular/material/expansion'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+// import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+
+// tslint:disable-next-line:function-name
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
 
 @NgModule({
   declarations: [
@@ -41,6 +50,13 @@ import { MatExpansionModule } from '@angular/material/expansion'
     Ng2SearchPipeModule,
     PipeSafeSanitizerModule,
     MatExpansionModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
 })
 export class KnowledgeResourceModule { }

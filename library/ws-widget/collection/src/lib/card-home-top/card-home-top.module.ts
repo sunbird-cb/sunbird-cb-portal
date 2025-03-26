@@ -10,7 +10,7 @@ import { CardLearningStatusComponent } from './card-learning-status/card-learnin
 import { StarRatingComponent } from './star-rating/star-rating.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatGridListModule } from '@angular/material/grid-list'
-import { HorizontalScrollerModule, PipeNameTransformModule } from '@sunbird-cb/utils'
+import { HorizontalScrollerModule, PipeNameTransformModule } from '@sunbird-cb/utils-v2'
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatExpansionModule,
   MatIconModule, MatProgressSpinnerModule, MatFormFieldModule,

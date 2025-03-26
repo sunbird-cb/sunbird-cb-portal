@@ -5,7 +5,30 @@
 .autocomplete-form {
     width: 100%;
 }
+
+.knowledge_card {
+    width: calc(33% - 22px);
+
+}
+
+.flex-direction {
+    flex-direction: row;
+}
+.space-btwn {
+    gap: 32px;
+}
 .empty_search {
     width: 200px;
     margin: auto;
 }
+
+@media only screen and (max-width: 599px) {
+    .flex-direction {
+        flex-direction: column;
+    }
+
+    .knowledge_card {
+        width: 100%
+    }
+}
+

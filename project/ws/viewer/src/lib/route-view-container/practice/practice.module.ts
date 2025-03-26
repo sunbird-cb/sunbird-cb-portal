@@ -31,7 +31,7 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { PracticePlModule as PracticePluginModule } from '../../plugins/practice/practice.module'

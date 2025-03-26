@@ -11,7 +11,7 @@ import { EditorContentService } from '@ws/author/src/lib/routing/modules/editor/
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { MatDialog } from '@angular/material'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { StatusTrackComponent } from '../../../../../modules/shared/components/status-track/status-track.component'
 
 @Component({

@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router'
 // import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
 import { MatSnackBar } from '@angular/material'
-import { NsUser } from '@sunbird-cb/utils'
-import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
+import { NsUser } from '@sunbird-cb/utils-v2'
+// import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
 
 @Component({
   selector: 'ws-app-connection-request-card',
@@ -26,7 +26,7 @@ export class ConnectionRequestCardComponent implements OnInit {
     // private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
     private activeRoute: ActivatedRoute,
-    private connectionHoverService: ConnectionHoverService,
+    // private connectionHoverService: ConnectionHoverService,
   ) {
     if (this.activeRoute.parent) {
       this.me = this.activeRoute.parent.snapshot.data.me
@@ -34,18 +34,20 @@ export class ConnectionRequestCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    const userId = this.user.id || this.user.identifier
-    this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
-      if (res.profileDetails !== null) {
-        this.unmappedHowerUser = res
-        this.howerUser = res.profileDetails
-      } else {
-        this.unmappedHowerUser = res
-        this.howerUser = res || {}
-      }
-      this.user = this.howerUser
-      return this.howerUser
-    })
+    this.unmappedHowerUser = this.user
+    this.howerUser = this.user
+    // const userId = this.user.id || this.user.identifier
+    // this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
+    //   if (res.profileDetails !== null) {
+    //     this.unmappedHowerUser = res
+    //     this.howerUser = res.profileDetails
+    //   } else {
+    //     this.unmappedHowerUser = res
+    //     this.howerUser = res || {}
+    //   }
+    //   this.user = this.howerUser
+    //   return this.howerUser
+    // })
   }
 
   acceptConnection() {
@@ -67,9 +69,9 @@ export class ConnectionRequestCardComponent implements OnInit {
       userIdFrom: this.me ? this.me.userId : '',
       userNameFrom: this.me ? this.me.userId : '',
       userDepartmentFrom: this.me && this.me.departmentName ? this.me.departmentName : '',
-      userIdTo: this.unmappedHowerUser.userId,
-      userNameTo: this.unmappedHowerUser.userId,
-      userDepartmentTo: this.unmappedHowerUser.rootOrg.channel,
+      userIdTo: this.unmappedHowerUser.id,
+      userNameTo: this.unmappedHowerUser.fullName,
+      userDepartmentTo: this.unmappedHowerUser.departmentName,
       status: action,
     }
 
@@ -114,14 +116,29 @@ export class ConnectionRequestCardComponent implements OnInit {
     let name = ''
     if (this.user && !this.user.personalDetails) {
       if (this.user.firstName) {
-        name = `${this.user.firstName} ${this.user.lastName}`
+        if (this.user.lastName && this.user.lastName !== null && this.user.lastName !== undefined) {
+          name = `${this.user.firstName} ${this.user.lastName}`
+        } else  {
+          name = `${this.user.firstName}`
+        }
       }
     } else if (this.user && this.user.personalDetails) {
       if (this.user.personalDetails.middlename) {
-        // tslint:disable-next-line: max-line-length
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename}`
+        }
       } else {
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstname}`
+        }
       }
     }
     return name

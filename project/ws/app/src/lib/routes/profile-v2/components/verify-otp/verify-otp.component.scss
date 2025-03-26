@@ -1,0 +1,44 @@
+@import 'ws-vars';
+
+.verify-otp-dialog {
+    .timer-div {
+        // margin-bottom: 16px;
+        
+        .time-remaining {
+            color: rgba($color: #000, $alpha: 0.6);
+        }
+    }
+
+    .resend-otp {
+        color: $text-primary;
+        font-weight: 700;
+        cursor: pointer;
+        // margin-bottom: 16px;
+    }
+    .button-common-css, .outline-button {
+        background-color: transparent !important;
+        padding: 8px 16px !important;
+        color:#1B4CA1 !important;
+        
+    }
+    .button-common-css, .submit-button,{
+        background-color:  #1B4CA1 !important;
+        padding: 8px 16px !important;
+        color: #fff ;
+        border-radius:20px !important;
+        border: 1px solid  #1B4CA1 !important;
+        cursor: pointer;
+        line-height: 16px;
+        font-size: 14px;
+        font-weight: 700;
+    
+    }
+
+    .timer {
+        color: #666;
+    }
+   
+    .mat-dialog-container {
+        padding: 12px 24px !important;
+    }
+}

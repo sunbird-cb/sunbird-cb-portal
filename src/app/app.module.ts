@@ -1,7 +1,7 @@
 import { FullscreenOverlayContainer, OverlayContainer } from '@angular/cdk/overlay'
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common'
-import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { APP_INITIALIZER, Injectable, NgModule, ErrorHandler } from '@angular/core'
+import { HttpClient, HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { APP_INITIALIZER, Injectable, NgModule, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import {
   GestureConfig,
   MatButtonModule,
@@ -25,6 +25,7 @@ import {
   MatSelectModule,
   MatTableModule,
   MatProgressSpinnerModule,
+  MatSidenavModule,
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -33,7 +34,8 @@ import {
   StickyHeaderModule,
 } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService, PipeOrderByModule } from '@sunbird-cb/utils'
+import { SbUiResolverModule } from '@sunbird-cb/resolver-v2'
+import { LoggerService, PipeSafeSanitizerModule, ConfigurationsService, PipeOrderByModule, NPSGridService } from '@sunbird-cb/utils-v2'
 import { SearchModule } from '@ws/app/src/public-api'
 import 'hammerjs'
 import { KeycloakAngularModule } from 'keycloak-angular'
@@ -45,10 +47,7 @@ import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/
 import { RootComponent } from './component/root/root.component'
 import { LoginComponent } from './component/login/login.component'
 import { AppFooterComponent } from './component/app-footer/app-footer.component'
-import { AppNavBarComponent } from './component/app-nav-bar/app-nav-bar.component'
 import { AppPublicNavBarComponent } from './component/app-public-nav-bar/app-public-nav-bar.component'
-// import { ServiceWorkerModule } from '@angular/service-worker'
-// import { environment } from '../environments/environment'
 import { DialogConfirmComponent } from './component/dialog-confirm/dialog-confirm.component'
 import { InvalidUserComponent } from './component/invalid-user/invalid-user.component'
 import { LoginRootComponent } from './component/login-root/login-root.component'
@@ -79,8 +78,30 @@ import { PublicLoginWGComponent } from './routes/public/public-login-wg/public-l
 import { PublicWelcomeModule } from './routes/public/welcome/public-welcome.module'
 import { WelcomeUserResolverService } from './services/welcome-user-resolver.service'
 import { PublicTocModule } from './routes/public/public-toc/public-toc.module'
-// import { ServiceWorkerModule } from '@angular/service-worker'
-// import { environment } from '../environments/environment'
+import { PublicRequestModule } from './routes/public/public-request/public-request.module'
+import { AppTourComponent } from './component/app-tour/app-tour.component'
+import { GuidedTourModule, GuidedTourService } from 'cb-tour-guide'
+import { AppTourVideoComponent } from './component/app-tour-video/app-tour-video.component'
+import { AppChatbotModule } from './component/app-chatbot/app-chatbot.module'
+import { AppHierarchyResolverService } from './services/app-hierarchy-resolver.service'
+import { AppEnrollmentResolverService } from './services/app-enrollment-resolver.service'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { AppContentResolverService } from './services/app-content-read-resolver.service'
+
+import { HeaderModule } from './header/header.module'
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component'
+import { SocialLinkComponent } from './component/social-link/social-link.component'
+import { FooterSectionComponent } from './component/app-footer/footer-section/footer-section.component'
+import { AppLogoComponent } from './component/app-logo/app-logo.component'
+import { ProfileV3Module } from '@ws/app/src/lib/routes/profile-v3/profile-v3.module'
+import { NoDataComponent } from './component/no-data/no-data.component'
+import { SurveyShikshaComponent } from './component/survey-shiksha/survey-shiksha.component'
+import {
+WIDGET_REGISTERED_LIB_MODULES, WIDGET_REGISTRATION_LIB_CONFIG,
+} from '@sunbird-cb/consumption'
+import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-policy.component'
+import { LearnerAdvisoryComponent } from './learner-advisory/learner-advisory.component'
 
 @Injectable()
 export class HammerConfig extends GestureConfig {
@@ -100,13 +121,19 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
   return platformLocation.getBaseHrefFromDOM()
 }
 
+// tslint:disable-next-line:function-name
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
+
 // tslint:disable-next-line: max-classes-per-file
 @NgModule({
   declarations: [
     RootComponent,
     LoginComponent,
-    AppNavBarComponent,
+    // AppNavBarComponent,
     AppPublicNavBarComponent,
+    NoDataComponent,
     TncComponent,
     AppIntroComponent,
     TncRendererComponent,
@@ -120,6 +147,15 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicContacthomeComponent,
     PublicLoginWComponent,
     PublicLoginWGComponent,
+    AppTourVideoComponent,
+    AppTourComponent,
+    DialogBoxComponent,
+    SocialLinkComponent,
+    FooterSectionComponent,
+    AppLogoComponent,
+    SurveyShikshaComponent,
+    PrivacyPolicyComponent,
+    LearnerAdvisoryComponent,
   ],
   imports: [
     FormsModule,
@@ -129,11 +165,14 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     BrowserModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    BrowserModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
     AppRoutingModule,
     ...WIDGET_REGISTERED_MODULES,
-    WidgetResolverModule.forRoot(WIDGET_REGISTRATION_CONFIG),
+    ...WIDGET_REGISTERED_LIB_MODULES,
+    WidgetResolverModule.forRoot([...WIDGET_REGISTRATION_CONFIG, ...WIDGET_REGISTRATION_LIB_CONFIG]),
+    SbUiResolverModule.forRoot([...WIDGET_REGISTRATION_LIB_CONFIG]),
     StickyHeaderModule,
     ErrorResolverModule,
     // Material Imports
@@ -161,23 +200,39 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     PublicContactModule,
     PublicLogoutModule,
     PublicSignupModule,
+    PublicRequestModule,
     PublicWelcomeModule,
     PublicTocModule,
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,
     MatTabsModule,
+    GuidedTourModule,
+    AppChatbotModule,
     DiscussionUiModule.forRoot(ConfigService),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    HeaderModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+    ProfileV3Module,
+    MatSidenavModule,
   ],
   exports: [
     TncComponent,
+    HeaderModule,
+    TranslateModule,
   ],
   bootstrap: [RootComponent],
   entryComponents: [
     DialogConfirmComponent,
     LoginComponent,
     AppIntroComponent,
+    DialogBoxComponent,
   ],
   providers: [
     {
@@ -205,14 +260,27 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     ConfigurationsService,
     PipeContentRoutePipe,
     AppTocResolverService,
+    AppHierarchyResolverService,
+    AppContentResolverService,
+    AppEnrollmentResolverService,
+    NPSGridService,
+    HttpClient,
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseHref,
       deps: [PlatformLocation],
     },
+    {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient],
+    },
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig },
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
+    { provide: 'environment', useValue: environment },
+    GuidedTourService,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

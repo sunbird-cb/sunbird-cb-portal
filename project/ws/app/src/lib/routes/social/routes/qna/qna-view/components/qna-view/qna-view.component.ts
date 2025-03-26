@@ -11,7 +11,7 @@ import {
   EditorQuillComponent,
   DialogSocialDeletePostComponent,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService, LoggerService, ValueService, NsPage } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService, LoggerService, ValueService, NsPage } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-qna-view',

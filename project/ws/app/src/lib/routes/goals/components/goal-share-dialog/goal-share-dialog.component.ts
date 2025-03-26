@@ -6,7 +6,7 @@ import {
   ElementRef,
 } from '@angular/core'
 import { NsGoal, BtnGoalsService, NsAutoComplete } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material'
 
 @Component({

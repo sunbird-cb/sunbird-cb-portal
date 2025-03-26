@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils-v2'
 import videoJs from 'video.js'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
@@ -17,11 +17,12 @@ import { ViewerUtilService } from '@ws/viewer/src/lib/viewer-util.service'
 
 const videoJsOptions: videoJs.PlayerOptions = {
   controls: true,
-  autoplay: false,
+  autoplay: true,
   preload: 'auto',
   fluid: false,
+  muted: false,
   techOrder: ['html5'],
-  playbackRates: [0.75, 0.85, 1, 1.25, 2, 3],
+  playbackRates: [1, 1.5],
   poster: '',
   html5: {
     hls: {
@@ -52,6 +53,10 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   public id = 'v-player'
   private player: videoJs.Player | null = null
   private dispose: (() => void) | null = null
+  videoEnd = false
+  timerInterval: any
+  video: any
+  replayVideoFlag = false
   constructor(
     private eventSvc: EventService,
     private contentSvc: WidgetContentService,
@@ -61,9 +66,33 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     super()
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  //   this.video=document.getElementById("videoTag");
+  //   document.addEventListener("keydown",(e:any)=>{
+  //     if(e.keyCode==37){       //left arrow
+  //         this.backward()
+  //     }else if(e.keyCode==39){ //right arrow
+  //         this.forward()
+  //     }
+  //   }
+  // )
+
+  }
+
+  // forward=()=>{
+  //   this.skip(15);
+  // }
+
+  // backward=()=>{
+  //    this.skip(-15);
+  // }
+
+  // skip(time:any) {
+  //   this.video.currentTime=this.video.currentTime+time;
+  // }
 
   async ngAfterViewInit() {
+
     this.widgetData = {
       ...this.widgetData,
     }
@@ -77,7 +106,56 @@ export class PlayerVideoComponent extends WidgetBaseComponent
         this.initializeVPlayer()
       }
     }
+
+    const videoTag: any =   document.getElementsByTagName('video')[0]
+    if (videoTag) {
+      videoTag.onended = () => {
+        this.videoEnd = true
+        if (this.widgetData && this.widgetData.hideUpNext) {
+          this.replayVideoFlag = this.widgetData.hideUpNext ? true : false
+        }
+        const videoTagElement: any = document.getElementById('videoTag') || document.getElementById('realvideoTag')
+        const autoPlayVideo: any = document.getElementById('auto-play-video')
+        if (videoTagElement) {
+          if (autoPlayVideo) {
+            autoPlayVideo.style.opacity = '0.8'
+          }
+          videoTagElement.style.filter = 'blur(2px)'
+
+        }
+        let counter = 1
+        this.timerInterval =   setInterval(() => {
+            if (counter <= 5) {
+                this.updateProgress(counter)
+            }
+            if (counter > 5) {
+              if (videoTag) {
+                videoTag.style.filter = 'blur(0px)'
+              }
+              if (autoPlayVideo) {
+                autoPlayVideo.style.opacity = '1'
+              }
+              counter = 0
+              this.clearTimeInterval()
+              this.viewerSvc.autoPlayNextVideo.next(true)
+            }
+            counter = counter + 1
+          },                               1000)
+
+      }
+    }
   }
+
+  clearTimeInterval() {
+    clearInterval(this.timerInterval)
+  }
+
+  updateProgress(value: any) {
+    const progress: any = document.querySelector('.circular-progress')
+    progress.style.setProperty('--percentage', `${value * 72}deg`)
+    // progress.innerText = `${value}%`
+  }
+
   ngOnDestroy() {
     if (this.player) {
       this.player.dispose()
@@ -85,8 +163,23 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     if (this.dispose) {
       this.dispose()
     }
+    this.clearTimeInterval()
   }
   private initializeVPlayer() {
+    // alert()
+    // let playerInstance:any = this.player;
+    // if(playerInstance) {
+    //   var skipBehindButton = playerInstance.controlBar.addChild("button");
+    //   var skipBehindButtonDom = skipBehindButton.el();
+    //   skipBehindButtonDom.innerHTML = "30<<";
+    //   skipBehindButton.addClass("buttonClass");
+
+    //   // skipBehindButtonDom.onclick = function(){
+    //   //     skipS3MV(-30);
+    //   // }
+    //   console.log("playerInstance.controlBar",playerInstance.controlBar);
+    // }
+
     const dispatcher: telemetryEventDispatcherFunction = event => {
       if (this.widgetData.identifier) {
         this.eventSvc.dispatchEvent(event)
@@ -135,9 +228,9 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
       const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-              this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
+              this.activatedRoute.snapshot.queryParams.collectionId : ''
       const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-              this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
+              this.activatedRoute.snapshot.queryParams.batchId : ''
 
       if (this.widgetData.identifier && identifier && data) {
           this.viewerSvc
@@ -165,6 +258,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
   }
 
   private initializePlayer() {
+
     const dispatcher: telemetryEventDispatcherFunction = event => {
       if (this.widgetData.identifier) {
         this.eventSvc.dispatchEvent(event)
@@ -211,12 +305,11 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       }
     }
     const fireRProgress: fireRealTimeProgressFunction = (identifier, data) => {
-        const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-                this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-        const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-                this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
-
-        if (this.widgetData.identifier && identifier && data) {
+      const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                           this.activatedRoute.snapshot.queryParams.batchId, identifier)
+      const collectionId = (resData && resData.courseId) ? resData.courseId : ''
+      const batchId = (resData && resData.batchId) ? resData.batchId : ''
+        if (this.widgetData.identifier && identifier && data && collectionId && batchId) {
           this.viewerSvc
             .realTimeProgressUpdate(identifier, data, collectionId, batchId)
       }
@@ -241,6 +334,7 @@ export class PlayerVideoComponent extends WidgetBaseComponent
       enableTelemetry,
       this.widgetData,
       this.widgetData.mimeType,
+      this.widgetData.size
     )
     this.player = initObj.player
     this.dispose = initObj.dispose
@@ -261,9 +355,21 @@ export class PlayerVideoComponent extends WidgetBaseComponent
         })
       }
       if (this.widgetData.url) {
-        initObj.player.src(this.widgetData.url)
+        initObj.player.src(this.viewerSvc.getCdnUrl(this.widgetData.url))
+
       }
     })
+
+    // const player = this.player;
+    // console.log('player', this.player)
+    // if(player) {
+    //   if(player.controlBar.options_.children) {
+    //     console.log('player', player);
+    //     let seelBar:any = player.controlBar;
+    //     seelBar.progressControl['children'][0]['SeekBar']['enabled_'] = false;
+    //     console.log('seelBar', seelBar.progressControl)
+    //   }
+    // }
   }
   async fetchContent() {
     const content = await this.contentSvc
@@ -277,5 +383,26 @@ export class PlayerVideoComponent extends WidgetBaseComponent
     }
 
     this.widgetData.subtitles = content.subTitles
+  }
+
+  closeAutoPlay() {
+    this.videoEnd = false
+    this.replayVideoFlag = true
+    clearInterval(this.timerInterval)
+  }
+
+  replayVideo() {
+    this.replayVideoFlag = false
+    const videoTag: any = document.getElementById('videoTag') || document.getElementById('realvideoTag')
+    if (videoTag) {
+      videoTag.style.filter = 'blur(0px)'
+    }
+    const autoPlayVideo: any = document.getElementById('auto-play-video')
+    if (autoPlayVideo) {
+      autoPlayVideo.style.opacity = '1'
+    }
+    if (this.player) {
+      this.player.play()
+    }
   }
 }

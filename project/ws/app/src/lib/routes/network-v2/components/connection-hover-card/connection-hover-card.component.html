@@ -9,11 +9,13 @@
     </div>
     <mat-card-content class="name-container flex flex-col width-expand">
         <div *ngIf="hoverUser" class="margin-top-xs" i18n-aria-label role="link">
-            <div class="flex flex-1">
-                <div class="mat-title name ws-mat-black-text truncate">
+            <div class="flex flex-1 name-container-inner">
+                <div class="mat-title name ws-mat-black-text">
                     <!-- {{hoverUser?.personalDetails?.firstname}}{{' '}}{{hoverUser?.personalDetails?.middlename}}
                 {{' '}}{{hoverUser?.personalDetails?.surname}} -->
-                    {{getUserName}}
+                    {{getUserName | titlecase }}
+                    <span class="profile-badge" *ngIf="isProfileStatus">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+                    </span>
                 </div>
             </div>
             <div class="flex flex-1" *ngFor="let pro of hoverUser?.professionalDetails">
@@ -44,22 +46,22 @@
                         {{'Not available'}}
                     </span>
                 </div> -->
-                <div class="flex flex-1 m-margin cursor-pointer">
+                <!-- <div class="flex flex-1 m-margin cursor-pointer">
                     <mat-icon>email</mat-icon>
                     <a *ngIf="hoverUser?.personalDetails?.primaryEmail"
                         href="mailto:{{hoverUser?.personalDetails?.primaryEmail}}">
-                        <span class="mat-body-2 margin-left-s ws-mat-black60-text">
-                            {{hoverUser?.personalDetails?.primaryEmail || 'Not available'}}
+                        <span class="mat-body-2 margin-left-s ws-mat-black60-text email-hower">
+                            {{hoverUser?.personalDetails?.primaryEmail | pipeEmail }}
                         </span>
                     </a>
                     <span *ngIf="!hoverUser?.personalDetails?.primaryEmail" class="mat-body-2 margin-left-s">
                         {{'Not available'}}
                     </span>
-                </div>
+                </div> -->
                 <div class="flex flex-1 m-margin margin-bottom-s cursor-pointer">
                     <a i18n role="link" class="flex ws-mat-default-text" (click)="goToUserProfile()">
                         <mat-icon>group</mat-icon>
-                        <span class="mat-body-2 margin-left-s">{{'Network Profile'}}</span>
+                        <span class="mat-body-2 margin-left-s">{{'connectionHoverCard.networkProfile' | translate }}</span>
                     </a>
                 </div>
             </div>

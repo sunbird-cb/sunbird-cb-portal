@@ -3,7 +3,7 @@ import { throwError, Subscription, Subject } from 'rxjs'
 import { switchMap, takeWhile, tap } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils-v2'
 
 import { CertificationApiService } from '../../apis/certification-api.service'
 import { CertificationService } from '../../services/certification.service'

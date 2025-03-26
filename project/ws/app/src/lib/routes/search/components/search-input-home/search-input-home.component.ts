@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild, ViewEncapsulation } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Observable } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
 import { ISearchAutoComplete } from '../../models/search.model'
@@ -30,7 +30,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
   autoCompleteResults: ISearchAutoComplete[] = []
   searchLocale = this.getActiveLocale()
   lang = ''
-
+  disableMenu = false
   constructor(
     private activated: ActivatedRoute,
     private router: Router,
@@ -63,7 +63,27 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
     }
   }
   init() {
-    if (this.searchInputElem.nativeElement) {
+    let isNotMyUser = false
+    let isIgotOrg = false
+    if (this.configSvc && this.configSvc.unMappedUser
+      && this.configSvc.unMappedUser.profileDetails
+      && this.configSvc.unMappedUser.profileDetails.profileStatus) {
+      isNotMyUser = this.configSvc.unMappedUser.profileDetails.profileStatus.toLowerCase() === 'not-my-user' ? true : false
+    }
+    if (this.configSvc && this.configSvc.unMappedUser
+      && this.configSvc.unMappedUser.profileDetails
+      && this.configSvc.unMappedUser.profileDetails.employmentDetails
+      && this.configSvc.unMappedUser.profileDetails.employmentDetails.departmentName) {
+        isIgotOrg = this.configSvc.unMappedUser.profileDetails.employmentDetails.departmentName.toLowerCase() === 'igot' ? true : false
+    }
+    // let isIgotOrg = true
+    if (isNotMyUser && isIgotOrg) {
+      this.disableMenu = true
+      // this.router.navigateByUrl('app/person-profile/me#profileInfo')
+    } else {
+      this.disableMenu = false
+    }
+    if (this.searchInputElem && this.searchInputElem.nativeElement) {
       // activated
       this.searchInputElem.nativeElement.focus()
     }
@@ -157,6 +177,7 @@ export class SearchInputHomeComponent implements OnInit, OnChanges {
         queryParamsHandling: 'merge',
       })
     }
+    localStorage.removeItem('activeRoute')
   }
 
   clearSearchText() {

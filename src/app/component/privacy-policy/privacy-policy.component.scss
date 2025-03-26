@@ -1,0 +1,66 @@
+.privacypolicy-section {
+  box-sizing: border-box;
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 20px;
+
+  .container-balanced {
+    max-width: 1202px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    height: auto;
+    min-height: 400px;
+    padding: 20px;
+  }
+
+  .main_title_text {
+    font-size: 36px;
+    font-weight: 600;
+    font-family: Montserrat, sans-serif;
+    align-items: justify;
+  }
+
+  .mat-title {
+    font-size: 20px;
+    font-family: Montserrat, sans-serif;
+    margin-bottom: 10px;
+    margin-left: -17px;
+  }
+
+  .mat-body-2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-family: Lato, sans-serif;
+  }
+
+  ul {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    font-family: Lato, sans-serif;
+  }
+  .privacy-policy-content {
+    text-align: justify;
+  }
+  .privacy_main_box .number {
+    position: relative;
+    left: -13px;
+   
+  }
+
+  @media screen and (max-width: 768px) {
+    .main_title_text {
+      font-size: 20px;
+    }
+    .mat-title {
+      font-size: 18px;
+    }
+    .mat-body-2 {
+      font-size: 14px;
+    }
+  }
+}
+
+::ng-deep#userwayAccessibilityIcon {
+  display: none;
+}

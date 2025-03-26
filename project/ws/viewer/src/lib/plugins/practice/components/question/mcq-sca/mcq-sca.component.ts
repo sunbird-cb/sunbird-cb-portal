@@ -13,7 +13,7 @@ import { NSPractice } from '../../../practice.model'
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { PracticeService } from '../../../practice.service'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NsContent } from '@sunbird-cb/utils-v2'
 @Component({
     selector: 'viewer-mcq-sca-question',
     templateUrl: './mcq-sca.component.html',
@@ -29,7 +29,9 @@ export class SingleChoiseQuesComponent implements OnInit, OnDestroy {
         question: '',
         instructions: '',
         questionId: '',
+        questionLevel: '',
         editorState: undefined,
+        timeTaken: '',
         options: [
             {
                 optionId: '',
@@ -40,6 +42,7 @@ export class SingleChoiseQuesComponent implements OnInit, OnDestroy {
     }
     @Input() itemSelectedList: string[] = []
     @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+    @Input() assessmentType = ''
     @Output() update = new EventEmitter<string | Object>()
     localQuestion: string = this.question.question
     shCorrectAnsSubscription: Subscription | null = null
@@ -85,8 +88,12 @@ export class SingleChoiseQuesComponent implements OnInit, OnDestroy {
         // return isSelected
         return this.itemSelectedList && this.itemSelectedList.indexOf(option.optionId) !== -1
     }
-    updateParent($event: any) {
-        this.update.emit($event)
+    updateParent($event: any, checked: any) {
+        if (this.assessmentType === 'optionalWeightage') {
+            this.update.emit({ 'index': $event, 'status': checked })
+        } else {
+            this.update.emit($event)
+        }
     }
     // ngOnDestroy(): void {
     //     if (this.subscription) {
@@ -94,6 +101,13 @@ export class SingleChoiseQuesComponent implements OnInit, OnDestroy {
     //         // this.question.options = []
     //     }
     // }
+    getSanitizeString(res: any) {
+        if (res && (typeof res === 'string')) {
+            const response = res.replace(/\&lt;/g, '<').replace(/\&gt;/g, '>')
+            return response
+        }
+        return res
+    }
     ngOnDestroy(): void {
         this.practiceSvc.shCorrectAnswer(false)
         if (this.shCorrectAnsSubscription) {

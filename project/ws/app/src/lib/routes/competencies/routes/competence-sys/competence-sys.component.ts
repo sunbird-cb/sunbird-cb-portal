@@ -8,7 +8,8 @@ import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
 import { MatSnackBar } from '@angular/material';
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:enable */
 
 @Component({
@@ -45,11 +46,22 @@ export class CompetenceSysComponent implements OnInit {
     private competencySvc: CompetenceService,
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     // this.tabsData =
     //   (this.route.parent &&
     //     this.route.parent.snapshot.data.pageData.data.tabs) ||
     //   []
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+
     if (
       this.route.snapshot.data &&
       this.route.snapshot.data.profile &&
@@ -69,6 +81,7 @@ export class CompetenceSysComponent implements OnInit {
     } else {
       this.getProfile()
     }
+    // console.log('this.route =======', this.route.snapshot.queryParams)
   }
   ngOnInit() {
     // load page based on 'page' query param or default to 1
@@ -215,25 +228,25 @@ export class CompetenceSysComponent implements OnInit {
     }
   }
   resetcomp() {
-    let data: any[] = [];
+    // let data: any[] = [];
     const allCompetencies = [...this.allCompetencies];
-    if (this.myCompetencies && this.myCompetencies.length > 0) {
-      data = _.flatten(
-        _.map(this.myCompetencies, (item: NSCompetencie.ICompetencie) =>
-          _.filter(
-            allCompetencies,
-            (i: NSCompetencie.ICompetencie) => i.id === item.id
-          )
-        )
-      );
+    // if (this.myCompetencies && this.myCompetencies.length > 0) {
+    //   data = _.flatten(
+    //     _.map(this.myCompetencies, (item: NSCompetencie.ICompetencie) =>
+    //       _.filter(
+    //         allCompetencies,
+    //         (i: NSCompetencie.ICompetencie) => i.id === item.id
+    //       )
+    //     )
+    //   );
 
-      this.filteredCompetencies = this.allCompetencies.filter((obj) => {
-        return data.indexOf(obj) === -1;
-      });
-      // this.filteredCompetencies = data
-    } else {
+      // this.filteredCompetencies = this.allCompetencies.filter((obj) => {
+      //   return data.indexOf(obj) === -1;
+      // });
+    //   this.filteredCompetencies = data
+    // } else {
       this.filteredCompetencies = allCompetencies;
-    }
+    // }
   }
   refreshData() {
     this.searchJson = [
@@ -247,19 +260,19 @@ export class CompetenceSysComponent implements OnInit {
       .fetchCompetency(searchObj)
       .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
         if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-          let data = reponse.responseData;
-          if (this.myCompetencies && this.myCompetencies.length > 0) {
-            data = _.flatten(
-              _.map(this.myCompetencies, (item) => {
-                return _.filter(reponse.responseData, (i) => i.id === item.id);
-              })
-            );
-            this.filteredCompetencies = reponse.responseData.filter((obj) => {
-              return data.indexOf(obj) === -1;
-            });
-          } else {
+          // let data = reponse.responseData;
+          // if (this.myCompetencies && this.myCompetencies.length > 0) {
+          //   data = _.flatten(
+          //     _.map(this.myCompetencies, (item) => {
+          //       return _.filter(reponse.responseData, (i) => i.id === item.id);
+          //     })
+          //   );
+          //   this.filteredCompetencies = reponse.responseData.filter((obj) => {
+          //     return data.indexOf(obj) === -1;
+          //   });
+          // } else {
             this.filteredCompetencies = reponse.responseData;
-          }
+          // }
         }
       });
   }

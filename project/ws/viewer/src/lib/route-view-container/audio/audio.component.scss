@@ -103,11 +103,11 @@
 }
 
 .padding-dynamic {
-  padding: $size-s;
-  padding-top: $size-m;
+  // padding: $size-s;
+  // padding-top: $size-m;
   @include breakpoint-xs {
-    padding: $size-xs;
-    padding-top: 40vh;
+    // padding: $size-xs;
+    // padding-top: 40vh;
   }
 }
 
@@ -139,31 +139,28 @@
 
 .video-player {
   width: 100%;
-  height: 75vh;
-  @include breakpoint-lt-xl {
-    height: 70vh;
-  }
-  @include breakpoint-lt-l {
-    height: 65vh;
-  }
-  @include breakpoint-lt-m {
-    height: 60vh;
-  }
-  @include breakpoint-lt-s {
-    height: 55vh;
-  }
-  @include breakpoint-xs {
-    display: none;
-  }
+  height: 557px;
+  // height: 59vh;
+  // @include breakpoint-lt-xl {
+  //   height: 59vh;
+  // }
+  // @include breakpoint-lt-l {
+  //   height: 65vh;
+  // }
+  // @include breakpoint-lt-m {
+  //   height: 60vh;
+  // }
+  // @include breakpoint-lt-s {
+  //   height: 55vh;
+  // }
+  // @include breakpoint-xs {
+  //   display: none;
+  // }
 }
 
 .video-player-m {
-  position: fixed;
-  top: 55px;
-  left: 0px;
-  height: 40vh;
-  width: 100vw;
-  z-index: 1000;
+  position: relative;
+  height: 34vh;
   background: black;
   @include breakpoint-gt-xs {
     display: none;
@@ -230,4 +227,14 @@
 .audio-player-embed {
   height: 100vh;
   width: 100vw;
+}
+
+.audio-player-container .mat-card {
+  background: transparent;
+  box-shadow: none;
+  // padding: 0 16px;
+}
+
+.audio-mat-card {
+  padding:0 !important
 }

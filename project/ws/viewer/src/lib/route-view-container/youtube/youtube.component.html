@@ -9,7 +9,7 @@
               </ng-container>
             </div>
             <ng-container *ngIf="!isScreenSizeSmall">
-              <div class="flex justify-end mt-3">
+              <div class="flex justify-end">
                 <ws-widget-btn-content-download [forPreview]="forPreview" [widgetData]="
                     youtubeData
                       | pipePartialContent
@@ -38,7 +38,7 @@
           </mat-card-content>
         </mat-card>
       </div>
-      <div class="vidoe-title margin-top-m" *ngIf="youtubeData">
+      <div class="vidoe-title margin-top-m" *ngIf="youtubeData && !isMobile">
         <mat-card *ngIf="isScreenSizeSmall" class="unit-meta-item">
           <div class="flex">
             <!-- <ws-widget-btn-content-download [forPreview]="forPreview" [widgetData]="

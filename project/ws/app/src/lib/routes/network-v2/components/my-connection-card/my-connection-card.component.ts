@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
-import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
+// import { ConnectionHoverService } from '../connection-name/connection-hover.servive'
 
 @Component({
   selector: 'ws-app-my-connection-card',
@@ -14,21 +14,23 @@ export class MyConnectionCardComponent implements OnInit {
   unmappedUser!: any
   constructor(
     private router: Router,
-    private connectionHoverService: ConnectionHoverService,
+    // private connectionHoverService: ConnectionHoverService,
   ) { }
 
   ngOnInit() {
-    const userId = this.user.id || this.user.identifier
-    this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
-      if (res.profileDetails !== null) {
-        this.howerUser = res.profileDetails
-        this.unmappedUser = res
-      } else {
-        this.howerUser = res || {}
-        this.unmappedUser = res
-      }
-      return this.howerUser
-    })
+    this.howerUser = this.user
+    this.unmappedUser = this.user
+    // const userId = this.user.id || this.user.identifier
+    // this.connectionHoverService.fetchProfile(userId).subscribe((res: any) => {
+    //   if (res.profileDetails !== null) {
+    //     this.howerUser = res.profileDetails
+    //     this.unmappedUser = res
+    //   } else {
+    //     this.howerUser = res || {}
+    //     this.unmappedUser = res
+    //   }
+    //   return this.howerUser
+    // })
   }
 
   goToUserProfile(user: any) {
@@ -45,14 +47,33 @@ export class MyConnectionCardComponent implements OnInit {
     let name = ''
     if (this.user && !this.user.personalDetails) {
       if (this.user.firstName) {
-        name = `${this.user.firstName} ${this.user.lastName}`
+        if (this.user.lastName && this.user.lastName !== null && this.user.lastName !== undefined) {
+          name = `${this.user.firstName} ${this.user.lastName}`
+        } else  {
+          name = `${this.user.firstName}`
+        }
+      } else if (this.user.fullName) {
+        name = `${this.user.fullName}`
+      } else {
+        name = `${this.user.name}`
       }
     } else if (this.user && this.user.personalDetails) {
       if (this.user.personalDetails.middlename) {
-        // tslint:disable-next-line: max-line-length
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
-      } else {
-        name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.middlename}`
+        }
+      } else if (this.user.personalDetails.firstname) {
+        // tslint:disable-next-line:max-line-length
+        if (this.user.personalDetails.surname && this.user.personalDetails.surname !== null && this.user.personalDetails.surname !== undefined) {
+          // tslint:disable-next-line: max-line-length
+          name = `${this.user.personalDetails.firstname} ${this.user.personalDetails.surname}`
+        } else {
+          name = `${this.user.personalDetails.firstname}`
+        }
       }
     }
     return name

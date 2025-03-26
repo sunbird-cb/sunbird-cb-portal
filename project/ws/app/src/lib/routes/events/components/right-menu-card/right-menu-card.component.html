@@ -1,25 +1,94 @@
 
-  <mat-card class="right-menu-card">
+  <mat-card class="right-menu-card">   
     <mat-card-content role="link" tabindex="0">
-      <ng-container>
-        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="pastEvent">
-          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs">
-            <span i18n>Event is completed</span>
+      <!-- new enroll flow -->
+      <div class="event-image">
+        <img src="{{eventData?.appIcon | pipePublicURL}}" class="event-card-image" *ngIf="eventData?.appIcon">
+        <img src="/assets/icons/Events_default.png" class="event-card-image" *ngIf="!eventData?.appIcon">
+      </div>
+      <ng-container *ngIf="isenrollFlow">
+        
+        <ng-container *ngIf="!enrollBtnLoading">
+          <!--Not enrolled -->
+          <ng-container *ngIf="!isEnrolled && (futureEvent || currentEvent)">
+            <div class="ml-4 mt-2 mr-6 mb-2 view-more view-all" *ngIf="batchId">
+              <a mat-button class="flex-1 action-button" target="_blank" (click)="enrolltoEvent()">
+                <span i18n>{{ 'eventDetailsRightCard.enroll' | translate }}</span>
+              </a>
+            </div>
+            <p class="text-center pt-4" *ngIf="!batchId">{{'eventDetailsRightCard.noBatchErrormsg' | translate }}</p>             
+          </ng-container>
+          <!--enrolled -->
+          <ng-container *ngIf="isEnrolled">
+            <div class="ml-4 mr-6 mb-2 mt-2 view-more  view-all " *ngIf="currentEvent">
+              <a mat-button class="flex-1 action-button" target="_blank" (click)="navigateToPLayer();raiseTelemetry('join-event')">
+                <span i18n>{{ 'eventDetailsRightCard.joinEvent' | translate }}</span>
+              </a>
+            </div>
+            <div class="ml-4 mr-6 mb-2 mt-2 view-more  view-all " *ngIf="pastEvent">
+              <a mat-button class="flex-1 action-button" target="_blank" (click)="navigateToPLayer();raiseTelemetry('join-event')">
+                <span i18n>{{ 'eventDetailsRightCard.viewRecording' | translate }}</span>
+              </a>
+            </div>
+            <div class="ml-4 mr-6 mb-2 mt-2 view-more ws-mat-accent-text view-all" *ngIf="futureEvent">
+              <p mat-button class="flex-1  margin-top-xs margin-bottom-xs action-button">
+                <span i18n>{{ 'eventDetailsRightCard.eventIsYetToStart' | translate }}</span>
+              </p>
+            </div>
+          </ng-container>
+          <ng-container>
+            <div class="ml-4 mt-2 mr-6 mb-2 view-more  view-all" *ngIf="!isEnrolled && pastEvent">
+                <a class="action-button"  [href]="getLink()" target="_blank" (click)="raiseTelemetry('view-recording')">
+                  <span i18n>{{ 'eventDetailsRightCard.viewRecording' | translate }}</span>
+                </a>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="enrollBtnLoading">
+          <ws-widget-skeleton-loader [width]="'100%'" [height]="'36px'"
+          [bindingClass]="'flex rounded h-8'"></ws-widget-skeleton-loader>
+        </ng-container>
+      </ng-container>
+      <!-- keeping the old flow as it is -->
+      <ng-container *ngIf="!isenrollFlow">
+        <div class="ml-4 mt-2 mr-6 mb-2 view-more view-all" *ngIf="pastEvent">
+          <p mat-button class="margin-top-xs margin-bottom-xs action-button view-recording" *ngIf="isSpvEvent">
+            <a class="flex-1"  [href]="getLink()" target="_blank" (click)="raiseTelemetry('view-recording')">
+              <span i18n>{{ 'eventDetailsRightCard.viewRecording' | translate }}</span>
+            </a>
+          </p>
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs event-completed" *ngIf="!isSpvEvent">
+            <span i18n>{{ 'eventDetailsRightCard.eventIsCompleted' | translate }}</span>
           </p>
         </div>
-        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background" *ngIf="currentEvent">
-          <a mat-button class="flex-1" href="{{eventData?.registrationLink}}" target="_blank">
-            <span class="text-white" i18n>Attend Live Event</span>
+        <div class="ml-4 mr-6 mb-2 mt-2 view-more view-all" *ngIf="currentEvent">
+          <a mat-button class="flex-1 action-button" target="_blank" (click)="navigateToPLayer();raiseTelemetry('join-event')">
+            <span i18n>{{ 'eventDetailsRightCard.joinEvent' | translate }}</span>
           </a>
         </div>
-        <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all" *ngIf="futureEvent">
-          <p mat-button class="flex-1  margin-top-xs margin-bottom-xs">
-            <span i18n>Event is yet to start</span>
+        <div class="ml-4 mr-6 mb-2 mt-2 view-more view-all" *ngIf="futureEvent">
+          <p mat-button class="flex-1 margin-top-xs margin-bottom-xs">
+            <span i18n>{{ 'eventDetailsRightCard.eventIsYetToStart' | translate }}</span>
           </p>
         </div>
       </ng-container>
     </mat-card-content>
     <mat-card-content>
+      <div class="right-side-content-container">
+        <div class="progressDiv mb-5" *ngIf="isEnrolled && enrolledEvent && enrolledEvent?.completionPercentage">
+          <div class="flex-1">
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-row gap-4 text-sm">
+                <div class="flex-1 text-xs">{{ 'apptocsinglepage.overallProgress' | translate }}</div>
+                <div class="text-xs" *ngIf="enrolledEvent?.completionPercentage > 0"> {{ progressVal }} %</div>
+              </div>
+              <ws-widget-content-progress *ngIf="enrolledEvent?.contentId" [forPreview]="forPreview"
+                [contentId]="enrolledEvent?.contentId" [progress]="progressVal" [progressType]="'percentage'"
+                [customClassName]="'content-progress'" >
+              </ws-widget-content-progress>
+            </div>
+          </div>
+        </div>
       <div class="timediv">
         <span class="mat-subheading-2" role="link" tabindex="0">{{eventData?.startDate | date }}</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
@@ -28,8 +97,12 @@
             </span>
         </div>
       </div>
+      <div class="margin-top-m karma-points-div" *ngIf="!(!isEnrolled && pastEvent)  || !(isEnrolled && pastEvent && enrolledEvent?.status < 2) ">
+        <ws-widget-karma-points [data]="kparray" [condition]="{event: eventData, isEnrolled: isEnrolled, enrolledEvent: enrolledEvent, 
+          pastEvent: pastEvent, currentEvent: currentEvent, futureEvent: futureEvent }"></ws-widget-karma-points>
+      </div>
       <div class="margin-top-m">
-        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Event Type</span>
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">{{ 'eventDetailsRightCard.eventType' | translate }}</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
             <span class="flex-wrap mat-body-2" role="link" tabindex="0">
               {{eventData?.resourceType}}
@@ -37,22 +110,23 @@
         </div>
       </div>
       <div class="margin-top-m">
-        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">Hosted By</span>
+        <span class="mat-subheading-2 ws-mat-accent-text" role="link" tabindex="0">{{ 'eventDetailsRightCard.hostedBy' | translate }}</span>
         <div class="flex flex-wrap" role="link" tabindex="0">
             <span class="flex-wrap mat-body-2" role="link" tabindex="0">
               {{eventData?.owner}}
             </span>
         </div>
       </div>
-      <div class="margin-top-m">
+    </div>
+      <!-- <div class="margin-top-m">
         <span class="mat-subheading-2 ws-mat-black60-text" role="link" tabindex="0">
         Last updated on {{eventData?.lastUpdatedOn | date}}
         </span>
-      </div>
+      </div> -->
     </mat-card-content>
     <!-- <mat-card-content>
       <span role="link" tabindex="0" class="mat-subheading-2">Recently Earned</span>
-      <div class="flex flex-wrap" role="link" tabindex="0">        
+      <div class="flex flex-wrap" role="link" tabindex="0">
       </div>
     </mat-card-content>
     <mat-card-content >

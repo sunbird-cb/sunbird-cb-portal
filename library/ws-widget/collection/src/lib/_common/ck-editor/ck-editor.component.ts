@@ -8,7 +8,7 @@ import { FILE_MAX_SIZE, IMAGE_MAX_SIZE, IMAGE_SUPPORT_TYPES } from './constants/
 import { NotificationComponent } from './components/notification/notification.component'
 import { AccessControlService } from './services/access-control.service'
 import { UploadService } from './services/upload.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { LoaderService } from './services/loader.service'
 

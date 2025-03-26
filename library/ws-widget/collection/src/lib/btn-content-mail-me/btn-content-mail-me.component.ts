@@ -3,7 +3,7 @@ import { switchMap, map, catchError } from 'rxjs/operators'
 import { of, Observable } from 'rxjs'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { NsContent } from '../_services/widget-content.model'
 import {
   BtnContentMailMeDialogComponent,

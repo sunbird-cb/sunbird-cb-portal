@@ -12,10 +12,14 @@ export namespace NSPractice {
     instructions: string
     section: string
     editorState?: IEditor
-    question: string
+    question: any
     questionId: string
     options: IOption[]
-    questionType?: TQuizQuestionType
+    questionLevel: String,
+    timeTaken: String,
+    questionType?: TQuizQuestionType,
+    rhsChoices?: string[],
+    choices?: IChoiceOptions
   }
 
   export interface IOption {
@@ -78,7 +82,23 @@ export namespace NSPractice {
     correct: number
     passPercent: number
     inCorrect: number
-    pass: boolean
+    pass: boolean,
+    totalMarks: number,
+    sectionMarks: number,
+    children: ISectionQuestion[],
+    name: string
+  }
+
+  export interface ISectionQuestion {
+    identifier: string,
+    mimeType: string,
+    objectType: string
+    primaryCategory: string
+    qType: string
+    question: string
+    result: string,
+    questionLevel: string
+    timeSpent: string
   }
   export interface IQuizSubmitResponseV2 {
     identifier: string
@@ -93,10 +113,16 @@ export namespace NSPractice {
     passPercentage: number
     incorrect: number
     pass: boolean
+    isInProgress?: boolean
+    timeTakenForAssessment: string,
+    totalSectionMarks: number,
+    totalMarks: number
   }
 
   export interface IQPaper {
+    response?: any
     questionSet: {
+      assessmentType: string,
       lastStatusChangedOn: string
       children: IPaperSection[]
       name: string
@@ -188,7 +214,9 @@ export namespace NSPractice {
     contentDisposition: string
     visibility: string
     showSolutions: 'Yes' | 'No'
-    index: number
+    index: number,
+    expectedDuration: number,
+    questionParagraph?: any
   }
   export interface IQuestionV2 {
     lastStatusChangedOn: string
@@ -234,6 +262,7 @@ export namespace NSPractice {
     variants: object
     index: number
     pkgVersion: number
+
   }
   export interface IEditor {
     // answer?: string
@@ -280,7 +309,9 @@ export namespace NSPractice {
     primaryCategory: string
     mimeType: string
     objectType: 'Question'
-    qType: string
+    qType: string,
+    timeTaken: string,
+    timeSpent: string,
     editorState: {
       options?: any[]
       selectedAnswer?: string | null
@@ -291,6 +322,8 @@ export namespace NSPractice {
     primaryCategory: NsContent.EPrimaryCategory.SINGLE_CHOICE_QUESTION
     mimeType: NsContent.EMimeTypes.QUESTION
     qType: 'MCQ-SCA',
+    question: String,
+    questionLevel: String,
     editorState: {
       options: IResponseOptions[]
     }
@@ -300,6 +333,19 @@ export namespace NSPractice {
     primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION
     mimeType: NsContent.EMimeTypes.QUESTION
     qType: 'MCQ-MCA',
+    question: String,
+    questionLevel: String,
+    editorState: {
+      options: IResponseOptions[]
+    }
+  }
+  // tslint:disable-next-line
+  export interface IMCQ_MCA_W extends IRScratch {
+    primaryCategory: NsContent.EPrimaryCategory.MULTIPLE_CHOICE_QUESTION
+    mimeType: NsContent.EMimeTypes.QUESTION
+    qType: 'MCQ-MCA-W',
+    question: String,
+    questionLevel: String,
     editorState: {
       options: IResponseOptions[]
     }
@@ -309,15 +355,20 @@ export namespace NSPractice {
     primaryCategory: NsContent.EPrimaryCategory.MTF_QUESTION
     mimeType: NsContent.EMimeTypes.QUESTION
     qType: 'MTF',
+    question: String,
+    questionLevel: String,
     editorState: {
       options: IResponseOptions[]
-    }
+      rhsChoices?: String[]
+    },
   }
   // tslint:disable-next-line
   export interface IMCQ_FTB extends IRScratch {
     primaryCategory: NsContent.EPrimaryCategory.FTB_QUESTION
     mimeType: NsContent.EMimeTypes.QUESTION
     qType: 'FTB'
+    question: String
+    questionLevel: String,
     editorState: {
       // selectedAnswer: string | null
       options: IResponseOptions[]
@@ -341,8 +392,10 @@ export namespace NSPractice {
     children: ISubSec[]
   }
   export interface IRetakeAssessment {
-    retakeMinutesLeft: number
-    retakeAssessments: boolean
-    retakeAssessmentDuration: number
+    attemptsMade: number,
+    attemptsAllowed: number
+  }
+  export interface IChoiceOptions {
+    options: any []
   }
 }

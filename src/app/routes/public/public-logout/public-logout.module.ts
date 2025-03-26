@@ -9,7 +9,7 @@ import {
   MatExpansionModule,
 } from '@angular/material'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
-import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils-v2'
 import { RouterModule } from '@angular/router'
 
 @NgModule({

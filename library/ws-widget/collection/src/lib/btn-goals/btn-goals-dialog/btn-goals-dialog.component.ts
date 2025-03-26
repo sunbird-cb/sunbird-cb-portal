@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 import { NsGoal } from '../btn-goals.model'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 

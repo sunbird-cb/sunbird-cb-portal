@@ -1,7 +1,7 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 @Component({
@@ -15,6 +15,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
   titles = [{ title: 'DISCUSS', url: '/app/discussion-forum', icon: 'forum', queryParams: { page: 'home' } }]
   unread = 0
   currentRoute = 'forum'
+  pageLayout: any
   banner!: NsWidgetResolver.IWidgetData<any>
   private bannerSubscription: any
   public screenSizeIsLtMedium = false
@@ -42,6 +43,7 @@ export class DiscussComponent implements OnInit, OnDestroy {
     this.bannerSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {
         this.banner = data.pageData.data.banner || []
+        this.pageLayout = data.pageData.data.pageLayout || []
       }
     })
   }

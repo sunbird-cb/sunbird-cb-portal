@@ -11,7 +11,7 @@ import { Observable, of, timer, throwError, noop, Subscription } from 'rxjs'
 import { finalize, startWith, map, switchMap, catchError } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils-v2'
 
 import {
   ICertificationMeta,

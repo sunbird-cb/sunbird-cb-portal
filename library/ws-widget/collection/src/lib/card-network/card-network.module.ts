@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, MatInputModule } from '@angular/material'
-import { HorizontalScrollerModule, PipeNameTransformModule } from '@sunbird-cb/utils'
+import { HorizontalScrollerModule, PipeNameTransformModule } from '@sunbird-cb/utils-v2'
 import { CardNetWorkService } from './card-network.service'
 import { ActivityCardModule } from '../activity-card/activity-card.module'
 import { TourModule } from '../_common/tour-guide/tour-guide.module'

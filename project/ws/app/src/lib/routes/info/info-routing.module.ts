@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 import { AboutHomeComponent } from './about/components/about-home.component'
 import { ContactHomeComponent } from './contact/components/contact-home.component'
 import { QuickTourComponent } from './quick-tour/quick-tour.component'

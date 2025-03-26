@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { UserProfileComponent } from './components/user-profile/user-profile.component'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
-import { PageResolve } from '@sunbird-cb/utils/src/public-api'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 
 const routes: Routes = [
 {
@@ -12,7 +12,7 @@ const routes: Routes = [
         pageType: 'feature',
         pageKey: 'edit-profile',
         pageId: 'details',
-        module: 'Profile',
+        module: 'Network',
       },
     resolve: {
         profileData: ProfileResolverService,

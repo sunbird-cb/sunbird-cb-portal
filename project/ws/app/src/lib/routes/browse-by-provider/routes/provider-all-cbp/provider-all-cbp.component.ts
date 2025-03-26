@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router'
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core'
+import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-provider-all-cbp',
@@ -27,6 +29,7 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
   provider = ''
   sortBy: any
   searchQuery = ''
+  primaryCategory = NsContent.EPrimaryCategory
   searchForm: FormGroup | undefined
   disableLoadMore =  false
   private unsubscribe = new Subject<void>()
@@ -34,8 +37,11 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
     request: {
       filters: {
         primaryCategory: [
-          'Course',
-          'Program',
+          this.primaryCategory.COURSE,
+          this.primaryCategory.BLENDED_PROGRAM,
+          this.primaryCategory.PROGRAM,
+          this.primaryCategory.STANDALONE_ASSESSMENT,
+          this.primaryCategory.CURATED_PROGRAM
         ],
         source: [''],
       },
@@ -54,8 +60,13 @@ export class ProviderAllCbpComponent implements OnInit, OnDestroy {
   constructor(
     private browseProviderSvc: BrowseProviderService,
     private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
   ) {
-    
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {

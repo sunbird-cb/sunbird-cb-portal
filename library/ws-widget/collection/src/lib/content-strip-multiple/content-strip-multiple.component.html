@@ -7,7 +7,7 @@
   <ng-container *ngIf="showParentError" [wsResolverWidget]="widgetData.errorWidget"></ng-container>
   <ng-container *ngIf="showParentNoData" [wsResolverWidget]="widgetData.noDataWidget"></ng-container>
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index; trackBy: identify">
-    <ng-container *ngIf="stripsResultDataMap[key].showStrip">
+    <ng-container *ngIf="isStripShowing(stripsResultDataMap[key])">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
         <div *ngIf="stripsResultDataMap && (getLength(stripsResultDataMap[key]) ||
                   stripsResultDataMap[key]?.showOnNoData ||
@@ -27,23 +27,22 @@
                     ">
               <div class="flex items-center flex-1">
                 <h1 class="mat-h1 margin-remove inline-block" *ngIf="stripsResultDataMap[key]?.stripTitle">
-                  {{ stripsResultDataMap[key]?.stripTitle }}
+                  <!-- {{ stripsResultDataMap[key]?.stripTitle }} -->
+                  {{ translateLabels(stripsResultDataMap[key]?.stripTitle)}}
                 </h1>
 
                 <button *ngIf="stripsResultDataMap[key]?.stripInfo?.icon" type="button" mat-icon-button
-                  (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="info"
-                  class="margin-left-xs">
+                  (click)="toggleInfo(stripsResultDataMap[key])" i18n-matTooltip matTooltip="{{ 'contentstripmultiple.info' | translate }}"
+                  class="flex justify-center items-center">
                   <mat-icon>{{ stripsResultDataMap[key]?.stripInfo?.icon.icon }}</mat-icon>
                 </button>
                 <span class="spacer"></span>
                 <!-- viewAll -->
-                <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])"
-                  class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all">
-                  <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
-                    [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
-                    <!-- <span i18n>SEE ALL</span> -->
-                    <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'See all'}}</span>
-                  </a>
+                <div *ngIf="checkCondition(widgetData , stripsResultDataMap[key])" class="ws-mat-accent-text">
+                  <div class="flex flex-row gap-2 items-center cursor-pointer" [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path" [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
+                    <span i18n>{{ 'contentstripmultiple.showAll' | translate }}</span>
+                    <mat-icon>chevron_right</mat-icon>
+                  </div>
                 </div>
               </div>
               <button mat-icon-button (click)="setHiddenForStrip(key)" *ngIf="stripsResultDataMap[key]?.canHideStrip">
@@ -86,8 +85,15 @@
             <ng-container *ngIf="key !== 'continueLearning'">
               <ws-utils-horizontal-scroller *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)"
                 [loadStatus]="'done'">
-                <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker"
-                  [wsResolverWidget]="widget"></ng-container>
+                <div *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker">
+                  <ng-container 
+                    *ngIf="widget.widgetData.content.primaryCategory === this.environment.programStripPrimaryCategory && stripsResultDataMap[key]?.key === this.environment.programStripKey && stripsResultDataMap[key]?.stripTitle === this.environment.programStripName"
+                    [wsResolverWidget]="widget"></ng-container>
+                  <ng-container *ngIf="stripsResultDataMap[key]?.key !== this.environment.programStripKey && stripsResultDataMap[key]?.stripTitle !== this.environment.programStripName"
+                    [wsResolverWidget]="widget"></ng-container>
+                 </div>
+                <!-- <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets; trackBy: tracker"
+                  [wsResolverWidget]="widget"></ng-container> -->
               </ws-utils-horizontal-scroller>
             </ng-container>
 
@@ -104,11 +110,12 @@
     <div class="w-full">
       <div class="p-4">
         <div class="text-3xl font-semibold text-center leading-tight" i18n>
-          Content not available
+          {{ 'contentstripmultiple.contentNotAvailable' | translate }}
         </div>
         <br />
         <div class="text-base font-medium text-center leading-normal" i18n>
-          Please try different keywords or change the search query.
+          <!-- Please try different keywords or change the search query. -->
+          {{ 'contentstripmultiple.tryDifferentKeywords' | translate }}
         </div>
       </div>
     </div>

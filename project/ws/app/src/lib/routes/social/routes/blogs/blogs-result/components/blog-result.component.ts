@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { DialogSocialDeletePostComponent, WsDiscussionForumService, NsDiscussionForum } from '@sunbird-cb/collection'
 
 @Component({

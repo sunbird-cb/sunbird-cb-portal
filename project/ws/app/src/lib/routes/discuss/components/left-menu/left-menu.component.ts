@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 // import { BreakpointObserver } from '@angular/cdk/layout'
 // import { DomSanitizer } from '@angular/platform-browser'
-// import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { NSDiscussData } from '../../models/discuss.model'

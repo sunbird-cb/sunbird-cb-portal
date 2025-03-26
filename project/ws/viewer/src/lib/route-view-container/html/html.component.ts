@@ -3,7 +3,7 @@ import { NsContent, NsDiscussionForum } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser'
-import { PipeLimitToPipe, ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { PipeLimitToPipe, ValueService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 @Component({
   selector: 'viewer-html-container',
   templateUrl: './html.component.html',
@@ -25,6 +25,8 @@ export class HtmlComponent implements OnInit, OnChanges {
   isLtMedium = false
   isScormContent = false
   isRestricted = false
+  playScormContentFlag = false
+  isMobile = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
@@ -51,6 +53,11 @@ export class HtmlComponent implements OnInit, OnChanges {
     this.valueSvc.isLtMedium$.subscribe(isLtMd => {
       this.isLtMedium = isLtMd
     })
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
     // }).catch((ex) => {
     //   console.warn("Please refresh Page", ex)
     // })

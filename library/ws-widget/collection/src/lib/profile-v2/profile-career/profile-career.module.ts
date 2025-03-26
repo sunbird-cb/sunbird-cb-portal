@@ -5,12 +5,16 @@ import {
   MatExpansionModule, MatIconModule, MatProgressSpinnerModule,
 } from '@angular/material'
 import { BrowserModule } from '@angular/platform-browser'
-import { PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { PipeRelativeTimeModule } from '@sunbird-cb/utils-v2'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [ProfileCareerComponent],
   imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule,
-    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, PipeRelativeTimeModule],
+    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule,
+    PipeRelativeTimeModule,
+    TranslateModule,
+  ],
   entryComponents: [ProfileCareerComponent],
 })
 export class ProfileCareerModule {

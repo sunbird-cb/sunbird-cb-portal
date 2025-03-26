@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { WidgetContentService, NsContent } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 
 @Injectable()
 export class ContentCertificationResolver {

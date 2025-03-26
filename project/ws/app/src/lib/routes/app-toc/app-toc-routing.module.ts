@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 // import { AppTocCohortsComponent } from './components/app-toc-cohorts/app-toc-cohorts.component'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'
@@ -13,6 +13,9 @@ import { AppTocContentsComponent } from './routes/app-toc-contents/app-toc-conte
 import { AppTocHomeComponent } from './routes/app-toc-home/app-toc-home.component'
 // import { AppTocOverviewComponent as AppTocOverviewRootComponent } from './routes/app-toc-overview/app-toc-overview.component'
 import { AppTocSinglePageComponent as AppTocSinglePageRootComponent } from './routes/app-toc-single-page/app-toc-single-page.component'
+import { AppTocCiosHomeComponent } from './components/app-toc-cios-home/app-toc-cios-home.component'
+import { AppTocCiosResolverService } from './resolvers/app-toc-cios-resolver.service'
+import { AppTocCiosUserEnrollResolverService } from './resolvers/app-toc-cios-user-enroll-resolver.service'
 
 const routes: Routes = [
   {
@@ -60,14 +63,14 @@ const routes: Routes = [
         path: 'discussion',
         component: AppTocDiscussionComponent,
       },
-      {
-        path: 'single-page-view',
-        component: AppTocSinglePageRootComponent,
-        data: {
-          pageId: 'overview',
-          module: 'Learn',
-        },
-      },
+      // {
+      //   path: 'single-page-view',
+      //   component: AppTocSinglePageRootComponent,
+      //   data: {
+      //     pageId: 'overview',
+      //     module: 'Learn',
+      //   },
+      // },
       {
         path: 'certification',
         loadChildren: () =>
@@ -94,6 +97,14 @@ const routes: Routes = [
   {
     path: 'knowledge-artifact/:id',
     component: KnowledgeArtifactDetailsComponent,
+  },
+  {
+    path: 'ext/:id',
+    component: AppTocCiosHomeComponent,
+    resolve: {
+      extContent: AppTocCiosResolverService,
+      userEnrollContent: AppTocCiosUserEnrollResolverService,
+    },
   },
 ]
 

@@ -25,7 +25,7 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
@@ -59,5 +59,6 @@ import { VideoModule as VideoViewContainerModule } from '../../route-view-contai
     BtnContentFeedbackV2Module,
     VideoViewContainerModule,
   ],
+  exports: [VideoComponent],
 })
 export class VideoModule { }

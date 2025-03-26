@@ -1,0 +1,167 @@
+.filter-wrapper {
+    width: 282px;
+    border-radius: 12px 0px 0px 0px;
+    border: 1px 0px 0px 0px;
+    background: rgba(255, 255, 255, 1);
+    padding: 16px;
+
+    .mat-radio-checked {
+        background-color: transparent !important;
+    }
+    p.title {
+       font-family: Montserrat;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 19.5px;
+        text-align: left;
+    }
+    p.main-title {
+        font-family: Montserrat;
+         font-weight: 600;
+         line-height: 19.5px;
+         text-align: left;
+     }
+    .individual-block{
+        p.title {
+            font-family: Montserrat;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19.5px;
+            text-align: left;
+            
+    
+        }
+        .search-filter {
+            position: relative;
+            input {
+                width: 227px;
+                height: 42px;
+                padding-left: 48px;
+                border-radius: 4px;
+                border: 1px solid rgba(0, 0, 0, 0.16)
+            }
+            mat-icon{
+                position: absolute;
+                left: 8px;
+                top: 14px;
+            }
+
+        }
+        .check-list{
+            padding: 4px 0;
+        }
+        
+    }
+
+}
+
+
+
+
+.bottom-nav-wrapper {
+        width: 91%;
+        background-color: white;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        bottom: 0;
+        right: 0;
+        left: 0;
+        padding: 16px;
+    .footer-block {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        // color: white;
+        // border-radius: 12px;
+        // bottom: 0;
+        // padding-top: 16px;
+        // padding-bottom: 16px;
+        .apply-btn {
+            width: 141px;
+            height: 40px;
+            top: 1090px;
+            left: 223px;
+            padding: 12px 32px 12px 32px;
+            gap: 8px;
+            border-radius: 12px;
+            background: rgba(27, 76, 161, 1);
+            color: white;
+        }
+        .clear-btn {
+            width: 141px;
+            height: 40px;
+            top: 1090px;
+            left: 223px;
+            padding: 12px 32px 12px 32px;
+            gap: 8px;
+            border-radius: 12px;
+            background: white;
+            border: 1px solid rgba(27, 76, 161, 1);
+            color: rgba(27, 76, 161, 1);
+        }
+    }
+}
+::ng-deep .filter-bottomsheet {
+    height: 100vh;
+    position: relative !important;
+    padding: 0 !important;
+    .filter-body{
+        border-radius: 12px 0px 0px 0px;
+        border: 1px 0px 0px 0px;
+        background: rgba(255, 255, 255, 1);
+        padding: 16px;
+        width: 91%;
+    }
+    .filter-headder {
+        top: 0;
+        padding: 16px;
+        background: white;
+        z-index: 9999;
+    }
+    .individual-block{
+        p.title {
+            font-family: Montserrat;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19.5px;
+            text-align: left;
+            
+    
+        }
+        .search-filter {
+            position: relative;
+            input {
+                width: 227px;
+                height: 42px;
+                padding-left: 48px;
+                border-radius: 4px;
+                border: 1px solid rgba(0, 0, 0, 0.16)
+            }
+            mat-icon{
+                position: absolute;
+                left: 8px;
+                top: 14px;
+            }
+
+        }
+        .check-list{
+            padding: 4px 0;
+        }
+        
+    }
+}
+.clear-all {
+    font-family: Lato;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16.8px;
+    text-align: left;
+    color: rgba(27, 76, 161, 1);
+
+
+}
+
+::ng-deep  .mat-gyaan-filter{
+    label  {
+        text-wrap: balance;
+    }
+}

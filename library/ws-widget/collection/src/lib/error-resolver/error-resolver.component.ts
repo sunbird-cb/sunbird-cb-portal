@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
 import { NsError } from './error-resolver.model'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ErrorResolverService } from './error-resolver.service'
 import { ActivatedRoute } from '@angular/router'
 @Component({

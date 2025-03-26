@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { AuthKeycloakService } from '@sunbird-cb/utils'
+import { AuthKeycloakService } from '@sunbird-cb/utils-v2'
 import { NsContent } from '../../public-api'
 // tslint:disable-next-line: max-line-length
 import {

@@ -16,7 +16,7 @@ const routes: Routes = [
     component: TaxonomyHomeComponent,
     data: {
       pageId: 'home',
-      module: 'explore',
+      module: 'Explore',
     },
   },
   {

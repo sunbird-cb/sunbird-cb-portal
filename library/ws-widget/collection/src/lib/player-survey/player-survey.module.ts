@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { BtnFullscreenModule } from '../btn-fullscreen/btn-fullscreen.module'
 import { PlayerSurveyComponent } from './player-survey.component'
 import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [PlayerSurveyComponent],
   imports: [
@@ -28,6 +29,7 @@ import { MicroSurveyModule } from '@sunbird-cb/micro-surveys'
     BtnFullscreenModule,
     MatInputModule,
     MicroSurveyModule,
+    TranslateModule.forChild(),
   ],
   exports: [PlayerSurveyComponent],
   entryComponents: [PlayerSurveyComponent],

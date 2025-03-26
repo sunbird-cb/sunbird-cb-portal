@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, LogoutComponent, NsPage, NsAppsConfig, EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { IBtnAppsConfig } from '../btn-apps/btn-apps.model'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
@@ -8,6 +8,8 @@ import { ROOT_WIDGET_CONFIG } from '../collection.config'
 /* tslint:disable*/
 import _ from 'lodash'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
+import { ActivatedRoute, Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:enable*/
 interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
   featureWidgets: NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink>[]
@@ -42,17 +44,27 @@ export class BtnProfileComponent extends WidgetBaseComponent
   btnSettingsConfig!: NsWidgetResolver.IRenderConfigWithTypedData<IBtnAppsConfig>
   private pinnedAppsSubs?: Subscription
   givenName = 'Guest'
+  verifiedBadge = false
   profileImage!: string | null
   private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
   portalLinks: any[] = []
+  hideMenu = false
   constructor(
     private configSvc: ConfigurationsService,
     private dialog: MatDialog,
-    private accessService: AccessControlService
+    private accessService: AccessControlService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
+    private events: EventService
   ) {
     super()
     this.btnAppsConfig = { ...this.basicBtnAppsConfig }
     this.btnSettingsConfig = { ... this.settingBtnConfig }
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails &&
+      this.configSvc.unMappedUser.profileDetails.profileStatus === 'VERIFIED') {
+      this.verifiedBadge = true
+    }
     this.updateUserInfo()
     if (this.configSvc.appsConfig) {
       const appsConfig = this.configSvc.appsConfig
@@ -90,11 +102,22 @@ export class BtnProfileComponent extends WidgetBaseComponent
           }),
       )
     }
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
   updateUserInfo() {
     if (this.configSvc.userProfile) {
-      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
-      this.profileImage = this.configSvc.userProfile.profileImage ||
+      // tslint:disable-next-line:max-line-length
+      if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
+        this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      } else {
+        this.givenName = `${this.configSvc.userProfile.firstName}`
+      }
+      this.profileImage = this.configSvc.userProfile.profileImageUrl ||
         (this.configSvc.userProfileV2 ? this.configSvc.userProfileV2.profileImage : null) || null
       if (!this.profileImage && localStorage.getItem(this.configSvc.userProfile.userId)) {
         this.profileImage = localStorage.getItem(this.configSvc.userProfile.userId)
@@ -103,7 +126,13 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
   get getGivenName() {
     if (this.configSvc.userProfile) {
-      this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      // tslint:disable-next-line:max-line-length
+      // if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
+      //   this.givenName = `${this.configSvc.userProfile.firstName} ${this.configSvc.userProfile.lastName}`
+      // } else {
+      //   this.givenName = `${this.configSvc.userProfile.firstName}`
+      // }
+      this.givenName = `${this.configSvc.userProfile.firstName}`
       return this.givenName
     }
     return 'Guest'
@@ -122,6 +151,26 @@ export class BtnProfileComponent extends WidgetBaseComponent
     if (this.featuresConfig && this.featuresConfig.length > 0) {
       this.getPortalLinks()
     }
+    let isNotMyUser = false
+    let isIgotOrg = false
+    if (this.configSvc && this.configSvc.unMappedUser
+      && this.configSvc.unMappedUser.profileDetails
+      && this.configSvc.unMappedUser.profileDetails.profileStatus) {
+      isNotMyUser = this.configSvc.unMappedUser.profileDetails.profileStatus.toLowerCase() === 'not-my-user' ? true : false
+    }
+    if (this.configSvc && this.configSvc.unMappedUser
+      && this.configSvc.unMappedUser.profileDetails
+      && this.configSvc.unMappedUser.profileDetails.employmentDetails
+      && this.configSvc.unMappedUser.profileDetails.employmentDetails.departmentName) {
+        isIgotOrg = this.configSvc.unMappedUser.profileDetails.employmentDetails.departmentName.toLowerCase() === 'igot' ? true : false
+    }
+    // let isIgotOrg = true
+    if (isNotMyUser && isIgotOrg) {
+      this.hideMenu = true
+      // this.router.navigateByUrl('app/person-profile/me#profileInfo')
+    } else {
+      this.hideMenu = false
+    }
   }
 
   ngOnDestroy() {
@@ -131,6 +180,7 @@ export class BtnProfileComponent extends WidgetBaseComponent
   }
 
   logout() {
+    this.raiseTelemetry('signout')
     this.dialog.open<LogoutComponent>(LogoutComponent)
   }
 
@@ -166,4 +216,51 @@ export class BtnProfileComponent extends WidgetBaseComponent
       }
     })
   }
+
+  redirectToTourPage() {
+    // this.raiseGetStartedImpression('Get Started')
+    this.raiseTelemetry('Get Started')
+    this.router.navigate(['/page/home'], { relativeTo: this.activatedRoute, queryParamsHandling: 'merge' })
+    this.configSvc.updateTourGuideMethod(false)
+  }
+
+  redirectToMyLearning() {
+    this.raiseTelemetry('My Learning')
+    // /app/seeAll?key=continueLearning
+    this.router.navigate(['/app/seeAll'], { queryParams: { key: 'continueLearning' } })
+  }
+
+  handleRedirectToCompetencyPassbook() {
+    this.raiseTelemetry('Learning History')
+    this.router.navigate(['/page/competency-passbook/list'])
+  }
+
+  raiseTelemetry(tabname: string) {
+    const name = tabname.toLowerCase().split(' ').join('-')
+    this.events.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        id: `${name}`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.HOME,
+      }
+    )
+  }
+  redirectToLearnersPage() {
+    this.raiseTelemetry('Tips For Learners')
+    this.router.navigate(['/learner-advisory'])
+  }
+
+  // rasieProfileMenuTelemetry(tabname: string) {
+  //   tabname = tabname.toLowerCase().split(' ').join('-')
+  //   const data: WsEvents.ITelemetryTabData = {
+  //     label: `${tabname}`
+  //   }
+  //   this.events.handleTabTelemetry(
+  //     WsEvents.EnumInteractTypes.CLICK,
+  //     data,
+  //   )
+  // }
 }

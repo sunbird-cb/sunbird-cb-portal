@@ -12,6 +12,7 @@ import {
 } from '@angular/material'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BtnFullscreenModule } from '../btn-fullscreen/btn-fullscreen.module'
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [PlayerPdfComponent],
   imports: [
@@ -26,6 +27,7 @@ import { BtnFullscreenModule } from '../btn-fullscreen/btn-fullscreen.module'
     ReactiveFormsModule,
     BtnFullscreenModule,
     MatInputModule,
+    TranslateModule.forChild(),
   ],
   exports: [PlayerPdfComponent],
   entryComponents: [PlayerPdfComponent],

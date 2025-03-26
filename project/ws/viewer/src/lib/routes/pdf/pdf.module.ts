@@ -25,7 +25,7 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
@@ -33,6 +33,7 @@ import { PdfComponent } from './pdf.component'
 import { RouterModule } from '@angular/router'
 
 import { PdfModule as PdfViewContainerModule } from '../../route-view-container/pdf/pdf.module'
+import { TranslateModule } from '@ngx-translate/core'
 @NgModule({
   declarations: [PdfComponent],
   imports: [
@@ -57,6 +58,10 @@ import { PdfModule as PdfViewContainerModule } from '../../route-view-container/
     UserContentRatingModule,
     BtnContentFeedbackV2Module,
     PdfViewContainerModule,
+    TranslateModule.forRoot(),
+  ],
+  exports: [
+    PdfComponent,
   ],
 })
 export class PdfModule { }

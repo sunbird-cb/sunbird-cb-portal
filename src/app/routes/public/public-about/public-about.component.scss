@@ -60,15 +60,6 @@
 
 }
 
-// .overview-intro {
-//   border: 1px solid;
-//   box-sizing: border-box;
-//   position: relative;
-//   @include breakpoint-xs {
-//     display: none;
-//   }
-// }
-
 .about-info-footer {
   @extend %about-info;
 }
@@ -102,7 +93,6 @@ $description-height-size: 1.2em;
 }
 
 .learning-overview {
-  // width: 48%;
   box-sizing: border-box;
 
   @include breakpoint-xs {
@@ -155,7 +145,6 @@ $description-height-size: 1.2em;
     box-sizing: border-box;
 
     .header-title {
-      display: flex;
       align-items: center;
       display: block;
     }

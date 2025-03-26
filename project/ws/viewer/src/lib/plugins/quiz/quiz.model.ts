@@ -19,8 +19,12 @@ export namespace NSQuiz {
     question: string
     questionId: string
     options: IOption[]
-    editorState?: any[],
+    editorState?: any[]
+    questionLevel: string
     questionType?: TQuizQuestionType
+    rhsChoices?: any[],
+    marks: number,
+    choices?: IChoiceOptions[]
   }
 
   export interface IOption {
@@ -61,4 +65,7 @@ export namespace NSQuiz {
     total: number
   }
 
+  export interface IChoiceOptions {
+    options?: any[]
+  }
 }

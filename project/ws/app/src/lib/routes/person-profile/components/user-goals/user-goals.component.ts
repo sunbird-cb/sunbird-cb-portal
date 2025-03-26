@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 import { NsGoal } from '@sunbird-cb/collection'
 import { PersonProfileService } from '../../services/person-profile.service'
 

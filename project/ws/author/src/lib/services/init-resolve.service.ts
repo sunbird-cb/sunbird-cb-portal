@@ -1,7 +1,7 @@
 import { ZipJSResolverService } from './zip-js-resolve.service'
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ICreateEntity } from '@ws/author/src/lib/interface/create-entity'
 import { forkJoin, Observable, of } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'

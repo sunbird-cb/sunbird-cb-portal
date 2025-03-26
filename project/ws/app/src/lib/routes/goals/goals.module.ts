@@ -45,7 +45,7 @@ import {
 } from '@angular/material'
 import { GoalMeComponent } from './routes/goal-me/goal-me.component'
 import { GoalOthersComponent } from './routes/goal-others/goal-others.component'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 import { GoalCreateCommonComponent } from './components/goal-create-common/goal-create-common.component'
 import { GoalCreateCustomComponent } from './components/goal-create-custom/goal-create-custom.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'

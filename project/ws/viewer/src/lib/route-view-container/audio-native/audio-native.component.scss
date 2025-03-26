@@ -46,24 +46,24 @@
 
 .video-player {
   width: 100%;
-  height: 75vh;
+  height: 557px;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  @include breakpoint-lt-xl {
-    height: 70vh;
-  }
-  @include breakpoint-lt-l {
-    height: 65vh;
-  }
-  @include breakpoint-lt-m {
-    height: 60vh;
-  }
-  @include breakpoint-lt-s {
-    height: 55vh;
-  }
-  @include breakpoint-xs {
-    display: none;
-  }
+  // @include breakpoint-lt-xl {
+  //   height: 70vh;
+  // }
+  // @include breakpoint-lt-l {
+  //   height: 65vh;
+  // }
+  // @include breakpoint-lt-m {
+  //   height: 60vh;
+  // }
+  // @include breakpoint-lt-s {
+  //   height: 55vh;
+  // }
+  // @include breakpoint-xs {
+  //   display: none;
+  // }
 }
 
 .video-player-m {

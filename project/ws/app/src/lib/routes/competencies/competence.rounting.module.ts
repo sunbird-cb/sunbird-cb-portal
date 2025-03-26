@@ -10,11 +10,15 @@ import { ProfileResolve } from './resolvers/profile-fetch'
 import { CompetencyTestComponent } from './routes/competence-test/competence-test.component'
 import { AssessmentResolverService } from './resolvers/assessment-resolver.service'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
-// import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+// import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 const routes: Routes = [
   {
     path: '',
     component: CompetenceComponent,
+    data: {
+      pageId: '',
+      module: 'Competency',
+    },
     children: [
       {
         path: '',
@@ -30,7 +34,7 @@ const routes: Routes = [
         component: CompetenceAllComponent,
         data: {
           pageId: 'home',
-          module: 'competency',
+          module: 'Competency',
         },
         resolve: {
           profile: ProfileResolve,
@@ -43,7 +47,7 @@ const routes: Routes = [
         component: CompetencyAllWrapperComponent,
         data: {
           pageId: 'all',
-          module: 'competency',
+          module: 'Competency',
         },
         resolve: {
           profile: ProfileResolve,
@@ -65,7 +69,7 @@ const routes: Routes = [
             component: CompetenceSysComponent,
             data: {
               pageId: 'list',
-              module: 'competency',
+              module: 'Competency',
             },
             resolve: {
               profile: ProfileResolve,
@@ -78,7 +82,7 @@ const routes: Routes = [
             component: CompetencyDetailedViewComponent,
             data: {
               pageId: ':competencyId/:competencyName/:routeType',
-              module: 'competency',
+              module: 'Competency',
             },
           },
           {

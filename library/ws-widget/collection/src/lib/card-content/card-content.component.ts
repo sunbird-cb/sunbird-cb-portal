@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, UtilityService, NsInstanceConfig } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { NsGoal } from '../btn-goals/btn-goals.model'
 import { NsPlaylist } from '../btn-playlist/btn-playlist.model'
@@ -9,6 +9,7 @@ import { NsContent } from '../_services/widget-content.model'
 import { NsCardContent } from './card-content.model'
 /* tslint:disable*/
 import _ from 'lodash'
+// import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-widget-card-content',
@@ -19,6 +20,7 @@ export class CardContentComponent extends WidgetBaseComponent
   implements OnInit, OnDestroy, AfterViewInit, NsWidgetResolver.IWidgetData<NsCardContent.ICard> {
   @Input() widgetData!: NsCardContent.ICard
   @HostBinding('id')
+  primaryCategory = NsContent.EPrimaryCategory
   public id = `ws-card_${Math.random()}`
   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
   defaultThumbnail = ''
@@ -39,6 +41,7 @@ export class CardContentComponent extends WidgetBaseComponent
     private configSvc: ConfigurationsService,
     private utilitySvc: UtilityService,
     private snackBar: MatSnackBar,
+
   ) {
     super()
   }
@@ -101,6 +104,13 @@ export class CardContentComponent extends WidgetBaseComponent
       )
     }
     return true
+  }
+
+  redirectToUrl() {
+    let url = window.location.href
+    let indexValue = url.split('curatedCollections/')
+    window.location.href = indexValue[0] + 'curatedCollections/'  + this.widgetData.content.identifier
+
   }
 
   checkMimeTypeCriteria() {
@@ -253,12 +263,12 @@ export class CardContentComponent extends WidgetBaseComponent
       {
         type: 'click',
         subType: `${this.widgetType}-${this.widgetSubType}`,
-        // id: this.widgetData.content.identifier,
+        id: `${_.camelCase(this.widgetData.content.primaryCategory)}-card`,
       },
       {
         id: this.widgetData.content.identifier,
         type: this.widgetData.content.primaryCategory,
-        context: this.widgetData.context,
+        //context: this.widgetData.context,
         rollup: {},
         ver: `${this.widgetData.content.version}${''}`,
       },

@@ -4,7 +4,7 @@ import {
   EventEmitter,
 } from '@angular/core'
 import { MatSelectChange, MatButtonToggleChange } from '@angular/material'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { GamificationService } from '../../../../services/gamification.service'
 import { FormControl } from '@angular/forms'
 import { DatePipe } from '@angular/common'

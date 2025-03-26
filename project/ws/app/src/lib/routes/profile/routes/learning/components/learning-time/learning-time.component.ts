@@ -12,7 +12,7 @@ import {
   TChartJsColorPalette,
   TChartJsGraphType,
 } from '@sunbird-cb/collection'
-import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils-v2'
 import { Chart } from 'chart.js'
 import { Subscription } from 'rxjs'
 import { NSProfileData } from '../../../../models/profile.model'

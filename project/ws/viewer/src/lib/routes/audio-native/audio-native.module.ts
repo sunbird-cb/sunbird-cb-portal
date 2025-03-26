@@ -29,7 +29,7 @@ import {
   DefaultThumbnailModule,
   PipePartialContentModule,
   PipeSafeSanitizerModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
 import { AudioNativeModule as AudioNativeViewContainerModule } from '../../route-view-container/audio-native/audio-native.module'
 

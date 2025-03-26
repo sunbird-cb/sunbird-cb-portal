@@ -1,10 +1,12 @@
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { noop, Observable } from 'rxjs'
+import { noop, Observable, Subject } from 'rxjs'
 import dayjs from 'dayjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { environment } from 'src/environments/environment'
+import { WidgetContentService } from '@sunbird-cb/collection/src/lib/_services/widget-content.service'
+import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +16,21 @@ export class ViewerUtilService {
     setS3Cookie: `/apis/v8/protected/content/setCookie`,
     // PROGRESS_UPDATE: `/apis/protected/v8/user/realTimeProgress/update`,
     PROGRESS_UPDATE: `/apis/proxies/v8/content-progres`,
-    ASSESSMENT_SECTION: `/apis/proxies/v8/assessment/read`,
+    ASSESSMENT_SECTION: `/apis/proxies/v8/assessment/v5/read`,
   }
   downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
   authoringBase = '/apis/authContent/'
-  constructor(private http: HttpClient, private configservice: ConfigurationsService) { }
+  markAsCompleteSubject = new Subject()
+  autoPlayNextVideo = new Subject()
+  autoPlayNextAudio = new Subject()
+  forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+  publicUserDetails: any = {}
+  constructor(
+    private http: HttpClient,
+    private configservice: ConfigurationsService,
+    private contentSvc: WidgetContentService,
+    private tocSvc: AppTocService,
+    ) { }
 
   async fetchManifestFile(url: string) {
     this.setS3Cookie(url)
@@ -126,13 +138,70 @@ export class ViewerUtilService {
           ],
         },
       }
+      // if (this.configservice.cstoken !== '') {
+      //   const headers = new HttpHeaders()
+      //   .set('cstoken', this.configservice.cstoken)
+
+      //   this.http
+      //   .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, { headers } , req)
+      //   .subscribe(noop, noop)
+      // } else {
+      //   this.http
+      //   .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+      //   .subscribe(noop, noop)
+      // }
       this.http
-      .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
-      .subscribe(noop, noop)
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+        .subscribe(noop, noop)
+        if (this.tocSvc.hashmap[contentId] &&
+          (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2)) {
+          this.tocSvc.hashmap[contentId]['completionPercentage'] = req.request.contents[0].completionPercentage
+          this.tocSvc.hashmap[contentId]['completionStatus'] = req.request.contents[0].status
+          this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
+        }
     } else {
       req = {}
       // do nothing
     }
+  }
+
+  getBatchIdAndCourseId(courseId: string, batchId: string, resourceId: string) {
+    const tempData = {
+      courseId,
+      batchId,
+    }
+    const tempContentData = this.contentSvc.currentMetaData
+    const tempContentReadData = this.contentSvc.currentContentReadMetaData
+    const enrollmentList = this.contentSvc.currentBatchEnrollmentList
+    if (!this.forPreview) {
+      if (tempContentData && tempContentReadData.cumulativeTracking &&
+        (tempContentData.primaryCategory === NsContent.EPrimaryCategory.PROGRAM ||
+       tempContentData.primaryCategory === NsContent.EPrimaryCategory.CURATED_PROGRAM ||
+       tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM)
+       ) {
+       tempContentData.children.forEach((childList: NsContent.IContent) => {
+         if (childList.primaryCategory === NsContent.EPrimaryCategory.COURSE) {
+           // tslint:disable-next-line: max-line-length
+           const courseEnrollmentList = enrollmentList &&  enrollmentList.filter((v: NsContent.ICourse) => v.contentId === childList.identifier)
+           if (childList.childNodes && childList.childNodes.indexOf(resourceId) !== -1) {
+             if (courseEnrollmentList && courseEnrollmentList.length > 0) {
+               tempData.batchId = courseEnrollmentList[courseEnrollmentList.length - 1].batch.batchId
+               tempData.courseId = childList.identifier
+             }
+           }
+         } else if (tempContentData.primaryCategory === NsContent.EPrimaryCategory.BLENDED_PROGRAM) {
+           const bPEnrollmentList = enrollmentList.filter((v: NsContent.ICourse) => v.contentId === tempContentData.identifier)
+           if (tempContentData.childNodes && tempContentData.childNodes.indexOf(resourceId) !== -1) {
+             if (bPEnrollmentList.length > 0) {
+               tempData.batchId = bPEnrollmentList[bPEnrollmentList.length - 1].batch.batchId
+               tempData.courseId = tempContentData.identifier
+             }
+           }
+         }
+       })
+     }
+    }
+    return tempData
   }
 
   realTimeProgressUpdateQuiz(contentId: string, collectionId?: string, batchId?: string, status?: number) {
@@ -148,13 +217,23 @@ export class ViewerUtilService {
               status: status || 2,
               courseId: collectionId,
               lastAccessTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss:SSSZZ'),
+              completionPercentage: status === 2 ? 100 : 0,
             },
           ],
         },
       }
+
       this.http
-      .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
-      .subscribe(noop, noop)
+        .patch(`${this.API_ENDPOINTS.PROGRESS_UPDATE}/${contentId}`, req)
+        .subscribe(noop, noop)
+      if (this.tocSvc.hashmap && this.tocSvc.hashmap[contentId] && req.request.contents[0]) {
+        if (this.tocSvc.hashmap[contentId] &&
+          (!this.tocSvc.hashmap[contentId]['completionStatus'] || this.tocSvc.hashmap[contentId]['completionStatus'] < 2)) {
+          this.tocSvc.hashmap[contentId]['completionPercentage'] = req.request.contents[0].completionPercentage
+          this.tocSvc.hashmap[contentId]['completionStatus'] = req.request.contents[0].status
+          this.tocSvc.hashmap = { ...this.tocSvc.hashmap }
+        }
+      }
     } else {
       req = {}
       // do nothing
@@ -167,7 +246,11 @@ export class ViewerUtilService {
     if (!forPreview) {
       url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
     } else {
-      url = `/api/content/v1/read/${contentId}`
+      if (window.location.href.includes('editMode=true')  && window.location.href.includes('_rc')) {
+        url = `/apis/proxies/v8/action/content/v3/read/${contentId}`
+      } else {
+          url = `/api/content/v1/read/${contentId}`
+      }
     }
     return this.http.get<NsContent.IContent>(
       // tslint:disable-next-line:max-line-length
@@ -202,6 +285,11 @@ export class ViewerUtilService {
   getPublicUrl(url: string): string {
     const mainUrl = url.split('/content').pop() || ''
     return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
+  }
+
+  getCdnUrl(url: string): string {
+    const mainUrl = url.split('/content').pop() || ''
+    return `${environment.cdnContentHost}/${environment.cdnContentBucket}/content${mainUrl}`
   }
 
   //  fetchContent(

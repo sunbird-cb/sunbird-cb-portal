@@ -1,0 +1,306 @@
+<div class="main_container flex flex-row" 
+  style=" background: url(assets/instances/eagle/banners/home/9/Login_background.png) no-repeat center center fixed;">
+  <div class="left_container flex flex-col items-center justify-center mt-8">
+    <div class="logo_box flex items-center">
+      <img src="/assets/instances/eagle/app_logos/dopt_logo.png" alt="logo" class="logo_img">
+    </div>
+    <div class="slideshow-container">
+      <div class="mySlides">
+        <img src="/assets/instances/eagle/app_logos/Hexagon.png" alt="karmayogi">
+      </div>
+    </div>
+    <br>
+  </div>
+  <div class=" right_container flex flex-col py-8">
+    <div class="langdiv" *ngIf="isMultiLangEnabled">
+      <mat-form-field class="custom-lang float-right margin-right-xl">
+        <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language" class="margin-right-xs">
+        <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
+          <span *ngFor="let lang of multiLang">
+            <mat-option *ngIf="lang.active" [value]="lang.key" [ngClass]="{'checkmark':lang.key == selectedLanguage}">{{lang.value}}</mat-option>
+          </span>
+        </mat-select>
+    </mat-form-field>
+    </div>
+    <div class="right_inner_container profile-box">
+      <div class="flex">
+        <div class="flex items-center mr-5">
+          <a class="cursor-pointer" (click)="goBackUrl()" tabindex="0" aria-disabled="false">
+            <span class="flex">
+              <mat-icon class="mat-icon notranslate material-icons ws-mat-primary-text" aria-hidden="true">
+                arrow_back
+              </mat-icon>
+            </span>
+          </a>
+        </div>
+        <h2 class="mat-h1 margin-remove inline-block">
+          {{'publicrequest.requestTo' | translate}} {{ translateLabel(requestType, 'publicrequest') }}
+          <!-- {{requestType | lowercase}} -->
+        </h2>
+      </div>
+      <form [formGroup]="requestForm" novalidate>
+        <div class="margin-top-l new-mobile">
+          <div class="flex flex-wrap mobile-break">
+            <div class="flex flex-col content-center flex-wrap">
+              <div class="input-wrapper margin-top-s">
+                <label for="firstName" class=" margin-remove-bottom form-label required"
+                  i18n="Full name label|Label which explains the user to enter full name" i18n-aria-label
+                  aria-label="Full name label">
+                  {{'publicrequest.fullName' | translate}}
+                </label>
+                <mat-form-field appearance="outline" class="margin-top-s">
+                  <input id="firstName" matInput #firstname formControlName="firstname" i18n-placeholder
+                    placeholder="{{'publicrequest.enterYourFullName' | translate}}" autocomplete="off" i18n-aria-label aria-label="Full Name input" maxlength="150" />
+                  <mat-error [hidden]="false" i18n="Full Name Error|Explains name is required" i18n-aria-label
+                    aria-label="Full Name Error|Explains name is required "
+                    *ngIf="requestForm?.controls['firstname'].errors?.required">
+                    {{'publicrequest.fullNameMandatory' | translate}}
+                  </mat-error>
+                  <mat-error [hidden]="false" *ngIf="requestForm?.controls['firstname'].errors?.pattern"
+                    i18n-aria-label
+                    aria-label="Full name Error|Name fields cannot contain numbers and special characters except ">
+                    {{'publicrequest.fullNameWitoutSp' | translate}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <div class="input-wrapper  mobile-wrapper margin-top-l">
+                <label for="email" class=" margin-remove-bottom form-label required"
+                  i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
+                  aria-label="Email label">
+                  {{'publicrequest.email' | translate}}
+                </label>
+                <div class="flex flex-1">
+                  <mat-form-field appearance="outline" class="margin-top-s">
+                  <input id="email" name="emailField" autocomplete="off" type="email" maxlength="320"  (input)="emailVerification($event.target.value)" matInput
+                     placeholder="{{'publicrequest.enterYourEmailAddress' | translate}}" #email
+                    formControlName="email" i18n-aria-label aria-label="Email input">
+                  <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isEmailVerified"></mat-icon>
+                  <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.required"
+                    i18n="Email Error|Explains name is required">
+                    {{'publicrequest.pleaseEnterEmail' | translate}}
+                  </mat-error>
+                  <mat-error [hidden]="false" *ngIf="requestForm?.controls['email'].errors?.pattern"
+                    i18n-aria-label aria-label="Please enter a valid email address">
+                    {{'publicrequest.validEmail' | translate}}
+                  </mat-error>
+                  <div *ngIf="emailLengthVal" class="email-error"
+                    i18n="Email Error|Explains character validation">
+                    {{'publicrequest.emailLengthValidation' | translate}}
+                  </div>
+                  </mat-form-field>
+                </div>
+                <div class="w-full" id="org-field">
+                  <div class="flex items-center flex-1">
+                    <span class="ws-mat-black60-text">{{'publicrequest.validEmail' | translate}} </span>
+                  </div>
+                </div>
+
+                <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
+                  <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="requestForm?.email?.invalid">
+                    <a class="text-white" i18n>
+                      {{'publicrequest.sendOTP' | translate}}
+                    </a>
+                  </button>
+                  <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
+                      <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        <input  id="emailOTP" #emailotp type="password" minlength="4" maxlength="6"
+                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                        <mat-hint *ngIf="timeLeftforOTPEmail > 0 ">
+                          <span>{{'publicrequest.resendOTPAfter' | translate}} {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
+                        </mat-hint>
+                        <mat-hint *ngIf="timeLeftforOTPEmail <= 0 ">
+                          <!-- //NOSONAR --> <span class="cursor-pointer ws-mat-default-text" (click)="resendOTPEmail()">
+                            {{'publicrequest.resendOTP' | translate}} </span>
+                        </mat-hint>
+                      </mat-form-field>
+                      <div class="flex flex-1 margin-top-s justify-end">
+                        <button mat-raised-button type="button" (click)="verifyOtpEmail(emailotp)"
+                          class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
+                          [disabled]="requestForm?.email?.invalid || disableEmailVerifyBtn">
+                          <span class="text-white" i18n>
+                            {{'publicrequest.verifyOTP' | translate}}
+                          </span>
+                        </button>
+                      </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="input-wrapper mobile-wrapper margin-top-l">
+                <label for="mobileNumber" class=" margin-remove-bottom form-label required"
+                  i18n="Mobile Number label|Label which explains the user to enter Mobile Number" i18n-aria-label
+                  aria-label="Mobile Number label">
+                  {{'publicrequest.mobileNumber' | translate}}
+                </label>
+                <div class="flex flex-1">
+                  <mat-form-field appearance="outline" class="margin-top-s w-full">
+                    <input  id="mobileNumber" #mobile type="text" matInput maxlength="10" (keypress)="numericOnly($event)" (paste)="numericOnly($event)"
+                      placeholder="{{'publicrequest.mobileNumber' | translate}}" formControlName="mobile" i18n-aria-label
+                      aria-label="Mobile Number input">
+                    <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified" [hidden]="!isMobileVerified"></mat-icon>
+                    <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
+                      *ngIf="requestForm?.controls['mobile'].errors?.required" i18n-aria-label
+                      aria-label="Please enter your mobile number">
+                      {{'publicrequest.pleaseEnterMobileNumber' | translate}}
+                    </mat-error>
+                    <mat-error [hidden]="false" *ngIf="requestForm?.controls['mobile'].errors?.pattern"
+                      i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                      {{'publicrequest.validMobilenumber' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div *ngIf="!isMobileVerified" class="flex flex-1 margin-top-s justify-end">
+                  <button *ngIf="!otpSend" mat-raised-button type="button" (click)="sendOtp()"
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive" [disabled]="requestForm?.mobile?.invalid">
+                    <a class="text-white" i18n>
+                      {{'publicrequest.sendOTP' | translate}}
+                    </a>
+                  </button>
+                  <div *ngIf="otpSend" class="flex flex-1 flex-column">
+                      <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                        <input  id="mobileNumber" #otp type="password" minlength="4" maxlength="6"
+                          matInput placeholder="Enter OTP" i18n-aria-label aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                        <mat-hint *ngIf="timeLeftforOTP > 0 ">
+                          <span>{{'publicrequest.resendOTPAfter' | translate}} {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
+                        </mat-hint>
+                        <mat-hint *ngIf="timeLeftforOTP <= 0 ">
+                          <!-- //NOSONAR --> <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">
+                            {{'publicrequest.resendOTP' | translate}}
+                          </span>
+                        </mat-hint>
+                      </mat-form-field>
+                      <div class="flex flex-1 margin-top-s justify-end">
+                        <button mat-raised-button type="button" (click)="verifyOtp(otp)"
+                          class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
+                          [disabled]="requestForm?.mobile?.invalid || disableVerifyBtn">
+                          <span class="text-white" i18n>
+                            {{'publicrequest.verifyOTP' | translate}}
+                          </span>
+                        </button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Position field -->
+              <ng-container *ngIf="requestType === 'Position'">
+                <div class="input-wrapper margin-top-s" >
+                  <label for="position" class="margin-remove-bottom form-label required"
+                    i18n="Position | Label which explains the user to enter position" i18n-aria-label
+                    aria-label="Position Field label">
+                    {{'publicrequest.position' | translate}}
+                  </label>
+                  <mat-form-field appearance="outline" class="margin-top-s w-full">
+                    <input id="position" matInput type="text" placeholder="Enter your position"
+                      i18n-placeholder="position" formControlName="position" autocomplete="off"
+                      i18n-aria-label aria-label="Position" #position maxlength="150" />
+                    <mat-error [hidden]="false" i18n="Position Error | Explains position is required"
+                      *ngIf="requestForm?.controls['position'].errors?.required" i18n-aria-label
+                      aria-label="Position is mandatory">
+                      {{'publicrequest.positionMandatory' | translate}}
+                    </mat-error>
+                    <mat-error *ngIf="requestForm?.controls['position'].errors?.pattern" i18n-aria-label
+                      aria-label="Only alphabets, numbers, space, &, -, and  () are allowed.">
+                      {{'publicrequest.positionOnlyAlphabets' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="requestType === 'Organisation'">
+                <div class="input-wrapper margin-top-s">
+                  <label for="organisation" class="margin-remove-bottom form-label required"
+                    i18n="Organisation | Label which explains the user to enter organisation" i18n-aria-label
+                    aria-label="Organisation Field label">
+                    {{'publicrequest.organisation' | translate}}
+                  </label>
+                  <mat-form-field appearance="outline" class="margin-top-s w-full">
+                    <input id="organisation" matInput type="text" placeholder="{{'publicrequest.enterOrganisation' | translate}}"
+                      i18n-placeholder="organisation" formControlName="organisation" autocomplete="off"
+                      i18n-aria-label aria-label="organisation" #organisation maxlength="150" />
+                    <mat-error [hidden]="false" i18n="Organisation Error | Explains organisation is required"
+                      *ngIf="requestForm?.controls['organisation'].errors?.required" i18n-aria-label
+                      aria-label="Please enter your organisation name">
+                      {{'publicrequest.pleaseEnterOrganisation' | translate}}
+                    </mat-error>
+                    <mat-error *ngIf="requestForm?.controls['organisation'].errors?.pattern" i18n-aria-label
+                      aria-label="Only alphabets, numbers, space, &, -, and  () are allowed.">
+                      {{'publicrequest.porgPositionOnlyAlphabets' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+
+              <!-- domain field -->
+              <ng-container *ngIf="requestType === 'Domain'">
+                <div class="input-wrapper margin-top-s">
+                  <label for="domain" class="margin-remove-bottom form-label required"
+                    i18n="Domain |Label which explains the user to enter domain" i18n-aria-label
+                    aria-label="Domain Field label">
+                    {{'publicrequest.domain' | translate}}
+                  </label>
+                  <mat-form-field appearance="outline" class="margin-top-s w-full">
+                    <input id="domain" matInput type="text" placeholder="{{'publicrequest.exDomain' | translate}}"
+                      i18n-placeholder="domain" formControlName="domain" autocomplete="off"
+                      i18n-aria-label aria-label="domain" #domain maxlength="63" />
+                    <mat-error [hidden]="false" i18n="Domain Error | Explains domain is required"
+                      *ngIf="requestForm?.controls['domain'].errors?.required" i18n-aria-label
+                      aria-label="domain is mandatory">
+                      {{'publicrequest.enterDomain' | translate}}
+                    </mat-error>
+                    <mat-error *ngIf="requestForm?.controls['domain'].errors?.pattern" i18n-aria-label
+                      aria-label="Please enter a valid domain name">
+                      {{'publicrequest.validDomainName' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+
+              <div class="input-wrapper margin-top-s">
+                <label for="addDetails" class="margin-remove-bottom form-label"
+                i18n="Add deatils | Label which explains the Details" i18n-aria-label
+                aria-label="Details label">{{'publicrequest.addDetails' | translate}}</label>
+                <mat-form-field appearance="outline" class="margin-top-s w-full">
+                    <textarea matInput name="addDetails" id="addDetails" [matTextareaAutosize] [matAutosizeMaxRows]="5"
+                    [matAutosizeMinRows]="3"  maxlength="500" formControlName="addDetails" placeholder="{{'publicrequest.typeHere' | translate}}"></textarea>
+                    <mat-error [hidden]="false" i18n="Details Error | Explains details is required"
+                      *ngIf="requestForm?.controls['addDetails'].errors?.required" i18n-aria-label
+                      aria-label="Position details is mandatory">
+                      {{'publicrequest.detailsMandatory' | translate}}
+                    </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="input-wrapper margin-top-s">
+                <div class="flex flex-middle">
+                  <mat-checkbox aria-label="I confirm that the above provided information are accurate." id="confirm"
+                    [checked]="confirm" (change)="confirmChange()" i18n-aria-label
+                    aria-label="I confirm that the above provided information are accurate. checkbox" required>
+                    <!-- //NOSONAR --> <label class="margin-remove-bottom mat-body-2 ws-mat-black60-text" i18n-aria-label
+                      aria-label="I confirm that the above provided information are accurate. checkbox label">
+                      {{'publicrequest.confirmProvider' | translate}}
+                    </label>
+                  </mat-checkbox>
+                </div>
+              </div>
+
+              <div class="w-full margin-top-l">
+                <div class="button_box flex flex-col items-center justify-center">
+                  <button mat-flat-button type="submit"
+                    class="submitBtn text-white ws-mat-primary-background ws-mat-white-text" (click)="submitRequest()"
+                    [disabled]="!requestForm?.valid || !confirm || disableBtn || !isMobileVerified || !isEmailVerified">
+                    {{'publicrequest.submit' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

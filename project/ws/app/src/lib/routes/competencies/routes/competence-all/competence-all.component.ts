@@ -4,14 +4,13 @@ import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute } from '@angular/router'
 import { CompetenceService } from '../../services/competence.service'
 /* tslint:disable */
-import _ from 'lodash';
+import * as _ from 'lodash'
 import { FormControl } from '@angular/forms';
-import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component';
+import { CompetenceViewComponent } from '../../components/competencies-view/competencies-view.component'
 import { MatSnackBar } from '@angular/material';
-import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
-import {ThemePalette} from '@angular/material/core'
-/* tslint:enable */
-
+import { ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
+import { ThemePalette } from '@angular/material/core'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'app-competence-all',
   templateUrl: './competence-all.component.html',
@@ -33,8 +32,9 @@ export class CompetenceAllComponent implements OnInit {
 
   sticky = false
   elementPosition: any
-  currentFilter = 'recommended'
+  currentFilter = 'acquired_by_you'
   myCompetencies: NSCompetencie.ICompetencie[] = []
+  desiredCompetencies: NSCompetencie.ICompetencie[] = []
   tabsData: NSCompetencie.ICompetenciesTab[]
   allCompetencies!: NSCompetencie.ICompetencie[]
   watCompetencies: NSCompetencie.ICompetencie[] = []
@@ -47,6 +47,7 @@ export class CompetenceAllComponent implements OnInit {
   selectedId = ''
   currentProfile: any
   userPosition: any = null
+  pageLayout: any
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -54,7 +55,42 @@ export class CompetenceAllComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService,
     private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+    this.searchJson = [
+      { type: 'COMPETENCY', field: 'name', keyword: '' },
+      { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
+    ]
+
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+
+    const searchObj = {
+      searches: this.searchJson,
+      childNodes: true,
+    }
+    this.competencySvc
+      .fetchCompetency(searchObj)
+      .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
+        if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
+          this.allCompetencies = reponse.responseData
+          // this.resetcomp()
+        }
+      })
+
+    this.pageLayout = (this.route.parent &&
+      this.route.parent.snapshot.data.pageData.data.pageLayout) || []
     this.tabsData =
       (this.route.parent &&
         this.route.parent.snapshot.data.pageData.data.tabs) ||
@@ -71,32 +107,55 @@ export class CompetenceAllComponent implements OnInit {
       ) {
         this.myCompetencies =
           this.route.snapshot.data.profile.data[0].competencies || []
+
+          if (this.myCompetencies && this.myCompetencies.length > 0) {
+            if (this.allCompetencies && this.allCompetencies.length > 0) {
+              this.myCompetencies.forEach((comp: any) => {
+                if (comp.competencyCBPCompletionLevel) {
+                  if (!isNaN(Number(comp.competencyCBPCompletionLevel))) {
+                    comp.competencyCBPCompletionLevel = Number(comp.competencyCBPCompletionLevel)
+                  } else {
+                    comp.competencyCBPCompletionLevel = comp.competencyCBPCompletionLevel
+                  }
+                }
+                if (comp.competencySelfAttestedLevel) {
+                  if (!isNaN(Number(comp.competencySelfAttestedLevel))) {
+                    comp.competencySelfAttestedLevel = Number(comp.competencySelfAttestedLevel)
+                  } else {
+                    comp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+                  }
+                }
+                // const orgcomp = this.allCompetencies.filter((obj: any) => this.myCompetencies.includes(obj.id))
+                const orgcomp = this.allCompetencies.filter(x => x.id === comp.id)
+                if (orgcomp && orgcomp.length > 0) {
+                  comp.children =  orgcomp[0].children
+                }
+              })
+            }
+          }
       } else {
         this.myCompetencies = []
       }
+      if (
+        this.route.snapshot.data.profile.data[0].desiredCompetencies &&
+        this.route.snapshot.data.profile.data[0].desiredCompetencies.length > 0
+      ) {
+        this.desiredCompetencies =
+          this.route.snapshot.data.profile.data[0].desiredCompetencies || []
+      } else {
+        this.desiredCompetencies = []
+      }
+
       this.currentProfile = this.route.snapshot.data.profile.data[0]
     } else {
       this.getProfile()
     }
   }
-  ngOnInit() {
-    // load page based on 'page' query param or default to 1
-    // this.searchJson = [
-    //   { type: 'COMPETENCY', field: 'name', keyword: '' },
-    //   { type: 'COMPETENCY', field: 'status', keyword: 'VERIFIED' },
-    // ]
+  ngOnInit() { }
 
-    // const searchObj = {
-    //   searches: this.searchJson,
-    // }
-    // this.competencySvc
-    //   .fetchCompetency(searchObj)
-    //   .subscribe((reponse: NSCompetencie.ICompetencieResponse) => {
-    //     if (reponse.statusInfo && reponse.statusInfo.statusCode === 200) {
-    //       this.allCompetencies = reponse.responseData
-    //       this.resetcomp()
-    //     }
-    //   })
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   getProfile() {
@@ -104,7 +163,34 @@ export class CompetenceAllComponent implements OnInit {
       if (response) {
         // console.log("My Comp", response.profileDetails.competencies)
         this.myCompetencies = response.profileDetails.competencies || []
+        this.desiredCompetencies = response.profileDetails.desiredCompetencies || []
         this.currentProfile = response.profileDetails
+
+        if (this.myCompetencies && this.myCompetencies.length > 0) {
+          if (this.allCompetencies && this.allCompetencies.length > 0) {
+            this.myCompetencies.forEach((comp: any) => {
+              if (comp.competencyCBPCompletionLevel) {
+                if (!isNaN(Number(comp.competencyCBPCompletionLevel))) {
+                  comp.competencyCBPCompletionLevel = Number(comp.competencyCBPCompletionLevel)
+                } else {
+                  comp.competencyCBPCompletionLevel = comp.competencyCBPCompletionLevel
+                }
+              }
+              if (comp.competencySelfAttestedLevel) {
+                if (!isNaN(Number(comp.competencySelfAttestedLevel))) {
+                  comp.competencySelfAttestedLevel = Number(comp.competencySelfAttestedLevel)
+                } else {
+                  comp.competencySelfAttestedLevel = comp.competencySelfAttestedLevel
+                }
+              }
+              // const orgcomp = this.allCompetencies.filter((obj: any) => this.myCompetencies.includes(obj.id))
+              const orgcomp = this.allCompetencies.filter(x => x.id === comp.id)
+              if (orgcomp && orgcomp.length > 0) {
+                comp.children =  orgcomp[0].children && orgcomp[0].children.length > 0 ? orgcomp[0].children : []
+              }
+            })
+          }
+        }
 
         const profDetails = response.profileDetails.professionalDetails
         // tslint:disable-next-line: ter-prefer-arrow-callback
@@ -151,7 +237,7 @@ export class CompetenceAllComponent implements OnInit {
     }
   }
 
-  filter(key: string | 'recommended' | 'added_by_you' | 'recommended_from_wat') {
+  filter(key: string | 'recommended' | 'acquired_by_you' | 'recommended_from_wat' | 'desired_competencies') {
     if (key) {
       this.currentFilter = key
       // this.refreshData()
@@ -231,26 +317,28 @@ export class CompetenceAllComponent implements OnInit {
         source: item.source || '',
         competencyType: _.get(item, 'additionalProperties.competencyType') || item.type,
       }
-      const updatedProfile = { ...this.currentProfile }
+      // const updatedProfile = { ...this.currentProfile }
+      let updatedProfile = this.currentProfile.competencies
       if (
         _.get(this, 'currentProfile.competencies') &&
         _.get(this, 'currentProfile.competencies').length > 0
       ) {
         _.remove(
-          updatedProfile.competencies, itm => _.get(itm, 'id') === item.id
+          updatedProfile, itm => _.get(itm, 'id') === item.id
         )
-        updatedProfile.competencies.push(newCompetence)
+        updatedProfile.push(newCompetence)
       } else {
-        updatedProfile.competencies = []
-        updatedProfile.competencies.push(newCompetence)
+        updatedProfile = []
+        updatedProfile.push(newCompetence)
       }
       const reqUpdate = {
         request: {
           userId: this.configSvc.unMappedUser.id,
-          profileDetails: updatedProfile,
+          profileDetails: {
+            competencies: updatedProfile,
+          },
         },
       }
-
       this.competencySvc.updateProfile(reqUpdate).subscribe(response => {
         if (response) {
           // success
@@ -267,18 +355,43 @@ export class CompetenceAllComponent implements OnInit {
   }
   removeFromProfile(item: NSCompetencie.ICompetencie) {
     if (item) {
+      // console.log('item ---', item)
       const currentCompetencies = _.get(this, 'currentProfile.competencies');
-      const updatedProfile = { ...this.currentProfile };
+      // const updatedProfile = { ...this.currentProfile };
+      let updatedProfile = this.currentProfile.competencies
       _.remove(currentCompetencies, (itm) => _.get(itm, 'id') === item.id);
+      if (item && item.competencyCBPCompletionLevel) {
+        const newCompetence = {
+          type: item.type,
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          status: item.status,
+          source: item.source,
+          competencyType: item.type,
+          competencyCBPCompletionLevel: item.competencyCBPCompletionLevel ? item.competencyCBPCompletionLevel : '',
+          competencyCBPCompletionLevelName: item.competencyCBPCompletionLevelName ? item.competencyCBPCompletionLevelName : '',
+          competencyCBPCompletionLevelValue: item.competencyCBPCompletionLevelValue ? item.competencyCBPCompletionLevelValue : '',
+        }
+        updatedProfile.push(newCompetence)
+      }
       if (updatedProfile) {
-        updatedProfile.competencies = currentCompetencies;
+        updatedProfile = currentCompetencies;
       }
       const reqUpdate = {
         request: {
           userId: this.configSvc.unMappedUser.id,
-          profileDetails: updatedProfile,
+          profileDetails: {
+            competencies: updatedProfile,
+          },
         },
       }
+      // const reqUpdate = {
+      //   request: {
+      //     userId: this.configSvc.unMappedUser.id,
+      //     profileDetails: updatedProfile,
+      //   },
+      // }
       this.competencySvc.updateProfile(reqUpdate).subscribe(
         (response) => {
           if (response) {
@@ -355,7 +468,13 @@ export class CompetenceAllComponent implements OnInit {
       data: item,
     });
     const instance = dialogRef.componentInstance;
-    instance.isUpdate = true;
+    // console.log('item', item)
+    if(item && item.competencySelfAttestedLevel !== ''){
+      instance.isUpdate = true
+    } else {
+      instance.isUpdate = false
+    }
+
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response && response.action === 'ADD') {
         this.addCompetency(response.id);
@@ -371,9 +490,16 @@ export class CompetenceAllComponent implements OnInit {
       label,
       index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.COMPETENCY_TAB,
+        id: `${_.camelCase(data.label)}-tab`
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.COMPETENCY
+      }
     )
   }
 }

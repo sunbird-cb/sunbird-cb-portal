@@ -1,0 +1,207 @@
+$text-primary: #1B4CA1;
+
+.text-primary {
+    color: $text-primary;
+}
+
+.hide {
+    display: none;
+}
+
+.stamp-img {
+    width: 128px;
+}
+
+.chips-container {
+    background: #FFF;
+    border: 1px solid rgba($color: #000000, $alpha: 0.08);
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.chip {
+    border: 1px solid $text-primary;
+    color: $text-primary;
+    line-height: 14px;
+}
+
+.chip-ellipsis {
+    white-space: nowrap;
+    max-width: 104px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.certificate-container {
+    width: 100%;
+    max-width: 380px;
+
+    .certificate-card {
+        border-radius: 12px;
+        border-top: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.08);
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.08);
+        background: #FFF;
+        --mask: radial-gradient(16px at 16px 100%, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+
+        .icon {
+            width: 28px;
+            height: 28px;
+            font-size: 28px;
+            color: $text-primary;
+        }
+
+        .img-div {
+            width: 280px;
+            border-radius: 8px;
+
+            img {
+                width: 280px;
+            }
+        }
+
+        .error-img-div {
+            height: 180px;
+        }
+
+        .no-certificate-found {
+            text-align: center;
+            margin-bottom: 0px !important;
+        }
+    }
+
+    .chips-card {
+        border-top: 1px dashed rgba($color: #000000, $alpha: 0.16);
+        padding: 16px;
+        background: #FFF;
+        border-radius: 12px;
+        --mask: radial-gradient(16px at 16px 0, #0000 98%, #000) -16px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
+}
+
+.no-data-div {
+    background-color: #FFF;
+    width: 100%;
+    border: 1px solid rgba($color: #000000, $alpha: 0.16);
+}
+
+.share-icon {
+    font-size: 23px !important;
+    padding-left: 4px;
+    padding-top: 2px;
+}
+
+$title-line-count: 2;
+
+.text-ellipsis {
+    white-space: initial;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: $title-line-count;
+    -webkit-line-clamp: $title-line-count;
+    -webkit-box-orient: vertical;
+}
+
+.course-name {
+    @extend .text-ellipsis;
+    min-height: $title-line-count * 24px;
+}
+
+.course-name-div {
+    height: 72px;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-container {
+        padding: 16px;
+
+        .header {
+            font-size: 20px;
+        }
+    }
+}
+
+
+.img-container {
+    position: relative;
+    
+    .view-cert {
+      visibility: hidden;
+      display: none;
+    }
+    
+    &:hover {
+        display: block;
+        z-index: 99999;
+        .view-cert {
+            visibility: visible;
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.35s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background-color: #000000b5;
+            border-radius: 8px;
+            button {
+                color: white;
+                border: 1px solid white;
+                padding: 8px;
+                background: transparent;
+                border-radius: 12px;
+                cursor: pointer;
+                z-index: 999999;
+            }
+        }
+    }
+}
+.view-certificate {
+    visibility: visible !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    opacity: 1;
+    background-color: #000000b5;
+    border-radius: 8px;
+    transition: opacity 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    
+    button {
+        color: white;
+        border: 1px solid white;
+        padding: 8px;
+        background: transparent;
+        border-radius: 12px;
+        cursor: pointer;
+        z-index: 999999;
+        width: 150px;
+    }
+}
+
+.uploader-status ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #ffffff;
+}
+.uploader-status ::ng-deep .mat-progress-spinner svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+.uploader-status ::ng-deep .mat-progress-spinner {
+    width: 24px !important;
+    height: 24px !important;
+}

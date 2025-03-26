@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="flex flex-col level_box" *ngIf="competency?.children?.length > 0">
-            <p class="mat-body-2 ws-mat-black60-text">Select level</p>
+            <p class="mat-body-2 ws-mat-black60-text">{{"desiredcomptencycard.selectLevel" | translate}}</p>
             <div class="flex flex-row level_list_box flex-wrap">
                 <!-- <ws-app-level-card [competencyLevelData]="complevel" [competency]="competency" *ngFor="let complevel of competency?.children" (selectedCompetency)="selectLevel(complevel, competency)"></ws-app-level-card> -->
                 <a (keyup.enter)="selectLevel(complevel, competency)" (click)="selectLevel(complevel, competency)"

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { AccessControlService } from '@ws/author'
 import {
@@ -8,7 +8,7 @@ import {
   WidgetContentService,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { ValueService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { Platform } from '@angular/cdk/platform'
@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./video.component.scss'],
 })
 export class VideoComponent implements OnInit, OnDestroy {
+  @Input() hideUpNext = false
   private routeDataSubscription: Subscription | null = null
   private screenSizeSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
@@ -35,6 +36,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     NsDiscussionForum.IDiscussionForumInput
   > | null = null
   batchId = this.activatedRoute.snapshot.queryParamMap.get('batchId')
+  channelId: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private valueSvc: ValueService,
@@ -51,6 +53,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     })
     this.isNotEmbed =
       this.activatedRoute.snapshot.queryParamMap.get('embed') === 'true' ? false : true
+      this.channelId = this.activatedRoute.snapshot.queryParamMap.get('channelId')
     if (
       this.activatedRoute.snapshot.queryParamMap.get('preview') === 'true' &&
       !this.accessControlSvc.authoringConfig.newDesign
@@ -83,6 +86,11 @@ export class VideoComponent implements OnInit, OnDestroy {
           this.widgetResolverVideoData.widgetData.contentType = this.videoData.contentType
           this.widgetResolverVideoData.widgetData.primaryCategory = this.videoData.primaryCategory
           this.widgetResolverVideoData.widgetData.version = `${this.videoData.version}${''}`
+          this.widgetResolverVideoData.widgetData.channel = this.channelId
+          this.widgetResolverVideoData.widgetData.size = this.videoData.duration
+        }
+        if (this.widgetResolverVideoData && this.widgetResolverVideoData.widgetData) {
+          this.widgetResolverVideoData.widgetData['hideUpNext'] = this.hideUpNext
         }
         this.isFetchingDataComplete = true
         // if (this.videoData.artifactUrl.indexOf('/content-store/') > -1) {
@@ -126,11 +134,10 @@ export class VideoComponent implements OnInit, OnDestroy {
           if (this.videoData && this.videoData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
-                this.activatedRoute.snapshot.queryParams.collectionId,
                 this.videoData.identifier,
               )
             } else {
-              await this.fetchContinueLearning(this.videoData.identifier, this.videoData.identifier)
+              await this.fetchContinueLearning(this.videoData.identifier)
             }
           }
           this.widgetResolverVideoData.widgetData.url = this.videoData
@@ -138,16 +145,19 @@ export class VideoComponent implements OnInit, OnDestroy {
               ? this.viewerSvc.getAuthoringUrl(this.videoData.artifactUrl)
               : this.viewerSvc.getPublicUrl(this.videoData.artifactUrl) || this.videoData.artifactUrl
             : ''
-          this.widgetResolverVideoData.widgetData.resumePoint = this.getResumePoint(this.videoData)
+          // this.widgetResolverVideoData.widgetData.resumePoint = this.getResumePoint(this.videoData)
           this.widgetResolverVideoData.widgetData.identifier = this.videoData
             ? this.videoData.identifier
             : ''
           this.widgetResolverVideoData.widgetData.mimeType = data.content.data.mimeType
           this.widgetResolverVideoData.widgetData.contentType = data.content.data.contentType
           this.widgetResolverVideoData.widgetData.primaryCategory = data.content.data.primaryCategory
-
+          this.widgetResolverVideoData.widgetData.channel = this.channelId
           this.widgetResolverVideoData.widgetData.version = `${data.content.data.version}${''}`
-
+          this.widgetResolverVideoData.widgetData.size = data.content.data.duration
+          if (this.widgetResolverVideoData && this.widgetResolverVideoData.widgetData) {
+            this.widgetResolverVideoData.widgetData['hideUpNext'] = this.hideUpNext
+          }
           if (data.content.data.length > 0 && data.content.data.subTitles[0]) {
 
             let subTitlesUrl = ''
@@ -258,7 +268,7 @@ export class VideoComponent implements OnInit, OnDestroy {
       widgetType: 'discussionForum',
     }
   }
-  async fetchContinueLearning(collectionId: string, videoId: string): Promise<boolean> {
+  async fetchContinueLearning(videoId: string): Promise<boolean> {
     return new Promise(resolve => {
       // this.contentSvc.fetchContentHistory(collectionId).subscribe(
       //   data => {
@@ -282,35 +292,53 @@ export class VideoComponent implements OnInit, OnDestroy {
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId || ''
       }
-      const req: NsContent.IContinueLearningDataReq = {
-        request: {
-          userId,
-          batchId: this.batchId,
-          courseId: collectionId || '',
-          contentIds: [],
-          fields: ['progressdetails'],
-        },
-      }
-      this.contentSvc.fetchContentHistoryV2(req).subscribe(
-        data => {
-          if (data && data.result && data.result.contentList.length) {
-            for (const content of data.result.contentList) {
-              if (
-                content.contentId === videoId &&
-                content.progressdetails &&
-                content.progressdetails.current &&
-                this.widgetResolverVideoData
-              ) {
-                this.widgetResolverVideoData.widgetData.resumePoint = Number(
-                  content.progressdetails.current.pop(),
-                )
+      if (this.activatedRoute.snapshot.queryParams.collectionId &&
+        this.activatedRoute.snapshot.queryParams.batchId &&
+        videoId
+      ) {
+        const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+          this.activatedRoute.snapshot.queryParams.collectionId,
+          this.activatedRoute.snapshot.queryParams.batchId,
+          videoId)
+        const req: NsContent.IContinueLearningDataReq = {
+          request: {
+            userId,
+            batchId: requestCourse.batchId,
+            courseId: requestCourse.courseId || '',
+            contentIds: [],
+            fields: ['progressdetails'],
+          },
+        }
+        this.contentSvc.fetchContentHistoryV2(req).subscribe(
+          data => {
+            if (data && data.result && data.result.contentList.length) {
+              for (const content of data.result.contentList) {
+                if (
+                  content.contentId === videoId &&
+                  content.progressdetails &&
+                  content.progressdetails.current &&
+                  this.widgetResolverVideoData
+                ) {
+                  if (content.progress === 100 || content.status === 2) {
+                    // if its completed then resume from starting
+                    this.widgetResolverVideoData.widgetData.resumePoint = 0
+                  } else {
+                    // resume from last played point
+                    this.widgetResolverVideoData.widgetData.resumePoint = Number(
+                      content.progressdetails.current.pop(),
+                    )
+                  }
+                }
               }
             }
-          }
-          resolve(true)
-        },
-        () => resolve(true),
-      )
+            resolve(true)
+          },
+          () => resolve(true),
+        )
+      } else {
+        resolve(true)
+      }
+
     })
   }
   private async setS3Cookie(contentId: string) {

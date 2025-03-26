@@ -13,7 +13,7 @@ const routes: Routes = []
         children: routes,
         data: {
           path: '',
-          module: '',
+          module: 'app/my-dashboard',
         },
       },
     ]),

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { SocialForum } from '../models/SocialForumposts.model'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-forum-card',

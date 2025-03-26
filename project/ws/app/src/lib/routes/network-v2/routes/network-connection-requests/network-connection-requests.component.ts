@@ -3,7 +3,9 @@ import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
+import { TranslateService } from '@ngx-translate/core'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-network-connection-requests',
@@ -18,21 +20,59 @@ export class NetworkConnectionRequestsComponent implements OnInit {
   queryControl = new FormControl('')
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
+  datalist: any[] = []
+  filterdData: any[] = []
+  enableSearchFeature = false
   constructor(
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
     private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
-    this.data = this.route.snapshot.data.connectionRequests.data.result.data
-    this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    if (this.route.snapshot.data.connectionRequests
+      && this.route.snapshot.data.connectionRequests.data
+      && this.route.snapshot.data.connectionRequests.data.result
+      && this.route.snapshot.data.connectionRequests.data.result.data) {
+        this.datalist = this.route.snapshot.data.connectionRequests.data.result.data
+        this.data = this.route.snapshot.data.connectionRequests.data.result.data
+        this.data = this.data.map((v: NSNetworkDataV2.INetworkUser) => {
+          if (v && v.personalDetails && v.personalDetails.firstname) {
+            v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+          }
+          return v
+        })
+        this.filterdData = this.data
       }
-      return v
-    })
+      this.langtranslations.languageSelectedObservable.subscribe(() => {
+        if (localStorage.getItem('websiteLanguage')) {
+          this.translate.setDefaultLang('en')
+          const lang = localStorage.getItem('websiteLanguage')!
+          this.translate.use(lang)
+        }
+
+      })
    }
 
   ngOnInit() {
+    if (this.datalist && this.datalist.length > 0) {
+      this.filter('timestamp', 'desc')
+    }
+
+    this.queryControl.valueChanges.subscribe(val => {
+      if (val.length === 0) {
+        this.filterdData = this.data
+        this.enableSearchFeature = false
+      } else {
+        this.filterdData = this.data.filter((user: any) => user.fullName.toLowerCase().includes(val.toLowerCase()))
+        this.enableSearchFeature = true
+      }
+    })
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   updateQuery(key: string) {
@@ -45,6 +85,16 @@ export class NetworkConnectionRequestsComponent implements OnInit {
     if (key) {
       this.currentFilter = key
       this.currentFilterSort = order
+      if (this.currentFilter === 'timestamp') {
+        // this.filterdData = this.datalist
+        this.filterdData.sort((a: any, b: any) => {
+          return a.id.toLowerCase().localeCompare(b.id.toLowerCase())
+        })
+      } else {
+        this.filterdData.sort((a: any, b: any) => {
+          return a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
+        })
+      }
     }
   }
 
@@ -65,9 +115,16 @@ export class NetworkConnectionRequestsComponent implements OnInit {
       label,
       index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.NETWORK_TAB,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.NETWORK,
+      }
     )
   }
 

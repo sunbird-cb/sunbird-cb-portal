@@ -12,7 +12,7 @@ import {
 import { NotificationRoutingModule } from './notification-routing.module'
 import { NotificationComponent } from './components/notification/notification.component'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
-import { PipeLimitToModule } from '@sunbird-cb/utils'
+import { PipeLimitToModule } from '@sunbird-cb/utils-v2'
 
 @NgModule({
   declarations: [NotificationComponent],

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-// import { AuthKeycloakService } from '@sunbird-cb/utils'
+// import { AuthKeycloakService } from '@sunbird-cb/utils-v2'
 import { NsContent } from '@sunbird-cb/collection'
 // tslint:disable-next-line: max-line-length
 import {
@@ -24,12 +24,14 @@ interface IWindowMobileAppModified extends Window {
   isAuthenticated?: any
   dispatchEventFlag?: any
 }
+import { Subject } from 'rxjs'
 declare var window: IWindowMobileAppModified
 
 @Injectable({
   providedIn: 'root',
 })
 export class MobileAppsService {
+  mobileTopHeaderVisibilityStatus = new Subject()
   constructor(
     // private authSvc: AuthKeycloakService,
     private navigateSvc: NavigationExternalService,

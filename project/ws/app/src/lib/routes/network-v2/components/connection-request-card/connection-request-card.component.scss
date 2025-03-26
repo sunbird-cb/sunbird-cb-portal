@@ -1,5 +1,6 @@
 .card-container {
-    padding: 20px 12px;
+    // padding: 20px 12px;
+    padding:0;
     margin-bottom: 8px;
 }
 
@@ -10,6 +11,11 @@
 }
 .designation{
     line-height: 21px;
+}
+.request-img {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
 }
 .circle-m {
     background-color: rgb(48, 105, 51);

@@ -4,7 +4,7 @@ import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { InterestService } from '../services/interest.service'
 import { map, catchError } from 'rxjs/operators'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 
 @Injectable()
 export class InterestUserResolve

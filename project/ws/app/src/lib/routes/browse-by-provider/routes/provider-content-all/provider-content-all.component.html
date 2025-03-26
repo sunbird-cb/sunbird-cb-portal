@@ -1,0 +1,37 @@
+<div class="container-balanced">
+
+    <ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles }">
+    </ws-widget-btn-page-back>
+    <p class="mat-subheading-1 mob-padding">All {{selectedTab?.label}} <span *ngIf="contentDataList.length">({{contentDataList.length}})</span></p>
+
+<div class="">
+    <div class="container">
+        <div class="grid grid-cols-12 gap-4 padding-top-l mb-6">
+            <div class="col-span-12">
+                <div class="mb-4">
+                    <div>
+                        <mat-form-field appearance="outline"  class="w-full custom-width pl-1 mat-form-search">
+                            <input name="search"  (keyup.enter)="handleSearchQuery($event)"    matInput placeholder="Search">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <ng-container *ngIf="contentDataList?.length ; else noData">
+                    <div class="mr-2 mb-5" *ngFor="let c of contentDataList">
+                        <sb-uic-cards [widgetData]="c.widgetData"> </sb-uic-cards>
+                    </div>
+                </ng-container>
+                <ng-template #noData>
+                    <div class="flex justify-center w-full">
+                        <div class="margin-xl text-center" >
+                            <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
+                                class="margin-top-l margin-bottom-s">
+                            <h2 class="mat-h2" i18n="search route no result">{{'learnsearch.noResults' | translate}}</h2>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            
+        </div>
+    </div>
+</div>
+</div>

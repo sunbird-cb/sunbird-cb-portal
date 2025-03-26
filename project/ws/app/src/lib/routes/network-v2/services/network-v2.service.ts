@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { NSNetworkDataV2 } from '../models/network-v2.model'
 import { map } from 'rxjs/operators'
 // tslint:disable
@@ -26,6 +26,11 @@ export class NetworkV2Service {
   constructor(
     private http: HttpClient) {
   }
+  headers = new HttpHeaders({
+    'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+    Pragma: 'no-cache',
+    Expires: '0',
+  })
 
   fetchProfile(userId: string) {
     return this.http.get<NSNetworkDataV2.IProfile>(`${API_ENDPOINTS.getUserdetailsV2FromRegistry}/${userId}`)
@@ -38,11 +43,11 @@ export class NetworkV2Service {
   }
 
   fetchAllConnectionRequests() {
-    return this.http.get<NSNetworkDataV2.IConnectionRequestResponse>(API_ENDPOINTS.connectionRequests)
+    return this.http.get<NSNetworkDataV2.IConnectionRequestResponse>(API_ENDPOINTS.connectionRequests, { headers: this.headers })
   }
 
   fetchAllReceivedConnectionRequests() {
-    return this.http.get<NSNetworkDataV2.IConnectionRequest>(API_ENDPOINTS.connectionRequestsReceived)
+    return this.http.get<NSNetworkDataV2.IConnectionRequest>(API_ENDPOINTS.connectionRequestsReceived, { headers: this.headers })
   }
 
   fetchAllRecommendedUsers(data: NSNetworkDataV2.IRecommendedUserReq) {
@@ -62,11 +67,11 @@ export class NetworkV2Service {
   }
 
   fetchAllConnectionEstablished() {
-    return this.http.get<NSNetworkDataV2.IEstablishedConnectResopnse>(API_ENDPOINTS.connectionEstablished)
+    return this.http.get<NSNetworkDataV2.IEstablishedConnectResopnse>(API_ENDPOINTS.connectionEstablished, { headers: this.headers })
   }
 
   fetchAllConnectionEstablishedById(wid: any) {
     const url = `${API_ENDPOINTS.connectionEstablished}/${wid}`
-    return this.http.get<NSNetworkDataV2.IEstablishedConnectResopnse>(url)
+    return this.http.get<NSNetworkDataV2.IEstablishedConnectResopnse>(url, { headers: this.headers })
   }
 }

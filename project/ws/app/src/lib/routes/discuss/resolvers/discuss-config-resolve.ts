@@ -3,11 +3,11 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-// import { IResolveResponse } from '@sunbird-cb/utils'
+// import { IResolveResponse } from '@sunbird-cb/utils-v2'
 // import { DiscussService } from '../services/discuss.service'
 // import { NSDiscussData } from '../models/discuss.model'
 import { DiscussUtilsService } from '../services/discuss-utils.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 // import { DiscussUtilsService } from '../services/discuss-util.service'
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar, MatDialog } from '@angular/material'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
 
 @Component({

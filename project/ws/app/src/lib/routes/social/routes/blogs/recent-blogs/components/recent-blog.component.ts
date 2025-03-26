@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
-import { TFetchStatus, ValueService, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { TFetchStatus, ValueService, ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 import { NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
 
 @Component({

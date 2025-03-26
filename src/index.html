@@ -10,8 +10,10 @@
   <meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- <link id="id-app-fav-icon" rel="icon" type="image/png" /> -->
+  <link rel="manifest" href="./manifest.json" />
+  
   <link id="id-app-x-icon" rel="icon" type="x-icon" />
-  <link id="id-app-fav-icon" rel="icon" type="image/png" href="favicon.png" />
+  <link id="id-app-fav-icon" rel="icon" type="x-icon" href="/assets/configurations/manifest/favicon.ico" />
   <link id="id-app-webmanifest" rel="manifest" />
   <meta id="id-app-theme-color" name="theme-color" content="#000" />
   <!-- <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin> -->
@@ -24,10 +26,72 @@
   <meta name="twitter:image" content=" http://euro-travel-example.com/thumbnail.jpg">
   <meta name="twitter:card" content="https://png.pngtree.com/thumb_back/fh260/back_our/20190620/ourmid/pngtree-fresh-natural-product-poster-background-image_146684.jpg"> -->
   <!-- <link  rel='preload' as='stylesheet' href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"> -->
-  <script rel="preload" src="/assets/env.js" as="script"></script>
+  <!-- <script rel="preload" src="/assets/env.js" as="script"></script> -->
+  <script rel="preload">
+    (async function getData() {
+      const url = "/assets/env.json";
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+        const envJson = await response.json();
+          window["env"] = window["env"] || {};
+          // Environment variables
+          window["env"]["name"] = envJson.name
+          window["env"]["production"] = envJson.production;
+          window["env"]["sitePath"] = envJson.sitePath ;
+          window["env"]["organisation"] = envJson.organisation ;
+          window["env"]["framework"] = envJson.framework ;
+          window["env"]["channelId"] = envJson.channelId ;
+          window["env"]["azureHost"] = envJson.azureHost ;
+          //window["env"]["contentHost"] = envJson. ;
+          window["env"]["azureBucket"] = envJson.azureBucket;
+          window["env"]["azureOldHost"] = envJson.azureOldHost;
+          window["env"]["azureOldBuket"] = envJson.azureOldBuket;
+          window["env"]["contentHost"] = envJson.contentHost;
+          window["env"]["contentBucket"] = envJson.contentBucket;
+          window["env"]["certificateassets"] = envJson.certificateassets;
+          window["env"]["missionKarmayogiPath"] = envJson.missionKarmayogiPath;
+          window["env"]["helpEmail"] = envJson.helpEmail;
+          window["env"]["staticHomePageUrl"] = envJson.staticHomePageUrl;
+          window["env"]['cscmsUrl'] = envJson.cscmsUrl;
+          window["env"]['dakshtaName'] = envJson.dakshtaName;
+          window["env"]["contactMeetLink"] = envJson.contactMeetLink;
+          window["env"]["karmayogiBharatLink"] = envJson.karmayogiBharatLink;
+          window["env"]["meetingLinkDetail"] = envJson.meetingLinkDetail;
+          window["env"]["programStripName"] = envJson.programStripName;
+          window["env"]["programStripPrimaryCategory"] = envJson.programStripPrimaryCategory;
+          window["env"]["programStripKey"] = envJson.programStripKey;
+          window["env"]["quizResultTimeout"] = envJson.quizResultTimeout;
+          window["env"]["assessmentBuffer"] = envJson.assessmentBuffer;
+          window["env"]["cdnContentHost"] = envJson.cdnContentHost;
+          window["env"]["cdnContentBucket"] = envJson.cdnContentBucket;
+          window["env"]["spvorgID"] = envJson.spvorgID;
+          window["env"]["mdoChannelsBookmarkId"] = envJson.mdoChannelsBookmarkId;
+          window["env"]["apiCache"] = envJson.apiCache;
+          window["env"]["portalRoles"] = envJson.portalRoles;
+          window["env"]["portals"] = envJson.portals;
+          window["env"]["recaptchaKey"] = envJson.recaptchaKey;
+          window["env"]["supportEmail"] = envJson.supportEmail;
+          window["env"]["providerDataKey"] = envJson.providerDataKey;
+          window["env"]["resendOTPTIme"] = envJson.resendOTPTIme;
+          window["env"]["compentencyVersionKey"] = envJson.compentencyVersionKey;
+      } catch (error) {
+        console.error("Error in fetching env json");
+      }
+    })(this);
+  </script>
+  <script>window.git_build = '{git-hash}';</script>
+  <script>window.git_branch = '{git-branch}';</script>
+  <META HTTP-EQUIV='content-type' CONTENT='text/html; charset=UTF-8'>
+    <link href="src\zoho-style.css">
+    <script src='https://js.zohostatic.in/support/app/js/jqueryandencoder.ffa5afd5124fbedceea9.js' integrity="sha384-WxjccFdarXj9qC3CXtilb+x2qSQA3CMFOjT6vA0CkfexBVqYRAISERxH45f5VnmM" crossorigin="anonymous"></script>
+   <script src="src\zoho-script.js"></script>
+
 </head>
 
-<body class="mat-app-background mat-body mat-typography custom-scroll">
+<body class="mat-app-background mat-body mat-typography custom-scroll" id="app-bg">
   <ws-root role="main">
     <style>
       .loader-container {
@@ -78,11 +142,46 @@
       <div class="loader-ripple">
         <div></div>
         <div></div>
+
       </div>
+    </div>
+
+    <div id="zoho-form-box">
+
     </div>
   </ws-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
+
+  <!-- <script type="text/javascript" nonce="{place_your_nonce_value_here}" src="https://desk.zoho.in/portal/api/web/inapp/120349000000222059?orgId=60023043070" defer></script> -->
+        <!-- <script src="https://desk.zoho.in/portal/api/feedbackwidget/120349000000212259?orgId=60023043070&displayType=popout"></script> -->
+        <script src="https://cdn.userway.org/widget.js" data-account="pam3S93IQ7" integrity="sha384-Z3p55GwPaV0Y6nBmr3ezjEhuMtzgWxMcw78fcSukm0nPEt40UydxMAd18tSNNiCP" crossorigin="anonymous"></script>
+        <script>
+    (function(d){
+      var s = d.createElement("script");
+      /* uncomment the following line to override default position*/
+      /* s.setAttribute("data-position", 3);*/
+      /* uncomment the following line to override default size (values: small, large)*/
+      /* s.setAttribute("data-size", "small");*/
+      /* uncomment the following line to override default language (e.g., fr, de, es, he, nl, etc.)*/
+      /* s.setAttribute("data-language", "language");*/
+      /* uncomment the following line to override color set via widget (e.g., #053f67)*/
+      /* s.setAttribute("data-color", "#053e67");*/
+      /* uncomment the following line to override type set via widget (1=person, 2=chair, 3=eye, 4=text)*/
+      /* s.setAttribute("data-type", "1");*/
+      /* s.setAttribute("data-statement_text:", "Our Accessibility Statement");*/
+      /* s.setAttribute("data-statement_url", "http://www.example.com/accessibility")";*/
+      /* uncomment the following line to override support on mobile devices*/
+      /* s.setAttribute("data-mobile", true);*/
+      /* uncomment the following line to set custom trigger action for accessibility menu*/
+      /* s.setAttribute("data-trigger", "triggerId")*/
+      s.setAttribute("data-account", "pam3S93IQ7");
+      s.setAttribute("src", "https://cdn.userway.org/widget.js");
+      (d.body || d.head).appendChild(s);
+    })(document)
+</script>
+<noscript>Please ensure Javascript is enabled for purposes of <a href="https://userway.org">website accessibility</a></noscript>
 </body>
+
 <script>
   var MATCHING_IE = navigator.userAgent.match(/(msie|trident(?=\/))\/?\s*(\d+)/i) || [];
   if (/trident/i.test(MATCHING_IE[1])) {
@@ -105,4 +204,16 @@
 
 </script>
 
+<script>
+  // setTimeout(()=>{
+  //   document.getElementById("feedbacklabelspan").style.display = 'none';
+    
+  //   let htm = this.sanitizer.bypassSecurityTrustHtml(this.html);
+  //     document.getElementById("help-icon").addEventListener('click',function() {
+
+
+  //   })
+  // },10000)
+  
+</script>
 </html>

@@ -4,7 +4,7 @@ import { HttpClient, HttpBackend } from '@angular/common/http'
 import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
 import { ActivatedRoute } from '@angular/router'
-import { WsEvents, EventService } from '@sunbird-cb/utils'
+import { WsEvents, EventService } from '@sunbird-cb/utils-v2'
 import { ViewerUtilService } from '../../viewer-util.service'
 // import { environment } from 'src/environments/environment'
 
@@ -12,6 +12,9 @@ import { ViewerUtilService } from '../../viewer-util.service'
   selector: 'viewer-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
+  /* tslint:disable */
+  host: { class: 'h-inherit inline-block w-full', style: 'height:  inherit;' },
+  /* tslint:enable */
 })
 export class QuizComponent implements OnInit, OnDestroy {
   private dataSubscription: Subscription | null = null
@@ -37,6 +40,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.dataSubscription = this.activatedRoute.data.subscribe(
       async data => {
+        this.isFetchingDataComplete = false
         this.quizData = data.content.data
         if (this.quizData) {
           const url = this.viewSvc.getPublicUrl(this.quizData.artifactUrl)
@@ -57,13 +61,15 @@ export class QuizComponent implements OnInit, OnDestroy {
           this.alreadyRaised = true
           this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.quizData)
         }
-        this.isFetchingDataComplete = true
+        setTimeout(() => { this.isFetchingDataComplete = true }, 100)
+
       },
       () => { },
     )
   }
 
   async ngOnDestroy() {
+    this.isFetchingDataComplete = false
     if (this.activatedRoute.snapshot.queryParams.collectionId &&
       this.activatedRoute.snapshot.queryParams.collectionType
       && this.quizData) {
@@ -100,6 +106,13 @@ export class QuizComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.QUIZ,
         url: data ? data.artifactUrl : null,
+        object: {
+          id: data ? data.identifier : null,
+          type: data ? data.primaryCategory : '',
+          rollup: {
+            l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
+          },
+        },
       },
     }
     this.eventSvc.dispatchEvent(event)

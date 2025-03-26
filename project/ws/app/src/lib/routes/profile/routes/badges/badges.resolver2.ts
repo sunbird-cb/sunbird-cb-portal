@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 import { IBadgeResponse } from './badges.model'
 import { BadgesService } from './badges.service'
 

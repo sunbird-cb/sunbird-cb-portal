@@ -1,53 +1,83 @@
 <ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
 </ws-widget-btn-page-back>
+
 <div class="container-balanced main_content_box">
-    <div class="top_card_container">
-        <h2 class="mat-h1 margin-bottom-m inline-block "> Popular providers</h2>
+    <div class="top_card_container" *ngIf="featuredProviders?.length">
+        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allproviderscomponent.popularProviders' | translate }}</h2>
         <div class="top_card_inner_box flex">
-            <ng-container *ngFor="let p of allProviders | slice:0:8; let i=index">
-                <ws-app-popular-provider-card [provider]="p"></ws-app-popular-provider-card>
+            <ng-container *ngFor="let p of featuredProviders | slice:0:8; let i=index">
+                <ws-app-provider-card [provider]="p"></ws-app-provider-card>
             </ng-container>
         </div>
         <h4 *ngIf="allProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-            No providers found! 
+            {{ 'allproviderscomponent.noProvidersFound' | translate }}
         </h4>
         <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
         </div>
     </div>
 
-
-
     <!--===========  All competencies section ============= -->
     <div class="all_provider_box">
-        <h2 class="mat-h1 margin-bottom-m inline-block "> All providers </h2>
+        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allproviderscomponent.allProviders' | translate }} ({{allProviders?.length}})</h2>
         <div class="all_provider_inner">
             <!-- search box and dropdown-->
             <form [formGroup]="searchForm">
                 <div class="flex top_search_box">
-                    <div class="search_box_inner flex-1">
+                    <div class="search_box_inner mb-4 flex-1">
                         <div class="flex flex-1 flex-column margin-fix search search_box_main">
-                            <mat-form-field appearance="outline" class="autocomplete-form search_form margin-right-s"
+                            <!-- <mat-form-field appearance="outline" class="autocomplete-form search_form margin-right-s"
                                 color="primary">
-                                <mat-icon matPrefix class="search-home flex items-center justify-center mr-2">search
+                                <mat-icon matPrefix class="flex items-center justify-center mr-2">search
                                 </mat-icon>
                                 <input type="search" name="searchKey" #searchKey class="ml-2" i18-aria-label
                                     aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
-                                    [placeholder]="'Search'" matInput />
-                            </mat-form-field>
+                                    [placeholder]="'allproviderscomponent.search' | translate" matInput />
+                            </mat-form-field> -->
+                            <div class="relative search-wrapper">
+                                <mat-icon matPrefix class="flex absolute items-center justify-center mr-2">search
+                                </mat-icon>
+                                <input type="search" name="searchKey" #searchKey class="ml-2 search-field" i18-aria-label
+                                    aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
+                                    [placeholder]="'allproviderscomponent.search' | translate" />
+                            </div>
                         </div>
                     </div>
 
                     <div class="item_dropdown_box">
                         <div class="flex flex-1 flex-wrap section-input">
                             <div class="item">
-                                <mat-form-field class="" appearance="outline">
+                                <!-- <mat-form-field class="" appearance="outline">
                                     <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
-                                        placeholder="Sort by">
-                                        <mat-option [value]="'asc'" slected>Ascending ( A - Z )</mat-option>
-                                        <mat-option [value]="'desc'">Descending ( Z - A )</mat-option>
+                                        placeholder="{{ 'allproviderscomponent.sortBy' | translate }}">
+                                        <mat-option [value]="'asc'" slected>{{ 'allproviderscomponent.ascending' | translate }} ( A - Z )</mat-option>
+                                        <mat-option [value]="'desc'">{{ 'allproviderscomponent.descending' | translate }} ( Z - A )</mat-option>
                                     </mat-select>
-                                </mat-form-field>
+                                </mat-form-field> -->
+                                <mat-menu #appMenu="matMenu">
+                                    <button (click)="sortType('asc')" mat-menu-item>
+                                        {{ 'allChannelsComponent.ascending' | translate }} ( A - Z )
+                                    </button>
+                                    <button (click)="sortType('desc')"  mat-menu-item>
+                                        {{ 'allChannelsComponent.descending' | translate }} ( Z - A )
+                                    </button>
+                                </mat-menu>
+                                <button type="button" mat-icon-button class="flex w-full sort-menu justify-end" [matMenuTriggerFor]="appMenu">
+                                    <div class="flex items-center">
+                                    <span class="mr-1" *ngIf="searchForm?.value?.sortByControl === 'asc'">
+                                        <span class="block md:hidden">A-Z</span>
+                                        <span class="hidden md:block">{{ 'allChannelsComponent.ascending' | translate }} ( A - Z )</span>
+                                    </span>
+                                    <span class="mr-1" *ngIf="searchForm?.value?.sortByControl !== 'asc'">
+                                        <span class="block md:hidden">Z-A</span>
+                                        <span class="hidden md:block">{{ 'allChannelsComponent.descending' | translate }} ( Z - A )</span>
+                                    </span>
+
+
+                                    <mat-icon matPrefix class="flex items-center justify-center ">sort
+                                    </mat-icon>
+                                </div>
+                                </button>
                             </div>
 
                         </div>
@@ -61,11 +91,13 @@
                 <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
 
                     <div class="provider_card_box">
-                        <ng-container *ngFor="let p of allProviders">
-                            <ws-app-provider-card [provider]="p"></ws-app-provider-card>
+                        <ng-container *ngFor="let p of clonesProviders">
+                            <ng-container *ngIf="p?.orgId">
+                                <ws-app-provider-card [provider]="p"></ws-app-provider-card>
+                            </ng-container>
                         </ng-container>
-                        <h4 *ngIf="allProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
-                            No providers found! 
+                        <h4 *ngIf="clonesProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
+                            {{ 'allproviderscomponent.noProvidersFound' | translate }}
                          </h4>
                     </div>
                 </mat-sidenav-content>

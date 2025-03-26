@@ -14,7 +14,7 @@ import { jsPlumb, OnConnectionBindInfo } from 'jsplumb'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NsContent } from '@sunbird-cb/utils-v2'
 
 @Component({
     selector: 'viewer-mtf-question',
@@ -30,6 +30,8 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         instructions: '',
         question: '',
         questionId: '',
+        questionLevel: '',
+        timeTaken: '',
         editorState: undefined,
         options: [
             {
@@ -81,6 +83,11 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
                 this.matchHintDisplay.push(element)
             }
         })
+        this.practiceSvc.clearResponse.subscribe((questionId: any) => {
+           if (this.question.questionId === questionId) {
+            this.resetMtf()
+           }
+        })
     }
     get numConnections() {
         if (this.jsPlumbInstance) {
@@ -105,7 +112,6 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
         })
         const connectorType = ['Bezier', { curviness: 10 }]
         this.jsPlumbInstance.bind('connection', (_i: any, _c: any) => {
-            // debugger
             // root cause
             // const allConnection = this.jsPlumbInstance.getAllConnections()
             // const finalConnection=[]
@@ -206,17 +212,17 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
     }
     changeColor() {
         const a = this.jsPlumbInstance.getAllConnections() as any[]
-        if (a.length < this.question.options.length) {
-            this.showAns = false
-            alert('Please select all answers')
-            return
-        }
+        // if (a.length < this.question.options.length) {
+        //     this.showAns = false
+        //     alert('Please select all answers')
+        //     return
+        // }
         a.forEach(element => {
             const b = element.sourceId
             const options = this.question.options
             if (options) {
-                const match = options[(b.slice(-1) as number) - 1].match
-                if (match && match.trim() === element.target.innerText.trim()) {
+                const hint = options[(b.slice(-1) as number) - 1].hint
+                if (hint && hint.trim() === element.target.innerText.trim()) {
                     element.setPaintStyle({
                         stroke: '#357a38',
                     })
@@ -250,6 +256,7 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
                     if (match && match.trim()) {/** ===  selectors[0].innerText.trim() */
                         this.jsPlumbInstance.connect({
                             endpoint: ['Dot', {
+                                radius: 3,
                                 cssClass: 'amit icon-svg',
                                 PaintStyle: {
                                     stroke: 'rgba(0,0,0,0.5)',
@@ -273,6 +280,13 @@ export class MatchTheFollowingQuesComponent implements OnInit, OnChanges, AfterV
             100
         )
 
+    }
+    getSanitizeString(res: any) {
+        if (res && (typeof res === 'string')) {
+            const response = res.replace(/\&lt;/g, '<').replace(/\&gt;/g, '>')
+            return response
+        }
+        return res
     }
     ngOnDestroy(): void {
         this.resetMtf()

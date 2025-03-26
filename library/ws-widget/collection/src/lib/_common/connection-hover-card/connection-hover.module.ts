@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { PipeNameTransformModule } from '@sunbird-cb/utils'
+import { PipeNameTransformModule } from '@sunbird-cb/utils-v2'
 import { FormsModule } from '@angular/forms'
 import { TooltipDirective } from '../../_directives/tooltip.directive'
 import { AvatarPhotoModule } from '../avatar-photo/avatar-photo.module'

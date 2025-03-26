@@ -3,7 +3,7 @@ import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 import { IFeedbackConfig, FeedbackService } from '@sunbird-cb/collection'
 
 @Injectable()

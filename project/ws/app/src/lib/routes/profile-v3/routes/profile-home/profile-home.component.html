@@ -1,5 +1,5 @@
 <div class="container-balanced-banner flex flex-row justify-between margin-bottom-xl margin-top-xl">
-  <h1>{{currentStep}}. {{message}} </h1>
+  <h1>{{currentStep}}. {{translateTo(message)}} </h1>
   <!-- <ng-container *ngIf="current?.allowSkip">
     <a *ngIf="skip" [routerLink]="skip.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Skip, I will do this later</a>
   </ng-container> -->
@@ -39,8 +39,8 @@
 
   <ng-container *ngIf="previous && previous !== 'first'">
 
-    <a [routerLink]="previous.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Previous: {{previous.step}}.
-      {{previous.name}}</a>
+    <a [routerLink]="previous.routerLink" class="skip_link mat-body-2 margin-remove-bottom">{{'profilehome.prev' | translate}} {{previous.step}}.
+      {{translateTo(previous.name) }}</a>
 
   </ng-container>
   <ng-container *ngIf="previous && previous === 'first'">
@@ -52,18 +52,18 @@
   </ng-container>
 
 
-  <p class="mat-body-2 margin-remove-bottom margin-top-xs footer_text">Your selections are automatically saved.</p>
+  <p class="mat-body-2 margin-remove-bottom margin-top-xs footer_text">{{'profilehome.autoSave' | translate}}</p>
 
 
   <ng-container *ngIf="next && next !== 'done'">
 
-    <a [routerLink]="next.routerLink" (click)="updateCompentency()" class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
-      {{next.name}}</a>
+    <a [routerLink]="next.routerLink" (click)="updateCompentency()" class="next_link mat-body-2 margin-remove-bottom">{{'profilehome.next' | translate}} {{next.step}}.
+      {{translateTo(next.name)}}</a>
 
   </ng-container>
   <ng-container *ngIf="next && next === 'done'">
 
-    <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">Done</a>
+    <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">{{'profilehome.done' | translate}}</a>
 
   </ng-container>
 </div>

@@ -6,6 +6,7 @@ import { RatingService } from '../../_services/rating.service'
   templateUrl: './rating-summary.component.html',
   styleUrls: ['./rating-summary.component.scss'],
 })
+
 export class RatingSummaryComponent implements OnInit, OnChanges {
   @Input() ratingSummary: any | null = null
 
@@ -14,14 +15,9 @@ export class RatingSummaryComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-
   }
 
   ngOnChanges() {
-    //  if (this.ratingSummary && this.ratingSummary.breakDown) {
-    //   this.ratingSummary.breakDownReverse = this.ratingSummary.breakDown.reverse()
-    //   console.log('this.ratingSummary.breakDownReverse', this.ratingSummary.breakDownReverse)
-    // }
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {

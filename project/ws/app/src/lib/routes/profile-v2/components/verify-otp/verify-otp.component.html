@@ -1,0 +1,32 @@
+<div class="verify-otp-dialog">
+    <div class="flex flex-col gap-4">
+        <div class="text-base font-semibold text-center mb-4">
+            {{ 'profileInfo.otpHeaderText' | translate }} 
+            <span *ngIf="data.type === 'email'" class="lowercase">{{ 'profileInfo.email' | translate }}</span>
+            <span *ngIf="data.type !== 'email'" class="lowercase">{{ 'profileInfo.mobileNumber' | translate }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <div class="flex flex-row justify-between">
+                <div class="text-sm font-bold">{{ 'profileInfo.enterOTP' | translate }}</div>
+                <div class="timer" *ngIf="!showResendOTP">{{ 'profileInfo.timeRemaining' | translate }}: <span #timerDiv></span></div>
+            </div>            
+            <input type="text" class="input-text" placeholder="{{ 'profileInfo.enterTheOTP' | translate }}" maxlength="6" [(ngModel)]="otpEntered"  />
+        </div>
+        <!-- <div class="flex flex-row gap-2 items-center justify-center timer-div" *ngIf="!showResendOTP">
+            <div class="flex flex-row gap-1 time-remaining text-sm ">
+                {{ 'profileInfo.timeRemaining' | translate }}: <div #timerDiv></div>
+            </div>
+        </div> -->
+        <div class="flex justify-center" *ngIf="showResendOTP">  
+            <div class="flex flex-row">
+                <div class="timer">{{ 'profileInfo.didNotReceiveOTP' | translate }}</div>
+                <div class="resend-otp" (click)="handleResendOTP()">&nbsp;&nbsp;{{ 'profileInfo.resentOTP' | translate }}</div>
+            </div>
+        </div>
+        <!-- <div class="resend-otp" (click)="handleResendOTP()">&nbsp;&nbsp;{{ 'profileInfo.resentOTP' | translate }}</div> -->
+        <div class="flex flex-row justify-between">
+            <button class="outline-button" (click)="handleCloseModal()">{{ 'profileInfo.cancel' | translate }}</button>
+            <button class="submit-button" (click)="handleVerifyOTP()">{{ 'profileInfo.submit' | translate }}</button>
+        </div>  
+    </div>
+</div>

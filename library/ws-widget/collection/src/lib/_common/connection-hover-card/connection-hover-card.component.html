@@ -5,6 +5,9 @@
         <div class="fixd" i18n-aria-label role="link" aria-label="click on it to visit user profile">
             <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="hoverUser?.photo" size="l-s">
             </ws-widget-avatar-photo>
+            <span class="profile-badge" *ngIf="hoverUser?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
+            
         </div>
     </div>
     <mat-card-content class="name-container flex flex-col width-expand">

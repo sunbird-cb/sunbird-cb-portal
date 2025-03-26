@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Resolve } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 import { NSLearningHistory } from '../models/learning.models'
 import { LearningHistoryService } from '../services/learning-history.service'
 

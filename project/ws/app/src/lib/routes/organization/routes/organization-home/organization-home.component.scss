@@ -1,0 +1,206 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  // min-height: 400px;
+  min-height: calc(100vh - 160px);
+
+  @media (max-width:1024px) {
+    padding:0px 0px;
+  }
+}
+
+.organization-main-box {
+  padding:0 0;
+  @media (max-width:992px) {
+    padding:0px 16px;
+  }
+}
+
+.container-balanced-banner {
+  @extend %page-center;
+  height: auto;
+}
+
+.sub-side-content .learn-card {
+    border-radius: 10px;
+    background: #fff;
+    height: 170px;
+    min-height: 170px;
+    box-shadow: none!important;
+}
+
+.sub-side-content .learn-card .imageholder {
+    width: 34%;
+    height: 170px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        display: block;
+        height: auto;
+        // object-fit: cover;
+        // object-position: center;
+        // max-height: 170px;
+        border-radius: 10px 0 0 10px;   
+        @media (max-width:992px) {
+         margin-top: 32px!important;
+        }
+    }
+}
+.sub-side-content .learn-card .mat-card-content {
+    margin-left: 36%;
+    padding: 8px;
+    position: relative;
+    height: 152px;
+}
+.sub-side-content .learn-card .mat-card-content .bottomsection {
+    position: absolute;
+    bottom: 0;
+    width: 96%;
+}
+.sub-side-content .learn-card .mat-card-content ul {
+    // list-style-type: circle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.sub-side-content .learn-card .mat-card-content ul li {
+    display: inline-block;
+    padding-right: 10px;
+    // margin-bottom: 12px;
+
+    img {
+        vertical-align: bottom;
+    }
+}
+
+.register-btn {
+    background-color: #1B4CA1;
+    color: #fff!important;
+    border-radius: 4px 4px;
+    padding: 10px 12px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    @media (max-width:992px) {
+      width: 125px;
+      margin:12px auto 0 auto;
+      display: block;
+    }
+}
+.register_icon {
+  font-size: 18px;
+  height: 18px;
+}
+
+.top-content {
+    display: block;
+    margin:0px 16px;
+    border:1px solid transparent;
+
+    @media (max-width:992px) {
+      margin:0px 0px;
+    }
+}
+th.mat-header-cell , td.mat-cell {
+    padding: 0px 16px;
+    border: 1px solid #b6b3b3;
+  }
+
+  th.mat-header-cell {
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  .img_box {
+    // height: 400px;
+
+    img {
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+  }
+
+  .mat-caption .mat-icon {
+    vertical-align: middle;
+  }
+.learn-card .mat-card-content .content-title {
+  text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+  }
+
+  
+  .table_main_box {
+    width: 100%;
+    @include breakpoint-xs {
+      overflow-y: scroll;
+    }
+    
+  }
+
+.main-heading-text {
+  @include breakpoint-xs {
+    font: 600 20px/24px Montserrat;
+    margin: 0 0 16px;
+    width: 100%;
+    text-align: center;
+   
+   }
+   @include breakpoint-s {
+    font: 600 20px/24px Montserrat;
+    margin: 0 0 16px;
+    width: 100%;
+    text-align: center;
+   }
+  }
+
+.register-btn{
+  @include breakpoint-xs {
+    line-height: 1;
+   }
+}
+
+  .item-name {
+    cursor: auto;
+  }
+
+  .timetable-list {
+    flex-wrap: wrap;
+  }
+  .timetable-data-box {
+    width: 32%;
+    height: 140px;
+    border-bottom: 2px solid #ddd;
+
+    @include breakpoint-s {
+      width: 100%;
+      height: auto;
+    }
+    @include breakpoint-xs {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .timetable-data-box:nth-child(3n - 1) {
+    margin-left:1.5%;
+    margin-right:1.5%;
+  }
+
+  .button-box {
+    flex-direction: row;
+    @include breakpoint-s {
+      flex-direction: column;
+    }
+    @include breakpoint-xs {
+      flex-direction: column;
+    }
+  }
+

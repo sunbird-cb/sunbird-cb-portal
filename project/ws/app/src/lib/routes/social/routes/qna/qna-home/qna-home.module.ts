@@ -14,7 +14,7 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material'
 import { QnaHomeComponent } from './components/qna-home/qna-home.component'
-import { PipeLimitToModule, PipeCountTransformModule } from '@sunbird-cb/utils'
+import { PipeLimitToModule, PipeCountTransformModule } from '@sunbird-cb/utils-v2'
 import { BtnPageBackModule, ErrorResolverModule, DialogSocialDeletePostModule } from '@sunbird-cb/collection'
 import { QnaItemComponent } from './components/qna-item/qna-item.component'
 

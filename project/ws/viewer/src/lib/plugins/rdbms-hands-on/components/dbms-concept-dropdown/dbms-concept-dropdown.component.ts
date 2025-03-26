@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms'
 import { RdbmsHandsOnService } from '../../rdbms-hands-on.service'
 import { NSRdbmsHandsOn } from '../../rdbms-hands-on.model'
 import { MatSnackBar } from '@angular/material'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'viewer-dbms-concept-dropdown',

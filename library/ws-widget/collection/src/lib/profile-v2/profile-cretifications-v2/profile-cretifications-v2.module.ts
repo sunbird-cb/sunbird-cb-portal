@@ -6,14 +6,26 @@ import {
 } from '@angular/material'
 import { BrowserModule } from '@angular/platform-browser'
 import { ProfileCertificateDialogModule } from '../profile-certificate-dialog/profile-certificate-dialog.module'
-import { PipePublicURLModule, PipeCertificateImageURLModule } from '@sunbird-cb/utils/src/public-api'
+import { PipePublicURLModule, DefaultThumbnailModule, PipeCertificateImageURLModule } from '@sunbird-cb/utils-v2'
+import { TranslateModule } from '@ngx-translate/core'
+
 @NgModule({
   declarations: [ProfileCretificationsV2Component],
-  imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule,
-    // tslint:disable-next-line:max-line-length
-    MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, ProfileCertificateDialogModule, PipePublicURLModule, PipeCertificateImageURLModule],
+  imports: [
+    BrowserModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    DefaultThumbnailModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    ProfileCertificateDialogModule,
+    PipePublicURLModule,
+    PipeCertificateImageURLModule,
+    TranslateModule,
+  ],
   entryComponents: [ProfileCretificationsV2Component],
 })
-export class ProfileCretificationsV2Module {
-
-}
+export class ProfileCretificationsV2Module {}

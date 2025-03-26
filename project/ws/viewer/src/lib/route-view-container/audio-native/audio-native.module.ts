@@ -32,7 +32,7 @@ import {
   DefaultThumbnailModule,
   PipePartialContentModule,
   PipeSafeSanitizerModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
 import { AudioNativeModule as AudioNativePluginModule } from '../../plugins/audio-native/audio-native.module'
 

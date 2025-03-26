@@ -36,7 +36,7 @@ import {
   BtnTwitterShareModule,
 } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 import { PlaylistCardComponent } from './components/playlist-card/playlist-card.component'
 import { PlaylistContentDeleteDialogComponent } from './components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
 import { PlaylistContentDeleteErrorDialogComponent } from './components/playlist-content-delete-error-dialog/playlist-content-delete-error-dialog.component'

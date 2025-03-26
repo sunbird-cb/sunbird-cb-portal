@@ -10,7 +10,7 @@ import {
 } from '@angular/core'
 import { Subscription, fromEvent } from 'rxjs'
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser'
-import { ValueService, ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ValueService, ConfigurationsService, EventService } from '@sunbird-cb/utils-v2'
 import { WidgetContentService, NsContent } from '@sunbird-cb/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { ActivatedRoute } from '@angular/router'

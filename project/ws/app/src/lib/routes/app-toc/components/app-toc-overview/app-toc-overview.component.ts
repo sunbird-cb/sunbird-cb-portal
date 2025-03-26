@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Observable, Subscription } from 'rxjs'
 import { NsAppToc } from '../../models/app-toc.model'
 import { AppTocService } from '../../services/app-toc.service'
@@ -132,6 +132,7 @@ export class AppTocOverviewComponent implements OnInit, OnDestroy {
       webPage: 0,
       youtube: 0,
       interactivecontent: 0,
+      offlineSession: 0,
     }
     if (this.content) {
       this.hasTocStructure = false

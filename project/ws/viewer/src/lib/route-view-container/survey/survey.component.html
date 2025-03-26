@@ -1,7 +1,7 @@
 <div class="padding-dynamic" *ngIf="surveyData">
     <div class="flex flex-around flex-wrapped">
         <div class="w-full">
-            <mat-card>
+            <mat-card class="viewer-container">
                 <mat-card-content>
                 <div id="fullScreenContainer" class="video-player">
                     <ng-container   *ngIf="isFetchingDataComplete" [wsResolverWidget]="widgetResolverSurveyData"></ng-container>

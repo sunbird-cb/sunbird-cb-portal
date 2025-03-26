@@ -8,18 +8,19 @@
       <mat-list-option #lo checkboxPosition="before" class="margin-top-s" [ngClass]="{
         'ws-mat-accent-border': !(lo.selected),
         'ws-mat-accent-border-active ': (lo.selected)
-      }" (click)="updateParent(option.optionId)"
+      }" (click)="updateParent(option.optionId, lo.selected)"
+      
       [selected]="isSelected(option)">
-        <mat-error class="incorrect-option" *ngIf="showAns && !option?.isCorrect && isSelected(option)">
-          {{ option?.text }}
-        </mat-error>
+        <span class="incorrect-option" *ngIf="showAns && !option?.isCorrect && isSelected(option)" [innerHtml]="getSanitizeString(option?.text)">
+          
+        </span>
         <div [ngClass]="{
       'correct-option':
         (showAns && option?.isCorrect && isSelected(option)) ||
         (showAns && option?.isCorrect)
     }" [hidden]="showAns && !option?.isCorrect && isSelected(option)">
-          <!-- {{option?.text}} -->
-          <div class="no-margin-p" [innerHTML]="option?.text"></div>
+          <!-- {{getSanitizeString(option?.text)}} -->
+          <div class="no-margin-p html-option" [innerHTML]="getSanitizeString(option?.text)"></div>
         </div>
       </mat-list-option>
       <div class="background-well padding-left-m padding-xs"

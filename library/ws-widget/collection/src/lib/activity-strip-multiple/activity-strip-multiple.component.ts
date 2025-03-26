@@ -11,7 +11,7 @@ import {
   // EventService,
   // ConfigurationsService,
   UtilityService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { MatSnackBar } from '@angular/material'
 // import { filter } from 'rxjs/operators'

@@ -14,8 +14,6 @@
 
 .competency_main_block {
   width: 100%;
-
-
 }
 .competency_inner {
   @media (max-width:1024px) {
@@ -42,24 +40,25 @@
 }
 
 .search {
+  @include breakpoint-xs {
+    padding-bottom: 12px;
+  }
+
   @media (max-width:768px) {
     width: 100%;
     margin: 0px !important;
   }
   form.search_form {
     @include breakpoint-xs  {
-      width: 55%;
+      width: 100%;
     }
-    .autocomplete-form {
-      // @media (max-width:768px) {
-      //   width: calc(100%- 170px);
-      // }
 
+    .autocomplete-form {
       @include breakpoint-s  {
         width: 90%;
       }
       @include breakpoint-xs  {
-        width: 95%;
+        width: 100%;
       }
     }
   }
@@ -239,7 +238,9 @@
     border-right-width: 0;
   }
 }
-
+.matbold {
+  font-weight: 600 !important;
+}
 .max-height-60 {
   max-height: 60px;
 }
@@ -385,7 +386,6 @@ a:not([href]):not([tabindex]) {
   }
 
   .card_inner_title_box {
-  //    display: column;
       width: 210px;
       padding: 24px;
 
@@ -463,38 +463,29 @@ a:not([href]):not([tabindex]) {
 }
 
 // recommendation_frca_box
-
 .recommendation_frca_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
   background:  rgba(246, 153, 83, 0.2);
 
-
   .post_image_box {
-
     img {
       margin-top: 56px;
       margin-bottom: 24px;
     }
-
   }
 
   .info_icon {
     margin-right: 10px;
     vertical-align: top;
   }
-
-
 }
 
 a.work_order_link {
-  // color: #0074B6;
   text-decoration: underline!important;
 }
 
-
 // recommendation_box notification
-
 .recommendation_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
@@ -509,14 +500,20 @@ a.work_order_link {
     text-decoration: underline;
   }
 }
+::ng-deep .comp-search {
+  .mat-form-field-infix {
+    padding: 6px 8px 12px !important;
+  }
+}
 
 .add_competency_btn {
   background: #0074b6;
   border-radius: 4px 4px;
   // padding: 14px 16px;
-  width: 155px;
-  height: 56px;
-  margin: 0;
+  min-width: 152px;
+  padding: 0 12px;
+  height: 42px;
+  margin: 5px 0 0;
   color: #fff!important;
 
   @include breakpoint-s  {
@@ -528,14 +525,7 @@ a.work_order_link {
   }
 }
 
-
-
-
-
 // competency box with proficiency
-
-
-
 ul.tagIconList {
   padding: 0;
   margin: 0;
@@ -547,51 +537,70 @@ ul.tagIconList {
 ul.tagIconList li {
   float: left;
 }
-ul.tagIconList li a {
+ul.tagIconList li span {
   width: 8px;
   margin-left: 3px;
   height: 5px;
   border-radius: 2px 2px;
   display: block;
 }
-a.activeTagIcon {
+span.activeTagIcon {
   background-color: #0074B6;
   border: 2px solid #0074B6;
 }
-a.activeLevelIcon {
+span.activeLevelIcon {
   background-color: #1D8923;
   border: 2px solid #1D8923;
 }
-a.deactiveLevelIcon {
+span.deactiveLevelIcon {
   background-color: rgba(0, 0, 0, 0.08);
   border: 2px solid #D13924;
 }
-a.disableTagIcon, a.disableLevelIcon {
+span.disableTagIcon, span.disableLevelIcon {
   background-color: rgba(0, 0, 0, 0.08);
   border: 2px solid rgba(0, 0, 0, 0.08);
 }
+
 .card_inner_content {
   width: 100%;
 
   .card_inner_title_box {
-    width: 30%;
+    width: 35%;
     @include breakpoint-xs {
       word-wrap: break-word;
       white-space: initial;
     }
   }
+  
   .proficiency_text_box {
-    width: 30%;
+    width: 35%;
   }
+
   .proficient_level_box {
-    width: 25%;
+    width: 22%;
   }
-  .prof_txt_data {
-    @include breakpoint-xs {
-      flex-direction: column;
+}
+
+@media screen and (max-width: 640px) {
+  .card_inner_content {
+    .mat-h4 {
+      margin-bottom: 0px;
+    }
+
+    .card_inner_title_box {
+      width: 100%;
+    }
+
+    .proficiency_text_box {
+      width: 100%;
+    }
+
+    .proficient_level_box {
+      width: 100%;
     }
   }
 }
+
 
 p.deactivate_text {
   opacity: 0.4;
@@ -604,22 +613,17 @@ p.proficiency_text {
   letter-spacing: 0.25px;
 }
 
-
 // recommendation_frca_box
-
 .recommendation_frca_box {
   padding: 12px 15px;
   border-radius: 8px 8px;
   background:  rgba(246, 153, 83, 0.2);
 
-
   .post_image_box {
-
     img {
       margin-top: 56px;
       margin-bottom: 24px;
     }
-
   }
 
   .info_icon {
@@ -631,4 +635,22 @@ p.proficiency_text {
     color: #0074B6;
     text-decoration: underline;
   }
+}
+
+.completedicon {
+  color: #1D8923;
+  width: 20px !important;
+  height: 20px !important;
+  vertical-align: sub;
+  font-size: 20px !important;
+  margin-left: 4px;
+}
+
+::ng-deep.desired-card{
+  width: 70% !important;
+  margin-right: 5%;
+}
+
+::ng-deep.mat-drawer.mat-drawer-side {
+  z-index: 1;
 }

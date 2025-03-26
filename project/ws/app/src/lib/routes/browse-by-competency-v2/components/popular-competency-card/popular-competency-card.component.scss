@@ -1,0 +1,36 @@
+.card-box {
+    width: 275px;
+    height: 130px;
+    // margin-bottom: 25px;
+    border-radius: 8px 8px;
+    overflow: hidden;
+    // background-image: url("https://igot.blob.core.windows.net/content/content/do_11327647746152857614136/artifact/do_11327647746152857614136_1620663753379_introtoeconomics11602651204113.jpg");
+    // background-position: center;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    
+    box-sizing: border-box;
+    position: relative;
+    .comp-name {
+        height: 48px;
+        overflow: hidden;
+    }
+
+    img {
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        z-index: -1;
+    
+    }
+    .card_text_box {
+        padding: 16px 16px;
+        width: 100%;
+        position: relative;
+        z-index: 9;
+        box-sizing: border-box;
+    }
+}

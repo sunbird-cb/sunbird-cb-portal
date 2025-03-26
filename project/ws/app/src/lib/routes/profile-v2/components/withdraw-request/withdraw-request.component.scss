@@ -1,0 +1,18 @@
+@import 'ws-vars';
+
+.info-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+    color: $colorOrange;
+    transform: rotate(180deg);
+}
+
+.primary {
+    color: $text-primary;
+}
+
+.outline-button, .save-button {
+    min-width: 88px;
+    border-radius: 8px;
+}

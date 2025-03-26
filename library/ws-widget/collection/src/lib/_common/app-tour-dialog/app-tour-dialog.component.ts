@@ -1,4 +1,4 @@
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 import { Component, OnInit, Inject, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { CustomTourService } from '../tour-guide/tour-guide.service'

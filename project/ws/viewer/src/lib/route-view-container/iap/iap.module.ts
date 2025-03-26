@@ -32,7 +32,7 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 @NgModule({
   declarations: [IapComponent],
   imports: [

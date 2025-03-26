@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { NsAutoComplete, UserAutocompleteService } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import {
   AUTHORING_CONTENT_BASE,
   CONTENT_BASE_COPY,

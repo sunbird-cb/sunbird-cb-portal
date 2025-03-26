@@ -12,11 +12,21 @@ export class EventsHomeComponent implements OnInit, OnDestroy {
   banner!: NsWidgetResolver.IWidgetData<any>
   currentRoute = 'home'
   private bannerSubscription: any
+  pageLayout: any
+  detailPageFlag = false
   constructor(private route: ActivatedRoute, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
-        // console.log(event.url)
+        /* tslint:disable */
+        console.log(event)
+        /* tslint:enable */
+        const eventUrl = event.url.split('/').pop()
+        if (eventUrl && eventUrl.includes('do_')) {
+          this.detailPageFlag = true
+        } else {
+          this.detailPageFlag = false
+        }
         this.bindUrl(event.urlAfterRedirects.replace('/app/event-hub/', ''))
       }
 
@@ -31,6 +41,7 @@ export class EventsHomeComponent implements OnInit, OnDestroy {
     this.bannerSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {
         this.banner = data.pageData.data.banner || []
+        this.pageLayout = data.pageData.data.pageLayout || []
       }
     })
   }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ContentPickerV2Component } from './content-picker-v2.component'
 import { RouterModule } from '@angular/router'
-import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import {
   MatSidenavModule,

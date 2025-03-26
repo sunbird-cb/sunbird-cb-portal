@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, HostListener, OnDestroy } from '@angular/core'
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser'
 import { MatSnackBar } from '@angular/material/snack-bar'

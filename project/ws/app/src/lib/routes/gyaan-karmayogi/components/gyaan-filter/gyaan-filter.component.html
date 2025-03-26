@@ -1,0 +1,81 @@
+<div class="hidden md:block">
+    <div class="filter-wrapper">
+        <p class="main-title  mat-body-2 mb-4">Filter by</p>
+        <ng-container [ngTemplateOutlet]="filter"></ng-container>
+    </div>
+</div>
+<div class="block md:hidden">
+    <div class="flex sticky filter-headder justify-between">
+        <p class="main-title  mat-body-2 mb-4">Filter by</p>
+
+        <p (click)="clearFilter()" class="title mb-4 cursor-pointer">{{'gyaanKarmayogi.clearAll'| translate}}</p>
+    </div>
+    <div class="filter-body">
+        <ng-container [ngTemplateOutlet]="filter"></ng-container>
+    </div>
+
+
+
+</div>
+    <div class="sticky bottom-nav-wrapper md:hidden">
+        <div class=" footer-block">
+            <button class="btn btn-primary clear-btn" (click)="openLink('cancel')">{{'gyaanKarmayogi.cancel'| translate}}</button>
+            <button class="btn btn-primary apply-btn" (click)="openLink('apply')">{{'gyaanKarmayogi.apply'| translate}}</button>
+        </div>
+    </div>
+
+<ng-template #filter>
+        <ng-container *ngIf="!filterDataLoading">
+            <ng-container *ngFor="let facet of localFilterData  | keyvalue:returnZero">
+                <div class="individual-block">
+                    <p class="title mb-4">{{facet.value.name}}</p>
+                    <div class="search-filter mb-2">
+                        <input type="text" (keyup)="getSearch($event?.target?.value, facet?.key)" placeholder="Search {{facet?.value?.label}}">
+                        <mat-icon>search</mat-icon>
+                    </div>
+                    <div class="list mb-4">
+                        <ng-container *ngIf="facet?.value?.values?.length;else noData">
+                            <ng-container  *ngIf="facet?.key !== 'resourceCategory'">
+                                <ng-container *ngFor="let sectors of facet?.value?.values">
+                                    <div class="check-list">
+                                        <mat-checkbox [checked]="sectors?.checked" (change)="changeSelection($event?.checked,facet?.key, sectors)" class="mat-gyaan-filter text-capitalize">{{sectors.name}}</mat-checkbox>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="facet?.key === 'resourceCategory'">
+                                <mat-radio-group aria-label="Select an option" >
+                                    <ng-container *ngFor="let sectors of facet?.value?.values">
+                                        <div class="check-list">
+                                                <mat-radio-button [value]="sectors?.name" class="text-capitalize"  [checked]="sectors?.checked" 
+                                                (change)="changeSelection(true,facet?.key, sectors)">{{sectors?.name}}</mat-radio-button>
+                                        </div>
+                                    </ng-container>
+                                </mat-radio-group>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noData>
+                            <span class="text-captalize">No {{facet?.value?.name}}</span>
+                        </ng-template>
+                    </div>
+                    
+                </div>
+            </ng-container>
+    
+        </ng-container>
+        <!-- <div class="individual-block">
+            <p class="title">Sectors</p>
+            <div class="search-filter">
+                <input type="text" placeholder="Search sector">
+                <mat-icon>search</mat-icon>
+            </div>
+            <div class="list">
+                <ng-container *ngFor="let sectors of sectorsList">
+                    <div class="check-list">
+                        <mat-checkbox [checked]="sectors?.completed">{{sectors?.label}}</mat-checkbox>
+                    </div>
+                </ng-container>
+            </div>
+        </div> -->
+       
+    
+</ng-template>

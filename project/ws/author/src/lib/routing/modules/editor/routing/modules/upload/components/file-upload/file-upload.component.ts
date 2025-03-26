@@ -1,5 +1,5 @@
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import {
   Component,
   EventEmitter,

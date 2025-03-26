@@ -7,7 +7,7 @@ const routes: Routes = [
     path: ':resourceId',
     component: PracticeTestComponent,
     data: {
-      module: 'Practice',
+      module: 'Learn',
       pageId: ':resourceId',
     },
     resolve: {

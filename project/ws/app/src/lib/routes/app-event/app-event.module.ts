@@ -7,7 +7,7 @@ import { MatFormFieldModule, MatInputModule, MatGridListModule, MatIconModule, M
 import { MatDividerModule } from '@angular/material/divider'
 import { MatCardModule } from '@angular/material/card'
 import { ProfileDetailModule } from './components/profile-detail/profile-detail.module'
-import { HorizontalScrollerModule } from '@sunbird-cb/utils'
+import { HorizontalScrollerModule } from '@sunbird-cb/utils-v2'
 import { EventOverviewComponent } from './components/event-overview/event-overview.component'
 import { EventSessionsComponent } from './components/event-sessions/event-sessions.component'
 import { EventBannerComponent } from './components/event-banner/event-banner.component'

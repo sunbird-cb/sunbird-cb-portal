@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser'
 
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatGridListModule } from '@angular/material/grid-list'
-import { HorizontalScrollerModule } from '@sunbird-cb/utils'
+import { HorizontalScrollerModule } from '@sunbird-cb/utils-v2'
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatExpansionModule,
   MatIconModule, MatProgressSpinnerModule, MatFormFieldModule,

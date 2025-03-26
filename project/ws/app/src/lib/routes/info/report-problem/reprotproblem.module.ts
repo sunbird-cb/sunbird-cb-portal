@@ -15,7 +15,7 @@ import {
 } from '@angular/material'
 
 import { BtnPageBackNavModule, BtnPageBackModule } from '@sunbird-cb/collection'
-import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { HorizontalScrollerModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils-v2'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ReportproblemComponent } from './components/reportproblem.component'
 

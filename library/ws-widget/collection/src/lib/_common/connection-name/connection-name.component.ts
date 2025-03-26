@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core'
 // import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { ActivatedRoute } from '@angular/router'
-import { NsUser } from '@sunbird-cb/utils'
+import { NsUser } from '@sunbird-cb/utils-v2'
 // import { ConnectionHoverService } from './connection-hover.servive'
 // import { NSProfileDataV2 } from '../../../profile-v2/models/profile-v2.model'
 
@@ -46,6 +46,8 @@ export class ConnectionNameComponent implements OnInit, AfterViewInit {
       if (this.hoverUser.personalDetails.middlename) {
         // tslint:disable-next-line: max-line-length
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.middlename} ${this.hoverUser.personalDetails.surname}`
+      } else if (this.hoverUser.personalDetails.firstName) {
+        name = `${this.hoverUser.personalDetails.firstName} ${this.hoverUser.personalDetails.surname}`
       } else {
         name = `${this.hoverUser.personalDetails.firstname} ${this.hoverUser.personalDetails.surname}`
       }

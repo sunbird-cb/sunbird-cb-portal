@@ -13,6 +13,9 @@
 
 
 }
+.email-hower {
+    word-break: break-all;
+}
 
 .m-t-fix {
     margin-top: calc(2* #{$size-m} + #{$size-xs});
@@ -39,9 +42,21 @@
 .name-container {
     padding: $size-m $size-l;
 }
+.name-container-inner{
+    height: 90px;
+    box-sizing: border-box;
+    // overflow: hidden;
+    position: relative;
+}
 
 .name {
     text-transform: capitalize;
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6 em;
+    line-height: 1.2em;
 }
 
 .designation {

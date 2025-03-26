@@ -1,37 +1,43 @@
-<div class="flex flex-col item-center">
+<div class="flex flex-col item-center mt-5">
     <div class="flex flex-col card-container">
         <div class="photo-container flex items-center justify-center cursor-pointer" (click)="goToUserProfile(user)">
             <ws-widget-avatar-photo i18n-aria-label role="link" tabindex="0" [name]="getUseravatarName()" [photoUrl]="user?.photo"
-            size="m">
+            size="m-recommended">
             </ws-widget-avatar-photo>
         </div>
         <div class="name-container flex flex-col width-expand">
             <a href="javascript:void(0)" class="" i18n-aria-label role="link" (click)="goToUserProfile(user)">
-                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails">
-                    {{user?.personalDetails?.firstname}} {{user?.personalDetails?.middlename}}
-                    {{user?.personalDetails?.surname}}
+                <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstname;else firstNameCheck">
+                    {{user?.personalDetails?.firstname}}
+                    <span class="profile-badge" *ngIf="user && user?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+                    </span>
                 </div>
-                <div class="name ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
-                    {{user?.firstName}} {{user?.lastName}}
+                <ng-template #firstNameCheck>
+                    <div class="name  text-center ws-mat-black-text cursor-pointer" *ngIf="user && user?.personalDetails?.firstName">
+                        {{user?.personalDetails?.firstName}} {{user?.personalDetails?.middlename}}
+                    </div>
+                </ng-template>
+                <div class="name text-center ws-mat-black-text cursor-pointer" *ngIf="user && !user?.personalDetails">
+                    {{user?.firstName}}
                 </div>
-                <div class="designation ws-mat-black60-text" *ngIf="user?.employmentDetails">
+                <div class="designation text-center ws-mat-black60-text" *ngIf="user?.employmentDetails">
                     {{user?.employmentDetails?.departmentName}}
                 </div>
-                <div class="designation ws-mat-black60-text" *ngIf="!user?.employmentDetails">
-                    {{user?.channel}}
+                <div class="designation text-center ws-mat-black60-text" *ngIf="!user?.employmentDetails">
+                    {{user?.rootOrg?.orgName}}
                 </div>
             </a>
         </div>
         <div class="action-container flex items-center justify-center">
             <button mat-stroked-button color="accent" type="button" class="connect_btn mat-accent-border flex-auto-display"
                 (click)="connetToUser()">
-                <span class="" i18n>Connect</span>
+                <span class="ws-mat-default-text" i18n><img class="connect-icon" src="assets/icons/Connect_icon.svg"/>{{ 'connectionPeopleCard.connect' | translate }}</span>
             </button>
         </div>
     </div>
 </div>
 
-<input type="hidden" i18-value i18-aria-value aria-value="Connection sent" value="Connection sent successfully!"
+<input type="hidden" i18-value i18-aria-value aria-value="Connection sent" value="{{'connectionPeopleCard.connectionSentSuccessfully' | translate}}"
     #toastSuccess />
 <input type="hidden" i18-value i18-aria-value aria-value="Connection failed"
     value="Something went wrong, please try again later!" #toastError />

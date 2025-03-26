@@ -6,7 +6,7 @@ import { OverviewComponent } from './components/overview/overview.component'
 import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 
-import { PipeDurationTransformModule, PipeLimitToModule } from '@sunbird-cb/utils'
+import { PipeDurationTransformModule, PipeLimitToModule } from '@sunbird-cb/utils-v2'
 
 import {
   MatCardModule,
@@ -19,6 +19,7 @@ import {
   MatTableModule,
   MatButtonModule,
   MatProgressSpinnerModule,
+  MatTooltipModule,
 } from '@angular/material'
 
 import {
@@ -43,6 +44,7 @@ import {
     MatButtonModule,
     BtnFullscreenModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
   ],
   exports: [
     QuizComponent,

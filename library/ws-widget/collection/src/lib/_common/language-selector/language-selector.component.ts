@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core'
-import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils-v2'
 import { MatSelectChange } from '@angular/material'
 
 @Component({

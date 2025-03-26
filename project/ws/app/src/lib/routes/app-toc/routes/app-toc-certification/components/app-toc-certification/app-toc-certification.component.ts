@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { noop, Subject, throwError, of } from 'rxjs'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 
 import { ICertificationMeta } from '../../models/certification.model'
 import { CertificationService } from '../../services/certification.service'

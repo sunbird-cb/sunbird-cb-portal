@@ -2,7 +2,7 @@
   <mat-card class="flex-custom" [attr.id]='widgetData.key'>
     <mat-card-content>
       <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
-        {{widgetData.name}}
+        {{translateTabName(widgetData.name) }}
       </span>
       <!-- {{widgetData | json}} -->
       <!-- widgetData.data -->
@@ -62,12 +62,12 @@
             <mat-card  class="mt-2 mat-list-item dark-card" *ngIf="certificate.content" role="link" tabindex="0">
               <div (click)="openCertificateDialog(certificate)" class="flex flex-1 cursor-pointer">
                 <div *ngIf="certificate.content?.appIcon" class="float-left">
-                  <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" />
+                  <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" [wsUtilsDefaultThumbnail]="defaultThumbnail" />
                 </div>
                 <div *ngIf="!certificate.content?.appIcon" class="float-left">
-                  <img src="/assets/instances/eagle/app_logos/default.png"  class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" />
+                  <img src="/assets/instances/eagle/app_logos/default.png"  class="app-icon example-header-image" [alt]="certificate.content.name || iGOT" [wsUtilsDefaultThumbnail]="defaultThumbnail"/>
               </div>
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1 detais-view">
                 <div class="subheading">
                   {{certificate.content?.name}}
                 </div>
@@ -89,6 +89,13 @@
             </mat-card>
           <!-- </a> -->
           </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!widgetData?.data?.length">
+          <mat-card role="link" tabindex="0" class="no-shadow mt-2 mat-list-item dark-card">
+            <div class="flex flex-1 mobile-margin margin-f">
+              <span class="mat-subtitle flex-1 mobile-margin">No information available</span>
+            </div>
+          </mat-card>
         </ng-container>
     </mat-card-content>
   </mat-card>

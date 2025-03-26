@@ -1,0 +1,22 @@
+<div class="flex flex-col items-center gap-4">
+    <div class="flex">
+        <mat-icon class="info-icon">info_outline</mat-icon>
+    </div>
+    <ng-container *ngIf="data?.withDrawType === 'department'">
+        <div class="flex flex-col text-sm primary">
+            <div>You requested for transfer with the following details:</div>
+            <div *ngFor="let item of data?.approvalPendingFields">
+                <div *ngIf="item?.name"><b>Organization: </b> {{ item?.name }}</div>
+                <div *ngIf="item?.group"><b>Group: </b> {{ item?.group }}</div>
+                <div *ngIf="item?.designation"><b>Designation: </b> {{ item?.designation }}</div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="text-base primary text-center">
+        {{ 'profileInfo.withdrawWarnMsg' | translate }}
+    </div>
+    <div class="flex gap-4 mt-4">
+        <button class="outline-button" (click)="handleCloseModal()">{{ 'profileInfo.no' | translate }}</button>
+        <button class="save-button" (click)="handleWithdrawRequest()">{{ 'profileInfo.yes' | translate }}</button>
+    </div>
+</div>

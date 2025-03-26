@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { BtnFollowService } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { PersonProfileService } from '../../services/person-profile.service'
 import { IFollowDetails } from '../../person-profile.model'
 import { Router } from '@angular/router'

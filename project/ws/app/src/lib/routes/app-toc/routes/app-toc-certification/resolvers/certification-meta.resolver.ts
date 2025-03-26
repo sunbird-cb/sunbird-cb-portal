@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 
 import { ICertificationMeta } from '../models/certification.model'
 import { CertificationApiService } from '../apis/certification-api.service'

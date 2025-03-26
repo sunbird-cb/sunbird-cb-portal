@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { NsContent } from '../../_services/widget-content.model'
-import { UtilityService, ConfigurationsService } from '@sunbird-cb/utils'
+import { UtilityService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 
 @Component({

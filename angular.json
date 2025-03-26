@@ -23,12 +23,14 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "preserveSymlinks": true,
             "assets": [
               "src/favicon.ico",
               "src/favicon.png",
               "src/fusion-assets/icons/",
               "src/fusion-assets/images/",
               "src/dashboard-assets/",
+              "src/manifest.json",
               {
                 "glob": "**/*.*",
                 "input": "./node_modules/@sunbird-cb/discussions-ui-v8/assets",
@@ -59,7 +61,8 @@
               "src/fusion-assets/fonts/montserrat/stylesheet.css",
               "node_modules/@sunbird-cb/discussions-ui-v8/assets/styles/global.scss",
               "src/dashboard-assets/fonts/lato/stylesheet.css",
-              "src/dashboard-assets/fonts/montserrat/stylesheet.css"
+              "src/dashboard-assets/fonts/montserrat/stylesheet.css",
+              "node_modules/cb-tour-guide/scss/guided-tour-base-theme.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -531,4 +534,5 @@
   "cli": {
     "analytics": "0960077c-cd40-4a38-a76c-e63878df5326"
   }
+  
 }

@@ -23,7 +23,7 @@ import {
   MatMenuModule,
 } from '@angular/material'
 
-import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils-v2'
 import {
   UserImageModule,
   DisplayContentTypeModule,

@@ -7,7 +7,7 @@ import {
   EventService, LoggerService,
   NsPage, ValueService, WsEvents,
   SubapplicationRespondService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { fromEvent, Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { CustomTourService } from '../_common/tour-guide/tour-guide.service'

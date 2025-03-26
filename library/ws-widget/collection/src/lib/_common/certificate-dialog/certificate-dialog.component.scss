@@ -3,7 +3,7 @@
     box-shadow: none !important;
 }
 .certificate-banner-image {
-    height: 500px;
+    height: 30rem;
     display: flex;
     width: auto;
     margin: 0px auto;
@@ -12,6 +12,16 @@
         height: auto;
         flex: 1;
     }
+}
+
+.certificate-img-box {
+    max-height: 35rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    // border: 2px solid;
+}
+.certificate-img-content {
+    overflow: hidden;
 }
 
 a.download_btn {
@@ -36,12 +46,18 @@ a.download_btn {
 }
 .close-button {
     float: right;
-    top: -24px;
-    right: -24px;
+    top: -16px;
+    right: -12px;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    background: #000 !important;
+    color: #fff !important;
 }
 
 .close-icon {
     transition: 1s ease-in-out;
+    color:#fff !important
 }
 
 .close-icon:hover {
@@ -52,9 +68,23 @@ a.download_btn {
     float: right;
     top: -52px;
     right: -52px;
+    position: absolute;
+    top: 19px;
+    right: 18px;
 }
 ::ng-deep .icon-outside .mat-dialog-container {
     overflow: unset;
+}
+
+// ::ng-deep .mat-dialog-container {
+//     height: 90% !important;
+//     overflow-y: auto;
+//     border:2px solid red;
+// }
+
+::ng-deep .cdk-overlay-pane {
+    max-height: 96%!important;
+    overflow-y: auto!important;
 }
 
 .certificate-banner-image {
@@ -66,5 +96,66 @@ a.download_btn {
             height: auto;
             flex: 1;
         }
+    }
+}
+.btn-custom{
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+}
+
+
+.close-button {
+    position: absolute !important;
+    top: 19px !important;
+    right: 18px !important;
+}
+
+@media screen and (max-width: 1200px) {
+    .btn-custom{
+        box-sizing: border-box;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        outline: 0;
+        border: none;
+        -webkit-tap-highlight-color: transparent;
+        display: inline-block;
+        white-space: nowrap;
+        text-decoration: none;
+        vertical-align: baseline;
+        text-align: center;
+        margin: 0;
+        min-width: 64px;
+        line-height: 36px;
+        padding: 0 8px;
+        border-radius: 4px;
+        overflow: visible;
+    }
+
+    .gap-4 {
+        grid-gap: 0rem; 
+        gap: 0rem;
     }
 }

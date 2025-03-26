@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeFilterV2Module, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { PipeFilterModule, PipeFilterV2Module, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils-v2'
 import { CompetenceComponent } from './routes/competence-home/competence.component'
 import { CompetencieRoutingModule } from './competence.rounting.module'
 import { CompetenceCardComponent } from './components/competencies-card/competencies-card.component'
@@ -44,6 +44,9 @@ import { PracticePlModule } from '@ws/viewer/src/lib/plugins/practice/practice.m
 import { CompetencyTestComponent } from './routes/competence-test/competence-test.component'
 import { ViewerTopBarModule } from '@ws/viewer/src/lib/components/viewer-top-bar/viewer-top-bar.module'
 import { CompetenceAssessmentService } from './services/comp-assessment.service'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -95,6 +98,13 @@ import { CompetenceAssessmentService } from './services/comp-assessment.service'
     BtnPageBackModule,
     WidgetResolverModule,
     ViewerTopBarModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   entryComponents: [CompetenceViewComponent, CompetenciesAssessmentComponent],
   providers: [

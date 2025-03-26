@@ -1,7 +1,7 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
-import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
+import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils-v2'
 import { catchError } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { NOTIFICATION_TIME } from '@sunbird-cb/collection/src/lib/_common/ck-editor/constants/constant'
@@ -40,13 +40,13 @@ export class AppInterceptorService implements HttpInterceptor {
           rootOrg: this.configSvc.rootOrg,
           locale: lang.join(','),
           wid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+          cstoken: (this.configSvc.cstoken) || '',
           // wid:'',
           hostPath: this.configSvc.hostPath,
         },
       })
       return next.handle(modifiedReq)
         // .do(event => {
-        //   debugger
         //   if (event instanceof HttpResponseBase) {
         //     const response = event as HttpResponseBase
         //     if (response && response.ok && response.url && response.url.toLowerCase().indexOf(this.logoPartialUrl) >= 0) {

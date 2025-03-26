@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { NSDiscussData } from '../models/discuss.model'
-import { ConfigurationsService, NsUser } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsUser } from '@sunbird-cb/utils-v2'
 // import { ActivatedRoute } from '@angular/router'
 const API_ENDPOINTS = {
   getAllCategories: '/apis/protected/v8/discussionHub/categories',

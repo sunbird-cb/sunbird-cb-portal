@@ -7,7 +7,7 @@ import { ActivatedRoute, Data, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsError, ROOT_WIDGET_CONFIG, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 import { WsSocialService } from '../../../../../services/ws-social.service'
 
 @Component({

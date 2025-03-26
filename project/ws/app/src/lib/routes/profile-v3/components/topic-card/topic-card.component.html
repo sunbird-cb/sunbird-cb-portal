@@ -18,14 +18,14 @@
       <ng-container *ngIf="topic?.children?.length > show">
         <div class="flex flex-1 margin-top-xs">
           <span (click)="showMore()" class="cursor-pointer ws-mat-accent-text margin-auto">
-            SEE {{ topic.children.length-show }} MORE TOPICS
+            {{'topiccard.see' | translate }} {{ topic.children.length-show }} {{'topiccard.moreTopics' | translate }}
           </span>
         </div>
       </ng-container>
       <ng-container *ngIf="topic?.children?.length > 6 && show >= topic?.children?.length">
         <div class="flex flex-1 margin-top-xs">
           <span (click)="showLess()" class="cursor-pointer ws-mat-accent-text margin-auto">
-            SEE LESS
+            {{'topiccard.seeLess' | translate }}
           </span>
         </div>
       </ng-container>

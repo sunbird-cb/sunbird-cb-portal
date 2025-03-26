@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 // tslint:disable-next-line
 import _ from 'lodash'
@@ -10,6 +10,7 @@ import { RolesAndActivityService } from '../../services/rolesandActivities.servi
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 import { Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
     selector: 'ws-app-roles-and-activities',
     templateUrl: './roles-and-activities.component.html',
@@ -44,8 +45,14 @@ export class RolesAndActivitiesComponent implements OnInit, OnDestroy {
         private rolesAndActivityService: RolesAndActivityService,
         private dialog: MatDialog,
         private router: Router,
-        private snackBar: MatSnackBar) {
+        private snackBar: MatSnackBar,
+        private translate: TranslateService) {
         this.updateRoles()
+        if (localStorage.getItem('websiteLanguage')) {
+            this.translate.setDefaultLang('en')
+            const lang = localStorage.getItem('websiteLanguage')!
+            this.translate.use(lang)
+        }
     }
     updateRoles() {
         // tslint:disable-next-line:max-line-length

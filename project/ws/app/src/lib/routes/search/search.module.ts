@@ -38,7 +38,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   DefaultThumbnailModule,
   HorizontalScrollerModule, PipeDurationTransformModule, PipeLimitToModule, PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { BlogsCardComponent } from './components/blogs-card/blogs-card.component'
 import { FilterDisplayComponent } from './components/filter-display/filter-display.component'
 import { ItemTileComponent } from './components/item-tile/item-tile.component'

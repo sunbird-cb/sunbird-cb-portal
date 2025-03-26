@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { NsGoal } from '@sunbird-cb/collection'
 import { ActivatedRoute } from '@angular/router'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { MatDialog } from '@angular/material'
 import { GoalAcceptDialogComponent } from '../../components/goal-accept-dialog/goal-accept-dialog.component'
 import { GoalRejectDialogComponent } from '../../components/goal-reject-dialog/goal-reject-dialog.component'

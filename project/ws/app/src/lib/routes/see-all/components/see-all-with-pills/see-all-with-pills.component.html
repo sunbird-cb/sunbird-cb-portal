@@ -1,0 +1,46 @@
+<div class="seeAll-home-container m-auto gap-4">
+    <ng-container>
+        <div class="flex flex-row page-header margin-top-l margin-bottom-l">
+            <div *ngIf="seeAllPageConfig && seeAllPageConfig.title">
+                {{translateLabels(seeAllPageConfig.title, 'seeAllHome')}}
+            </div>
+        </div>
+        <div class="flex flex-row flex-wrap content-container" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+            [infiniteScrollThrottle]="throttle" (scrolled)="onScrollEnd()"
+            *ngIf="tabResults.length === 0">
+            <div class="mr-2 mb-5" *ngFor="let c of contentDataList">
+                <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+            </div>
+        </div>
+        <div class="flex flex-row flex-wrap content-container"
+            *ngIf="tabResults.length > 0">
+            <mat-tab-group animationDuration="0ms"
+                  class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
+                  (selectedTabChange)="tabClicked($event, seeAllPageConfig, seeAllPageConfig.key, 0)" [(selectedIndex)]="dynamicTabIndex">
+            <mat-tab *ngFor="let tab of tabResults; let last = last;let tabIndex = index" [label]="tab?.label">
+                <ng-template mat-tab-label>
+                    <span>{{translateLabels(tab?.label,'seeAllHome')}} &nbsp;</span>
+                    <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
+                </ng-template>
+                <div class="flex flex-row flex-wrap content-container mt-4 mb-10">
+                    <div>
+                        <ng-container >
+                          <mat-chip-list  class="content-pill" aria-label="Fish selection">
+                              <ng-container *ngFor="let pill of tab?.pillsData;let p = index">
+                                  <mat-chip [selected]="pill?.selected" (click)="pillClicked(seeAllPageConfig, p, tabIndex)">
+                                    <span class="pill-name">{{pill?.label}}</span></mat-chip>
+                              </ng-container>
+                          </mat-chip-list>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-row flex-wrap content-container mt-4 mb-10" *ngIf=" tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets?.length">
+                            <div class="mr-2 mb-5" *ngFor="let c of tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets">
+                                <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+                            </div>
+                      </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        </div>
+    </ng-container>
+</div>

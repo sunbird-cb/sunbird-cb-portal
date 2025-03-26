@@ -1,7 +1,11 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, WsEvents } from '@sunbird-cb/utils-v2'
+import { NSSearch, NsContent } from '@sunbird-cb/collection'
+import { SearchApiService } from '../_services/search-api.service'
+import { TranslateService } from '@ngx-translate/core'
+import * as _ from 'lodash'
 
 // import { ActivitiesService } from '@ws/app/src/lib/routes/activities/services/activities.service'
 // import { IActivity, IActivityCard, IChallenges } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
@@ -26,15 +30,22 @@ export class CardLearnComponent extends WidgetBaseComponent
   showActivities = false
   keyTag: string[] = []
   exploreBtns = []
+  showModeratedCourseTab = false
+
   @HostBinding('id')
   public id = 'w-card-learn'
   constructor(
     private configSvc: ConfigurationsService,
     private router: Router,
     private activateroute: ActivatedRoute,
+    private searchApiService: SearchApiService,
+    private langtranslations: MultilingualTranslationsService,
+    private translate: TranslateService,
+    private events: EventService,
     // private activitiesSvc: ActivitiesService,
     // private snackBar: MatSnackBar,
   ) {
+
     super()
     if (this.configSvc.userProfile) {
       this.givenName = this.configSvc.userProfile.givenName
@@ -50,6 +61,13 @@ export class CardLearnComponent extends WidgetBaseComponent
     } else {
       this.showActivities = false
     }
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
 
   }
   hasRole(role: string[]): boolean {
@@ -98,10 +116,86 @@ export class CardLearnComponent extends WidgetBaseComponent
       //   this.snackBar.open('Failed to load activities', 'X')
       // })
     }
+    // if (this.configSvc && this.configSvc.unMappedUser &&
+    //     this.configSvc.unMappedUser.profileDetails &&
+    //     this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+      this.callModeratedFunc()
+    // }
+
+  }
+
+  callModeratedFunc() {
+    let orgId = ''
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) {
+      orgId = this.configSvc.userProfile.rootOrgId
+    }
+    const moderatedCoursesRequestBody: NSSearch.ISearchV6RequestV3 = {
+      request: {
+        query: '',
+        filters: {
+          courseCategory: [NsContent.ECourseCategory.MODERATED_COURSE,
+            NsContent.ECourseCategory.MODERATED_PROGRAM, NsContent.ECourseCategory.MODERATED_ASSESSEMENT],
+            'secureSettings.organisation': orgId,
+          contentType: ['Course'],
+            status: [
+                'Live',
+            ],
+        },
+        sort_by: {
+            lastUpdatedOn: 'desc',
+        },
+        facets: [
+            'mimeType',
+        ],
+        limit : 20,
+      },
+    }
+
+    if (this.configSvc && this.configSvc.unMappedUser &&
+      this.configSvc.unMappedUser.profileDetails &&
+      !this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+      moderatedCoursesRequestBody.request.filters = {
+        ...moderatedCoursesRequestBody.request.filters,
+        'secureSettings.isVerifiedKarmayogi': 'No',
+      }
+    }
+    this.searchApiService.getSearchV4Results(moderatedCoursesRequestBody).subscribe(results => {
+      let contentList = []
+      if (results && results.result && results.result.content && results.result.content.length) {
+        // if (this.configSvc && this.configSvc.unMappedUser &&
+        //        this.configSvc.unMappedUser.profileDetails &&
+        //        this.configSvc.unMappedUser.profileDetails.verifiedKarmayogi) {
+        //   contentList = results.result.content
+        // } else {
+        //   contentList = results.result.content.filter((ele: any) => {
+        //     return ele.secureSettings && ele.secureSettings.isVerifiedKarmayogi === 'No'
+        //   })
+        // }
+        contentList = results.result.content
+      }
+      this.showModeratedCourseTab = Boolean(contentList.length > 0)
+    })
   }
 
   allActivities() {
     this.router.navigate(['app', 'activities'])
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
+
+  raiseTelemetry(name: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        id: `${_.kebabCase(name).toLocaleLowerCase()}`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.LEARN,
+      }
+    )
   }
 
 }

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material'
 import _ from 'lodash'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
 import { TopicService } from '../../services/topics.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-topic-card',
@@ -17,7 +18,14 @@ export class TopicCardComponent implements OnInit {
   @Input() topic!: NSProfileDataV3.ITopic
   show = 6
   // selectedTopics: Subscription | null = null
-  constructor(private topicService: TopicService, private snackBar: MatSnackBar) { }
+  constructor(private topicService: TopicService, private snackBar: MatSnackBar,
+              private translate: TranslateService) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
+   }
 
   ngOnInit() {
 

@@ -20,7 +20,7 @@ const routes: Routes = [
     component: NetworkComponent,
     data: {
       pageId: '',
-      module: 'network',
+      module: 'Network',
     },
     resolve: {
       me: MyProfileResolve,
@@ -37,7 +37,7 @@ const routes: Routes = [
         component: NetworkHomeComponent,
         data: {
           pageId: 'home',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           recommendedUsers: MyMdoResolveService,
@@ -51,7 +51,7 @@ const routes: Routes = [
         component: NetworkMyConnectionComponent,
         data: {
           pageId: 'my-connection',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           myConnectionList: MyConnectionResolveService,
@@ -63,7 +63,7 @@ const routes: Routes = [
         component: NetworkConnectionRequestsComponent,
         data: {
           pageId: 'connection-requests',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           connectionRequests: ConnectionRequestResolveService,
@@ -75,7 +75,7 @@ const routes: Routes = [
         component: NetworkMyMdoComponent,
         data: {
           pageId: 'my-mdo',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           myMdoList: MyMdoResolveService,
@@ -87,7 +87,7 @@ const routes: Routes = [
         component: NetworkRecommendedComponent,
         data: {
           pageId: 'recommended',
-          module: 'network',
+          module: 'Network',
         },
         resolve: {
           recommendedList: RecommendedResolveService,

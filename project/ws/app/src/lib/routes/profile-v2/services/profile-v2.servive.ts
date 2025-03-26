@@ -15,13 +15,14 @@ const API_END_POINTS = {
   SOCIAL_VIEW_CONVERSATION: `${PROTECTED_SLAG_V8}/social/post/viewConversation`,
   // getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
   getUserdetailsV2FromRegistry: '/apis/proxies/v8/api/user/v2/read',
+  getCadreDetails: '/apis/proxies/v8/data/v2/system/settings/get/cadreConfig',
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileV2Service {
-  constructor(private http: HttpClient) { }
+constructor(private http: HttpClient) { }
   fetchDiscussProfile(wid: string): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.DISCUSS_PROFILE}/${wid}`)
   }
@@ -38,4 +39,7 @@ export class ProfileV2Service {
     return this.http.post<any>(API_END_POINTS.SOCIAL_VIEW_CONVERSATION, request)
   }
 
+  fetchCadre(): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.getCadreDetails}`)
+  }
 }

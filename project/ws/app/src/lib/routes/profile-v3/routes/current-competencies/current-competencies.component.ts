@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { ActivatedRoute } from '@angular/router'
@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
 import { CompLocalService } from '../../services/comp.service'
 import { FormControl } from '@angular/forms'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-current-competencies',
@@ -36,11 +37,17 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
     private activateroute: ActivatedRoute,
     private dialog: MatDialog,
     private compLocalService: CompLocalService,
+    private translate: TranslateService
   ) {
     if (this.currentCompSubscription) {
       this.currentCompSubscription.unsubscribe()
     }
     this.loadCompetencies()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -57,7 +64,12 @@ export class CurrentCompetenciesComponent implements OnInit, OnDestroy {
     return _.findIndex(this.currentComps, { id: competency.id })
   }
   getSelectedLevel(competency: NSProfileDataV3.ICompetencie) {
-    return _.get(_.first(_.filter(this.currentComps, { id: competency.id })), 'competencySelfAttestedLevel')
+    // return _.get(_.first(_.filter(this.currentComps, { id: competency.id })), 'competencySelfAttestedLevel')
+    const orgcomp = this.currentComps.filter((x: any) => x.id === competency.id)
+    if (orgcomp && orgcomp.length > 0) {
+      return orgcomp[0]
+    }
+    return ''
   }
 
   getUserDetails() {

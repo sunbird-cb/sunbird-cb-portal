@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { DisplayContentTypeModule } from '@sunbird-cb/collection'
-import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 import { SharedModule } from '@ws/author/src/lib/modules/shared/shared.module'
 import { AceEditorModule } from 'ng2-ace-editor'
 import { CKEditorModule } from 'ng2-ckeditor'
@@ -22,6 +22,9 @@ import { LiveHtmlEditorComponent } from './components/live-html-editor/live-html
 import { OptionsComponent } from './components/options/options.component'
 import { FormsModule } from '@angular/forms'
 import { CompetencyAddPopUpComponent } from './components/competency-add-popup/competency-add-popup'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -50,6 +53,13 @@ import { CompetencyAddPopUpComponent } from './components/competency-add-popup/c
     SharedModule,
     AceEditorModule,
     CatalogSelectModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [
     MatQuillComponent,
@@ -63,6 +73,7 @@ import { CompetencyAddPopUpComponent } from './components/competency-add-popup/c
     LiveHtmlEditorComponent,
     OptionsComponent,
     CompetencyAddPopUpComponent,
+    TranslateModule,
   ],
   entryComponents: [AuthPickerComponent, CompetencyAddPopUpComponent],
   providers: [UploadService],

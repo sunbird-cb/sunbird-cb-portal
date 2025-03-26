@@ -30,7 +30,7 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { UploadService } from '@ws/author/src/lib/routing/modules/editor/shared/services/upload.service'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 
 declare const CKEDITOR: any

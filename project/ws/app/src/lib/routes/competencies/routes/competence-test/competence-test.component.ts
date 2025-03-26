@@ -1,7 +1,7 @@
 import { AfterViewChecked, ChangeDetectorRef, OnDestroy, Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { Subscription } from 'rxjs'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { RootService } from 'src/app/component/root/root.service'
 import { TStatus, ViewerDataService } from '@ws/viewer/src/lib/viewer-data.service'

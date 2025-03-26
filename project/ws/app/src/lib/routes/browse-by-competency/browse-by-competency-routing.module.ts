@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { AllCompetenciesComponent } from './routes/all-competencies/all-competencies.component'
 import { CompetencyDetailsComponent } from './routes/competency-details/competency-details.component'
-import { PageResolve } from '@sunbird-cb/utils/src/public-api'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 
 const routes: Routes = [
   {
@@ -15,7 +15,7 @@ const routes: Routes = [
     component: AllCompetenciesComponent,
     data: {
       pageId: 'all-competencies',
-      module: 'explore',
+      module: 'Competency',
     },
   },
   {
@@ -25,7 +25,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'browse-competency',
       pageId: ':competency-name',
-      module: 'explore',
+      module: 'Competency',
     },
     resolve: {
       searchPageData: PageResolve,

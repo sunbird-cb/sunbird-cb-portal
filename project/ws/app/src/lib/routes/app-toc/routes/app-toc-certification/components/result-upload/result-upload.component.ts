@@ -13,7 +13,7 @@ import { Observable, timer, throwError, of, Subscription } from 'rxjs'
 import { map, switchMap, catchError } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils-v2'
 
 import { ICertificationMeta, ICertificationUserPrivileges } from '../../models/certification.model'
 import {

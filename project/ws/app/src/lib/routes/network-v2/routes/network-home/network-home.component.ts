@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { NsUser, ConfigurationsService } from '@sunbird-cb/utils'
+import { NsUser, ConfigurationsService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
 import { CardNetWorkService } from '@sunbird-cb/collection'
-
+import { TranslateService } from '@ngx-translate/core'
+import { DOCUMENT } from '@angular/common'
 @Component({
   selector: 'ws-app-network-home',
   templateUrl: './network-home.component.html',
@@ -32,7 +33,19 @@ export class NetworkHomeComponent implements OnInit {
     private cardNetworkService: CardNetWorkService,
     private activeRoute: ActivatedRoute,
     private configSvc: ConfigurationsService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
+    @Inject(DOCUMENT) private document: Document
   ) {
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+
+    })
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     if (this.activeRoute.parent) {
@@ -41,18 +54,83 @@ export class NetworkHomeComponent implements OnInit {
     if (this.route.snapshot.data.recommendedUsers && this.route.snapshot.data.recommendedUsers.data.result) {
       this.recommendedUsers = this.route.snapshot.data.recommendedUsers.data.result.data.
       find((item: any) => item.field === 'employmentDetails.departmentName').results
+      this.recommendedUsers.sort((a: any, b: any) => {
+        return this.getName(a.personalDetails).toLowerCase().localeCompare(this.getName(b.personalDetails).toLowerCase())
+      })
     }
-    this.establishedConnections = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
-      if (v && v.personalDetails && v.personalDetails.firstname) {
-        v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+    if (this.route.snapshot.data.myConnectionList
+      && this.route.snapshot.data.myConnectionList.data
+      && this.route.snapshot.data.myConnectionList.data.result
+      && this.route.snapshot.data.myConnectionList.data.result.data) {
+        this.establishedConnections = this.route.snapshot.data.myConnectionList.data.result.data.map((v: NSNetworkDataV2.INetworkUser) => {
+          if (v && v.personalDetails && v.personalDetails.firstname) {
+            v.personalDetails.firstname = v.personalDetails.firstname.toLowerCase()
+          }
+          return v
+        })
       }
-      return v
-    })
-    this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
+      if (this.route.snapshot.data.connectionRequests
+        && this.route.snapshot.data.connectionRequests.data
+        && this.route.snapshot.data.connectionRequests.data.result
+        && this.route.snapshot.data.connectionRequests.data.result.data) {
+          this.connectionRequests = this.route.snapshot.data.connectionRequests.data.result.data
+        }
     this.getAllConnectionRequests()
   }
 
+  getName(userDetails: any) {
+    return userDetails.firstName ? userDetails.firstName : userDetails.firstname
+  }
+
   ngOnInit() {
+    if (this.router.url.includes('/app/network-v2/home?page=people_you_may_know')) {
+      this.route.queryParams.subscribe(params => {
+        const param = params['page']
+        if (param === 'people_you_may_know') {
+            if (this.document.getElementById('people_you_may_know')) {
+              if (navigator.userAgent.search('Firefox') < 0) {
+                const element =  this.document.getElementById('people_you_may_know')
+                if (element !== null) {
+                  element.scrollIntoView()
+                }
+              } else {
+                setTimeout(() => {
+                  const element =  this.document.getElementById('people_you_may_know')
+                  if (element !== null) {
+                    element.scrollIntoView()
+                  }
+                },         500)
+              }
+
+            }
+
+        }
+      })
+    }
+    if (this.router.url.includes('/app/network-v2/home?page=people_connection_request')) {
+      this.route.queryParams.subscribe(params => {
+        const param = params['page']
+        if (param === 'people_connection_request') {
+          if (this.document.getElementById('people_connection_request')) {
+            if (navigator.userAgent.search('Firefox') < 0) {
+              const element =  this.document.getElementById('people_connection_request')
+              if (element !== null) {
+                element.scrollIntoView()
+              }
+            } else {
+              setTimeout(() => {
+                const element =  this.document.getElementById('people_connection_request')
+                if (element !== null) {
+                  element.scrollIntoView()
+                }
+              },         500)
+
+            }
+
+          }
+        }
+      })
+    }
   }
 
   goToMyMdo() {

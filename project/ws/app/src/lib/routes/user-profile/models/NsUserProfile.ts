@@ -39,7 +39,7 @@ export namespace NsUserProfileDetails {
   export enum EUserGender {
     MALE = 'Male',
     FEMALE = 'Female',
-    OTHER = 'Others',
+    OTHERS = 'Others',
   }
   export enum EMaritalStatus {
     SINGLE = 'Single',

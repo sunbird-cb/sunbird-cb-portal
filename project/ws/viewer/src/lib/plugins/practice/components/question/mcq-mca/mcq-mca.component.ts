@@ -10,7 +10,7 @@ import {
 import { NSPractice } from '../../../practice.model'
 import { Subscription } from 'rxjs'
 import { PracticeService } from '../../../practice.service'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NsContent } from '@sunbird-cb/utils-v2'
 
 @Component({
     selector: 'viewer-mcq-mca-question',
@@ -26,6 +26,8 @@ export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterView
         question: '',
         instructions: '',
         questionId: '',
+        questionLevel: '',
+        timeTaken: '',
         editorState: undefined,
         options: [
             {
@@ -38,6 +40,7 @@ export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterView
     @Input() itemSelectedList: string[] = []
     @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
     @Output() update = new EventEmitter<string | Object>()
+    @Input() assessmentType = ''
     localQuestion: string = this.question.question
     shCorrectAnsSubscription: Subscription | null = null
     showAns = false
@@ -54,6 +57,9 @@ export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterView
             this.showAns = displayAns
         })
         this.localQuestion = this.question.question
+        // if(this.question && this.question.editorState && this.question.editorState.options) {
+        //     this.question.options = this.question.editorState.options
+        // }
     }
     ngOnChanges(changes: SimpleChanges): void {
         if (changes) {
@@ -64,8 +70,20 @@ export class MultipleChoiseQuesComponent implements OnInit, OnChanges, AfterView
     isSelected(option: NSPractice.IOption) {
         return this.itemSelectedList && this.itemSelectedList.indexOf(option.optionId) !== -1
     }
-    updateParent($event: any) {
-        this.update.emit($event)
+    updateParent($event: any, checked: any) {
+        if (this.assessmentType === 'optionalWeightage') {
+            this.update.emit({ 'index': $event, 'status': checked })
+        } else {
+            this.update.emit($event)
+        }
+
+    }
+    getSanitizeString(res: any) {
+        if (res && (typeof res === 'string')) {
+            const response = res.replace(/\&lt;/g, '<').replace(/\&gt;/g, '>')
+            return response
+        }
+        return res
     }
     ngOnDestroy(): void {
         this.practiceSvc.shCorrectAnswer(false)

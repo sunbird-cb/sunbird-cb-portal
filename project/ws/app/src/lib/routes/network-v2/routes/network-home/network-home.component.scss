@@ -143,3 +143,23 @@
 .network_right {
   margin-left: 18px;
 }
+
+.card-with-bottom-border {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px;
+}
+
+.card-with-bottom-border:last-child {
+  border: none;
+}
+@media only screen and (max-width:768px) {
+  .card-scroll {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: calc(100vw - 100px);
+  }
+}

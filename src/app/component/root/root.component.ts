@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ApplicationRef,
   ChangeDetectorRef,
@@ -21,6 +22,7 @@ import {
 } from '@angular/router'
 // import { interval, concat, timer } from 'rxjs'
 import { BtnPageBackService } from '@sunbird-cb/collection'
+import { HttpClient } from '@angular/common/http'
 import {
   // AuthKeycloakService,
   ConfigurationsService,
@@ -30,19 +32,18 @@ import {
   UtilityService,
   EventService,
   WsEvents,
-} from '@sunbird-cb/utils'
-import { delay, first } from 'rxjs/operators'
+} from '@sunbird-cb/utils-v2'
+import { delay, first, catchError, map, filter } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
-// import { DiscussionUiModule } from '@project-sunbird/discussions-ui-v8'
+import { UrlService } from 'src/app/shared/url.service'
 
 import { CsModule } from '@project-sunbird/client-services'
 import { SwUpdate } from '@angular/service-worker'
 import { environment } from '../../../environments/environment'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
-import { concat, interval, timer } from 'rxjs'
-// import { AppIntroComponent } from '../app-intro/app-intro.component'
+import { concat, interval, timer, of } from 'rxjs'
 
 @Component({
   selector: 'ws-root',
@@ -50,31 +51,10 @@ import { concat, interval, timer } from 'rxjs'
   styleUrls: ['./root.component.scss'],
   providers: [SwUpdate],
 })
-export class RootComponent implements OnInit, AfterViewInit {
+export class RootComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-  @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
-  // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
-  previewContainerViewRef: ViewContainerRef | null = null
-  @ViewChild('appUpdateTitle', { static: true })
-  appUpdateTitleRef: ElementRef | null = null
-  @ViewChild('appUpdateBody', { static: true })
-  appUpdateBodyRef: ElementRef | null = null
-
-  @ViewChild('skipper', { static: false }) skipper!: ElementRef
-
-  isXSmall$ = this.valueSvc.isXSmall$
-  routeChangeInProgress = false
-  showNavbar = true
-  showFooter = true
-  currentUrl!: string
-  customHeight = false
-  isNavBarRequired = true
-  isInIframe = false
-  appStartRaised = false
-  isSetupPage = false
-  processed: any
-  loginToken: any
-  currentRouteData: any = []
+  hideHeaderAndFooter = false
+  disableHeightOnTop = false
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -82,6 +62,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private logger: LoggerService,
     private swUpdate: SwUpdate,
     private dialog: MatDialog,
+    private http: HttpClient,
     // public authSvc: AuthKeycloakService,
     public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
@@ -92,15 +73,31 @@ export class RootComponent implements OnInit, AfterViewInit {
     private btnBackSvc: BtnPageBackService,
     private changeDetector: ChangeDetectorRef,
     private utilitySvc: UtilityService,
+    private urlService: UrlService
     // private dialogRef: MatDialogRef<any>,
   ) {
+
+    if (window.location.pathname.includes('/public/privacy-policy')) {
+      this.hideHeaderAndFooter = true
+    }
+
+    this.getHeaderFooterConfiguration().subscribe((sectionData: any) => {
+      // console.log('headerFooterConfigData',sectionData)
+      this.headerFooterConfigData = sectionData.data
+      this.showFooter = true
+    })
     if (window.location.pathname.includes('/public/home')
       || window.location.pathname.includes('/public/toc/')
       || window.location.pathname.includes('/viewer/')
       ) {
       this.customHeight = true
+      // tslint: disable
     }
-
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.profileDetails &&
+      this.configSvc.unMappedUser.profileDetails.get_started_tour) {
+      this.showTour = this.configSvc.unMappedUser.profileDetails.get_started_tour.skipped ||
+      this.configSvc.unMappedUser.profileDetails.get_started_tour.visited
+    }
     this.mobileAppsSvc.init()
     this.openIntro()
     // if (this.authSvc.token) {
@@ -158,6 +155,63 @@ export class RootComponent implements OnInit, AfterViewInit {
       },
     })
   }
+
+  get navBarRequired(): boolean {
+    return this.isNavBarRequired
+  }
+
+  get isShowNavbar(): boolean {
+    return this.showNavbar
+  }
+
+  get isCustomHeight(): boolean {
+    if (window.location.pathname.includes('/public/home')
+    || window.location.pathname.includes('/public/faq')
+    || window.location.pathname.includes('/public/contact')
+    || window.location.pathname.includes('/public/signup')
+    || window.location.pathname.includes('/public/request')
+
+    ) {
+      this.customHeight = true
+    }
+    return this.customHeight
+  }
+
+  @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
+  // @ViewChild('userIntro', { static: true }) userIntro!: TemplateRef<any>
+  previewContainerViewRef: ViewContainerRef | null = null
+  @ViewChild('appUpdateTitle', { static: true })
+  appUpdateTitleRef: ElementRef | null = null
+  @ViewChild('appUpdateBody', { static: true })
+  appUpdateBodyRef: ElementRef | null = null
+
+  @ViewChild('skipper', { static: false }) skipper!: ElementRef
+
+  isXSmall$ = this.valueSvc.isXSmall$
+  routeChangeInProgress = false
+  showNavbar = true
+  showFooter = false
+  currentUrl!: string
+  customHeight = false
+  isNavBarRequired = true
+  isInIframe = false
+  appStartRaised = false
+  isSetupPage = false
+  processed: any
+  loginToken: any
+  showTour = false
+  currentRouteData: any = []
+  loggedinUser = !!(this.configSvc.userProfile && this.configSvc.userProfile.userId)
+  headerFooterConfigData: any = {}
+  mobileTopHeaderVisibilityStatus = true
+  activeMenu: any = ''
+  backGroundTheme: any
+  showHubs = true
+  showBottomNav = true
+  viewerPage = false
+
+  prevUrl = ''
+  currUrl = ''
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: any) {
     if (event && event.type === 'unload') {
@@ -174,8 +228,21 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
   public skipToMainContent(): void {
     this.skipper.nativeElement.focus()
+    // tslint: disable
   }
   ngOnInit() {
+    // let showTour = localStorage.getItem('tourGuide')? JSON.parse(localStorage.getItem('tourGuide')||''): {}
+    // this.showTour = showTour && showTour.disable ? showTour.disable : false
+    this.mobileAppsSvc.mobileTopHeaderVisibilityStatus.subscribe((status: any) => {
+      this.mobileTopHeaderVisibilityStatus = status
+    })
+    this.configSvc.updateTourGuideMethod(this.showTour)
+    this.route.queryParams
+      .subscribe(params => {
+        // tslint:disable-next-line
+        console.log(params) // { orderby: "price" }
+      }
+    )
     if (window.location.pathname.includes('/public/home')) {
       this.customHeight = true
     }
@@ -187,16 +254,34 @@ export class RootComponent implements OnInit, AfterViewInit {
 
     this.btnBackSvc.initialize()
 
-    // if (this.authSvc.isAuthenticated) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.prevUrl = this.currUrl
+      this.currUrl = event.url
+      this.urlService.setPreviousUrl(this.prevUrl)
+    })
 
-    // }
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
+
         if (event.url.includes('/setup/')) {
           this.isSetupPage = true
         }
       }
+      if (window.location.pathname.includes('/page/home')) {
+        this.changeBg26Jan()
+      } else {
+        this.removeBg26Jan()
+      }
+
       if (event instanceof NavigationStart) {
+        let isMobile = false
+        if (window.innerWidth <= 1200) {
+          isMobile = true
+        } else {
+          isMobile = false
+        }
         this.showNavbar = true
         if (event.url.includes('preview') || event.url.includes('embed')) {
           this.isNavBarRequired = false
@@ -205,6 +290,23 @@ export class RootComponent implements OnInit, AfterViewInit {
         } else {
           this.isNavBarRequired = true
         }
+
+        if (!(event.url.includes('/page/home')) && isMobile) {
+          this.showHubs = false
+        } else {
+          if (event.url.includes('/public')) {
+            this.showHubs = false
+          } else {
+            this.showHubs = true
+          }
+        }
+
+        if (event.url.includes('/viewer')) {
+          this.viewerPage = true
+        } else {
+          this.viewerPage = false
+        }
+
         this.routeChangeInProgress = true
         this.changeDetector.detectChanges()
       } else if (
@@ -214,16 +316,21 @@ export class RootComponent implements OnInit, AfterViewInit {
       ) {
         this.routeChangeInProgress = false
         this.currentUrl = event.url
+
         if (this.currentUrl.includes('/public/home')) {
           this.customHeight = true
+
         } else {
           this.customHeight = false
         }
+
         if (
           !!this.currentUrl.startsWith('/public/logout')
           || !!this.currentUrl.startsWith('/public/signup')
           || !!this.currentUrl.startsWith('/public/welcome')
           || !!this.currentUrl.startsWith('/viewer/')
+          || !!this.currentUrl.startsWith('/public/request')
+          || !!this.currentUrl.startsWith('/public/toc')
         ) {
           this.showFooter = false
           this.showNavbar = false
@@ -232,6 +339,17 @@ export class RootComponent implements OnInit, AfterViewInit {
           this.showFooter = true
           this.showNavbar = true
           this.isNavBarRequired = true
+        }
+        if (window.location.pathname.includes('/learner-advisory')) {
+          this.showNavbar = true
+          this.isNavBarRequired = true
+          this.showBottomNav = true
+          this.showHubs = true
+
+        }
+
+        if (!!this.currentUrl.startsWith('/app/toc/')) {
+          this.showBottomNav = false
         }
       }
 
@@ -250,10 +368,11 @@ export class RootComponent implements OnInit, AfterViewInit {
         const data = {
           pageContext,
         }
+        const objectType = this.route.snapshot.queryParams.primaryCategory || ''
         this.raiseAppStartTelemetry()
         // console.log('data: ', data)
         if (data.pageContext.pageId && data.pageContext.module) {
-          this.telemetrySvc.impression(data)
+          this.telemetrySvc.impression(data, objectType)
         } else {
           this.telemetrySvc.impression()
         }
@@ -262,12 +381,51 @@ export class RootComponent implements OnInit, AfterViewInit {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
         // }
+        this.activeMenu = localStorage.getItem('activeMenu')
         this.openIntro()
+
       }
     })
-    this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
+    this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe((display: any) => {
       this.showNavbar = display
     })
+
+    let isNotMyUser = false
+    let isIgotOrg = false
+    if (this.configSvc && this.configSvc.unMappedUser
+      && this.configSvc.unMappedUser.profileDetails
+      && this.configSvc.unMappedUser.profileDetails.profileStatus) {
+      isNotMyUser = this.configSvc.unMappedUser.profileDetails.profileStatus.toLowerCase() === 'not-my-user' ? true : false
+    }
+    if (this.configSvc && this.configSvc.unMappedUser
+      && this.configSvc.unMappedUser.profileDetails
+      && this.configSvc.unMappedUser.profileDetails.employmentDetails
+      && this.configSvc.unMappedUser.profileDetails.employmentDetails.departmentName) {
+        isIgotOrg = this.configSvc.unMappedUser.profileDetails.employmentDetails.departmentName.toLowerCase() === 'igot' ? true : false
+    }
+    // let isIgotOrg = true
+    if (isNotMyUser && isIgotOrg) {
+      this.disableHeightOnTop = true
+      this.router.navigateByUrl('app/person-profile/me#profileInfo')
+    } else {
+      this.disableHeightOnTop = false
+    }
+  }
+
+  changeBg26Jan() {
+    this.backGroundTheme = this.configSvc.overrideThemeChanges
+    const docData: any = document.getElementById('app-bg')
+    if (this.backGroundTheme && this.backGroundTheme.isEnabled) {
+      docData.classList.add('jan-bg-change')
+    } else {
+      docData.classList.remove('jan-bg-change')
+    }
+  }
+
+  removeBg26Jan() {
+    this.backGroundTheme = this.configSvc.overrideThemeChanges
+    const docData: any = document.getElementById('app-bg')
+    docData.classList.remove('jan-bg-change')
   }
 
   raiseAppStartTelemetry() {
@@ -294,22 +452,6 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initAppUpdateCheck()
-  }
-  get navBarRequired(): boolean {
-    return this.isNavBarRequired
-  }
-  get isShowNavbar(): boolean {
-    return this.showNavbar
-  }
-  get isCustomHeight(): boolean {
-    if (window.location.pathname.includes('/public/home')
-    || window.location.pathname.includes('/public/faq')
-    || window.location.pathname.includes('/public/contact')
-    || window.location.pathname.includes('/public/signup')
-    ) {
-      this.customHeight = true
-    }
-    return this.customHeight
   }
 
   getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {
@@ -363,5 +505,31 @@ export class RootComponent implements OnInit, AfterViewInit {
         })
       }
     }
+  }
+
+  getTourGuide() {
+    let showTour = false
+    this.configSvc.updateTourGuide.subscribe((res: any) => {
+      showTour = res
+    })
+    this.showTour = showTour
+    return showTour
+  }
+
+  getHeaderFooterConfiguration() {
+    const baseUrl = this.configSvc.sitePath
+    // tslint:disable-next-line: prefer-template
+    return this.http.get(baseUrl + '/page/right-nav-config.json').pipe(
+      map(data => ({ data, error: null })),
+      catchError(err => of({ data: null, error: err })),
+    )
+  }
+
+  ngAfterViewChecked() {
+    const show = this.getTourGuide()
+    if (show !== this.showTour) { // check if it change, tell CD update view
+      // this.showTour = this.showTour
+    }
+    this.changeDetector.detectChanges()
   }
 }

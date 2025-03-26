@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
 import { IWsLeaderMailMeta } from '../../model/leadership.model'
 import { NgForm } from '@angular/forms'
 import { IWsEmailTextRequest, IWsEmailResponse } from '../../model/leadership-email.model'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { LeadershipService } from '../../services/leadership.service'
 
 @Component({

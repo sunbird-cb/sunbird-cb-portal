@@ -27,7 +27,6 @@ $typography: mat-typography-config($font-family: 'Lato',
   $caption: mat-typography-level(12px, 18px, 400, $font-family-lato),
   $button: mat-typography-level(14px, 21px, 700, $font-family-lato),
   $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato));
-// $overline: mat-typography-level(20, 30, 400, $font-family-lato));
 @include angular-material-typography($typography);
 
 .x-small-typography {

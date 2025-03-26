@@ -1,0 +1,93 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.comment-card {
+  // width: 40%;
+  min-width: 80px;
+  margin: $size-xs;
+  font-size: 16px;
+
+  mat-card-content {
+    margin-top: $size-s;
+  }
+}
+.show-all {
+  margin: 0!important;
+  font-weight: 700;
+  float: right;
+  cursor: pointer;
+}
+
+.karmapoints-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.info-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.mat-card {
+  padding: 16px 24px;
+}
+
+
+
+.bonus-points {
+  color: #EF951E;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  vertical-align: top;
+}
+
+.courseName {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400!important;
+  font-family: lato;
+}
+
+.date-of-completed {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400!important;
+  color: rgba(0, 0, 0, 0.54);
+  font-family: lato;
+}
+
+.bonus-badge {
+  border-radius: 63px;
+  border: 1px solid rgba(0,0,0, 0.08);
+  opacity: 1;
+  font-size: 12px;
+  background-color: #e4e9f3;
+  color: #1B4CA1;
+  padding: 5px 7px;
+  font-family: lato;
+}
+
+.mat-subheading-1 {
+  margin-bottom: 0!important;
+}
+
+
+.mobile-margin {
+  margin: 0;
+
+  @include breakpoint-xs {
+    margin-top: $size-s;
+  }
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .mat-card {
+    padding: 15px
+  }
+}

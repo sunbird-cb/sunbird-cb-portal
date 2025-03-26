@@ -7,7 +7,7 @@ import {
   // RouterStateSnapshot,
   UrlTree,
 } from '@angular/router'
-import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
+import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils-v2'
 import { NSProfileDataV3 } from '@ws/app/src/lib/routes/profile-v3/models/profile-v3.models'
 // tslint:disable-next-line
 import _ from 'lodash'

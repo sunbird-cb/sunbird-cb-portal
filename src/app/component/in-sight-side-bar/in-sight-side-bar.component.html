@@ -1,0 +1,174 @@
+<div class="not-my-user-container margin-top-m" *ngIf="isNotMyUser && !isIgotOrg">        
+    <div class="not-my-user-content">
+        <div>
+            <mat-icon class="warning-icon" [ngStyle]="{'color':'red'}">warning</mat-icon>
+        </div>
+        <div class="not-my-user-data">
+            <p>
+                <span>{{ 'home.notMyUser1' | translate }}</span>
+                <b>{{ 'home.notMyUser2' | translate }}</b>. 
+                <span>{{ 'home.notMyUser3' | translate }}</span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="margin-top-m" *ngIf="nwlConfiguration?.enabled && canShowNlwCard">
+    <div class="nlw-container cursor-pointer" (click)="navigateToNationalLearning()">
+        <div class="flex">
+            <div class="nlw-title gap-3">
+                {{nwlConfiguration?.title}}
+            </div>
+            <div class="nlw-title">
+                <img class="nlw-animation" src="assets/images/national-learning/nlw.gif" alt=""/>
+            </div>
+        </div>
+        <div class="flex nlw-description">
+            {{nwlConfiguration?.description}}
+        </div>
+        <div class="progress-wrapper mt-5">
+            <div class="flex items-center">
+                <div *ngFor="let n of [].constructor(totlaDays); let i = index">
+                    <div class="flex items-center">
+                        <div class="dot {{daysCompleted > i ? 'active' : ''}}" ></div>
+                        <div class="line {{daysCompleted > i ? 'active' : ''}}"></div>
+                        <div class="dot" *ngIf="(totlaDays - 1) === i"></div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-align-end nlw-redirect margin-top-l">
+            <button
+                class="nlw-view-more-btn mat-button mat-button-base text-white">
+                {{nwlConfiguration?.buttonText}}
+            </button>
+        </div>
+    </div>
+</div>
+<div class="margin-top-m">
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" (activity)="goToActivity($event)"
+        [profileData]="homePageData.profileCard" [insightsData]="insightsData"
+        [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+</div>
+<section class="hidden md:block" style="position: relative;" [ngClass]="{'':!collapsed, 'margin-bottom-m': collapsed}">
+    <!-- <div class="collapsible margin-top-m" [@collapse]="collapsed" *ngIf="surveyForm && surveyForm.active">
+        <ws-widget-survey-form-section [surveyFormData]="surveyForm.surveyFormData"></ws-widget-survey-form-section>
+    </div> -->
+    <div class="assessment-box  collapsible" [@collapse]="collapsed"
+        [ngClass]="{'margin-bottom-remove margin-top-remove':collapsed}">
+        <ng-container [ngTemplateOutlet]="loadNewStrips"></ng-container>
+        <ng-template #loadNewStrips>
+            <ng-container *ngFor="let newStrip of assessmentStrip">
+                <sb-uic-content-strip-with-tabs [widgetData]="newStrip">
+                </sb-uic-content-strip-with-tabs>
+            </ng-container>
+        </ng-template>
+    </div>
+    <section class="collapsible" [@collapse]="collapsed"
+        [ngClass]="{'padding-top-m':(!collapsed && isLeaderboardExist)}">
+        <ws-widget-user-leaderboard
+            (isLeaderboardAvailable)="checkLeaderboardData($event)"></ws-widget-user-leaderboard>
+    </section>
+    <div class="collapsible" [@collapseWeekly]="collapsed" [ngClass]="{'margin-bottom-m margin-top-m':!collapsed}">
+        <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps"
+            [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
+    </div>
+
+   
+
+    <div class="collapsible" [@collapse]="collapsed" *ngIf="learnAdvisoryData">
+        <ws-widget-tips-for-learner-card [learnAdvisoryData]="learnAdvisoryData"></ws-widget-tips-for-learner-card>
+    </div>
+
+
+    <div *ngIf="assessmentsData" class="margin-bottom-m" class="collapsible" [@collapsDiscuss]="collapsed"
+        [ngClass]="{'padding-bottom-m': !collapsed}">
+        <div class="assessments-wrapper">
+            <div class="assessments-info-wrapper">
+                <div class="flex justify-between">
+                    <div class="flex flex-col">
+                        <div class="flex flex-between flex-middle">
+                            <p class="flex-align-start upcoming-assessment-title flex flex-middle margin-remove">
+                                Upcoming Assessment
+                                <img class="margin-left-s cursor-pointer" width="20px" height="20px" alt=""
+                                    src="assets/icons/home/help_icon.svg" #tooltip="matTooltip"
+                                    [matTooltipClass]="'below'"
+                                    matTooltip="View your Credentials and take your Assessment.">
+                            </p>
+                        </div>
+                        <button
+                            class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer mt-4 mb-2 tracking-wide"
+                            [routerLink]="['/app/discussion-forum']">START</button>
+                    </div>
+                    <div class="flex justify-center system-icon">
+                        <mat-icon class="custom-size">desktop_mac</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="cred-container">
+                <div class="flex flex-middle flex-between">
+                    <div class="flex flex-middle">
+                        <span class="cred-title">{{ credMessage }}</span>
+                    </div>
+                    <div class="flex">
+                        <!-- //NOSONAR --><mat-icon class="ws-mat-default-text cursor-pointer" (click)="toggleCreds()">{{showCreds ?
+                            'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+                    </div>
+                </div>
+                <div class="my-credentials p-3" *ngIf="showCreds">
+                    <div class="flex flex-middle" style="padding: 5px 0px;">
+                        <span class="pr-5 font-semibold">Username</span>
+                        <div class="flex flex-middle copy-items">
+                            <span class="pr-2 custom-width">{{assessmentsData.userName}}</span>
+                            <!-- //NOSONAR --><span class=""><mat-icon class="cursor-pointer copy-icon"
+                                    (click)="copyToClipboard('Venkat')">content_copy</mat-icon></span>
+                        </div>
+                    </div>
+                    <div class="flex flex-middle" style="padding: 5px 0px;">
+                        <span class="pr-6 font-semibold">Password</span>
+                        <div class="flex flex-middle copy-items">
+                            <span class="pr-2  custom-width">{{assessmentsData.password}}</span>
+                            <!-- //NOSONAR --><span class=""><mat-icon class="cursor-pointer copy-icon"
+                                    (click)="copyToClipboard('Test@1234')">content_copy</mat-icon></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'':!collapsed}" *ngIf="!discussion?.error">
+        <div class="flex flex-col discussion-card">
+            <div class="flex mat-subheading-1 p-4">
+                <!-- //NOSONAR --><div class="flex flex-row gap-1 mat-subheading-1 cursor-pointer feed-title"
+                    (click)="navigate(); raiseTelemetry('discussions')">
+                    {{ 'home.myDiscussions' | translate }}
+                    <mat-icon
+                        class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon">
+                        chevron_right
+                    </mat-icon>
+                </div>
+            </div>
+            <ng-container>
+                <ws-widget-discussions [discussion]="discussion" [count]="2"></ws-widget-discussions>
+            </ng-container>
+        </div>
+    </section>
+    <section class="collapsible" [@collapse]="collapsed" [ngClass]="{'padding-top-m margin-bottom-m':!collapsed}">
+        <ws-widget-pending-request [pendingRequestData]="pendingRequestData"
+            [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
+    </section>
+    <div class="empty-div margin-bottom-xl" *ngIf="collapsed">
+        <div class="empty-div2 margin-bottom-m" *ngIf="!discussion?.error">
+
+        </div>
+    </div>
+    <div class="flex flex-col">
+        <ws-home-other-portal></ws-home-other-portal>
+    </div>
+</section>
+<section class="block md:hidden">
+    <div *ngIf="learnAdvisoryData">
+        <ws-widget-tips-for-learner-card [learnAdvisoryData]="learnAdvisoryData"></ws-widget-tips-for-learner-card>
+    </div>
+    
+</section>

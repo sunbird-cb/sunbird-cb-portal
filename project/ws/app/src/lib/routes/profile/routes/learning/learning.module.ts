@@ -25,7 +25,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { LearningTimeResolver } from './resolvers/learning-time.resolver'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 import { LearningHistoryResolver } from './resolvers/learning-history.resolver'
 import { LearningHistoryProgressComponent } from './components/learning-history-progress/learning-history-progress.component'
 import { DisplayContentTypeModule } from '@sunbird-cb/collection'

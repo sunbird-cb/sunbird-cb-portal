@@ -4,7 +4,7 @@ import { MIME_TYPE } from '@ws/author/src/lib/constants/mimeType'
 import { ISearchContent } from '@ws/author/src/lib/interface/search'
 import { APP_BASE_HREF } from '@angular/common'
 import { Inject, Injectable } from '@angular/core'
-import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils-v2'
 import { NSContent } from '@ws/author/src/lib/interface/content'
 
 @Injectable()

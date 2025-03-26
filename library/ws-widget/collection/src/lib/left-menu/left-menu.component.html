@@ -16,19 +16,19 @@
           *ngIf="tab?.enabled && !tab.customRouting && !tab.fragment && !tab.queryParams"
           [routerLink]="[tab.routerLink]" queryParamsHandling="preserve" routerLinkActive="ws-active-route-menu">
           <!--  [class.ws-active-route-menu]="isLinkActive(tab.key)" [fragment]="tab.fragment? tab.key : ''" [queryParamsHandling]="preserve" -->
-          <span class="">{{tab?.name}}</span>
+          <span class="">{{translateLabels(tab?.name, 'faq')}}</span>
         </a>
         <a mat-list-item disableRipple class="flex outline-1" [attr.data-index]="i"
           *ngIf="tab?.enabled && !tab.customRouting && tab.fragment && !tab.queryParams" [routerLink]="'.'"
           [class.ws-active-discuss-route]="isLinkActive(tab.key, i)" [fragment]="tab.fragment? tab.key : ''"
           queryParamsHandling="preserve">
-          <span class="">{{tab?.name}}</span>
+          <span class="">{{translateLabels(tab?.name, 'faq')}}</span>
         </a>
         <a mat-list-item disableRipple class="flex outline-1" [attr.data-index]="i"
           *ngIf="tab?.enabled && tab.customRouting && !tab.queryParams" [routerLink]="getLink(tab)"
           queryParamsHandling="preserve" routerLinkActive="ws-active-route-menu">
           <!--  [class.ws-active-route-menu]="isLinkActive(tab.key)" [fragment]="tab.fragment? tab.key : ''" [queryParamsHandling]="preserve" -->
-          <span class="">{{tab?.name}}</span>
+          <span class="">{{translateLabels(tab?.name, 'faq')}}</span>
         </a>
         <a mat-list-item disableRipple class="flex outline-1" [attr.data-index]="i"
           *ngIf="tab?.enabled && !tab.customRouting  && !tab.fragment && tab.queryParams" [routerLink]="tab.routerLink"
@@ -36,7 +36,7 @@
           [class.ws-active-route-menu]="isLinkActive2(tab.routerLink)">
           <!-- routerLinkActive="ws-active-route-menu"> -->
           <!--  [class.ws-active-route-menu]="isLinkActive(tab.key)" [fragment]="tab.fragment? tab.key : ''" [queryParamsHandling]="preserve" -->
-          <span class="">{{tab?.name}}</span>
+          <span class="">{{translateLabels(tab?.name, 'faq')}}</span>
         </a>
       </ng-container>
     </ng-container>

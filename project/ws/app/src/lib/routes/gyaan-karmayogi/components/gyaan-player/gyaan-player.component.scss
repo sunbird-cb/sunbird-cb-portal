@@ -1,0 +1,125 @@
+@import 'ws-mixins';
+@import 'ws-common';
+
+.container-balanced {
+  @extend %page-center;
+}
+
+
+.gyaan-player-wrapper {
+    .player-header {
+        background: linear-gradient(93.12deg, #3A83CF 244.11%, #1B4CA1 9755.89%);
+        padding: 24px;
+
+        .sector-block{
+            .sector{
+                min-width: 105px;
+                padding: 9px 16px 9px 16px;
+                gap: 4px;
+                border-radius: 24px;
+                border: 1px 0px 0px 0px;
+                border: 1px solid #EF951E;
+                background: #00000099;
+                color: white;
+                //styleName: Dark/Center/Active/Caption;
+                font-family: Lato;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 14.4px;
+                text-align: center;
+                mat-icon {
+                    color: #ef951e !important;
+                }
+            }
+        }
+        .title {
+            //styleName: Display 1;
+            font-family: Montserrat;
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 43.88px;
+            text-align: left;
+            color: #fff;
+            margin-bottom: 1rem !important;
+        }
+        .description {
+            //styleName: Sub Heading 1;
+            font-family: Montserrat;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19.5px;
+            text-align: left;
+            color: #FFFFFF;
+
+
+        }
+        .published-date {
+            //styleName: Caption;
+            font-family: Lato;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14.4px;
+            text-align: left;
+            color: #FFFFFFB2;
+
+
+        }
+        .content-details {
+            .title-label {
+                //styleName: Caption;
+                font-family: Lato;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 14.4px;
+                text-align: left;
+                color: #FFFFFFB2;
+
+            }
+            .title-value {
+                //styleName: Body 1;
+                font-family: Lato;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 19.2px;
+                text-align: left;
+                color: #FFFFFF;
+
+            }
+        }
+        .img-section {
+            padding-left: 24px ;
+            img {
+                width: 485px;
+                height: 274px;
+            }
+
+        }
+
+    }
+    
+
+}
+.player-wrapper {
+    // height: 700px;
+    // width: 100%;
+    box-shadow: 0px -2px 4px 0px #00000040;
+
+}
+.sector_icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: white !important;
+}
+.txt-white {
+    color: white !important;
+}
+@media screen and (max-width: 768px) {
+    .img-section {
+        display: none !important;
+    }
+    .img-section-mb {
+        display: block !important;
+    }
+
+}

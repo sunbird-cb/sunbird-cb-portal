@@ -1,4 +1,5 @@
 export interface IWidgetsPlayerMediaData {
+  hideUpNext?: boolean
   size?: any
   subtitles?: {
     srclang: string;
@@ -22,4 +23,5 @@ export interface IWidgetsPlayerMediaData {
   contentType?: string
   primaryCategory?: string
   version?: string
+  channel?: any
 }

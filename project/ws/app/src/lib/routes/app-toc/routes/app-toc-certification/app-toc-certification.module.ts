@@ -20,7 +20,7 @@ import {
 } from '@angular/material'
 
 import { CtrlFileUploadModule } from '@sunbird-cb/collection'
-import { PipeDateConcatModule } from '@sunbird-cb/utils'
+import { PipeDateConcatModule } from '@sunbird-cb/utils-v2'
 
 import { WINDOW_PROVIDERS } from './services/window.service'
 import { FileDownloadService } from './services/file-download.service'

@@ -23,11 +23,11 @@ export class ChannelHubComponent extends WidgetBaseComponent
           typeof card.startDate === 'string' &&
           card.startDate.indexOf('/') > -1
         ) {
-          const startDate = moment(card.startDate, 'MM/YYYY')
+          const startDate: any = moment(card.startDate, 'MM/YYYY')
           card.startDate = startDate.toISOString()
         }
         if (card.endDate && typeof card.endDate === 'string' && card.endDate.indexOf('/') > -1) {
-          const endDate = moment(card.endDate, 'MM/YYYY')
+          const endDate: any = moment(card.endDate, 'MM/YYYY')
           card.endDate = endDate.toISOString()
         }
       }

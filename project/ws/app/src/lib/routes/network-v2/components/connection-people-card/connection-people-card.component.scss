@@ -4,18 +4,27 @@
 
 .card-container {
     // height: 231px;
-    height: 255px;
+    height: 215px;
     width:  268px;
+    // overflow: hidden;
     border: 1px solid rgba(0,0,0,8%);
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.08);
 }
 
 .photo-container{
-    background: #F8F4F9;
-    padding: $size-m 0;
+    // background: #F8F4F9;
+    background-color: #fff;
+    // padding: $size-m 0;
 }
 
 .name-container{
     padding: $size-m $size-l;
+    height: 75px;
+}
+.name-container-inner {
+    height: 65px;
+    box-sizing: border-box;
 }
 .name{
     font-size: 16px;
@@ -27,10 +36,23 @@
     height: 60px;
     overflow: hidden;
     font-size: 14px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 .action-container{
     padding: $size-m 0;
+    // position: absolute;
+    position: relative;
+    bottom: 0; 
+    left: 0;
 }
 .connect_btn {
     width:230px;
+    border-radius: 20px;
+}
+
+.connect-icon {
+    vertical-align: middle;
+    margin-right: 5px;
 }

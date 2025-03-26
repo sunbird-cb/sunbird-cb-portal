@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { WidgetContentService } from '../_services/widget-content.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { HttpClient } from '@angular/common/http'
 import { NsContent } from '../_services/widget-content.model'
 

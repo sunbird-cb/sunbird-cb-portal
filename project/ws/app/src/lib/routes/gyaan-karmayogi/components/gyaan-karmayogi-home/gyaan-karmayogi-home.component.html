@@ -1,0 +1,128 @@
+
+<div class="gyann-wrapper">
+    <div >
+        <div class="flex flex-center headder-block">
+            <div class="section w-full">
+                <div class="container-balanced ">
+                    <div class="grid 2 md:grid-cols-2">
+                        <div class="">
+                            <p class="title mat-display-1 mb-2">{{'gyaanKarmayogi.title'| translate}}</p>
+                            <p class="description mat-title">{{'gyaanKarmayogi.description'| translate}}</p>
+                            <div class="flex search-block mt-16">
+                                <input type="text" placeholder="{{'gyaanKarmayogi.placeholder' | translate}}" (keyup.enter)="searchFilter()" [formControl]="searchControl"  class="flex-1">
+                                <button type="button" (click)="searchFilter()" class="btn cursor-pointer">{{'gyaanKarmayogi.search' | translate}}</button>
+                            </div>
+                        </div>
+    
+                        <div class="img-container flex justify-end gap-8">
+                            <img class="img1" src="assets/instances/eagle/banners/hubs/knowledgeresource/banner-1.jpg" alt="">
+                            <div class="flex gap-4 flex-col">
+    
+                            <img class="img2"  src="assets/instances/eagle/banners/hubs/knowledgeresource/banner-2.jpg" alt="">
+    
+                            <img  class="img3" src="assets/instances/eagle/banners/hubs/knowledgeresource/banner-3.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="flex flex-center mt-8 mb-8 p-2 md:p-0" *ngIf="sectorsList?.length > 1">
+        <div class="container-balanced w-full">
+            <div class="flex items-center justify-between sector-headding">
+                <p>{{'gyaanKarmayogi.sectors'| translate}}</p>
+                <p *ngIf="sectorsList?.length > 9" (click)="viewAllSector()" class="flex items-center view-all cursor-pointer">{{'gyaanKarmayogi.viewAll'| translate}}
+                    <mat-icon>chevron_right</mat-icon>
+                </p>
+            </div>
+          <div class="flex sector-section  justify-start items-start gap-2">
+            <div class="flex all-sector-wrapper col-span-2">
+                <div class="all-sector flex items-center justify-center {{sectorsList[0]?.name === selectedSector? 'selected-sector': ''}}" 
+                 (click)="sectorFilter(sectorsList[0],'all')" >
+                    {{sectorsList[0]?.name}}
+                </div> 
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 w-full grid-flow-row  gap-2">
+                <ng-container *ngFor="let sector of sectorsList|slice: 1:9">
+                   <div class="each-sector flex items-center justify-start  {{sector?.name === selectedSector? 'selected-sector': ''}}"
+                    (click)="sectorFilter(sector)" [style.background]="sector?.bgColor">
+                    <img class="mr-3" width="24px" height="25px" src="{{sector?.imgUrl}}" [alt]="sector?.name">
+                    {{sector?.name  | titlecase}}
+                   </div> 
+                </ng-container>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="flex flex-center filter-section pt-4 pb-4 bg-primary">
+        <div class="container-balanced w-full">
+            <!-- {{gyaanForm.value |json}} -->
+            <ng-container *ngIf="gyaanForm">
+                <form [formGroup]="gyaanForm" (ngSubmit)="applyFilter(gyaanForm)">
+                    <div class="flex gap-2 items-center flex-col md:flex-row md:items-end justify-between">
+                            <div class="flex flex-col">
+                                <label for="">{{'gyaanKarmayogi.sector'| translate}}</label>
+                                <mat-form-field  appearance="outline"  class="filter-select">
+                                    <mat-select name="sectors" placeholder="{{'gyaanKarmayogi.sectors' | translate}}" (selectionChange)="sectorChange($event)" formControlName="sectors">
+                                        <ng-container *ngFor="let sector of sectorsList">
+                                            <mat-option [value]="sector">{{sector?.name | titlecase}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="">{{'gyaanKarmayogi.subSector'| translate}}</label>
+                                <mat-form-field   appearance="outline" class="filter-select">
+                                    <mat-select name="subSectors" placeholder="{{'gyaanKarmayogi.subSectors' | translate}}" (selectionChange)="subSectorChange($event)" formControlName="subSectors" >
+                                    <ng-container *ngFor="let subData of subSector">
+                                        <mat-option [value]="subData?.name">{{subData?.name  | titlecase}}</mat-option>
+                                    </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="">{{'gyaanKarmayogi.category'| translate}}</label>
+                                <mat-form-field   appearance="outline" class="filter-select">
+                                    <mat-select name="category" placeholder="Categories" formControlName="category" >
+                                        <ng-container *ngFor="let cat of categories">
+                                            <mat-option [value]="cat?.name">{{cat?.name | titlecase}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <button class="apply-btn mt-4 md:mt-0" type="submit" >{{'gyaanKarmayogi.applyNow'| translate}}</button>
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-center filter-section  pb-4 bg-primary">
+    <div class="container-balanced w-full">
+        <div class="flex gap-2 pl-4 pr-4 md:pl-0 md:pr-0 flex-wrap items-end justify-between">  
+           <ng-container *ngIf="!hideAllStrip">
+                <ng-container *ngIf="stripData?.length; else noData">
+                    <ng-container *ngFor="let strip of stripData">
+                        <div class="w-full">
+                            <ws-widget-content-strip-with-tabs [widgetData]="strip"></ws-widget-content-strip-with-tabs>
+                        </div>
+                    </ng-container>
+                </ng-container>
+           </ng-container>
+           <ng-template #noData>
+            <div class="flex justify-center w-full">
+                <div class="margin-xl text-center" >
+                    <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
+                        class="margin-top-l margin-bottom-s">
+                    <h2 class="mat-h2" i18n="search route no result">{{'learnsearch.noResults' | translate}}</h2>
+                </div>
+            </div>
+        </ng-template>
+        </div>
+    </div>
+</div>
+<!--{{translateLetMenuName('title')}} -->

@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core'
 import { NsPlaylist, BtnPlaylistService, NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'

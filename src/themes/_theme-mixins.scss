@@ -27,8 +27,9 @@
   $iconColor: mat-color($foreground, icon);
   $colorGreen: #5fa800;
   $colorGreen2: #1d8923;
-  $colorRed: #ff0000;
+  $colorRed: #D13924;
   $colorOrange: rgba(246, 153, 83, 1);
+  $colorOrangeLight: rgba(241, 224, 211, 1);
   $footerColor: #373434;
   $footerTextColor: #dedfe0;
   $colorWhite: #ffffff;
@@ -38,15 +39,16 @@
   $colorBlack16: rgba(0, 0, 0, 0.16);
   $colorBlack040: rgba(0, 0, 0, 0.04);
   $colorLighterGrey: #bbbcbc;
-
+  $colorLightBlue: #cbe2f0;
+  $linkColour: rgb(27, 76, 161);
   outline-color: mat-color($accent, lighter);
-
+  $colorAccent: rgb(27, 76, 161); 
+  
   .icon-svg {
     fill: $iconColor;
   }
 
   .ws-mat-primary-lite-background {
-    // background-color: $colorPrimaryLight;
     background-color: transparent;
   }
 
@@ -74,9 +76,11 @@
   .accent-progress .mat-progress-bar-fill::after {
     background-color: $colorAccent !important;
   }
+
   .quiz-progress .mat-progress-bar-fill::after {
     background-color: $colorAccent !important;
   }
+
   .quiz-progress .mat-progress-bar-buffer {
     background-color: $colorBlack16 !important;
   }
@@ -99,22 +103,17 @@
     }
 
     a {
-      // color: $colorAccentLight !important;
       color: $colorPrimary;
       opacity: 0.8;
     }
 
-    // .mat-button{}
     .mat-icon-button {
-      // background-color: $colorAccentDark;
       color: $colorPrimaryLight !important;
     }
 
-    // .mat-stroked-button{}
     .mat-primary {
       color: $colorText !important;
       background-color: #333333 !important;
-      // 926b6b $colorText
     }
 
     .ws-mat-primary-text {
@@ -125,16 +124,15 @@
       color: $colorAccentDark !important;
     }
 
-    .ws-mat-primary-lite-background-on-day {
-      color: $colorText !important;
-      // background-color: #333333;
+    .ws-mat-accent-light-bg {
+      background-color: $colorLightBlue !important;
     }
 
-    // .mat-tab-group
-    .mat-tab-nav-bar,
-    .mat-form-field-outline-thick .mat-ink-bar {
-      background-color: $colorAccentLight !important;
+    .ws-mat-primary-lite-background-on-day {
+      color: $colorText !important;
     }
+
+    
 
     .mat-ink-bar {
       background-color: $colorAccentLight !important;
@@ -142,7 +140,6 @@
 
     .mat-option.mat-selected:not(.mat-option-multiple) {
       background: $colorPrimaryDark !important;
-      // color: red;
     }
 
     .mat-mini-fab {
@@ -188,6 +185,7 @@
         }
       }
     }
+
     .mat-radio-checked {
       background-color: rgba(0, 116, 182, 0.05) !important;
 
@@ -201,6 +199,7 @@
         }
       }
     }
+
     .mat-pseudo-checkbox-checked {
       background-color: rgba(0, 116, 182, 0.05) !important;
     }
@@ -214,12 +213,8 @@
       background: inherit;
     }
 
-    // .mat-form-field-outline {
-    //   background: $colorPrimary;
-    // }
     .mat-chip.mat-standard-chip {
       color: $colorPrimaryDark !important;
-      // background: $colorPrimaryDark !important;
 
       mat-icon {
         color: $colorPrimaryDark !important;
@@ -227,9 +222,6 @@
       }
     }
 
-    // .ws-mat-auth-exp {
-    //   background-color: $colorAccentLight !important;
-    // }
     .ws-mat-default-text {
       color: $colorAccentDark;
     }
@@ -271,6 +263,7 @@
         color: $colorText;
       }
     }
+
     .jtk-connected {
       border: 1px solid $colorAccent;
 
@@ -278,40 +271,44 @@
         color: $colorText;
       }
     }
+
     .mat-copmetence {
       background-color: black !important;
       color: #ededed;
     }
   } @else {
     .mat-radio-button {
-      background-color: transparent !important;
+      background-color: transparent;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorPrimaryDark !important;
+          background-color: $colorPrimaryDark;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorPrimaryDark !important;
+          border-color: $colorPrimaryDark;
         }
       }
     }
+
     .mat-radio-checked {
-      background-color: rgba(0, 116, 182, 0.05) !important;
+      background-color: rgba(0, 116, 182, 0.05) ;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorAccent !important;
+          background-color: $colorAccent ;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorAccent !important;
+          border-color: $colorAccent ;
         }
       }
     }
+
     .mat-pseudo-checkbox-checked {
-      background-color: $colorAccent !important;
+      background-color: $colorAccent ;
     }
+
     .mat-progress-spinner circle,
     .mat-spinner circle {
       stroke: $colorAccent;
@@ -369,6 +366,10 @@
       color: $colorAccent;
     }
 
+    .ws-mat-accent-light-bg {
+      background-color: $colorLightBlue !important;
+    }
+
     .ws-mat-primary-lite-background-on-day {
       background-color: $colorBackground;
     }
@@ -382,7 +383,6 @@
 
     .mat-chip.mat-standard-chip {
       color: $colorPrimaryDark !important;
-      // background: $colorAccentLight;
 
       mat-icon {
         color: $colorPrimaryDark !important;
@@ -413,7 +413,6 @@
 
     .ws-active-discuss-route {
       background-color: #eeeeee !important;
-      // font-weight: 700;
       font-weight: bold;
 
       &:before {
@@ -425,10 +424,10 @@
         height: inherit;
       }
     }
+
     .ws-active-route-menu {
       background-color: $colorBlack040 !important;
-      font-weight: 700;
-      font: bold 14px Lato !important;
+      font: bold 14px Lato, sans-serif !important;
 
       &::after {
         content: "";
@@ -447,16 +446,12 @@
 
     .ws-mat-selected-home-menu {
       color: $colorAccent;
-      // background: #F5F5F5;
       box-shadow: 0 2px 0 0 $colorAccent;
     }
 
     .dark-card {
       background: $colorBackground !important;
       color: rgba(0, 0, 0, 0.87) !important;
-      // $colorBackground: mat-color($background, background);
-      //  $background: map-get($theme, background);
-      //  $foreground: map-get($theme, foreground);
     }
   }
 
@@ -465,10 +460,8 @@
     a[href^="http"],
     a[href^="mailto"],
     a[target="_blank"] {
-      // color: $colorPrimaryLight;
       color: $colorPrimaryDark !important;
       background-color: $colorPrimaryDark !important;
-      // background-color: red !important;
     }
   } @else {
     a[href^="/"][target="_self"],
@@ -476,13 +469,7 @@
     a[href^="mailto"],
     a[target="_blank"] {
       color: $colorAccent;
-      background-color: $colorPrimaryLight;
     }
-
-    // ws-widget-page a[href^='http'],
-    // ws-widget-page a[target='_blank'] {
-    //   text-decoration: none !important;
-    // }
 
     .ws-mat-primary-lite-background-important {
       background-color: $colorPrimaryLight !important;
@@ -567,7 +554,7 @@
     }
 
     .ws-mat-default-text {
-      color: $colorAccent;
+      color: $linkColour !important;
     }
 
     .ws-mat-warn-text {
@@ -577,6 +564,7 @@
     .ws-mat-green-text {
       color: $colorGreen !important;
     }
+
     .ws-mat-green-2-text {
       color: $colorGreen2 !important;
     }
@@ -587,6 +575,13 @@
 
     .ws-mat-orange-text {
       color: $colorOrange !important;
+    }
+
+    .ws-mat-orange-light-bg {
+      background-color: $colorOrangeLight !important;
+    }
+    .ws-mat-orange-medium-bg {
+      background-color: rgba(239, 149, 30, 0.32)  !important;
     }
 
     .ws-mat-white-text {
@@ -624,6 +619,7 @@
     .ws-mat-accent-border-active {
       border: 1px solid $colorAccent;
     }
+
     .jtk-connected {
       border: 1px solid $colorAccent;
       color: $colorAccent;
@@ -631,6 +627,7 @@
         color: $colorAccent;
       }
     }
+
     .ws-mat-text-block-fade-gradient {
       position: relative;
       background: linear-gradient(to bottom, rgba(mat-color($background, card), 0), mat-color($background, card) 100%);
@@ -644,22 +641,10 @@
         width: 40%;
         height: 1.2em;
       }
-
-      // &::after {
-      //   content: '';
-      //   background: linear-gradient(to right,
-      //       rgba(mat-color($background, card), 0),
-      //       mat-color($background, card) 50%);
-      // }
-
-      // &::before {
-      //   content: '...';
-      // }
     }
 
     .ws-mat-text-fade-gradient {
       height: 2rem;
-      background-color: white;
       position: absolute;
       width: 90%;
       margin-top: 24%;
@@ -667,13 +652,11 @@
     }
 
     .mat-button-toggle-checked {
-      // background-color: mat-color($primary);
       color: $colorPrimary !important;
       background-color: $colorAccentDark;
     }
 
     .ws-mat-button-theme {
-      // background-color: mat-color($primary);
       color: $colorPrimary !important;
       background-color: $colorAccentDark !important;
     }
@@ -708,6 +691,10 @@
     ws-widget-btn-catalog {
       flex: 1;
       margin-top: 7px;
+    }
+
+    .mat-simple-snackbar {
+      justify-content: center !important;
     }
   }
 }

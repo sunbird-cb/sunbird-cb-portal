@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ContentAssignService } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { IUserSearchUnitFilterModel, IUserSearchRequestModel } from '@sunbird-cb/collection/src/lib/content-assign/content-assign.model'
 
 @Component({

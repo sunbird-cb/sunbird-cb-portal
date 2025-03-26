@@ -8,8 +8,8 @@ import { SafeHtml } from '@angular/platform-browser'
 import { PracticeService } from '../../practice.service'
 // tslint:disable-next-line
 import _ from 'lodash'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
-
+import { NsContent } from '@sunbird-cb/utils-v2'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material'
 @Component({
   selector: 'viewer-question',
   templateUrl: './question.component.html',
@@ -23,6 +23,11 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() total = 0
   @Input() viewState = 'initial'
   @Input() primaryCategory = NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+  @Input() ePrimaryCategory: any
+  @Input() totalQCount: any
+  @Input() showAnswer: any
+  @Input() currentQuestion: any
+  @Input() selectedAssessmentCompatibilityLevel = 2
   @Input() question: NSPractice.IQuestion = {
     multiSelection: false,
     section: '',
@@ -30,6 +35,8 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     editorState: undefined,
     question: '',
     questionId: '',
+    questionLevel: '',
+    timeTaken: '',
     options: [
       {
         optionId: '',
@@ -37,11 +44,16 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
         isCorrect: false,
       },
     ],
+    choices: { options: [] },
   }
   @Input() itemSelectedList: string[] = []
   @Input() markedQuestions: Set<string> = new Set()
   @Output() itemSelected = new EventEmitter<string | Object>()
-  @Input()
+  @Output() getNextQuestion = new EventEmitter<Boolean>()
+  @Output() clearQuestion = new EventEmitter<Boolean>()
+  @Input() questionAnswerHash: any
+  @Input() showQuestionMarks = 'No'
+  @Input() questionParagraph = ''
   quizAnswerHash: { [questionId: string]: string[] } = {}
   title = 'match'
   itemSelectedList1: any
@@ -50,15 +62,27 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   correctOption: boolean[] = []
   unTouchedBlank: boolean[] = []
   matchHintDisplay: NSPractice.IOption[] = []
+  isMobile = false
+  @Input() mobileQuestionSetExpand: any = false
+  @Input() coursePrimaryCategory: any
+  @Input() showOnlyQuestion: any
+  @Input() showMarkForReview: any = false
+  @Input() assessmentType = ''
+  expandedQuestionSetSubscription: any
 
   constructor(
-    // private domSanitizer: DomSanitizer,
     // private elementRef: ElementRef,
     private practiceSvc: PracticeService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    // debugger
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
+
     this.init()
   }
 
@@ -75,9 +99,12 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
         const toBeReplaced = temp[0]
         temp = [temp[0].replace('src="/', '')]
         temp = [temp[0].replace(/\"/g, '')]
-        const baseUrl = this.artifactUrl.split('/')
-        const newUrl = this.artifactUrl.replace(baseUrl[baseUrl.length - 1], temp[0])
-        this.question.question = this.question.question.replace(toBeReplaced, `src="${newUrl}"`)
+        if (this.artifactUrl) {
+          const baseUrl = this.artifactUrl.split('/')
+          const newUrl = this.artifactUrl.replace(baseUrl[baseUrl.length - 1], temp[0])
+          this.question.question = this.question.question.replace(toBeReplaced, `src="${newUrl}"`)
+        }
+
       }
     }
     this.practiceSvc.questionAnswerHash.subscribe(val => {
@@ -110,13 +137,48 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
       this.markedQuestions.delete(this.question.questionId)
     } else {
       this.markedQuestions.add(this.question.questionId)
+      if (this.selectedAssessmentCompatibilityLevel >= 7) {
+        this.getNextQuestion.emit(true)
+      }
     }
+  }
+
+  clearResponse() {
+    this.clearQuestion.emit(true)
   }
 
   setBorderColorById(id: string, color: string | null) {
     const elementById: HTMLElement | null = document.getElementById(id)
     if (elementById && color) {
       elementById.style.borderColor = color
+    }
+  }
+
+  checkAns(quesIdx: number) {
+    if (!this.itemSelectedList) {
+      this.openSnackbar('Please give your answer before showing the answer')
+    } else {
+      if (quesIdx > 0 && quesIdx <= this.totalQCount && this.currentQuestion.editorState && this.currentQuestion.editorState.options) {
+        this.showAnswer = true
+        this.practiceSvc.shCorrectAnswer(true)
+      }
+    }
+
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    if (window.innerWidth <= 1200) {
+      const config = new MatSnackBarConfig()
+      config.panelClass = ['show-answer-alert-class']
+      config.duration = duration
+      config.verticalPosition = 'top'
+      config.horizontalPosition = 'center',
+      this.snackBar.open(primaryMsg, '', config)
+    } else {
+      const config = new MatSnackBarConfig()
+      config.panelClass = ['show-answer-alert-class']
+      config.duration = duration
+      this.snackBar.open(primaryMsg, '', config)
     }
   }
 

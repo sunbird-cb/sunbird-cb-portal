@@ -2,7 +2,7 @@ import { Injectable  } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of, EMPTY } from 'rxjs'
 import { } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 @Injectable()
 export class MyProfileResolve

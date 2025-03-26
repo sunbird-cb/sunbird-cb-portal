@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 import { BtnGoalsService, NsGoal } from '@sunbird-cb/collection'
 import { MatTableDataSource, MatSnackBar } from '@angular/material'
 import { SelectionModel } from '@angular/cdk/collections'

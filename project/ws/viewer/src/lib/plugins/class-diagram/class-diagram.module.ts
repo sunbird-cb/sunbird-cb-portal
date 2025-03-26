@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { ScrollingModule } from '@angular/cdk/scrolling'
 
-import { PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 
 import { ClassDiagramComponent } from './class-diagram.component'
 import { ClassDiagramResultComponent } from './components/class-diagram-result/class-diagram-result.component'

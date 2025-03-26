@@ -5,7 +5,7 @@ import 'videojs-hls-quality-selector'
 import 'videojs-vr'
 
 import { Subscription, interval, fromEvent } from 'rxjs'
-import { WsEvents } from '@sunbird-cb/utils'
+import { WsEvents } from '@sunbird-cb/utils-v2'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'
 import { IWidgetsPlayerMediaData } from '../_models/player-media.model'
 import { NsContent } from './widget-content.model'
@@ -374,15 +374,22 @@ export function youtubeInitializer(
   mimeType: NsContent.EMimeTypes,
   screenHeight: string,
 ): { dispose: () => void } {
+  /* tslint:disable */
+  console.log('passThroughData--', passThroughData)
+  /* tslint:enable */
   const yHeight = screenHeight
   const player = new (<any>window).YT.Player(elem, {
     videoId: youtubeId,
+
     width: '100%',
     height: yHeight,
     playerVars: {
       autoplay: 0,
       modestbranding: 0,
       showInfo: 0,
+      fs:1,
+      rel: 0,
+      start: passThroughData && passThroughData['resumeFrom'] ? parseInt(passThroughData['resumeFrom'], 10) : 0,
     },
     events: {
       onStateChange: (event: any) => {
@@ -390,20 +397,37 @@ export function youtubeInitializer(
       },
     },
   })
+
   const eventDispatcher = enableTelemetry
     ? generateEventDispatcherHelper(passThroughData, dispatcher, widgetSubType)
     : () => undefined
   let heartBeatSubscription: Subscription
+  let timeSpentInterval: Subscription
   let currentTimeInterval: Subscription
   let loaded = false
   let readyToRaise = false
   let currTime = 0
+  let timespentTimer = passThroughData && passThroughData['resumeFrom'] ? passThroughData['resumeFrom'] : 1
+  // const lastAccessTime = 0/* tslint:disable */
+  if (passThroughData['lastAccessTime'] === undefined) {
+    passThroughData['lastAccessTime'] = 0
+  }
   const onPlayerStateChange = (event: any) => {
+    /* tslint:disable */
+    console.log('event', event, (<any>window).YT.PlayerState.PLAYING)
+    /* tslint:enable */
     switch (event.data) {
       case (<any>window).YT.PlayerState.PLAYING:
         if (!loaded) {
+
           eventDispatcher(WsEvents.EnumTelemetrySubType.Loaded, widgetData, WsEvents.EnumTelemetryMediaActivity.PLAYED, mimeType)
-          heartBeatSubscription = interval(2 * 60000).subscribe(_ => {
+          heartBeatSubscription = interval(1 * 1000).subscribe(_ => {
+            /* tslint:disable */
+            console.log('heartbeat')
+            /* tslint:enable */
+            passThroughData['lastAccessTime'] = currTime
+            passThroughData['timeSpent'] = timespentTimer
+            // passThroughData['playerDuration'] = player.getDuration()
             eventDispatcher(WsEvents.EnumTelemetrySubType.HeartBeat, widgetData, WsEvents.EnumTelemetryMediaActivity.PLAYED, mimeType)
           })
           loaded = true
@@ -418,7 +442,21 @@ export function youtubeInitializer(
             readyToRaise = false
           }
           currTime = player.getCurrentTime()
+
         })
+        /* tslint:disable */
+        console.log(player.getCurrentTime(), passThroughData['lastAccessTime'], currTime)
+        /* tslint:enable */
+          timeSpentInterval = interval(1000).subscribe(() => {
+            // if (player.getCurrentTime() > passThroughData['lastAccessTime']) {
+              timespentTimer = timespentTimer + 1
+              passThroughData['timeSpent'] = timespentTimer
+            // }
+          })
+          /* tslint:disable */
+        console.log('timespentTimer', timespentTimer)
+        /* tslint:enable */
+
         break
       case (<any>window).YT.PlayerState.PAUSED:
         if (loaded) {
@@ -426,6 +464,7 @@ export function youtubeInitializer(
           loaded = false
           heartBeatSubscription.unsubscribe()
           currentTimeInterval.unsubscribe()
+          timeSpentInterval.unsubscribe()
         }
         currTime = player.getCurrentTime()
         break
@@ -435,6 +474,7 @@ export function youtubeInitializer(
           loaded = false
           heartBeatSubscription.unsubscribe()
           currentTimeInterval.unsubscribe()
+          timeSpentInterval.unsubscribe()
         }
         break
     }
@@ -443,6 +483,9 @@ export function youtubeInitializer(
     saveContinueLearning(widgetData, saveCLearning, currTime)
     if (heartBeatSubscription) {
       heartBeatSubscription.unsubscribe()
+    }
+    if (timeSpentInterval) {
+      timeSpentInterval.unsubscribe()
     }
     if (currentTimeInterval) {
       currentTimeInterval.unsubscribe()

@@ -23,8 +23,7 @@ import {
   MatProgressSpinnerModule,
   MatButtonToggleModule,
   MatTabsModule,
-  MatAutocompleteModule,
-} from '@angular/material'
+  MatAutocompleteModule} from '@angular/material'
 import { UserProfileRoutingModule } from './user-profile-routing.module'
 import { UserProfileComponent } from './components/user-profile/user-profile.component'
 import { TabDirective } from './components/user-profile/tab.directive'
@@ -33,13 +32,18 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { UserProfileService } from './services/user-profile.service'
 import { LoaderService } from '@ws/author/src/public-api'
 import { BtnPageBackModule } from '@sunbird-cb/collection'
-import { PipeDurationTransformModule } from '@sunbird-cb/utils/src/public-api'
+import { PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 import { OtpService } from './services/otp.services'
+import { RequestDialogComponent } from './components/request-dialog/request-dialog.component'
+import { EhrmsComponent } from './components/user-profile/e-hrms/ehrms/ehrms.component'
+import { SkeletonLoaderModule } from '@sunbird-cb/collection/src/lib/_common/skeleton-loader/skeleton-loader.module'
 
 @NgModule({
   declarations: [
     UserProfileComponent,
     TabDirective,
+    RequestDialogComponent,
+    EhrmsComponent,
   ],
   imports: [
     BtnPageBackModule,
@@ -74,7 +78,9 @@ import { OtpService } from './services/otp.services'
     MatTabsModule,
     MatAutocompleteModule,
     PipeDurationTransformModule,
+    SkeletonLoaderModule,
   ],
   providers: [UserProfileService, LoaderService, OtpService],
+  entryComponents: [RequestDialogComponent],
 })
 export class UserProfileModule { }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 import { NSCompetency } from '../../models/competency.model'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute, Data, Router } from '@angular/router'

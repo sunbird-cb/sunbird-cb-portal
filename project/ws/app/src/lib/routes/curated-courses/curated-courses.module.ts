@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, PipeListFilterModule, PipeFilterV3Module } from '@sunbird-cb/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, PipeListFilterModule, PipeFilterV3Module } from '@sunbird-cb/utils-v2'
 
 // import { BasicCKEditorComponent } from './components/basic-ckeditor/basic-ckeditor.component'
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -30,6 +30,8 @@ import { CuratedCollectionCardComponent } from './components/curated-collection-
 import { CuratedPopularCardComponent } from './components/curated-popular-card/curated-popular-card.component'
 import { CuratedCollectionService } from './services/curated-collection.service'
 import { LeftMenuComponent } from './components/left-menu/left-menu.component'
+import { CardContentV2Module } from '@sunbird-cb/collection/src/lib/card-content-v2/card-content-v2.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component'
     BtnPageBackModule,
     WidgetResolverModule,
     CardContentModule,
+    CardContentV2Module,
     PipeFilterV3Module,
+    TranslateModule,
   ],
   providers: [
     CuratedCollectionService,

@@ -14,7 +14,7 @@ import { DesiredCompetenciesComponent } from './routes/desired-competencies/desi
 import { TopicComponent } from './routes/topics/topic.component'
 import { BrowseByCompetencyModule } from '../browse-by-competency/browse-by-competency.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { PipeFilterV2Module, PipeListFilterModule } from '@sunbird-cb/utils/src/public-api'
+import { PipeFilterV2Module, PipeListFilterModule } from '@sunbird-cb/utils-v2'
 import { TreeCatalogModule } from '@sunbird-cb/collection/src/public-api'
 import { TopicService } from './services/topics.service'
 // import { PlayerVideoComponent } from '@sunbird-cb/collection/src/lib/player-video/player-video.component'
@@ -29,6 +29,7 @@ import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboar
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component'
 import { DesiredcomptencyCardComponent } from './components/desiredcomptency-card/desiredcomptency-card.component'
 import { CompLocalService } from './services/comp.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { CompLocalService } from './services/comp.service'
     BrowseByCompetencyModule,
     MatChipsModule,
     PipeListFilterModule,
+    TranslateModule,
   ],
   providers: [
     TopicService,

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs'
 import { ApiService } from '../services/api.service'
 import { NSApiResponse } from '../interface/apiResponse'
 import { HttpClient } from '@angular/common/http'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { FIXED_FILE_NAME } from '../constants/upload'
 import { AccessControlService } from './access-control.service'
 

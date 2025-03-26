@@ -4,7 +4,7 @@ import {
   ConfigurationsService,
   NsInstanceConfig,
   UserPreferenceService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { FormControl, Validators } from '@angular/forms'
 
 @Component({

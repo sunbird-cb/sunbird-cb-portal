@@ -2,7 +2,7 @@ import { AccessControlService } from '@ws/author'
 import { Component, Input, OnDestroy, OnInit, OnChanges } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { ConfigurationsService, LoggerService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
 import { Observable, Subscription, Subject } from 'rxjs'
 import { share, debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { NsAppToc, NsCohorts } from '../../models/app-toc.model'
@@ -18,6 +18,8 @@ import { NsContent, NsAutoComplete } from '@sunbird-cb/collection/src/public-api
 import _ from 'lodash'
 import { FormGroup, FormControl } from '@angular/forms'
 import { RatingService } from '../../../../../../../../../library/ws-widget/collection/src/lib/_services/rating.service'
+import { TranslateService } from '@ngx-translate/core'
+import { environment } from 'src/environments/environment'
 @Component({
   selector: 'ws-app-app-toc-single-page',
   templateUrl: './app-toc-single-page.component.html',
@@ -79,7 +81,12 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   displayLoader = false
   tabSelectedIndex = 0
   updateReviewsSubscription: Subscription | null = null
+  authReplies: any
+  lookupLoading: Boolean = true
+  selectedBatchData: any
+  batchSubscription: any
   // configSvc: any
+  compentencyKey = ''
 
   constructor(
     private router: Router,
@@ -96,8 +103,15 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     private connectionHoverService: ConnectionHoverService,
     private eventSvc: EventService,
     private ratingSvc: RatingService,
-    // private discussionEventsService: DiscussionEventsService
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.translate.use(lang)
+    }
     if (this.configSvc.restrictedFeatures) {
       this.askAuthorEnabled = !this.configSvc.restrictedFeatures.has('askAuthor')
       this.trainingLHubEnabled = !this.configSvc.restrictedFeatures.has('trainingLHub')
@@ -116,7 +130,10 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.compentencyKey = environment.compentencyVersionKey
+    this.batchSubscription = this.tocSharedSvc.getSelectedBatch.subscribe(batchData => {
+      this.selectedBatchData = batchData
+    })
     this.searchForm = new FormGroup({
       sortByControl: new FormControl(this.sortReviewValues[0]),
       searchKey: new FormControl(''),
@@ -200,6 +217,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     if (this.updateReviewsSubscription) {
       this.updateReviewsSubscription.unsubscribe()
     }
+    if (this.batchSubscription) {
+      this.batchSubscription.unsubscribe()
+    }
   }
 
   get showSubtitleOnBanner() {
@@ -233,23 +253,16 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private initData(data: Data) {
-    // debugger
     const initData = this.tocSharedSvc.initData(data)
     this.content = initData.content
     if (this.content && this.content.identifier) {
       this.fetchRatingSummary()
     }
-    let competencies = this.content && this.content.competencies_v3 || this.content && this.content.competencies
-    const isString = typeof (competencies) === 'string'
-    if (competencies && isString) {
-      try {
-        competencies = JSON.parse(competencies)
-      } catch (ex) {
-        competencies = []
-        this.logger.error('Competency Parse Error', ex)
-      }
+    if (this.content && this.content[this.compentencyKey]) {
+      this.content[this.compentencyKey] = this.content[this.compentencyKey]
+      this.competencies = this.content[this.compentencyKey] || []
     }
-    this.competencies = competencies || []
+
     this.discussionConfig.contextIdArr = (this.content) ? [this.content.identifier] : []
     if (this.content) {
       this.discussionConfig.categoryObj = {
@@ -279,10 +292,10 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     this.resetAndFetchTocStructure()
     // this.getTrainingCount()
     // this.getContentParent()
-    if (this.content && this.content.identifier) {
-      this.fetchCohorts(this.cohortTypesEnum.ACTIVE_USERS, this.content.identifier)
-      this.fetchCohorts(this.cohortTypesEnum.AUTHORS, this.content.identifier)
-    }
+    // if (this.content && this.content.identifier) {
+    //   this.fetchCohorts(this.cohortTypesEnum.ACTIVE_USERS, this.content.identifier)
+    //   this.fetchCohorts(this.cohortTypesEnum.AUTHORS, this.content.identifier)
+    // }
   }
   sanitize(data: any) {
     return this.domSanitizer.bypassSecurityTrustHtml(data)
@@ -348,6 +361,7 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
       webPage: 0,
       youtube: 0,
       interactivecontent: 0,
+      offlineSession: 0,
     }
     if (this.content) {
       this.hasTocStructure = false
@@ -522,6 +536,57 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  getAuthorReply(identifier: string, primaryCategory: NsContent.EPrimaryCategory, userIds: any[]) {
+    const request = {
+      request: {
+          activityId: identifier,
+          activityType: primaryCategory,
+          userId: userIds,
+      },
+    }
+    return this.ratingSvc.getRatingReply(request).subscribe(
+      (res: any) => {
+        this.displayLoader = false
+        if (res && res.result && res.result.content) {
+          const reatingAuthReplay = res.result.content
+          _.forEach(reatingAuthReplay, value => {
+              if (this.authReplies[value.userId]) {
+                this.authReplies[value.userId]['comment'] = value.comment
+                this.authReplies[value.userId]['userId'] = value.userId
+              }
+          })
+        }
+        return this.authReplies
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
+      },
+      (err: any) => {
+        this.displayLoader = false
+        this.logger.error('USER RATING FETCH ERROR >', err)
+        // TODO: To be removed
+        // this.hardcodeData()
+        // this.ratingSummaryProcessed = this.processRatingSummary()
+      }
+    )
+  }
+
+  get checkForFacilitators(): any[] {
+    const facilitators: any[] = []
+    if (this.selectedBatchData &&
+      this.selectedBatchData.content[0] &&
+      this.selectedBatchData.content[0].batchAttributes &&
+      this.selectedBatchData.content[0].batchAttributes.sessionDetails_v2 &&
+      this.selectedBatchData.content[0].batchAttributes.sessionDetails_v2.length) {
+        this.selectedBatchData.content[0].batchAttributes.sessionDetails_v2.map((sessionDetails: any) => {
+          sessionDetails.facilatorDetails.map((facilitator: any) => [
+            facilitators.push(facilitator),
+          ])
+        })
+    }
+    return facilitators
+  }
+
   fetchRatingLookup() {
     this.displayLoader = true
     if (this.content && this.content.identifier && this.content.primaryCategory) {
@@ -575,27 +640,27 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
 
     const totRatings = _.get(this.ratingSummary, 'sum_of_total_ratings') || 0
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount1stars'), 1, totRatings),
       key: 1,
       value: _.get(this.ratingSummary, 'totalcount1stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount2stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount2stars'), 2, totRatings),
       key: 2,
       value: _.get(this.ratingSummary, 'totalcount2stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount3stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount3stars'), 3, totRatings),
       key: 3,
       value: _.get(this.ratingSummary, 'totalcount3stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount4stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount4stars'), 4, totRatings),
       key: 4,
       value: _.get(this.ratingSummary, 'totalcount4stars'),
     })
     ratingSummaryPr.breakDown.push({
-      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount5stars'), totRatings),
+      percent: this.countStarsPercentage(_.get(this.ratingSummary, 'totalcount5stars'), 5, totRatings),
       key: 5,
       value: _.get(this.ratingSummary, 'totalcount5stars'),
     })
@@ -605,19 +670,35 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
     // this.ratingReviews = this.ratingSummary && this.ratingSummary.latest50Reviews ? JSON.parse(this.ratingSummary.latest50Reviews) : []
     // ratingSummaryPr.avgRating = parseFloat(((((totRatings / this.ratingSummary.total_number_of_ratings) * 100) * 5) / 100).toFixed(1))
     if (this.ratingSummary && this.ratingSummary.latest50Reviews) {
-      ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
-      this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      // ratingSummaryPr.latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      // this.ratingReviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      const latest50Reviews = JSON.parse(this.ratingSummary.latest50Reviews)
+      const modifiedReviews = _.map(latest50Reviews, rating => {
+        rating['userId'] =  rating.user_id
+        return rating
+      })
+      this.authReplies = []
+      this.authReplies = _.keyBy(latest50Reviews, 'user_id')
+      const userIds = _.map(latest50Reviews, 'user_id')
+      if (this.content) {
+        this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
+      }
+      ratingSummaryPr.latest50Reviews = modifiedReviews
+      this.ratingReviews = modifiedReviews
     }
-    const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
-      // console.log('item', item)
-      return val + (item.key * item.value)
-      // tslint:disable-next-line: align
-    }, 0)
+    // rating changes 07 march 23
+    // const meanRating = ratingSummaryPr.breakDown.reduce((val, item) => {
+    //   // console.log('item', item)
+    //   return val + (item.key * item.value)
+    //   // tslint:disable-next-line: align
+    // }, 0)
     // tslint:disable-next-line:max-line-length
     // ratingSummaryPr.avgRating = this.ratingSummary && this.ratingSummary.total_number_of_ratings ? parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1)) : 0
 
     if (this.ratingSummary && this.ratingSummary.total_number_of_ratings) {
-      ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+      // ratingSummaryPr.avgRating = parseFloat((meanRating / this.ratingSummary.total_number_of_ratings).toFixed(1))
+      ratingSummaryPr.avgRating =
+      parseFloat((this.ratingSummary.sum_of_total_ratings / this.ratingSummary.total_number_of_ratings).toFixed(1))
     }
     if (this.content) {
       this.content.averageRating = ratingSummaryPr.avgRating
@@ -628,18 +709,30 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   processRatingLookup(response: any) {
-    if (response.length < this.lookupLimit) {
-      this.disableLoadMore = true
-    } else {
-      this.disableLoadMore = false
+    if (response) {
+      if (response && response.length < this.lookupLimit) {
+        this.disableLoadMore = true
+      } else {
+        this.disableLoadMore = false
+        this.lookupLoading = false
+      }
+      this.lastLookUp = response[response.length - 1]
+      this.ratingReviews = this.ratingLookup
+      this.authReplies = []
+      this.authReplies = _.keyBy(this.ratingReviews, 'userId')
+      const userIds = _.map(this.ratingReviews, 'userId')
+      if (this.content && userIds) {
+        this.getAuthorReply(this.content.identifier, this.content.primaryCategory, userIds)
+      }
+      this.ratingReviews = this.ratingReviews.slice()
     }
-    this.lastLookUp = response[response.length - 1]
-    this.ratingReviews = this.ratingLookup
-    this.ratingReviews = this.ratingReviews.slice()
   }
 
-  countStarsPercentage(value: any, total: any) {
-    return ((value / total) * 100).toFixed(2)
+  countStarsPercentage(value: any, key: any, total: any) {
+    if (value && total) {
+      return (((value * key) / total) * 100).toFixed(2)
+    }
+    return 0
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {
@@ -705,7 +798,8 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadMore() {
-    if (!this.disableLoadMore) {
+    if (!this.disableLoadMore && !this.lookupLoading) {
+      this.lookupLoading = true
       // tslint:disable-next-line: no-non-null-assertion
       if ((this.searchForm!.get!('sortByControl')!.value === this.sortReviewValues[0])) {
         if ((this.reviewPage * this.ratingViewCount) > this.ratingReviews.length) {
@@ -719,5 +813,9 @@ export class AppTocSinglePageComponent implements OnInit, OnChanges, OnDestroy {
         this.fetchRatingLookup()
       }
     }
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabelWithoutspace(label, type, '')
   }
 }

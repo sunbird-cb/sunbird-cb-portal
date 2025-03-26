@@ -1,9 +1,11 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { NsContent, viewerRouteGenerator } from '@sunbird-cb/collection'
 import { NsAppToc } from '../../models/app-toc.model'
-import { EventService } from '@sunbird-cb/utils/src/public-api'
+import { EventService } from '@sunbird-cb/utils-v2'
 /* tslint:disable*/
 import _ from 'lodash'
+import { CertificateDialogComponent } from '@sunbird-cb/collection/src/lib/_common/certificate-dialog/certificate-dialog.component'
+import { MatDialog } from '@angular/material'
 
 @Component({
   selector: 'ws-app-toc-content-card',
@@ -37,11 +39,13 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     webPage: 0,
     youtube: 0,
     interactivecontent: 0,
+    offlineSession: 0,
   }
   defaultThumbnail = ''
   viewChildren = false
   constructor(
     private events: EventService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -50,6 +54,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     //     this.defaultThumbnail = data.configData.data.logos.defaultContent
     //   }
     // )
+    
   }
   ngOnChanges(changes: SimpleChanges) {
     for (const property in changes) {
@@ -78,7 +83,7 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
   }
   get resourceLink(): { url: string; queryParams: { [key: string]: any } } {
     if (this.content) {
-      return viewerRouteGenerator(
+      let url = viewerRouteGenerator(
         this.content.identifier,
         this.content.mimeType,
         this.rootId,
@@ -87,6 +92,10 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
         this.content.primaryCategory,
         this.batchId
       )
+      
+      /* tslint:disable-next-line */
+      // console.log(url,'=====> content card url link <========')
+      return url
     }
     return { url: '', queryParams: {} }
   }
@@ -100,8 +109,14 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
     // if (this.currentProgress > 70 && this.currentProgress <= 100) {
     //   return '#1D8923'
     // }
+   
     return '#1D8923'
   }
+
+  public progressColor2(): string {
+    return '#f27d00'
+  }
+
 
   private evaluateImmediateChildrenStructure() {
     if (this.content && this.content.children && this.content.children.length) {
@@ -112,6 +127,8 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
           this.contentStructure.other += 1
         } else if (child.primaryCategory === NsContent.EPrimaryCategory.MODULE) {
           this.contentStructure.learningModule += 1
+        } else if (child.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION) {
+          this.contentStructure.offlineSession += 1
         } else if (child.primaryCategory === NsContent.EPrimaryCategory.RESOURCE) {
           switch (child.mimeType) {
             case NsContent.EMimeTypes.HANDS_ON:
@@ -129,6 +146,9 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
               break
             case NsContent.EMimeTypes.PDF:
               this.contentStructure.pdf += 1
+              break
+            case NsContent.EMimeTypes.OFFLINE_SESSION:
+              this.contentStructure.offlineSession += 1
               break
             case NsContent.EMimeTypes.SURVEY:
               this.contentStructure.survey += 1
@@ -216,5 +236,14 @@ export class AppTocContentCardComponent implements OnInit, OnChanges {
 
   get isEnabled(): boolean {
     return false
+  }
+  openCertificateDialog(certData: any) {
+    const cet = certData
+    this.dialog.open(CertificateDialogComponent, {
+      // height: '400px',
+      width: '1300px',
+      data: { cet },
+      // panelClass: 'custom-dialog-container',
+    })
   }
 }

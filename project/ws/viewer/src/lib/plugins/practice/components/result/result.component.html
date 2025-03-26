@@ -1,90 +1,601 @@
-<div class="flex auto-w ws-mat-primary-lite-background-important result_main">
-  <div class="flex flex-1 max-w relative result_image_box">
-    <div class="flex percent-div">
-      <div class="flex flex-1 flex-column flex-center center">
-        <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory">
-          <mat-icon *ngIf="isPassed" class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
-          <mat-icon *ngIf="!isPassed" class="ws-mat-red-text transform15 margin-top-m">highlight_off</mat-icon>
-          <span *ngIf="isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Passed'}}</span>
-          <span *ngIf="!isPassed" class="mat-title ws-mat-black60-text margin-top-s">{{levelText || 'Failed'}}</span>
-          <span class="mat-heading-1 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
-          <span class="mat-body-1 ws-mat-black60-text">your score</span>
-        </ng-container>
-        <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
-          <mat-icon class="ws-mat-green-2-text transform15 margin-top-m">check_box</mat-icon>
-          <span class="mat-title ws-mat-black60-text margin-top-s padding-s">{{'Attemped Successfully!!'}}</span>
-        </ng-container>
-
+<div [ngClass]="selectedAssessmentCompatibilityLevel < 7 ? 'blue-bg':''">
+  <div class="flex flex-col" [ngClass]="selectedAssessmentCompatibilityLevel >= 7 ? 'box-height-standalone-assessment':'box-height'">
+    <ng-container *ngIf="selectedAssessmentCompatibilityLevel < 7 && quizResponse">
+      <div class="assessment-container">
+        <div class="assessment-stats-count">
+          <div class="flex flex-row justify-end">
+            <div class="start-assessment-cta flex flex-row butto_box end">
+              <!-- <ng-container
+              *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
+              <div class="quest_btn">
+                <a mat-button (click)="action('retake')">
+                  Try Again
+                </a>
+              </div>
+              </ng-container>  -->
+              <ng-container>
+              <div class="quest_btn" *ngIf="quizResponse">
+                <a mat-button (click)="action('retake')">
+                  {{ 'playerbrief.tryAgain' | translate }}
+                </a>
+              </div>
+              <!-- <div class="quest_btn-blue">
+                <a mat-button (click)="action('retake')">
+                  {{ 'playerbrief.finish' | translate }}
+                </a>
+              </div> -->
+              </ng-container>
+              <!-- <ng-container
+              *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
+              <div class="text-white  quest_btn_finish">
+                <a mat-button (click)="action('retake')" class="width-1-1 text-white">
+                  Finish
+                </a>
+              </div>
+              </ng-container>        -->
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <img class="flex-1 result_image" [src]="staticImage" alt="exam image" />
-  </div>
-  <div class="flex flex-1 flex-column result_text_box ws-mat-accent-border border-custom">
-    <div class="flex flex-1 flex-column flex-wrap margin-top-m">
-      <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
-        <mat-card *ngIf="_parts" class="ws-mat-accent-border box-c result_box">
-          <mat-card-title>
-            <span class="mat-subheading-1" *ngIf="!isOnlySection">{{'Section ' + (i+1)}}</span>
-            <span class="mat-subheading-1" *ngIf="isOnlySection">{{'Default Section'}}</span>
-            <span class="mat-subheading-2 block ws-mat-black60-text">{{'Insights'}}</span>
-          </mat-card-title>
-          <mat-card-content class="flex flex-1 flex-column">
-            <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
-              <ng-container *ngIf="_parts[_result]">
-                <ng-container *ngIf="_result == 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{
-              icon: 'done',
-              isSVG: false,
-              colorClass: 'green',
-              text: _parts[_result] +' Correct'
-            }"></ng-container>
-                <ng-container *ngIf="_result === 'inCorrect' || _result ===  'incorrect'" [ngTemplateOutlet]="detail"
-                  [ngTemplateOutletContext]="{
-              icon: 'close',
-              isSVG: false,
-              colorClass: 'red',
-              text: _parts[_result] + ' incorrect'
-            }"></ng-container>
-                <ng-container *ngIf="_result == 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{
-              icon: 'close',
-              isSVG: false,
-              colorClass: 'red',
-              text: _parts[_result] + ' not Attemped'
-            }"></ng-container>
+
+      <div class="flex auto-w result_main">
+        <!-- <div class="flex flex-1 max-w relative result_image_box">
+          <div class="flex percent-div">
+            <div class="flex flex-1 flex-column flex-center center">
+              <ng-container *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory && quizResponse && !quizResponse?.isInProgress">
+                <div *ngIf="isPassed && percentage === 100" class="msg-box">
+                  <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m">check_circle</mat-icon>
+                  <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Passed'}}</span>
+                  <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
+                  <span class="mat-body-2 ws-mat-black60-text"> {{ 'quizresult.score' | translate }}</span>
+                  <span class="mat-body-2 text-block">{{ 'quizresult.hurray' | translate }}</span>
+                  <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">{{ 'quizresult.passMsg1' | translate }}</span>
+                </div>
+
+                <div *ngIf="isPassed && percentage < 100" class="msg-box">
+                  <mat-icon  class="ws-mat-green-2-text transform15 margin-top-m ">check_circle</mat-icon>
+                  <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Passed'}}</span>
+                  <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%
+                    <span class="mat-body-2 ws-mat-black60-text"> {{ 'quizresult.score' | translate }}</span>
+                  </span>
+                  <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">{{ 'quizresult.passMsg2' | translate }}</span>
+                </div>
+
+                <div *ngIf="!isPassed" class="msg-box">
+                  <mat-icon class="ws-mat-red-text msg-icon transform15 margin-top-m">highlight_off</mat-icon>
+                  <span class="mat-body-3 ws-mat-black60-text margin-top-s text-block">{{levelText || 'Failed'}}</span>
+                  <span class="mat-body-2 ws-mat-default-text">{{(percentage || 0) | number: '1.2-2'}}%</span>
+                  <span class="mat-body-2 ws-mat-black60-text"> {{ 'quizresult.score' | translate }}</span>
+                  <span class="mat-body-2 ws-mat-black60-text text-block attempt-text">{{ 'quizresult.passMsg3' | translate }}</span>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
+                <mat-icon class="ws-mat-green-2-text transform15 margin-top-m">check_box</mat-icon>
+                <span class="ws-mat-black60-text margin-top-s padding-s attempt-text">{{ 'Well done, Keep learning!'}}</span>
+              </ng-container>
+            </div>
+          </div>
+          <img class="flex-1 result_image" [src]="staticImage" alt="exam image" />
+        </div> -->
+        <div class="flex flex-1 flex-column result_text_box border-custom">
+          <div class="flex flex-1 flex-column flex-wrap margin-top-m">
+            <!-- <ng-container *ngIf="!(quizResponse)">
+              <div class="flex flex-1 flex-center text-center flex-middle">
+                <span class="mat-heading" i18n>{{ 'quizresult.bePatienWhileWeCalculate' | translate }}</span>
+                <mat-spinner></mat-spinner>
+              </div>
+            </ng-container> -->
+            <ng-container *ngIf="quizResponse && quizResponse?.isInProgress">
+              <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
+                <!-- <span class="mat-heading" i18n>We are not able to fetch the result</span> -->
+                <span class="mat-heading" i18n>{{ 'quizresult.submittedSucessfull' | translate }}</span>
+              </div>
+              <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
+                <button mat-button  class="ws-mat-primary-background text-white m-w padding-xs" (click)="retryResult()">
+                  <mat-icon>refresh</mat-icon> {{ 'quizresult.retry' | translate }}</button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="checkRes()">
+              <div class="flex flex-row flex-center text-center flex-middle margin-top-xl">
+                <span class="mat-heading" i18n><mat-icon class="font-size-50">warning</mat-icon></span>
+              </div>
+              <div class="flex flex-row flex-center text-center flex-middle margin-top-m padding-left-l">
+                <span class="mat-heading" i18n>{{quizResponse}}</span>
+              </div>
+              <div class="flex flex-row flex-center text-center flex-middle margin-top-m padding-left-l">
+                <span class="mat-heading" i18n>{{ 'quizresult.pleaseContactSystemAdmin' | translate }}</span>
+              </div>
+            </ng-container>
+            <ng-container>
+              <div *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory">
+                <div class="flex flex-col justify-center align-center success-message-result">
+                    <div><img src="assets/icons/final-assessment/practice-assessment-badge.svg"></div>
+                    <div class="mat-subheading-2">{{'quizresult.passMdg4' | translate}}</div>
+                </div>
+              </div>
+              <div *ngIf="questionTYP.FINAL_ASSESSMENT === quizCategory && quizResponse" class="flex flex-col justify-center align-center success-message-result">
+                <ng-container *ngIf="isPassed && percentage === 100">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="120">
+
+                    <path  class="progress-clr" d="M55,90
+                            A55,55 0 1,1 140,90"
+                          style="fill:none;stroke-width:8px"
+                          />
+                  </svg>
+                  <div style="position:relative; top: -60px; left: 0px;">
+                      <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
+                      <div class="level-text">{{levelText || 'Passed'}}</div>
+                  </div>
+                  <div class="mat-subheading-2 message">{{'quizresult.passMsg1' | translate}}</div>
+                </ng-container>
+                <ng-container *ngIf="isPassed && percentage < 100">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="108">
+
+                    <path  class="progress-clr" d="M55,90
+                            A55,55 0 1,1 140,90"
+                          style="fill:none;stroke-width:8px"
+                          />
+                  </svg>
+                  <div style="position:relative; top: -60px; left: 0px;">
+                      <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
+                      <div class="level-text">{{levelText || ('playerbrief.passed' | translate)}}</div>
+                  </div>
+                  <div class="mat-subheading-2 message">{{'quizresult.passMsg2' | translate}}</div>
+                </ng-container>
+                <ng-container *ngIf="!isPassed  && quizResponse">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="37 -5 120 100" width="108">
+
+                    <path  class="progress-red-clr" d="M55,90
+                            A55,55 0 1,1 140,90"
+                          style="fill:none;stroke-width:8px"
+                          />
+                  </svg>
+                  <!-- <div class="circular-progress-container">
+                    <div class="circular-progress">
+                      {{updateProgress(percentage)}}
+                    </div>
+                  </div> -->
+                  <div style="position:relative; top: -60px; left: 0px;">
+                      <div class="percentage">{{(percentage || 0) | number: '1.2-2'}}%</div>
+                      <div class="level-text">{{levelText || ('playerbrief.failed' | translate)}}</div>
+                  </div>
+                  <div class="mat-subheading-2 message">{{'playerbrief.tryAgainMessage' | translate}}</div>
+                </ng-container>
+              </div>
+              <mat-card class="result_box_time_container" *ngIf="quizResponse">
+                <div class="flex flex-row justify-between response_box">
+                  <div class="stats-label">
+                    <!-- <div><img src="assets/icons/final-assessment/timer.svg"></div> -->
+                    <div><img src="assets/icons/final-assessment/assessment-done.svg"></div>
+                    <div class="ml-2"> {{'practiceoverview.totalQuestions' | translate}} </div>
+                  </div>
+                  <div class="stats-label">
+                    <!-- <div><img src="assets/icons/final-assessment/assessment-done.svg"></div> -->
+                    <div class="ml-2">{{quizResponse?.total}} {{'playerbrief.questions' | translate}}</div>
+                  </div>
+                </div>
+              </mat-card>
+              <ng-container *ngFor="let _parts of quizResponse?.children; let i = index">
+                <mat-card *ngIf="_parts" class="result_box">
+                  <mat-card-title class="section-title">
+                    <span class="mat-subheading-1" *ngIf="!isOnlySection">{{'Section ' + (i+1)}}</span>
+                    <span class="mat-subheading-2" *ngIf="isOnlySection">{{'playerbrief.performanceSummary' | translate}}</span>
+                  </mat-card-title>
+                  <mat-card-content class="flex flex-1 flex-column">
+                    <ng-container *ngFor="let _result of ['correct','inCorrect','incorrect','blank']">
+                      <ng-container *ngIf="_parts[_result]">
+                        <ng-container *ngIf="_result && _result === 'correct'" [ngTemplateOutlet]="testdetail" [ngTemplateOutletContext]="{data: {
+                      icon: 'done',
+                      isSVG: false,
+                      imgIcon: 'correct_arrow',
+                      colorClass: 'rgb(27, 76, 161)',
+                      text: (_parts[_result] &&_parts[_result] === 1 ?
+                        _parts[_result] + ' '+translateLabels(' questionCorrectAnswered', 'playerbrief') :
+                        _parts[_result] + ' '+translateLabels(' questionsCorrectAnswered', 'playerbrief')
+                      ),
+                      type: _result,
+                      sectionType: 'Section' + (i)+_result,
+                      children:_parts['children']}
+                    }"></ng-container>
+                        <ng-container *ngIf="_result && _result === 'inCorrect' || _result && _result ===  'incorrect'" [ngTemplateOutlet]="incorrectDetail"
+                          [ngTemplateOutletContext]="{ data:{
+                      icon: 'done',
+                      isSVG: false,
+                      imgIcon: 'blue-cross',
+                      colorClass: 'rgb(27, 76, 161)',
+                      text: (_parts[_result] &&_parts[_result] === 1 ?
+                        _parts[_result] + ' '+translateLabels(' questionWrongAnswered', 'playerbrief') :
+                        _parts[_result] + ' '+translateLabels(' questionsWrongAnswered', 'playerbrief')
+                      ) ,
+                      type: _result,
+                      sectionType: 'Section' + (i)+_result,
+                      children:_parts['children']
+                    }}"></ng-container>
+                        <ng-container *ngIf="_result && _result === 'blank'" [ngTemplateOutlet]="detail" [ngTemplateOutletContext]="{data:{
+                      icon: 'done',
+                      isSVG: false,
+                      imgIcon: 'blue-question',
+                      colorClass: 'rgb(27, 76, 161)',
+                      text: (_parts[_result] && _parts[_result] === 1 ?
+                        _parts[_result] +' '+translateLabels(' questionUnAnswered', 'playerbrief') :
+                        _parts[_result] +' '+translateLabels(' questionsUnAnswered', 'playerbrief')
+                      ),
+                      type: _result,
+                      sectionType: 'Section' + (i)+_result,
+                      children:_parts['children']
+                    }}"></ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </mat-card-content>
+                </mat-card>
               </ng-container>
             </ng-container>
-          </mat-card-content>
-        </mat-card>
-      </ng-container>
-      <ng-container *ngIf="!(quizResponse?.children && quizResponse?.children?.length > 0)">
-        <div class="flex flex-1 flex-center text-center flex-middle">
-          <span class="mat-heading" i18n>We are calculating!! ....</span>
-          <mat-spinner></mat-spinner>
+          </div>
+          <!-- <ng-container
+            *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
+            <div class="flex flex-1 flex-center">
+              <a mat-button (click)="action('retake')" class="width-1-1 text-white ws-mat-primary-background retake">
+                {{ 'quizresult.retakeAssessment' | translate }}
+              </a>
+            </div>
+          </ng-container> -->
+        </div>
+        <div class="flex flex-1 top-margin-63">
+          <div class="p-4 w-full" [ngClass]="activeQuestionSet === 'answer' ? 'question-list-green' : (activeQuestionSet === 'wrong') ? 'question-list-red' : 'question-list-gray'" *ngIf="selectedQuestionData">
+            <p class="question-section">{{selectedQuestionData.text}} </p>
+            <div *ngIf="selectedQuestionData.children">
+              <ng-container *ngFor="let question of selectedQuestionData.children;let i = index">
+                <ng-container *ngIf="selectedQuestionData.type === question.result">
+                  <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel class="questionPanel bg-gray-accordian" hideToggle="true"  #example>
+                          <mat-expansion-panel-header class="question-header">
+                            <mat-panel-title class="mr-0">
+                              <mat-panel-description class="panel-description">
+                                <div class="q-label">
+                                  <span [innerHtml]="'practiceoverview.question' | translate"></span>&nbsp;
+                                  <span>{{i+1}}</span>
+                                </div>
+                                
+                                <mat-icon *ngIf="!example.expanded">add</mat-icon>
+                                <mat-icon *ngIf="example.expanded">remove</mat-icon>
+                              </mat-panel-description>
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                            <div>
+                              <p class="display-ques" [innerHtml]="question.question"></p>
+                            </div>
+                        </mat-expansion-panel>
+                  </mat-accordion>
+
+              </ng-container>
+            </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedAssessmentCompatibilityLevel >= 7 && quizResponse && !showInsight">
+      <div class="results flex flex-col gap-6 px-5 py-4">
+        <div class="header-text flex flex-col">
+          {{ 'quizresult.myOverallPerformanceSummary' | translate}}
+          <span class="mt-1"></span>
+        </div>
+      
+        <div class="flex wrap-mweb gap-4 mt-6 mb-6" 
+        [ngClass]="{'viewOverAllPerformance': expandMwebOverView && isMobile, 'colapseOverAllPerformance': !expandMwebOverView && isMobile}">
+          <ng-container *ngFor="let summary of overAllSummary">
+            <div class="results-card flex">
+              <div class="flex gap-4 justify-center items-center mx-4">
+                <div class="result-icons-bg flex justify-center items-center" [ngClass]="summary.class">
+                  <ng-container *ngIf="summary.imgType === 'icon'">
+                    <mat-icon class="icons">{{summary.imgPath}}</mat-icon>
+                  </ng-container>
+                  <ng-container *ngIf="summary.imgType === 'img'">
+                    <img [src]="summary.imgPath">
+                  </ng-container>
+                </div>
+                <div class="flex flex-col w-full">
+                  <div class="results-persentsge">
+                    {{summary.summary}}
+                  </div>
+                  <div class="result-section-text">
+                    {{summary.summaryType | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <div></div>
+        </div>
+        <ng-container *ngIf="isMobile">
+          <div class="flex justify-center items-center">
+            <ng-container *ngIf="!expandMwebOverView; else collapse">
+              <button (click)="expandMwebOverView = !expandMwebOverView" mat-button class="viewAll-btn fles justify-center items-center gap-2">
+                <span>{{'quizresult.viewAll' | translate}}</span>
+                <mat-icon class="down-arrow ml-2">arrow_downward</mat-icon>
+              </button>
+            </ng-container>
+            <ng-template #collapse>
+              <button (click)="expandMwebOverView = !expandMwebOverView" mat-button class="collapse-btn fles justify-center items-center gap-2">
+                <span>{{'quizresult.collapse' | translate}}</span>
+                <mat-icon class="up-arrow ml-2">arrow_upward</mat-icon>
+              </button>
+            </ng-template>
+          </div>
+        </ng-container>
+      
+        <div class="header-text flex flex-col" *ngIf="quizResponse?.children?.length > 1">
+          {{ 'quizresult.mySectionwiseSummary' | translate}}
+          <span class="mt-1"></span>
+        </div>
+      
+        <div *ngIf="quizResponse?.children?.length > 1">
+          <table
+            mat-table
+            [dataSource]="summaryTableDataSource"
+            class="w-full">
+              <ng-container
+                  *ngFor="let disCol of summaryTableDisplayeColumns; let colIndex = index">
+                  <ng-container matColumnDef="{{ disCol.key }}" >
+                      <th mat-header-cell *matHeaderCellDef>
+                          {{ disCol.header | translate }}
+                      </th>
+      
+                      <td
+                          mat-cell
+                          *matCellDef="let element; let rowIndex = index;"
+                      >
+                          <span>{{ element[disCol.key] }}</span>
+                      </td>
+                  </ng-container>
+              </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="getFinalColumns(summaryTableDisplayeColumns)"></tr>
+            
+              <tr mat-row *matRowDef="let row; columns: getFinalColumns(summaryTableDisplayeColumns)"></tr>
+          </table>
+          <ng-container *ngIf="summaryTableDataSource.length === 0">
+            <table class="w-full">
+              <tr>
+                <td class="flex justify-center mt-2">No record found</td>
+              </tr>
+            </table>
+          </ng-container>
+        </div>
+        <!-- <div class="header-text flex flex-col" *ngIf="quizResponse.children.length > 1">
+          Competitive Analysis
+          <span class="mt-1"></span>
+        </div> -->
+      
+        <!-- <div>
+          <table
+            mat-table
+            [dataSource]="competitiveTableDataSource"
+            class="w-full">
+              <ng-container
+                  *ngFor="let disCol of competitiveTableDisplayedColumns; let colIndex = index">
+                  <ng-container matColumnDef="{{ disCol.key }}" >
+                      <th mat-header-cell *matHeaderCellDef>
+                          {{ disCol.header | translate }}
+                      </th>
+      
+                      <td
+                          mat-cell
+                          *matCellDef="let element; let rowIndex = index;"
+                      >
+                          <span>{{ element[disCol.key] }}</span>
+                      </td>
+                  </ng-container>
+              </ng-container>
+      
+              <tr class="mat-row" *matNoDataRow>
+                  <span class="mat-cell" colspan="10">No data found</span>
+              </tr>
+            
+              <tr mat-header-row *matHeaderRowDef="getFinalColumns(competitiveTableDisplayedColumns)"></tr>
+            
+              <tr mat-row *matRowDef="let row; columns: getFinalColumns(competitiveTableDisplayedColumns)"></tr>
+          </table>
+        </div>    -->
+        <!-- <div *ngIf="quizResponse.children.length > 1">
+          <table
+            mat-table
+            [dataSource]="summaryTableDataSource"
+            class="w-full">
+              <ng-container
+                  *ngFor="let disCol of summaryTableDisplayeColumns; let colIndex = index">
+                  <ng-container matColumnDef="{{ disCol.key }}" >
+                      <th mat-header-cell *matHeaderCellDef>
+                          {{ disCol.header | translate }}
+                      </th>
+      
+                      <td
+                          mat-cell
+                          *matCellDef="let element; let rowIndex = index;"
+                      >
+                          <span>{{ element[disCol.key] }}</span>
+                      </td>
+                  </ng-container>
+              </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="getFinalColumns(summaryTableDisplayeColumns)"></tr>
+            
+              <tr mat-row *matRowDef="let row; columns: getFinalColumns(summaryTableDisplayeColumns)"></tr>
+          </table>
+          <ng-container *ngIf="summaryTableDataSource.length === 0">
+            <table class="w-full">
+              <tr>
+                <td class="flex justify-center mt-2">No record found</td>
+              </tr>
+            </table>
+          </ng-container>
+        </div> -->
+      
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedAssessmentCompatibilityLevel >= 7 && quizResponse && showInsight">
+      <div class="results result-insight flex flex-col gap-6 px-5 py-4">
+        <ng-container *ngIf="questionTYP.PRACTICE_RESOURCE !== quizCategory; else overAllPerformance">
+          <div class="flex overAllScore justify-center items-center">
+            <div class="flex justify-center items-center totalScore w-full">
+              {{ 'quizresult.yourScore' | translate}}
+            </div>
+            <div class="separator"></div>
+            <div class="flex justify-center items-center totalScore w-full" *ngIf="quizResponse && quizResponse?.totalMarks">
+              {{(quizResponse['totalSectionMarks'] || 0) | number: '1.2-2'}}/ {{quizResponse['totalMarks']}}
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #overAllPerformance>
+          <div class="header-text flex flex-col">
+            {{ 'quizresult.myOverallPerformanceSummary' | translate}}
+            <span class="mt-1"></span>
+          </div>
+        </ng-template>
+    
+      <div class="flex wrap-mweb gap-4 mt-6 mb-6"
+      [ngClass]="{'viewOverAllPerformance': expandMwebOverView && isMobile, 'colapseOverAllPerformance': !expandMwebOverView && isMobile}">
+        <ng-container *ngFor="let summary of scoreSummary">
+          <div class="results-card flex">
+            <div class="flex gap-4 justify-center items-center mx-4">
+              <div class="result-icons-bg flex justify-center items-center" [ngClass]="summary.class">
+                <ng-container *ngIf="summary.imgType === 'icon'">
+                  <mat-icon class="icons">{{summary.imgPath}}</mat-icon>
+                </ng-container>
+                <ng-container *ngIf="summary.imgType === 'img'">
+                  <img [src]="summary.imgPath">
+                </ng-container>
+              </div>
+              <div class="flex flex-col w-full">
+                <div class="results-persentsge">
+                  {{summary.summary}}
+                </div>
+                <div class="result-section-text">
+                  {{summary.summaryType | translate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="isMobile">
+        <div class="flex justify-center items-center">
+          <ng-container *ngIf="!expandMwebOverView; else collapse">
+            <button (click)="expandMwebOverView = !expandMwebOverView" mat-button class="viewAll-btn fles justify-center items-center">
+              <span>{{'quizresult.viewAll' | translate}}</span>
+              <mat-icon class="down-arrow ml-2">arrow_downward</mat-icon>
+            </button>
+          </ng-container>
+          <ng-template #collapse>
+            <button (click)="expandMwebOverView = !expandMwebOverView" mat-button class="collapse-btn fles justify-center items-center">
+              <span>{{'quizresult.collapse' | translate}}</span>
+              <mat-icon class="up-arrow ml-2">arrow_upward</mat-icon>
+            </button>
+          </ng-template>
         </div>
       </ng-container>
-    </div>
-    <ng-container
-      *ngIf="questionTYP.PRACTICE_RESOURCE === quizCategory && (quizResponse?.children && quizResponse?.children?.length > 0)">
-      <div class="flex flex-1 flex-center">
-        <a mat-button (click)="action('retake')" class="width-1-1 text-white ws-mat-primary-background retake">
-          Retake assessment
-        </a>
+    
+      <div>
+        <button mat-button [matMenuTriggerFor]="sectionsMenu" class="btn-outline flex justify-center items-center px-4"><span>{{selectedSection}}</span>
+          <mat-icon class="arrow-down">arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #sectionsMenu="matMenu" yPosition="below">
+          <ng-container *ngFor="let section of sectionsList">
+            <button mat-menu-item class="questionType-btn" (click)="getSectionalData(section.identifier); selectedSection = section.sectionName">{{section.sectionName}} </button>
+          </ng-container>
+        </mat-menu>
+      </div>
+      <div class="flex wrap-mweb gap-4">
+        <button mat-button [ngClass]="selectedStatus === 'all' ? 'btn-full':'btn-outline'" class="flex justify-center items-center px-4 gap-2" (click)="getQuestionByStatus('all')">{{'quizresult.all' | translate}}</button>
+        <button mat-button [ngClass]="selectedStatus === 'correct' ? 'btn-full':'btn-outline'" class="flex justify-center items-center px-4" (click)="getQuestionByStatus('correct')">{{'quizresult.correct' | translate}}</button>
+        <button mat-button [ngClass]="selectedStatus === 'wrong' ? 'btn-full':'btn-outline'" class="flex justify-center items-center px-4" (click)="getQuestionByStatus('wrong')">{{'quizresult.wrong' | translate}}</button>
+        <button mat-button [ngClass]="selectedStatus === 'notAnswered' ? 'btn-full':'btn-outline'" class="flex justify-center items-center px-4" (click)="getQuestionByStatus('notAnswered')">{{'quizresult.unattempted' | translate}}</button>
+      </div>
+    
+      <div class="questions-table-section">
+        <div class="questions-table">
+          <table
+            mat-table
+            [dataSource]="questionStatuTableDataSource"
+            class="w-full">
+              <ng-container
+                  *ngFor="let disCol of questionStatuTableColumns; let colIndex = index">
+                  <ng-container matColumnDef="{{ disCol.key }}" >
+                      <th mat-header-cell *matHeaderCellDef>
+                          {{ disCol.header | translate }}
+                      </th>
+    
+                      <td
+                          mat-cell
+                          *matCellDef="let element; let rowIndex = index;"
+                      >
+                          <span [ngClass]="{'correct': element[disCol.key] === 'correct', 'wrong': element[disCol.key] === 'wrong', 'blank': element[disCol.key] === 'blank'}"><span [innerHtml]="element[disCol.key] | QuestionSafeUrl"></span></span>
+                      </td>
+                  </ng-container>
+              </ng-container>
+            
+              <tr mat-header-row *matHeaderRowDef="getFinalColumns(questionStatuTableColumns)"></tr>
+            
+              <tr mat-row *matRowDef="let row; columns: getFinalColumns(questionStatuTableColumns)"></tr>
+          </table>
+          <ng-container *ngIf="questionStatuTableDataSource.length === 0">
+            <table class="w-full">
+              <tr>
+                <td class="flex justify-center mt-2">No record found</td>
+              </tr>
+            </table>
+          </ng-container>
+        </div>
+      </div>      
       </div>
     </ng-container>
   </div>
-  <div class="flex flex-1 blank_box"></div>
+  <div class="footer flex justify-center items-center gap-2" *ngIf="selectedAssessmentCompatibilityLevel >= 7 && quizResponse">    
+      <ng-container *ngIf="!showInsight">
+        <button mat-button class="flex justify-center items-center px-4 inSight gap-2" (click)="showInsight = true">
+          <img class="mr-2" src="/assets/icons/final-assessment/insight.svg">
+          <span>{{'quizresult.insights' | translate}}</span>
+          <mat-icon class="plus">add</mat-icon>
+        </button>
+      </ng-container>
+      <ng-container>
+        <button mat-button class="flex justify-center items-center px-4 reAttempt gap-2" (click)="action('retake')">
+          <img src="/assets/icons/final-assessment/reattempt.svg">
+          <span> {{'quizresult.reattemptTest' | translate}}</span>
+        </button>
+      </ng-container>
+  </div>
 </div>
-<ng-template #detail let-icon="icon" let-text="text" let-colorClass='colorClass'>
-  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
-    <mat-icon [style.color]="colorClass">{{icon}}</mat-icon>
-    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+<ng-template #incorrectDetail let-data="data" >
+  <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data,'wrong')">
+    <div class="flex">
+      <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
+      <span class="mat-body-2 margin-left-xs" [innerHtml]="data.text"></span>
+    </div>
+    <mat-icon *ngIf="selectedQuestionData?.sectionType !== data.sectionType">add</mat-icon>
+    <mat-icon *ngIf="selectedQuestionData?.sectionType === data.sectionType">remove</mat-icon>
   </mat-card>
 </ng-template>
 
-<ng-template #testdetail let-icon="icon" let-text="text" let-isSVG="isSVG" let-colorClass='colorClass'>
-  <mat-card class="flex max-card-w customcard margin-top-xs ws-mat-primary-tags">
-    <mat-icon [style.color]="colorClass" *ngIf="!isSVG">{{icon}}</mat-icon>
-    <img *ngIf="isSVG" [style.color]="colorClass" [src]="icon" alt="Assessment" class="margin-right-xs">
-    <span class="mat-body-2 margin-left-xs">{{text}}</span>
+
+<ng-template #detail let-data="data" >
+  <mat-card [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" (click)="getQuestionCount(data,'blank')">
+    <div class="flex">
+      <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
+      <span class="mat-body-2 margin-left-xs" [innerHtml]="data.text"></span>
+    </div>
+    <mat-icon *ngIf="selectedQuestionData?.sectionType !== data.sectionType">add</mat-icon>
+    <mat-icon *ngIf="selectedQuestionData?.sectionType === data.sectionType">remove</mat-icon>
   </mat-card>
 </ng-template>
 
+<ng-template #testdetail let-data="data" >
+  <mat-card class="flex customcard flex-jc-space-between cursor-pointer margin-top-xs bg-gray" [ngClass]="{'highlight': selectedQuestionData?.sectionType === data.sectionType}" (click)="getQuestionCount(data,'answer')">
+    <div class="flex">
+      <img src="assets/icons/final-assessment/{{data.imgIcon}}.svg">
+      <span class="mat-body-2 margin-left-xs" [innerHtml]="data.text"></span>
+    </div>
+    <mat-icon *ngIf="selectedQuestionData?.sectionType !== data.sectionType">add</mat-icon>
+    <mat-icon *ngIf="selectedQuestionData?.sectionType === data.sectionType">remove</mat-icon>
+  </mat-card>
+</ng-template>

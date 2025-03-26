@@ -1,4 +1,4 @@
-<section #fullScreenContainer class="survey-container" *ngIf="progressStatus < 2">
+<section #fullScreenContainer class="survey-container" *ngIf="progressStatus < 2 && currentResourceId === resourceId">
   <lib-micro-survey class="course-survey"
       [apiData]="apiData"
       [afterSubmitAction]="afterSubmitAction"
@@ -6,11 +6,12 @@
       [surveyId]="surveyId"
       [courseId]="courseId"
       [courseName]="courseName"
+      [isblendedprogram]="false"
     ></lib-micro-survey>
 </section>
 
-<section #fullScreenContainer class="survey-container" *ngIf="progressStatus === 2 && identifierId === widgetData.identifier">
+<section #fullScreenContainer class="survey-container" *ngIf="progressStatus === 2 && currentResourceId === resourceId">
   <div>
-    <p class="margin-xl mat-subheading-1">Survey is submitted</p>
+    <p class="margin-xl mat-subheading-1">{{ 'player.surveySubmitted' | translate }}</p>
   </div>
 </section>

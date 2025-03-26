@@ -4,14 +4,14 @@
     <mat-card class="mb-4">
       <button mat-button color="primary" (click)="download()">
         <mat-icon>cloud_download</mat-icon>
-        <span i18n class="px-2">Download</span>
+        <span i18n class="px-2">{{ 'apptochome.download' | translate }}</span>
       </button>
     </mat-card>
   </ng-container>
   <mat-card class="ws-mat-primary-lite-background-on-day ws-mat-primary-border-top-bolder info-container">
-    <h2 i18n>At a glance</h2>
+    <h2 i18n>{{ 'apptochome.atGlance' | translate }}</h2>
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.displayContentType?.enabled && content?.displayContentType">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.displayContentType?.displayName}}</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.displayContentType?.displayName, 'apptoc') }}</h3>
       <ws-widget-display-content-type *ngIf="content?.contentType !== contentTypes.RESOURCE"
         class="ws-mat-accent-text width-expand mat-body-strong" [displayContentType]="content?.displayContentType">
       </ws-widget-display-content-type>
@@ -22,27 +22,27 @@
     </div>
     <mat-divider *ngIf="tocConfig?.atAGlance?.displayContentType?.enabled && content?.displayContentType"></mat-divider>
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.complexityLevel?.enabled && content?.complexityLevel">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.complexityLevel?.displayName}}</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.complexityLevel?.displayName, 'apptoc') }}</h3>
       <h3 class="ws-mat-accent-text width-expand">
         {{ content?.complexityLevel }}
       </h3>
     </div>
     <mat-divider *ngIf="tocConfig?.atAGlance?.complexityLevel?.enabled && content?.complexityLevel"></mat-divider>
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.duration?.displayName}}</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.duration?.displayName, 'apptoc') }}</h3>
       <h3 class="ws-mat-accent-text width-expand">
         {{ content?.duration | pipeDurationTransform: 'hms' }}
       </h3>
     </div>
     <mat-divider *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration"></mat-divider>
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.cost?.enabled">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.cost?.displayName}}</h3>
-      <h3 *ngIf="content?.exclusiveContent" class="ws-mat-accent-text width-expand">Paid Content</h3>
-      <h3 *ngIf="!content?.exclusiveContent" class="ws-mat-accent-text width-expand">Free</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.cost?.displayName, 'apptoc') }}</h3>
+      <h3 *ngIf="content?.exclusiveContent" class="ws-mat-accent-text width-expand">{{'apptochome.paidContent' | translate}}</h3>
+      <h3 *ngIf="!content?.exclusiveContent" class="ws-mat-accent-text width-expand">{{'apptochome.free' | translate}}</h3>
     </div>
     <mat-divider *ngIf="tocConfig?.atAGlance?.cost?.enabled"></mat-divider>
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.viewCount?.enabled && content?.viewCount && configSvc?.rootOrg">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.viewCount?.displayName}}</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.viewCount?.displayName, 'apptoc') }}</h3>
       <h3 class="ws-mat-accent-text width-expand">
         {{ getViewCount(content) | pipeCountTransform }}
         <ng-container *ngIf="content?.uniqueLearners">
@@ -54,7 +54,7 @@
     <mat-divider *ngIf="tocConfig?.atAGlance?.viewCount?.enabled && content?.viewCount && configSvc?.rootOrg">
     </mat-divider>
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.sourceShortName?.enabled && content?.sourceShortName">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.sourceShortName?.displayName}}</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.sourceShortName?.displayName, 'apptoc') }}</h3>
       <h3 class="ws-mat-accent-text width-expand">
         {{ content?.sourceShortName }}
       </h3>
@@ -63,76 +63,76 @@
     <!-- Structure -->
     <div class="info-item"
       *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.structure?.displayName}}</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.structure?.displayName, 'apptoc') }}</h3>
       <div class="ws-mat-accent-text width-expand">
         <h3 *ngIf="tocStructure?.course > 0">
           <ng-container>{{ tocStructure?.course }}</ng-container>
-          <ng-container *ngIf="tocStructure?.course === 1" i18n> Course</ng-container>
-          <ng-container *ngIf="tocStructure?.course > 1" i18n> Courses</ng-container>
+          <ng-container *ngIf="tocStructure?.course === 1" i18n> {{'apptochome.course1' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.course > 1" i18n> {{'apptochome.courses1' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.learningModule > 0">
           <ng-container>{{ tocStructure?.learningModule }}</ng-container>
-          <ng-container *ngIf="tocStructure?.learningModule === 1" i18n> Module</ng-container>
-          <ng-container *ngIf="tocStructure?.learningModule > 1" i18n> Modules</ng-container>
+          <ng-container *ngIf="tocStructure?.learningModule === 1" i18n> {{'apptochome.module' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.learningModule > 1" i18n> {{'apptochome.modules' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.video > 0">
           <ng-container>{{ tocStructure?.video }}</ng-container>
-          <ng-container *ngIf="tocStructure?.video === 1" i18n> Video</ng-container>
-          <ng-container *ngIf="tocStructure?.video > 1" i18n> Videos</ng-container>
+          <ng-container *ngIf="tocStructure?.video === 1" i18n> {{'apptochome.video' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.video > 1" i18n> {{'apptochome.videos' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.interactiveVideo > 0">
           <ng-container>{{ tocStructure?.interactiveVideo }}</ng-container>
           <ng-container *ngIf="tocStructure?.interactiveVideo === 1" i18n>
-            Interactive Video</ng-container>
+            {{'playerbrief.interactiveVideo' | translate}}</ng-container>
           <ng-container *ngIf="tocStructure?.interactiveVideo > 1" i18n>
-            Interactive Videos</ng-container>
+            {{'playerbrief.interactiveVideos' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.youtube > 0">
           <ng-container>{{ tocStructure?.youtube }}</ng-container>
-          <ng-container *ngIf="tocStructure?.youtube === 1" i18n> Youtube Video</ng-container>
-          <ng-container *ngIf="tocStructure?.youtube > 1" i18n> Youtube Videos</ng-container>
+          <ng-container *ngIf="tocStructure?.youtube === 1" i18n> {{'playerbrief.youtubeVideo' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.youtube > 1" i18n> {{'playerbrief.youtubeVideos' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.pdf > 0">
           <ng-container>{{ tocStructure?.pdf }}</ng-container>
-          <ng-container *ngIf="tocStructure?.pdf === 1" i18n> PDF</ng-container>
-          <ng-container *ngIf="tocStructure?.pdf > 1" i18n> PDFs</ng-container>
+          <ng-container *ngIf="tocStructure?.pdf === 1" i18n> {{'apptochome.pdf' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.pdf > 1" i18n> {{'apptochome.pdfs' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.podcast > 0">
           <ng-container>{{ tocStructure?.podcast }}</ng-container>
-          <ng-container *ngIf="tocStructure?.podcast === 1" i18n> Podcast</ng-container>
-          <ng-container *ngIf="tocStructure?.podcast > 1" i18n> Podcasts</ng-container>
+          <ng-container *ngIf="tocStructure?.podcast === 1" i18n> {{'playerbrief.podcast' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.podcast > 1" i18n> {{'playerbrief.podcasts' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.webModule > 0">
           <ng-container>{{ tocStructure?.webModule }}</ng-container>
-          <ng-container *ngIf="tocStructure?.webModule === 1" i18n> Web Module</ng-container>
-          <ng-container *ngIf="tocStructure?.webModule > 1" i18n> Web Modules</ng-container>
+          <ng-container *ngIf="tocStructure?.webModule === 1" i18n> {{'playerbrief.webModule' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.webModule > 1" i18n> {{'playerbrief.webModules' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.webPage > 0">
           <ng-container>{{ tocStructure?.webPage }}</ng-container>
-          <ng-container *ngIf="tocStructure?.webPage === 1" i18n> Web Page</ng-container>
-          <ng-container *ngIf="tocStructure?.webPage > 1" i18n> Web Pages</ng-container>
+          <ng-container *ngIf="tocStructure?.webPage === 1" i18n> {{'apptochome.webPage' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.webPage > 1" i18n> {{'apptochome.webPages' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.quiz > 0">
           <ng-container>{{ tocStructure?.quiz }}</ng-container>
-          <ng-container *ngIf="tocStructure?.quiz === 1" i18n> Quiz</ng-container>
-          <ng-container *ngIf="tocStructure?.quiz > 1" i18n> Quizzes</ng-container>
+          <ng-container *ngIf="tocStructure?.quiz === 1" i18n> {{'playerbrief.quiz' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.quiz > 1" i18n> {{'playerbrief.quizzes' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.assessment > 0">
           <ng-container>{{ tocStructure?.assessment }}</ng-container>
-          <ng-container *ngIf="tocStructure?.assessment === 1" i18n> Assessment</ng-container>
-          <ng-container *ngIf="tocStructure?.assessment > 1" i18n> Assessments</ng-container>
+          <ng-container *ngIf="tocStructure?.assessment === 1" i18n> {{'apptochome.assessment' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.assessment > 1" i18n> {{'apptochome.assessments' | translate}}</ng-container>
         </h3>
         <h3 *ngIf="tocStructure?.other > 0">
           <ng-container>{{ tocStructure?.other }}</ng-container>
-          <ng-container *ngIf="tocStructure?.other === 1" i18n> Other Item</ng-container>
-          <ng-container *ngIf="tocStructure?.other > 1" i18n> Other Items</ng-container>
+          <ng-container *ngIf="tocStructure?.other === 1" i18n> {{'apptochome.otherItem' | translate}}</ng-container>
+          <ng-container *ngIf="tocStructure?.other > 1" i18n> {{'apptochome.otherItems' | translate}}</ng-container>
         </h3>
       </div>
     </div>
     <mat-divider *ngIf="tocConfig?.atAGlance?.structure?.enabled && hasTocStructure && content?.children?.length">
     </mat-divider>
     <div class="info-item" *ngIf="tocConfig?.atAGlance?.lastUpdatedOn?.enabled && content?.lastUpdatedOn">
-      <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.lastUpdatedOn?.displayName}}</h3>
+      <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.lastUpdatedOn?.displayName, 'apptoc') }}</h3>
       <h3 class="ws-mat-accent-text width-expand">
         {{ content?.lastUpdatedOn | date }}
       </h3>
@@ -141,7 +141,7 @@
       <mat-divider *ngIf="tocConfig?.atAGlance?.lastUpdatedOn?.enabled && content?.lastUpdatedOn"></mat-divider>
       <div class="info-item"
         *ngIf="tocConfig?.atAGlance?.expiryDate?.enabled && content?.expiryDate && content?.expiryDate?.startsWith('20')">
-        <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.expiryDate?.displayName}}</h3>
+        <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.expiryDate?.displayName, 'apptoc') }}</h3>
         <h3 class="ws-mat-accent-text width-expand">
           {{ content?.expiryDate | date }}
         </h3>
@@ -150,21 +150,21 @@
         *ngIf="tocConfig?.atAGlance?.expiryDate?.enabled && content?.expiryDate && content?.expiryDate?.startsWith('20')">
       </mat-divider>
       <div class="info-item" *ngIf="tocConfig?.atAGlance?.learningMode?.enabled && content?.learningMode">
-        <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.learningMode?.displayName}}</h3>
+        <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.learningMode?.displayName, 'apptoc') }}</h3>
         <h3 class="ws-mat-accent-text width-expand">
           {{ content?.learningMode }}
         </h3>
       </div>
       <mat-divider *ngIf="tocConfig?.atAGlance?.learningMode?.enabled && content?.learningMode"></mat-divider>
       <div class="info-item" *ngIf="tocConfig?.atAGlance?.region?.enabled && content?.region?.length">
-        <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.region?.displayName}}</h3>
+        <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.region?.displayName, 'apptoc') }}</h3>
         <h3 class="ws-mat-accent-text width-expand">
           {{ content?.region }}
         </h3>
       </div>
       <mat-divider *ngIf="tocConfig?.atAGlance?.region?.enabled && content?.region?.length"></mat-divider>
       <div class="info-item" *ngIf="tocConfig?.atAGlance?.locale?.enabled && content?.locale">
-        <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.locale?.displayName}}</h3>
+        <h3 class="item-heading ws-mat-primary-text">{{ translateLabels(tocConfig?.atAGlance?.locale?.displayName, 'apptoc') }}</h3>
         <h3 class="ws-mat-accent-text width-expand">
           {{ content?.locale | uppercase }}
         </h3>
@@ -210,8 +210,8 @@
     <div class="text-right mt-2">
       <button mat-button (click)="showMoreGlance = !showMoreGlance">
         <mat-icon>{{ !showMoreGlance ? 'arrow_drop_down' : 'arrow_drop_up' }}</mat-icon>
-        <ng-container i18n *ngIf="!showMoreGlance">Show More</ng-container>
-        <ng-container i18n *ngIf="showMoreGlance">Show Less</ng-container>
+        <ng-container i18n *ngIf="!showMoreGlance">{{'playerbrief.showMore' | translate}}</ng-container>
+        <ng-container i18n *ngIf="showMoreGlance">{{'playerbrief.showLess' | translate}}</ng-container>
       </button>
     </div>
   </mat-card>
@@ -236,8 +236,8 @@
 
 <ng-template #creators let-authors="authors" let-title="title">
   <mat-card>
-    <h2 i18n *ngIf="title === 'AUTHOR'">Authors</h2>
-    <h2 i18n *ngIf="title === 'CONTACT'">Curator/Contact</h2>
+    <h2 i18n *ngIf="title === 'AUTHOR'">{{'playerbrief.authors' | translate}}</h2>
+    <h2 i18n *ngIf="title === 'CONTACT'">{{'playerbrief.curatorcontact' | translate}}</h2>
     <mat-divider></mat-divider>
     <div *ngFor="let author of parseJsonData(authors)" class="author">
       <ws-widget-user-image class="author-image" [imageType]="'name-initial'" [userName]="author.name || ''"

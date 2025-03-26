@@ -5,7 +5,7 @@ import {
   BtnCallDialogComponent,
   IWidgetBtnCallDialogData,
 } from './btn-call-dialog/btn-call-dialog.component'
-import { EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { EventService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 export interface IWidgetBtnCall {
   userName: string

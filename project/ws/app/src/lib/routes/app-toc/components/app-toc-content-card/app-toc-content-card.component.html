@@ -8,19 +8,27 @@
           <div class="text-truncate" [ngClass]="{'cursor-pointer': !isEnabled}" (click)="viewChildren = !viewChildren">
             <div class="flex flex-col sm:flex-row flex-wrap">
               <p class="margin-remove text-truncate mat-subheading-1 flex-auto">
-                {{ content?.name }}
+                {{ content?.name }} 
               </p>
+              <ng-container *ngIf="content.issuedCertificatesSVG">
+                <a class="certificate-txt" (click)="openCertificateDialog(content.issuedCertificatesSVG)">
+                  <span class="view-certificate-wrapper">
+                    <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24">
+                    <span>{{'apptoccontentcard.viewCertificate' | translate}}</span>
+                  </span>
+                </a>
+              </ng-container>
               <div class="type-container resource mt-2 sm:mt-0" *ngIf="content?.category === 'Resource'">
                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
-                <span>Resource</span>
+                <span>{{'apptoccontentcard.resource' | translate}}</span>
               </div>
               <div class="type-container module mt-2 sm:mt-0" *ngIf="content?.category === 'Collection'">
                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
-                <span>Module</span>
+                <span>{{'apptoccontentcard.module' | translate}}</span>
               </div>
               <div class="type-container course mt-2 sm:mt-0" *ngIf="content?.category === 'Course'">
                 <mat-icon class="mr-1 custom-icon rotate-90">call_to_action</mat-icon>
-                <span>Course</span>
+                <span>{{'apptoccontentcard.course' | translate}}</span>
               </div>
             </div>
             <div>
@@ -37,7 +45,7 @@
             [matMenuTriggerFor]="buttonMenu">
             <mat-icon>more_vertical</mat-icon>
           </button>
-          <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage">
+          <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage && content.primaryCategory !== 'Course'">
             <ng-container *ngIf="content?.completionStatus == 2">
               <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
                 [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
@@ -139,7 +147,7 @@
           </div> -->
           <div class="see-all-container">
             <a href="javascript:void(0)" role="button" (click)="viewChildren = !viewChildren"
-              class="margin-left-m see-all-btn tab customicon" mat-button>
+              class="margin-left-m see-all-btn tab custom-chevron customicon" mat-button>
               <!-- <ng-container *ngIf="!viewChildren" i18n>See All</ng-container>
               <ng-container *ngIf="viewChildren" i18n>See Less</ng-container> -->
               <mat-icon *ngIf="!viewChildren">keyboard_arrow_down</mat-icon>
@@ -200,6 +208,8 @@
               <!-- <mat-icon class="margin-right-xs radiobtn time-icon">radio_button_unchecked </mat-icon> -->
               {{ content?.name }}
             </p>
+            <span class="content-type optional-span" *ngIf="content?.optionalReading">{{'apptoccontentcard.optional' | translate}}</span>
+            <!-- <span class="mat-body-strong content-type">{{ content?.identifier }}</span> -->
           </div>
           <div class="resicons ws-mat-black60-text">
             <!-- <span class="mat-body-strong content-type ws-mat-default-text">{{ content?.contentType }}</span> -->
@@ -222,6 +232,8 @@
               *ngIf="content?.mimeType === 'image/png' || content?.mimeType === 'image/jpeg'">
             <img src="/assets/icons/content/grey/content_copy.svg" class="contenticon" alt="Course"
               *ngIf="content.mimeType === 'application/vnd.ekstep.content-collection' || content?.mimeType === 'application/survey'">
+            <img src="/assets/icons/content/grey/module.svg" class="float-left margin-right-xs" alt="offline sessions"
+              *ngIf="content.mimeType === 'application/offline' || content?.mimeType === 'application/survey'">
             <span class="ws-mat-black60-text">{{ (content?.duration || 120)| pipeDurationTransform: 'hms' }}</span>
             <!-- </span> -->
           </div>
@@ -244,13 +256,14 @@
           class="" [matMenuTriggerFor]="buttonMenu">
           <mat-icon>more_vertical</mat-icon>
         </button>
-        <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage">
+        <ng-container *ngIf="!forPreview && content?.identifier && content?.completionPercentage ; else elseBlock">
+        
           <ng-container *ngIf="content?.completionStatus == 2">
             <circle-progress class="flex items-center progress" [percent]="100" [radius]="12" [outerStrokeWidth]="3"
               [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
-              [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
+              [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
               [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
-              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
+              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="{{'apptoccontentcard.completed' | translate}}"
               [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
               [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
             </circle-progress>
@@ -261,10 +274,10 @@
           </ng-container>
           <ng-container *ngIf="content?.completionStatus < 2">
             <circle-progress class="flex items-center progress" [percent]="content?.completionPercentage" [radius]="12"
-              [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor()"
-              [innerStrokeColor]="'rgba(0,0,0,.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
+              [outerStrokeWidth]="3" [innerStrokeWidth]="3" [space]="-3" [outerStrokeColor]="progressColor2()"
+              [innerStrokeColor]="'rgba(0, 0, 0, 0.16)'" [animation]="true" [animationDuration]="300" [showTitle]="false"
               [showUnits]="false" [showSubtitle]="false" [showInnerStroke]="true" [clockwise]="true"
-              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3"
+              [backgroundOpacity]="0" [backgroundGradient]="false" [backgroundStrokeWidth]="3" matTooltip="{{'apptoccontentcard.inProgress' | translate}}"
               [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false" [backgroundPadding]="0"
               [imageHeight]="24" [imageWidth]="24" [showBackground]="false" [outerStrokeLinecap]="'butt'">
             </circle-progress>
@@ -273,8 +286,33 @@
               [progressType]="'percentage'">
             </ws-widget-content-progress> -->
           </ng-container>
+          
         </ng-container>
+        <ng-template #elseBlock>
+        <circle-progress  class="flex items-center progress"
+          [percent]="0"
+          [radius]="12"
+          [outerStrokeWidth]="3"
+          [innerStrokeWidth]="3"
+          [outerStrokeColor]="'#808080'"
+          [innerStrokeColor]="'#808080'"
+          [animation]="true"
+          [space]="-3"
+          [showUnits]="false"
+          [animationDuration]="300"
+          [showTitle]="false"
+          [backgroundPadding]="0"
+          [backgroundPadding]="-9"
+          [outerStrokeLinecap]="'butt'"
+          matTooltip="{{'apptoccontentcard.notStarted' | translate}}"
+          [showSubtitle]="false" 
+          [showInnerStroke]="true" 
+          [clockwise]="true" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"></circle-progress>
+        <!-- <p>no data</p> -->
+        </ng-template>
       </div>
+
+      
 
       <!-- <button *ngIf="content?.artifactUrl" type="button" mat-icon-button [matMenuTriggerFor]="buttonMenu">
         <mat-icon>more_vertical</mat-icon>
@@ -300,7 +338,7 @@
     class="flex flex-middle">
     <mat-icon>toc</mat-icon>
     <h3 class="margin-remove" i18n>
-      View Details
+      {{'apptoccontentcard.viewDetails' | translate}}
     </h3>
   </a>
   <!-- TODO: Hiding this from here for now, as the functionalities are not working -->

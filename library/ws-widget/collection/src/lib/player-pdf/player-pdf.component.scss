@@ -4,9 +4,10 @@
   // font-size: 1em;
   display: flex;
   align-items: center;
-  min-height: 56px;
+  height: 48px;
   overflow: hidden;
   font: inherit;
+  justify-content: center;
 }
 
 .pdf-page-container {
@@ -43,4 +44,11 @@
 
 .mat-toolbar-single-row {
   padding: 0;
+}
+
+::ng-deep .pdf-nav-bar {
+  background: none !important; 
+}
+.pdf-controls-toolbar {
+  background: whitesmoke;
 }

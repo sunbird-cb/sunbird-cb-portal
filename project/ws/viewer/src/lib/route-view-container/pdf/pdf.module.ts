@@ -28,8 +28,8 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
-
+} from '@sunbird-cb/utils-v2'
+import { TranslateModule } from '@ngx-translate/core'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 
 import { PdfComponent } from './pdf.component'
@@ -60,6 +60,7 @@ import { RouterModule } from '@angular/router'
     UserContentRatingModule,
     BtnContentFeedbackV2Module,
     PlayerBriefModule,
+    TranslateModule,
   ],
   exports: [
     PdfComponent,

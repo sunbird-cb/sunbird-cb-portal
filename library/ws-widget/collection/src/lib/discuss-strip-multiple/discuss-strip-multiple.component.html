@@ -10,14 +10,17 @@
   <ng-container *ngFor="let key of stripsKeyOrder; let i = index">
     <ng-container *ngIf="stripsResultDataMap[key].showStrip">
       <a name="{{stripsResultDataMap[key]?.stripTitle}}">
-        <div *ngIf="
-                  stripsResultDataMap[key]?.widgets ||
-                  stripsResultDataMap[key]?.showOnNoData ||
-                  stripsResultDataMap[key]?.showOnLoader ||
-                  stripsResultDataMap[key]?.showOnError
-                " [ngClass]="
-                  !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-1' : i > 0 ? 'mt-12' : ''
-                " [id]="key" class="margin-bottom-custom">
+        <div 
+          *ngIf="
+            stripsResultDataMap[key]?.widgets ||
+            stripsResultDataMap[key]?.showOnNoData ||
+            stripsResultDataMap[key]?.showOnLoader ||
+            stripsResultDataMap[key]?.showOnError
+          " 
+          [ngClass]="
+            !widgetData.isChannelStrip ? 'xs:px-8 sx:px-10ss py-2 my-1' : i > 0 ? 'mt-12' : ''
+          "
+          [id]="key" class="margin-bottom-custom">
           <div class="oneBox">
             <div [ngClass]="{ pad: stripsResultDataMap[key]?.stripBackground }" class="background-norepeat"
               [ngStyle]="{ 'background-image': 'url('+ stripsResultDataMap[key]?.stripBackground+')'}"></div>
@@ -41,7 +44,6 @@
                   {{stripsResultDataMap[key]?.description}}</span> -->
                   <span class="mat-subheading-1 margin-remove inline-block ws-mat-primary-default-text margin-left-s mob">
                     {{stripsResultDataMap[key]?.description}}</span>
-
                 <span class="spacer"></span>
                 <div
                   *ngIf="widgetData.strips[0].viewMoreUrl && stripsResultDataMap[key] && stripsResultDataMap[key].widgets"
@@ -75,13 +77,11 @@
             <ws-utils-horizontal-scroller class="flex container-balanced new-width"
               *ngIf="getLength(stripsResultDataMap[key]) && showAccordion(key)" [loadStatus]="'done'">
               <ng-container *ngFor="let widget of stripsResultDataMap[key]?.widgets" [wsResolverWidget]="widget">
-
               </ng-container>
             </ws-utils-horizontal-scroller>
           </div>
         </div>
       </a>
-
     </ng-container>
   </ng-container>
 </ng-template>

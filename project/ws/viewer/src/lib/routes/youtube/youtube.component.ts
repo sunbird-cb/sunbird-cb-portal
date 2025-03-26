@@ -7,9 +7,10 @@ import {
   WidgetContentService,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
 import { Platform } from '@angular/cdk/platform'
+import { ViewerUtilService } from '../../viewer-util.service'
 
 @Component({
   selector: 'viewer-youtube',
@@ -36,6 +37,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private valueSvc: ValueService,
+    private viewerSvc: ViewerUtilService,
     private contentSvc: WidgetContentService,
     private platform: Platform,
     private configSvc: ConfigurationsService
@@ -58,12 +60,11 @@ export class YoutubeComponent implements OnInit, OnDestroy {
         if (this.youtubeData && this.youtubeData.identifier) {
           if (!this.forPreview && this.activatedRoute.snapshot.queryParams.collectionId) {
             await this.fetchContinueLearning(
-              this.activatedRoute.snapshot.queryParams.collectionId,
               this.youtubeData.identifier,
             )
           } else {
             if (!this.forPreview) {
-              await this.fetchContinueLearning(this.youtubeData.identifier, this.youtubeData.identifier)
+              await this.fetchContinueLearning(this.youtubeData.identifier)
             }
           }
         }
@@ -85,6 +86,9 @@ export class YoutubeComponent implements OnInit, OnDestroy {
           `${this.youtubeData.version}${''}` : '1'
         this.widgetResolverYoutubeData.widgetData.collectionId =
           this.activatedRoute.snapshot.queryParamMap.get('collectionId') || undefined
+
+        this.widgetResolverYoutubeData.widgetData.channel =
+          this.activatedRoute.snapshot.queryParamMap.get('channelId') || undefined
 
         if (this.platform.ANDROID) {
           this.widgetResolverYoutubeData.widgetData.isVideojs = false
@@ -116,7 +120,7 @@ export class YoutubeComponent implements OnInit, OnDestroy {
     }
   }
 
-  async fetchContinueLearning(collectionId: string, videoId: string): Promise<boolean> {
+  async fetchContinueLearning(videoId: string): Promise<boolean> {
     return new Promise(resolve => {
       // this.contentSvc.fetchContentHistory(collectionId).subscribe(
       //   data => {
@@ -140,36 +144,53 @@ export class YoutubeComponent implements OnInit, OnDestroy {
       if (this.configSvc.userProfile) {
         userId = this.configSvc.userProfile.userId || ''
       }
-      const req: NsContent.IContinueLearningDataReq = {
-        request: {
-          userId,
-          batchId: this.batchId,
-          courseId: collectionId || '',
-          contentIds: [],
-          fields: ['progressdetails'],
-        },
-      }
-      this.contentSvc.fetchContentHistoryV2(req).subscribe(
-        data => {
-          if (data && data.result && data.result.contentList.length) {
-            for (const content of data.result.contentList) {
-              if (
-                content.contentId === videoId &&
-                content.progressdetails &&
-                content.progressdetails.current &&
-                this.widgetResolverYoutubeData
-              ) {
-                this.widgetResolverYoutubeData.widgetData.resumePoint = Number(
-                  content.progressdetails.current.pop(),
-                )
-                this.widgetResolverYoutubeData.widgetData.size = content.progressdetails.max_size
+      if (this.activatedRoute.snapshot.queryParams.collectionId &&
+        this.activatedRoute.snapshot.queryParams.batchId &&
+        videoId
+      ) {
+        const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+          this.activatedRoute.snapshot.queryParams.collectionId,
+          this.activatedRoute.snapshot.queryParams.batchId,
+          videoId)
+        const req: NsContent.IContinueLearningDataReq = {
+          request: {
+            userId,
+            batchId: requestCourse.batchId,
+            courseId: requestCourse.courseId || '',
+            contentIds: [],
+            fields: ['progressdetails'],
+          },
+        }
+        this.contentSvc.fetchContentHistoryV2(req).subscribe(
+          data => {
+            if (data && data.result && data.result.contentList.length) {
+              for (const content of data.result.contentList) {
+                if (
+                  content.contentId === videoId &&
+                  content.progressdetails &&
+                  content.progressdetails.current &&
+                  this.widgetResolverYoutubeData
+                ) {
+                  if (content.progress === 100 || content.status === 2) {
+                    // if its completed then resume from starting
+                    this.widgetResolverYoutubeData.widgetData.resumePoint = 0
+                  } else {
+                    // resume from last played point
+                    this.widgetResolverYoutubeData.widgetData.resumePoint = Number(
+                      content.progressdetails.current.pop(),
+                    )
+                  }
+                  this.widgetResolverYoutubeData.widgetData.size = content.progressdetails.max_size
+                }
               }
             }
-          }
-          resolve(true)
-        },
-        () => resolve(true),
-      )
+            resolve(true)
+          },
+          () => resolve(true),
+        )
+      } else {
+       resolve(true)
+      }
     })
   }
 

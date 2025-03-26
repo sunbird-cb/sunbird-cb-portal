@@ -3,7 +3,7 @@ import { AuthExpiryDateConfirmComponent } from '@ws/author/src/lib/modules/share
 import { DraftDialogComponent } from '@ws/author/src/lib/modules/shared/components/draft-dialog/draft-dialog.component'
 import { UnpublishDialogComponent } from '@ws/author/src/lib/modules/shared/components/unpublish-dialog/unpublish-dialog.component'
 import { RestoreDialogComponent } from '@ws/author/src/lib/modules/shared/components/restore-dialog/restore-dialog.component'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { AuthInitService } from '@ws/author/src/lib/services/init.service'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { IAction } from './../../interface/content-card'

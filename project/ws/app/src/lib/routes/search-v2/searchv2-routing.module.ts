@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { CommonModule } from '@angular/common'
 import { GlobalSearchComponent } from './routes/global-search/global-search.component'
-import { PageResolve } from '@sunbird-cb/utils/src/public-api'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 
 const routes: Routes = [
   {
@@ -12,6 +12,7 @@ const routes: Routes = [
     data: {
       pageType: 'feature',
       pageKey: 'search',
+      pageId: '',
     },
     resolve: {
       searchPageData: PageResolve,

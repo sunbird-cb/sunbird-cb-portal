@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ConfigurationsService, NsPage, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, TFetchStatus } from '@sunbird-cb/utils-v2'
 
 import { NotificationApiService } from '../../services/notification-api.service'
 import { ENotificationType, INotification } from '../../models/notifications.model'

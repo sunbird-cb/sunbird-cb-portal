@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core'
-import { ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { ValueService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { NSSearch } from '../../_services/widget-search.model'
 // import { SearchApiService } from '@ws/app/src/lib/routes/search/apis/search-api.service'

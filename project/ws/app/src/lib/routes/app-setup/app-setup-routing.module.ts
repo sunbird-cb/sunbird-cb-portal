@@ -6,7 +6,7 @@ import { LangSelectComponent } from './components/lang-select/lang-select.compon
 import { AboutVideoComponent } from '../info/about-video/about-video.component'
 import { TncAppResolverService } from '../../../../../../../src/app/services/tnc-app-resolver.service'
 import { TncComponent } from './components/tnc/tnc.component'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 import { InterestComponent } from './module/interest/interest/interest.component'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
 

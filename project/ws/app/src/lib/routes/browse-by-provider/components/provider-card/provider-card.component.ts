@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { EventService, WsEvents } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-provider-card',
@@ -8,9 +9,25 @@ import { Component, OnInit, Input } from '@angular/core'
 export class ProviderCardComponent implements OnInit {
   @Input() provider!: any
 
-  constructor() { }
+  constructor(private events: EventService) { }
 
   ngOnInit() {
+  }
+
+  raiseTelemetery() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: 'click',
+        id: 'card-content',
+      },
+      {
+        id: this.provider.name,
+        type: this.provider.orgId,
+      },
+      {
+        pageIdExt: 'card-content',
+        module: WsEvents.EnumTelemetrymodules.LEARN,
+      })
   }
 
 }

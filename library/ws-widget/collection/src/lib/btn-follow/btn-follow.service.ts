@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ConfigurationsService, EventService, WsEvents, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, WsEvents, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { HttpClient } from '@angular/common/http'
 import { Observable, ReplaySubject } from 'rxjs'
 import { IFollowing } from './btn-follow.model'

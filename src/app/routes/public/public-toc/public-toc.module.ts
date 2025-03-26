@@ -26,7 +26,7 @@ import {
 } from '@angular/material'
 import { PublicTocComponent } from './public-toc.component'
 import { RouterModule } from '@angular/router'
-import { PipeDurationTransformModule, PipePartialContentModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api'
+import { PipeDurationTransformModule, PipePartialContentModule, PipeSafeSanitizerModule } from '@sunbird-cb/utils-v2'
 import { AppTocService } from '@ws/app/src/lib/routes/app-toc/services/app-toc.service'
 import { AppTocModule } from '@ws/app/src/public-api'
 import { BtnPageBackNavModule } from '@sunbird-cb/collection/src/public-api'

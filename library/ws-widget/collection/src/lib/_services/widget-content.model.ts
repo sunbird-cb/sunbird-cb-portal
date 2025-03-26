@@ -20,12 +20,14 @@ export namespace NsContent {
     artifactUrl: string
     averageRating?: any
     // this will be used to content form enrollment user list
+    batches?: any
     batch?: any
     body?: string
     certificationList?: IRelatedContentMeta[]
     certificationStatus?: TCertificationStatus
     certificationSubmissionDate?: string
     certificationUrl: string
+    childNodes?: string[]
     children: IContent[]
     childrenClassifiers?: string[]
     clients?: IClient[]
@@ -64,6 +66,7 @@ export namespace NsContent {
     isInIntranet?: boolean
     keywords?: string[]
     kArtifacts?: IRelatedContentMeta[]
+    lastContentAccessTime?: string
     lastUpdatedOn: string
     learningMode?: TLearningMode
     learningObjective: string
@@ -81,7 +84,7 @@ export namespace NsContent {
     playgroundInstructions?: string
     playgroundResources?: IResourcePlayground[]
     postContents?: IPrePostContent[]
-    posterImage: string
+    posterImage?: string
     preContents?: IPrePostContent[]
     preRequisites: string
     price?: {
@@ -107,6 +110,7 @@ export namespace NsContent {
     sourceIconUrl?: string
     sourceUrl?: string
     ssoEnabled?: boolean
+    lastReadContentId?: string
     status:
     | 'Draft'
     | 'InReview'
@@ -139,6 +143,8 @@ export namespace NsContent {
     references?: { url: string; title: string }[]
     resumePage?: number // For player WebModule in UI
     [key: string]: any
+    optionalReading: boolean
+    additionalTags?: string[]
   }
 
   export interface IContentResponse {
@@ -178,6 +184,11 @@ export namespace NsContent {
     content?: IBatch[]
     count?: number,
     enrolled?: boolean,
+    workFlow?: {
+      wfInitiated?: boolean
+      batch?: any
+      wfItem?: any
+    },
   }
 
   export interface ICourse {
@@ -200,7 +211,8 @@ export namespace NsContent {
     description: string
     enrolledDate: string
     issuedCertificates: []
-    lastReadContentId: string | null
+    lastContentAccessTime?: string
+    lastReadContentId?: string
     lastReadContentStatus: string | null
     leafNodesCount: number
     progress: number
@@ -350,6 +362,10 @@ export namespace NsContent {
     MULTIPLE_CHOICE_QUESTION = 'Multiple Choice Question',
     SINGLE_CHOICE_QUESTION = 'Single Choice Question',
     MANDATORY_COURSE_GOAL = 'Mandatory Course Goal',
+    STANDALONE_ASSESSMENT = 'Standalone Assessment',
+    BLENDED_PROGRAM = 'Blended Program',
+    OFFLINE_SESSION = 'Offline Session',
+    CURATED_PROGRAM = 'Curated Program',
     // following will not be available soon
     /**
      * @deprecated The type should not be used
@@ -369,11 +385,51 @@ export namespace NsContent {
     CHANNEL = 'Channel',
   }
 
+  export enum ECourseCategory {
+    INVITE_ONLY_PROGRAM = 'Invite-Only Program',
+    MODERATED_PROGRAM = 'Moderated Program',
+    BLENDED_PROGRAM = 'Blended Program',
+    CURATED_PROGRAM = 'Curated Program',
+    COURSE = 'Course',
+    MODERATED_COURSE = 'Moderated Course',
+    STANDALONE_ASSESSMENT = 'Standalone Assessment',
+    MODERATED_ASSESSEMENT = 'Moderated Assessment',
+  }
+
+  export enum WFBlendedProgramStatus {
+    INITIATE = 'INITIATE',
+    SEND_FOR_MDO_APPROVAL = 'SEND_FOR_MDO_APPROVAL',
+    SEND_FOR_PC_APPROVAL = 'SEND_FOR_PC_APPROVAL',
+    APPROVED = 'APPROVED',
+    REJECTED = 'REJECTED',
+    WITHDRAWN = 'WITHDRAWN',
+    REMOVED = 'REMOVED',
+    WITHDRAW = 'WITHDRAW',
+  }
+  export enum WFBlendedProgramApprovalTypes {
+    ONE_STEP_PC = 'oneStepPCApproval',
+    ONE_STEP_MDO = 'oneStepMDOApproval',
+    TWO_STEP_MDO_PC = 'twoStepMDOAndPCApproval',
+    TWO_STEP_PC_MDO = 'twoStepPCAndMDOApproval',
+  }
+
+  export const  WFSTATUS_MSG_MAPPING: any = {
+    INITIATE:  '',
+    SEND_FOR_MDO_APPROVAL:  'BatchEnrollL1Msg',
+    SEND_FOR_PC_APPROVAL:  'BatchEnrollL2Msg',
+    APPROVED:  'BatchEnrollApprovedMsg',
+    REJECTED:  'BatchEnrollRejectedMsg',
+    WITHDRAWN: 'BatchEnrollWithdrawMsg',
+    REMOVED: 'BatchEnrollRemoveMsg',
+    EXPIRED: 'BatchListExpiredMsg',
+  }
+
   export enum EResourcePrimaryCategories {
     LEARNING_RESOURCE = 'Learning Resource',
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
     COMP_ASSESSMENT = 'Competency Assessment',
+    OFFLINE_SESSION = 'Offline Session',
   }
 
   export enum EMiscPlayerSupportedCollectionTypes {
@@ -383,6 +439,9 @@ export namespace NsContent {
     EPrimaryCategory.COURSE,
     EPrimaryCategory.MODULE,
     EPrimaryCategory.PROGRAM,
+    EPrimaryCategory.CURATED_PROGRAM,
+    EPrimaryCategory.BLENDED_PROGRAM,
+    EPrimaryCategory.STANDALONE_ASSESSMENT,
     EMiscPlayerSupportedCollectionTypes.PLAYLIST,
   ]
   export const KB_SUPPORTED_CONTENT_TYPES: EPrimaryCategory[] = [
@@ -425,6 +484,7 @@ export namespace NsContent {
     APPLICATION_JSON = 'application/json',
     PRACTICE_RESOURCE = 'application/vnd.sunbird.questionset',
     FINAL_ASSESSMENT = 'application/vnd.sunbird.questionset',
+    OFFLINE_SESSION = 'application/offline',
     // Added on UI Only
     CERTIFICATION = 'application/certification',
     PLAYLIST = 'application/playlist',
@@ -436,6 +496,7 @@ export namespace NsContent {
   }
   export enum EDisplayContentTypes {
     ASSESSMENT = 'ASSESSMENT',
+    STANDALONE_ASSESSMENT = 'STANDALONE ASSESSMENT',
     PRACTICE_RESOURCE = 'Practice Question Set',
     FINAL_ASSESSMENT = 'Course Assessment',
     AUDIO = 'AUDIO',
@@ -468,6 +529,8 @@ export namespace NsContent {
     LINK = 'LINK',
     KNOWLEDGE_BOARD = 'Knowledge Board',
     LEARNING_JOURNEY = 'Learning Journeys',
+    BLENDED_PROGRAM = 'BLENDED PROGRAM',
+    CURATED_PROGRAM = 'CURATED PROGRAM',
   }
   // for UI
   export enum EFilterCategory {
@@ -483,14 +546,15 @@ export namespace NsContent {
   }
 
   export const UN_SUPPORTED_DATA_TYPES_FOR_NON_BATCH_USERS: string[] = [
-    EMimeTypes.QUIZ,
-    EMimeTypes.APPLICATION_JSON,
-    EMimeTypes.WEB_MODULE_EXERCISE,
+    // this is comment now for enabling links in the toc page for enrolled users
+    // EMimeTypes.QUIZ,
+    // EMimeTypes.APPLICATION_JSON,
+    // EMimeTypes.WEB_MODULE_EXERCISE,
 
   ]
   export const PUBLIC_SUPPORTED_CONTENT_TYPES: EMimeTypes[] = [
-    // EMimeTypes.APPLICATION_JSON,
-    // EMimeTypes.FINAL_ASSESSMENT,
+    EMimeTypes.APPLICATION_JSON,
+    EMimeTypes.FINAL_ASSESSMENT,
     EMimeTypes.HTML,
     EMimeTypes.HTML_TEXT,
     EMimeTypes.ZIP,
@@ -503,4 +567,12 @@ export namespace NsContent {
     EMimeTypes.TEXT_WEB,
     EMimeTypes.SURVEY,
   ]
+
+  export interface ICompentencyKeys {
+    vKey: string
+    vCompetencyArea: string
+    vCompetencyAreaDescription: string
+    vCompetencyTheme: string
+    vCompetencySubTheme: string
+  }
 }

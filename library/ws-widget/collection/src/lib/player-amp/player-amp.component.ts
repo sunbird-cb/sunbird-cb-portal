@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { IWidgetsPlayerAmpData } from './player-amp.model'
 import { Subscription, interval, timer } from 'rxjs'
-import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { DynamicAssetsLoaderService } from '../_services/dynamic-assets-loader.service'
 import { getAmpConfig, isIOS, LINKS } from './player-amp.utility'
 import { ROOT_WIDGET_CONFIG } from '../collection.config'

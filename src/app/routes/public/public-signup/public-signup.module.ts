@@ -32,10 +32,14 @@ import { SignupService } from './signup.service'
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha'
 import { SignupSuccessDialogueComponent } from './signup-success-dialogue/signup-success-dialogue/signup-success-dialogue.component'
 import { environment } from 'src/environments/environment'
-import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by/pipe-order-by.module'
+import { PipeOrderByModule, PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
+import { AppPublicPositionResolverService } from './position-resolver.service'
+import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component'
+import { AppPublicGroupResolverService } from './group-resolver.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
-  declarations: [PublicSignupComponent, SignupSuccessDialogueComponent],
+  declarations: [PublicSignupComponent, SignupSuccessDialogueComponent, TermsAndConditionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -66,16 +70,20 @@ import { PipeOrderByModule } from '@sunbird-cb/utils/src/lib/pipes/pipe-order-by
     MatAutocompleteModule,
     RecaptchaV3Module,
     PipeOrderByModule,
+    PipeDurationTransformModule,
+    TranslateModule,
   ],
   exports: [PublicSignupComponent],
   providers: [
     SignupService,
+    AppPublicPositionResolverService,
+    AppPublicGroupResolverService,
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: environment.recaptchaKey,
     },
   ],
-  entryComponents: [SignupSuccessDialogueComponent],
+  entryComponents: [SignupSuccessDialogueComponent, TermsAndConditionComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PublicSignupModule { }

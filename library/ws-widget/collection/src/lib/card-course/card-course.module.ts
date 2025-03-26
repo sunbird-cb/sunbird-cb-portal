@@ -3,7 +3,7 @@ import { CardCourseComponent } from './card-course.component'
 import { MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material'
 import { BrowserModule } from '@angular/platform-browser'
 import { AvatarPhotoModule } from '../_common/avatar-photo/avatar-photo.module'
-import { HorizontalScrollerModule, PipeNameTransformModule } from '@sunbird-cb/utils'
+import { HorizontalScrollerModule, PipeNameTransformModule } from '@sunbird-cb/utils-v2'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 @NgModule({

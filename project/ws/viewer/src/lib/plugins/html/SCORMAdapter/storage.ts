@@ -79,5 +79,7 @@ export interface IScromData {
   "cmi.core.session_time"?: string
   "cmi.suspend_data"?: string
   errors?: string
-
+  spentTime?: number
+  completionStatus?: number
+  completionPercentage?: number
 }

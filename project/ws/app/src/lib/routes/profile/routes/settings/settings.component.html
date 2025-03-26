@@ -1,23 +1,34 @@
 <mat-card class="home-card-1">
   <mat-card-content class="home-card-content">
     <img mat-card-image src="/assets/images/profile/2.svg" alt="Photo of a Shiba Inu">
-    <div class="ml-8  mt-4">
+    <div class="ml-8 mt-4">
       <div class="mt-4">
         <h2 class="mat-subheading-2 flex flex-middle">
-          Language
+          {{ 'settings.language' | translate }}
         </h2>
       </div>
       <div class="mt-8">
         <h4 class="mat-subheading-2 flex flex-middle">
-          Website language
+          {{ 'settings.chooselanguage' | translate }}
         </h4>
       </div>
 
-      <div class="col-md-4 mt-10">
-        <span mat-line class="radio-select">
-          <mat-radio-group><mat-radio-button [checked]="true"></mat-radio-button>EN - English</mat-radio-group>
-        </span>
-      </div>   
+      <div class="flex">
+        <div class="flex-wrapped" *ngIf="isMultiLangEnabled">
+          <mat-radio-group aria-label="Select an option" [ngModel]="selectedLanguage" (ngModelChange)="selectLanguage($event)">
+            <!-- <mat-radio-button *ngFor="let lang of multiLang" [value]="lang.key">{{lang.value}}</mat-radio-button> -->
+            <span *ngFor="let lang of multiLang">
+              <mat-radio-button *ngIf="lang.active" [value]="lang.key">{{lang.value}}</mat-radio-button>
+            </span>
+          </mat-radio-group>
+        </div>
+
+        <div class="flex-wrapped" *ngIf="!isMultiLangEnabled">
+          <mat-radio-group aria-label="Select an option" [ngModel]="selectedLanguage">
+            <mat-radio-button *ngFor="let lang of defaultLang" [value]="lang.key" [checked]="lang.checked">{{lang.value}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
       <!-- <mat-form-field class="language-drop-down-width">
          <mat-select [value]="appLanguage" (selectionChange)="langChanged($event)">
            <mat-option value="en" *ngIf="isLocaleAvailable('')" [disabled]="!isLocaleEnabled('')">
@@ -75,18 +86,18 @@
            </mat-option>
          </mat-select>
        </mat-form-field> -->
-      <div class="flex flex-middle mt-8" (click)="showContentLang = !showContentLang">
+      <!-- <div class="flex flex-middle mt-8" (click)="showContentLang = !showContentLang"> -->
         <!-- <mat-icon *ngIf="showContentLang">keyboard_arrow_down</mat-icon>
          <mat-icon *ngIf="!showContentLang">chevron_right</mat-icon> -->
-        <span i18n>Content Language</span>
-      </div>
-      <mat-selection-list class="flex flex-wrapped mt-4" [formControl]="contentLangForm"
+        <!-- <span i18n>{{ 'settings.contentLanguage' | translate }}</span>
+      </div> -->
+      <!-- <mat-selection-list class="flex flex-wrapped mt-4" [formControl]="contentLangForm"
         (selectionChange)="contentLangChanged()">
         <mat-list-option class="wid-50"
           [checkboxPosition]="'before'" *ngIf="isLocaleAvailable('')"
           [disabled]="!isLocaleEnabled('') || isPrimary('en')" [value]="'en'" [selected]="isPrimary('en')"
           class="width-content-lang">
-          <h4 mat-line>EN - English </h4>
+          <h4 mat-line>{{ 'settings.enEnglish' | translate }}</h4>
         </mat-list-option>
         <mat-list-option [ngStyle]="{ opacity: !isLocaleEnabled('de') || isPrimary('de') ? 0.4 : 1 }"
           [checkboxPosition]="'before'" *ngIf="isLocaleAvailable('de')"
@@ -138,7 +149,7 @@
           <h4 mat-line>Español</h4>
           <p mat-line i18n>Spanish (es)</p>
         </mat-list-option>
-      </mat-selection-list>
+      </mat-selection-list> -->
       <!-- <div class="flex flex-middle flex-between mt-4">
          <span *ngIf="mode === 'settings'" i18n class="ws-mat-primary-text">After changing the application language,
            the
@@ -149,12 +160,11 @@
            </a>
          </div>
        </div> -->
-       <div class="col-md-4 mt-12">
+      <!-- <div class="col-md-4 mt-12">
         <span class="comming-soon">
-          <mat-icon>info</mat-icon>Support for more languages coming soon
+          <mat-icon>info</mat-icon>{{ 'settings.supportLanguages' | translate }}
         </span>
-      </div>   
-
+      </div> -->
     </div>
   </mat-card-content>
 </mat-card>
@@ -165,12 +175,12 @@
 
         <div class="mt-6">
           <h2 class="mat-subheading-2 flex flex-middle">
-            Appearance
+            {{ 'settings.appearance' | translate }}
           </h2>
         </div>
         <div class="mt-10">
           <h4 class="mat-subheading-2 flex flex-middle">
-            Choose base font size
+            {{ 'settings.chooseFontSize' | translate }}
           </h4>
         </div>
 
@@ -180,24 +190,24 @@
             activeFontClass === font.fontClass ? 'radio_button_checked' : 'radio_button_unchecked'
             }}</mat-icon>
           <span [style.fontSize]="font.baseFontSize">
-            <span i18n>Base font size</span>
+            <span i18n>{{ 'settings.baseFontSize' | translate }}</span>
             ({{ font.baseFontSize }})
           </span>
         </button>
         </div>
         <div class="mt-10">
           <h4 class="mat-subheading-2 flex flex-middle">
-            Select theme
+            {{ 'settings.selectTheme' | translate }}
           </h4>
         </div>
         <span mat-line class="theme-radio">
-          <mat-radio-group><mat-radio-button [checked]="true"></mat-radio-button>Default light</mat-radio-group>
+          <mat-radio-group><mat-radio-button [checked]="true"></mat-radio-button>{{ 'settings.defaultLight' | translate }}</mat-radio-group>
 
               </span> <br />
               <img src="/assets/images/profile/theme.svg" class="theme-img" alt="Photo of a Shiba Inu">
-        <div class="col-md-4 mt-10">
+        <div class="col-md-4 mt-10 margin-bottom-l">
           <span class="comming-soon">
-            <mat-icon>info</mat-icon>Support for more themes coming soon
+            <mat-icon>info</mat-icon>{{ 'settings.supportThemes' | translate }}
           </span> 
       </div>
     </div>

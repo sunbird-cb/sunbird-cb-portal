@@ -1,0 +1,97 @@
+<ws-widget-btn-page-back
+[widgetData]="{ url: 'home', titles: titles  }">
+</ws-widget-btn-page-back>
+<div class="gyaan-player-wrapper">
+    <div class="flex player-header item-center justify-center" >
+        <div class="container-balanced w-full">
+            <div class="flex grid grid-cols-2">
+                <div class="w-full">
+                    <div class="img-section img-section-mb flex justify-end w-full">
+                        <div class=" block md:hidden">
+                            <div class="flex justify-start mb-4 text-white">
+                                <div class="flex items-center mr-4 cursor-pointer" (click)="enableShare = true">
+                                    <mat-icon class="mr-2">share</mat-icon>
+                                    <span>Share</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 sector-block mb-4">
+                        <div class="sector flex item-center justify-center" *ngIf="resourceData?.sectorName">
+                            <mat-icon class="mat-icon sector_icon  margin-right-xs">video_library</mat-icon>
+                            {{resourceData?.sectorName || '-'}}
+                        </div>
+                        <div class="sector flex item-center justify-center" *ngIf="resourceData?.subSectorName">
+                            {{resourceData?.subSectorName || '-'}}
+                        </div>
+                    </div>
+                    <div class="mb-8">
+                        <p class="title">{{resourceData?.name}}</p>
+                        <p class="description mb-4" [innerHTML]="resourceData?.instructions | replaceNbspText"></p>
+                        <p class="published-date mb-4">Published on {{resourceData?.lastPublishedOn |date:'MMM d, y'}}</p>
+                    </div>
+                    <div class="flex gap-6 flex-wrap">
+                        <div class="content-details">
+                            <p class="title-label">{{'gyaanKarmayogi.sector'| translate}}</p>
+                            <p class="title-value">{{resourceData?.sectorName || '-'}}</p>
+                        </div>
+                        <div class="content-details">
+                            <p class="title-label">{{'gyaanKarmayogi.subSectors'| translate}}</p>
+                            <p class="title-value">{{resourceData?.subSectorName || '-'}}</p>
+                        </div>
+                        <div class="content-details">
+                            <p class="title-label">{{'gyaanKarmayogi.categories'| translate}}</p>
+                            <p class="title-value">{{resourceData?.resourceCategory || '-'}}</p>
+                        </div>
+                        <div class="content-details">
+                            <p class="title-label">{{'gyaanKarmayogi.resourceType'| translate}}</p>
+                            <p class="title-value">
+                                <span  *ngIf="getMimeType === 'pdf';else otherResource" class="uppsercase">{{getMimeType || '-'}}</span>
+                                <ng-template #otherResource>
+                                    <span class="capitalize">{{getMimeType || '-'}}</span>
+                                </ng-template>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="img-section flex justify-end w-full">
+                    <div>
+                        <div class="flex justify-end mb-4 text-white">
+                            <div class="flex items-center mr-4 cursor-pointer" (click)="enableShare = true">
+                                <mat-icon class="mr-2">share</mat-icon>
+                                <span>{{'gyaanKarmayogi.share'| translate}}</span>
+                            </div>
+                            <!-- <a class="flex items-center mr-4 txt-white cursor-pointer" href="{{resourceData?.previewUrl}}" target="_blank"  download>
+                                <mat-icon class="mr-2">file_download</mat-icon>
+                                <span>{{'gyaanKarmayogi.download'| translate}}</span>
+                            </a> -->
+                        </div>
+                        <img mat-card-image [src]="resourceData?.posterImage" loading="lazy" class="card-img" [alt]="''" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex item-center justify-center mb-8 mt-8">
+    <div class="container-balanced  w-full ">
+        <div class=" player-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+        <div class="mt-4">
+            <p [innerText]="resourceData?.description"></p>
+        </div>
+    </div>
+</div>
+<div class="flex flex-center filter-section  pb-4 bg-primary">
+    <div class="container-balanced w-full">
+        <div class="flex gap-2 pl-4 pr-4 md:pl-0 md:pr-0 flex-wrap items-end justify-between">  
+           <ng-container *ngIf="relatedContentStrip">
+                    <div class="w-full mt-4">
+                        <ws-widget-content-strip-with-tabs [widgetData]="relatedContentStrip"></ws-widget-content-strip-with-tabs>
+                    </div>
+           </ng-container>
+        </div>
+    </div>
+</div>
+<ws-app-share-toc *ngIf="enableShare" [rootOrgId]="rootOrgId" [content]="resourceData" [contentLink]="resourceLink" (resetEnableShare)="resetEnableShare($event)"></ws-app-share-toc>

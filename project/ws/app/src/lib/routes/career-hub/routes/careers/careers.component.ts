@@ -3,7 +3,9 @@ import { NSDiscussData } from '../../../discuss/models/discuss.model'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormControl } from '@angular/forms'
 import { DiscussService } from '../../../discuss/services/discuss.service'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
+import { TranslateService } from '@ngx-translate/core'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-careers',
@@ -25,11 +27,20 @@ export class CareersComponent implements OnInit {
     private router: Router,
     private discussService: DiscussService,
     private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     this.data = this.route.snapshot.data.topics.data
     this.paginationData = this.data.pagination
     this.categoryId = this.route.snapshot.data['careersCategoryId'] || 1
     this.setPagination()
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
   }
 
   ngOnInit() {
@@ -37,6 +48,11 @@ export class CareersComponent implements OnInit {
       this.currentActivePage = x.page || 1
       this.refreshData(this.currentActivePage)
     })
+  }
+
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
   }
 
   filter(key: string | 'timestamp' | 'viewcount') {
@@ -98,9 +114,16 @@ export class CareersComponent implements OnInit {
       label,
       index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.CAREER_TAB,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.CAREER_TAB,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.CAREER,
+      }
     )
   }
 

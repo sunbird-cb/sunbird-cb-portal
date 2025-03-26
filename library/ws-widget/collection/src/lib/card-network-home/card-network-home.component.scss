@@ -58,9 +58,19 @@
     }
   }
 
+  // .text-box {
+
+  // }
+
   .mat-card-header .mat-card-title {
     font-size: 16px;
+    height: 3rem;
+    overflow: hidden;
 
+  }
+  .user-name {
+    word-break: break-all;
+    white-space: initial; 
   }
   .mat-card-subtitle{
     margin-top: -12px;

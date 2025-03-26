@@ -4,7 +4,7 @@ import { MIME_TYPE } from '../constants/mimeType'
 import { ISearchContent } from '../interface/search'
 import { APP_BASE_HREF } from '@angular/common'
 import { Inject, Injectable } from '@angular/core'
-import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils-v2'
 import { NSContent } from '../interface/content'
 
 @Injectable()
@@ -195,6 +195,8 @@ export class AccessControlService {
         return content.primaryCategory || 'Course'
       case 'Program':
         return content.primaryCategory || 'Program'
+      case 'Offline Session':
+        return content.primaryCategory || 'Offline Session'
       default:
         return this.getCategory(content)
     }
