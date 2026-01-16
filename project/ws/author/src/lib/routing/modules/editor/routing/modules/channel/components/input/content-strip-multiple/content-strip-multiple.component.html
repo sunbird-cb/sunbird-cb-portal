@@ -1,18 +1,18 @@
 <form [formGroup]="form" class="column-wise">
   <div>
-    <p i18n>Key</p>
+    <p >Key</p>
     <mat-form-field class="w-full" appearance="outline">
       <input matInput i18n-placeholder placeholder="Key" formControlName="key" #key />
     </mat-form-field>
   </div>
   <div>
-    <p i18n>Title</p>
+    <p >Title</p>
     <mat-form-field class="w-full" appearance="outline">
       <input matInput i18n-placeholder placeholder="Title" formControlName="title" #title />
     </mat-form-field>
   </div>
   <div class="button">
-    <p class="mat-label-design" i18n>Loader</p>
+    <p class="mat-label-design" >Loader</p>
     <mat-slide-toggle
       class="button-design"
       [checked]="this.content?.loader || ''"
@@ -23,29 +23,29 @@
 
   <div formGroupName="stripConfig">
     <div class="button mat-form-field-wrapper">
-      <p class="mat-label-design" i18n>Do you require Post-Card</p>
+      <p class="mat-label-design" >Do you require Post-Card</p>
       <mat-slide-toggle class="button-design" formControlName="postCardForSearch">
       </mat-slide-toggle>
     </div>
     <div class="mat-form-field-wrapper">
-      <p class=" margin-remove-bottom" i18n>Content Card Type</p>
+      <p class=" margin-remove-bottom" >Content Card Type</p>
       <mat-form-field>
         <mat-select formControlName="cardSubType">
-          <mat-option value="standard" i18n>Standard</mat-option>
-          <mat-option value="minimal" i18n>Minimal</mat-option>
-          <mat-option value="space-saving" i18n>Space-Saving</mat-option>
+          <mat-option value="standard" >Standard</mat-option>
+          <mat-option value="minimal" >Minimal</mat-option>
+          <mat-option value="space-saving" >Space-Saving</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
 
-  <p i18n>Filters</p>
-  <ws-auth-ace-editor
+  <p >Filters</p>
+  <!-- <ws-auth-ace-editor
     [mode]="'json'"
     [content]="form.controls.filters.value || {}"
     (data)="form.controls.filters.setValue($event)"
   >
-  </ws-auth-ace-editor>
+  </ws-auth-ace-editor> -->
   <br />
 
   <mat-radio-group
@@ -53,19 +53,19 @@
     [(ngModel)]="requestType"
     [ngModelOptions]="{ standalone: true }"
   >
-    <mat-radio-button class="radio-button-design" value="ids" i18n>
+    <mat-radio-button class="radio-button-design" value="ids" >
       Content IDs
     </mat-radio-button>
-    <mat-radio-button class="radio-button-design" value="api" i18n>
+    <mat-radio-button class="radio-button-design" value="api" >
       Provide URL for fetching content
     </mat-radio-button>
-    <mat-radio-button class="radio-button-design" value="search" i18n>
+    <mat-radio-button class="radio-button-design" value="search" >
       Provide Search Request
     </mat-radio-button>
-    <mat-radio-button class="radio-button-design" value="searchV6" i18n>
+    <mat-radio-button class="radio-button-design" value="searchV6" >
       Provide Search Request
     </mat-radio-button>
-    <mat-radio-button class="radio-button-design" value="searchRecommendation" i18n>
+    <mat-radio-button class="radio-button-design" value="searchRecommendation" >
       Provide Search Request
     </mat-radio-button>
   </mat-radio-group>
@@ -77,40 +77,40 @@
       </mat-form-field>
     </div> -->
     <div *ngSwitchCase="'search'">
-      <ws-auth-ace-editor
+      <!-- <ws-auth-ace-editor
         [mode]="'json'"
         [content]="form?.controls?.request?.get('search')?.value || {}"
         (data)="update('api', $event)"
       >
-      </ws-auth-ace-editor>
+      </ws-auth-ace-editor> -->
     </div>
     <div *ngSwitchCase="'searchV6'">
-      <ws-auth-ace-editor
+      <!-- <ws-auth-ace-editor
         [mode]="'json'"
         [content]="form?.controls?.request?.get('searchV6')?.value || {}"
         (data)="update('searchV6', $event)"
       >
-      </ws-auth-ace-editor>
+      </ws-auth-ace-editor> -->
     </div>
     <div *ngSwitchCase="'searchRegionRecommendation'">
-      <ws-auth-ace-editor
+      <!-- <ws-auth-ace-editor
         [mode]="'json'"
         [content]="form?.controls?.request?.get('searchRegionRecommendation')?.value || {}"
         (data)="update('api', $event)"
       >
-      </ws-auth-ace-editor>
+      </ws-auth-ace-editor> -->
     </div>
     <div *ngSwitchCase="'api'">
-      <ws-auth-ace-editor
+      <!-- <ws-auth-ace-editor
         [mode]="'json'"
         [content]="form?.controls?.request?.get('api')?.value || {}"
         (data)="update('api', $event)"
       >
-      </ws-auth-ace-editor>
+      </ws-auth-ace-editor> -->
     </div>
 
     <div *ngSwitchCase="'ids'">
-      <h3 i18n>
+      <h3 >
         Provide Content IDs in the order in which it needs to appear. ( You can find the id of a
         content by going to its details page or player. It will be part of its url and looks like
         “lex_auth_012893540415217664101”).

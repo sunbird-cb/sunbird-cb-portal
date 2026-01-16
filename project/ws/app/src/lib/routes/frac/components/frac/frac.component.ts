@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { FracService } from '../../services/frac.service'
-// import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { IFrac } from '../../interfaces/frac.model'
 

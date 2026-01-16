@@ -1,6 +1,6 @@
 <div class="page-container">
-  <!-- <h2 *ngIf="error" class="mat-title text-center" color="warn" i18n>Error Fetching Data</h2>
-  <h2 *ngIf="!error && !catalog?.length" class="mat-title text-center" i18n>Catalog data will appear here</h2> -->
+  <!-- <h2 *ngIf="error" class="mat-title text-center" color="warn" >Error Fetching Data</h2>
+  <h2 *ngIf="!error && !catalog?.length" class="mat-title text-center" >Catalog data will appear here</h2> -->
   <mat-card>
     <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="tree">
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>

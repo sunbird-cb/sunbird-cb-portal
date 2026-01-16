@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsContent, NsError, NSSearch, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, ValueService, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, ValueService, UtilityService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { FilterDisplayComponent } from '../../components/filter-display/filter-display.component'
 import { IFilterUnitResponse, ISearchRequestV2, ISearchTab } from '../../models/search.model'
@@ -13,7 +13,7 @@ import { SearchServService } from '../../services/search-serv.service'
   styleUrls: ['./learning.component.scss'],
 })
 export class LearningComponent implements OnInit, OnDestroy {
-  @ViewChild(FilterDisplayComponent, { static: false })
+  @ViewChild(FilterDisplayComponent)
   appFilterDisplay: FilterDisplayComponent | null = null
 
   removable = true

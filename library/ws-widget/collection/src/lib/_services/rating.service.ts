@@ -13,6 +13,7 @@ const API_END_POINTS = {
   GET_RATING_LOOKUP: `${PROXY_SLAG_V8}/ratings/v1/ratingLookUp`,
   GET_AUTHOR_REPLY: (contentId: string, userID: string) =>
   `${PROXY_SLAG_V8}/ratings/v1/read/${contentId}/Course/${userID}`,
+  POST_AUTHOR_REPLY: `${PROXY_SLAG_V8}/ratings/v2/read`,
 }
 
 @Injectable({
@@ -24,9 +25,13 @@ export class RatingService {
   constructor(private http: HttpClient) { }
 
   getRating(contentId: string, contentType: string, userId: string): Observable<any> {
-    return this.http.get<any>(
-      API_END_POINTS.GET_RATING(contentId, contentType, userId)
-    )
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      return this.http.get<any>(
+        API_END_POINTS.GET_RATING(contentId, contentType, userId)
+      )
+    }
+      return Observable.of({})
   }
 
   addOrUpdateRating(req: NsAppRating.IRating): Observable<any> {
@@ -36,15 +41,29 @@ export class RatingService {
   }
 
   getRatingSummary(contentId: string, contentType: string): Observable<any> {
-    return this.http.get<any>(
-      API_END_POINTS.GET_RATING_SUMMARY(contentId, contentType)
-    )
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      return this.http.get<any>(
+        API_END_POINTS.GET_RATING_SUMMARY(contentId, contentType)
+      )
+    }
+    return Observable.of({})
   }
 
   getRatingLookup(req: NsAppRating.ILookupRequest): Observable<any> {
     return this.http.post<any>(
       API_END_POINTS.GET_RATING_LOOKUP, req
     )
+  }
+
+  getRatingReply(req: any): Observable<any> {
+    const forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
+    if (!forPreview) {
+      return this.http.post<any>(
+        API_END_POINTS.POST_AUTHOR_REPLY, req
+      )
+    }
+      return Observable.of({})
   }
 
   getRatingIcon(ratingIndex: number, avg: number): 'star' | 'star_border' | 'star_half' {

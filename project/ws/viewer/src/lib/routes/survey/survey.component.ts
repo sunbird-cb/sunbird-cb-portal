@@ -2,10 +2,11 @@ import { AccessControlService } from '@ws/author'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
-import { WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils'
+import { WsEvents, EventService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
+import * as _ from 'lodash'
 // import { environment } from 'src/environments/environment'
 
 @Component({
@@ -33,6 +34,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       collectionId: '',
       courseName: '',
       progressStatus: '',
+      wfClientVersion: '',
     },
   }
   isPreviewMode = false
@@ -52,7 +54,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (
-      this.activatedRoute.snapshot.queryParamMap.get('preview') &&
+      this.activatedRoute.snapshot.queryParamMap.get('preview') === 'true' &&
       !this.accessControlSvc.authoringConfig.newDesign
     ) {
       this.isPreviewMode = true
@@ -80,11 +82,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
           if (this.surveyData && this.surveyData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
-                this.activatedRoute.snapshot.queryParams.collectionId,
                 this.surveyData.identifier,
               )
             } else {
-              await this.fetchContinueLearning(this.surveyData.identifier, this.surveyData.identifier)
+              await this.fetchContinueLearning(this.surveyData.identifier)
             }
           }
           this.widgetResolverSurveyData.widgetData.surveyUrl = this.surveyData
@@ -94,6 +95,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
           : ''
           this.widgetResolverSurveyData.widgetData.disableTelemetry = true
           this.isFetchingDataComplete = true
+          this.widgetResolverSurveyData.widgetData.wfClientVersion = _.get(this.surveyData, 'wfClientVersion', '')
+
         })
     } else {
       this.dataSubscription = this.activatedRoute.data.subscribe(
@@ -124,11 +127,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
           if (this.surveyData && this.surveyData.identifier) {
             if (this.activatedRoute.snapshot.queryParams.collectionId) {
               await this.fetchContinueLearning(
-                this.activatedRoute.snapshot.queryParams.collectionId,
                 this.surveyData.identifier,
               )
             } else {
-              await this.fetchContinueLearning(this.surveyData.identifier, this.surveyData.identifier)
+              await this.fetchContinueLearning(this.surveyData.identifier)
             }
           }
           this.widgetResolverSurveyData.widgetData.surveyUrl = this.surveyData
@@ -150,6 +152,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.surveyData)
           }
           this.isFetchingDataComplete = true
+          this.widgetResolverSurveyData.widgetData.wfClientVersion = _.get(this.surveyData, 'wfClientVersion', '')
         },
         () => { },
       )
@@ -199,7 +202,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
     if (this.forPreview) {
       return
     }
-
     const event = {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Info,
@@ -213,12 +215,19 @@ export class SurveyComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.PDF,
         url: data ? data.artifactUrl : null,
+        object: {
+          id: data ? data.identifier : null,
+          type: data ? data.primaryCategory : '',
+          rollup: {
+            l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
+          },
+        },
       },
     }
     this.eventSvc.dispatchEvent(event)
   }
 
-  async fetchContinueLearning(collectionId: string, surveyId: string) {
+  async fetchContinueLearning(surveyId: string) {
     return new Promise(resolve => {
       let userId
       if (this.configSvc.userProfile) {
@@ -228,28 +237,42 @@ export class SurveyComponent implements OnInit, OnDestroy {
       // this.activatedRoute.data.subscribe(data => {
       //   userId = data.profileData.data.userId
       // })
-      const req: NsContent.IContinueLearningDataReq = {
-        request: {
-          userId,
-          batchId: this.batchId,
-          courseId: collectionId || '',
-          contentIds: [],
-          fields: ['progressdetails'],
-        },
-      }
-      this.contentSvc.fetchContentHistoryV2(req).subscribe(
-        data => {
-          if (data && data.result && data.result.contentList.length) {
-            for (const content of data.result.contentList) {
-              if (content.contentId === surveyId) {
-                this.widgetResolverSurveyData.widgetData.progressStatus = content.status
+      if (this.activatedRoute.snapshot.queryParams.collectionId
+        && this.activatedRoute.snapshot.queryParams.batchId
+        && surveyId
+      ) {
+        const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+          this.activatedRoute.snapshot.queryParams.collectionId,
+          this.activatedRoute.snapshot.queryParams.batchId,
+          surveyId)
+        const language = this.viewerSvc.getResourceContentLanguage(surveyId) 
+        const req: NsContent.IContinueLearningDataReq = {
+          request: {
+            userId,
+            language,
+            batchId: requestCourse.batchId,
+            courseId: requestCourse.courseId || '',
+            contentIds: [],
+            fields: ['progressdetails'],
+          },
+        }
+        this.contentSvc.fetchContentHistoryV2(req).subscribe(
+          data => {
+            if (data && data.result && data.result.contentList.length) {
+              this.contentSvc.setProgramChildResumeData(data.result.contentList, requestCourse.courseId)
+              for (const content of data.result.contentList) {
+                if (content.contentId === surveyId) {
+                  this.widgetResolverSurveyData.widgetData.progressStatus = content.status
+                }
               }
             }
-          }
-          resolve(true)
-        },
-        () => resolve(true),
-      )
+            resolve(true)
+          },
+          () => resolve(true),
+        )
+        resolve(true)
+      }
+      resolve(true)
     })
   }
 

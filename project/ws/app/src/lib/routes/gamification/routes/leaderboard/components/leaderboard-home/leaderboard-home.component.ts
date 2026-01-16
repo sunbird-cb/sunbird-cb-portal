@@ -4,9 +4,9 @@ import {
   EventEmitter,
 } from '@angular/core'
 import { MatSelectChange, MatButtonToggleChange } from '@angular/material'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { GamificationService } from '../../../../services/gamification.service'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { DatePipe } from '@angular/common'
 
 @Component({
@@ -40,8 +40,8 @@ export class LeaderboardHomeComponent implements OnInit {
   currentTab = 'Guild'
   guildMode = true
   activityMode = false
-  startDate = new FormControl(new Date())
-  endDate = new FormControl(new Date())
+  startDate = new UntypedFormControl(new Date())
+  endDate = new UntypedFormControl(new Date())
 
   @Output() langChangedEvent = new EventEmitter<string>()
 

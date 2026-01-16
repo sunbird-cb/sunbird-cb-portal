@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject, forwardRef, ViewChild, ElementRef } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms'
 import { AppDateAdapter, APP_DATE_FORMATS, startWithYearformat } from '@ws/app'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { AppTocService } from '../../services/app-toc.service'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core'
 
 @Component({
   selector: 'ws-app-create-batch-dialog',
@@ -16,7 +17,7 @@ import { AppTocService } from '../../services/app-toc.service'
   ],
 })
 export class CreateBatchDialogComponent implements OnInit {
-  createBatchForm: FormGroup
+  createBatchForm: UntypedFormGroup
   enrollmentTypes = ['open', 'closed']
   namePatern = `^[a-zA-Z\\s\\']{1,32}$`
   today = new Date()
@@ -31,17 +32,17 @@ export class CreateBatchDialogComponent implements OnInit {
     private snackBar: MatSnackBar,
     private configSvc: ConfigurationsService
   ) {
-    this.createBatchForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      description: new FormControl('', []),
-      enrollmentType: new FormControl(this.enrollmentTypes[0], [Validators.required]),
-      startDate: new FormControl('', [Validators.required]),
-      endDate: new FormControl('', []),
-      enrollmentEndDate: new FormControl('', []),
+    this.createBatchForm = new UntypedFormGroup({
+      name: new UntypedFormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+      description: new UntypedFormControl('', []),
+      enrollmentType: new UntypedFormControl(this.enrollmentTypes[0], [Validators.required]),
+      startDate: new UntypedFormControl('', [Validators.required]),
+      endDate: new UntypedFormControl('', []),
+      enrollmentEndDate: new UntypedFormControl('', []),
       // createdFor: new FormControl('', []),
-      mentors: new FormControl('', []),
-      courseId: new FormControl('', []),
-      createdBy: new FormControl('', []),
+      mentors: new UntypedFormControl('', []),
+      courseId: new UntypedFormControl('', []),
+      createdBy: new UntypedFormControl('', []),
     })
   }
 

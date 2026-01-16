@@ -32,13 +32,13 @@
         <mat-icon class="px-2 grey-icons">chat</mat-icon>
         <span>{{result.postCount}}</span>
       </div>
-      <span class="ws-mat-primary-text"><span i18n>Modified: </span>{{result.dtLastModified | date}}</span>
+      <span class="ws-mat-primary-text"><span >Modified: </span>{{result.dtLastModified | date}}</span>
       <ws-widget-btn-social-like *ngIf="showSocialLike" [postId]="post?.postId"
         [postCreatorId]="post?.mainPost?.postCreator?.postCreatorId" [activity]="post?.mainPost?.activity">
       </ws-widget-btn-social-like>
     </mat-card>
   </div>
-  <h2 class="text-center i18n margin-top-m" *ngIf="!forumViewResponse?.result.length">
+  <h2 class="text-center margin-top-m" *ngIf="!forumViewResponse?.result.length">
     There are no forums present
   </h2>
 

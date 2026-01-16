@@ -1,70 +1,70 @@
 <div class="flex flex-between">
   <h2 mat-dialog-title>
     <ng-container [ngSwitch]="widget.widgetSubType">
-      <ng-container i18n *ngSwitchCase="'cardBreadcrumb'">
+      <ng-container *ngSwitchCase="'cardBreadcrumb'">
         Breadcrumb
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'playerVideo'">
+      <ng-container *ngSwitchCase="'playerVideo'">
         Video
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'playerAudio'">
+      <ng-container *ngSwitchCase="'playerAudio'">
         Audio
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'elementHtml'">
+      <ng-container *ngSwitchCase="'elementHtml'">
         HTML
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'pageEmbedded'">
+      <ng-container *ngSwitchCase="'pageEmbedded'">
         Embed
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'sliderBanners'">
+      <ng-container *ngSwitchCase="'sliderBanners'">
         Banner
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'imageMapResponsive'">
+      <ng-container *ngSwitchCase="'imageMapResponsive'">
         Image Map
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'gridLayout'">
+      <ng-container *ngSwitchCase="'gridLayout'">
         Grid
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'linearLayout'">
+      <ng-container *ngSwitchCase="'linearLayout'">
         Linear
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'tabLayout'">
+      <ng-container *ngSwitchCase="'tabLayout'">
         Tab
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'videoWrapper'">
+      <ng-container *ngSwitchCase="'videoWrapper'">
         Video
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'selectorResponsive'">
+      <ng-container *ngSwitchCase="'selectorResponsive'">
         Selector
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'galleryView'">
+      <ng-container *ngSwitchCase="'galleryView'">
         Gallery
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'contentStripMultiple'">
+      <ng-container *ngSwitchCase="'contentStripMultiple'">
         Content Strip Container
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'contentStripSingle'">
+      <ng-container *ngSwitchCase="'contentStripSingle'">
         Content Strip Container
       </ng-container>
       <ng-container *ngSwitchCase="''">
-        <ng-container i18n *ngIf="widget.purpose === 'holder'">
+        <ng-container *ngIf="widget.purpose === 'holder'">
           Card Strip
         </ng-container>
-        <ng-container i18n *ngIf="!widget.purpose">
+        <ng-container *ngIf="!widget.purpose">
           Common Widget
         </ng-container>
       </ng-container>
-      <ng-container i18n *ngSwitchDefault>
+      <ng-container *ngSwitchDefault>
         Common Widget
       </ng-container>
     </ng-container>
     <ng-container *ngIf="widget.purpose">(
-      <ng-container i18n>as </ng-container>
-      <ng-container i18n *ngIf="widget.purpose === 'info'">Info Widget</ng-container>
-      <ng-container i18n *ngIf="widget.purpose === 'preWidget'">Pre Widget</ng-container>
-      <ng-container i18n *ngIf="widget.purpose === 'postWidget'">Post Widget</ng-container>
-      <ng-container i18n *ngIf="widget.purpose === 'errorWidget'">Error Widget</ng-container>
-      <ng-container i18n *ngIf="widget.purpose === 'noDataWidget'">No Data Widget</ng-container>
+      <ng-container >as </ng-container>
+      <ng-container *ngIf="widget.purpose === 'info'">Info Widget</ng-container>
+      <ng-container *ngIf="widget.purpose === 'preWidget'">Pre Widget</ng-container>
+      <ng-container *ngIf="widget.purpose === 'postWidget'">Post Widget</ng-container>
+      <ng-container *ngIf="widget.purpose === 'errorWidget'">Error Widget</ng-container>
+      <ng-container *ngIf="widget.purpose === 'noDataWidget'">No Data Widget</ng-container>
       )
     </ng-container>
   </h2>
@@ -74,33 +74,33 @@
 </div>
 
 <div *ngIf="widget.widgetSubType === 'elementHtml'">
-  <ng-container i18n>
+  <ng-container >
     You can provide inputs in any one of the following ways.
   </ng-container>
   <ol type="a">
-    <li i18n>Using HTML editor. (Within the editor, you may also copy paste the source code or modify it)</li>
+    <li >Using HTML editor. (Within the editor, you may also copy paste the source code or modify it)</li>
     <li>
-      <ng-container i18n>
+      <ng-container >
         Use Mustache web template system to add your code. See documentation in
       </ng-container>
       <a href="https://mustache.github.io/" rel="noopener noreferrer" target="_blank"> https://mustache.github.io/
       </a>
-      <ng-container i18n>Enter both HTML and JSON data.</ng-container>
+      <ng-container >Enter both HTML and JSON data.</ng-container>
     </li>
   </ol>
 </div>
 <div *ngIf="widget.widgetSubType === 'selectorResponsive'">
-  <ng-container i18n>
+  <ng-container >
     Responsive container allows you to add different widgets for different devices.
     <br> Relevant widget will be chosen based on user’s screen resolution.
     <br> How to use this widget? :
     <br>
   </ng-container>
   <ol type="a">
-    <li i18n>
+    <li >
       Drag and Drop a widget and enter resolution information in the “Additional Information” section of the widget.
     </li>
-    <li i18n>
+    <li >
       To add a new widget for different resolution, go to Edit section and Add a Child.
     </li>
   </ol>
@@ -110,26 +110,26 @@
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>
+        <mat-panel-title >
           Container Style Data
         </mat-panel-title>
       </mat-expansion-panel-header>
       <h3>
         <div class="margin-top-xs flex flex-middle">
-          <ng-container i18n>CSS Class for Widget</ng-container>
+          <ng-container >CSS Class for Widget</ng-container>
           <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo = 'class'">info
           </mat-icon>
         </div>
         <span *ngIf="showInfo === 'class'">
-          <ng-container i18n>Use pre-defined classes of Tailwind CSS framework. Click </ng-container>
-          <a href="https://tailwindcss.com/" rel="noopener noreferrer" target="_blank" i18n>here</a>
-          <ng-container i18n> to see its documentation</ng-container>
+          <ng-container >Use pre-defined classes of Tailwind CSS framework. Click </ng-container>
+          <a href="https://tailwindcss.com/" rel="noopener noreferrer" target="_blank" >here</a>
+          <ng-container > to see its documentation</ng-container>
         </span>
       </h3>
       <ws-auth-chips [content]="widget.widgetHostClass" (data)="widget.widgetHostClass = $event"></ws-auth-chips>
       <h3>
         <div class="margin-top-xs flex flex-middle">
-          <ng-container i18n>CSS Style for Widget</ng-container>
+          <ng-container >CSS Style for Widget</ng-container>
           <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo = 'css'">info
           </mat-icon>
         </div>
@@ -138,13 +138,13 @@
           "blue" {{'}'}}
         </span>
       </h3>
-      <ws-auth-ace-editor [mode]="'json'" [content]="widget.widgetHostStyle || {}"
+      <!-- <ws-auth-ace-editor [mode]="'json'" [content]="widget.widgetHostStyle || {}"
         (data)="widget.widgetHostStyle = $event">
-      </ws-auth-ace-editor>
+      </ws-auth-ace-editor> -->
     </mat-expansion-panel>
     <mat-expansion-panel *ngIf="canShowEdit" [expanded]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>
+        <mat-panel-title >
           Data
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -152,7 +152,7 @@
       <div class="my-5">
         <ng-container [ngSwitch]="widget.widgetSubType">
           <ng-container *ngSwitchCase="'gridLayout'">
-            <p i18n>Gutter</p>
+            <p >Gutter</p>
             <mat-form-field appearance="outline">
               <input type="number" matInput i18n-placeholder placeholder="0" [(ngModel)]="widget.data.gutter">
             </mat-form-field>
@@ -205,7 +205,7 @@
           </ng-container>
           <ng-container *ngSwitchCase="'contentStripMultiple'">
             <div class="button">
-              <p i18n>Loader</p>
+              <p >Loader</p>
               <mat-slide-toggle [checked]="widget.data.loader || '' " [(ngModel)]="widget.data.loader">
               </mat-slide-toggle>
             </div>
@@ -222,7 +222,7 @@
               </ng-container> -->
           </ng-container>
           <!-- <ng-container *ngSwitchDefault>
-              <h3 i18n>Plain JSON Editor</h3>
+              <h3 >Plain JSON Editor</h3>
               <ws-auth-ace-editor [mode]="'json'" [content]="widget || {}"
                 (data)="content = $event; content.isValid = true">
               </ws-auth-ace-editor>
@@ -243,11 +243,11 @@
       <!--Grid Panel start-->
       <ng-container [ngSwitch]="parentType">
         <ng-container *ngSwitchCase="'gridLayout'">
-          <h3 i18n>Position Percentage</h3>
+          <h3 >Position Percentage</h3>
           <mat-form-field class="mr-6">
-            <mat-label i18n>Mobile</mat-label>
+            <mat-label >Mobile</mat-label>
             <mat-select [(ngModel)]="widget.dimensions.small" name="small">
-              <mat-option value="" i18n>Select</mat-option>
+              <mat-option value="" >Select</mat-option>
               <mat-option
                 *ngFor="let i of ['8%','16%','25%','33%','42%','50%','58%','67%','75%','83%','92%','100%']; let index = index"
                 [value]="index+1">
@@ -256,9 +256,9 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="mr-6">
-            <mat-label i18n>Tablet</mat-label>
+            <mat-label >Tablet</mat-label>
             <mat-select [(ngModel)]="widget.dimensions.medium" name="medium">
-              <mat-option value="" i18n>Select</mat-option>
+              <mat-option value="" >Select</mat-option>
               <mat-option
                 *ngFor="let i of ['8%','16%','25%','33%','42%','50%','58%','67%','75%','83%','92%','100%']; let index = index"
                 [value]="index+1">
@@ -267,9 +267,9 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="mr-6">
-            <mat-label i18n>Desktop</mat-label>
+            <mat-label >Desktop</mat-label>
             <mat-select [(ngModel)]="widget.dimensions.large" name="large">
-              <mat-option value="" i18n>Select</mat-option>
+              <mat-option value="" >Select</mat-option>
               <mat-option
                 *ngFor="let i of ['8%','16%','25%','33%','42%','50%','58%','67%','75%','83%','92%','100%']; let index = index"
                 [value]="index+1">
@@ -278,9 +278,9 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field>
-            <mat-label i18n>Big Screens</mat-label>
+            <mat-label >Big Screens</mat-label>
             <mat-select [(ngModel)]="widget.dimensions.xLarge" name="xLarge">
-              <mat-option value="" i18n>Select</mat-option>
+              <mat-option value="" >Select</mat-option>
               <mat-option
                 *ngFor="let i of ['8%','16%','25%','33%','42%','50%','58%','67%','75%','83%','92%','100%']; let index = index"
                 [value]="index+1">
@@ -290,20 +290,20 @@
           </mat-form-field>
           <h3>
             <div class="margin-top-xs flex flex-middle">
-              <ng-container i18n>CSS Class for Widget</ng-container>
+              <ng-container >CSS Class for Widget</ng-container>
               <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo = 'gridClass'">info
               </mat-icon>
             </div>
             <span *ngIf="showInfo === 'gridClass'">
-              <ng-container i18n>Use pre-defined classes of Tailwind CSS framework. Click </ng-container>
-              <a href="https://tailwindcss.com/" target="_blank" i18n>here</a>
-              <ng-container i18n> to see its documentation.</ng-container>
+              <ng-container >Use pre-defined classes of Tailwind CSS framework. Click </ng-container>
+              <a href="https://tailwindcss.com/" target="_blank" >here</a>
+              <ng-container > to see its documentation.</ng-container>
             </span>
           </h3>
           <ws-auth-chips [content]="widget.className" (data)="widget.className = $event"></ws-auth-chips>
           <h3>
             <div class="margin-top-xs flex flex-middle">
-              <ng-container i18n>CSS Style for Widget</ng-container>
+              <ng-container >CSS Style for Widget</ng-container>
               <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo = 'gridCss'">info
               </mat-icon>
             </div>
@@ -312,27 +312,27 @@
               "blue" {{'}'}}
             </span>
           </h3>
-          <ws-auth-ace-editor [mode]="'json'" [content]="widget.styles || {}" (data)="widget.styles = $event">
-          </ws-auth-ace-editor>
+          <!-- <ws-auth-ace-editor [mode]="'json'" [content]="widget.styles || {}" (data)="widget.styles = $event">
+          </ws-auth-ace-editor> -->
         </ng-container>
         <ng-container *ngSwitchCase="'selectorResponsive'">
           <div class="flex">
             <div class="w-1/2 ">
-              <p class="required" i18n>Minimum Width (px)</p>
+              <p class="required" >Minimum Width (px)</p>
               <mat-form-field appearance="outline">
                 <input type="number" matInput i18n-placeholder placeholder="Enter number"
                   [(ngModel)]="widget.addOnData.minWidth" #imageHeight required>
-                <mat-error *ngIf="!imageHeight.value" i18n>
+                <mat-error *ngIf="!imageHeight.value" >
                   The above field is required
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="w-1/2 ">
-              <p class="required" i18n>Maximum Width (px)</p>
+              <p class="required" >Maximum Width (px)</p>
               <mat-form-field appearance="outline">
                 <input type="number" matInput i18n-placeholder placeholder="Enter Number"
                   [(ngModel)]="widget.addOnData.maxWidth" #imageWidth required>
-                <mat-error *ngIf="!imageWidth.value" i18n>
+                <mat-error *ngIf="!imageWidth.value" >
                   The above field is required
                 </mat-error>
               </mat-form-field>
@@ -351,8 +351,8 @@
               [(ngModel)]="widget.addOnData.description">
           </mat-form-field>
           <button class="button-design" type="button" mat-stroked-button (click)="imageFile.click()">
-            <ng-container *ngIf="!widget.addOnData?.thumbnail" i18n>Choose Image</ng-container>
-            <ng-container *ngIf="widget.addOnData?.thumbnail" i18n>Change Image</ng-container>
+            <ng-container *ngIf="!widget.addOnData?.thumbnail" >Choose Image</ng-container>
+            <ng-container *ngIf="widget.addOnData?.thumbnail" >Change Image</ng-container>
             <input type="file" (change)="upload($event.target.files[0]); imageFile.value = null" class="hidden"
               #imageFile accept="image/*" />
           </button>
@@ -364,13 +364,13 @@
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>
+        <mat-panel-title >
           Free Flow Editor
         </mat-panel-title>
       </mat-expansion-panel-header>
       <h3>
         <div class="margin-top-xs flex flex-middle">
-          <ng-container i18n>Not advisable to edit without prior knowledge of JSON</ng-container>
+          <ng-container >Not advisable to edit without prior knowledge of JSON</ng-container>
           <!-- <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo = 'json'">info
           </mat-icon> -->
         </div>
@@ -378,13 +378,13 @@
           Change this if you know the required JSON structure. Incorrect syntax or data will not load properly.
         </span>
       </h3>
-      <ws-auth-ace-editor [mode]="'json'" [content]="widget.data || {}"
+      <!-- <ws-auth-ace-editor [mode]="'json'" [content]="widget.data || {}"
         (data)="widget.data = $event; directEdit = true">
-      </ws-auth-ace-editor>
+      </ws-auth-ace-editor> -->
     </mat-expansion-panel>
   </mat-accordion>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close cdkFocusInitial i18n>Cancel</button>
-  <button mat-button (click)="close()" i18n>Change</button>
+  <button mat-button mat-dialog-close cdkFocusInitial >Cancel</button>
+  <button mat-button (click)="close()" >Change</button>
 </mat-dialog-actions>

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable, of, Subject } from 'rxjs'
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ISearchAutoComplete, ISearchQuery } from '../../search/models/search.model'
 import { SearchApiService } from '../../search/apis/search-api.service'
 
 const API_END_POINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
+  SEARCH_V4: `/apis/proxies/v8/sunbirdigot/v4/search`,
+  SEARCH_EXT_CONTENT: `/apis/proxies/v8/cios/v1/search/content`,
 }
 
 @Injectable({
@@ -29,7 +31,12 @@ export class GbSearchService {
   fetchSearchData(request: any): Observable<any> {
     return this.http.post<any>(API_END_POINTS.SEARCH_V6, request)
   }
-
+  fetchSearchDataByCategory(request: any): Observable<any> {
+    return this.http.post<any>(API_END_POINTS.SEARCH_V4, request)
+  }
+  fetchSearchDataforCios(request: any): Observable<any> {
+    return this.http.post<any>(API_END_POINTS.SEARCH_EXT_CONTENT, request)
+  }
   public notifyOther(data: any) {
     if (data) {
       this.removeFilter.next(data)

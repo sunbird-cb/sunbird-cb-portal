@@ -6,17 +6,17 @@
       *ngIf="errorData"
       [src]="isDarkMode ? errorData?.errorImageDark : errorData?.errorImageLite"
     />
-    <div class="error-message ws-mat-primary-text font-weight-bold" i18n>
+    <div class="error-message ws-mat-primary-text font-weight-bold" >
       Oops! Something went wrong
     </div>
   </div>
   <div class="error-support">
-    <div class="support-message" i18n>We are facing some technical difﬁculties.</div>
-    <div class="support-message" i18n>You might want to:</div>
+    <div class="support-message" >We are facing some technical difﬁculties.</div>
+    <div class="support-message" >You might want to:</div>
     <ul>
-      <li i18n>Empty the cache and reload the page.</li>
+      <li >Empty the cache and reload the page.</li>
       <li>
-        <ng-container i18n>Do you suspect a site problem? </ng-container>
+        <ng-container >Do you suspect a site problem? </ng-container>
       </li>
     </ul>
     <!-- <a

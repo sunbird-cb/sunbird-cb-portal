@@ -1,7 +1,7 @@
 import { AuthInitService } from '@ws/author/src/lib/services/init.service'
 import { Component, OnInit, Inject } from '@angular/core'
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
 import { NSContent } from '@ws/author/src/lib/interface/content'
 
 @Component({
@@ -10,13 +10,13 @@ import { NSContent } from '@ws/author/src/lib/interface/content'
   styleUrls: ['./comments-dialog.component.scss'],
 })
 export class CommentsDialogComponent implements OnInit {
-  commentsForm!: FormGroup
+  commentsForm!: UntypedFormGroup
   contentMeta!: NSContent.IContentMeta
   history = <NSContent.IComments[]>[]
   isSubmitPressed = false
   showNewFlow = false
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<CommentsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: NSContent.IContentMeta,
     private authInitService: AuthInitService,
@@ -47,7 +47,7 @@ export class CommentsDialogComponent implements OnInit {
 
   submitData() {
     if (
-      this.commentsForm.controls.comments.value &&
+      this.commentsForm.controls.comments.value && this.contentMeta.status &&
       ((!['Draft', 'Live'].includes(this.contentMeta.status) &&
         this.commentsForm.controls.action.value) ||
         ['Draft', 'Live'].includes(this.contentMeta.status))

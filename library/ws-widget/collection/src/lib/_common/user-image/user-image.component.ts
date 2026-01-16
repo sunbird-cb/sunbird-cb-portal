@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 // import { UserMiniProfileService } from '../../mini-profile/user-mini-profile.service'
 // import { NsMiniProfile } from '../../mini-profile/mini-profile.model'
 

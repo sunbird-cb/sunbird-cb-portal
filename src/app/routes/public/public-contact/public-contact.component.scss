@@ -241,3 +241,8 @@ h2.main_title_text {
     }
   }
 }
+
+::ng-deep.mat-form-field-underline {
+  background-color: transparent !important;
+  height: 0 !important;
+}

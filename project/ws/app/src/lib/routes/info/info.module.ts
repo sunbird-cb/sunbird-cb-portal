@@ -20,6 +20,7 @@ import { ReportproblemModule } from './report-problem/reprotproblem.module'
     AboutVideoModule,
     FeedBackModule,
     FaqModule,
-    ReportproblemModule],
+    ReportproblemModule,
+ ],
 })
 export class InfoModule { }

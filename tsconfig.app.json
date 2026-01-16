@@ -2,11 +2,17 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": ["node", "@types/zip.js"]
+    "types": ["node", "@types/zip.js"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowJs": true,
   },
   "angularCompilerOptions": {
     "enableIvy": false
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/test.ts", "src/**/*.spec.ts"]
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": ["src/**/*.d.ts"]
 }

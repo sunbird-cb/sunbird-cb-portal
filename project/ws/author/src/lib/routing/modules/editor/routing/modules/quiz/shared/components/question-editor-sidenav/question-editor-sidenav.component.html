@@ -3,7 +3,7 @@
     <div class="pb-1" *ngIf="type === 'assessment'">
       <div class="flex pt-4 pb-3 items-center justify-center">
         <mat-card-title class="pt-2 text-xl flex justify-center ws-mat-primary-text w-full"
-          *ngIf="type === 'assessment'" i18n>
+          *ngIf="type === 'assessment'" >
           Questions</mat-card-title>
         <button *ngIf="!mediumScreen" class="float-right" (click)="showContent = !showContent" mat-icon-button
           i18n-matTooltip matTooltipPosition="right" matTooltip="Minimize the side panel"
@@ -16,8 +16,8 @@
           <mat-select [(ngModel)]="questionType" placeholder="Question Type">
             <mat-option value="mcq-sca" i18n="MCQ| acronym for multiple choice question">MCQ</mat-option>
 
-            <mat-option value="fitb" i18n>Fill in the Blanks</mat-option>
-            <mat-option value="mtf" i18n>Match the Following</mat-option>
+            <mat-option value="fitb" >Fill in the Blanks</mat-option>
+            <mat-option value="mtf" >Match the Following</mat-option>
           </mat-select>
         </mat-form-field>
         <button (click)="addEntity()"
@@ -36,7 +36,7 @@
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
       </div>
-      <mat-card-title class="text-xl flex justify-center w-10/12 ws-mat-primary-text w-full" i18n>Pages
+      <mat-card-title class="text-xl flex justify-center w-10/12 ws-mat-primary-text w-full" >Pages
       </mat-card-title>
       <button (click)="addEntity()"
         class="padding-remove ws-mat-primary-background mat-elevation-z6 margin-left-s self-center"
@@ -57,7 +57,7 @@
         }">
         <div class="w-full flex items-center justify-between" *ngIf="type === 'assessment'">
           <span class="px-2">
-            <span i18n>Quiz</span>-{{ i + 1 }} :
+            <span >Quiz</span>-{{ i + 1 }} :
             <span i18n="MCQ| acronym for multiple choice question"
               *ngIf="quesObj.questionType === 'mcq-mca' || quesObj.questionType === 'mcq-sca'">MCQ</span>
             <span i18n="FITB| acronym for fill in the blanks" *ngIf="quesObj.questionType === 'fitb'">FITB</span>
@@ -71,7 +71,7 @@
         </div>
         <div class="w-full flex items-center justify-between" *ngIf="type === 'web-module'">
           <span>
-            <span i18n>Page</span>-{{ i + 1 }} </span>
+            <span >Page</span>-{{ i + 1 }} </span>
           <button mat-button class="float-right" (click)="removeEntity(i, $event)"
             [ngClass]="{ 'opacity-25 cursor-disable': !canEdit }" [disabled]="!canEdit" i18n-matTooltip
             matTooltip="Delete this Page" aria-label="delete this page" i18n-aria-label>

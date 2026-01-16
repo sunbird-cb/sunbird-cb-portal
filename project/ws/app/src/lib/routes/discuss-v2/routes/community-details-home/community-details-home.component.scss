@@ -1,0 +1,15 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+@media print {
+	body {
+		margin: 0 !important;
+	}
+}
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  min-height: 400px;
+}

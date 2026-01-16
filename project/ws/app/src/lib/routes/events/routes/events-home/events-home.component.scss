@@ -32,3 +32,13 @@
     flex-direction: column;
   }
 }
+
+@media screen and (min-width: 820px) and (max-width: 1232px) {
+  .container-balanced {
+    @extend %page-center;
+    height: auto;
+    min-height: 400px;
+    max-width: calc(100vw - 100px) !important;
+  }
+}
+

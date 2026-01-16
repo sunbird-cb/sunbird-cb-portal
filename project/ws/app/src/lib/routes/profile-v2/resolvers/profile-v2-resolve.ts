@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
+import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ProfileV2Service } from '../services/profile-v2.servive'
 import { NSProfileDataV2 } from '../models/profile-v2.model'
 
 @Injectable()
 export class Profilev2Resolve
-  implements
-  Resolve<Observable<IResolveResponse<NSProfileDataV2.IProfile>> | IResolveResponse<NSProfileDataV2.IProfile>> {
+   {
   constructor(private profileV2Svc: ProfileV2Service, private configSvc: ConfigurationsService) { }
 
   resolve(

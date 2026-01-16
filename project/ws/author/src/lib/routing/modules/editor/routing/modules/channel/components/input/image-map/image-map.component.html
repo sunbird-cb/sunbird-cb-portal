@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <mat-label class="required" i18n>Image</mat-label>
+  <mat-label class="required" >Image</mat-label>
   <br />
   <button
     class="button-design"
@@ -8,8 +8,8 @@
     color="primary"
     (click)="imageFile.click()"
   >
-    <ng-container *ngIf="!form.controls.imageSrc.value" i18n>Choose Image</ng-container>
-    <ng-container *ngIf="form.controls.imageSrc.value" i18n>Change Image</ng-container>
+    <ng-container *ngIf="!form.controls.imageSrc.value" >Choose Image</ng-container>
+    <ng-container *ngIf="form.controls.imageSrc.value" >Change Image</ng-container>
     <input
       type="file"
       (change)="upload($event.target.files[0]); imageFile.value = null"
@@ -52,7 +52,7 @@
           </div>
           <div class="width-20">
             <mat-form-field class="w-full" appearance="outline">
-              <mat-label i18n>Title</mat-label>
+              <mat-label >Title</mat-label>
               <input
                 matInput
                 [value]="paths.at(i).controls.title.value"
@@ -61,14 +61,14 @@
                 formControlName="title"
                 #title
               />
-              <mat-error *ngIf="!title.value" i18n>
+              <mat-error *ngIf="!title.value" >
                 The above field is required
               </mat-error>
             </mat-form-field>
           </div>
           <div class="width-20">
             <mat-form-field class="w-full" appearance="outline">
-              <mat-label i18n>Alternate Text For Image</mat-label>
+              <mat-label >Alternate Text For Image</mat-label>
               <input
                 [value]="paths.at(i).controls.alt.value"
                 matInput
@@ -81,7 +81,7 @@
           </div>
           <div class="width-12">
             <mat-form-field>
-              <mat-label i18n>URL Type</mat-label>
+              <mat-label >URL Type</mat-label>
               <mat-select
                 #urlType
                 [value]="
@@ -104,7 +104,7 @@
               [hideRequiredMarker]="paths.value.hideRequired"
               *ngIf="!urlType || (urlType && urlType.value === 'anchor')"
             >
-              <mat-label i18n>Provide Anchor Id</mat-label>
+              <mat-label >Provide Anchor Id</mat-label>
               <input
                 matInput
                 i18n-placeholder
@@ -119,7 +119,7 @@
               [hideRequiredMarker]="paths.value.hideRequired"
               *ngIf="urlType && urlType.value !== 'anchor'"
             >
-              <mat-label i18n>Provide URL</mat-label>
+              <mat-label >Provide URL</mat-label>
               <input
                 matInput
                 i18n-placeholder
@@ -132,10 +132,10 @@
 
           <div class="width-16">
             <mat-form-field>
-              <mat-label i18n>Target</mat-label>
+              <mat-label >Target</mat-label>
               <mat-select #target formControlName="target">
-                <mat-option value="_blank" i18n>Open in New Window</mat-option>
-                <mat-option value="_self" i18n>Open in Same Window</mat-option>
+                <mat-option value="_blank" >Open in New Window</mat-option>
+                <mat-option value="_self" >Open in Same Window</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -158,5 +158,5 @@
   color="primary"
 >
   <mat-icon>add box</mat-icon>
-  <ng-container i18n>Add A New Area</ng-container>
+  <ng-container >Add A New Area</ng-container>
 </button>

@@ -12,7 +12,7 @@ import { NSApiResponse } from '@ws/author/src/lib/interface//apiResponse'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { FIXED_FILE_NAME } from '../../../../../constants/upload'
 import { HttpClient } from '@angular/common/http'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 
@@ -59,9 +59,10 @@ export class UploadService {
     contentData: NSApiRequest.IContentData,
     options?: any,
   ): Observable<NSApiResponse.IFileApiResponse> {
+    const contentDataInfo: any = contentData
     return this.apiService.post<NSApiResponse.IFileApiResponse>(
       // tslint:disable-next-line:max-line-length
-      `${CONTENT_BASE_ZIP}${this.accessService.rootOrg.replace(/ /g, '_')}/${this.accessService.org.replace(/ /g, '_')}/Public/${contentData.contentId.replace('.img', '')}${contentData.contentType}`,
+      `${CONTENT_BASE_ZIP}${this.accessService.rootOrg.replace(/ /g, '_')}/${this.accessService.org.replace(/ /g, '_')}/Public/${contentDataInfo.contentId.replace('.img', '')}${contentData.contentType}`,
       data,
       false,
       options,
@@ -73,13 +74,14 @@ export class UploadService {
     fileName: string,
     contentData: NSApiRequest.IContentData,
   ): Observable<NSApiResponse.IFileApiResponse> {
+    const contentDataInfo: any = contentData
     return this.apiService.post<NSApiResponse.IFileApiResponse>(
       `${CONTENT_BASE_ENCODE}`,
       {
         fileName,
         text: this.apiService.base64(CONTENT_BASE_ENCODE, data).data,
         // tslint:disable-next-line:max-line-length
-        location: `${this.accessService.rootOrg.replace(/ /g, '_')}/${this.accessService.org.replace(/ /g, '_')}/Public/${contentData.contentId.replace('.img', '')}${contentData.contentType}`,
+        location: `${this.accessService.rootOrg.replace(/ /g, '_')}/${this.accessService.org.replace(/ /g, '_')}/Public/${contentDataInfo.replace('.img', '')}${contentData.contentType}`,
       },
       false,
     )

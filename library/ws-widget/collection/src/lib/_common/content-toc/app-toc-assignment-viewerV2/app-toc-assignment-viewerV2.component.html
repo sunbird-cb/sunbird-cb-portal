@@ -1,0 +1,33 @@
+<div class="document-viewer-container">
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="loading-text">Loading document...</p>
+  </div>
+  <div *ngIf="error" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-message">{{ errorMessage }}</p>
+  </div>
+  <div class="flex">
+    <div class="left-div" style="width: 100%; height: calc(100vh - 107px);">
+      <div class="left-title font-bold p-5 mb-5 flex flex-row justify-between">
+        <div>Post Assignment Preview</div>
+        <div class="flex gap-4">
+          <button mat-button class="discard-btn cursor-pointer" (click)="handleClose()">
+            {{ 'userAssignments.discard' | translate }}
+          </button>
+          <button mat-button class="submit-btn cursor-pointer" (click)="handleSubmitAssignment()">
+            {{ 'userAssignments.submit' | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="loaders" *ngIf="loading">
+        <mat-spinner diameter="40" class="blue-spinner m-auto"></mat-spinner>
+      </div>
+      <div *ngIf="showPdfViewer && !isLoading && !error" class="iframe-container pl-4">
+        <iframe title="PDF Document Viewer" [src]="safeSrc" height="600px" style="border: none;" (load)="onIframeLoad()"
+          (error)="onIframeError()">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>

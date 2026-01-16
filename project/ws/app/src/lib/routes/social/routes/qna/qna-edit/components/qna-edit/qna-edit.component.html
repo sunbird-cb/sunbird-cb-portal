@@ -12,10 +12,10 @@
       <div class="w-screen">
         <textarea class="mat-typography title-textarea" i18n-placeholder placeholder="Title" required minlength="10"
           maxlength="150" name="title" [(ngModel)]="title" autofocus #postTitle="ngModel"></textarea>
-        <p *ngIf="(postTitle.dirty || postTitle.touched) && postTitle.invalid" class="error-text mat-caption" i18n>
+        <p *ngIf="(postTitle.dirty || postTitle.touched) && postTitle.invalid" class="error-text mat-caption" >
           *Title range: 10-150 characters
         </p>
-        <div *ngIf="toggleTitleInfo" class="ws-mat-primary-text mb-4" i18n>
+        <div *ngIf="toggleTitleInfo" class="ws-mat-primary-text mb-4" >
           Your title helps people quickly understand what your question is about so they can answer
           it.
         </div>
@@ -51,7 +51,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <div *ngIf="toggleTagsInfo" class="ws-mat-primary-text mb-4" i18n>
+        <div *ngIf="toggleTagsInfo" class="ws-mat-primary-text mb-4" >
           Tags help the right people find and answer your question.
         </div>
       </div>
@@ -64,7 +64,7 @@
 
 <div class="mat-toolbar save-options">
   <button *ngIf="editMode === 'create'" class="margin-right-s" (click)="saveDraft(savedDraft.value, error.value)"
-    [disabled]="isCreatingPost || !actionButtonsEnabled || postTitle.invalid" mat-raised-button color="primary" i18n>
+    [disabled]="isCreatingPost || !actionButtonsEnabled || postTitle.invalid" mat-raised-button color="primary" >
     Save as Draft
   </button>
   <button *ngIf="editMode === 'create' || editMode === 'draft'" class="margin-right-s"
@@ -74,11 +74,11 @@
     Publish
   </button>
   <button *ngIf="editMode === 'update'" class="margin-right-s" (click)="update(saved.value, error.value)"
-    [disabled]="isCreatingPost || !actionButtonsEnabled || postTitle.invalid" mat-raised-button color="primary" i18n>
+    [disabled]="isCreatingPost || !actionButtonsEnabled || postTitle.invalid" mat-raised-button color="primary" >
     Save
   </button>
   <button *ngIf="editMode === 'draft'" class="margin-right-s" (click)="saveDraft(saved.value, error.value)"
-    [disabled]="isCreatingPost || !actionButtonsEnabled || postTitle.invalid" mat-raised-button color="primary" i18n>
+    [disabled]="isCreatingPost || !actionButtonsEnabled || postTitle.invalid" mat-raised-button color="primary" >
     Save
   </button>
   <mat-spinner *ngIf="isCreatingPost" [diameter]="30"></mat-spinner>

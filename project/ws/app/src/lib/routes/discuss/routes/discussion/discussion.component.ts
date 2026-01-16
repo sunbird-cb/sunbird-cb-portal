@@ -2,11 +2,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NSDiscussData } from '../../models/discuss.model'
-import { FormGroup, FormBuilder } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms'
 import { CONTENT_BASE_STREAM } from '@ws/author/src/lib/constants/apiEndpoints'
 import { LoaderService } from '../../../../../../../author/src/public-api'
 import { DiscussService } from '../../services/discuss.service'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { DiscussUtilsService } from '../../services/discuss-utils.service'
 
 @Component({
@@ -19,7 +19,7 @@ import { DiscussUtilsService } from '../../services/discuss-utils.service'
 export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
-  postAnswerForm!: FormGroup
+  postAnswerForm!: UntypedFormGroup
   data!: NSDiscussData.IDiscussionData
   similarPosts!: any
   currentFilter = 'timestamp' //  'recent'
@@ -34,7 +34,7 @@ export class DiscussionComponent implements OnInit, OnDestroy, AfterViewInit {
   fetchNewData = false
   topicName: any
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private loader: LoaderService,
     private ref: ChangeDetectorRef,
     private route: ActivatedRoute,

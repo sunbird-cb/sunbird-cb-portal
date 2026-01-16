@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { TenantAdminService } from '../../tenant-admin.service'
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms'
-import { MatSnackBar } from '@angular/material'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { IResponseAllSources } from '../../models/userRegistration.model'
 import { NsAutoComplete } from '@sunbird-cb/collection'
 @Component({

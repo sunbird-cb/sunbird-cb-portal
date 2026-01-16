@@ -34,7 +34,7 @@
               >
                 <span class="dateDiv">
                   <ng-container *ngIf="!card?.endDate">
-                    <ng-container i18n>since</ng-container>
+                    <ng-container >since</ng-container>
                     {{ card?.startDate | date: 'MM/yyyy' }}
                   </ng-container>
                   <ng-container *ngIf="card?.endDate">

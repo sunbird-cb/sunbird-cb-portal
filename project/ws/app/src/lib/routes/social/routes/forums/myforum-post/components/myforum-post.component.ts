@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Observable, Subscription } from 'rxjs'
-import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils-v2'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'
 import { ForumService } from '../../service/forum.service'

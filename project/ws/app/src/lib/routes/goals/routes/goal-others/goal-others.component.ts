@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
 import { ActivatedRoute } from '@angular/router'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-goal-others',

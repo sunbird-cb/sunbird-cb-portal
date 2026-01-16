@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { DisplayContentTypeModule } from '@sunbird-cb/collection'
-import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils'
+import { DefaultThumbnailModule, PipeDurationTransformModule } from '@sunbird-cb/utils-v2'
 import { SharedModule } from '@ws/author/src/lib/modules/shared/shared.module'
-import { AceEditorModule } from 'ng2-ace-editor'
-import { CKEditorModule } from 'ng2-ckeditor'
+// import { AceEditorModule } from 'ng2-ace-editor'
+// import { CKEditorModule } from 'ng2-ckeditor'
 import { CatalogSelectModule } from '../shared/components/catalog-select/catalog-select.module'
 import { AceEditorComponent } from './components/ace-editor/ace-editor.component'
 import { AuthEditorActionButtonsComponent } from './components/auth-editor-action-buttons/auth-editor-action-buttons.component'
@@ -22,49 +22,59 @@ import { LiveHtmlEditorComponent } from './components/live-html-editor/live-html
 import { OptionsComponent } from './components/options/options.component'
 import { FormsModule } from '@angular/forms'
 import { CompetencyAddPopUpComponent } from './components/competency-add-popup/competency-add-popup'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpLoaderFactory } from 'src/app/app.module'
+import { HttpClient } from '@angular/common/http'
 
 @NgModule({
-  declarations: [
-    MatQuillComponent,
-    QuillComponent,
-    PlainCKEditorComponent,
-    EditMetaComponent,
-    DragDropDirective,
-    AceEditorComponent,
-    AuthLanguageSelectBarComponent,
-    AuthPickerComponent,
-    AuthEditorActionButtonsComponent,
-    BaseComponent,
-    EditMetaV2Component,
-    LiveHtmlEditorComponent,
-    OptionsComponent,
-    CompetencyAddPopUpComponent,
-  ],
-  imports: [
-    CommonModule,
-    DefaultThumbnailModule,
-    PipeDurationTransformModule,
-    DisplayContentTypeModule,
-    CKEditorModule,
-    FormsModule,
-    SharedModule,
-    AceEditorModule,
-    CatalogSelectModule,
-  ],
-  exports: [
-    MatQuillComponent,
-    QuillComponent,
-    PlainCKEditorComponent,
-    EditMetaComponent,
-    DragDropDirective,
-    AceEditorComponent,
-    AuthEditorActionButtonsComponent,
-    AuthPickerComponent,
-    LiveHtmlEditorComponent,
-    OptionsComponent,
-    CompetencyAddPopUpComponent,
-  ],
-  entryComponents: [AuthPickerComponent, CompetencyAddPopUpComponent],
-  providers: [UploadService],
+    declarations: [
+        MatQuillComponent,
+        QuillComponent,
+        PlainCKEditorComponent,
+        EditMetaComponent,
+        DragDropDirective,
+        AceEditorComponent,
+        AuthLanguageSelectBarComponent,
+        AuthPickerComponent,
+        AuthEditorActionButtonsComponent,
+        BaseComponent,
+        EditMetaV2Component,
+        LiveHtmlEditorComponent,
+        OptionsComponent,
+        CompetencyAddPopUpComponent,
+    ],
+    imports: [
+        CommonModule,
+        DefaultThumbnailModule,
+        PipeDurationTransformModule,
+        DisplayContentTypeModule,
+        // CKEditorModule,
+        FormsModule,
+        SharedModule,
+        // AceEditorModule,
+        CatalogSelectModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+    ],
+    exports: [
+        MatQuillComponent,
+        QuillComponent,
+        PlainCKEditorComponent,
+        EditMetaComponent,
+        DragDropDirective,
+        AceEditorComponent,
+        AuthEditorActionButtonsComponent,
+        AuthPickerComponent,
+        LiveHtmlEditorComponent,
+        OptionsComponent,
+        CompetencyAddPopUpComponent,
+        TranslateModule,
+    ],
+    providers: [UploadService]
 })
 export class EditorSharedModule { }

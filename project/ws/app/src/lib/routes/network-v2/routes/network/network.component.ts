@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd, NavigationError } from '@angular/router'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
@@ -30,6 +30,7 @@ export class NetworkComponent implements OnInit, OnDestroy {
   tabs: any
   tabsData: NSNetworkDataV2.IProfileTab[]
   private defaultSideNavBarOpenedSubscription: any
+  pageLayout: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset
@@ -46,11 +47,11 @@ export class NetworkComponent implements OnInit, OnDestroy {
   ) {
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     // console.log('+++++++')
-    // console.log(this.tabsData);
 
     this.bannerSubscription = this.route.data.subscribe(data => {
       if (data && data.pageData) {
         this.banner = data.pageData.data.banner || []
+        this.pageLayout = data.pageData.data.pageLayout || []
       }
     })
     this.router.events.subscribe((event: Event) => {

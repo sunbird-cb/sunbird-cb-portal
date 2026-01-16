@@ -9,15 +9,15 @@ import {
     RatingService,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils'
+import { ConfigurationsService, LoggerService, NsPage, TFetchStatus, UtilityService } from '@sunbird-cb/utils-v2'
 import { Subscription, Observable } from 'rxjs'
 import { share } from 'rxjs/operators'
 import { SafeHtml, DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { AccessControlService } from '@ws/author/src/public-api'
 // import { FormControl, Validators } from '@angular/forms'
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { MobileAppsService } from 'src/app/services/mobile-apps.service'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { ContentRatingV2DialogComponent } from '@sunbird-cb/collection/src/lib/_common/content-rating-v2-dialog/content-rating-v2-dialog.component'
@@ -148,7 +148,6 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
         private route: ActivatedRoute,
         private router: Router,
         private contentSvc: WidgetContentService,
-        // private userSvc: WidgetUserService,
         private tocSvc: AppTocService,
         private loggerSvc: LoggerService,
         private configSvc: ConfigurationsService,
@@ -198,7 +197,7 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
             })
         }
         this.currentFragment = 'overview'
-        this.route.fragment.subscribe((fragment: string) => {
+        this.route.fragment.subscribe((fragment: any) => {
             this.currentFragment = fragment || 'overview'
         })
         this.batchSubscription = this.tocSvc.batchReplaySubject.subscribe(
@@ -305,6 +304,7 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
             const isResource = this.content.primaryCategory === NsContent.EPrimaryCategory.KNOWLEDGE_ARTIFACT ||
                 this.content.primaryCategory === NsContent.EPrimaryCategory.RESOURCE
                 || this.content.primaryCategory === NsContent.EPrimaryCategory.PRACTICE_RESOURCE
+                || this.content.primaryCategory === NsContent.EPrimaryCategory.OFFLINE_SESSION
                 || !(this.content.children && this.content.children.length)
             if (isResource) {
                 this.mobileAppsSvc.sendViewerData(this.content)
@@ -377,6 +377,7 @@ export class PublicTocComponent implements OnInit, OnDestroy, AfterViewChecked, 
             webPage: 0,
             youtube: 0,
             interactivecontent: 0,
+            offlineSession: 0,
         }
         if (this.content) {
             this.hasTocStructure = false

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
 import { SocialForum } from '../../../models/SocialForumposts.model'
 import { BtnFlagService } from '../../buttons/btn-flag/btn-flag.service'
 import { BtnModeratorService } from '../../buttons/btn-moderator/btn-moderator.service'

@@ -1,0 +1,30 @@
+<div class="community-card cursor-pointer" (click)="communityCardClick()">
+    <div class="card-img-block relative">
+        <img [src]="community?.imageUrl || community?.data?.imageUrl" class="w-full h-full"
+        (error)="changeToDefaultThumbnailImg($event)" alt="logo">
+        <div class="community-type flex items-center" *ngIf="community?.communityAccessLevel === 'private'">
+            <mat-icon class="mat-icon ">lock</mat-icon>
+            <span class="title">Private</span>
+        </div>
+    </div>
+    <div class="card-details-block p-4">
+        <p class="community-title text-sm w-full">{{community?.communityName || community?.data?.communityName}}</p>
+        <div class="flex items-center justify-between community-info">
+            <p>
+                <span class="mr-1">{{community?.countOfPeopleJoined | numberShortener}}</span>
+                <span>{{ community?.countOfPeopleJoined | plural:'Member':'Members' }}</span>
+            </p>
+            <span class="mx-2">•</span>
+            <p>
+                <span class="mr-1">{{community?.countOfPostCreated | numberShortener}}</span>
+                <span>{{ community?.countOfPostCreated | plural:'Post':'Posts' }}</span>
+            </p>
+        </div>
+        <div class="flex items-center justify-start community-owner-info">
+            <div class="owner-icon mr-2">
+                <img [src]="orgDetails?.logo" alt="logo" (error)="changeToDefaultImg($event)">
+            </div>
+            <p class="owner-name margin-remove w-full">{{'learnsearch.by' | translate}} {{community?.orgName}}</p>
+        </div>
+    </div>
+</div>

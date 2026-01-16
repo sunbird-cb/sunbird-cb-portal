@@ -1,6 +1,6 @@
 <!-- <mat-toolbar class="sec-nav-bar" [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles"> -->
 <ws-widget-btn-page-back [widgetData]="{ url: '/',titles:[{title:'Features',url:'none'}] }"></ws-widget-btn-page-back>
-<!-- <h1 i18n>Features</h1> -->
+<!-- <h1 >Features</h1> -->
 <div class="flex flex-1 container-balanced">
   <span class="spacer"></span>
   <mat-form-field floatLabel="never" class="search-container">
@@ -32,7 +32,7 @@
 </section>
 <section *ngIf="featureGroups !== null" [hidden]="featureGroups?.length" class="mat-card warn-card">
   <mat-icon aria-label="warning" role="image" class="warn-icon" color="warn">warning</mat-icon>
-  <span i18n>No features matches your query</span>
+  <span >No features matches your query</span>
 </section>
 
 <div class="my-4 mx-6 flex flex-wrapped">
@@ -58,7 +58,7 @@
   <!-- <div class="logout">
     <button (click)="logout()" color="warn" mat-button>
       <mat-icon>power_settings_new</mat-icon>&nbsp;
-      <span i18n>Logout</span>
+      <span >Logout</span>
     </button>
   </div> -->
 </div>

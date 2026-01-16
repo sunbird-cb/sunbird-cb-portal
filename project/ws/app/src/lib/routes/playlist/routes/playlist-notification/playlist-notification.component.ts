@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 import { BtnPlaylistService, NsPlaylist } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-playlist-notification',

@@ -1,0 +1,38 @@
+ <div class="main-survey flex items-center justify-center" *ngIf="surveyPopup?.active && isTourDone && localStorageFlag">
+    <ng-container *ngIf="languageFlag; else elseTemplate">
+        <div class="surver-inner">
+            <a mat-icon-button class="close-button flex" (click)="closeCard()">
+                <mat-icon>close</mat-icon>
+            </a>
+            <a class="survey-img-link desktop-img" href={{surveyPopup?.surveyUrl}}>
+                <img i18n-alt alt="Page Banner" [src]="surveyPopup?.banners" wsUtilsImageResponsive
+                    class="banner-image-solo" />
+            </a>
+
+            <div class="mobile-img-box flex flex-col items-center justify-center">
+                <img i18n-alt alt="Page Banner" [src]="surveyPopup?.banners" wsUtilsImageResponsive
+                    class="mobile-banner-image-solo" />
+                <a class="mobile-survey-link" href={{surveyPopup?.surveyUrl}}>{{surveyPopup?.buttonName}} </a>
+            </div>
+
+
+        </div>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <div class="surver-inner">
+            <a mat-icon-button class="close-button flex" (click)="closeCard()">
+                <mat-icon>close</mat-icon>
+            </a>
+            <a class="survey-img-link desktop-img" href={{surveyPopup?.surveyUrl}}>
+                <img i18n-alt alt="Page Banner" [src]="surveyPopup?.hindiBanners" wsUtilsImageResponsive
+                    class="banner-image-solo" />
+            </a>
+
+            <div class="mobile-img-box flex flex-col items-center justify-center">
+                <img i18n-alt alt="Page Banner" [src]="surveyPopup?.hindiBanners" wsUtilsImageResponsive
+                    class="mobile-banner-image-solo" />
+                <a class="mobile-survey-link" href={{surveyPopup?.surveyUrl}}>{{surveyPopup?.buttonNameHi}} </a>
+            </div>
+        </div>
+    </ng-template>
+</div>

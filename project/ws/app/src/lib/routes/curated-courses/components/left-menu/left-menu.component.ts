@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService } from '@sunbird-cb/utils-v2'
 /* tslint:disable*/
 import _ from 'lodash'
 
@@ -19,14 +19,14 @@ export class LeftMenuComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   onChangeTab(tab: any) {
     this.currentTab.emit(tab)
     this.events.raiseInteractTelemetry(
       {
         type: WsEvents.EnumInteractTypes.CLICK,
         subType: WsEvents.EnumInteractSubTypes.SIDE_MENU,
-        id: `${_.camelCase(tab.name)}-menu`,
+        id: tab.identifier || '',
       },
       { },
     )

@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core'
-import { MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
 import { IWsLeaderMailMeta } from '../../model/leadership.model'
 import { NgForm } from '@angular/forms'
 import { IWsEmailTextRequest, IWsEmailResponse } from '../../model/leadership-email.model'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { LeadershipService } from '../../services/leadership.service'
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-send-mail-dialog',

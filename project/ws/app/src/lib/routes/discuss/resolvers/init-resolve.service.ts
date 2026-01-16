@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router'
+import { ActivatedRouteSnapshot } from '@angular/router'
 
 // import { CKEditorService } from 'library/ws-widget/collection/src/lib/_common/ck-editor/ck-editor.service'
 import { Observable, forkJoin, of } from 'rxjs'
@@ -7,7 +7,7 @@ import { Observable, forkJoin, of } from 'rxjs'
 // import { AuthInitService } from '@ws/author/src/lib/services/init.service'
 
 @Injectable()
-export class InitResolver implements Resolve<any> {
+export class InitResolver  {
   constructor(
     // private apiService: ApiService,
     // private router: Router,

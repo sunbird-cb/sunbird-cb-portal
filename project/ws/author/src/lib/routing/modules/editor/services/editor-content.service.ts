@@ -69,7 +69,9 @@ export class EditorContentService {
   }
 
   setOriginalMeta(meta: NSContent.IContentMeta) {
+    if (meta && meta.identifier) {
     this.originalContent[meta.identifier] = JSON.parse(JSON.stringify(meta))
+    }
   }
 
   cleanProperties(objParam: any) {
@@ -137,14 +139,15 @@ export class EditorContentService {
   private getParentUpdatedMeta(): NSContent.IContentMeta {
     const meta = {} as any
     const parentMeta = this.getUpdatedMeta(this.parentContent)
-    Object.keys(this.authInitService.authConfig).map(v => {
+    const authConfig: any = this.authInitService.authConfig
+    Object.keys(authConfig).map((v: any) => {
       // tslint:disable-next-line: no-console
 
       meta[v as keyof NSContent.IContentMeta] = parentMeta[v as keyof NSContent.IContentMeta]
         ? parentMeta[v as keyof NSContent.IContentMeta]
         : JSON.parse(
           JSON.stringify(
-            this.authInitService.authConfig[v as keyof IFormMeta].defaultValue[
+            authConfig[v as keyof IFormMeta].defaultValue[
               parentMeta.contentType
               // tslint:disable-next-line: ter-computed-property-spacing
             ][0].value,
@@ -196,6 +199,7 @@ export class EditorContentService {
 
   checkCondition(id: string, meta: string, type: 'show' | 'required' | 'disabled'): boolean {
     let returnValue = false
+    const authConfig: any = this.authInitService.authConfig
     try {
       const data = this.getUpdatedMeta(id)
       let directType: 'showFor' | 'mandatoryFor' | 'disabledFor'
@@ -215,19 +219,19 @@ export class EditorContentService {
           break
       }
       if (
-        !this.authInitService.authConfig[meta as keyof IFormMeta] ||
-        !this.authInitService.authConfig[meta as keyof IFormMeta][directType][data.contentType]
+        !authConfig[meta as keyof IFormMeta] ||
+        !authConfig[meta as keyof IFormMeta][directType][data.contentType]
       ) {
         returnValue = false
       } else if (
-        this.authInitService.authConfig[meta as keyof IFormMeta][directType][data.contentType] &&
-        this.authInitService.authConfig[meta as keyof IFormMeta][directType][data.contentType]
+        authConfig[meta as keyof IFormMeta][directType][data.contentType] &&
+        authConfig[meta as keyof IFormMeta][directType][data.contentType]
           .length === 0
       ) {
         returnValue = true
       } else {
-        this.authInitService.authConfig[meta as keyof IFormMeta][directType][data.contentType].map(
-          condition => {
+        authConfig[meta as keyof IFormMeta][directType][data.contentType].map(
+          (condition: any) => {
             let childReturnValue = false
             Object.keys(condition).map(childMeta => {
               if (
@@ -250,20 +254,20 @@ export class EditorContentService {
         )
       }
       if (
-        this.authInitService.authConfig[meta as keyof IFormMeta] &&
-        this.authInitService.authConfig[meta as keyof IFormMeta][counterType][data.contentType] &&
-        this.authInitService.authConfig[meta as keyof IFormMeta][counterType][data.contentType]
+        authConfig[meta as keyof IFormMeta] &&
+        authConfig[meta as keyof IFormMeta][counterType][data.contentType] &&
+        authConfig[meta as keyof IFormMeta][counterType][data.contentType]
           .length === 0
       ) {
         returnValue = false
       } else if (
-        this.authInitService.authConfig[meta as keyof IFormMeta] &&
-        this.authInitService.authConfig[meta as keyof IFormMeta][counterType][data.contentType] &&
-        this.authInitService.authConfig[meta as keyof IFormMeta][counterType][data.contentType]
+        authConfig[meta as keyof IFormMeta] &&
+        authConfig[meta as keyof IFormMeta][counterType][data.contentType] &&
+        authConfig[meta as keyof IFormMeta][counterType][data.contentType]
           .length > 0
       ) {
-        this.authInitService.authConfig[meta as keyof IFormMeta][counterType][data.contentType].map(
-          condition => {
+        authConfig[meta as keyof IFormMeta][counterType][data.contentType].map(
+          (condition: any) => {
             let childReturnValue = false
             Object.keys(condition).map(childMeta => {
               if (
@@ -296,7 +300,8 @@ export class EditorContentService {
   isPresent(meta: string, id: string): boolean {
     let returnValue = false
     const data = this.getUpdatedMeta(id)[meta as keyof NSContent.IContentMeta]
-    switch (this.authInitService.authConfig[meta as keyof IFormMeta].type) {
+    const authConfig: any = this.authInitService.authConfig
+    switch (authConfig[meta as keyof IFormMeta].type) {
       case 'array':
       case 'string':
         returnValue = data && (data as any).length ? true : false
@@ -347,7 +352,7 @@ export class EditorContentService {
     conditions: { [key in keyof NSContent.IContentMeta]: any[] }[],
   ): boolean {
     try {
-      return conditions.some(condition => {
+      return conditions.some((condition: any) => {
         let isLocalPassed = true
         Object.keys(condition).forEach(meta => {
           if (

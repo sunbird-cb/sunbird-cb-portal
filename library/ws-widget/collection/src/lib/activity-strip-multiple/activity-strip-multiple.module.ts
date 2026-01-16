@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { ActivityStripMultipleComponent } from './activity-strip-multiple.component'
-import { HorizontalScrollerModule } from '@sunbird-cb/utils'
+import { HorizontalScrollerModule } from '@sunbird-cb/utils-v2'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   MatButtonModule,
@@ -14,19 +14,18 @@ import {
 } from '@angular/material'
 
 @NgModule({
-  declarations: [ActivityStripMultipleComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    HorizontalScrollerModule,
-    WidgetResolverModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatCardModule,
-  ],
-  entryComponents: [ActivityStripMultipleComponent],
+    declarations: [ActivityStripMultipleComponent],
+    imports: [
+        CommonModule,
+        RouterModule,
+        HorizontalScrollerModule,
+        WidgetResolverModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatChipsModule,
+        MatCardModule,
+    ]
 })
 export class ActivityStripMultipleModule { }

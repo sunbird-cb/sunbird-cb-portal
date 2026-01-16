@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { ConfigurationsService, NsUser } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsUser } from '@sunbird-cb/utils-v2'
 
 const API_ENDPOINTS = {
   getAllTopics: '/apis/protected/v8/catalog',

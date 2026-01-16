@@ -1,20 +1,20 @@
 import { NotificationService } from '@ws/author/src/lib/services/notification.service'
 import { ErrorParserComponent } from './../error-parser/error-parser.component'
 import { Component, OnInit, Inject } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { ISearchContent } from '@ws/author/src/lib/interface/search'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { ApiService } from '@ws/author/src/lib/modules/shared/services/api.service'
 import { UNPUBLISH, STATUS_CHANGE } from '@ws/author/src/lib/constants/apiEndpoints'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { HttpHeaders } from '@angular/common/http'
 import { mergeMap, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-auth-draft-dialog',
@@ -22,7 +22,7 @@ import { of } from 'rxjs'
   styleUrls: ['./draft-dialog.component.scss'],
 })
 export class DraftDialogComponent implements OnInit {
-  commentsForm!: FormGroup
+  commentsForm!: UntypedFormGroup
   contentMeta!: ISearchContent
   isSubmitPressed = false
   onAction = false
@@ -30,7 +30,7 @@ export class DraftDialogComponent implements OnInit {
   isNew = 'No'
   isMobile = false
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<DraftDialogComponent>,

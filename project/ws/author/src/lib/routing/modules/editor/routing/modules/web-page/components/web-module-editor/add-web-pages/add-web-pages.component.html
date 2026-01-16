@@ -28,7 +28,7 @@
               </div>
               <ng-container *ngIf="mediumScreenSize || !mediumScreenSize && showContent">
                 <div class="flex items-center pl-1 pt-3 sm:pt-0 pb-1">
-                  <mat-card-title class="text-xl text-center w-9/12 ws-mat-primary-text" i18n>Pages</mat-card-title>
+                  <mat-card-title class="text-xl text-center w-9/12 ws-mat-primary-text" >Pages</mat-card-title>
                   <button (click)="addPage()"
                     class="padding-remove margin-right-s ws-mat-primary-background mat-elevation-z6 margin-left-s self-center"
                     i18n-aria-label aria-label="add new page" mat-icon-button>
@@ -48,7 +48,7 @@
                   aria-label="select page">
                   <div class="w-full flex items-center justify-between">
                     <span>
-                      <span i18n>Page</span>-{{i+1}}
+                      <span >Page</span>-{{i+1}}
                     </span>
                     <button mat-icon-button (click)="onDelete(i,$event)" aria-label="delete page" i18n-aria-label>
                       <mat-icon>delete</mat-icon>
@@ -96,7 +96,7 @@
                   <mat-expansion-panel [(expanded)]="showAudioCard">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
-                        <p class="font-weight-bold pb-1 self-center  margin-remove-bottom" i18n>
+                        <p class="font-weight-bold pb-1 self-center  margin-remove-bottom" >
                           Audios
                         </p>
                         <button mat-icon-button color='primary' (click)="$event.stopPropagation();audioADD()" aria-label="add audio" matTooltip="add audio file"
@@ -109,7 +109,7 @@
                       <ws-auth-audio-strips *ngIf="userData[currentId].pageJson[selectedPage].audio.length" [data]="userData[currentId].pageJson[selectedPage].audio"
                         (audioDeleted)="deleteAudio($event)"></ws-auth-audio-strips>
                       <div class="h-12 py-4 flex items-center justify-center" *ngIf="!userData[currentId].pageJson[selectedPage].audio.length">
-                        <span i18n>No audios found for this page</span>
+                        <span >No audios found for this page</span>
                       </div>
                     </div>
                   </mat-expansion-panel>
@@ -120,7 +120,7 @@
                   <div class="cursor-pointer flex flex-row justify-between px-4 pt-2" aria-label="click to expand card"
                     i18n-aria-label (click)="showAudioCard=!showAudioCard">
                     <div class="flex">
-                      <p class="font-weight-bold pb-1 self-center  margin-remove-bottom" i18n>
+                      <p class="font-weight-bold pb-1 self-center  margin-remove-bottom" >
                         Audios
                       </p>
                       <button aria-label="add audio" id="abtn" mat-icon-button color='primary'
@@ -140,7 +140,7 @@
                     </ws-auth-audio-strips>
                     <div class="h-12 py-4 flex items-center justify-center" *ngIf="!userData[currentId].pageJson[selectedPage].audio
                     || !userData[currentId].pageJson[selectedPage].audio.length">
-                      <span i18n>No audios found for this page</span>
+                      <span >No audios found for this page</span>
                     </div>
                   </div>
                 </mat-card>
@@ -150,18 +150,18 @@
                   (click)="changePage(selectedPage-1)" [disabled]="selectedPage === 0"
                   [ngClass]="{ 'opacity-25 cursor-disable': selectedPage === 0 }" mat-button i18n-aria-label
                   aria-label="previos page">
-                  <span class="text-white" i18n>Previous</span>
+                  <span class="text-white" >Previous</span>
                 </button>
                 <button class="ws-mat-primary-background mat-elevation-z6 margin-left-s" i18n-aria-label
                   aria-label="next page" mat-button (click)="changePage(selectedPage+1)"
                   [disabled]="selectedPage === userData[currentId].pages.length - 1"
                   [ngClass]="{'opacity-25 cursor-disable': selectedPage === userData[currentId].pages.length - 1}">
-                  <span class="text-white" i18n>Next</span>
+                  <span class="text-white" >Next</span>
                 </button>
               </div>
             </ng-container>
             <div class="flex items-center justify-center h-64" *ngIf="!userData[currentId].pages.length">
-              <span i18n>No pages found, Kindly add!</span>
+              <span >No pages found, Kindly add!</span>
             </div>
           </mat-sidenav-content>
         </mat-sidenav-container>
@@ -174,7 +174,7 @@
       <button type="button" mat-button class="ws-mat-primary-background margin-top-m m-auto"
         (click)="action('saveAndNext')">
         <!-- <mat-icon class="text-white">file_upload</mat-icon> -->
-        <b class="text-white" i18n>Save and Proceed</b>
+        <b class="text-white" >Save and Proceed</b>
       </button>
     </div>
   </mat-card-actions>

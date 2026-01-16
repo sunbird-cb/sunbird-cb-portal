@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router'
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { ProfileService } from '../../../services/profile.service'
@@ -12,7 +12,7 @@ export interface ITimeResolveData {
 }
 
 @Injectable()
-export class LearningTimeResolver implements Resolve<ITimeResolveData> {
+export class LearningTimeResolver  {
   constructor(private profileSvc: ProfileService) {}
 
   resolve(

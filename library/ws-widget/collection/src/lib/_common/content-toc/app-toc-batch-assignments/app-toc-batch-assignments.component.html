@@ -1,0 +1,81 @@
+<div class="guide-container">
+  <div class="flex flex row">
+    <div class="info-banner info-banner-warning flex flex-row itm-center">
+      <mat-icon class="info-icon margin-right-s assignment-note-icon">info</mat-icon>
+      <span class="assignment-note"> {{ 'userAssignments.note' | translate }}</span>
+    </div>
+  </div>
+  <ng-container *ngFor="let assignment of assignments; index as i">
+    <div class="guide-card">
+      <div class="content flex gap-4 justify-between flex-middle">
+        <div class="note-title">{{i + 1}}. {{assignment.title}} </div>
+        <div class="flex flex-middle gap-3" *ngIf="!assignment.expand">
+          <button mat-button class="download-btn cursor-pointer flex align-center justify-center"
+            (click)="downloadFile(assignment)" [disabled]="assignment.downloading">
+            <span *ngIf="assignment.downloading" class="white-spinner">
+              <mat-spinner diameter="16" class="mr-2" [style.color]="'white'" strokeWidth="2"></mat-spinner>Download
+            </span>
+            <span *ngIf="!assignment.downloading">
+              {{ 'userAssignments.download' | translate }}
+            </span>
+          </button>
+          <ng-container *ngIf="assignment.status === 'DRAFT'">
+            <button mat-button class="upload-btn cursor-pointer flex align-center justify-center"
+              (click)="triggerFileUpload(assignment)">
+              {{ 'userAssignments.upload' | translate }}
+            </button>
+          </ng-container>
+          <ng-container *ngIf="assignment.status !== 'DRAFT'">
+            <button mat-button class="upload-btn cursor-pointer flex align-center justify-center"
+              (click)="triggerFileUpload(assignment)"
+              [disabled]="assignment.status === 'SUBMITTED' || assignment.status === 'EVALUATED' || !assignment.enableDownload">
+              {{ 'userAssignments.upload' | translate }}
+            </button>
+          </ng-container>
+          <!-- <button mat-button class="upload-btn cursor-pointer flex align-center justify-center"
+            (click)="triggerFileUpload(assignment)" [disabled]="!assignment.enableDownload">
+            Upload
+          </button> -->
+          <input #resourceFile type="file" name="sResourceFile" id="sResourceFile" class="hidden"
+            (change)="fileInputEmit(resourceFile.files)">
+          <ng-container *ngIf="assignment.status === 'SUBMITTED'">
+            <button mat-button class="view-btn cursor-pointer flex align-center justify-center"
+              (click)="handleViewFeedback(assignment)" [disabled]="true">{{ 'userAssignments.viewFeedback' | translate
+              }}</button>
+          </ng-container>
+          <ng-container *ngIf="assignment.status === 'EVALUATED'">
+            <button mat-button class="view-btn cursor-pointer flex align-center justify-center"
+              (click)="handleViewFeedback(assignment)">{{ 'userAssignments.viewFeedback' | translate }}</button>
+          </ng-container>
+
+        </div>
+        <mat-icon class="cursor-pointer c-icon" *ngIf="assignment.expand"
+          (click)="assignment.expand = !assignment.expand">
+          close
+        </mat-icon>
+      </div>
+      <div class="flex justify-between flex-col mt-4 feedback-container"
+        *ngIf="assignment.expand && assignment?.submissionMeta?.marksGiven">
+        <div class="font-bold font-style">
+          <div>
+            {{ 'userAssignments.marksObtained' | translate }} - {{getMarks(assignment?.submissionMeta)}}
+          </div>
+        </div>
+        <div class="font-bold font-style">{{ 'userAssignments.instructorFeedback' | translate }}</div>
+        <div class="font-style">
+          {{assignment?.submissionMeta?.instructorFeedback}}
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+</div>
+<div class="flex justify-center items-center mt-4 loader" *ngIf="isLoading">
+  <mat-spinner strokeWidth="3" [diameter]="50" [style.stroke]="'#1B4CA1'" class="blue-spinner"></mat-spinner>
+</div>
+
+
+<!-- No teachers resources message -->
+<div *ngIf="assignments?.length === 0" class="no-resources-message mt-4">
+  {{ 'userAssignments.noAssignments' | translate }}
+</div>

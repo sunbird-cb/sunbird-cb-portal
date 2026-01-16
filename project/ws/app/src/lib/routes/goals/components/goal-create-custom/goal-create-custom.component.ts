@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { NsGoal, NsContent, BtnGoalsService, NsAutoComplete } from '@sunbird-cb/collection'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { TFetchStatus, EventService, ConfigurationsService, WsEvents } from '@sunbird-cb/utils'
-import { MatSnackBar } from '@angular/material'
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms'
+import { TFetchStatus, EventService, ConfigurationsService, WsEvents } from '@sunbird-cb/utils-v2'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Router, ActivatedRoute } from '@angular/router'
 
 @Component({
@@ -27,7 +27,7 @@ export class GoalCreateCustomComponent implements OnInit {
   showShareGoalStep = false
   showContentError = false
 
-  createGoalForm: FormGroup
+  createGoalForm: UntypedFormGroup
   createGoalStatus: TFetchStatus = 'none'
 
   selectedContentIds: Set<string> = new Set()
@@ -39,7 +39,7 @@ export class GoalCreateCustomComponent implements OnInit {
   fetchEditGoalStatus: TFetchStatus = 'none'
   isShareEnabled = false
   constructor(
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     private events: EventService,
     private route: ActivatedRoute,
     private snackbar: MatSnackBar,

@@ -1,6 +1,6 @@
 import { Directive, AfterViewInit, OnDestroy, Optional } from '@angular/core'
 import { NgControl } from '@angular/forms'
-import { MatAutocompleteTrigger } from '@angular/material'
+import { MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete'
 
 // tslint:disable-next-line: directive-selector
 @Directive({ selector: '[tab-directive]' })

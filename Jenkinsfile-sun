@@ -29,7 +29,13 @@ node('build-slave') {
                 sh('cd iGOT/client-assets && docker build -t assets . && docker run --name assets assets && docker cp assets:/usr/src/app/dist.zip . && docker rm -f assets && docker rmi -f assets && unzip dist.zip')
                 }
                 }
-		
+
+        	if(params.enable_code_analysis){
+            	stage('Code analysis'){
+               	build job: "Build/CodeReview/${JOB_BASE_NAME}", wait: true
+	     	}
+       	    }
+
 		stage('Build') {
 		// Docker build
                 env.NODE_ENV = "build"
@@ -53,6 +59,6 @@ node('build-slave') {
         throw err
     }
     finally {
-        email_notify()
+      //  email_notify()
     }
 }

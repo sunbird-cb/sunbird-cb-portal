@@ -22,8 +22,9 @@ export class WorkFlowService {
 
   getNextStatus(content: NSContent.IContentMeta | ISearchContent): string {
     const workFlow = this.getWorkFlow(content)
+    const contentStatus: any = content.status
     if (workFlow.length > 3) {
-      let index = workFlow.indexOf(content.status)
+      let index = workFlow.indexOf(contentStatus)
       if (!this.isOptimised(content)) {
         return workFlow[index + 1]
       }

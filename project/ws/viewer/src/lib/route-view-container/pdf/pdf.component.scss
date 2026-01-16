@@ -10,11 +10,12 @@
 }
 
 .padding-dynamic {
-  padding: $size-xs;
-  padding-top: $size-m;
-
+  // padding: $size-xs;
+  // padding-top: $size-m;
+  border-radius: none !important;
+  box-shadow: none !important;
   @include breakpoint-xs {
-    padding: $size-xs;
+    // padding: $size-xs;
     // padding-top: 40vh;
   }
 }
@@ -109,4 +110,73 @@
   border-radius: 2px;
   box-sizing: border-box;
   margin-bottom: $size-m;
+}
+
+.pdf-outer-container {
+  height: 573px;
+  overflow-y: auto;
+  .mat-card {
+    padding: 0;
+  }
+}
+
+.start-pdf-content-container {
+  background: rgb(27, 33, 51);
+}
+
+.content-instruction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding: 18% 0;
+  color: #fff;
+  width: 32%;
+  margin: 0 auto;
+}
+.play-btn {
+  border: none;
+  background: #EF951E;
+  height: 32px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.content-instruction-desc {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.12px;
+  line-height: 24px;
+  color:rgba(255, 255, 255, 0.95)
+}
+
+@media screen and (min-width: 280px) and (max-width: 768px) {
+  .html-viewer-container  {
+    height: auto;
+    padding:0 !important;
+  }
+  .content-instruction {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .video-player {
+    width: 100%;
+    height: auto;
+  }
 }

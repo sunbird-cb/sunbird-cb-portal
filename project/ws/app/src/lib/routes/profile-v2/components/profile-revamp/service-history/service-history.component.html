@@ -1,0 +1,43 @@
+<ng-container *ngIf="isPopup">
+  <div class="popup-header flex justify-between items-center">
+    <div class="header-title">Service History</div>
+    <button mat-icon-button class="close-button" (click)="closePopup()">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+  </div>
+</ng-container>
+<div [ngClass]="{'container': isPopup}" class="flex flex-col gap-2">
+  <ng-container *ngFor="let service of serviceHistoryList">
+    <div class="service-card flex">
+      <ng-container *ngIf="service?.orgLogo; else defaultLogo">
+        <img class="org-logo" [src]="service?.orgLogo" alt="Organization Logo">
+      </ng-container>
+      <ng-template #defaultLogo>
+        <div class="default-logo-card flex items-center justify-center">
+          <img class="default-logo" src="./assets/icons/office.svg" alt="Default Logo">
+        </div>
+      </ng-template>
+      <div class="flex flex-col w-full gap-1">
+        <div class="flex justify-between items-start">
+          <div class="designation">{{service?.designation}}</div>
+          <ng-container *ngIf="isCurrentUser">
+            <mat-icon class="edit-icon" (click)="openEditDialog(service)">edit</mat-icon>
+          </ng-container>
+        </div>
+        <div class="org-details">{{service?.orgDetails}}</div>
+        <div class="org-period">{{service?.period}}</div>
+        <ng-container *ngIf="service?.description">
+          <div [ngClass]="{'extend-description': service?.showMore}" class="org-description">
+            <ws-app-description [description]="service?.description" [minHeight]="30"
+              (showViewMoreBtn)="service['showViewMoreBtn'] = $event"></ws-app-description>
+          </div>
+          <ng-container *ngIf="service.showViewMoreBtn">
+            <div class="view-more" (click)="service.showMore = !service.showMore">
+              {{(service?.showMore ? 'NetworkV2Profile.viewLess' : 'NetworkV2Profile.viewMore') | translate}}
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

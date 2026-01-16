@@ -1,0 +1,51 @@
+
+/* Custom radio button style for Figma-like look */
+.custom-radio .mat-radio-outer-circle {
+  border-width: 2px;
+  border-color: #2563eb; /* Tailwind blue-600 */
+}
+.custom-radio.mat-radio-checked {
+  background-color: transparent;
+}
+.custom-radio.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #2563eb;
+}
+.custom-radio .mat-radio-inner-circle {
+  background-color: transparent;
+}
+.custom-radio.mat-radio-checked .mat-radio-inner-circle {
+  background-color: #2563eb;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+/* Card and section styling for extra polish */
+.profile-visibility-section {
+  margin-bottom: 1.5rem;
+}
+.profile-visibility-label {
+  color: #000;
+  /* stylelint-disable */
+  font: 600 16px Montserrat;
+  /* stylelint-enable */
+  margin-bottom: 16px;
+}
+.profile-visibility-option {
+  padding: 1rem 1rem 0.8rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.option-text {
+  /* stylelint-disable */
+  font: 600 14px Montserrat;
+  /* stylelint-enable */
+}
+
+.option-description {
+  /* stylelint-disable */
+  font: 400 14px Lato;
+  /* stylelint-enable */
+  color: rgba(0, 0, 0, 0.60);
+}

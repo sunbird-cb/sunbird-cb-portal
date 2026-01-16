@@ -1,0 +1,9 @@
+<section class="my-4 pt-4 pb-8 pl-4 pr-4 container-balanced">
+  <div class="flex flex-col">
+    <div class="sec-header">{{ 'myNotifications.notifications' | translate }}</div>
+  </div>
+  <div class="notification-card margin-top-l">
+    <sb-uin-all-notifications [showIcon]='true' (redirectTo)="redirectTo($event)" [showMarkAllAsRead]="true"
+      [fragment]="fragment"></sb-uin-all-notifications>
+  </div>
+</section>

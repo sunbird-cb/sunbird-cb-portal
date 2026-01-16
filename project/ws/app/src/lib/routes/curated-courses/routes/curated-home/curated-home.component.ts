@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { Observable, Subject } from 'rxjs'
 import { CuratedCollectionService } from '../../services/curated-collection.service'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { ActivatedRoute } from '@angular/router'
 /* tslint:disable*/
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-curated-home',
@@ -17,7 +19,7 @@ export class CuratedHomeComponent implements OnInit {
   page = 1
   defaultLimit = 50
   limit = 50
-  searchForm: FormGroup | undefined
+  searchForm: UntypedFormGroup | undefined
   sortBy: any
   searchQuery = ''
   allCollections: any
@@ -52,13 +54,23 @@ export class CuratedHomeComponent implements OnInit {
   constructor(
     private curatedCollectionSvc: CuratedCollectionService,
     private route: ActivatedRoute,
-  ) { }
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
+  ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+  }
 
   ngOnInit() {
     this.searchReq = _.get(this.route, 'snapshot.data.pageData.data.search.searchReq') || this.searchReqDefault
-    this.searchForm = new FormGroup({
+    this.searchForm = new UntypedFormGroup({
       // sortByControl: new FormControl(''),
-      searchKey: new FormControl(''),
+      searchKey: new UntypedFormControl(''),
     })
     this.displayLoader = this.curatedCollectionSvc.isLoading()
     this.searchForm.valueChanges

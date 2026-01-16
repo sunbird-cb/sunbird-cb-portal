@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
-import { FormGroup, FormBuilder } from '@angular/forms'
-import { MatChipInputEvent, MatSnackBar } from '@angular/material'
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms'
 import { InterestService } from '../../../../../../../../../app/src/lib/routes/profile/routes/interest/services/interest.service'
+import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 export interface IDialogData {
   animal: string
   name: string
@@ -14,7 +15,7 @@ export interface IDialogData {
   styleUrls: ['./competency-add-popup.scss'],
 })
 export class CompetencyAddPopUpComponent implements OnInit {
-  startForm!: FormGroup
+  startForm!: UntypedFormGroup
   separatorKeysCodes: number[] = [ENTER, COMMA]
   postTagsArray: string[] = []
   uploadSaveData = false
@@ -27,7 +28,7 @@ export class CompetencyAddPopUpComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CompetencyAddPopUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IDialogData,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private interestService: InterestService,
     private snackBar: MatSnackBar,
   ) {

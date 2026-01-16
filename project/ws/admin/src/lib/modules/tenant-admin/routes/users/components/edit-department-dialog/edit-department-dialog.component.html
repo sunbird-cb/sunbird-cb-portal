@@ -1,5 +1,5 @@
 <div class="flex flex-between items-center">
-    <h2 mat-dialog-title class="heading font-weight-500" i18n>
+    <h2 mat-dialog-title class="heading font-weight-500" >
         Edit Department
     </h2>
     <button mat-dialog-close mat-icon-button class="cursor-pointer" (click)="close()">
@@ -22,7 +22,7 @@
             <mat-progress-spinner mode="indeterminate" *ngIf="processing" diameter="30"></mat-progress-spinner>
         </div>
         <button mat-raised-button class="pt-4" type="button" color="primary" (click)="changeDepartment(editForm)">
-            <span i18n>Save Changes</span>
+            <span >Save Changes</span>
         </button>
     </div>
 </form>

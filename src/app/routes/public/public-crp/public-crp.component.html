@@ -1,0 +1,515 @@
+<ng-container *ngIf="!invalidLinkMessage || invalidLinkMessage === 'Registration link is not active'">
+    <div [ngClass]="mobileTopHeaderVisibilityStatus ? 'mobile-download-app-top-header' : 'mobile-download-app-without-top-header'"
+        *ngIf="mobileTopHeaderVisibilityStatus">
+        <!-- //NOSONAR -->
+        <div class="cross-mobile-download-app" (click)="hideMobileTopHeader()">
+            <span>X</span>
+        </div>
+        <div class="kb-symbol">
+            <img src="/assets/icons/top-nav/KB-Symbol_icon.svg" alt="">
+        </div>
+        <div class="mobile-download-app-desc">
+            <p class="mobile-download-app-desc-heading">iGot Karmayogi</p>
+            <p class="mobile-download-app-desc-sub-heading">Download the mobile app</p>
+        </div>
+        <div class="flex-1 flex justify-end pr-4">            
+            <li class="download-app-chip-top-header" (click)="downloadApp()"><!-- //NOSONAR -->
+                <span>Download App </span>
+            </li>
+        </div>
+    </div>
+
+    <div class="main_container flex flex-row" style="
+        background: url(/assets/instances/eagle/banners/home/9/BG.png) center center
+          fixed;
+      ">
+        <div class="left_container mt-8">
+            <div class="features-image">
+                <img src="/assets/instances/eagle/banners/home/9/oldSticky.png" alt="What's New @ iGOT?" />
+            </div>
+        </div>
+        <div class="right_container py-8 px-6">
+            <div class="flex justify-between items-center mb-4">
+                <button mat-icon-button aria-label="back" [routerLink]="'/static-home'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <div class="karmayogi-logo block sm:hidden">
+                    <img src="/assets/instances/eagle/app_logos/KarmayogiBharat_Logo_Horizontal.svg"
+                        alt="logo-karmayogi" class="mt-1" width="78">
+                </div>
+                <div class="flex gap-4 items-center">
+                    <div class="langdiv" *ngIf="isMultiLangEnabled">
+                        <mat-form-field class="custom-lang float-right margin-right-xl">
+                            <img src="/assets/icons/top-nav/translate_icon.svg" alt="Language"
+                                class="margin-right-xs" />
+                            <mat-select matNativeControl panelClass="custom-langselect" [ngModel]="selectedLanguage"
+                                (ngModelChange)="selectLanguage($event)">
+                                <span *ngFor="let lang of multiLang">
+                                    <mat-option *ngIf="lang.active" [value]="lang.key"
+                                        [ngClass]="{ checkmark: lang.key == selectedLanguage }">{{ lang.value
+                                        }}</mat-option>
+                                </span>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="zoho-form-box">
+                        <a (click)="getZohoForm()" class="help-icon" id="help-icon">
+                            <img src="/assets/icons/top-nav/help_icon.svg" alt="Need Help" />
+                            <!-- <span class="tooltiptext">Need Help</span> -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right_inner_container profile-box">
+                <div class="sm:flex hidden items-center justify-between ">
+                    <div class="karmayogi-logo">
+                        <img src="/assets/instances/eagle/app_logos/KarmayogiBharat_Logo_Horizontal.svg"
+                            alt="logo-karmayogi" width="140">
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="">
+                        <p class="ff-montserrat fw-medium fs-28"> {{ 'publicsignup.registerFor' | translate }} </p>
+                        <p class="ff-montserrat fw-medium fs-28 brand-color"> {{organizationDetails?.orgName}} </p>
+                    </div>
+                    <div class="org-logo" *ngIf="organizationDetails?.logo">
+                        <img [src]="organizationDetails?.logo" alt="" width="82" height="82">
+                    </div>
+                </div>
+                <form [formGroup]="registrationForm">
+                    <div class="margin-top-l new-mobile">
+                        <!-- <div class="flex flex-wrap mobile-break"> -->
+                        <div class="w-full">
+                            <!-- <div class="flex flex-col content-center flex-wrap"> -->
+                            <div class="flex gap-6 flex-wrap">
+                                <div class="input-wrapper margin-top-s">
+                                    <label for="firstName" class="margin-remove-bottom form-label required"
+                                        i18n="First name label|Label which explains the user to enter first name"
+                                        i18n-aria-label aria-label="First name label">
+                                        {{ 'publicsignup.fullName' | translate }}
+                                    </label>
+                                    <mat-form-field appearance="outline" class="margin-top-s">
+                                        <input id="firstName" matInput #firstname formControlName="firstname"
+                                            i18n-placeholder
+                                            placeholder="{{'publicsignup.enterYourFullName' | translate}}"
+                                            autocomplete="off" i18n-aria-label aria-label="First Name input"
+                                            maxlength="100" />
+                                        <mat-error [hidden]="false" i18n="First Name Error|Explains name is required"
+                                            i18n-aria-label aria-label="First Name Error|Explains name is required "
+                                            *ngIf=" registrationForm?.controls['firstname'].errors?.required">
+                                            {{ 'publicsignup.fullNameMandatory' | translate }}
+                                        </mat-error>
+                                        <mat-error [hidden]="false"
+                                            *ngIf="registrationForm?.controls['firstname'].errors?.pattern"
+                                            i18n-aria-label
+                                            aria-label="First name Error|Name fields cannot contain numbers and special characters except ">
+                                            {{ 'publicsignup.fullNameWitoutSp' | translate }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="input-wrapper margin-top-s">
+                                    <label for="group" class="margin-remove-bottom form-label required"
+                                        i18n="Designation | Label which explains the user to select designation"
+                                        i18n-aria-label aria-label="Designation Field label">
+                                        {{ 'publicsignup.designation' | translate }}
+                                    </label>
+                                    <!-- <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
+                                        <mat-select placeholder=" {{ 'publicsignup.selectDesignation' | translate }}"
+                                            id="designation" #designation i18n-placeholder="group"
+                                            formControlName="designation">
+                                            <mat-option *ngFor="let option of designationsList"
+                                                [value]="option?.name">{{
+                                                option?.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error [hidden]="false"
+                                            i18n="Designation Error | Explains Designation is required"
+                                            *ngIf="registrationForm?.controls['designation'].errors?.required"
+                                            i18n-aria-label aria-label="Designation is mandatory">
+                                            {{ 'publicsignup.designationMandatory' | translate }}
+                                        </mat-error>
+                                    </mat-form-field> -->
+                                    <!-- <mat-form-field appearance="outline" class="margin-top-s w-full arrow-down" id="designation">
+                                        <input id="designation" #designation i18n-placeholder="designation" type="text" placeholder="Type to search" aria-label="Type to search" matInput
+                                          (input)="onFilterDesignation($event.target.value)" formControlName="designation" [matAutocomplete]="auto" 
+                                          (keydown)="onkeyDown($event)">
+                                          <mat-icon class="mat-icon-arroe">keyboard_arrow_down</mat-icon>
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (opened)="onAutoCompleteOpened()" (closed)="onAutoCompleteClosed()">
+                                            <ng-container *ngIf="filteredDesignationsList.length > 0; else noDesignation">
+                                                <ng-container *ngFor="let option of filteredDesignationsList">
+                                                  <mat-option  [value]="option?.name">{{ option?.name }}</mat-option>
+                                                </ng-container>
+                                            </ng-container>
+                                          <ng-template #noDesignation>
+                                            <mat-option disabled>No Designation found</mat-option>
+                                          </ng-template>
+                                        </mat-autocomplete>
+                                        <mat-error [hidden]="false"
+                                        i18n="Designation Error | Explains Designation is required"
+                                        *ngIf="registrationForm?.controls['designation'].errors?.required"
+                                        i18n-aria-label aria-label="Designation is mandatory">
+                                        {{ 'publicsignup.designationMandatory' | translate }}
+                                    </mat-error>
+                                      </mat-form-field> -->
+                                      <div class="custom-select-container">
+                                        <mat-form-field appearance="outline" class="margin-top-s fixed-height-select">
+                                          <mat-select placeholder="Select Designation" formControlName="designation"   panelClass="search-panel" (closed)="onDesignationDropdownClosed()" (openedChange)="setupScrollListener($event)">
+                                            <!-- Sticky search input container -->
+                                            <div class="sticky-search-container" (click)="$event.stopPropagation()">
+                                              <div class="search-input-wrapper">
+                                                <input 
+                                                            type="text" 
+                                                            placeholder="Search designation" 
+                                                            formControlName="searchDesignation" 
+                                                            class="search-input"
+                                                            (input)="onFilterDesignation($event.target.value)"
+                                                            (keydown)="$event.stopPropagation()"
+                                                            autocomplete="off">
+                                                <button 
+                                                            *ngIf="searchDesignation?.value" 
+                                                            type="button" 
+                                                            class="clear-button" 
+                                                            (click)="searchDesignation?.setValue('')">
+                                                            ✕
+                                                </button>
+                                              </div>
+                                            </div>
+                                            <!-- Options list -->
+                                            <mat-option *ngFor="let option of filteredDesignationsList " [value]="option?.name">
+                                                    {{ option?.name }}
+                                            </mat-option>
+                                            <!-- Loading indicator -->
+                                            <div *ngIf="isLoadingMoreDesignations" class="loading-indicator">
+                                              Loading more...
+                                            </div>
+                                            <!-- No results message -->
+                                            <mat-option *ngIf="(filteredDesignationsList )?.length === 0" disabled>
+                                                    No matches found
+                                            </mat-option>
+                                          </mat-select>
+                                        </mat-form-field>
+                                      </div>
+                                    </div>
+
+                            </div>
+
+                            <div class="flex gap-6 flex-wrap">
+                                <div class="input-wrapper mobile-wrapper margin-top-l">
+                                    <label for="email" class="margin-remove-bottom form-label required"
+                                        i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
+                                        aria-label="Email label">
+                                        {{ 'publicsignup.email' | translate }}
+                                    </label>
+                                    <div class="flex">
+                                        <mat-form-field appearance="outline" class="margin-top-s" id="email">
+                                            <input id="email" name="emailField" autocomplete="off" type="email"
+                                                maxlength="320" (input)="emailVerification($event.target.value)"
+                                                matInput
+                                                placeholder="{{'publicsignup.enterYourEmailAddress' | translate}}"
+                                                #email formControlName="email" i18n-aria-label
+                                                aria-label="Email input" />
+                                            <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified"
+                                                [hidden]="!isEmailVerified"></mat-icon>
+                                            <mat-error [hidden]="false"
+                                                *ngIf="registrationForm?.controls['email'].errors?.required"
+                                                i18n="Email Error|Explains name is required">
+                                                {{ 'publicsignup.pleaseEnterEmail' | translate }}
+                                            </mat-error>
+                                            <mat-error [hidden]="false"
+                                                *ngIf="registrationForm.controls['email'].touched && registrationForm?.controls['email'].errors?.pattern"
+                                                i18n-aria-label aria-label="Please enter a valid email address">
+                                                {{ 'publicsignup.validEmail' | translate }}
+                                            </mat-error>
+                                            <div *ngIf="registrationForm.controls['email'].touched && emailLengthVal"
+                                                class="email-error" i18n="Email Error|Explains character validation">
+                                                {{ 'publicsignup.emailLengthValidation' | translate }}
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="flex justify-between items-start">
+                                        <span class="pos-hint help-request ws-mat-black60-text break-word-link" id="org-field"> {{
+                                            'publicsignup.donotHaveGovernmentEmail' | translate }}</span>
+                                        <span class="float-right ws-mat-accent-text cursor-pointer request-help-text"
+                                            (click)="navigateTo('Domain')"> {{ 'publicsignup.requestForHelp2' |
+                                            translate
+                                            }}</span>
+                                    </div>
+                                    <!-- //NOSONAR -->
+                                    <!-- <a class="pos-hint help-request ws-mat-black60-text" id="org-field">
+                                        {{ 'publicsignup.donotHaveGovernmentEmail' | translate }}
+
+                                        <span class="float-right ws-mat-accent-text cursor-pointer font-bold"
+                                            (click)="navigateTo('Domain')"> {{ 'publicsignup.requestForHelp2' |
+                                            translate
+                                            }}</span>
+                                    </a> -->
+
+                                    <div *ngIf="!isEmailVerified" class="flex flex-1 margin-top-s justify-end">
+                                        <button *ngIf="!otpEmailSend" mat-btn-button type="button"
+                                            (click)="sendOtpEmail()" class=" mat-btn-flat btn-responsive"
+                                            [disabled]="registrationForm?.email?.invalid">
+                                            <a class="text-white">
+                                                {{ 'publicsignup.btnVerify' | translate }}
+                                            </a>
+                                        </button>
+
+                                        <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
+                                            <!-- <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                                                <input id="emailOTP" #emailotp type="password" minlength="4"
+                                                    maxlength="6" matInput
+                                                    placeholder="{{ 'publicsignup.enterOTP' | translate }}"
+                                                    i18n-aria-label aria-label="OTP input"
+                                                    onKeyPress="if(this.value.length === 8) return false;"
+                                                    autocomplete="new-password" />
+                                                <mat-hint *ngIf="timeLeftforOTPEmail > 0">
+                                                    <span>{{ 'publicsignup.resendOTPAfter' | translate }}
+                                                        {{
+                                                        timeLeftforOTPEmail
+                                                        | pipeDurationTransform : 'hms2M'
+                                                        }}</span>
+                                                </mat-hint>
+                                                <mat-hint *ngIf="timeLeftforOTPEmail <= 0">
+                                                    <span class="cursor-pointer ws-mat-default-text"
+                                                        (click)="resendOTPEmail()">
+                                                        {{ 'publicsignup.btnVerify' | translate }}</span>
+                                                </mat-hint>
+                                            </mat-form-field> -->
+                                            <div class="otp-reader-wrapper">
+                                                <ws-app-otp-reader #emailOTPComponent></ws-app-otp-reader>
+                                                <ng-container *ngIf="timeLeftforOTPEmail > 0">
+                                                    <div class="otp-resent-timer mt-2">
+                                                        <span>{{ 'publicsignup.resendOTPAfter' | translate }}
+                                                            {{
+                                                            timeLeftforOTPEmail
+                                                            | pipeDurationTransform : 'hms2M'
+                                                            }}</span>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="timeLeftforOTPEmail <= 0">
+                                                    <div class="otp-resend-btn mt-2">
+                                                        <span class="cursor-pointer ws-mat-default-text text-xs"
+                                                            (click)="resendOTPEmail()">
+                                                            {{ 'publicsignup.resendOTP' | translate }}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+
+
+                                            <div class="flex flex-1 margin-top-s justify-end">
+                                                <button mat-btn-button type="button" (click)="verifyOtpEmail(emailOTPComponent.finalOTPValues)"
+                                                    class="mat-btn-flat margin-top-s otp"
+                                                    [disabled]="registrationForm?.email?.invalid">
+                                                    <span class="text-white">
+                                                        {{ 'publicsignup.btnVerify' | translate }}
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- mobile otp / -->
+                                <div class="input-wrapper mobile-wrapper margin-top-l">
+                                    <label for="mobileNumber" class="margin-remove-bottom form-label required"
+                                        i18n="Mobile Number label|Label which explains the user to enter Mobile Number"
+                                        i18n-aria-label aria-label="Mobile Number label">
+                                        {{ 'publicsignup.mobileNumber' | translate }}
+                                    </label>
+                                    <div class="flex">
+                                        <mat-form-field appearance="outline" class="margin-top-s w-full">
+                                            <input id="mobileNumber" #mobile matInput type="text" maxlength="10"
+                                                (keypress)="numericOnly($event)" (paste)="numericOnly($event)"
+                                                placeholder="{{'publicsignup.mobileNumber' | translate}}"
+                                                formControlName="mobile" i18n-aria-label
+                                                aria-label="Mobile Number input" />
+                                            <mat-icon matSuffix class="ws-mat-green-text margin-xs" svgIcon="verified"
+                                                [hidden]="!isMobileVerified"></mat-icon>
+                                            <mat-error [hidden]="false"
+                                                i18n="Mobile Number Error|Explains Mobile no is required"
+                                                *ngIf="registrationForm?.controls['mobile'].errors?.required"
+                                                i18n-aria-label aria-label="Please enter your mobile number">
+                                                {{ 'publicsignup.pleaseEnterMobileNumber' | translate }}
+                                            </mat-error>
+                                            <mat-error [hidden]="false"
+                                                *ngIf="registrationForm?.controls['mobile'].errors?.pattern"
+                                                i18n-aria-label
+                                                aria-label="Please enter a valid 10 digit mobile number">
+                                                {{ 'publicsignup.validMobilenumber' | translate }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <mat-checkbox class="text-sm recieve-text" formControlName="isWhatsappConsent"> {{ 'publicsignup.receiveOnWhatsapp' |
+                                        translate }}</mat-checkbox>
+
+                                    <div *ngIf="!isMobileVerified" class="flex flex-1 margin-top-s justify-end">
+                                        <button *ngIf="!otpSend" mat-flat-button type="button" (click)="sendOtp()"
+                                            class="mat-btn-flat btn-responsive"
+                                            [disabled]="registrationForm?.mobile?.invalid">
+                                            <a class="text-white">
+                                                {{ 'publicsignup.btnVerify' | translate }}
+                                            </a>
+                                        </button>
+                                        <div *ngIf="otpSend" class="flex flex-1 flex-column">
+                                            <!-- <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                                                <input id="mobileNumber" #otp type="password" minlength="4"
+                                                    maxlength="6" matInput
+                                                    placeholder="{{ 'publicsignup.enterOTP' | translate }}"
+                                                    i18n-aria-label aria-label="OTP input"
+                                                    onKeyPress="if(this.value.length === 8) return false;"
+                                                    autocomplete="new-password" />
+                                                <mat-hint *ngIf="timeLeftforOTP > 0">
+                                                    <span>{{ 'publicsignup.resendOTPAfter' | translate }}
+                                                        {{
+                                                        timeLeftforOTP | pipeDurationTransform : 'hms2M'
+                                                        }}</span>
+                                                </mat-hint>
+                                                <mat-hint *ngIf="timeLeftforOTP <= 0">
+                                                    <span class="cursor-pointer ws-mat-default-text"
+                                                        (click)="resendOTP()">{{
+                                                        'publicsignup.resendOTP' | translate
+                                                        }}</span>
+                                                </mat-hint>
+                                                {{ otp.errors }}
+                                                <mat-error [hidden]="false" *ngIf="otp.errors?.minlength">
+                                                    {{ 'publicsignup.mobileOtp' | translate }}
+                                                </mat-error>
+                                            </mat-form-field> -->
+                                            <div class="otp-reader-wrapper">
+                                                <ws-app-otp-reader #phoneOTPComponent></ws-app-otp-reader>
+                                                <ng-container *ngIf="timeLeftforOTP > 0">
+                                                    <div class="otp-resent-timer mt-2">
+                                                        <span>{{ 'publicsignup.resendOTPAfter' | translate }}
+                                                            {{
+                                                            timeLeftforOTP | pipeDurationTransform : 'hms2M'
+                                                            }}</span>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="timeLeftforOTP <= 0">
+                                                    <div class="otp-resend-btn mt-2">
+                                                        <span class="cursor-pointer ws-mat-default-text"
+                                                        (click)="resendOTP()">{{
+                                                        'publicsignup.resendOTP' | translate
+                                                        }}</span>
+                                                    </div>
+                                                </ng-container>
+                                                <!-- <span class="text-xs text-red-600" [hidden]="false" *ngIf="otp.errors?.minlength">
+                                                    {{ 'publicsignup.mobileOtp' | translate }}
+                                                </span> -->
+                                            </div>
+                                            <div class="flex flex-1 margin-top-s justify-end">
+                                                <button mat-flat-button type="button" (click)="verifyOtp(phoneOTPComponent.finalOTPValues)"
+                                                    class="mat-btn-flat margin-top-s otp" [disabled]="
+                                  registrationForm?.mobile?.invalid || disableVerifyBtn
+                                ">
+                                                    <span class="text-white">
+                                                        {{ 'publicsignup.btnVerify' | translate }}
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Group  -->
+                            <div class="input-wrapper margin-top-s">
+                                <label for="group" class="margin-remove-bottom form-label required"
+                                    i18n="Group | Label which explains the user to enter Group" i18n-aria-label
+                                    aria-label="Group Field label">
+                                    {{ 'publicsignup.groupGrade' | translate }}
+                                </label>
+                                <!-- <mat-form-field appearance="outline" class="margin-top-s w-full" id="group">
+                                    <mat-select placeholder="{{'publicsignup.selectgroupGrade' | translate}}" id="group"
+                                        #group i18n-placeholder="group" formControlName="group">
+                                        <mat-option *ngFor="let option of masterGroup" [value]="option">{{ option
+                                            }}</mat-option>
+                                    </mat-select>
+                                    <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
+                                        *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
+                                        aria-label="Group/Grade is mandatory">
+                                        {{ 'publicsignup.groupGradeMandatory' | translate }}
+                                    </mat-error>
+                                </mat-form-field> -->
+                                <mat-form-field appearance="outline" class="margin-top-s w-full arrow-down" id="group">
+                                    <input #group i18n-placeholder="group" type="text" placeholder="Type to search" aria-label="Type to search" matInput
+                                      (input)="onFilterGroups($event.target.value)" formControlName="group" [matAutocomplete]="autoGroups" (keydown)="onkeyDown($event)">
+                                      <mat-icon class="mat-icon-arroe">keyboard_arrow_down</mat-icon>
+                                    <mat-autocomplete #autoGroups="matAutocomplete" [displayWith]="displayFnGroups" (opened)="onAutoCompleteOpened()" (closed)="onAutoCompleteClosed()">
+                                        <ng-container *ngIf="filteredGroupsList?.length > 0; else nogroups">
+                                            <ng-container *ngFor="let option of filteredGroupsList">
+                                              <mat-option  [value]="option">{{ option }}</mat-option>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-template #nogroups>
+                                            <mat-option disabled>No Groups found</mat-option>
+                                          </ng-template>
+                                    </mat-autocomplete>
+                                    <mat-error [hidden]="false" i18n="Group Error | Explains Group is required"
+                                        *ngIf="registrationForm?.controls['group'].errors?.required" i18n-aria-label
+                                        aria-label="Group/Grade is mandatory">
+                                        {{ 'publicsignup.groupGradeMandatory' | translate }}
+                                    </mat-error>
+                                  </mat-form-field>
+                            </div>
+
+                            <div class="input-wrapper margin-top-s terms-conditions-text">
+                                <div class="flex flex-middle">
+                                    <mat-checkbox
+                                        aria-label="I agree to the IGOT karmayogi's Terms of Service & Privacy Policy."
+                                        id="confirmTerms" [checked]="confirmTerms" (change)="confirmTermsChange()"
+                                        i18n-aria-label
+                                        aria-label="I agree to the IGOT karmayogi's Terms of Service & Privacy Policy. checkbox"
+                                        required>
+                                    </mat-checkbox>
+                                    <!-- //NOSONAR -->
+                                    <label class="margin-remove-bottom mat-body-2 ws-mat-black-text ml-3 font-bold"
+                                        i18n-aria-label
+                                        aria-label="I agree to the IGOT karmayogi's Terms of Service & Privacy Policy. checkbox label">
+                                        {{ 'publicsignup.publicsignupCrpTermsCond' | translate }}
+                                        <a class="brand-color terms-text font-bold"
+                                            (click)="termsAndConditionClick()">{{
+                                            'publicsignup.terms' | translate }}</a>
+                                        &
+                                        <a class="brand-color terms-text font-bold" href="/public/privacy-policy"
+                                            target="_blank">{{ 'publicsignup.privacyPolicy' | translate }}</a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="w-full margin-top-l">
+
+                                <div class="button_box flex flex-col items-center justify-center">
+                                    <button mat-flat-button type="submit" class="submitBtn mat-btn-flat"
+                                        (click)="signup()" [disabled]="
+                                            !registrationForm?.valid || 
+                                            disableBtn || 
+                                            !isMobileVerified ||
+                                            !isEmailVerified || 
+                                            !confirmTerms">
+                                        {{ 'publicsignup.signup' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="w-full margin-top-l">
+                                <div class="flex items-center mat-body-1 flex-1 justify-center font-bold">
+                                    {{ 'publicsignup.haveAccount' | translate }} &nbsp;
+                                    <a href="/protected/v8/resource" class="brand-color text-center font-bold">
+                                        {{ 'publicsignup.signin' | translate }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #invalidLinkTemplate let-data>
+    <div class="relative">
+        <div class="close-error-modal" *ngIf="data?.type === 'expiredLink'" (click)="closedDialogandRedirect()"><mat-icon>close</mat-icon></div>
+        <div class="flex flex-col justify-center items-center h-full items-center text-center mt-6" [innerHtml]="data?.message"></div>
+    </div>
+</ng-template>

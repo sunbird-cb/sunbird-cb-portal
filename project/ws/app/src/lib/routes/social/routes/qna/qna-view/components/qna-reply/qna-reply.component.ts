@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { DialogSocialDeletePostComponent, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { NsSocial } from '../../../../../models/social.model'
 import { WsSocialService } from '../../../../../services/ws-social.service'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-qna-reply',

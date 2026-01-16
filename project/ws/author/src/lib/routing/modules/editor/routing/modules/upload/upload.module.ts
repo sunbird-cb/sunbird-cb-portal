@@ -11,10 +11,9 @@ import { ProfanityPopUpComponent } from './components/profanity-popup/profanity-
 import { ProfanityService } from './services/profanity.service'
 
 @NgModule({
-  declarations: [UploadComponent, FileUploadComponent, ProfanityPopUpComponent],
-  exports: [FileUploadComponent, ProfanityPopUpComponent],
-  imports: [CommonModule, SharedModule, EditorSharedModule, UploadRoutingModule, AuthViewerModule, MatProgressBarModule],
-  entryComponents: [ProfanityPopUpComponent],
-  providers: [ProfanityService],
+    declarations: [UploadComponent, FileUploadComponent, ProfanityPopUpComponent],
+    exports: [FileUploadComponent, ProfanityPopUpComponent],
+    imports: [CommonModule, SharedModule, EditorSharedModule, UploadRoutingModule, AuthViewerModule, MatProgressBarModule],
+    providers: [ProfanityService]
 })
 export class UploadModule { }

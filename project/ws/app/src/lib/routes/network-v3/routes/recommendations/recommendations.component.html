@@ -1,0 +1,75 @@
+<div class="w-full flex flex-col gap-4">
+  <div class="home-header">Recommendation</div>
+
+  <!-- #region (people you may know) -->
+  <div class="section p-4 flex flex-col justify-between items-center">
+    <div class="flex w-full justify-between items-center mb-5">
+      <div class="flex gap-2 items-center">
+        <div class="section-header">
+          people you may know
+        </div>
+      </div>
+      <a (click)="showAll('peopleYouMayKnow')"
+      class="flex gap-1 items-center show-all">
+        show all
+          <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+      </a>
+    </div>
+    <div class="flex gap-2 w-full flex-wrap">
+      <ng-container *ngFor="let otherUserProfile of peopleYouMayKnowList">
+        <ws-app-connection-people-card [user]="otherUserProfile"></ws-app-connection-people-card>
+      </ng-container>
+    </div>
+  </div>
+  <!-- #endregion (people you may know) -->
+
+  <div class="noteCard flex justify-between intems-center p-4">
+    <div class="note-text">Want to see people near you?</div>
+    <div class="locationLink">Add office location</div>
+  </div>
+
+  <!-- #region (People near you) -->
+  <div class="section p-4 flex flex-col justify-between items-center">
+    <div class="flex w-full justify-between items-center mb-5">
+      <div class="flex gap-2 items-center">
+        <div class="section-header">
+          People near you
+        </div>
+      </div>
+      <a (click)="showAll('peopleNearYou')"
+      class="flex gap-1 items-center show-all">
+        show all
+          <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+      </a>
+    </div>
+    <div class="flex gap-2 w-full flex-wrap">
+      <ng-container *ngFor="let otherUserProfile of peopleNearYou">
+        <ws-app-connection-people-card [user]="otherUserProfile"></ws-app-connection-people-card>
+      </ng-container>
+    </div>
+  </div>
+  <!-- #endregion (People near you) -->
+
+  <!-- #region (People sharing the same interests.) -->
+  <div class="section p-4 flex flex-col justify-between items-center">
+    <div class="flex w-full justify-between items-center mb-5">
+      <div class="flex gap-2 items-center">
+        <div class="section-header">
+          People sharing the same interests.
+        </div>
+      </div>
+      <a (click)="showAll('peopelSharingSameIntrest')"
+      class="flex gap-1 items-center show-all">
+        show all
+          <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+      </a>
+    </div>
+    <div class="flex gap-2 w-full flex-wrap">
+      <ng-container *ngFor="let otherUserProfile of peopleSharingSameIntrest">
+        <ws-app-connection-people-card [user]="otherUserProfile"></ws-app-connection-people-card>
+      </ng-container>
+    </div>
+  </div>
+  <!-- #endregion (People sharing the same interests.) -->
+
+</div>

@@ -1,0 +1,39 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.mat-card {
+  border: 1px solid $matCardBorderColor;
+  box-shadow: none !important;
+  border-radius: $size-s !important;
+}
+
+.course-card {
+  padding: 0;
+}
+
+.course-image-container {
+  min-width: 270px;
+  max-width: 270px;
+  height: 160px;
+}
+
+.course-image-container img {
+  object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+  }
+
+  .course-image-container {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .bookmark-container {
+    top: 8px;
+    bottom: auto;
+  }
+}

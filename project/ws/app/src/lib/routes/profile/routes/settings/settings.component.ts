@@ -13,13 +13,17 @@ import {
   ConfigurationsService,
   UserPreferenceService,
   UtilityService,
-} from '@sunbird-cb/utils'
+  MultilingualTranslationsService,
+} from '@sunbird-cb/utils-v2'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { BtnSettingsService } from '@sunbird-cb/collection'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { Router, ActivatedRoute } from '@angular/router'
-import { MatSnackBar, MatSelectChange, MatTabChangeEvent } from '@angular/material'
+import { TranslateService } from '@ngx-translate/core'
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs'
 
 @Component({
   selector: 'ws-app-settings',
@@ -37,10 +41,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
   themes: NsInstanceConfig.ITheme[] = []
   fonts: NsInstanceConfig.IFontSize[] = []
   allowedLangCode: { [langCode: string]: NsInstanceConfig.ILocalsConfig } = {}
-  contentLangForm: FormControl = new FormControl()
+  contentLangForm: UntypedFormControl = new UntypedFormControl()
   showContentLang = false
-  intranetContentForm = new FormControl(false)
-  darkModeForm = new FormControl(false)
+  intranetContentForm = new UntypedFormControl(false)
+  darkModeForm = new UntypedFormControl(false)
   activeThemeKey = ''
   activeFontClass = ''
   activeLocaleClass = ''
@@ -55,6 +59,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
   showIntranetSettings = false
   isLanguageEnabled = true
   // showProfileSettings = false
+  selectedLanguage = 'en'
+  multiLang: any = []
+  isMultiLangEnabled: any
+  defaultLang = [
+    {
+      value: 'English',
+      key: 'en',
+      checked : true,
+    },
+  ]
 
   constructor(
     // todo mobile settings removed
@@ -65,7 +79,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private utilitySvc: UtilityService,
-  ) { }
+    private langtranslations: MultilingualTranslationsService,
+    private translate: TranslateService,
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+      this.selectedLanguage = lang
+    }
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+        this.selectedLanguage = lang
+      }
+    })
+
+    if (this.configSvc.instanceConfig && this.configSvc.instanceConfig.isMultilingualEnabled) {
+      this.isMultiLangEnabled = this.configSvc.instanceConfig.isMultilingualEnabled
+    }
+  }
 
   ngOnInit() {
     const tab = this.route.snapshot.queryParamMap.get('tab')
@@ -106,6 +142,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }
       this.chosenLanguage = this.appLanguage
       this.fonts.sort((a, b) => a.scale - b.scale)
+
+      this.multiLang = instanceConfig.websitelanguages
+      // console.log('multilang', this.multiLang)
 
       this.allowedLangCode = instanceConfig.locals.reduce(
         (agg: { [path: string]: NsInstanceConfig.ILocalsConfig }, u) => {
@@ -256,5 +295,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
          break */
     }
     this.router.navigate([], { queryParams: { tab } })
+  }
+
+  selectLanguage(event: any) {
+    // console.log('event', event)
+    this.selectedLanguage = event
+    localStorage.setItem('websiteLanguage', this.selectedLanguage)
+    this.langtranslations.updatelanguageSelected(
+      true,
+      this.selectedLanguage,
+      this.configSvc.unMappedUser ? this.configSvc.unMappedUser.id : ''
+    )
   }
 }

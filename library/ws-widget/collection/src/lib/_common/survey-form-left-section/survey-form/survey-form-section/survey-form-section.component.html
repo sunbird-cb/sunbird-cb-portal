@@ -1,0 +1,30 @@
+<div class="tips-container" *ngIf="isVisible">
+    <ng-container *ngFor="let data of surveyFormData">
+    <div class="card-header flex  items-start justify-between">
+        <span class="card-title flex mat-subheading-1">{{data.title}}</span>
+        <a mat-icon-button class="close-button flex" (click)="closeCard()">
+          <mat-icon>close</mat-icon>
+        </a>
+      </div>
+    <div class="circle-box">
+        <div class="background-circle">
+        </div>
+    </div>
+ 
+    <div class="tip-content flex flex-col">
+        <div class="tip-content-top flex flex-row">
+            <div class="background flex items-center">
+                <img class="book-icon" src="{{data?.ImageUrl}}"
+                    alt="{{data?.ImageUrl}}">
+            </div>
+            <div class="tip-data flex">
+                <p>{{data?.content}}</p>
+            </div>
+        </div>
+       
+    <div class="tip-count">
+        <a href="https://portal.igotkarmayogi.gov.in/surveyml/668e250da8bfb500083136b1" class="btn-title">{{data.btnTitle}}</a>
+    </div>
+</div>
+    </ng-container>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { NsContentStripMultiple, ROOT_WIDGET_CONFIG, NsError } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { NSProfileData } from '../../../profile/models/profile.model'
 import { NSLearningData } from '../../models/my-learning.model'

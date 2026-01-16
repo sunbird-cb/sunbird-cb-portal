@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup } from '@angular/forms'
+import { UntypedFormGroup } from '@angular/forms'
 
 @Component({
   selector: 'ws-app-roles-activities',
@@ -11,7 +11,7 @@ export class RolesActivitiesComponent implements OnInit {
   role = ''
   activity = ''
 
-  roleForm!: FormGroup
+  roleForm!: UntypedFormGroup
   constructor() { }
 
   ngOnInit() {

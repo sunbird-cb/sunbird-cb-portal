@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { Resolve } from '@angular/router'
+
 import { Observable, of } from 'rxjs'
 import { SocialForum } from '../routes/forums/models/SocialForumposts.model'
 import { ForumService } from '../routes/forums/service/forum.service'
 import { map, catchError } from 'rxjs/operators'
 
 @Injectable()
-export class ModeratorTimelineService implements Resolve<Observable<SocialForum.IModeratorTimeline>> {
+export class ModeratorTimelineService  {
 
   moderatorTimelineRequest: SocialForum.IModeratorTimelineRequest = {
     pgNo: 0,

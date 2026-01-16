@@ -1,0 +1,21 @@
+.heading {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.87);
+    font: 600 16px / 24px Montserrat-SemiBold, sans-serif;
+    font-style: normal;
+    letter-spacing: 0.12px;
+    text-align: left;
+}
+
+.main-container {
+    max-width: 1200px;
+}
+.pill-container {
+    display: flex;
+    align-items: center;
+}
+
+.content-pill .mat-chip-selected {
+    background-color: #1b4ca1 !important;
+    color: white !important;
+}

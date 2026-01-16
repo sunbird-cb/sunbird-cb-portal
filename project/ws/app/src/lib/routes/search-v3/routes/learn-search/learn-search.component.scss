@@ -1,0 +1,240 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.custom-sidenav {
+  width: 22.5%;
+  box-shadow: none !important;
+  border: 1px solid $borderColor !important;
+  border-radius: #{$size-s};
+}
+
+.font-bold-imp {
+  font-weight: bold !important;
+}
+
+.filternames {
+  .myfilter-custom {
+    background: RGBA(0, 0, 0, 0.08);
+    border-radius: 20px;
+  }
+
+  .mat-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 20px;
+    vertical-align: middle;
+    line-height: 12px;
+  }
+}
+
+.custom-sidecontent {
+  //   width: 73%;
+  min-height: 94vh;
+  &.full {
+    width: 100%;
+  }
+  .learn-card {
+    border-radius: 10px;
+    background: #ffffff;
+    height: 170px;
+    min-height: 170px;
+    box-shadow: none !important;
+    .imageholder {
+      width: 34%;
+      height: 170px;
+      img {
+        width: 100%;
+        display: block;
+        height: 100%;
+        // max-height: 170px;
+        border-radius: 10px 0 0 10px;
+      }
+    }
+    .content-title {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .mat-card-content {
+      margin-left: 36%;
+      padding: 8px;
+      position: relative;
+      height: 152px;
+      .mat-caption {
+        .mat-icon {
+          vertical-align: middle;
+          height: 18px !important;
+          width: 16px !important;
+          font-size: 16px !important;
+        }
+      }
+
+      .contenticon {
+        vertical-align: middle;
+        margin-right: 6px;
+        width: 16px;
+        max-height: 16px;
+      }
+
+      .bottomsection {
+        position: absolute;
+        bottom: 0;
+        width: 96%;
+
+        .actionbtns {
+          position: absolute;
+          right: 0;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        li {
+          display: inline-block;
+          padding-right: 10px;
+
+          img {
+            vertical-align: bottom;
+          }
+        }
+      }
+
+      .tags {
+        li {
+          background: RGBA(0, 0, 0, 0.04);
+          padding: 2px 13px 4px !important;
+          margin-right: 10px;
+          border-radius: 10px 4px 4px 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .custom-sidenav {
+    width: auto !important;
+    margin-top: 40px;
+  }
+  .custom-sidecontent {
+    width: 100%;
+  }
+  .learnsearch {
+    margin-left: 8px;
+    margin-right: 8px;
+    overflow: hidden;
+  }
+}
+
+.no-data-text {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  line-height: 16.8px;
+  color: $black-87;
+}
+
+.max-w-330 {
+  max-width: 20.625rem;
+}
+
+.action-search-btn button {
+  padding: 6.5px 12px !important;
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  height: 32px !important;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19.2px;
+  width: 156px;
+}
+
+.result-meta {
+  span {
+    /* stylelint-disable */
+    font-family: Montserrat;
+    /* stylelint-enable */
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24.38px;
+    color: $textGreyShade4;
+    margin-bottom: 8px;
+  }
+}
+
+.see-all-results {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-weight: 400;
+  line-height: 16.8px;
+}
+
+.mt-4 {
+  margin-top: 1rem !important;
+}
+
+
+.filter-container-search {
+  width: 16.5% !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.1607843137) !important;
+  border-radius: 12px;
+  position: fixed;
+  margin-top: 126px;
+  /* height: calc(100vh - 10px); */
+  margin-bottom: 10px;
+  @media (max-width: 768px) {
+    width: 61.5% !important;
+  }
+}
+
+.filter-container-search .mat-drawer-inner-container {
+  overflow-x: hidden;
+}
+
+.filter-list {
+  .filter-pill {
+    padding: 2px 2px 2px 12px;
+    border-radius: 18px;
+    background-color: $lightGrayshade;
+    span {
+      /* stylelint-disable */
+      font-family: Lato;
+      /* stylelint-enable */
+      color: $dimGrayshade;
+      display: inline-block;
+      max-width: 14em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    mat-icon {
+      font-size: 16px;
+    }
+    .mat-icon-button {
+      width: 28px;
+      height: 28px;
+      line-height: 0;
+    }
+  }
+}
+
+.explore-all-content span, .contents-title-top, .contents-title-top span {
+  /* stylelint-disable */
+  font-family: Montserrat;
+  /* stylelint-enable */
+  font-weight: 600;
+  font-size: 20px;
+  color: rgba(27, 33, 51, 1);
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}

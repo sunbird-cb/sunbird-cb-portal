@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
 import { AccessControlService } from '@ws/author'
 import {
@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./audio.component.scss'],
 })
 export class AudioComponent implements OnInit, OnDestroy {
+  @Input() hideUpNext = false
   private routeDataSubscription: Subscription | null = null
   private screenSizeSubscription: Subscription | null = null
   private viewerDataSubscription: Subscription | null = null
@@ -33,6 +34,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   discussionForumWidget: NsWidgetResolver.IRenderConfigWithTypedData<
     NsDiscussionForum.IDiscussionForumInput
   > | null = null
+  channelId: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private contentSvc: WidgetContentService,
@@ -45,6 +47,7 @@ export class AudioComponent implements OnInit, OnDestroy {
     this.screenSizeSubscription = this.valueSvc.isXSmall$.subscribe(data => {
       this.isScreenSizeSmall = data
     })
+    this.channelId = this.activatedRoute.snapshot.queryParamMap.get('channelId')
     this.isNotEmbed = !(
       window.location.href.includes('/embed/') ||
       this.activatedRoute.snapshot.queryParams.embed === 'true'
@@ -80,10 +83,13 @@ export class AudioComponent implements OnInit, OnDestroy {
           this.widgetResolverAudioData.widgetData.primaryCategory = this.audioData.primaryCategory
           this.widgetResolverAudioData.widgetData.identifier = this.audioData.identifier
           this.widgetResolverAudioData.widgetData.version = `${this.audioData.version}${''}`
+          this.widgetResolverAudioData.widgetData.channel = this.channelId
         }
         this.widgetResolverAudioData.widgetData.disableTelemetry = false
         this.isFetchingDataComplete = true
-
+        if (this.widgetResolverAudioData && this.widgetResolverAudioData.widgetData) {
+          this.widgetResolverAudioData.widgetData['hideUpNext'] = this.hideUpNext
+        }
         if (this.audioData && this.audioData.subTitles) {
 
           let subTitleUrl = ''
@@ -126,21 +132,25 @@ export class AudioComponent implements OnInit, OnDestroy {
                 this.activatedRoute.snapshot.queryParams.collectionId,
                 this.audioData.identifier,
               )
-            } else {
-              await this.fetchContinueLearning(this.audioData.identifier, this.audioData.identifier)
             }
+            // else {
+            //   await this.fetchContinueLearning(this.audioData.identifier, this.audioData.identifier)
+            // }
           }
           if (this.forPreview) {
             // this.widgetResolverAudioData.widgetData.disableTelemetry = true
             // TODO: for public couese access forPreview is set to true, but we need telemetry too
             this.widgetResolverAudioData.widgetData.disableTelemetry = false
           }
-
+          if (this.widgetResolverAudioData && this.widgetResolverAudioData.widgetData) {
+            this.widgetResolverAudioData.widgetData['hideUpNext'] = this.hideUpNext
+          }
           this.widgetResolverAudioData.widgetData.mimeType = data.content.data.mimeType
           this.widgetResolverAudioData.widgetData.contentType = data.content.data.contentType
           this.widgetResolverAudioData.widgetData.primaryCategory = data.content.data.primaryCategory
 
           this.widgetResolverAudioData.widgetData.version = `${data.content.data.version}${''}`
+          this.widgetResolverAudioData.widgetData.channel = this.channelId
 
           if (data.content.data && data.content.data.subTitles && data.content.data.subTitles[0]) {
 

@@ -1,0 +1,49 @@
+<ng-container *ngIf="isPopup">
+  <div class="popup-header flex justify-between items-center">
+    <div class="header-title">Achievements</div>
+    <button mat-icon-button class="close-button" (click)="closePopup()">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+  </div>
+</ng-container>
+<div class="flex flex-col gap-2"  [ngClass]="{'container': isPopup}">
+    <ng-container *ngFor="let achievement of achievementsList">
+      <div class="achievement-card flex flex-col gap-1">
+        <div class="flex justify-between items-start certificate-name">
+          <div class="achievement-title">{{achievement?.title}}</div>
+          <ng-container *ngIf="isCurrentUser">
+            <mat-icon class="delete-icon mr-2" (click)="deleteAchievement(achievement)">delete</mat-icon>
+            <mat-icon class="edit-icon" (click)="openEditDialog(achievement)">edit</mat-icon>
+          </ng-container>
+        </div>
+        <div class="achievement-details"> {{achievement?.issuedOrganisation}}</div>
+        <div class="achievement-details"> {{achievement?.issuedDate | date:'dd MMM, yyyy'}}</div>
+        <ng-container *ngIf="achievement?.description">
+          <div [ngClass]="{'extend-description': achievement?.showMore}" class="description">
+            <ws-app-description [description]="achievement?.description" [minHeight]="30"
+              (showViewMoreBtn)="achievement['showViewMoreBtn'] = $event"></ws-app-description>
+          </div>
+           <ng-container *ngIf="achievement.showViewMoreBtn">
+            <div class="view-more" (click)="viewMore(achievement)">
+              {{(achievement?.showMore ? 'NetworkV2Profile.viewLess' : 'NetworkV2Profile.viewMore') | translate}}
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="achievement?.uploadedDocumentUrl">
+          <div class="document-card flex justify-between items-center">
+            <div class="flex items-center gap-4 w-full">
+              <img [src]="achievement?.uploadedDocumentUrl" class="certificate" alt="certificate">
+              <div class="document-name">{{achievement?.fileName}}</div>
+            </div>
+            <mat-icon class="view-icon" (click)="openDocument(achievement?.uploadedDocumentUrl)">visibility</mat-icon>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="achievement?.url">
+          <div class="url-card flex gap-2 items-center justify-center" (click)="openUrl(achievement.url)">
+            <div class="linke" >{{'NetworkV2Profile.viewCertificate' | translate}}</div>
+            <mat-icon class="link-icon" >link</mat-icon>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+</div>

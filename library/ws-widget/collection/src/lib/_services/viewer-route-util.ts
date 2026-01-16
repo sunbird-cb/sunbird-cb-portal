@@ -16,6 +16,9 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
     case NsContent.EMimeTypes.HTML_TEXT:
     case NsContent.EMimeTypes.HTML:
     case NsContent.EMimeTypes.ZIP:
+      if (window.location.href.includes('mobile/html')) {
+        return 'mobile/html'
+      }
       return 'html'
     case NsContent.EMimeTypes.TEXT_WEB:
       return 'youtube'
@@ -52,6 +55,8 @@ export const VIEWER_ROUTE_FROM_MIME = (mimeType: NsContent.EMimeTypes) => {
       return 'practice'
     case NsContent.EMimeTypes.COLLECTION_RESOURCE:
       return 'resource-collection'
+    case NsContent.EMimeTypes.OFFLINE_SESSION:
+      return 'offline-session'
     default:
       return 'html'
   }
@@ -66,6 +71,8 @@ export function viewerRouteGenerator(
   primaryCategory?: string,
   batchId?: string,
   courseName?: string,
+  ML?: string,
+  MLId?: string,
 ): { url: string; queryParams: { [key: string]: any } } {
   let collId = collectionId
   let collType = collectionType
@@ -74,6 +81,9 @@ export function viewerRouteGenerator(
     collType = undefined
   }
   const url = `/viewer/${VIEWER_ROUTE_FROM_MIME(mimeType)}/${id}`
+  // tslint:disable-next-line
+  // console.log(url,'========>Route from MIME TYPE<==========')
+  const forcreator = window.location.href.includes('editMode=true')
   let queryParams = {}
   if (primaryCategory) {
     queryParams = {
@@ -91,6 +101,12 @@ export function viewerRouteGenerator(
   }
   if (forPreview) {
     queryParams = { ...queryParams, preview: true }
+  }
+  if (forcreator) {
+    queryParams = { ...queryParams, editMode: true }
+  }
+  if( ML && MLId) {
+    queryParams = { ...queryParams, ML, MLId }
   }
   return {
     queryParams,

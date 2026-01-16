@@ -1,0 +1,33 @@
+<div class="flex gap-3 md:gap-5 px-2 md:px-0 states">
+  <ng-container *ngFor="let stat of userStats">
+    <div class="stateCard">
+      <div class="flex gap-1 md:gap-1 items-center" [ngClass]="{'justify-between': isMobile}">
+        <div class="statName">{{stat?.state | translate}}</div>
+        <ng-container *ngIf="stat?.stateInfo && !isMobile">
+          <div class="hidden md:inline-flex">
+          <mat-icon class="infoIcon" matTooltip="{{stat?.stateInfo}}">info_outline</mat-icon>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="stat?.totalPoints > 0">
+          <div class="block md:hidden rightArrowDiv"  (click)="viewAll(stat)">
+            <mat-icon class="right-arrow" >chevron_right</mat-icon>
+          </div>
+        </ng-container>
+      </div>
+      
+      <div class="flex justify-between items-center mt-1 md:mt-3">
+        <div class="flex gap-1 items-center">
+          <img [src]="stat?.iconUrl" class="statIcon" alt="statIcon">
+          <div class="statPoints">{{stat?.totalPoints}}</div>
+        </div>
+
+        <ng-container *ngIf="stat?.totalPoints > 0 && !isNotMyUserAndIgotOrg">
+          <div class="viewAll hidden md:block">
+            <a (click)="viewAll(stat)" >{{'NetworkV2Profile.viewAll' | translate}}</a>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </ng-container>
+</div>

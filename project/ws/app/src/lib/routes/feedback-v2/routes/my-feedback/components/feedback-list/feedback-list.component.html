@@ -1,18 +1,18 @@
 <section class="pt-8">
   <h3 class="mat-h3" [ngSwitch]="viewedBy" *ngIf="feedbackData && feedbackData.hits">
-    <ng-container *ngSwitchCase="feedbackRoles.User" i18n>
+    <ng-container *ngSwitchCase="feedbackRoles.User" >
       Feedback provided by you.
     </ng-container>
-    <ng-container *ngSwitchCase="feedbackRoles.Author" i18n>
+    <ng-container *ngSwitchCase="feedbackRoles.Author" >
       Feedback received on your content.
     </ng-container>
-    <ng-container *ngSwitchCase="feedbackRoles.Platform" i18n>
+    <ng-container *ngSwitchCase="feedbackRoles.Platform" >
       Feedback on the platform.
     </ng-container>
-    <ng-container *ngSwitchCase="feedbackRoles.Content" i18n>
+    <ng-container *ngSwitchCase="feedbackRoles.Content" >
       View and reply to content requests.
     </ng-container>
-    <ng-container *ngSwitchCase="feedbackRoles.Service" i18n>
+    <ng-container *ngSwitchCase="feedbackRoles.Service" >
       View and reply to service requests.
     </ng-container>
   </h3>
@@ -29,10 +29,10 @@
   </div>
   <div class="mb-4" *ngIf="viewedBy !== feedbackRoles.User && viewedBy !== feedbackRoles.Author">
     <mat-checkbox [formControl]="unseenCtrl">
-      <ng-container *ngIf="viewedBy === feedbackRoles.User" i18n>
+      <ng-container *ngIf="viewedBy === feedbackRoles.User" >
         Show only unread items
       </ng-container>
-      <ng-container *ngIf="viewedBy !== feedbackRoles.User" i18n>
+      <ng-container *ngIf="viewedBy !== feedbackRoles.User" >
         Show only unanswered items
       </ng-container>
     </mat-checkbox>
@@ -59,7 +59,7 @@
 
   <ng-container *ngIf="!feedbackData.result.length">
     <section class="my-16 flex flex-center">
-      <h3 class="mat-h3" i18n>
+      <h3 class="mat-h3" >
         No results found.
       </h3>
     </section>
@@ -68,7 +68,7 @@
 
 <ng-container *ngIf="feedbackFetchStatus === 'error'">
   <section class="my-16 flex flex-center">
-    <h3 class="mat-h3" i18n>
+    <h3 class="mat-h3" >
       There was an error while searching for feedback.
     </h3>
   </section>

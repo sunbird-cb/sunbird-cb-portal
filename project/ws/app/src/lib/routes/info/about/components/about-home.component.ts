@@ -6,7 +6,7 @@ import {
   SafeStyle,
 } from '@angular/platform-browser'
 import { map } from 'rxjs/operators'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
 import { IAboutObject } from '../../../../../../../../../src/app/routes/public/public-about/about.model'
 import { Subscription } from 'rxjs'

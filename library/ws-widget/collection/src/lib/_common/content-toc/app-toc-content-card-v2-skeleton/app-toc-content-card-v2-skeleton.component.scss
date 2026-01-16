@@ -1,0 +1,54 @@
+@import 'ws-vars';
+
+.resource {
+    padding: 16px;
+}
+
+.child-wrapper {
+    .collection-wrapper {
+        padding: 1rem 1rem 1rem 0;
+    }
+}
+
+.card-collection {
+    display: flex;
+    align-items: center;
+    // margin: $size-xs 0;
+    border-radius: 8px;
+
+    .card-thumbnail {
+        // $image-height: 65px;
+        // height: $image-height;
+        // width: (16 / 9) * $image-height;
+        // margin-right: $size-s;
+        // cursor: pointer;
+        height: 100%;
+        // width: 220px;
+        margin-right: 12px;
+        cursor: pointer;
+        border-radius: 8px 0 0 0px;
+    }
+
+    @media only screen and (max-width:469px) {
+        flex-direction: column;
+        margin: $size-xs $size-xs $size-xs*2 $size-xs !important;
+        align-items: flex-start !important;
+
+        .card-thumbnail {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        .text-truncate {
+            white-space: unset !important;
+        }
+    }
+}
+
+.w-100 {
+    width: 100%;
+  }
+  
+  .w-auto {
+    width: auto;
+  }

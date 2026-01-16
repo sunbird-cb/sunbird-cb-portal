@@ -9,7 +9,7 @@ import {
   EFeedbackRole,
   NsContent,
 } from '@sunbird-cb/collection'
-import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
+import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils-v2'
 @Component({
   selector: 'ws-app-feedback-thread-header',
   templateUrl: './feedback-thread-header.component.html',

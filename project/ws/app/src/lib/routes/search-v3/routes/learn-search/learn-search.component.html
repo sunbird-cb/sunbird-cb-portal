@@ -1,0 +1,360 @@
+<div class="learnsearch margin-top-l margin-bottom-l">
+    <mat-sidenav-container autosize class="container-balanced search-nav-container" [hasBackdrop]="false">
+        <mat-sidenav [mode]="'side'" [opened]="sideNavBarOpened" position="start"
+            class="custom-sidenav filter-container-search"
+            *ngIf="((combinedFacets.length > 0 ||
+        ((courseSearchTotalCount + eventSearchTotalCount + peopleSearchTotalCount + communitiesSearchTotalCount + resourcesSearchTotalCount + externalSearchTotalCount) > 0) && !searchContentLoader && !searchPeopleLoader) || filtersPanel === 'show') && !isMobileView">
+            <ng-container>
+                <ws-app-search-filters [urlparamFilters]="paramFilters" [newfacets]="combinedFacets"
+                    (appliedFilter)="applySearchFilter($event)" [typesOfEvents]="typesOfEventsFilters"
+                    [karmayogiBadge]="veifiedKarmayogi" (constructQueryParam)="constructQueryParam($event)"
+                    (applyFilterFromLearn)="applyFilterFromLearn($event)"></ws-app-search-filters>
+            </ng-container>
+        </mat-sidenav>
+
+        <mat-sidenav-content #mainContainer class="custom-sidecontent"
+            [ngClass]="{'full': filtersPanel && filtersPanel ==='hide'}">
+            <div #contentWrapper class="ml-2 md:ml-4 md:mr-0 mr-2 content-wrapper">
+                <div class="result-meta flex items-center justify-between flex-wrap"
+                    [ngClass]="{'my-3': screenSizeIsLtMedium, 'mb-4': !isExploreContentTab}"
+                    *ngIf="(courseSearchTotalCount + eventSearchTotalCount + peopleSearchTotalCount + communitiesSearchTotalCount + resourcesSearchTotalCount + externalSearchTotalCount) > 0">
+                    <!-- <ng-container *ngIf="!isExploreContentTab">
+                        <div class="">
+                            <span class="brand-color">“{{(courseSearchTotalCount + eventSearchTotalCount +
+                                peopleSearchTotalCount + communitiesSearchTotalCount)}}”</span>
+                            <span class="mx-1">{{'learnsearch.searchResultsFor' | translate}}</span>
+                            <span class="brand-color" *ngIf="searchQuery.query">“{{searchQuery.query}}”</span>
+                        </div>
+                    </ng-container> -->
+                    <div class="" *ngIf="!isExploreContentTab">
+                        <ng-container *ngIf="seeAllResult === '' || seeAllResult === 'courses'">
+                            <p class="contents-title-top text-dark mb-0">
+                                <span *ngIf="courseSearchTotalCount === 1">{{ 'learnsearch.content' | translate:{ count:
+                                    courseSearchTotalCount } }}</span>
+                                <span *ngIf="courseSearchTotalCount > 1">{{ 'learnsearch.contents' | translate:{ count:
+                                    courseSearchTotalCount } }}</span>
+                            </p>
+                        </ng-container>
+                        <ng-container *ngIf="seeAllResult === 'events'">
+                            <p class="contents-title-top text-dark mb-0">{{ 'learnsearch.event' | translate:{ count:
+                                eventSearchTotalCount } }}</p>
+                        </ng-container>
+                        <ng-container *ngIf="seeAllResult === 'peoples'">
+                            <p class="contents-title-top text-dark mb-0">{{ 'learnsearch.peoples' | translate:{ count:
+                                peopleSearchTotalCount } }}</p>
+                        </ng-container>
+                        <ng-container *ngIf="seeAllResult === 'communities'">
+                            <p class="contents-title-top text-dark mb-0">{{ 'learnsearch.communities' | translate:{
+                                count: communitiesSearchTotalCount } }}</p>
+                        </ng-container>
+                        <ng-container *ngIf="seeAllResult === 'resources'">
+                            <p class="contents-title-top text-dark mb-0">
+                                <span *ngIf="resourcesSearchTotalCount === 1">{{ 'searchfilters.resource' | translate:{
+                                    count: resourcesSearchTotalCount } }}</span>
+                                <span *ngIf="resourcesSearchTotalCount > 1">{{ 'searchfilters.resources' | translate:{
+                                    count: resourcesSearchTotalCount } }}</span>
+                            </p>
+                        </ng-container>
+                        <ng-container *ngIf="seeAllResult === 'external-contents'">
+                            <p class="contents-title-top text-dark mb-0">
+                                <span *ngIf="externalSearchTotalCount > 0">{{ 'searchfilters.externalContent' |
+                                    translate:{ count: externalSearchTotalCount } }}</span>
+                            </p>
+                        </ng-container>
+                    </div>
+
+                    <ng-container *ngIf="isExploreContentTab">
+                        <div class="explore-all-content">
+                            <span>{{'cardshublist.exploreAllContent' | translate}}</span>
+                        </div>
+                    </ng-container>
+                    <div class="sort-search ml-auto" *ngIf="!screenSizeIsLtMedium">
+                        <ws-app-search-sort-input [category]="seeAllResult" [isExploreContentTab]="isExploreContentTab"
+                            (searchSorter)="onChangeSortSearch($event)"></ws-app-search-sort-input>
+                    </div>
+                </div>
+
+                <div *ngIf="screenSizeIsLtMedium" class="flex justify-between">
+                    <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
+                        id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <div class="sort-search ml-auto">
+                        <ws-app-search-sort-input [category]="seeAllResult"
+                            (searchSorter)="onChangeSortSearch($event)"></ws-app-search-sort-input>
+                    </div>
+                </div>
+
+                <ng-container
+                    *ngIf="(seeAllResult === '' || seeAllResult === 'events' || seeAllResult === 'courses' || seeAllResult === 'communities' || seeAllResult === 'resources' || seeAllResult === 'external-contents') && searchContentLoader">
+                    <ng-container *ngFor="let item of [1,2,3,4]">
+                        <div class="mt-2">
+                            <ws-app-skeleton-loader-content></ws-app-skeleton-loader-content>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="filtersChipFromLearn.length">
+                    <div class="filter-list flex items-center flex-wrap gap-2 mb-4">
+                        <ng-container *ngFor="let item of filtersChipFromLearn">
+                            <div class="filter-pill flex items-center">
+                                <span class="font-normal text-xs" [matTooltip]="item">{{item}}</span>
+                                <button mat-icon-button color="primary" (click)="removeFilterChip(item)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <ng-container>
+                    <!-- Content Card -->
+                    <ng-container
+                        *ngIf="courseSearchTotalCount > 0 && (seeAllResult === '' || seeAllResult === 'courses' || seeAllResult === 'case-study')">
+                        <div class="search-content-card">
+                            <p class="mat-subheading-1 mt-4 font-bold-imp text-dark"
+                                *ngIf="(seeAllResult === '' || seeAllResult === 'courses') && isExploreContentTab">
+                                <span *ngIf="courseSearchTotalCount === 1">{{ 'learnsearch.content' | translate:{ count:
+                                    courseSearchTotalCount } }}</span>
+                                <span *ngIf="courseSearchTotalCount > 1">{{ 'learnsearch.contents' | translate:{ count:
+                                    courseSearchTotalCount } }}</span>
+                            </p>
+                            <ng-container *ngFor="let course of courseSearchResults; let index = index">
+                                <ws-app-course-content-card [content]="course" [enrollment]="enrollmentDetails"
+                                    [igotSpecializationPrograms]="igotSpecializationPrograms"
+                                    (telemetry)="applyTelemetry($event, index)"
+                                    [cbpPlans]="cbpPlanList"></ws-app-course-content-card>
+                            </ng-container>
+                            <p class="see-all-results text-center font-normal brand-color cursor-pointer"
+                                *ngIf="!seeAllResult && courseSearchTotalCount > 3"
+                                (click)="constructQueryParam('courses')">
+                                {{ 'learnsearch.seeAllResults'
+                                | translate }}
+                            </p>
+                            <ng-container *ngIf="seeAllResult && courseSearchTotalCount > initialPaginationSize">
+                                <div [ngClass]="{'md:mt-72': courseSearchResults.length < 3}">
+                                    <ws-app-pagination [defaultPaginationSize]="initialPaginationSize"
+                                        [defaultPaginationSizeOptions]="initialPaginationSizeOptions"
+                                        [totalItemsCount]="this.courseSearchTotalCount"
+                                        [currentPage]="initialPaginationPage"
+                                        (pageChange)="onPageChange($event)"></ws-app-pagination>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                    </ng-container>
+
+                    <!-- event Card -->
+                    <ng-container
+                        *ngIf="eventSearchTotalCount > 0 && (seeAllResult === '' || seeAllResult === 'events')">
+                        <div class="search-event-card">
+                            <p *ngIf="seeAllResult === ''" class="mat-subheading-1 mt-4 font-bold-imp text-dark">{{
+                                'learnsearch.event' | translate:{ count: eventSearchTotalCount } }}</p>
+                            <ng-container *ngFor="let event of eventsSearchResults; let index = index">
+                                <ws-app-search-event-card [content]="event"
+                                    (telemetry)="applyTelemetry($event, index)"></ws-app-search-event-card>
+                            </ng-container>
+                            <p class="see-all-results text-center font-normal brand-color cursor-pointer"
+                                *ngIf="!seeAllResult && eventSearchTotalCount > 3"
+                                (click)="constructQueryParam('events')"> {{
+                                'learnsearch.seeAllResults'
+                                | translate }}
+                            </p>
+                            <ng-container *ngIf="seeAllResult && eventSearchTotalCount > initialPaginationSize">
+                                <div [ngClass]="{'md:mt-72': eventsSearchResults.length < 3}">
+                                    <ws-app-pagination [defaultPaginationSize]="initialPaginationSize"
+                                        [defaultPaginationSizeOptions]="initialPaginationSizeOptions"
+                                        [totalItemsCount]="this.eventSearchTotalCount"
+                                        [currentPage]="initialPaginationPage"
+                                        (pageChange)="onPageChange($event)"></ws-app-pagination>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+
+                    <!-- // Peoples -->
+                    <ng-container *ngIf="seeAllResult === 'peoples' && searchPeopleLoader">
+                        <div class="flex flex-wrap gap-x-6 gap-y-6 items-center justify-start">
+                            <div class="card-container flex-grow" *ngFor="let user of [1, 2, 3, 4, 5, 6]">
+                                <ws-app-skeleton-loader-peoples></ws-app-skeleton-loader-peoples>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container
+                        *ngIf="peopleSearchTotalCount > 0 && (seeAllResult === '' || seeAllResult === 'peoples')">
+                        <div class="search-people-card overflow-x-hidden">
+                            <p *ngIf="seeAllResult === ''" class="mat-subheading-1 mt-4 font-bold-imp text-dark">
+                                {{ 'learnsearch.peoples' | translate:{ count: peopleSearchTotalCount } }}
+                            </p>
+                            <ng-container *ngIf="peopleSearchTotalCount > 0 && !seeAllResult">
+                                <ws-utils-horizontal-scroller [loadStatus]="'done'">
+                                    <div class="card-container mr-6"
+                                        *ngFor="let user of peoplesSearchResults; let index=index">
+                                        <ws-app-people-connection-card class="mr-4 mb-5" [user]="user"
+                                            (telemetry)="applyTelemetry($event, index)" [category]="seeAllResult"
+                                            (connection)="connectionUpdatePeopleCard($event)"></ws-app-people-connection-card>
+                                    </div>
+                                </ws-utils-horizontal-scroller>
+                            </ng-container>
+
+                            <ng-container *ngIf="seeAllResult === 'peoples'">
+                                <div class="flex flex-wrap gap-x-6 gap-y-3 items-center justify-start">
+                                    <div class="card-container flex-grow" *ngFor="let user of peoplesSearchResults">
+                                        <ws-app-people-connection-card class="mb-5" [user]="user"
+                                            [category]="seeAllResult" (telemetry)="applyTelemetry($event, index)"
+                                            (connection)="connectionUpdatePeopleCard($event)"></ws-app-people-connection-card>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <p class="see-all-results text-center font-normal brand-color cursor-pointer"
+                                *ngIf="!seeAllResult && peopleSearchTotalCount > 5"
+                                (click)="constructQueryParam('peoples')">
+                                {{ 'learnsearch.seeAllResults'
+                                | translate }}
+                            </p>
+                            <ng-container *ngIf="seeAllResult && peopleSearchTotalCount > initialPaginationSize">
+                                <div class="mt-4">
+                                    <ws-app-pagination [defaultPaginationSize]="initialPaginationSize"
+                                        [defaultPaginationSizeOptions]="initialPaginationSizeOptions"
+                                        [totalItemsCount]="this.peopleSearchTotalCount"
+                                        [currentPage]="initialPaginationPage"
+                                        (pageChange)="onPageChange($event)"></ws-app-pagination>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+
+                    <!-- Communities  -->
+                    <ng-container
+                        *ngIf="communitiesSearchTotalCount > 0 && (seeAllResult === '' || seeAllResult === 'communities')">
+                        <div class="communities-people-card overflow-x-hidden mb-3">
+                            <p *ngIf="seeAllResult === ''" class="mat-subheading-1 mt-4 font-bold-imp text-dark">
+                                {{ 'learnsearch.communities' | translate:{ count: communitiesSearchTotalCount } }}
+                            </p>
+                            <ng-container *ngIf="communitiesSearchTotalCount > 0 && !seeAllResult">
+                                <ws-utils-horizontal-scroller [loadStatus]="'done'">
+                                    <div class="card-container mr-6"
+                                        *ngFor="let community of communitiesSearchResults; let index=index">
+                                        <ws-app-community-content-card [community]="community"
+                                            (telemetry)="applyTelemetry($event, index)"
+                                            [orgDetails]="community?.additionalInfo"></ws-app-community-content-card>
+                                    </div>
+                                </ws-utils-horizontal-scroller>
+                            </ng-container>
+                            <ng-container *ngIf="seeAllResult === 'communities'">
+                                <div class="flex flex-wrap gap-x-2 gap-y-3 justify-around md:justify-start">
+                                    <div class="card-container" *ngFor="let community of communitiesSearchResults">
+                                        <ws-app-community-content-card [community]="community"
+                                            (telemetry)="applyTelemetry($event, index)"
+                                            [orgDetails]="community?.additionalInfo"></ws-app-community-content-card>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <p class="see-all-results text-center font-normal brand-color cursor-pointer mt-4"
+                                *ngIf="!seeAllResult && communitiesSearchTotalCount > 5"
+                                (click)="constructQueryParam('communities')"> {{
+                                'learnsearch.seeAllResults' | translate }}
+                            </p>
+                            <ng-container *ngIf="seeAllResult && communitiesSearchTotalCount > initialPaginationSize">
+                                <div [ngClass]="{'md:mt-72': communitiesSearchResults.length < 3}">
+                                    <ws-app-pagination [defaultPaginationSize]="initialPaginationSize"
+                                        [defaultPaginationSizeOptions]="initialPaginationSizeOptions"
+                                        [totalItemsCount]="this.communitiesSearchTotalCount"
+                                        [currentPage]="initialPaginationPage"
+                                        (pageChange)="onPageChange($event)"></ws-app-pagination>
+                                </div>
+                            </ng-container>
+                        </div>
+
+                    </ng-container>
+
+                    <!-- Resource  -->
+                    <ng-container
+                        *ngIf="resourcesSearchTotalCount > 0 && (seeAllResult === '' || seeAllResult === 'resources')">
+                        <div class="search-content-card">
+                            <p *ngIf="seeAllResult === ''" class="mat-subheading-1 mt-4 font-bold-imp text-dark">
+                                <span *ngIf="resourcesSearchTotalCount === 1">{{ 'searchfilters.resource' | translate:{
+                                    count: resourcesSearchTotalCount } }}</span>
+                                <span *ngIf="resourcesSearchTotalCount > 1">{{ 'searchfilters.resources' | translate:{
+                                    count: resourcesSearchTotalCount } }}</span>
+                            </p>
+                            <ng-container *ngFor="let course of resourcesSearchResults; let index = index">
+                                <ws-app-course-content-card [content]="course" [enrollment]="enrollmentDetails"
+                                    (telemetry)="applyTelemetry($event, index)"
+                                    [igotSpecializationPrograms]="igotSpecializationPrograms"
+                                    [cbpPlans]="cbpPlanList"></ws-app-course-content-card>
+                            </ng-container>
+                            <p class="see-all-results text-center font-normal brand-color cursor-pointer"
+                                *ngIf="!seeAllResult && resourcesSearchTotalCount > 3"
+                                (click)="constructQueryParam('resources')">
+                                {{ 'learnsearch.seeAllResults'
+                                | translate }}
+                            </p>
+                            <ng-container *ngIf="seeAllResult && resourcesSearchTotalCount > initialPaginationSize">
+                                <div [ngClass]="{'md:mt-72': resourcesSearchResults.length < 3}">
+                                    <ws-app-pagination [defaultPaginationSize]="initialPaginationSize"
+                                        [defaultPaginationSizeOptions]="initialPaginationSizeOptions"
+                                        [totalItemsCount]="this.resourcesSearchTotalCount"
+                                        [currentPage]="initialPaginationPage"
+                                        (pageChange)="onPageChange($event)"></ws-app-pagination>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                    </ng-container>
+
+                    <!-- External Card -->
+                    <ng-container
+                        *ngIf="externalSearchTotalCount > 0 && (seeAllResult === '' || seeAllResult === 'external-contents')">
+                        <div class="search-content-card">
+                            <p *ngIf="seeAllResult === ''" class="mat-subheading-1 mt-4 font-bold-imp text-dark">
+                                <span *ngIf="externalSearchTotalCount > 0">{{ 'searchfilters.externalContent' |
+                                    translate:{ count: externalSearchTotalCount } }}</span>
+                            </p>
+                            <ng-container *ngFor="let course of externalSearchResults; let index = index">
+                                <ws-app-course-content-card [content]="course" [enrollment]="enrollmentDetails"
+                                    (telemetry)="applyTelemetry($event, index)"
+                                    [cbpPlans]="cbpPlanList"></ws-app-course-content-card>
+                            </ng-container>
+                            <p class="see-all-results text-center font-normal brand-color cursor-pointer"
+                                *ngIf="!seeAllResult && externalSearchTotalCount > 3"
+                                (click)="constructQueryParam('external-contents')">
+                                {{ 'learnsearch.seeAllResults' | translate }}
+                            </p>
+                            <ng-container *ngIf="seeAllResult && externalSearchTotalCount > initialPaginationSize">
+                                <div [ngClass]="{'md:mt-72': externalSearchResults.length < 3}">
+                                    <ws-app-pagination [defaultPaginationSize]="initialPaginationSize"
+                                        [defaultPaginationSizeOptions]="initialPaginationSizeOptions"
+                                        [totalItemsCount]="externalSearchTotalCount"
+                                        [currentPage]="initialPaginationPage"
+                                        (pageChange)="onPageChange($event)"></ws-app-pagination>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                    </ng-container>
+
+                </ng-container>
+
+            </div>
+            <div class="ml-auto mr-auto mt-8 text-center max-w-330"
+                *ngIf="(courseSearchTotalCount + eventSearchTotalCount + peopleSearchTotalCount + communitiesSearchTotalCount + resourcesSearchTotalCount + externalSearchTotalCount) === 0 && !searchContentLoader">
+                <img src="/assets/icons/no-data.svg" wsUtilsImageResponsive alt="No results"
+                    class="margin-top-l margin-bottom-s">
+                <div class="no-data-text font-bold text-sm my-4" i18n="search route no result">
+                    {{ noResultMessage }}</div>
+                <div class="action-search-btn flex gap-4 items-center mt-6 justify-center">
+                    <button mat-raised-button class="mat-btn-outline cursor-pointer py-1"
+                        (click)="navigateTo('page/home')">
+                        {{'learnsearch.btnBackToHomepage' | translate}}</button>
+                    <button mat-flat-button class="mat-btn-flat cursor-pointer py-1" (click)="navigateTo('page/home')">
+                        {{'learnsearch.btnExploreMore' | translate}}</button>
+                </div>
+
+            </div>
+
+
+        </mat-sidenav-content>
+
+
+    </mat-sidenav-container>
+</div>

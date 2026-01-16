@@ -38,7 +38,7 @@
                             {{ path }}
                         </mat-option>
                     </mat-autocomplete>
-                    <mat-error class="error-font" i18n>Access Path is mandatory
+                    <mat-error class="error-font" >Access Path is mandatory
                     </mat-error>
                 </mat-form-field>
                 <div class="mt-4 flex justify-end">
@@ -48,7 +48,7 @@
                     </div>
                     <button mat-raised-button color="primary" type="submit" i18n
                         [disabled]="uploadSaveData || !accessPathForm?.valid" (click)="onSubmit(accessPathForm)">
-                        <ng-container i18n>Save</ng-container>
+                        <ng-container >Save</ng-container>
                     </button>
                 </div>
             </form>

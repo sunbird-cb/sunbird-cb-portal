@@ -2,40 +2,40 @@
   <mat-form-field *ngIf="content.type !== 'title' && content.type !== 'text'">
     <mat-label>Choose Type</mat-label>
     <mat-select formControlName="type" required>
-      <mat-option [value]="'set1'" i18n>
+      <mat-option [value]="'set1'" >
         Only Image
       </mat-option>
-      <mat-option [value]="'set2'" i18n>
+      <mat-option [value]="'set2'" >
         Image and Link
       </mat-option>
-      <mat-option [value]="'set3'" i18n>
+      <mat-option [value]="'set3'" >
         Image and Title
       </mat-option>
-      <mat-option [value]="'set4'" i18n>
+      <mat-option [value]="'set4'" >
         Image, Title and Link
       </mat-option>
-      <mat-option [value]="'set5'" i18n>
+      <mat-option [value]="'set5'" >
         Image with overlay Title
       </mat-option>
-      <mat-option [value]="'set6'" i18n>
+      <mat-option [value]="'set6'" >
         Image with overlay Title and Link
       </mat-option>
-      <mat-option [value]="'set7'" i18n>
+      <mat-option [value]="'set7'" >
         Image, Title and Description
       </mat-option>
-      <mat-option [value]="'set8'" i18n>
+      <mat-option [value]="'set8'" >
         Image, Title, Description and Link
       </mat-option>
-      <mat-option [value]="'set9'" i18n>
+      <mat-option [value]="'set9'" >
         Image with overlay Title and Description
       </mat-option>
-      <mat-option [value]="'set10'" i18n>
+      <mat-option [value]="'set10'" >
         Image, Link with overlay Title and Description
       </mat-option>
-      <mat-option [value]="'set11'" i18n>
+      <mat-option [value]="'set11'" >
         Image, Label, Title, Description
       </mat-option>
-      <mat-option [value]="'set12'" i18n>
+      <mat-option [value]="'set12'" >
         Image, Label, Title, Description and Link
       </mat-option>
     </mat-select>
@@ -55,15 +55,15 @@
   <div class="row-wise" *ngIf="canShow.indexOf('image') > -1">
     <div class="column-wise">
       <mat-label class="required">
-        <ng-container i18n>Image (Ideal Dimensions </ng-container>{{ minWidth }}px*
+        <ng-container >Image (Ideal Dimensions </ng-container>{{ minWidth }}px*
         <ng-container *ngIf="canShow.indexOf('category') === -1">472</ng-container>
         <ng-container *ngIf="canShow.indexOf('category') > -1">260</ng-container>
         px)
       </mat-label>
       <br />
       <button class="button-design" type="button" mat-stroked-button (click)="imageFile.click()">
-        <ng-container *ngIf="!form.controls.imageSrc.value" i18n>Choose Image</ng-container>
-        <ng-container *ngIf="form.controls.imageSrc.value" i18n>Change Image</ng-container>
+        <ng-container *ngIf="!form.controls.imageSrc.value" >Choose Image</ng-container>
+        <ng-container *ngIf="form.controls.imageSrc.value" >Change Image</ng-container>
         <input type="file" (change)="upload($event.target.files[0]); imageFile.value = null" class="hidden" #imageFile
           accept="image/*" />
       </button>
@@ -76,19 +76,19 @@
   <br />
 
   <mat-form-field *ngIf="canShow.indexOf('category') > -1" appearance="outline" class="w-full">
-    <mat-label i18n>Label</mat-label>
+    <mat-label >Label</mat-label>
     <input type="text" matInput i18n-placeholder placeholder="Label" formControlName="category" #category
       [value]="form.controls.category.value" />
   </mat-form-field>
 
   <mat-form-field *ngIf="canShow.indexOf('name') > -1" appearance="outline" class="w-full">
-    <mat-label i18n>Title</mat-label>
+    <mat-label >Title</mat-label>
     <input type="text" matInput i18n-placeholder placeholder="Title" formControlName="title" #title
       [value]="form.controls.title.value" />
   </mat-form-field>
 
   <mat-form-field *ngIf="canShow.indexOf('link') > -1" appearance="outline" class="w-full">
-    <mat-label i18n>Link</mat-label>
+    <mat-label >Link</mat-label>
     <input type="text" matInput i18n-placeholder placeholder="Link" formControlName="link" #link
       [value]="form.controls.link.value" />
   </mat-form-field>
@@ -101,13 +101,13 @@
   </mat-form-field>
 
   <mat-form-field *ngIf="canShow.indexOf('description') > -1" appearance="outline" class="w-full">
-    <mat-label i18n>Description</mat-label>
+    <mat-label >Description</mat-label>
     <textarea rows="4" type="text" matInput i18n-placeholder placeholder="Description" formControlName="description"
       #description [value]="form.controls.description.value">
     </textarea>
   </mat-form-field>
   <mat-checkbox [checked]="content &&
       content.containerClass &&
-      content.containerClass.indexOf('mat-elevation-z4')>-1" (change)="addElevation()" i18n>Appear as Card
+      content.containerClass.indexOf('mat-elevation-z4')>-1" (change)="addElevation()" >Appear as Card
   </mat-checkbox>
 </form>

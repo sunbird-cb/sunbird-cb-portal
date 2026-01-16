@@ -1,0 +1,64 @@
+<div class="main-event-container">
+  <div class="event-container-locked" *ngIf="locked">
+    <div class="locked-overlay">
+      <div class="locked-content" *ngIf="!conditionData?.userEnrollmentList?.length">
+        <div class="locked-icon-wrapper">
+          <mat-icon svgIcon="content-locked" class="locked-icon"></mat-icon>
+        </div>
+        <h2 class="locked-title">Enroll in the Course to Unlock Samuhik Charcha</h2>
+        <p class="locked-description">
+          Events related to this course will appear here once you complete the required learning. Continue your course
+          to
+          participate and engage with the community.
+        </p>
+      </div>
+      <div class="locked-content progress-content"
+        *ngIf="conditionData?.userEnrollmentList?.length && conditionData?.userEnrollmentList[0]?.completionPercentage < 30">
+        <h2 class="progress-title">Complete the course to access Samuhik Charcha</h2>
+
+        <div class="progress-section">
+          <div class="progress-label">
+            <span class="progress-text">Course Progress: {{conditionData?.userEnrollmentList[0]?.completionPercentage ||
+              0}}%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill"
+              [style.width.%]="conditionData?.userEnrollmentList[0]?.completionPercentage || 0">
+            </div>
+          </div>
+        </div>
+
+        <p class="progress-description">
+          You need to complete 30% of the course to access Samuhik Charcha. Keep learning to unlock Samuhik Charcha
+          events.
+        </p>
+
+        <button class="mat-button continue-course-btn" type="button" (click)="resumeContentData()">
+          Continue Course
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="event-container-unlocked w-full" [class.blurred]="locked">
+    <div class="welcome-container">
+      <div class="welcome-card">
+        <div class="icon-container">
+          <mat-icon class="mr-1" svgIcon="chat" class="welcome-icon"></mat-icon>
+        </div>
+        <div class="content-container">
+          <h2 class="welcome-title">Welcome to Samuhik Charcha!</h2>
+          <p class="welcome-description">
+            Explore live and upcoming events that extend your learning from this course. Engage with experts, gain
+            insights,
+            and stay connected to the larger learning network.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="event-container" *ngIf="samuhikConfigLoaded">
+      <sb-uic-content-strip-with-tabs [widgetData]="samuhikConfig"
+        (telemtryResponse)="raiseTelemetryInteratEvent($event)">
+      </sb-uic-content-strip-with-tabs>
+    </div>
+  </div>
+</div>

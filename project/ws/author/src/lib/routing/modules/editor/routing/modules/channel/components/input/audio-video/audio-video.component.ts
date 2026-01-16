@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { IWidgetsPlayerMediaData, NsContent } from '@sunbird-cb/collection'
 import {
   AUTHORING_CONTENT_BASE,

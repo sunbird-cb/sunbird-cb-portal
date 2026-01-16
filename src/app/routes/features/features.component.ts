@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { Router, ActivatedRoute } from '@angular/router'
 import { startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import {
-  NsAppsConfig, ConfigurationsService, NsPage,
+  NsAppsConfig, ConfigurationsService, NsPage, NsWidgetResolver,
   LogoutComponent, SubapplicationRespondService, ValueService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { AccessControlService } from '../../../../project/ws/author/src/public-api'
-import { NsWidgetResolver } from '@sunbird-cb/utils/src/lib/services/widget-resolver.model'
 import { CustomTourService, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection/src/public-api'
 /* tslint:disable*/
 import _ from 'lodash'
@@ -24,7 +23,7 @@ interface IGroupWithFeatureWidgets extends NsAppsConfig.IGroup {
   styleUrls: ['./features.component.scss'],
 })
 export class FeaturesComponent implements OnInit, OnDestroy {
-  queryControl = new FormControl(this.activateRoute.snapshot.queryParamMap.get('q'))
+  queryControl = new UntypedFormControl(this.activateRoute.snapshot.queryParamMap.get('q'))
   private readonly featuresConfig: IGroupWithFeatureWidgets[] = []
   featureGroups: IGroupWithFeatureWidgets[] | null = null
   private responseSubscription: Subscription | null = null

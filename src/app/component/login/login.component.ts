@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils' // AuthKeycloakService,
+import { ConfigurationsService } from '@sunbird-cb/utils-v2' // AuthKeycloakService,
 import { Subscription } from 'rxjs'
 import { ILoginDescriptiveFooterConfig, IWSPublicLoginConfig } from './login.model'
 

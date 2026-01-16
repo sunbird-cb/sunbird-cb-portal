@@ -1,0 +1,257 @@
+.calendar-container {
+  border: 1px solid #00000014;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+
+.callendar-header {
+  /* stylelint-disable */
+  font: 600 16px 'Montserrat';
+  /* stylelint-enable */
+  color: #212121;
+}
+
+.visibilityHidden {
+  visibility: hidden;
+}
+
+.month-selector {
+  color: #1B2133;
+  width: 106%;
+  margin-left: -3%;
+
+  span {
+    /* stylelint-disable */
+    font: 600 14px 'Montserrat';
+    /* stylelint-enable */
+  }
+}
+
+.toggle-btn {
+  color: #1B4CA1;
+  cursor: pointer;
+  text-align: right;
+  font-family: Lato;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-offset: 0%;
+  text-decoration-thickness: 0%;
+
+}
+
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 8px;
+
+  .weekday {
+    /* stylelint-disable */
+    font: 500 12px 'Inter';
+    /* stylelint-enable */
+    color: #1B2133;
+  }
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 4px;
+
+  .day-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    /* stylelint-disable */
+    font: 400 12px 'Inter';
+    /* stylelint-enable */
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+    &.current-month {
+      color: #000;
+    }
+
+    &:not(.current-month) {
+      color: #00000066;
+    }
+
+    &.today {
+      background-color: #e3f2fd;
+      font-weight: bold;
+    }
+
+    &.has-event {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0px;
+        width: 6px;
+        height: 6px;
+        background-color: #D13924;
+        border-radius: 50%;
+      }
+    }
+
+    &.has-pre-event {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0px;
+        width: 6px;
+        height: 6px;
+        background-color: #999999;
+        border-radius: 50%;
+      }
+    }
+
+    &.selected {
+      background-color: #F3962F;
+      color: white;
+    }
+  }
+}
+
+.today-events {
+  .today {
+    color: #212121;
+    /* stylelint-disable */
+    font: 600 14px 'Montserrat';
+    /* stylelint-enable */
+  }
+
+  .event-item {
+    border-bottom: 1px solid #00000014;
+  }
+
+  .eventName {
+    color: #000000DE;
+    /* stylelint-disable */
+    font: 600 14px 'Montserrat';
+    /* stylelint-enable */
+  }
+
+  .live {
+    color: #CE4444;
+    /* stylelint-disable */
+    font: 700 9px 'Lato';
+    /* stylelint-enable */
+  }
+
+  .blink {
+    animation: blink-animation 1s steps(2, start) infinite;
+  }
+
+  @keyframes blink-animation {
+    0% {
+      font-size: 10px;
+      height: 11px;
+      font-weight: normal;
+    }
+
+    50% {
+      font-size: 9px;
+      height: 10px;
+      font-weight: bolder;
+    }
+
+    100% {
+      font-size: 10px;
+      height: 10px;
+      font-weight: normal;
+    }
+  }
+
+  .eventDescription {
+    color: #000000DE;
+    /* stylelint-disable */
+    font: 400 14px 'Lato';
+    /* stylelint-enable */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.event-time {
+  color: #999999;
+  /* stylelint-disable */
+  font: 400 14px 'Lato';
+
+  /* stylelint-enable */
+  .event-time-icon {
+    color: #00000099 !important;
+    height: 15px;
+    width: 15px;
+    font-size: 15px;
+  }
+}
+
+.seeAll {
+  /* stylelint-disable */
+  font: 700 14px 'Lato';
+  /* stylelint-enable */
+  color: #1B4CA1;
+  border-bottom: 1px solid #1B4CA1;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .calendar-container {
+    border: unset;
+    background-color: unset;
+    padding: 0px;
+  }
+
+  .callendar-header {
+    border-bottom: 0px;
+    background-color: #ffffff;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    width: calc(100% + 12px);
+    margin-left: -16px;
+    padding-left: 20px;
+    color: #000000DE;
+    /* stylelint-disable */
+    font: 700 16px 'Lato';
+    /* stylelint-enable */
+
+    .backArrow {
+      color: #00000099;
+      font-size: 24px;
+      margin-right: 10px;
+      pointer-events: all;
+      cursor: pointer;
+    }
+  }
+
+  .m-calendar-view {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .today-events {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+}

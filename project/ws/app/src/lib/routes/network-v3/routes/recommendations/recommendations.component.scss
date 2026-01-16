@@ -1,0 +1,68 @@
+.home-header {
+  /*stylelint-disable */
+  font: 600 16px 'Montserrat';
+  /* stylelint-enable */
+  color: #000000
+}
+
+.section {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #00000014;
+
+  .section-header {
+    /*stylelint-disable */
+    font: 600 14px 'Montserrat';
+    /* stylelint-enable */
+    color: #000000
+  }
+
+  .records-count {
+    background-color: #D13924;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: #ffffff;
+    /*stylelint-disable */
+    font: 700 12px 'Lato';
+    /* stylelint-enable */
+  }
+
+  .show-all {
+    color: #1B4CA1;
+    /*stylelint-disable */
+    font: 400 14px 'Lato';
+    /* stylelint-enable */
+    pointer-events: all;
+    cursor: pointer;
+
+    .arrow-icon {
+      color: #1B4CA1;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      margin-top: 2px;
+    }
+  }
+}
+
+.noteCard {
+  background-color: #F9CB97;
+  border-radius: 8px;
+  
+  .note-text {
+    color: #000000DE;
+    /*stylelint-disable */
+    font: 600 16px 'Montserrat';
+    /* stylelint-enable */
+  }
+
+  .locationLink {
+    color: #1B4CA1;
+    /*stylelint-disable */
+    font: 700 14px 'Lato';
+    /* stylelint-enable */
+    pointer-events: all;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,83 @@
+@import 'ws-mixins';
+@import 'ws-common';
+
+.container-balanced {
+  @extend %page-center;
+}
+
+.filter-wrapper {
+    width: 282px;
+    border-radius: 12px 0px 0px 0px;
+    border: 1px 0px 0px 0px;
+    background: rgba(255, 255, 255, 1);
+    padding: 16px;
+    p.title {
+       font-family: Montserrat;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 19.5px;
+        text-align: left;
+
+
+    }
+    .individual-block{
+        p.title {
+            font-family: Montserrat;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19.5px;
+            text-align: left;
+            
+    
+        }
+        .search-filter {
+            position: relative;
+            input {
+                width: 227px;
+                height: 42px;
+                padding-left: 48px;
+                border-radius: 4px;
+                border: 1px solid rgba(0, 0, 0, 0.16)
+            }
+            mat-icon{
+                position: absolute;
+                left: 8px;
+                top: 14px;
+            }
+
+        }
+        .check-list{
+            padding: 4px 0;
+        }
+        
+    }
+
+}
+
+.search-block {
+    input {
+        border-radius: 24px;
+        height: 40px;
+        padding-left: 24px;
+        margin-right: 24px;
+        
+        border: none;
+    }
+    button {
+        height: 40px;
+        background-color: rgba(243, 150, 47, 1);
+        color: white;
+        width: Hug (107px)px;
+        height: Fixed (40px)px;
+        padding: 12px 32px 12px 32px;
+        gap: 8px;
+        border-radius: 24px;
+        border: none;
+
+    }
+}
+.filter-skeleton {
+    background: white;
+    padding: 16px;
+    height: fit-content;
+}

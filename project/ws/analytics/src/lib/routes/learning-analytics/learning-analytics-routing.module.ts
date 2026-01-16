@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { ContentComponent } from './components/content/content.component'
 import { HomeComponent } from './components/home/home.component'
 import { AnalyticsComponent } from './routes/analytics/analytics.component'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 
 const routes: Routes = [
   {

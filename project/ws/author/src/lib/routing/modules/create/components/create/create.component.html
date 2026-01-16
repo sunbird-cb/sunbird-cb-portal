@@ -6,7 +6,7 @@
       </h2>
       <div class="mat-h3 flex items-center select-lang ws-mat-default-text">
         <!-- {{allLanguages | json}} -->
-        <!-- <span class="mr-1 text-center" i18n>Select Language: </span> -->
+        <!-- <span class="mr-1 text-center" >Select Language: </span> -->
         <button class="lang-btn" *ngIf="allLanguages?.length" mat-button [matMenuTriggerFor]="sortLang">
           {{ languageName }}
           <mat-icon>arrow_drop_down</mat-icon>
@@ -29,7 +29,7 @@
     </div>
   </div>
 </div>
-<h2 *ngIf="error" class="mat-error margin-top-m text-center" i18n>
+<h2 *ngIf="error" class="mat-error margin-top-m text-center" >
   Unable to load the page. Reload or try again after some time.
 </h2>
 <mat-menu #sortLang="matMenu">

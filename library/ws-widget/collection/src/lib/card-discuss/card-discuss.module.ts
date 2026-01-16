@@ -5,13 +5,12 @@ import { BrowserModule } from '@angular/platform-browser'
 // import { DiscussCardComponent } from '@ws/app/src/lib/routes/discuss/components/discuss-card/discuss-card.component'
 
 @NgModule({
-  declarations: [
-    CardDiscussComponent,
-    // DiscussCardComponent
-  ],
-  imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule,
-    MatExpansionModule, MatIconModule, MatProgressSpinnerModule],
-  entryComponents: [CardDiscussComponent],
+    declarations: [
+        CardDiscussComponent,
+        // DiscussCardComponent
+    ],
+    imports: [BrowserModule, MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule,
+        MatExpansionModule, MatIconModule, MatProgressSpinnerModule]
 })
 export class CardDiscussModule {
 

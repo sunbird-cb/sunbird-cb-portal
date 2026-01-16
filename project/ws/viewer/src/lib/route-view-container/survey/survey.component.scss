@@ -10,12 +10,12 @@
 }
 
 .padding-dynamic {
-  padding: $size-xs;
-  padding-top: $size-m;
+  // padding: $size-xs;
+  // padding-top: $size-m;
 
-  @include breakpoint-xs {
-    padding: $size-xs;
-  }
+  // @include breakpoint-xs {
+  //   padding: $size-xs;
+  // }
 }
 
 .video-player-container {
@@ -93,3 +93,9 @@
   box-sizing: border-box;
   margin-bottom: $size-m;
 }
+
+.viewer-container {
+  height:557px;
+  box-shadow:none !important;
+}
+

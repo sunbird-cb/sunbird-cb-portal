@@ -1,6 +1,6 @@
 <ng-container *ngIf="!alreadyRegisteredUsers.length; else registeredUsers">
   <mat-form-field>
-    <mat-label i18n>Select a source</mat-label>
+    <mat-label >Select a source</mat-label>
     <mat-select #selectedSource>
       <mat-option *ngFor="let source of sources" [value]="source?.sourceShortName">
         {{source?.sourceName}}
@@ -40,14 +40,14 @@
   </div>
   <div>
     <button [disabled]="isLoading" (click)="save(selectedSource.value)" mat-flat-button color="primary"
-      i18n>Save</button>
+     >Save</button>
   </div>
 </ng-container>
 
 <ng-template #registeredUsers>
-  <h3 i18n>The following users are already registered</h3>
+  <h3 >The following users are already registered</h3>
   <p *ngFor="let user of alreadyRegisteredUsers">
     {{user}}
   </p>
-  <button (click)="close()" mat-flat-button color="primary" i18n>Close</button>
+  <button (click)="close()" mat-flat-button color="primary" >Close</button>
 </ng-template>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, ReplaySubject, throwError } from 'rxjs'
 import { first, tap } from 'rxjs/operators'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 // map, mergeMap,
 import { NsContent } from '../_services/widget-content.model'
 import { NsPlaylist } from './btn-playlist.model'
@@ -32,7 +32,12 @@ export class BtnPlaylistService {
   private userId!: string
   constructor(private http: HttpClient, private configSvc: ConfigurationsService) {
     if (this.configSvc.userProfile) {
-      this.userName = (`${this.configSvc.userProfile.firstName}''${this.configSvc.userProfile.lastName}`)
+      // tslint:disable-next-line:max-line-length
+      if (this.configSvc.userProfile.lastName && this.configSvc.userProfile.lastName !== null && this.configSvc.userProfile.lastName !== undefined) {
+        this.userName = (`${this.configSvc.userProfile.firstName}''${this.configSvc.userProfile.lastName}`)
+      } else  {
+        this.userName = (`${this.configSvc.userProfile.firstName}`)
+      }
       this.userId = this.configSvc.userProfile.userId
     }
   }

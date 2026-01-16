@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs'
 import { NsContent, NsDiscussionForum, WidgetContentService } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute } from '@angular/router'
-import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { ViewerUtilService } from '../../viewer-util.service'
 
 @Component({
@@ -142,6 +142,13 @@ export class WebModuleComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.WEB_MODULE,
         url: data ? data.artifactUrl : null,
+        object: {
+          id: data ? data.identifier : null,
+          type: data ? data.primaryCategory : '',
+          rollup: {
+            l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
+          },
+        },
       },
     }
     this.eventSvc.dispatchEvent(event)

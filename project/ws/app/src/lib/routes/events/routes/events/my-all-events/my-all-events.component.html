@@ -1,0 +1,87 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
+</ws-widget-btn-page-back>
+<div class="events-see-all-wrapper">
+  <div class="flex ">
+    <div class="container-balanced w-full">
+      <div class="col-span-12">
+        <div class="results-header my-4 pl-4 md:pl-0 lg:pl-0">
+          {{'events.myEvents' | translate}}
+        </div>
+        <div class="mb-4">
+          <mat-tab-group (selectedTabChange)="tabClick($event)" [(selectedIndex)]="tabIndex">
+            <mat-tab label="{{'events.toDay' | translate}} ({{today?.length}})">
+              <div class="flex flex-row flex-wrap justify-center md:justify-start content-container mt-5"
+                *ngIf="tabSelected === 'today'">
+                <ng-container *ngIf="contentDataList.length;else noData">
+                  <div class="flex flex-row flex-wrap justify-center md:justify-start content-container">
+                    <div class="mr-3 mb-5" *ngFor="let c of contentDataList">
+                      <ws-widget-event-card-v2 [widgetData]="c?.widgetData" (handleTelemetry)="raiseTelemetry($event)">
+                      </ws-widget-event-card-v2>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #noData>
+                  <div class="flex justify-center w-full">
+                    <div class="margin-xl text-center">
+                      <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
+                        class="margin-top-l margin-bottom-s">
+                      <h2 class="mat-h2" i18n="search route no result">{{'events.noEvents' |
+                        translate}}</h2>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </mat-tab>
+            <mat-tab label="{{'events.upcoming' | translate}} ({{upcoming?.length}})">
+              <div class="flex flex-row flex-wrap justify-center md:justify-start content-container mt-5"
+                *ngIf="tabSelected === 'upcoming'">
+                <ng-container *ngIf="contentDataList.length;else noData">
+                  <div class="flex flex-row flex-wrap justify-center md:justify-start content-container">
+                    <div class="mr-3 mb-5" *ngFor="let c of contentDataList">
+                      <ws-widget-event-card-v2 [widgetData]="c?.widgetData" (handleTelemetry)="raiseTelemetry($event)">
+                      </ws-widget-event-card-v2>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #noData>
+                  <div class="flex justify-center w-full">
+                    <div class="margin-xl text-center">
+                      <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
+                        class="margin-top-l margin-bottom-s">
+                      <h2 class="mat-h2" i18n="search route no result">{{'events.noEvents' |
+                        translate}}</h2>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </mat-tab>
+            <mat-tab label="{{'events.past' | translate}} ({{past?.length}})">
+              <div class="flex flex-row flex-wrap justify-center md:justify-start content-container mt-5"
+                *ngIf="tabSelected === 'past'">
+                <ng-container *ngIf="contentDataList.length;else noData">
+                  <div class="flex flex-row flex-wrap justify-center md:justify-start content-container">
+                    <div class="mr-3 mb-5" *ngFor="let c of contentDataList">
+                      <ws-widget-event-card-v2 [widgetData]="c?.widgetData" (handleTelemetry)="raiseTelemetry(c)">
+                      </ws-widget-event-card-v2>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #noData>
+                  <div class="flex justify-center w-full">
+                    <div class="margin-xl text-center">
+                      <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
+                        class="margin-top-l margin-bottom-s">
+                      <h2 class="mat-h2" i18n="search route no result">{{'events.noEvents' |
+                        translate}}</h2>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

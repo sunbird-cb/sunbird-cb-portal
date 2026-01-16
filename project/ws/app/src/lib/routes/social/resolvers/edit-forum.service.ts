@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 import { map, catchError } from 'rxjs/operators'
 import { ForumService } from '../routes/forums/service/forum.service'
 
 @Injectable()
-export class EditForumService implements
-  Resolve<
-  Observable<IResolveResponse<any>> | IResolveResponse<any>
-  > {
+export class EditForumService  {
   constructor(
     private forumSvc: ForumService
   ) { }

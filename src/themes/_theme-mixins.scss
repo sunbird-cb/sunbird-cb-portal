@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @mixin color-background-opacity($color, $opacity: 0.3) {
   background: rgba($color, $opacity);
 }
@@ -10,25 +11,26 @@
   $foreground: map-get($theme, foreground);
   $is-dark: map-get($theme, is-dark);
 
-  $colorPrimaryDark: mat-color($primary, darker);
-  $colorPrimaryLight: mat-color($primary, lighter);
-  $colorPrimary: mat-color($primary, default);
+  $colorPrimaryDark: mat.get-color-from-palette($primary, darker);
+  $colorPrimaryLight: mat.get-color-from-palette($primary, lighter);
+  $colorPrimary: mat.get-color-from-palette($primary, default);
 
-  $colorAccentDark: mat-color($accent, darker);
-  $colorAccentLight: mat-color($accent, lighter);
-  $colorAccent: mat-color($accent, default);
+  $colorAccentDark: mat.get-color-from-palette($accent, darker);
+  $colorAccentLight: mat.get-color-from-palette($accent, lighter);
+  $colorAccent: mat.get-color-from-palette($accent, default);
 
-  $colorWarnDark: mat-color($warn, darker);
-  $colorWarnLight: mat-color($warn, lighter);
-  $colorWarn: mat-color($warn, default);
+  $colorWarnDark: mat.get-color-from-palette($warn, darker);
+  $colorWarnLight: mat.get-color-from-palette($warn, lighter);
+  $colorWarn: mat.get-color-from-palette($warn, default);
 
-  $colorBackground: mat-color($background, background);
-  $colorText: mat-color($foreground, text);
-  $iconColor: mat-color($foreground, icon);
+  $colorBackground: mat.get-color-from-palette($background, background);
+  $colorText: mat.get-color-from-palette($foreground, text);
+  $iconColor: mat.get-color-from-palette($foreground, icon);
   $colorGreen: #5fa800;
   $colorGreen2: #1d8923;
-  $colorRed: #ff0000;
+  $colorRed: #D13924;
   $colorOrange: rgba(246, 153, 83, 1);
+  $colorOrangeLight: rgba(241, 224, 211, 1);
   $footerColor: #373434;
   $footerTextColor: #dedfe0;
   $colorWhite: #ffffff;
@@ -38,15 +40,16 @@
   $colorBlack16: rgba(0, 0, 0, 0.16);
   $colorBlack040: rgba(0, 0, 0, 0.04);
   $colorLighterGrey: #bbbcbc;
-
-  outline-color: mat-color($accent, lighter);
-
+  $colorLightBlue: #cbe2f0;
+  $linkColour: rgb(27, 76, 161);
+  outline-color: mat.get-color-from-palette($accent, lighter);
+  $colorAccent: rgb(27, 76, 161); 
+  
   .icon-svg {
     fill: $iconColor;
   }
 
   .ws-mat-primary-lite-background {
-    // background-color: $colorPrimaryLight;
     background-color: transparent;
   }
 
@@ -74,9 +77,11 @@
   .accent-progress .mat-progress-bar-fill::after {
     background-color: $colorAccent !important;
   }
+
   .quiz-progress .mat-progress-bar-fill::after {
     background-color: $colorAccent !important;
   }
+
   .quiz-progress .mat-progress-bar-buffer {
     background-color: $colorBlack16 !important;
   }
@@ -99,22 +104,17 @@
     }
 
     a {
-      // color: $colorAccentLight !important;
       color: $colorPrimary;
       opacity: 0.8;
     }
 
-    // .mat-button{}
     .mat-icon-button {
-      // background-color: $colorAccentDark;
       color: $colorPrimaryLight !important;
     }
 
-    // .mat-stroked-button{}
     .mat-primary {
       color: $colorText !important;
       background-color: #333333 !important;
-      // 926b6b $colorText
     }
 
     .ws-mat-primary-text {
@@ -125,16 +125,15 @@
       color: $colorAccentDark !important;
     }
 
-    .ws-mat-primary-lite-background-on-day {
-      color: $colorText !important;
-      // background-color: #333333;
+    .ws-mat-accent-light-bg {
+      background-color: $colorLightBlue !important;
     }
 
-    // .mat-tab-group
-    .mat-tab-nav-bar,
-    .mat-form-field-outline-thick .mat-ink-bar {
-      background-color: $colorAccentLight !important;
+    .ws-mat-primary-lite-background-on-day {
+      color: $colorText !important;
     }
+
+    
 
     .mat-ink-bar {
       background-color: $colorAccentLight !important;
@@ -142,7 +141,6 @@
 
     .mat-option.mat-selected:not(.mat-option-multiple) {
       background: $colorPrimaryDark !important;
-      // color: red;
     }
 
     .mat-mini-fab {
@@ -188,6 +186,7 @@
         }
       }
     }
+
     .mat-radio-checked {
       background-color: rgba(0, 116, 182, 0.05) !important;
 
@@ -201,6 +200,7 @@
         }
       }
     }
+
     .mat-pseudo-checkbox-checked {
       background-color: rgba(0, 116, 182, 0.05) !important;
     }
@@ -214,12 +214,8 @@
       background: inherit;
     }
 
-    // .mat-form-field-outline {
-    //   background: $colorPrimary;
-    // }
     .mat-chip.mat-standard-chip {
       color: $colorPrimaryDark !important;
-      // background: $colorPrimaryDark !important;
 
       mat-icon {
         color: $colorPrimaryDark !important;
@@ -227,9 +223,6 @@
       }
     }
 
-    // .ws-mat-auth-exp {
-    //   background-color: $colorAccentLight !important;
-    // }
     .ws-mat-default-text {
       color: $colorAccentDark;
     }
@@ -239,15 +232,15 @@
     }
 
     .ws-mat-primary-tags {
-      background: rgba(mat-color($primary, default), 0.1);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.1);
     }
 
     .ws-mat-primary-tags-list {
-      background: rgba(mat-color($primary, default), 0.1);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.1);
     }
 
     .ws-active-discuss-route {
-      background: rgba(mat-color($primary, default), 0.1);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.1);
       font-weight: bold;
 
       &:before {
@@ -271,6 +264,7 @@
         color: $colorText;
       }
     }
+
     .jtk-connected {
       border: 1px solid $colorAccent;
 
@@ -278,40 +272,44 @@
         color: $colorText;
       }
     }
+
     .mat-copmetence {
       background-color: black !important;
       color: #ededed;
     }
   } @else {
     .mat-radio-button {
-      background-color: transparent !important;
+      background-color: transparent;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorPrimaryDark !important;
+          background-color: $colorPrimaryDark;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorPrimaryDark !important;
+          border-color: $colorPrimaryDark;
         }
       }
     }
+
     .mat-radio-checked {
-      background-color: rgba(0, 116, 182, 0.05) !important;
+      background-color: rgba(0, 116, 182, 0.05) ;
 
       .mat-radio-container {
         .mat-radio-inner-circle {
-          background-color: $colorAccent !important;
+          background-color: $colorAccent ;
         }
 
         .mat-radio-outer-circle {
-          border-color: $colorAccent !important;
+          border-color: $colorAccent ;
         }
       }
     }
+
     .mat-pseudo-checkbox-checked {
-      background-color: $colorAccent !important;
+      background-color: $colorAccent ;
     }
+
     .mat-progress-spinner circle,
     .mat-spinner circle {
       stroke: $colorAccent;
@@ -369,6 +367,10 @@
       color: $colorAccent;
     }
 
+    .ws-mat-accent-light-bg {
+      background-color: $colorLightBlue !important;
+    }
+
     .ws-mat-primary-lite-background-on-day {
       background-color: $colorBackground;
     }
@@ -382,7 +384,6 @@
 
     .mat-chip.mat-standard-chip {
       color: $colorPrimaryDark !important;
-      // background: $colorAccentLight;
 
       mat-icon {
         color: $colorPrimaryDark !important;
@@ -413,7 +414,6 @@
 
     .ws-active-discuss-route {
       background-color: #eeeeee !important;
-      // font-weight: 700;
       font-weight: bold;
 
       &:before {
@@ -425,10 +425,10 @@
         height: inherit;
       }
     }
+
     .ws-active-route-menu {
       background-color: $colorBlack040 !important;
-      font-weight: 700;
-      font: bold 14px Lato !important;
+      font: bold 14px Lato, sans-serif !important;
 
       &::after {
         content: "";
@@ -447,16 +447,12 @@
 
     .ws-mat-selected-home-menu {
       color: $colorAccent;
-      // background: #F5F5F5;
       box-shadow: 0 2px 0 0 $colorAccent;
     }
 
     .dark-card {
       background: $colorBackground !important;
       color: rgba(0, 0, 0, 0.87) !important;
-      // $colorBackground: mat-color($background, background);
-      //  $background: map-get($theme, background);
-      //  $foreground: map-get($theme, foreground);
     }
   }
 
@@ -465,10 +461,8 @@
     a[href^="http"],
     a[href^="mailto"],
     a[target="_blank"] {
-      // color: $colorPrimaryLight;
       color: $colorPrimaryDark !important;
       background-color: $colorPrimaryDark !important;
-      // background-color: red !important;
     }
   } @else {
     a[href^="/"][target="_self"],
@@ -476,13 +470,7 @@
     a[href^="mailto"],
     a[target="_blank"] {
       color: $colorAccent;
-      background-color: $colorPrimaryLight;
     }
-
-    // ws-widget-page a[href^='http'],
-    // ws-widget-page a[target='_blank'] {
-    //   text-decoration: none !important;
-    // }
 
     .ws-mat-primary-lite-background-important {
       background-color: $colorPrimaryLight !important;
@@ -515,27 +503,27 @@
     }
 
     .ws-mat-primary-background-op10 {
-      background: rgba(mat-color($primary, default), 0.1);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.1);
     }
 
     .ws-mat-primary-background-op30 {
-      background: rgba(mat-color($primary, default), 0.3);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.3);
     }
 
     .ws-mat-primary-background-op50 {
-      background: rgba(mat-color($primary, default), 0.5);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.5);
     }
 
     .ws-mat-primary-background-op20 {
-      background: rgba(mat-color($primary, default), 0.2);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.2);
     }
 
     .ws-mat-primary-background-op30-hover:hover {
-      background: rgba(mat-color($primary, default), 0.3);
+      background: rgba(mat.get-color-from-palette($primary, default), 0.3);
     }
 
     .ws-mat-primary-background-op100 {
-      background: rgba(mat-color($primary, default), 1);
+      background: rgba(mat.get-color-from-palette($primary, default), 1);
     }
 
     .ws-mat-accent-background {
@@ -567,7 +555,7 @@
     }
 
     .ws-mat-default-text {
-      color: $colorAccent;
+      color: $linkColour !important;
     }
 
     .ws-mat-warn-text {
@@ -577,6 +565,7 @@
     .ws-mat-green-text {
       color: $colorGreen !important;
     }
+
     .ws-mat-green-2-text {
       color: $colorGreen2 !important;
     }
@@ -587,6 +576,13 @@
 
     .ws-mat-orange-text {
       color: $colorOrange !important;
+    }
+
+    .ws-mat-orange-light-bg {
+      background-color: $colorOrangeLight !important;
+    }
+    .ws-mat-orange-medium-bg {
+      background-color: rgba(239, 149, 30, 0.32)  !important;
     }
 
     .ws-mat-white-text {
@@ -624,6 +620,7 @@
     .ws-mat-accent-border-active {
       border: 1px solid $colorAccent;
     }
+
     .jtk-connected {
       border: 1px solid $colorAccent;
       color: $colorAccent;
@@ -631,9 +628,10 @@
         color: $colorAccent;
       }
     }
+
     .ws-mat-text-block-fade-gradient {
       position: relative;
-      background: linear-gradient(to bottom, rgba(mat-color($background, card), 0), mat-color($background, card) 100%);
+      background: linear-gradient(to bottom, rgba(mat.get-color-from-palette($background, card), 0), mat.get-color-from-palette($background, card) 100%);
 
       &::after,
       &::before {
@@ -644,36 +642,22 @@
         width: 40%;
         height: 1.2em;
       }
-
-      // &::after {
-      //   content: '';
-      //   background: linear-gradient(to right,
-      //       rgba(mat-color($background, card), 0),
-      //       mat-color($background, card) 50%);
-      // }
-
-      // &::before {
-      //   content: '...';
-      // }
     }
 
     .ws-mat-text-fade-gradient {
       height: 2rem;
-      background-color: white;
       position: absolute;
       width: 90%;
       margin-top: 24%;
-      background: linear-gradient(to bottom, rgba(mat-color($background, card), 0), mat-color($background, card) 100%);
+      background: linear-gradient(to bottom, rgba(mat.get-color-from-palette($background, card), 0), mat.get-color-from-palette($background, card) 100%);
     }
 
     .mat-button-toggle-checked {
-      // background-color: mat-color($primary);
       color: $colorPrimary !important;
       background-color: $colorAccentDark;
     }
 
     .ws-mat-button-theme {
-      // background-color: mat-color($primary);
       color: $colorPrimary !important;
       background-color: $colorAccentDark !important;
     }
@@ -708,6 +692,10 @@
     ws-widget-btn-catalog {
       flex: 1;
       margin-top: 7px;
+    }
+
+    .mat-simple-snackbar {
+      justify-content: center !important;
     }
   }
 }

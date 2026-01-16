@@ -2,7 +2,7 @@
   <mat-card class="flex-custom" [attr.id]='widgetData.key'>
     <mat-card-content>
       <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">
-        {{widgetData.name}}
+        {{translateTabName(widgetData.name) }}
       </span>
       <!-- {{widgetData | json}} -->
       <ng-container *ngIf="widgetData.data && widgetData.data[0]">
@@ -27,7 +27,7 @@
           </mat-card>
           <mat-card class="no-shadow mt-2 mat-list-item dark-card" *ngIf="!career.designation">
             <div class="flex flex-1 mobile-margin margin-f" role="link" tabindex="0">
-              <span class="mat-body-2 flex-1 mobile-margin"> No career information available </span>
+              <span class="mat-body-2 flex-1 mobile-margin"> {{'profileV2Career.noCareerInformation' | translate}} </span>
             </div>
           </mat-card>
         </ng-container>

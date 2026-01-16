@@ -1,0 +1,75 @@
+@import 'ws-vars';
+
+.sort-by-container {
+  border: 1px solid $borderColorSelect;
+  background: $white;
+  border-radius: 8px;
+  padding: 8px 8px 8px 0;
+  display: inline-block;
+  // min-width: 100px;
+  // max-width: fit-content;
+}
+
+.sort-by-label {
+  display: block;
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 100%;
+  color: $labelColorselect;
+  padding-left: 8px;
+}
+
+.select-wrapper {
+  position: relative;
+  width: auto;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 20%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #6b7280;
+  pointer-events: none;
+}
+
+.sort-select {
+  // width: auto;
+  padding: 0 24px 0 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: inherit;
+  border: none;
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-weight: 400;
+  font-size: 14px;
+  color: $brandAccentColor;
+  cursor: pointer;
+}
+
+.sort-select:focus {
+  outline: none;
+}
+
+.sort-select::-ms-expand {
+  display: none;
+}
+
+.select-width-max {
+  max-width: 195px;
+}
+
+.select-width-max-people {
+  max-width: 189px;
+}

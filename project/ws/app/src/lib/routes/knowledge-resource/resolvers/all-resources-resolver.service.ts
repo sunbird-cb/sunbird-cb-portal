@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 import { NSKnowledgeResource } from '../models/knowledge-resource.models'
 import { KnowledgeResourceService } from '../services/knowledge-resource.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class AllResourceResolveService implements
-  Resolve<Observable<IResolveResponse<NSKnowledgeResource.IResourceData>> |
-  IResolveResponse<NSKnowledgeResource.IResourceData>> {
+export class AllResourceResolveService  {
   constructor(private knowledeResource: KnowledgeResourceService) { }
 
   resolve(

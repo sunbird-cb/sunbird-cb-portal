@@ -232,7 +232,7 @@ mat-divider {
 }
 
 .contacts-container {
-  background: #F5F6FA 0% 0% no-repeat padding-box;
+  // background: #F5F6FA 0% 0% no-repeat padding-box;
   // border: 1px solid #ECECEC;
   padding: 22px 0 10px;
   border: 0;
@@ -287,10 +287,6 @@ mat-divider {
       cursor: pointer;
     }
   }
-}
-
-::ng-deep.mat-elevation-z4 {
-  box-shadow: none!important;
 }
 
 .divider-transparent {
@@ -355,10 +351,10 @@ mat-divider {
     }
   }
 }
-::ng-deep.mat-tab-header {
+::ng-deep.custom-tabgroup .mat-tab-header {
   border: 0 !important;
 }
-::ng-deep.mat-tab-body {
+::ng-deep.custom-tabgroup .mat-tab-body {
   padding: 15px 0 220px 0!important;
   box-sizing: border-box;
   overflow-y: initial!important;
@@ -370,7 +366,7 @@ mat-divider {
   // }
 
 }
-::ng-deep.mat-tab-body.mat-tab-body-active {
+::ng-deep.custom-tabgroup .mat-tab-body.mat-tab-body-active {
 
   // @include breakpoint-s {
 
@@ -382,19 +378,19 @@ mat-divider {
 
 }
 
-::ng-deep.mat-tab-body-wrapper {
+::ng-deep.custom-tabgroup .mat-tab-body-wrapper {
     overflow: inherit!important;
 }
 
 
-::ng-deep.mat-tab-label {
+::ng-deep.custom-tabgroup .mat-tab-label {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   margin-right: 3%;
   .mat-tab-label-content {
     text-transform: uppercase;
   }
 }
-::ng-deep.mat-tab-label-active {
+::ng-deep.custom-tabgroup .mat-tab-label-active {
   .mat-tab-label-content {
     font-weight: 700 !important;
   }
@@ -404,7 +400,8 @@ mat-divider {
   height:auto;
   max-height: 400px;
   padding: 0 15px 0 0;
-  overflow-y: scroll;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .view-all {
@@ -418,4 +415,16 @@ mat-divider {
 
 .bold-imp {
   font-weight: bold !important;
+}
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.spinner-border {
+  overflow: hidden;
 }

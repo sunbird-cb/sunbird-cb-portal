@@ -1,14 +1,15 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core'
 import { NsPlaylist, BtnPlaylistService, NsContent } from '@sunbird-cb/collection'
 import { ActivatedRoute, Router } from '@angular/router'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
-import { MatDialog, MatSnackBar } from '@angular/material'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 // tslint:disable-next-line:max-line-length
 import { PlaylistContentDeleteDialogComponent } from '../../components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
 // tslint:disable-next-line:max-line-length
 import { PlaylistContentDeleteErrorDialogComponent } from '../../components/playlist-content-delete-error-dialog/playlist-content-delete-error-dialog.component'
 import { PlaylistDeleteDialogComponent } from '../../components/playlist-delete-dialog/playlist-delete-dialog.component'
 import { PlaylistShareDialogComponent } from '../../components/playlist-share-dialog/playlist-share-dialog.component'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 // import {
 //   PLAYLIST_TITLE_MAX_LENGTH,
 //   PLAYLIST_TITLE_MIN_LENGTH,

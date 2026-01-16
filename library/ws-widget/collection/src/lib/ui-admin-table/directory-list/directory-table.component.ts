@@ -3,8 +3,8 @@ import {
   AfterViewInit, OnChanges, SimpleChanges,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
-import { MatTableDataSource } from '@angular/material/table'
-import { MatPaginator } from '@angular/material'
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table'
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator'
 import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 

@@ -1,9 +1,10 @@
 import { Component, Input, ViewChild, ElementRef, OnDestroy, OnChanges } from '@angular/core'
 import { RdbmsHandsOnService } from '../../rdbms-hands-on.service'
 import { NSRdbmsHandsOn } from '../../rdbms-hands-on.model'
-import { MatSnackBar, MatDialog } from '@angular/material'
 import { SubmissionDialogComponent } from '../submission-dialog/submission-dialog.component'
-import { EventService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils-v2'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'viewer-dbms-exercise',

@@ -1,9 +1,9 @@
 import { Component, Input, ViewChild, ElementRef, OnDestroy, OnChanges } from '@angular/core'
-import { FormGroup, FormBuilder } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms'
 import { RdbmsHandsOnService } from '../../rdbms-hands-on.service'
 import { NSRdbmsHandsOn } from '../../rdbms-hands-on.model'
-import { MatSnackBar } from '@angular/material'
-import { EventService } from '@sunbird-cb/utils'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { EventService } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'viewer-dbms-concept-dropdown',
@@ -27,7 +27,7 @@ export class DbmsConceptDropdownComponent implements OnDestroy, OnChanges {
   hasFiredRealTimeProgress = false
   executedResult: NSRdbmsHandsOn.IRdbmsApiResponse | null = null
   selectedOption: NSRdbmsHandsOn.IDropdownDetails | null = null
-  dropdownQueryForm: FormGroup | null = null
+  dropdownQueryForm: UntypedFormGroup | null = null
   contentData: any
   executed = false
   loadedTables: any[] = []
@@ -46,7 +46,7 @@ export class DbmsConceptDropdownComponent implements OnDestroy, OnChanges {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     private dbmsSvc: RdbmsHandsOnService,
     private eventSvc: EventService,

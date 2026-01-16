@@ -91,7 +91,7 @@ export namespace NSApiRequest {
   }
 
   export interface IContentData {
-    contentId: string
+    contentId?: string
     contentType:
     | typeof CONTENT_BASE_STATIC
     | typeof CONTENT_BASE_STREAM

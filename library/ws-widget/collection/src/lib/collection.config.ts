@@ -39,6 +39,8 @@ export const ROOT_WIDGET_CONFIG = {
     home_course: 'cardCourse',
     home_carrier: 'cardHomeCarrier',
     home_notify: 'cardHomeNotify',
+    event_hub: 'eventHubCard',
+    card_competency: 'competencyCard',
   },
   contentStrip: {
     _type: 'contentStrip',
@@ -46,6 +48,7 @@ export const ROOT_WIDGET_CONFIG = {
     singleStrip: 'contentStripSingle',
     multiStripNew: 'contentStripMultipleNew',
     verticalStrip: 'contentStripVertical',
+    stripWithTabs: 'contentStripWithTabs',
   },
   networkStrip: {
     _type: 'networkStrip',
@@ -92,6 +95,7 @@ export const ROOT_WIDGET_CONFIG = {
     video: 'playerVideo',
     webPages: 'playerWebPages',
     youtube: 'playerYoutube',
+    offlineSession: 'playerOfflineSession',
   },
   slider: {
     _type: 'slider',
@@ -118,6 +122,7 @@ export const ROOT_WIDGET_CONFIG = {
     departments: 'departments',
     // publications: 'publications',
     hobbies: 'hobbies',
+    karmapoints: 'karmapoints',
   },
   element: {
     _type: 'element',

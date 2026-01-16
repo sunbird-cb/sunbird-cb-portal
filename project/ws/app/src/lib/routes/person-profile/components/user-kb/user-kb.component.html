@@ -1,10 +1,10 @@
 <!-- <div class="m-0 lg:m-4">
   <div class="flex flex-middle flex-between">
-    <p class="margin-remove-bottom mat-h3 font-weight-bold font-family" i18n>Knowledge Boards</p>
+    <p class="margin-remove-bottom mat-h3 font-weight-bold font-family" >Knowledge Boards</p>
     <div class="flex-end" [hidden]="suggestionsLimit >= following?.length">
       <div class="flex">
         <p class="margin-remove-bottom ws-mat-primary-text font-family mat-h4 cursor-pointer"
-          [hidden]="suggestionsLimit >= following?.length" [routerLink]='' (click)="viewAllKb()" i18n>View All</p>
+          [hidden]="suggestionsLimit >= following?.length" [routerLink]='' (click)="viewAllKb()" >View All</p>
         <mat-icon
           class="ws-mat-primary-text margin-left-xs pointer mat-icon cursor-pointer notranslate material-icons mat-icon-no-color"
           role="img" (click)="viewAllKb()" aria-hidden="true">play_circle_fillec</mat-icon>
@@ -12,13 +12,13 @@
     </div>
   </div>
   <div class="mt-4 text-center" *ngIf="followingFetchStatus === 'fetching'">
-    <span i18n>Fetching KBs followed ...</span>
+    <span >Fetching KBs followed ...</span>
   </div>
   <p class="ws-mat-primary-text margin-top-xs pl-4 py-4 " *ngIf="followingFetchStatus === 'done' && !following?.length"
-    i18n>User
+   >User
     is not
     following any knowledge board.</p>
-  <p class="mat-error" *ngIf="followingFetchStatus === 'error'" i18n>Failed to fetch knowledge boards followed.
+  <p class="mat-error" *ngIf="followingFetchStatus === 'error'" >Failed to fetch knowledge boards followed.
   </p>
   <div class="flex flex-wrap remove-margin">
     <mat-card class="flex flex-wrap m-2 padding-remove card-container"
@@ -45,13 +45,13 @@
 <!--
 <div class="m-0">
   <div class="mt-4 text-center" *ngIf="followingFetchStatus === 'fetching'">
-    <span i18n>Fetching KBs followed ...</span>
+    <span >Fetching KBs followed ...</span>
   </div>
   <p class="ws-mat-primary-text margin-top-xs pl-4 py-4 " *ngIf="followingFetchStatus === 'done' && !following?.length"
-    i18n>User
+   >User
     is not
     following any knowledge board.</p>
-  <p class="mat-error" *ngIf="followingFetchStatus === 'error'" i18n>Failed to fetch knowledge boards followed.
+  <p class="mat-error" *ngIf="followingFetchStatus === 'error'" >Failed to fetch knowledge boards followed.
   </p>
   <mat-card class="flex flex-wrap m-2 md:my-1 sm:my-1 card-container mat-elevation-z1  padding-remove"
     *ngFor="let board of following">
@@ -82,16 +82,16 @@
 
 <div class="m-0 lg:py-2 card-height">
   <div class="pt-4 text-center" *ngIf="followingFetchStatus === 'fetching'">
-    <p class="font-family fetching" i18n>Fetching KBs followed ...</p>
+    <p class="font-family fetching" >Fetching KBs followed ...</p>
   </div>
   <div class="pt-4 text-center" *ngIf="!following?.length && followingFetchStatus === 'done'">
     <div class="flex flex-center">
       <span class="font-family fetching">{{name}}</span>
-      <span class="font-family fetching" i18n>'s not following any knowledge board.</span>
+      <span class="font-family fetching" >'s not following any knowledge board.</span>
     </div>
   </div>
   <div class="pt-4 text-center" *ngIf="followingFetchStatus === 'error'">
-    <p class="mat-error" i18n>Failed to fetch knowledge boards followed.</p>
+    <p class="mat-error" >Failed to fetch knowledge boards followed.</p>
   </div>
   <ws-utils-horizontal-scroller *ngIf="following?.length" [loadStatus]="'done'">
     <mat-card class="mx-2 padding-remove card" *ngFor="let board of following">
@@ -103,7 +103,7 @@
             class="font-family mat-h3 font-weight-normal ws-mat-text-block-fade-gradient title-text text title-size  mx-2">
             {{ board.name }}</p>
           <a class="font-family mat-caption mx-2 flex flex-middle" (click)="raiseTelemetry()"
-            [routerLink]="'/app/knowledge-board/'+ board?.identifier" i18n>
+            [routerLink]="'/app/knowledge-board/'+ board?.identifier" >
             View Board <mat-icon class="pl-1">arrow_right_alt</mat-icon>
           </a>
         </div>

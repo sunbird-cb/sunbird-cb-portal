@@ -1,0 +1,46 @@
+<div class="w-full flex flex-col">
+  <div class="header flex pl-2 items-center gap-2 mb-8">
+    <!-- <mat-icon class="arrow-icon">arrow_back</mat-icon>  -->
+    {{title | translate}}
+  </div>
+
+  <div class="section flex flex-col justify-between items-center">
+    <div class="flex gap-3 md:gap-4 w-full md:justify-start justify-center flex-wrap">
+      <ng-container *ngIf="!recommendationListLoading; else showRecommendationsSkeleton">
+        <ng-container *ngIf="recommendationList?.length > 0; else noRecommendationsFound">
+          <ng-container *ngFor="let otherUserProfile of recommendationList">
+            <ws-app-connection-people-card [user]="otherUserProfile"></ws-app-connection-people-card>
+          </ng-container>
+        </ng-container>
+        <ng-template #noRecommendationsFound>
+          <div class="w-full flex flex-col gap-4 justify-center items-center no-records-found">
+            <img class="emptyPageIcon" src="./assets/icons/no-data.svg" alt="empty">
+            <div class="no-data-text">
+              {{'NetworkLandingPage.noRecommendationsFound' | translate}}
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+      <ng-template #showRecommendationsSkeleton>
+        <ng-container *ngFor="let i of [1,2,3,4,5,6]">
+          <ws-widget-skeleton-loader
+            [width]="'170px'"
+            [height]="'174px'"
+            [bindingClass]="'flex rounded margin-bottom-xs'">
+          </ws-widget-skeleton-loader>
+        </ng-container>
+      </ng-template>
+    </div>
+  </div>
+
+  <ng-container *ngIf="totalItemsCount > defaultPaginationSize">
+    <div>
+      <ws-widget-pagination [defaultPaginationSize]="paginationSize"
+        [defaultPaginationSizeOptions]="paginationSizeOptions"
+        [totalItemsCount]="totalItemsCount"
+        [pageMessage]="'View designations per page'"
+        [numberOfPaginationVisable]="2"
+        (pageChange)="onPageChange($event)"></ws-widget-pagination>
+    </div>
+  </ng-container>
+</div>

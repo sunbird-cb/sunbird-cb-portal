@@ -1,8 +1,7 @@
-FROM node:12
+FROM node:22.6.0
 
 WORKDIR /app
 COPY . .
-
 #RUN npm i yarn
 #RUN yarn global add @angular/cli@latest
 

@@ -4,60 +4,60 @@ import { DomSanitizer } from '@angular/platform-browser'
 import { map } from 'rxjs/operators'
 import { NSHandsOnModels } from './hands-on.model'
 import { NSHandsOnConstants } from './hands-on.constants'
-import { LoggerService, EventService } from '@sunbird-cb/utils'
+import { LoggerService, EventService } from '@sunbird-cb/utils-v2'
 import { HandsOnService } from './hands-on.service'
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { HandsOnDialogComponent } from './components/hands-on-dialog/hands-on-dialog.component'
 
-import 'brace'
-import 'brace/snippets/text'
-import 'brace/ext/language_tools'
-import 'brace/mode/javascript'
-import 'brace/snippets/javascript'
+// import 'brace'
+// import 'brace/snippets/text'
+// import 'brace/ext/language_tools'
+// import 'brace/mode/javascript'
+// import 'brace/snippets/javascript'
 
-import 'brace/mode/python'
-import 'brace/snippets/python'
+// import 'brace/mode/python'
+// import 'brace/snippets/python'
 
-import 'brace/mode/scala'
-import 'brace/snippets/scala'
+// import 'brace/mode/scala'
+// import 'brace/snippets/scala'
 
-import 'brace/mode/golang'
-import 'brace/snippets/golang'
+// import 'brace/mode/golang'
+// import 'brace/snippets/golang'
 
-import 'brace/mode/perl'
-import 'brace/snippets/perl'
+// import 'brace/mode/perl'
+// import 'brace/snippets/perl'
 
-import 'brace/mode/ruby'
-import 'brace/snippets/ruby'
+// import 'brace/mode/ruby'
+// import 'brace/snippets/ruby'
 
-import 'brace/mode/c_cpp'
-import 'brace/snippets/c_cpp'
+// import 'brace/mode/c_cpp'
+// import 'brace/snippets/c_cpp'
 
-import 'brace/mode/clojure'
-import 'brace/snippets/clojure'
+// import 'brace/mode/clojure'
+// import 'brace/snippets/clojure'
 
-import 'brace/mode/coffee'
-import 'brace/snippets/coffee'
+// import 'brace/mode/coffee'
+// import 'brace/snippets/coffee'
 
-import 'brace/mode/java'
-import 'brace/snippets/java'
+// import 'brace/mode/java'
+// import 'brace/snippets/java'
 
-import 'brace/mode/csharp'
-import 'brace/snippets/csharp'
+// import 'brace/mode/csharp'
+// import 'brace/snippets/csharp'
 
-import 'brace/mode/r'
-import 'brace/snippets/r'
+// import 'brace/mode/r'
+// import 'brace/snippets/r'
 
-import 'brace/mode/sh'
-import 'brace/snippets/sh'
+// import 'brace/mode/sh'
+// import 'brace/snippets/sh'
 
-import 'brace/mode/typescript'
-import 'brace/snippets/typescript'
+// import 'brace/mode/typescript'
+// import 'brace/snippets/typescript'
 
-import 'brace/mode/php'
-import 'brace/snippets/php'
+// import 'brace/mode/php'
+// import 'brace/snippets/php'
 
-import 'brace/theme/eclipse'
+// import 'brace/theme/eclipse'
 
 @Component({
   selector: 'viewer-plugin-hands-on',

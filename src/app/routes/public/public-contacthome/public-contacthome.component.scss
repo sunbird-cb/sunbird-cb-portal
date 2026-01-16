@@ -32,6 +32,10 @@ h2.main_title_text {
   flex: 4;
 }
 
+a.mail_link {
+  cursor: default;
+}
+
 .custom {
   @include breakpoint-xs {
     flex-direction: column;
@@ -52,4 +56,45 @@ h2.main_title_text {
   font-size: 20px;
   line-height: 0.6 !important;
   vertical-align: middle;
+}
+.text-danger {
+  color: rgb(181, 12, 12);
+}
+
+.confrence-box {
+  padding-top: 16px;
+}
+.confrence-box h1 {
+  margin-bottom: 8!important;
+}
+.confrence-box p {
+  margin-bottom: 4!important;
+}
+
+.meet_link {
+  margin-top: 25px;
+  display: block;
+  cursor: pointer;
+  padding: 10px 12px;
+  color: #fff!important;
+  background-color: #0074b6;
+  border-radius: 4px 4px;
+  text-align: center;
+  width: 150px;
+}
+
+.meet_link img {
+  height: 40px;
+  margin-top: 16px;
+
+  @include breakpoint-xs  {
+    height: 35px;
+    margin-top: 12px;
+  }
+}
+
+.height-on-top {
+  @include breakpoint-xs {
+    padding-top: 0;
+  }
 }

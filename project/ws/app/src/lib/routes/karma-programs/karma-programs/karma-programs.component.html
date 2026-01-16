@@ -1,0 +1,85 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles  }">
+</ws-widget-btn-page-back>
+<div class="container-balanced main_content_box">
+    <div class="all_provider_box">
+        <h2 class="mat-h1 margin-bottom-m inline-block "> {{ 'allChannelsComponent.allPrograms' | translate }} ({{allProviders?.length}})</h2>
+        <div class="all_provider_inner">
+            <!-- search box and dropdown-->
+            <form [formGroup]="searchForm">
+                <div class="flex top_search_box">
+                    <div class="search_box_inner flex-1">
+                        <div class="flex flex-1 flex-column margin-fix search search_box_main">
+                            <div class="relative search-wrapper">
+                                <mat-icon matPrefix class="flex absolute items-center justify-center mr-2">search
+                                </mat-icon>
+                                <input type="search" name="searchKey" #searchKey class="ml-2 search-field" i18-aria-label
+                                    aria-label="Search" formControlName="searchKey" i18n-placeholder="search"
+                                    [placeholder]="'allproviderscomponent.search' | translate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item_dropdown_box">
+                        <div class="flex flex-1 flex-wrap section-input">
+                            <div class="item">
+                                <mat-menu #appMenu="matMenu">
+                                    <button (click)="sortType('asc')" mat-menu-item>
+                                        {{ 'allChannelsComponent.ascending' | translate }} ( A - Z )
+                                    </button>
+                                    <button (click)="sortType('desc')"  mat-menu-item>
+                                        {{ 'allChannelsComponent.descending' | translate }} ( Z - A )
+                                    </button>
+                                  </mat-menu>
+                                  
+                                  <button type="button" mat-icon-button class="flex w-full sort-menu justify-end" [matMenuTriggerFor]="appMenu">
+                                   <div class="flex items-center">
+                                        <span class="mr-1" *ngIf="searchForm?.value?.sortByControl === 'asc'">
+                                            <span class="block md:hidden">A-Z</span>
+                                            <span class="hidden md:block">{{ 'allChannelsComponent.ascending' | translate }} ( A - Z )</span>
+                                        </span>
+                                        <span class="mr-1" *ngIf="searchForm?.value?.sortByControl !== 'asc'">
+                                            <span class="block md:hidden">Z-A</span>
+                                            <span class="hidden md:block">{{ 'allChannelsComponent.descending' | translate }} ( Z - A )</span>
+                                        </span>
+                                        
+                                        
+                                        <mat-icon matPrefix class="flex items-center justify-center ">sort
+                                        </mat-icon>
+                                   </div>
+                                  </button>
+                                <!-- <mat-form-field class="" appearance="outline">
+                                    <mat-select #sortBySelect formControlName="sortByControl" i18n-placeholder
+                                        placeholder="{{ 'allproviderscomponent.sortBy' | translate }}">
+                                        <mat-option [value]="'asc'" slected>{{ 'allChannelsComponent.ascending' | translate }} ( A - Z )</mat-option>
+                                        <mat-option [value]="'desc'">{{ 'allChannelsComponent.descending' | translate }} ( Z - A )</mat-option>
+                                    </mat-select>
+                                </mat-form-field> -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div> <!-- search box and dropdown end -->
+            </form>
+           
+
+            <mat-sidenav-container>
+                <!-- search cards -->
+                <mat-sidenav-content class="custom-sidecontent  mat-drawer-content mat-sidenav-content">
+                    <div class="provider_card_box mt-8 justify-center md:justify-start">
+                        <ng-container *ngFor="let p of clonesProviders">
+                            <sb-uic-card-karma-programs-v2 [widgetData]="{
+                                content : p
+                            }" (raiseTemeletry)="raiseTelemetryInteratEvent($event)"></sb-uic-card-karma-programs-v2>
+                        </ng-container>
+                        <h4 *ngIf="clonesProviders?.length <=0 && ((displayLoader | async) === false)" class="w-full text-left ws-mat-black60-text ">
+                            {{ 'allChannelsComponent.noProgramsFound' | translate }}
+                         </h4>
+                    </div>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+            <div *ngIf="displayLoader | async" class="mt-5 pr-4 flex items-center justify-center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+            </div>
+        </div>
+    </div>
+</div>

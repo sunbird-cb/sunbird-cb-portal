@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core'
 import { map } from 'rxjs/operators'
-import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils-v2'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router'
 import { NSProfileDataV3 } from '../../models/profile-v3.models'
@@ -11,6 +11,7 @@ import { StepService } from '../../services/step.service'
 import { CompLocalService } from '../../services/comp.service'
 import { ProfileV3Service } from '../../services/profile_v3.service'
 import { InitService } from 'src/app/services/init.service'
+import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'ws-app-profile-home',
   templateUrl: './profile-home.component.html',
@@ -42,6 +43,7 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     private compLocalService: CompLocalService,
     private profileSvc: ProfileV3Service,
     private initSvc: InitService,
+    private translate: TranslateService,
   ) {
     if (!this.configSvc || !this.configSvc.userProfileV2) {
       this.initSvc.init().then(() => {
@@ -51,6 +53,11 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
     } else {
       this.defineTabs()
       this.init()
+    }
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
     }
 
   }
@@ -233,5 +240,11 @@ export class ProfileHomeComponent implements OnInit, OnDestroy {
       }
     })
     return isAllowed
+  }
+
+  translateTo(menuName: string): string {
+    // tslint:disable-next-line: prefer-template
+    const translationKey = 'profilehome.' + menuName.replace(/\s/g, '')
+    return this.translate.instant(translationKey)
   }
 }

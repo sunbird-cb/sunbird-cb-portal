@@ -1,6 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common'
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core'
-import { FormGroup } from '@angular/forms'
+import { UntypedFormGroup } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
@@ -322,13 +322,13 @@ export class ChannelComponent implements OnInit, OnDestroy {
         data: this.contentService.getOriginalMeta(this.currentContent),
       })
 
-      dialogRef.afterClosed().subscribe((commentsForm: FormGroup) => {
+      dialogRef.afterClosed().subscribe((commentsForm: UntypedFormGroup) => {
         this.finalCall(commentsForm)
       })
     }
   }
 
-  finalCall(commentsForm: FormGroup) {
+  finalCall(commentsForm: UntypedFormGroup) {
     if (commentsForm) {
       const body: NSApiRequest.IForwardBackwardActionGeneral = {
         comment: commentsForm.controls.comments.value,

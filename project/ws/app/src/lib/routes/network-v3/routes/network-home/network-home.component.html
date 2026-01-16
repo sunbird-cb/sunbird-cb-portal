@@ -1,0 +1,127 @@
+<div class="w-full flex flex-col gap-4 center-content">
+  <div class="home-header">{{'NetworkLandingPage.exploreNetwork' | translate}}</div>
+
+  <!-- #region (connections) -->
+  <ng-container *ngIf="connectionsLoading || connectionRequestsCount > 0">
+    <div class="section p-4 flex flex-col justify-center items-center">
+      <div class="flex w-full justify-between items-center mb-5">
+        <div class="flex gap-2 items-center">
+          <div class="section-header">
+            {{'NetworkLandingPage.connectionRequests' | translate}}
+          </div>
+          <div class="records-count flex justify-center items-center">
+            {{ connectionRequestsCount }}
+          </div>
+        </div>
+        <ng-container *ngIf="connectionRequestsCount > 3">
+          <a (click)="showAll('connectionRequests')" class="flex gap-1 items-center show-all">
+            show all
+            <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+          </a>
+        </ng-container>
+      </div>
+      <div class="flex flex-col w-full">
+        <ng-container *ngIf="!connectionsLoading; else showConnectionsSkeleton">
+          <ng-container *ngFor="let otherUserProfile of connectionRequestsList; index as i">
+            <ws-app-connections-card [otherUserProfile]="otherUserProfile" [currentTab]="'Received'"
+              [showBorder]="i < connectionRequestsList.length -1"></ws-app-connections-card>
+          </ng-container>
+        </ng-container>
+        <ng-template #showConnectionsSkeleton>
+          <div class="w-full flex flex-col gap-2">
+            <ng-container *ngFor="let i of [1,2,3]">
+              <ws-widget-skeleton-loader [width]="'100%'" [height]="'60px'"
+                [bindingClass]="'flex rounded margin-bottom-xs'">
+              </ws-widget-skeleton-loader>
+            </ng-container>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+  <!-- #endregion (connections) -->
+
+  <!-- #region (people you may know) -->
+  <ng-container *ngIf="suggestionsLoading || peopleYouMayKnowList?.length > 0">
+    <div class="section p-4 flex flex-col justify-between items-center">
+      <div class="flex w-full justify-between items-center mb-5">
+        <div class="flex gap-2 items-center">
+          <div class="section-header">
+            {{'NetworkLandingPage.peopleYouMayKnow' | translate}}
+          </div>
+        </div>
+        <ng-container *ngIf="peopleYouMayKnowCount > 6">
+          <a (click)="showAll('peopleYouMayKnow')" class="flex gap-1 items-center show-all">
+            {{'NetworkLandingPage.showAll' | translate}}
+            <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+          </a>
+        </ng-container>
+      </div>
+      <div class="flex gap-2 w-full md:justify-start justify-center flex-wrap">
+        <ng-container *ngIf="!suggestionsLoading; else showPeopleSkeleton">
+          <ng-container *ngFor="let otherUserProfile of peopleYouMayKnowList">
+            <ws-app-connection-people-card [user]="otherUserProfile"></ws-app-connection-people-card>
+          </ng-container>
+        </ng-container>
+        <ng-template #showPeopleSkeleton>
+          <ng-container *ngFor="let i of [1,2,3,4,5,6]">
+            <ws-widget-skeleton-loader [width]="'170px'" [height]="'174px'"
+              [bindingClass]="'flex rounded margin-bottom-xs'">
+            </ws-widget-skeleton-loader>
+          </ng-container>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+  <!-- #endregion (people you may know) -->
+
+  <!-- #region (find your mentor) -->
+  <ng-container *ngIf="mentorsLoading || mentorSuggestionsList?.length > 0">
+    <div class="flex flex-col justify-start my-4">
+      <div class="flex w-full justify-between items-center mb-2">
+        <div class="flex gap-2 items-center">
+          <div class="section-header">
+            {{'NetworkLandingPage.mentors' | translate}}
+          </div>
+        </div>
+        <ng-container *ngIf="mentorSuggestionsList?.length > 3">
+          <a (click)="showAll('showAllMentors')" class="flex gap-1 items-center show-all">
+            {{'NetworkLandingPage.showAll' | translate}}
+            <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+          </a>
+        </ng-container>
+      </div>
+      <div class="mentors-container">
+        <ng-container *ngIf="!mentorsLoading; else showMentorsSkeleton">
+          <sb-uic-horizontal-scroller-v2 [id]="'find-your-mentor-scroller'"
+            [widgetsLength]="mentorSuggestionsList?.length" [loadStatus]="'done'" [defaultMaxWidgets]="15"
+            [sliderConfig]="sliderConfig">
+            <ng-container *ngFor="let otherUserProfile of mentorSuggestionsList">
+              <ws-app-connection-people-card [user]="otherUserProfile"
+                [addMargin]="true"></ws-app-connection-people-card>
+            </ng-container>
+          </sb-uic-horizontal-scroller-v2>
+        </ng-container>
+        <ng-template #showMentorsSkeleton>
+          <div class="flex gap-2 w-full flex-wrap">
+            <ng-container *ngFor="let i of [1,2,3]">
+              <ws-widget-skeleton-loader [width]="'170px'" [height]="'174px'"
+                [bindingClass]="'flex rounded margin-bottom-xs'">
+              </ws-widget-skeleton-loader>
+            </ng-container>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+  <!-- #endregion (find your mentor) -->
+
+  <ng-container *ngIf="showEmptyData">
+    <div class="w-full flex flex-col gap-4 justify-center items-center no-records-found">
+      <img class="emptyPageIcon" src="./assets/icons/no-data.svg" alt="empty">
+      <div class="no-data-text">
+        {{'NetworkLandingPage.noConnectionsFound' | translate}}
+      </div>
+    </div>
+  </ng-container>
+</div>

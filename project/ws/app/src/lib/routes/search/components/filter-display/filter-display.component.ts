@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { IFilterUnitItem, IFilterUnitResponse, ISearchConfigContentStrip, IWsSearchAdvancedFilter } from '../../models/search.model'
 import { SearchServService } from '../../services/search-serv.service'
 @Component({
@@ -153,7 +153,7 @@ export class FilterDisplayComponent implements OnInit {
   lowerCaseFilter(filterObj: any, filterKeys: string[]) {
     filterKeys.forEach(data => {
       Object.defineProperty(filterObj, data.toLowerCase(), Object.getOwnPropertyDescriptor(filterObj, data) || {})
-      if (filterObj[data].value && filterObj[data].value !== {}) {
+      if (filterObj[data].value) {
         this.lowerCaseFilter(filterObj[data].value, Object.keys(filterObj[data].value))
       }
     })

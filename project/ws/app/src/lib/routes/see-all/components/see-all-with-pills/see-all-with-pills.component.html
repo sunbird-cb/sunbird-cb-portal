@@ -1,0 +1,92 @@
+<div class="seeAll-home-container m-auto gap-4">
+    <ng-container>
+        <div class="flex flex-row page-header margin-top-l margin-bottom-l">
+            <div *ngIf="seeAllPageConfig && seeAllPageConfig.title">
+                {{translateLabels(seeAllPageConfig.title, 'seeAllHome')}}
+            </div>
+        </div>
+        <div class="flex flex-row flex-wrap content-container" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+            [infiniteScrollThrottle]="throttle" (scrolled)="onScrollEnd()" *ngIf="tabResults.length === 0">
+            <div class="mr-2 mb-5" *ngFor="let c of contentDataList">
+                <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+            </div>
+        </div>
+        <div class="flex flex-row flex-wrap content-container" *ngIf="tabResults.length > 0">
+            <mat-tab-group animationDuration="0ms" class="mat-tab-labels w-full strips-tabgroup" dynamicHeight
+                [selectedIndex]="dynamicTabIndex"
+                (selectedIndexChange)="tabClicked($event, seeAllPageConfig, seeAllPageConfig.key, 0)">
+                <mat-tab *ngFor="let tab of tabResults; let last = last;let tabIndex = index" [label]="tab?.label">
+                    <ng-template mat-tab-label>
+                        <span>{{translateLabels(tab?.label,'seeAllHome')}} &nbsp;</span>
+                        <span *ngIf="tab?.showTabDataCount">({{tab?.widgets?.length}})</span>
+                    </ng-template>
+                    <div class="flex flex-row flex-wrap content-container mt-4 mb-10">
+                        <div class="w-full">
+                            <ng-container>
+                                <mat-chip-list class="content-pill" aria-label="Fish selection">
+                                    <ng-container *ngFor="let pill of tab?.pillsData;let p = index">
+                                        <mat-chip [selected]="pill?.selected"
+                                            (click)="pillClicked(seeAllPageConfig, p, tabIndex)">
+                                            <span class="pill-name">{{pill?.label}}</span></mat-chip>
+                                    </ng-container>
+                                </mat-chip-list>
+                            </ng-container>
+                        </div>
+                        <div class="flex flex-row flex-wrap justify-start content-container mt-4 mb-10"
+                            *ngIf=" tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets?.length">
+                            <ng-container *ngIf="seeAllPageConfig?.key === 'continueLearning'">
+                                <div class="mr-5 mb-5"
+                                    *ngFor="let c of tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets.slice(0, pageSize)">
+                                    <sb-uic-cards [widgetData]="c.widgetData"> </sb-uic-cards>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="seeAllPageConfig?.key !== 'continueLearning'">
+                                <div class="mr-2 mb-5"
+                                    *ngFor="let c of tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets">
+                                    <ws-widget-card-content-v2 [widgetData]="c.widgetData"> </ws-widget-card-content-v2>
+                                </div>
+                            </ng-container>
+                        </div>
+
+                        <ng-container *ngIf="seeAllPageConfig?.key === 'continueLearning'">
+                            <div class="w-full flex justify-center"
+                                *ngIf="tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets?.length > pageSize">
+                                <button mat-raised-button color="primary"
+                                    (click)="loadMore(seeAllPageConfig, tab, tabIndex)">
+                                    {{'providerallcbp.loadMore' | translate}} </button>
+                            </div>
+                        </ng-container>
+                        <div class="w-full"
+                            *ngIf="((tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.fetchTabStatus && tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.fetchTabStatus === 'done') &&
+                        (!tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets || !tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.widgets?.length))">
+                            <ng-container
+                                *ngIf="tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.value === 'inprogress'; else msgTemp">
+                                <div class="w-full flex flex-col items-center justify-center">
+                                    <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.svg">
+                                    <div class="mat-subheading-1 text-center info-content">{{ translateLabels('get Ready
+                                        For Learning Adventure','contentstripmultiple') }} -
+                                        <a class="click-here"
+                                            [routerLink]="tab?.label === 'Events' ? '/app/event-hub/home':'/page/learn'">{{
+                                            translateLabels('click Here','contentstripmultiple') }}.</a> <span
+                                            *ngIf=" tab?.label === 'Events'">{{translateLabels('to Enroll Next
+                                            Events','contentstripmultiple') }}</span>
+                                        <span *ngIf=" tab?.label !== 'Events'">{{ translateLabels('to Enroll Next
+                                            Course','contentstripmultiple') }}</span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #msgTemp>
+                                <div class="w-full flex flex-col items-center justify-center">
+                                    <img alt="" class="mt-4 mb-4" src="assets/icons/home/nodataDefault.png">
+                                    <div class="mat-subheading-1 text-center">{{
+                                        translateLabels(tab?.pillsData[getSelectedPillIndex(tab ,tabIndex)]?.nodataMsg,
+                                        'home') }}</div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </ng-container>
+</div>

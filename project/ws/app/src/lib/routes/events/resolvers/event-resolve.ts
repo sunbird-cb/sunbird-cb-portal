@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 import { DiscussService } from '../../discuss/services/discuss.service'
 import { NSDiscussData } from '../../discuss/models/discuss.model'
 
 @Injectable()
 export class EventRecentResolve
-  implements
-  Resolve<Observable<IResolveResponse<NSDiscussData.ICategoryData>> | IResolveResponse<NSDiscussData.ICategoryData>> {
+   {
   constructor(private discussionSvc: DiscussService) { }
 
   resolve(

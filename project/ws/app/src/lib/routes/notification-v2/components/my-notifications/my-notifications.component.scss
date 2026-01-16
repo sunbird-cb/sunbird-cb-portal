@@ -1,0 +1,23 @@
+@import 'ws-common';
+
+.container-balanced {
+  @extend %page-center;
+}
+
+.sec-header {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.notification-card {
+  padding: 16px;
+  border-radius: 16px;
+  background-color: $white;
+  margin-bottom: 16px;
+  cursor: pointer;
+  border: 1px solid #e0dbdb;
+}

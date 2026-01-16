@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy } from '@angular/core'
 import { SafeUrl } from '@angular/platform-browser'
 import { IPreviewDevice } from '../../../modules/viewer/viewer.component'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute, Router } from '@angular/router'
 import { VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'

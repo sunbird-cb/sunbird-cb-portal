@@ -1,19 +1,19 @@
 <div *ngIf="this.content.type !== 'image'">
-  <p i18n>Design Type</p>
+  <p >Design Type</p>
   <mat-form-field>
     <mat-select [(ngModel)]="content.designVal">
-      <mat-option value="set1" i18n>With Details</mat-option>
-      <mat-option value="set2" i18n>Without Details</mat-option>
-      <mat-option value="set3" i18n>Horizontal slider</mat-option>
+      <mat-option value="set1" >With Details</mat-option>
+      <mat-option value="set2" >Without Details</mat-option>
+      <mat-option value="set3" >Horizontal slider</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 <div *ngIf="this.content.type === 'image'">
-  <p i18n>Design Type</p>
+  <p >Design Type</p>
   <mat-form-field>
     <mat-select [(ngModel)]="content.designVal">
-      <mat-option value="set2" i18n>Carousel</mat-option>
-      <mat-option value="set3" i18n>Horizontal slider</mat-option>
+      <mat-option value="set2" >Carousel</mat-option>
+      <mat-option value="set3" >Horizontal slider</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -120,7 +120,7 @@
       [content]="currentStrip.widget.widgetData"
     ></ws-auth-image-v2>
   </ng-container>
-  <ng-container *ngSwitchDefault i18n>
+  <ng-container *ngSwitchDefault >
     Switch to Advanced editor to edit this content
   </ng-container>
 </ng-container>
@@ -151,8 +151,8 @@
     />
   </mat-form-field>
   <button class="button-design" type="button" mat-stroked-button (click)="imageFile.click()">
-    <ng-container *ngIf="!currentStrip.cardData?.thumbnail" i18n>Choose Image</ng-container>
-    <ng-container *ngIf="currentStrip.cardData?.thumbnail" i18n>Change Image</ng-container>
+    <ng-container *ngIf="!currentStrip.cardData?.thumbnail" >Choose Image</ng-container>
+    <ng-container *ngIf="currentStrip.cardData?.thumbnail" >Change Image</ng-container>
     <input
       type="file"
       (change)="upload($event.target.files[0]); imageFile.value = null"

@@ -1,0 +1,105 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  min-height: 400px;
+}
+
+.left {
+  width: 270px;
+}
+
+.rsearch {
+  display: flex;
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.sinput {
+  border-radius: 18px;
+  border: 1px solid #d5d0d0;
+  padding: 9px 9px 9px 45px;
+  margin-bottom: 0px;
+  margin-top: 0;
+  /* stylelint-disable */
+  font: 400 14px Lato;
+  /* stylelint-enable */
+}
+
+.search-icon {
+  position: absolute;
+  top: 8px;
+  font-size: 22px;
+  left: 16px;
+}
+
+.category-header {
+  /* stylelint-disable */
+  font: 600 14px Montserrat;
+  /* stylelint-enable */
+}
+
+.categories-card {
+  background-color: #FFFFFF;
+  border: 1px solid #00000014;
+  height: 71px;
+  color: #000000;
+  /* stylelint-disable */
+  font: 600 14px Montserrat;
+  /* stylelint-enable */
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.mEngagementCard {
+  border: 1px solid #00000029;
+  border-radius: 7px;
+  width: 116px;
+  height: 74px;
+  background-color: #FFFFFF;
+
+  /* stylelint-disable */
+  font: 400 12px Lato;
+  /* stylelint-enable */ 
+  cursor: pointer; 
+
+  .engagement-icon {
+    width: 21px;
+  }
+}
+
+.mBrowse {
+  width: 100%;
+  overflow-y: auto;
+}
+
+.myEngagements-sm {
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .container-balanced {
+        margin-top: 0;
+        flex-direction: column;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+
+  .right {
+    width: calc(100% - 293px);
+  }
+
+}
+
+::ng-deep .events-bottomsheet {
+  height: 100vh;
+  
+  .mat-bottom-sheet-container {
+    background-color: #eff3f9 !important;
+    max-height: 100vh !important;
+  }
+}

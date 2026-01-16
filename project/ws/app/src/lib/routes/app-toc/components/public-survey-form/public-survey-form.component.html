@@ -1,0 +1,45 @@
+<div class="preview-container">
+  <div class="form-header flex">
+    <div class="flex flex-1 justify-start items-center">
+      <div>{{'apptoc.AGKCaseStudySurveyForm' | translate}} </div>
+    </div>
+    <button mat-icon-button class="close-button" [mat-dialog-close]="false">
+      <mat-icon class="close-icon" color="warn">close</mat-icon>
+    </button>
+  </div>
+  <div class="form-content">
+    <ng-container *ngIf="surveyForm">
+      <form [formGroup]="surveyForm">
+        <ng-container *ngFor="let parentField of parentalFields">
+          <ng-container [ngSwitch]="parentField.fieldType">
+            <ng-container *ngSwitchCase="'heading'">
+              <ws-app-survey-form-section [childFields]="getChildFields(parentField.sectionId)"
+                [sectionField]="parentField"
+                [childQuestionsFormArray]="getChildQuestionsFormArray(parentField.sectionId)"
+                (questionValues)="updateQuestionValues($event)"></ws-app-survey-form-section>
+            </ng-container>
+            <ng-container *ngSwitchCase="'separator'">
+              <hr class="opacity-50 elment-separator">
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <ws-app-survey-form-question [fieldDetails]="parentField"
+                [questionForm]="getQuestionControl(parentField.controlIndex)"
+                (questionValues)="updateQuestionValues($event)"></ws-app-survey-form-question>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <div class="flex justify-end m-4">
+          <!-- <button mat-button class="do-later-btn" (click)="closeDialog()">{{'apptoc.doItLater' | translate}}</button> -->
+          <button mat-button class="submit-btn" [disabled]="!surveyFormIsValid" (click)="submitForm()">{{'apptoc.submit'
+            | translate}}</button>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+</div>
+
+<ng-container *ngIf="addLoader > 0">
+  <div class="text-center my-2 loader flex justify-center items-center">
+    <mat-spinner class="inline-block"></mat-spinner>
+  </div>
+</ng-container>

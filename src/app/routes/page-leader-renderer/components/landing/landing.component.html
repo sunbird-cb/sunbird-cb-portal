@@ -1,6 +1,6 @@
 <mat-toolbar class = "ws-mat-light-background" [ngStyle]="configSvc?.pageNavBar?.styles">
   <ws-widget-btn-page-back [widgetData]="{ url: '/app/channels/leadership' }"></ws-widget-btn-page-back>
-  <span class="margin-left-s" i18n>Leadership</span>
+  <span class="margin-left-s" >Leadership</span>
 </mat-toolbar>
 
 
@@ -89,10 +89,10 @@
 </div>
 
 <div class="text-center margin-top-m">
-  <h2 class="mat-h2" i18n *ngIf="!leaderData && !errorFetchingJson">
+  <h2 class="mat-h2" *ngIf="!leaderData && !errorFetchingJson">
     No Data Available for this leader.
   </h2>
-  <h2 class="mat-h2" i18n *ngIf="errorFetchingJson">
+  <h2 class="mat-h2" *ngIf="errorFetchingJson">
     Something went wrong. Not able to load the content.
   </h2>
 </div>

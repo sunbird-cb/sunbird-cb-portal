@@ -3,16 +3,17 @@ import { throwError, Subscription, Subject } from 'rxjs'
 import { switchMap, takeWhile, tap } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils-v2'
 
 import { CertificationApiService } from '../../apis/certification-api.service'
 import { CertificationService } from '../../services/certification.service'
 
 import { ICertificationMeta, TCertificationRequestType } from '../../models/certification.model'
 import { FileDownloadService } from '../../services/file-download.service'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { RequestCancelDialogComponent } from '../request-cancel-dialog/request-cancel-dialog.component'
 import { SnackbarComponent } from '../snackbar/snackbar.component'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-toc-certification-result-verification-card',

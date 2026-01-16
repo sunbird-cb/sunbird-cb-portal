@@ -7,7 +7,7 @@
   <div mat-menu-item>
     <mat-slide-toggle color="primary" [formControl]="darkModeForm" labelPosition="before">
       <mat-icon>brightness_medium</mat-icon>
-      <span i18n>Dark Mode</span>
+      <span >Dark Mode</span>
     </mat-slide-toggle>
   </div>
   <!-- <mat-slide-toggle color="primary" [formControl]="isRTLForm" labelPosition="before">
@@ -16,29 +16,29 @@
     <mat-icon>{{
       isRTLForm ? 'format_textdirection_r_to_l' : 'format_textdirection_l_to_r'
     }}</mat-icon>
-    <span i18n *ngIf="isRTLForm.value">Change to left-to-right</span>
-    <span i18n *ngIf="!isRTLForm.value">Change to right-to-left</span>
+    <span *ngIf="isRTLForm.value">Change to left-to-right</span>
+    <span *ngIf="!isRTLForm.value">Change to right-to-left</span>
   </div> -->
   <button mat-menu-item [matMenuTriggerFor]="languagesMenu" *ngIf="isLanguageEnabled">
     <mat-icon>translate</mat-icon>
-    <span i18n>Languages</span>
+    <span >Languages</span>
   </button>
   <button mat-menu-item [matMenuTriggerFor]="fontSizeMenu">
     <mat-icon>format_size</mat-icon>
-    <span i18n>Font Size</span>
+    <span >Font Size</span>
   </button>
   <button *ngIf="themes.length && themes.length > 1" mat-menu-item [matMenuTriggerFor]="themesMenu">
     <mat-icon>format_color_fill</mat-icon>
-    <span i18n>Themes</span>
+    <span >Themes</span>
   </button>
 
   <!-- <button mat-menu-item>
     <mat-icon>keyboard</mat-icon>
-    <span i18n>Keyboard Shortcuts</span>
+    <span >Keyboard Shortcuts</span>
   </button> -->
   <a mat-menu-item routerLink="/app/profile/settings">
     <mat-icon>expand_more</mat-icon>
-    <span i18n>All Settings</span>
+    <span >All Settings</span>
   </a>
 </mat-menu>
 
@@ -48,7 +48,7 @@
       activeFontClass === font.fontClass ? 'radio_button_checked' : 'radio_button_unchecked'
     }}</mat-icon>
     <span [style.fontSize]="font.baseFontSize">
-      <span i18n>Base font size</span>
+      <span >Base font size</span>
       ({{ font.baseFontSize }})
     </span>
   </button>

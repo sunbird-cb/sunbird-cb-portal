@@ -1,0 +1,53 @@
+.updates-card {
+  background-color: #FFFFFF;
+  border: 1px solid #00000033;
+  border-radius: 12px;
+}
+
+.user-name {
+  /*stylelint-disable */
+  font: 700 16px 'Lato';
+  /* stylelint-enable */
+}
+
+.user-designation {
+  /*stylelint-disable */
+  font: 400 12px 'Lato';
+  /* stylelint-enable */
+  color: #00000099;
+}
+
+.updated-time {
+  /*stylelint-disable */
+  font: 400 12px 'Roboto';
+  /* stylelint-enable */
+  color: #00000099;
+}
+
+.description {
+  /*stylelint-disable */
+  font: 400 16px 'Lato';
+  /* stylelint-enable */
+  color: #000000;
+}
+
+.profile-link {
+  background-color: #1B4CA129 !important;
+  border-radius: 17px;
+  border: 0px;
+  width: 115px;
+  height: 33px;
+  color: #1B4CA1 !important;
+  /*stylelint-disable */
+  font: 700 14px 'Lato';
+  /* stylelint-enable */
+
+  .send-icon {
+    color: #1B4CA1 !important;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+  }
+}
+
+

@@ -1,0 +1,39 @@
+.blue-text {
+    color: rgba(27, 76, 161, 1);   
+}
+
+.action-btn {
+    opacity: 1;
+    color: #fff;
+    font-family: Lato-Bold, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 20px;
+    background: #1a4ca1;
+    border-radius: 64px;
+    padding: 8px 16px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    opacity: 1;
+    color: #1a4ca1;
+    font-family: Lato-Bold, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 20px;
+    background: #fff;
+    border-radius: 64px;
+    padding: 8px 16px;
+    width: 100%;
+    border-color: #1a4ca1;
+    cursor: pointer;
+}

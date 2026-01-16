@@ -1,0 +1,8 @@
+<div class="w-full flex flex-col gap-4">
+  <div class="header">Updates</div>
+  <div class="updates-note">It will only show you updates related to you connections only.</div>
+
+  <ng-container *ngFor="let update of updatesList">
+    <ws-app-updates-card [profileUpdates]="update"></ws-app-updates-card>
+  </ng-container>
+</div>

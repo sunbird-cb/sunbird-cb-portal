@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms'
 import { MatChipInputEvent, MatDialog } from '@angular/material'
 import {
   IPickerContentData,
@@ -29,7 +29,7 @@ export class ContentStripV2Component implements OnInit {
   @Input() identifier = ''
   @Input() isSubmitPressed = false
   @Input() size = 1
-  form!: FormGroup
+  form!: UntypedFormGroup
   pickerContentData!: IPickerContentData
   requestType!: 'search' | 'ids' | 'api' | 'KB' | 'Collections'
   subscription: any
@@ -44,7 +44,7 @@ export class ContentStripV2Component implements OnInit {
   language: string[] = []
   backUpRequestType!: 'search' | 'ids' | 'api' | 'KB' | 'Collections'
   keywords: string[] = []
-  keywordsCtrl = new FormControl('')
+  keywordsCtrl = new UntypedFormControl('')
   collectionId: string[] = []
   id = 0
   cardSubtype:
@@ -59,7 +59,7 @@ export class ContentStripV2Component implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   constructor(
     private interestSvc: InterestService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private dialog: MatDialog,
   ) { }
 
@@ -127,7 +127,7 @@ export class ContentStripV2Component implements OnInit {
     ) as AbstractControl).valueChanges.subscribe({
       next: () => {
         const set = new Set<string>()
-        const lexIDs = (this.form.controls.request as FormGroup).controls.ids.value || []
+        const lexIDs = (this.form.controls.request as UntypedFormGroup).controls.ids.value || []
         lexIDs.map((v: string) => set.add(v))
         this.pickerContentData = {
           ...this.pickerContentData,
@@ -291,7 +291,7 @@ export class ContentStripV2Component implements OnInit {
 
   onContentSelectionChanged(event: { content: Partial<NsContent.IContent>; checked: boolean }) {
     const lexIDs = JSON.parse(
-      JSON.stringify((this.form.controls.request as FormGroup).controls.ids.value || []),
+      JSON.stringify((this.form.controls.request as UntypedFormGroup).controls.ids.value || []),
     )
     if (event.checked) {
       lexIDs.push(event.content.identifier)

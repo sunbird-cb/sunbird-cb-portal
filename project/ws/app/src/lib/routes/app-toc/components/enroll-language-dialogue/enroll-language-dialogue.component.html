@@ -1,0 +1,20 @@
+<mat-dialog-content>
+    <div class="dialog-header text-left flex flex-col justify-between align-items-center">
+        <p class="mat-subheading-1 text-center">Choose Your Preferred Language</p>
+        <p class="mat-body-2 text-center">This course is available in multiple languages. You can select one to begin.</p>
+    </div>
+    <div class="lang-msg-wrapper">
+        <mat-form-field appearance="outline" class="lang-select-wrapper">
+            <mat-select [(ngModel)]="selectedLanguage" (ngModelChange)="onLanguageChange($event)" class="mat-body-1">
+                <mat-option *ngFor="let lang of languageList" [value]="lang">
+                    {{ lang.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="flex items-center justify-center">
+            <a (click)="this.dialogRef.close()" class="cursor-pointer mat-stroked-button custom-rounded margin-right-m">Cancel</a>
+            <a (click)="onSubmit()" class="cursor-pointer action-button">Confirm & Start Course</a>
+        </div>
+    </div>
+</mat-dialog-content>

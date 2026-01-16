@@ -5,6 +5,9 @@
         <div class="fixd" i18n-aria-label role="link" aria-label="click on it to visit user profile">
             <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="hoverUser?.photo" size="l-s">
             </ws-widget-avatar-photo>
+            <span class="profile-badge" *ngIf="hoverUser?.verifiedKarmayogi">  <img class="profile-badge" src="fusion-assets/images/profile-badge.png" height="18">
+            </span>
+            
         </div>
     </div>
     <mat-card-content class="name-container flex flex-col width-expand">
@@ -53,7 +56,7 @@
                 <div class="flex flex-1 m-margin margin-bottom-s cursor-pointer">
                     <a role="link" class="flex ws-mat-default-text" (click)="goToUserProfile()">
                         <mat-icon>group</mat-icon>
-                        <span class="mat-body-2 margin-left-s" i18n>{{'Network Profile'}}</span>
+                        <span class="mat-body-2 margin-left-s" >{{'Network Profile'}}</span>
                     </a>
                 </div>
             </div>

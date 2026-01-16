@@ -9,16 +9,16 @@
   <button name="add-more-button-playlist-detail" *ngIf="!(playlist?.sharedBy || playlist?.sharedByDisplayName)"
     mat-button (click)="router.navigate([router.url, 'edit'])">
     <mat-icon>edit</mat-icon>&nbsp;
-    <span i18n>Edit</span>
+    <span >Edit</span>
   </button>
   <button name="share-button-playlist-detail" mat-button (click)="sharePlaylist()">
     <mat-icon>share</mat-icon>&nbsp;
-    <span i18n>Share</span>
+    <span >Share</span>
   </button>
   <button name="delete-button-playlist-detail" *ngIf="!(playlist?.sharedBy || playlist?.sharedByDisplayName)" mat-button
     (click)="deletePlaylist()">
     <mat-icon>delete</mat-icon>&nbsp;
-    <span i18n>Delete</span>
+    <span >Delete</span>
   </button>
 </div>
 <button class="hidden-gt-xs" mat-icon-button [matMenuTriggerFor]="playlistMenu">
@@ -44,8 +44,8 @@
           <form *ngIf="changeName" #playlistForm [(formGroup)]="editPlaylistForm">
             <div class="flex form-items items-center margin-bottom-s margin-top-reduce fade-in">
               <mat-form-field class="width-3-4">
-                <mat-label i18n>Edit playlist name</mat-label>
-                <mat-error i18n>Playlist title should be 1-100 characters</mat-error>
+                <mat-label >Edit playlist name</mat-label>
+                <mat-error >Playlist title should be 1-100 characters</mat-error>
                 <input name="edit-playlist-name-input-playlist-detail" matInput formControlName="title"
                   autocomplete="off" required />
               </mat-form-field>
@@ -71,11 +71,11 @@
             </ng-container>
             <mat-icon>group</mat-icon>
             <span class="margin-left-xxs">
-              <ng-container *ngIf="playlist?.visibility === 'private'" i18n>PRIVATE</ng-container>
-              <ng-container *ngIf="playlist?.visibility === 'public'" i18n>PUBLIC</ng-container>
+              <ng-container *ngIf="playlist?.visibility === 'private'" >PRIVATE</ng-container>
+              <ng-container *ngIf="playlist?.visibility === 'public'" >PUBLIC</ng-container>
             </span>
           </p>
-          <!-- <h3 class="mat-subheading-2 font-weight-500 margin-remove-bottom" i18n>CURATORS</h3>
+          <!-- <h3 class="mat-subheading-2 font-weight-500 margin-remove-bottom" >CURATORS</h3>
           <div class="flex flex-middle mt-2">
             <ws-widget-user-image class="user-icon-container"
               [email]="playlist?.sharedBy || configSvc?.userProfile?.email" [imageType]="'rounded'">
@@ -113,15 +113,15 @@
   <button mat-menu-item *ngIf="!playlist?.sharedBy || !playlist?.sharedByDisplayName"
     (click)="router.navigate([router.url, 'edit'])">
     <mat-icon>edit</mat-icon>
-    <span i18n>Edit </span>
+    <span >Edit </span>
   </button>
   <button mat-menu-item (click)="sharePlaylist()">
     <mat-icon>share</mat-icon>
-    <span i18n>Share</span>
+    <span >Share</span>
   </button>
   <button mat-menu-item *ngIf="!playlist?.sharedBy || !playlist?.sharedByDisplayName" (click)="deletePlaylist()">
     <mat-icon>delete</mat-icon>
-    <span i18n>Delete</span>
+    <span >Delete</span>
   </button>
 </mat-menu>
 

@@ -6,11 +6,11 @@
   <div class="hidden-xs">
     <button mat-button (click)="getAssignments()">
       <mat-icon>refresh</mat-icon>&nbsp;
-      <span i18n>Refresh</span>
+      <span >Refresh</span>
     </button>
     <button mat-button (click)="router.navigate([assignmentUrl])">
       <mat-icon>add</mat-icon>&nbsp;
-      <span i18n>New assignment</span>
+      <span >New assignment</span>
     </button>
 
   </div>
@@ -27,12 +27,12 @@
     </h2>
     <mat-table [dataSource]=" dataSource" multiTemplateDataRows class="mat-elevation-z8 margin-bottom-l">
       <ng-container matColumnDef="assignment_id">
-        <mat-header-cell i18n *matHeaderCellDef> ID </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
         <mat-cell *matCellDef="let assignment"> {{assignment.assignment_id}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="assigned_on">
-        <mat-header-cell i18n *matHeaderCellDef> Assigned On </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Assigned On </mat-header-cell>
         <mat-cell *matCellDef="let assignment">
 
           <span>
@@ -43,12 +43,12 @@
       </ng-container>
 
       <ng-container matColumnDef="assignedUserCount">
-        <mat-header-cell i18n *matHeaderCellDef> User Count </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> User Count </mat-header-cell>
         <mat-cell *matCellDef="let assignment"> {{assignment.assignedUserCount}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="percentageProcessingCompleted">
-        <mat-header-cell i18n *matHeaderCellDef> Status </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
         <mat-cell *matCellDef="let assignment">
           <!-- <mat-progress-bar
             ng-class="'amber-colour':( assignment.percentageProcessingCompleted>0 &&  assignment.percentageProcessingCompleted<100), 'green-colour':( assignment.percentageProcessingCompleted===100), 'red-colour':( assignment.percentageProcessingCompleted===0)}"
@@ -82,11 +82,11 @@
 <mat-menu #assignmentMenu="matMenu" overlapTrigger="true">
   <button mat-menu-item (click)="getAssignments()">
     <mat-icon>refresh</mat-icon>&nbsp;
-    <span i18n>Refresh</span>
+    <span >Refresh</span>
   </button>
   <button mat-menu-item (click)="router.navigate([assignmentUrl])">
     <mat-icon>add</mat-icon>&nbsp;
-    <span i18n>New assignment</span>
+    <span >New assignment</span>
   </button>
 </mat-menu>
 

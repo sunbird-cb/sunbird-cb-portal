@@ -1,0 +1,177 @@
+.container-balanced {
+    max-width: 1202px;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    height: auto;
+    min-height: 400px;
+
+    @media (max-width:1024px) {
+        margin-left: 8px!important;
+        margin-right: 8px!important;
+    }
+
+}
+
+.top_card_container {
+    margin-top: 30px;
+    .top_card_inner_box {
+        align-items: center;
+        // enable for flex box layout
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // justify-content:space-between;
+
+        // enable for grid box layout
+        display: grid !important;
+        grid-gap: 32px;
+        grid-template-columns: repeat(auto-fill, 276px);
+        justify-content: flex-start;
+
+        @media (max-width:768px) {
+            grid-gap: 16px;
+        }
+    }
+}
+
+// all providers
+.all_provider_box {
+    width: 100%;
+    margin-bottom: 150px;
+    padding: 30px 0;
+
+    .all_provider_inner {
+        width: 100%;
+    }
+
+    .top_search_box {
+        width: 100%;
+        overflow: hidden;
+        justify-content: space-between;
+
+
+        .search_box_inner {
+            max-width: 585px;
+            float: left;
+
+            @media (max-width:768px) {
+                width: 75%;
+                max-width: 75%;
+            }
+
+            .search_box_main {
+                width: 100%;
+                max-width: 585px;
+
+                @media (max-width:768px) {
+                    max-width: 100%;
+                }
+
+                mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix{
+                    border-top-width: 8px !important;
+                    padding: 12px 10px 12px 12px;
+
+                }
+
+                form {
+                    width: 100%;
+
+                    .search_form {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .item_dropdown_box {
+            float: right;
+            // width: 210px;
+            box-sizing: border-box;
+
+            @media (max-width:768px) {
+                width: 20%;
+                display: flex;
+                align-items: center;
+                margin-right: 8px;
+            }
+            .item {
+                background: white;
+                width: 100%;
+                padding: 0px 16px;
+                border-radius: 52px;
+                .mat-form-field {
+                    // background-color: #f0f3f4;
+                    // border:1px solid rgba(0, 0, 0, 0.08);
+                    // padding: 0px 12px;
+                    // border-radius: 4px 4px;
+                    // box-sizing: border-box;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+                .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
+                    background-color:none;
+                }
+
+            }
+        }
+    }
+
+    .provider_card_box {
+        width:100%;
+        align-items: center;
+        // Enable if flex layout is needed
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // display: flex;
+        // justify-content: space-between;
+
+        // disable if flex layout is needed and not grid
+        display: grid;
+        grid-gap: 27px;
+        grid-template-columns: repeat(auto-fill, 275px);
+        //justify-content: space-between;
+
+        @media (max-width:1024px) {
+            // justify-content: center;
+            grid-template-columns: unset;
+        }
+
+    }
+
+    a.load_more_link {
+        margin:35px auto 0 auto;
+        text-align:center;
+        display: block;
+    }
+
+}
+
+
+.sort-menu {
+width: 100% !important;
+}
+.search-wrapper {
+    mat-icon {
+        top: 8px;
+        left: 20px;
+    }
+    .search-field {
+        width:  487px;
+        height: 40px;
+        padding: 12px 16px 12px 48px;
+        gap: 8px;
+        border-radius: 52px;
+        background: #FFFFFF;
+        border: 1px solid #00000014;
+        @media (max-width:768px) {
+            width:  284px;
+        }
+    }
+}
+
+
+input[type="search"]::-webkit-search-decoration:hover,
+input[type="search"]::-webkit-search-cancel-button:hover { 
+    cursor:pointer; 
+}

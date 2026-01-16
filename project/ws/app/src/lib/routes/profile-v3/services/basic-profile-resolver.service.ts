@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core'
-import { Resolve } from '@angular/router'
+
 import { Observable, of } from 'rxjs'
 import { map, catchError, retry } from 'rxjs/operators'
 import { HttpBackend, HttpClient } from '@angular/common/http'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 // tslint:disable-next-line
 import _ from 'lodash'
 
 @Injectable()
-export class BasicProfileResolver implements Resolve<Observable<IResolveResponse<any>>> {
+export class BasicProfileResolver  {
     private httpClient: HttpClient
     constructor(handler: HttpBackend) {
         this.httpClient = new HttpClient(handler)

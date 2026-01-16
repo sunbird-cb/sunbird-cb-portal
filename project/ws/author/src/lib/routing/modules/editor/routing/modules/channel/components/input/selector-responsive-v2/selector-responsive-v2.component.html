@@ -8,12 +8,12 @@
     (click)="i !== index ? onIndexChange(i) : $event.preventDefault()"
   >
     <ng-container [ngSwitch]="getType(i, true)">
-      <ng-container *ngSwitchCase="'mob'" i18n>Mobile</ng-container>
-      <ng-container *ngSwitchCase="'tab'" i18n>Tablet</ng-container>
-      <ng-container *ngSwitchCase="'desktop'" i18n>Desktop</ng-container>
-      <ng-container *ngSwitchCase="'common'" i18n>Common</ng-container>
-      <ng-container *ngSwitchCase="'tabDesktop'" i18n>Tablet and Desktop</ng-container>
-      <ng-container *ngSwitchCase="'custom'" i18n>Custom</ng-container>
+      <ng-container *ngSwitchCase="'mob'" >Mobile</ng-container>
+      <ng-container *ngSwitchCase="'tab'" >Tablet</ng-container>
+      <ng-container *ngSwitchCase="'desktop'" >Desktop</ng-container>
+      <ng-container *ngSwitchCase="'common'" >Common</ng-container>
+      <ng-container *ngSwitchCase="'tabDesktop'" >Tablet and Desktop</ng-container>
+      <ng-container *ngSwitchCase="'custom'" >Custom</ng-container>
     </ng-container>
   </p>
   <button
@@ -29,36 +29,36 @@
 
 <div *ngIf="size > 1" class="mb-5" style="position: relative;">
   <!-- <mat-form-field class="mr-20" *ngIf="!isCommon">
-    <mat-label i18n>Select Screen Type</mat-label>
+    <mat-label >Select Screen Type</mat-label>
     <mat-select
       [value]="getType(index, true)"
       (selectionChange)="setScreenWidth($event)"
       name="screen"
     >
-      <mat-option [value]="'mob'" i18n>
+      <mat-option [value]="'mob'" >
         Mobile
       </mat-option>
-      <mat-option *ngIf="size === 2" [value]="'tabDesktop'" i18n>
+      <mat-option *ngIf="size === 2" [value]="'tabDesktop'" >
         Tablet and Desktop
       </mat-option>
-      <mat-option *ngIf="size > 2" [value]="'tab'" i18n>
+      <mat-option *ngIf="size > 2" [value]="'tab'" >
         Tablet
       </mat-option>
-      <mat-option *ngIf="size > 2" [value]="'desktop'" i18n>
+      <mat-option *ngIf="size > 2" [value]="'desktop'" >
         Desktop
       </mat-option>
-      <mat-option [value]="'custom'" i18n>
+      <mat-option [value]="'custom'" >
         Custom
       </mat-option>
     </mat-select>
   </mat-form-field> -->
   <!-- <ng-container *ngIf="!isCommon">
     <mat-form-field class="mr-10" appearance="outline">
-      <mat-label i18n>Min. Width (px)</mat-label>
+      <mat-label >Min. Width (px)</mat-label>
       <input [(ngModel)]="currentStrip.minWidth" matInput type="number" placeholder="0" />
     </mat-form-field>
     <mat-form-field class="mr-10" appearance="outline">
-      <mat-label i18n>Max. Width (px)</mat-label>
+      <mat-label >Max. Width (px)</mat-label>
       <input [(ngModel)]="currentStrip.maxWidth" type="number" matInput placeholder="0" />
     </mat-form-field>
   </ng-container> -->
@@ -102,7 +102,7 @@
       [content]="currentStrip.widget.widgetData"
     ></ws-auth-image-v2>
   </ng-container>
-  <ng-container *ngSwitchDefault i18n>
+  <ng-container *ngSwitchDefault >
     Switch to Advanced editor to edit this content
   </ng-container>
 </ng-container>

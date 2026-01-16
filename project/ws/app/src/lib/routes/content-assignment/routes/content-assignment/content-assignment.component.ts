@@ -1,10 +1,9 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material'
-import { MatPaginator, PageEvent } from '@angular/material/paginator'
+import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ContentAssignService, NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus, ValueService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { IFilterUnitResponse } from '../../../search/models/search.model'
 import { DialogAssignComponent } from '../../components/dialog-assign/dialog-assign.component'
@@ -12,6 +11,8 @@ import {
   UserFilterDisplayComponent,
 } from '../../components/user-filter-display/user-filter-display.component'
 import { IContentAssignModel } from '@sunbird-cb/collection/src/lib/content-assign/content-assign.model'
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 @Component({
   selector: 'ws-app-content-assignment',
   templateUrl: './content-assignment.component.html',
@@ -23,7 +24,7 @@ import { IContentAssignModel } from '@sunbird-cb/collection/src/lib/content-assi
 
 export class ContentAssignmentComponent implements OnInit {
 
-  @ViewChild(UserFilterDisplayComponent, { static: false })
+  @ViewChild(UserFilterDisplayComponent)
   appFilterDisplay: UserFilterDisplayComponent | null = null
 
   @ViewChild('selectContent', { static: true })

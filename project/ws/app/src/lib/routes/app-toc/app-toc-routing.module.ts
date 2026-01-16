@@ -1,23 +1,27 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 // import { AppTocCohortsComponent } from './components/app-toc-cohorts/app-toc-cohorts.component'
 import { AppTocDiscussionComponent } from './components/app-toc-discussion/app-toc-discussion.component'
 import { KnowledgeArtifactDetailsComponent } from './components/knowledge-artifact-details/knowledge-artifact-details.component'
-import { AppTocResolverService } from './resolvers/app-toc-resolver.service'
 import { AppTocAnalyticsComponent } from './routes/app-toc-analytics/app-toc-analytics.component'
 import { CertificationMetaResolver } from './routes/app-toc-certification/resolvers/certification-meta.resolver'
 import { ContentCertificationResolver } from './routes/app-toc-certification/resolvers/content-certification.resolver'
 import { AppTocContentsComponent } from './routes/app-toc-contents/app-toc-contents.component'
-import { AppTocHomeComponent } from './routes/app-toc-home/app-toc-home.component'
 // import { AppTocOverviewComponent as AppTocOverviewRootComponent } from './routes/app-toc-overview/app-toc-overview.component'
 import { AppTocSinglePageComponent as AppTocSinglePageRootComponent } from './routes/app-toc-single-page/app-toc-single-page.component'
+import { AppTocCiosHomeComponent } from './components/app-toc-cios-home/app-toc-cios-home.component'
+import { AppTocCiosResolverService } from './resolvers/app-toc-cios-resolver.service'
+import { AppTocCiosUserEnrollResolverService } from './resolvers/app-toc-cios-user-enroll-resolver.service'
+import { AppTocContentReadResolverService } from './resolvers/app-toc-content-read-resolver.service'
+import { AppTocHomeV2Component } from './components/app-toc-home-v2/app-toc-home-v2.component'
+import { FormDataResolverService } from '../../../../../../../src/app/services/form-data-resolver.service'
 
 const routes: Routes = [
   {
     path: ':id',
-    component: AppTocHomeComponent,
+    component: AppTocHomeV2Component,
     data: {
       pageType: 'feature',
       pageKey: 'toc',
@@ -26,7 +30,7 @@ const routes: Routes = [
     },
     resolve: {
       pageData: PageResolve,
-      content: AppTocResolverService,
+      content: AppTocContentReadResolverService,
     },
     runGuardsAndResolvers: 'paramsChange',
     children: [
@@ -60,14 +64,14 @@ const routes: Routes = [
         path: 'discussion',
         component: AppTocDiscussionComponent,
       },
-      {
-        path: 'single-page-view',
-        component: AppTocSinglePageRootComponent,
-        data: {
-          pageId: 'overview',
-          module: 'Learn',
-        },
-      },
+      // {
+      //   path: 'single-page-view',
+      //   component: AppTocSinglePageRootComponent,
+      //   data: {
+      //     pageId: 'overview',
+      //     module: 'Learn',
+      //   },
+      // },
       {
         path: 'certification',
         loadChildren: () =>
@@ -94,6 +98,21 @@ const routes: Routes = [
   {
     path: 'knowledge-artifact/:id',
     component: KnowledgeArtifactDetailsComponent,
+  },
+  {
+    path: 'ext/:id',
+    component: AppTocCiosHomeComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'tocExt',
+      pageId: 'ext/:do_ID',
+      module: 'Learn',
+    },
+    resolve: {
+      pageData: FormDataResolverService,
+      extContent: AppTocCiosResolverService,
+      userEnrollContent: AppTocCiosUserEnrollResolverService,
+    },
   },
 ]
 

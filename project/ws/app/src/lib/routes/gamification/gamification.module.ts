@@ -14,7 +14,7 @@ import {
 } from '@angular/material'
 
 import { UserImageModule } from '@sunbird-cb/collection'
-import { PipeNameTransformModule, PipeCountTransformModule } from '@sunbird-cb/utils'
+import { PipeNameTransformModule, PipeCountTransformModule } from '@sunbird-cb/utils-v2'
 
 @NgModule({
   declarations: [

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog'
 import {
   IFeedbackFilterObj,
   EFeedbackType,
@@ -7,7 +7,7 @@ import {
   IFeedbackFilterDialogData,
   EFeedbackRole,
 } from '@sunbird-cb/collection'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./feedback-filter-dialog.component.scss'],
 })
 export class FeedbackFilterDialogComponent implements OnInit, OnDestroy {
-  filterForm: FormGroup
+  filterForm: UntypedFormGroup
   feedbackTypeSub?: Subscription
   feedbackTypes: typeof EFeedbackType
   feedbackRoles: typeof EFeedbackRole
@@ -33,17 +33,17 @@ export class FeedbackFilterDialogComponent implements OnInit, OnDestroy {
 
     const filterObj = this.filterDialogData.filterObj
 
-    this.filterForm = new FormGroup({
-      feedbackType: new FormControl(
+    this.filterForm = new UntypedFormGroup({
+      feedbackType: new UntypedFormControl(
         this.filterDialogData.viewedBy === this.feedbackRoles.User ? filterObj.feedbackType : null,
       ),
-      contentType: new FormControl(
+      contentType: new UntypedFormControl(
         this.filterDialogData.viewedBy === this.feedbackRoles.User ||
         this.filterDialogData.viewedBy === this.feedbackRoles.Author
           ? filterObj.contentType
           : null,
       ),
-      showLimited: new FormControl(filterObj.showLimited),
+      showLimited: new UntypedFormControl(filterObj.showLimited),
     })
 
     this.typeToRoleMap = new Map([

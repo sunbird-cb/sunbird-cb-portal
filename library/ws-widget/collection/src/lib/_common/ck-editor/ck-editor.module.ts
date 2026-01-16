@@ -11,19 +11,16 @@ import { UploadService } from './services/upload.service'
 import { NotificationComponent } from './components/notification/notification.component'
 
 @NgModule({
-  declarations: [CkEditorComponent, NotificationComponent],
-  imports: [
-    CommonModule,
-    CKEditorModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  exports: [
-    CkEditorComponent,
-  ],
-  entryComponents: [
-    CkEditorComponent,
-  ],
-  providers: [CKEditorService, AccessControlService, ApiService, LoaderService, UploadService],
+    declarations: [CkEditorComponent, NotificationComponent],
+    imports: [
+        CommonModule,
+        CKEditorModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    exports: [
+        CkEditorComponent,
+    ],
+    providers: [CKEditorService, AccessControlService, ApiService, LoaderService, UploadService]
 })
 export class CkEditorModule { }

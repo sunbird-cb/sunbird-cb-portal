@@ -2,9 +2,9 @@
   <div class="mat-toolbar px-4 sm:px-8 md:px-0 py-4 flex items-center">
     <ws-widget-user-image class="user-image" [email]="userEmail"></ws-widget-user-image>
     <h3>
-      <ng-container i18n>Hey, </ng-container>
+      <ng-container >Hey, </ng-container>
       <ng-container>{{ givenName }}</ng-container>
-      <ng-container *ngIf="!isNewUser" i18n>, Welcome Back!</ng-container>
+      <ng-container *ngIf="!isNewUser" >, Welcome Back!</ng-container>
     </h3>
   </div>
 </ng-container>
@@ -15,18 +15,18 @@
       <mat-expansion-panel [expanded]="false" class="expansion-panel ws-mat-primary-lite-background-on-day">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <h2 class="title margin-remove" i18n>Welcome,
+            <h2 class="title margin-remove" >Welcome,
               <ng-container>{{ givenName }}</ng-container>
             </h2>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <!-- <mat-divider class="divider"></mat-divider> -->
         <!-- <div class="flex flex-between">
-          <h3 class="flex-start margin-remove-bottom subtitle" i18n>Get To Know My Learning World</h3>
+          <h3 class="flex-start margin-remove-bottom subtitle" >Get To Know My Learning World</h3>
           <div class="flex-end btn-display-top">
             <button type="button" mat-raised-button class="activity-button" (click)="allActivities()">
               <div class="flex flex-middle ">
-                <p class="text-white margin-remove-bottom" i18n>All Activities</p>
+                <p class="text-white margin-remove-bottom" >All Activities</p>
               </div>
             </button>
           </div>
@@ -49,7 +49,7 @@
           <mat-divider class="divider mt-2"></mat-divider>
           <button type="button" mat-raised-button class="activity-button" (click)="allActivities()">
             <div class="flex flex-middle ">
-              <p class="text-white margin-remove-bottom" i18n>All Activities</p>
+              <p class="text-white margin-remove-bottom" >All Activities</p>
             </div>
           </button>
         </div> -->

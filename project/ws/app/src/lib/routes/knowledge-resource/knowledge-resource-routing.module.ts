@@ -13,7 +13,7 @@ const routes: Routes = [
    component: KnowledgeHomeComponent,
    data: {
     pageId: '',
-    module: 'knowledge-resource',
+    module: 'Knowledge Resources',
   },
 
   children: [
@@ -27,7 +27,7 @@ const routes: Routes = [
       component: KnowledgeAllComponent,
       data: {
         pageId: 'all',
-        module: 'knowledge-resource',
+        module: 'Knowledge Resources',
       },
       resolve: {
         allResources : AllResourceResolveService,
@@ -39,7 +39,7 @@ const routes: Routes = [
       component: KnowledgeSavedComponent,
       data: {
         pageId: 'saved',
-        module: 'knowledge-resource',
+        module: 'Knowledge Resources',
       },
       resolve: {
         allSavedResources : SavedResourceResolveService,
@@ -50,7 +50,7 @@ const routes: Routes = [
       component: KnowledgeDetailComponent,
       data: {
         pageId: 'id',
-        module: 'knowledge-resource',
+        module: 'Knowledge Resources',
       },
       resolve: {
         resourceDetail: ResourceDetailResolveService,

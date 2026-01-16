@@ -1,6 +1,6 @@
 <div class="margin-top-s margin-bottom-s">
   <div class="flex flex-wrapped flex-middle margin-top-xl">
-    <button #btnSelect mat-flat-button i18n type="button" [color]="'primary'" (click)="onClickBtnSelect()">
+    <button #btnSelect mat-flat-button type="button" [color]="'primary'" (click)="onClickBtnSelect()">
       Select File
     </button>
     <input type="file" #fileInput class="hidden" />
@@ -8,7 +8,7 @@
       <ng-container *ngIf="file">
         {{file?.name}}
       </ng-container>
-      <ng-container *ngIf="!file" i18n>
+      <ng-container *ngIf="!file" >
         Click to select a file
       </ng-container>
     </div>

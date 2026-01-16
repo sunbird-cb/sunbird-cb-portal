@@ -1,0 +1,261 @@
+<div class="not-my-user-container margin-top-m" *ngIf="isNotMyUser && !isIgotOrg">        
+    <div class="not-my-user-content">
+        <div>
+            <mat-icon class="warning-icon" [ngStyle]="{'color':'red'}">warning</mat-icon>
+        </div>
+        <div class="not-my-user-data">
+            <p>
+                <span>{{ 'home.notMyUser1' | translate }}</span>
+                <b>{{ 'home.notMyUser2' | translate }}</b>. 
+                <span>{{ 'home.notMyUser3' | translate }}</span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="disigantion-master-container margin-top-l"
+    *ngIf="updateDesignationCard && designationList?.length && showUpdateDesignations">
+    <div class="flex items-center justify-center gap-2">
+        <img [src]="updateDesignationCard?.imageUrl" alt="updateDesignation" />
+        <div class="flex flex-col gap-2">
+            <div class="title">Hello {{userData?.firstName}}!</div>
+            <div class="note">{{renderUpdateDesignationCardHeader()}}</div>
+        </div>
+    </div>
+    <div class="hr my-3"></div>
+    <div class="choose-designation">
+        <div class="dLabel pb-1">{{ 'publicsignup.selectDesignation' | translate }}</div>
+        <div class="flex items-center gap-3 pb-3">
+            <div class="contoller">
+                <div class="flex items-center relative">
+                    <input type="text"
+                        class="input-text designation-input cursor-pointer" matInput
+                        #trigger="matAutocompleteTrigger"
+                        #autocompleteInput
+                        [(value)]="selectDesignation"
+                        placeholder="{{'updteDesignation.select' | translate }}"
+                        [matAutocomplete]="designationAuto"
+                        (input)="onInputChange($event.target.value)"/>
+                    <mat-icon class="dropdown-icon cursor-pointer" (click)="openAutocomplete(trigger, autocompleteInput)">arrow_drop_down</mat-icon>
+                </div>
+                <mat-autocomplete class="mat-autocomplete"
+                (closed)="onAutoCompleteClosed()" (opened)="onAutoCompleteOpened()" #designationAuto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)">
+                    <ng-container *ngIf="filterDesigantionList.length > 0; else noDesignation">
+                        <mat-option *ngFor="let designation of filterDesigantionList" value="{{ designation?.name }}">{{ designation?.name }}</mat-option>
+                    </ng-container>
+                    <ng-template #noDesignation>
+                        <mat-option disabled>No Designation found</mat-option>
+                    </ng-template>
+                </mat-autocomplete>
+            </div>
+            <button
+                type="button" mat-button
+                (click)="updateDesignation()" [disabled]="selectDesignation?.length === 0"
+                class="btn submit-btn {{selectDesignation?.length === 0 ? '' : 'cursor-pointer'}}">{{renderUpdateDesignationCardButtonText()}}
+            </button>
+        </div>
+    </div>
+    <div class="hint" [innerHTML]="renderUpdateDesignationCardHint()"></div>
+</div>
+<div class="margin-top-m" *ngIf="nwlConfiguration?.enabled && canShowNlwCard">
+    <div class="nlw-container cursor-pointer" (click)="navigateToNationalLearning()">
+        <div class="flex">
+            <div class="nlw-title gap-3">
+                {{currentLang === 'hi'? nwlConfiguration?.titleHi : nwlConfiguration?.title}}
+            </div>
+            <div class="nlw-title">
+                <img class="nlw-animation" src="assets/images/national-learning/nlw.gif" alt=""/>
+            </div>
+        </div>
+        <div class="flex nlw-description">
+            {{currentLang === 'hi'? nwlConfiguration?.descriptionHi : nwlConfiguration?.description }}
+        </div>
+        <div class="progress-wrapper mt-5">
+            <div class="flex items-center">
+                <div *ngFor="let n of [].constructor(totalDays); let i = index">
+                    <div class="flex items-center">
+                        <div class="dot {{daysCompleted > i ? 'active' : ''}}" ></div>
+                        <div class="line {{daysCompleted > i ? 'active' : ''}}" [ngStyle]="{'width': nwlConfiguration?.width}"></div>
+                        <div class="dot" *ngIf="(totalDays - 1) === i"></div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-align-end nlw-redirect margin-top-l">
+            <button
+                class="nlw-view-more-btn mat-button mat-button-base text-white">
+                {{nwlConfiguration?.buttonText}}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- STATE LEARNING WEEK -->
+<div class="margin-top-m" *ngIf="slwConfiguration?.enabled && canShowSlwCard">
+    <div class="nlw-container cursor-pointer" (click)="navigateToStatelLearning()">
+        <div class="flex justify-between">
+            <div class="nlw-title gap-3">
+                <p class="margin-remove mat-subheading-1 {{slwConfiguration?.celebrateClass}}">{{currentLang === 'hi'? slwConfiguration?.celebrateHi : slwConfiguration?.celebrate}}</p>
+                <p class="{{slwConfiguration?.titleClass}}">{{currentLang === 'hi'? slwConfiguration?.titleHi : slwConfiguration?.title}}</p>
+            </div>
+            <div class="nlw-title">
+                <img class="nlw-animation" src="assets/images/national-learning/nlw.gif" alt=""/>
+            </div>
+        </div>
+        <div class="flex nlw-description">
+            {{currentLang === 'hi'? slwConfiguration?.descriptionHi : slwConfiguration?.description }}
+        </div>
+        <div class="progress-wrapper mt-5">
+            <div class="flex items-center">
+                <div *ngFor="let n of [].constructor(totalDays); let i = index">
+                    <div class="flex items-center">
+                        <div class="dot {{daysCompleted > i ? 'active' : ''}}" ></div>
+                        <div class="line {{daysCompleted > i ? 'active' : ''}}" [ngStyle]="{'width': slwConfiguration?.width}"></div>
+                        <div class="dot" *ngIf="(totalDays - 1) === i"></div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-align-end nlw-redirect margin-top-l">
+            <button
+                class="nlw-view-more-btn mat-button mat-button-base text-white">
+                {{slwConfiguration?.buttonText}}
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="margin-top-m">
+    <ws-widget-profile-card-stats (expandCollapse)="expandCollapse($event)" (activity)="goToActivity($event)"
+        [profileData]="homePageData.profileCard" [insightsData]="insightsData"
+        [isLoading]="profileDataLoading"></ws-widget-profile-card-stats>
+</div>
+ 
+<section class="hidden md:block" style="position: relative;" [ngClass]="{'':!collapsed, 'margin-bottom-m': collapsed}">
+    <div class="assessment-box  collapsible" [@collapse]="collapsed"
+        [ngClass]="{'margin-bottom-remove margin-top-remove':collapsed}">
+        <ng-container [ngTemplateOutlet]="loadNewStrips"></ng-container>
+        <ng-template #loadNewStrips>
+            <ng-container *ngFor="let newStrip of assessmentStrip">
+                <ng-container *ngIf="newStrip?.stripType !== 'withPils'">
+                    <sb-uic-content-strip-with-tabs [widgetData]="newStrip" (telemtryResponse)="raiseTelemetryInteratEvent($event)">
+                    </sb-uic-content-strip-with-tabs>
+                </ng-container>
+                <ng-container *ngIf="newStrip?.stripType === 'withPils'">
+                    <sb-uic-content-strip-with-tabs-pills [widgetData]="newStrip" (telemtryResponse)="raiseTelemetryInteratEvent($event)">
+                    </sb-uic-content-strip-with-tabs-pills>
+                </ng-container>
+            </ng-container>
+        </ng-template>
+    </div>
+    <section class="collapsible" [@collapse]="collapsed"
+        [ngClass]="{'padding-top-m':(!collapsed && isLeaderboardExist)}">
+        <ws-widget-user-leaderboard
+            (isLeaderboardAvailable)="checkLeaderboardData($event)"></ws-widget-user-leaderboard>
+    </section>
+    <div class="collapsible" [@collapseWeekly]="collapsed" [ngClass]="{'margin-bottom-m margin-top-m':!collapsed}">
+        <ws-widget-weekly-claps [insightsData]="insightsData" [weeklyData]="homePageData.weeklyClaps"
+            [isLoading]="clapsDataLoading"></ws-widget-weekly-claps>
+    </div>
+
+   
+
+    <div class="collapsible" [@collapse]="collapsed" *ngIf="learnAdvisoryData">
+        <ws-widget-tips-for-learner-card [learnAdvisoryData]="learnAdvisoryData"></ws-widget-tips-for-learner-card>
+    </div>
+
+
+    <div *ngIf="assessmentsData" class="margin-bottom-m" class="collapsible" [@collapsDiscuss]="collapsed"
+        [ngClass]="{'padding-bottom-m': !collapsed}">
+        <div class="assessments-wrapper">
+            <div class="assessments-info-wrapper">
+                <div class="flex justify-between">
+                    <div class="flex flex-col">
+                        <div class="flex flex-between flex-middle">
+                            <p class="flex-align-start upcoming-assessment-title flex flex-middle margin-remove">
+                                Upcoming Assessment
+                                <img class="margin-left-s cursor-pointer" width="20px" height="20px" alt=""
+                                    src="assets/icons/home/help_icon.svg" #tooltip="matTooltip"
+                                    [matTooltipClass]="'below'"
+                                    matTooltip="View your Credentials and take your Assessment.">
+                            </p>
+                        </div>
+                        <button
+                            class="bg-blue-700 text-sm font-semibold text-white py-3 px-5 rounded-full border-none cursor-pointer mt-4 mb-2 tracking-wide"
+                            [routerLink]="['/app/discussion-forum']">START</button>
+                    </div>
+                    <div class="flex justify-center system-icon">
+                        <mat-icon class="custom-size">desktop_mac</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="cred-container">
+                <div class="flex flex-middle flex-between">
+                    <div class="flex flex-middle">
+                        <span class="cred-title">{{ credMessage }}</span>
+                    </div>
+                    <div class="flex">
+                        <!-- //NOSONAR --><mat-icon class="ws-mat-default-text cursor-pointer" (click)="toggleCreds()">{{showCreds ?
+                            'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+                    </div>
+                </div>
+                <div class="my-credentials p-3" *ngIf="showCreds">
+                    <div class="flex flex-middle" style="padding: 5px 0px;">
+                        <span class="pr-5 font-semibold">Username</span>
+                        <div class="flex flex-middle copy-items">
+                            <span class="pr-2 custom-width">{{assessmentsData.userName}}</span>
+                            <!-- //NOSONAR --><span class=""><mat-icon class="cursor-pointer copy-icon"
+                                    (click)="copyToClipboard('Venkat')">content_copy</mat-icon></span>
+                        </div>
+                    </div>
+                    <div class="flex flex-middle" style="padding: 5px 0px;">
+                        <span class="pr-6 font-semibold">Password</span>
+                        <div class="flex flex-middle copy-items">
+                            <span class="pr-2  custom-width">{{assessmentsData.password}}</span>
+                            <!-- //NOSONAR --><span class=""><mat-icon class="cursor-pointer copy-icon"
+                                    (click)="copyToClipboard('Test@1234')">content_copy</mat-icon></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- <section class="collapsible" [@collapsDiscuss]="collapsed" [ngClass]="{'':!collapsed}" *ngIf="!discussion?.error">
+        <div class="flex flex-col discussion-card">
+            <div class="flex mat-subheading-1 p-4">
+                <div class="flex flex-row gap-1 mat-subheading-1 cursor-pointer feed-title"
+                    (click)="navigate(); raiseTelemetry('discussions')">
+                    {{ 'home.myDiscussions' | translate }}
+                    <mat-icon
+                        class="ws-mat-default-text mr-3 mat-icon notranslate material-icons mat-icon-no-color feed-title-icon">
+                        chevron_right
+                    </mat-icon>
+                </div>
+            </div>
+            <ng-container>
+                <ws-widget-discussions [discussion]="discussion" [count]="2"></ws-widget-discussions>
+            </ng-container>
+        </div>
+    </section> -->
+    <section class="collapsible" [@collapse]="collapsed" [ngClass]="{'padding-top-m margin-bottom-m':!collapsed}">
+        <ws-widget-pending-request [pendingRequestData]="pendingRequestData"
+            [isLoading]="pendingRequestSkeleton"></ws-widget-pending-request>
+    </section>
+    <div class="empty-div margin-bottom-xl" *ngIf="collapsed">
+        <div class="empty-div2 margin-bottom-m" *ngIf="!discussion?.error">
+
+        </div>
+    </div>
+    <div class="flex flex-col">
+        <ws-home-other-portal></ws-home-other-portal>
+    </div>
+</section>
+<section class="block md:hidden">
+    <div *ngIf="learnAdvisoryData">
+        <ws-widget-tips-for-learner-card [learnAdvisoryData]="learnAdvisoryData"></ws-widget-tips-for-learner-card>
+    </div>
+    
+</section>
+<div *ngIf="surveyPopup && surveyPopup?.active">
+    <ws-survey-form ></ws-survey-form>
+    </div>

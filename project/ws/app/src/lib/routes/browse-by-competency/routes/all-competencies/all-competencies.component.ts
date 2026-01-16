@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core'
-import { ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
-import { FormGroup, FormControl } from '@angular/forms'
+import { ConfigurationsService, EventService, MultilingualTranslationsService, WsEvents } from '@sunbird-cb/utils-v2'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
 import { NSBrowseCompetency } from '../../models/competencies.model'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
@@ -9,6 +9,7 @@ import { Subject, Observable } from 'rxjs'
 import _ from 'lodash'
 // tslint:enable
 import { LocalDataService } from '../../services/localService'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'ws-app-all-competencies',
@@ -21,7 +22,7 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
   defaultThumbnail = ''
   allCompetencies!: NSBrowseCompetency.ICompetencie[]
   competencyAreas: any
-  searchForm: FormGroup | undefined
+  searchForm: UntypedFormGroup | undefined
   appliedFilters: any = []
   searchQuery = ''
   sortBy: any
@@ -41,14 +42,24 @@ export class AllCompetenciesComponent implements OnInit, OnDestroy, OnChanges {
     private events: EventService,
     private browseCompServ: BrowseCompetencyService,
     private localDataService: LocalDataService,
-  ) { }
+    private langtranslations: MultilingualTranslationsService,
+    private translate: TranslateService,
+  ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+  }
 
   ngOnInit() {
     this.displayLoader = this.browseCompServ.isLoading()
     this.stateData = { param: '', path: 'all-competencies' }
-    this.searchForm = new FormGroup({
-      sortByControl: new FormControl(''),
-      searchKey: new FormControl(''),
+    this.searchForm = new UntypedFormGroup({
+      sortByControl: new UntypedFormControl(''),
+      searchKey: new UntypedFormControl(''),
     })
     const instanceConfig = this.configSvc.instanceConfig
     if (instanceConfig) {

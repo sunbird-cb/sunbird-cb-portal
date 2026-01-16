@@ -93,9 +93,7 @@
   //   // outline: 1px solid #000;
   //   margin: 0 0 2em 0;
   //   text-overflow: ellipsis !important;
-  //   /**
-  //  * Required properties to achieve text-overflow
-  //  */
+  //   __<<ngThemingMigrationEscapedComment1>>__
   //   white-space: nowrap;
   //   overflow: hidden;
   // }
@@ -362,4 +360,8 @@ a.disableTagIcon, a.disableLevelIcon {
   .proficient_level_box {
     width: 25%;
   }
+}
+
+::ng-deep .mat-form-field-prefix {
+  top:0 !important
 }

@@ -39,7 +39,7 @@ export namespace NsUserProfileDetails {
   export enum EUserGender {
     MALE = 'Male',
     FEMALE = 'Female',
-    OTHER = 'Others',
+    OTHERS = 'Others',
   }
   export enum EMaritalStatus {
     SINGLE = 'Single',
@@ -50,6 +50,7 @@ export namespace NsUserProfileDetails {
     OBC = 'OBC',
     SC = 'SC',
     ST = 'ST',
+    PWD = 'PWD',
   }
   export interface IFieldApproval {
     approvalRequired: boolean

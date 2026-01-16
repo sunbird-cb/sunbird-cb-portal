@@ -7,7 +7,7 @@
 <mat-horizontal-stepper (selectionChange)="searchUsers()"
   class="mx-auto sm:padding-remove md:mt-4 md:p-4 md:w-11/12 sm:w-full" linear #stepper>
   <mat-step [completed]="checkContentSelection()">
-    <ng-template class="mat-subheading-2 click-disabled" matStepLabel i18n>
+    <ng-template class="mat-subheading-2 click-disabled" matStepLabel >
       <div *ngIf="screenSizeIsLtMedium">
         <div>
           Select
@@ -23,7 +23,7 @@
     <main>
       <section class="flex">
         <div class="flex-1 min-w-0 ">
-          <h2 *ngIf="!screenSizeIsLtMedium" class="mat-subheading-2 mx-2 md:mx-4" i18n>Select contents to assign to
+          <h2 *ngIf="!screenSizeIsLtMedium" class="mat-subheading-2 mx-2 md:mx-4" >Select contents to assign to
             users:</h2>
           <div class="mb-8">
             <ws-widget-picker-content [content]="'resource'" [searchableContentTypes]="['Course']" [removeSubset]="true"
@@ -38,7 +38,7 @@
         <div class="flex-1 min-w-0  mb-8">
           <div class="flex flex-row-reverse">
             <button mat-raised-button class="margin-left-s" (click)="searchUsers()" matStepperNext color="primary"
-              type="button" i18n>
+              type="button" >
               Next
             </button>
           </div>
@@ -47,7 +47,7 @@
     </main>
   </mat-step>
   <mat-step>
-    <ng-template class="mat-subheading-2 click-disabled" matStepLabel i18n>
+    <ng-template class="mat-subheading-2 click-disabled" matStepLabel >
       <div *ngIf="screenSizeIsLtMedium">
         <div>
           Select
@@ -63,7 +63,7 @@
     <div>
       <div class="flex">
         <div class="flex-1 min-w-0 ">
-          <h2 *ngIf="!screenSizeIsLtMedium" class="mat-subheading-2 mx-2 md:mx-4" i18n>
+          <h2 *ngIf="!screenSizeIsLtMedium" class="mat-subheading-2 mx-2 md:mx-4" >
             Select users to assign contents to:
           </h2>
         </div>
@@ -74,7 +74,7 @@
         <button (click)="handleSearchQuery()" mat-icon-button matSuffix>
           <mat-icon>search</mat-icon>
         </button>
-        <mat-label i18n>Search users</mat-label>
+        <mat-label >Search users</mat-label>
         <input matInput (keyup.enter)="handleSearchQuery()" [(ngModel)]="query" autocomplete="off"
           class="resize-none" />
       </mat-form-field>
@@ -150,19 +150,19 @@
               </button>
               <mat-radio-group (change)="sortBy($event.value)">
                 <button mat-menu-item>
-                  <mat-radio-button i18n [checked]="searchReqBody?.sort[0]?.hasOwnProperty('full_name')"
+                  <mat-radio-button [checked]="searchReqBody?.sort[0]?.hasOwnProperty('full_name')"
                     value="full_name">
                     Name
                   </mat-radio-button>
                 </button>
                 <button mat-menu-item>
-                  <mat-radio-button i18n [checked]="searchReqBody?.sort[0]?.hasOwnProperty('dealer_code')"
+                  <mat-radio-button [checked]="searchReqBody?.sort[0]?.hasOwnProperty('dealer_code')"
                     value="dealer_code">
                     Dealer Code
                   </mat-radio-button>
                 </button>
                 <button mat-menu-item>
-                  <mat-radio-button i18n [checked]="searchReqBody?.sort[0]?.hasOwnProperty('dealer_name')"
+                  <mat-radio-button [checked]="searchReqBody?.sort[0]?.hasOwnProperty('dealer_name')"
                     value="dealer_name">
                     Dealer Name
                   </mat-radio-button>
@@ -248,7 +248,7 @@
         <div *ngIf="fetchUserStatus==='error' || fetchUserStatus==='none' ">
           <div class="create-goal-fab width-expand text-center width-1-1">
             <div class="page-container mx-2 md:mx-4">
-              <h2 i18n class="mat-subheading-2 mx-2 md:mx-4">No users fetched!</h2>
+              <h2 class="mat-subheading-2 mx-2 md:mx-4">No users fetched!</h2>
             </div>
           </div>
         </div>
@@ -266,7 +266,7 @@
     <section class="flex">
       <div class="flex w-full content-space p-2">
         <div class="flex width-1-2 flex-row items-center">
-          <button mat-raised-button class="margin-left-s" matStepperPrevious color="primary" type="button" i18n>
+          <button mat-raised-button class="margin-left-s" matStepperPrevious color="primary" type="button" >
             Back
           </button>
         </div>

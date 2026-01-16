@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { BtnSettingsService } from './btn-settings.service'
@@ -21,8 +21,8 @@ export class BtnSettingsComponent extends WidgetBaseComponent
   fonts: NsInstanceConfig.IFontSize[] = []
   allowedLangCode: { [langCode: string]: NsInstanceConfig.ILocalsConfig } = {}
 
-  darkModeForm = new FormControl(false)
-  isRTLForm = new FormControl(this.configSvc.isRTL)
+  darkModeForm = new UntypedFormControl(false)
+  isRTLForm = new UntypedFormControl(this.configSvc.isRTL)
   activeThemeClass = ''
   activeFontClass = ''
   // Subscriptions

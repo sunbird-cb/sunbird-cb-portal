@@ -1,5 +1,5 @@
 <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles">
-  <ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title:'Mobile Apps',url:'none'}] }">
+  <ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title:'Mobile apps',url:'none'}] }">
   </ws-widget-btn-page-back>
   <!-- <span class="margin-left-xs text-truncate">
     <span i18n="page title: mobile apps" class="margin-left-xs">Mobile Apps</span>
@@ -13,11 +13,11 @@
       </ng-template>
       <ng-container *ngIf="mobileLinks?.appName && mobileLinks?.nameProvidedByClient">
         <h3 class="text-center margin-top-m">
-          <span i18n>Download the app</span>
+          <span >Download the app</span>
           <span> {{ mobileLinks?.appName }} </span>
-          <span i18n> to access </span>
+          <span > to access </span>
           <span> {{ mobileLinks?.nameProvidedByClient }} </span>
-          <span i18n> from your mobile device</span>
+          <span > from your mobile device</span>
         </h3>
       </ng-container>
       <ng-container *ngIf="mobileLinks?.appsAndroid || mobileLinks?.appsAndroidMirror">
@@ -52,18 +52,18 @@
             <div class="flex justify-around">
               <div *ngIf="mobileLinks?.androidQR">
                 <img i18n-alt alt="android qr code" class="mobile-qr-image" [src]="mobileLinks?.androidQR" />
-                <h3 i18n class="ws-mat-primary-text">Playstore</h3>
+                <h3 class="ws-mat-primary-text">Playstore</h3>
               </div>
               <div *ngIf="mobileLinks?.androidMirrorQR">
                 <img *ngIf="mobileLinks?.androidMirrorQR" i18n-alt alt="android qr code" class="mobile-qr-image"
                   [src]="mobileLinks?.androidMirrorQR" />
-                <h3 i18n class="ws-mat-primary-text">Server</h3>
+                <h3 class="ws-mat-primary-text">Server</h3>
               </div>
             </div>
           </ng-container>
         </div>
         <h3 class="margin-top-m text-center" *ngIf="mobilePlatformCode?.length">
-          <ng-container i18n>When prompted for code, please enter</ng-container>
+          <ng-container >When prompted for code, please enter</ng-container>
           <span class="ws-mat-primary-text"> "{{ mobilePlatformCode }}" </span>
         </h3>
         <h3 class="margin-top-m text-center" *ngIf="mobileLinks?.instructions">
@@ -76,7 +76,7 @@
           </p>
         </div>
       </ng-container>
-      <h2 class="text-center margin-top-s" *ngIf="!mobileLinks?.appsAndroid && !mobileLinks?.appsAndroidMirror" i18n>
+      <h2 class="text-center margin-top-s" *ngIf="!mobileLinks?.appsAndroid && !mobileLinks?.appsAndroidMirror" >
         Coming Soon...
       </h2>
     </mat-tab>
@@ -86,11 +86,11 @@
       </ng-template>
       <ng-container *ngIf="mobileLinks?.appName && mobileLinks?.nameProvidedByClient">
         <h3 class="text-center margin-top-m">
-          <span i18n>Download the app</span>
+          <span >Download the app</span>
           <span> {{ mobileLinks?.appName }} </span>
-          <span i18n> to access </span>
+          <span > to access </span>
           <span> {{ mobileLinks?.nameProvidedByClient }} </span>
-          <span i18n> from your mobile device</span>
+          <span > from your mobile device</span>
         </h3>
       </ng-container>
       <ng-container *ngIf="mobileLinks?.appsIos">
@@ -119,19 +119,19 @@
           </ng-container>
         </div>
         <h3 class="margin-top-m text-center" *ngIf="mobilePlatformCode">
-          <ng-container i18n>When prompted for code, please enter</ng-container>
+          <ng-container >When prompted for code, please enter</ng-container>
           <span class="ws-mat-primary-text"> "{{ mobilePlatformCode }}" </span>
         </h3>
         <h3 class="margin-top-m text-center" *ngIf="mobileLinks?.instructions">
           {{ mobileLinks?.instructions }}
         </h3>
       </ng-container>
-      <h2 class="text-center margin-top-s" *ngIf="!mobileLinks?.appsAndroid && !mobileLinks?.appsAndroidMirror" i18n>
+      <h2 class="text-center margin-top-s" *ngIf="!mobileLinks?.appsAndroid && !mobileLinks?.appsAndroidMirror" >
         Coming Soon...
       </h2>
     </mat-tab>
   </mat-tab-group>
-  <h2 class="mat-h2 app-unavailable" *ngIf="!mobileLinks" i18n>
+  <h2 class="mat-h2 app-unavailable" *ngIf="!mobileLinks" >
     Mobile Apps are not yet available for the Web-App
   </h2>
 </mat-card>

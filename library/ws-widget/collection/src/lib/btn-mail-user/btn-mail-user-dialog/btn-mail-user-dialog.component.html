@@ -1,6 +1,6 @@
 <div class="main-container sm:px-5 py-1">
   <div class="flex items-end mb-3">
-    <span mat-dialog-title class="mat-subheading-1 width-expand" i18n>
+    <span mat-dialog-title class="mat-subheading-1 width-expand" >
       {{ data.content.name }}
     </span>
     <button mat-dialog-close mat-icon-button class="cursor-pointer self-end closeBtn " (click)="close()">
@@ -19,9 +19,9 @@
     <mat-form-field appearance="outline" class="w-full margin-top-xs">
       <mat-label>{{ 'Elaborate your query' }}</mat-label>
       <textarea matInput i18n-placeholder placeholder="I need your help in 'Elaborate your query'" #mailBody rows="5"
-        [matTextareaAutosize]="'enabled'" [matAutosizeMinRows]="10"></textarea>
+        [cdkTextareaAutosize]="'enabled'" [cdkAutosizeMinRows]="10"></textarea>
     </mat-form-field>
-    <div class="mat-caption" *ngIf="sendStatus === 'INVALID_ID'" i18n>
+    <div class="mat-caption" *ngIf="sendStatus === 'INVALID_ID'" >
       Invalid Ids. Failed to send mail.
     </div>
     <div class="text-center" *ngIf="mailSendInProgress">
@@ -31,11 +31,11 @@
   <div class="actions-container flex-row-reverse">
     <button class="margin-left-s fw-normal" mat-flat-button [disabled]="mailSendInProgress || !mailBody.value"
       [color]="'accent'" (click)="send(mailBody.value, successToast.value, errorToast.value, invalidIdToast.value)"
-      i18n-aria-label aria-label="Send Your Query" i18n>
+      i18n-aria-label aria-label="Send Your Query" >
       Send Mail
     </button>
     <button mat-flat-button class="f-normal" [color]="'primary'" i18n-aria-label (click)="close()" aria-label="Cancel"
-      i18n>
+     >
       Cancel
     </button>
   </div>

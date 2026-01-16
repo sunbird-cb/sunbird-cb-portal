@@ -1,0 +1,23 @@
+<div class="navigation-card flex flex-row md:flex-col justify-between md:justify-start md:gap-1  md:p-3">
+  <ng-container *ngFor="let item of navigationItems">
+    <a [routerLink]="item?.navigationUrl" [queryParams]="item?.queryParams" routerLinkActive="active"
+      class="navigation-item flex items-center justify-between gap-2 md:pl-2 md:pr-3 px-1 rounded hover:bg-gray-200">
+      <div class="flex flex-col md:flex-row items-center gap-2">
+        <ng-container *ngIf="item?.icon; else routImg">
+          <mat-icon class="route-icons">
+            {{ item?.icon }}
+          </mat-icon>
+        </ng-container>
+        <ng-template #routImg>
+          <div class="icons-div flex items-center">
+            <img class="route-icons" [src]="item?.imageUrl" alt="route icon">
+          </div>
+        </ng-template>
+        {{ item?.name | translate }}
+      </div>
+      <ng-container *ngIf="item?.showUpdate">
+        <div class="redDaught"></div>
+      </ng-container>
+    </a>
+  </ng-container>
+</div>

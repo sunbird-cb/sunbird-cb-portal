@@ -1,7 +1,7 @@
 <h1 mat-dialog-title class="text-center">
-  <span i18n>Feedback</span>
+  <span >Feedback</span>
   <ng-container *ngIf="data?.name">
-    <ng-container i18n>&nbsp;for&nbsp;</ng-container>
+    <ng-container >&nbsp;for&nbsp;</ng-container>
     <span>"{{ data.name | slice: 0:30 }}"</span>
   </ng-container>
 </h1>
@@ -25,7 +25,7 @@
           [max]="5"
           [pattern]="numbersPattern"
         />
-        <mat-error [hidden]="rating.valid && rating.touched" i18n>
+        <mat-error [hidden]="rating.valid && rating.touched" >
           Rating is required
         </mat-error>
       </mat-form-field>
@@ -50,8 +50,8 @@
         [(ngModel)]="feedbackRequest.feedback[0].answer"
         matInput
         i18n-placeholder
-        matTextareaAutosize
-        matAutosizeMinRows="4"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="4"
         placeholder="Leave a comment"
       ></textarea>
     </mat-form-field>
@@ -63,8 +63,8 @@
       mat-raised-button
       [color]="'primary'"
     >
-      <ng-container *ngIf="submitInProgress" i18n>Please wait...</ng-container>
-      <ng-container *ngIf="!submitInProgress" i18n>Submit Feedback</ng-container>
+      <ng-container *ngIf="submitInProgress" >Please wait...</ng-container>
+      <ng-container *ngIf="!submitInProgress" >Submit Feedback</ng-container>
     </button>
     <button mat-button i18n="reset feedback form" type="reset">Reset</button>
   </form>

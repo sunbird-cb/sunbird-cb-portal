@@ -54,7 +54,7 @@
       </mat-form-field>
       <div *ngIf="selectedOption">
         <div class="margin-top-xs text-justify" [innerHTML]="selectedOption?.concept"></div>
-        <ace-editor class="code-container margin-top-s" (textChanged)="raiseInputChange()" [(text)]="selectedOption.query" theme="eclipse" [mode]="'sql'" [options]="options"></ace-editor>
+        <!-- <ace-editor class="code-container margin-top-s" (textChanged)="raiseInputChange()" [(text)]="selectedOption.query" theme="eclipse" [mode]="'sql'" [options]="options"></ace-editor> -->
         <div class="margin-top-s">
           <button
             mat-raised-button
@@ -100,15 +100,15 @@
     *ngIf="contentData?.telltext && executedResult && showTelltext"
     [innerHTML]="contentData?.telltext"
   ></div>
-  <div class="p-2 pl-0 text-justify" *ngIf="!selectedOption && contentData?.dropdown" i18n>
+  <div class="p-2 pl-0 text-justify" *ngIf="!selectedOption && contentData?.dropdown" >
     Use the dropdown to see a concept with a sample query and query output.
   </div>
-  <div class="p-2 pl-0 text-justify" *ngIf="!contentData?.dropdown && !executedResult" i18n>
+  <div class="p-2 pl-0 text-justify" *ngIf="!contentData?.dropdown && !executedResult" >
     Click on Run button to see the result
   </div>
   <ng-template #noDropdown>
     <div>
-      <ace-editor class="code-container margin-top-s" (textChanged)="raiseInputChange()" [(text)]="contentData.query" theme="eclipse" [mode]="'sql'" [options]="options"></ace-editor>
+      <!-- <ace-editor class="code-container margin-top-s" (textChanged)="raiseInputChange()" [(text)]="contentData.query" theme="eclipse" [mode]="'sql'" [options]="options"></ace-editor> -->
       <div class="margin-top-s">
         <button
           mat-raised-button

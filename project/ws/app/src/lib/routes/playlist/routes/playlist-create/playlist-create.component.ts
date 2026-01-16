@@ -1,9 +1,9 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
-import { TFetchStatus, NsPage, ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils'
+import { TFetchStatus, NsPage, ConfigurationsService, EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { NsPlaylist, IPickerContentData, BtnPlaylistService, NsContent, NsAutoComplete } from '@sunbird-cb/collection'
 import {
   PLAYLIST_TITLE_MIN_LENGTH, PLAYLIST_TITLE_MAX_LENGTH,
@@ -21,7 +21,7 @@ export class PlaylistCreateComponent implements OnInit {
   @ViewChild('createPlaylistSuccessMessage', { static: true }) createPlaylistSuccessMessage!: ElementRef<any>
   @ViewChild('playlistForm', { static: true }) playlistForm!: ElementRef<any>
 
-  createPlaylistForm: FormGroup
+  createPlaylistForm: UntypedFormGroup
   createPlaylistStatus: TFetchStatus = 'none'
   showContentPlayListError = false
 
@@ -35,7 +35,7 @@ export class PlaylistCreateComponent implements OnInit {
   isShareEnabled = false
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
   constructor(
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     private router: Router,
     private events: EventService,
     private snackBar: MatSnackBar,

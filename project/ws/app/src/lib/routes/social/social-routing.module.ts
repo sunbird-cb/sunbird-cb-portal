@@ -11,7 +11,7 @@ import { QnaEditComponent } from './routes/qna/qna-edit/components/qna-edit/qna-
 import { QnaHomeComponent } from './routes/qna/qna-home/components/qna-home/qna-home.component'
 import { QnaViewComponent } from './routes/qna/qna-view/components/qna-view/qna-view.component'
 // import { ProfileResolverService } from './resolvers/profile-resolver.service'
-import { ConfigurationsService } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 const routes: Routes = [
   {

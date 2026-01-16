@@ -3,13 +3,14 @@ import { throwError, Subject } from 'rxjs'
 import { takeWhile, tap, switchMap } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TSendStatus } from '@sunbird-cb/utils'
+import { TSendStatus } from '@sunbird-cb/utils-v2'
 
 import { ICertificationMeta, TCertificationRequestType } from '../../models/certification.model'
 import { RequestCancelDialogComponent } from '../request-cancel-dialog/request-cancel-dialog.component'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { CertificationApiService } from '../../apis/certification-api.service'
 import { SnackbarComponent } from '../snackbar/snackbar.component'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-toc-certification-budget-card',

@@ -19,8 +19,8 @@
               stop
             </mat-icon>
           </div>
-          <span class="m-1 cursor-pointer" i18n *ngIf="!isAudioPlaying" (click)="audioControl( aud.srclang)">Play</span>
-          <span class="m-1 cursor-pointer" i18n *ngIf="isAudioPlaying" (click)="audioControl(aud.srclang)">Stop</span>
+          <span class="m-1 cursor-pointer" *ngIf="!isAudioPlaying" (click)="audioControl( aud.srclang)">Play</span>
+          <span class="m-1 cursor-pointer" *ngIf="isAudioPlaying" (click)="audioControl(aud.srclang)">Stop</span>
           <!-- <span class="" *ngIf="aud.duration">{{aud.duration}}</span> -->
         </div>
       </div>

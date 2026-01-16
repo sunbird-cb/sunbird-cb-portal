@@ -9,7 +9,7 @@
           </span>
           <div class="mat-caption">
             {{ reply?.dtLastModified | date }}
-            <ng-container i18n> at </ng-container>
+            <ng-container > at </ng-container>
             <ng-container>{{ reply?.dtLastModified | date: 'shortTime' }}</ng-container>
           </div>
         </div>
@@ -25,8 +25,8 @@
   </div>
   <mat-menu #editMenu="matMenu">
     <ng-template matMenuContent>
-      <button type="button" (click)="editMode = true" mat-menu-item i18n>Edit</button>
-      <button type="button" (click)="deleteReply(deleteFailMsg.value)" mat-menu-item i18n>
+      <button type="button" (click)="editMode = true" mat-menu-item >Edit</button>
+      <button type="button" (click)="deleteReply(deleteFailMsg.value)" mat-menu-item >
         Delete
       </button>
     </ng-template>

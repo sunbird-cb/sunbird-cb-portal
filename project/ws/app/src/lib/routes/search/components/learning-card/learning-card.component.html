@@ -52,9 +52,9 @@
           <div *ngIf="content.trainingLHubCount" class="mat-body-2">
             <span>{{ content.trainingLHubCount }}</span>
             <span>
-              <ng-container *ngIf="content?.trainingLHubCount > 1" i18n>
+              <ng-container *ngIf="content?.trainingLHubCount > 1" >
                 trainings available</ng-container>
-              <ng-container *ngIf="content?.trainingLHubCount === 1" i18n>
+              <ng-container *ngIf="content?.trainingLHubCount === 1" >
                 training available</ng-container>
             </span>
           </div>

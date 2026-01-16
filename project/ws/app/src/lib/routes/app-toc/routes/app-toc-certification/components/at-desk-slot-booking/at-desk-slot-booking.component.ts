@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core'
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Observable, of, timer, throwError, noop, Subscription } from 'rxjs'
 import { finalize, startWith, map, switchMap, catchError } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils'
+import { TFetchStatus, TSendStatus } from '@sunbird-cb/utils-v2'
 
 import {
   ICertificationMeta,
@@ -42,7 +42,7 @@ export class AtDeskSlotBookingComponent implements OnInit, OnDestroy {
   locations!: IAtDeskLocation[]
   filteredCountries$!: Observable<ICertificationCountry[]>
   countriesChipList: ICertificationCountry[]
-  countryCtrl: FormControl = new FormControl()
+  countryCtrl: UntypedFormControl = new UntypedFormControl()
   dateSlotMap: Map<string, IAtDeskSlotItem> = new Map()
   slotList: { dateStr: string; dateObj: ICertificationDate }[]
   selectedDateSlotItem!: IAtDeskSlotItem
@@ -54,7 +54,7 @@ export class AtDeskSlotBookingComponent implements OnInit, OnDestroy {
   certificationMetaSub?: Subscription
   contentMetaSub?: Subscription
 
-  atDeskForm: FormGroup
+  atDeskForm: UntypedFormGroup
 
   constructor(
     private route: ActivatedRoute,
@@ -63,14 +63,14 @@ export class AtDeskSlotBookingComponent implements OnInit, OnDestroy {
     private certificationApi: CertificationApiService,
     private certificationSvc: CertificationService,
   ) {
-    this.atDeskForm = new FormGroup({
-      date: new FormControl(null, [Validators.required]),
-      country: new FormControl(null, [Validators.required]),
-      location: new FormControl(null, [Validators.required]),
-      slot: new FormControl(null, [Validators.required]),
-      userContact: new FormControl(null, [Validators.required]),
-      proctorContact: new FormControl(null, [Validators.required]),
-      proctorEmail: new FormControl('', [], [this.validateProctorEmail.bind(this)]),
+    this.atDeskForm = new UntypedFormGroup({
+      date: new UntypedFormControl(null, [Validators.required]),
+      country: new UntypedFormControl(null, [Validators.required]),
+      location: new UntypedFormControl(null, [Validators.required]),
+      slot: new UntypedFormControl(null, [Validators.required]),
+      userContact: new UntypedFormControl(null, [Validators.required]),
+      proctorContact: new UntypedFormControl(null, [Validators.required]),
+      proctorEmail: new UntypedFormControl('', [], [this.validateProctorEmail.bind(this)]),
     })
 
     this.managerFetchStatus = 'none'

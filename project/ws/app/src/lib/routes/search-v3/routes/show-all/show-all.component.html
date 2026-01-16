@@ -1,0 +1,70 @@
+<div class="learnsearch margin-top-l margin-bottom-l">
+  <div class="container-balanced">
+    <div class="result-meta flex items-center justify-between flex-wrap mb-4">
+       <div>
+         <div class="explore-all-content">
+                            <span >{{contentName ? contentName: 'cardshublist.exploreAllContent' | translate}}</span>
+                        </div>
+      <div>
+        <p class="contents-title-top text-dark mb-0">
+          <span *ngIf="courses.length === 1"
+            >1 {{ 'learnsearch.content' | translate }}</span
+          >
+          <span *ngIf="courses.length > 1"
+            >{{ 'learnsearch.contents' | translate: { count: courses?.length } }}</span
+          >
+        </p>
+      </div>
+       </div>
+
+      <div class="sort-search ml-auto" *ngIf="customOptions?.length > 0">
+        <ws-app-search-sort-input
+          [category]="'courses'"
+          [isExploreContentTab]="false"
+          [customOptions]="customOptions"
+          (searchSorter)="onChangeSortSearch($event)"
+        ></ws-app-search-sort-input>
+      </div>
+    </div>
+
+    <div *ngIf="loading">
+      <ws-app-skeleton-loader-content
+        *ngFor="let i of [1,2,3,4]"
+      ></ws-app-skeleton-loader-content>
+    </div>
+
+    <div *ngIf="!loading && pagedCourses?.length === 0" class="text-center">
+      <img
+        src="/assets/icons/no-data.svg"
+        wsUtilsImageResponsive
+        alt="No results"
+        class="margin-top-l margin-bottom-s"
+      />
+      <div class="no-data-text font-bold text-sm my-4">No results found.</div>
+    </div>
+    <ng-container *ngIf="loading && courses.length > 0">
+      <ng-container *ngFor="let item of [1,2,3,4]">
+        <div class="mt-2">
+          <ws-app-skeleton-loader-content></ws-app-skeleton-loader-content>
+        </div>
+      </ng-container>
+    </ng-container>
+    <div *ngIf="!loading && courses.length > 0" class="search-content-card">
+      <ng-container *ngFor="let course of pagedCourses; let index = index">
+        <ws-app-course-content-card
+          [content]="course"
+        ></ws-app-course-content-card>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="courses.length > 0">
+      <ws-app-pagination
+        [defaultPaginationSize]="initialPaginationSize"
+        [defaultPaginationSizeOptions]="initialPaginationSizeOptions"
+        [totalItemsCount]="courses?.length"
+        [currentPage]="1"
+        (pageChange)="onPageChange($event)"
+      ></ws-app-pagination>
+    </ng-container>
+  </div>
+</div>

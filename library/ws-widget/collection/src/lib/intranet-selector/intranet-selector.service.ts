@@ -1,4 +1,4 @@
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 

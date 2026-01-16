@@ -1,0 +1,104 @@
+@import 'ws-mixins';
+@import 'ws-common';
+
+.container-balanced {
+    @extend %page-center;
+  }
+  
+  .container {
+      max-width: 1200px;
+  }
+  .infra-background {
+    background: #1B4CA1;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+  
+  .banner-container{
+      align-items: center;
+      background: #eee;
+      padding: 16px;
+      gap: 2.5rem;
+      justify-content: center;
+  }
+  
+  .logo-box {
+      vertical-align: middle;
+      max-width: 250px;
+      background: #f5fdf1;
+      padding: 8px;
+      border: 1px solid rgba(0,0,0,0.5);
+  }
+  .slider-box {
+    // max-width: 30%;
+}
+
+.slider-background {
+    height: 160px;
+}
+
+.slider-background1 {
+    height: 195px;
+}
+
+.slider-background-2 {
+    position: relative;
+}
+
+.info-slider{
+    position: absolute; 
+    top: -180px; 
+    padding: 25px;
+}  
+
+::ng-deep .mat-form-search {
+  
+    .mat-form-field-infix {
+      border-top: 0.2em solid transparent !important;
+    }
+  
+    .mat-form-field-wrapper {
+      padding-bottom: 0
+    }
+  
+    .mat-select-panel .mat-optgroup-label,
+    .mat-select-panel .mat-option {
+      font-size: inherit;
+      line-height: 3em;
+      height: 4em;
+      padding-top: 8px;
+    }
+  
+    // .mat-select-arrow {
+    //   margin-top: 12px;
+    // }
+  }
+
+  .comp-back-img {
+    position: absolute;
+    filter: brightness(100);
+    left: 0;
+    right: 0;
+    top: 178px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
+  .mob-comp-back-img {
+    background-image: url("/assets/icons/microsite/competency.svg");
+    filter: brightness(100);
+  }
+
+  .zindex {
+    z-index: 99
+  }
+
+  .ref-links {
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    color: #F3962F !important;
+    position: relative;
+    z-index: 999999;
+  }

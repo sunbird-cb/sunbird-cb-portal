@@ -1,0 +1,61 @@
+<div class="w-full flex flex-col gap-4 network-connections">
+  <div class="header">Connections</div>
+
+  <mat-tab-group class="w-full connections-tab-group" [selectedIndex]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)">
+    <ng-container *ngFor="let tabDetails of tabDetailsList; let i = index">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="flex tabLable justify-center items-center">
+            {{tabDetails?.lable | translate}}
+            <ng-container *ngIf="tabDetails?.recordsCount > 0">
+              <ng-container *ngIf="tabDetails?.key === 'Received'; else notSelectedCount">
+                <div class="selected-count">{{tabDetails?.recordsCount}}</div>
+              </ng-container>
+              <ng-template #notSelectedCount>
+                ({{tabDetails?.recordsCount}})
+              </ng-template>
+            </ng-container>
+          </div>
+        </ng-template>
+        <ng-template matTabContent>
+          <div class="connections-list">
+            <ng-container *ngIf="!connectionsLoading; else showConnectionsSkeleton">
+              <ng-container *ngIf="connectionsList?.length > 0; else noConnectionsFound">
+                <ng-container *ngFor="let connection of connectionsList; let i = index">
+                  <ws-app-connections-card [otherUserProfile]="connection" [currentTab]="tabDetails?.key"
+                    [showBorder]="i < connectionsList?.length -1" (getCountOf)="setSatesListGet($event)">
+                  </ws-app-connections-card>
+                </ng-container>
+              </ng-container>
+              <ng-template #noConnectionsFound>
+                <div class="w-full flex flex-col gap-4 justify-center items-center no-records-found">
+                  <img class="emptyPageIcon" src="./assets/icons/no-data.svg" alt="empty">
+                  <div class="no-data-text">
+                    {{noDataMessage | translate}}
+                  </div>
+                </div>
+              </ng-template>
+            </ng-container>
+            <ng-template #showConnectionsSkeleton>
+              <div class="w-full flex flex-col gap-2">
+                <ng-container *ngFor="let i of [1,2,3,4,5,6]">
+                  <ws-widget-skeleton-loader [width]="'100%'" [height]="'60px'"
+                    [bindingClass]="'flex rounded margin-bottom-xs'">
+                  </ws-widget-skeleton-loader>
+                </ng-container>
+              </div>
+            </ng-template>
+          </div>
+          <ng-container *ngIf="totalItemsCount > defaultPaginationSize">
+            <div>
+              <ws-widget-pagination [defaultPaginationSize]="paginationSize"
+                [defaultPaginationSizeOptions]="paginationSizeOptions" [totalItemsCount]="totalItemsCount"
+                [pageMessage]="'View designations per page'"
+                [numberOfPaginationVisable]="2" (pageChange)="onPageChange($event)"></ws-widget-pagination>
+            </div>
+          </ng-container>
+        </ng-template>
+      </mat-tab>
+    </ng-container>
+  </mat-tab-group>
+</div>

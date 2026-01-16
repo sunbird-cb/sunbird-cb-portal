@@ -1,0 +1,299 @@
+::ng-deep.course-survey .main-container {
+    width: auto !important;
+    overflow-y: auto !important;
+    max-height: auto !important;
+}
+
+::ng-deep.course-survey .main-lib-body {
+    // margin: 10px;
+
+}
+
+.high-zindex {
+    z-index: 9999;
+}
+
+.auto-list {
+    display: flex;
+    border: 1px solid #e3dede;
+    padding: 15px 0;
+    border-radius: 7px;
+    max-height: 200px;
+    overflow: auto;
+    position: absolute;
+    background: white;
+    z-index: 99;
+    width: 100%;
+
+    .item {
+        padding: 5px 15px;
+    }
+    .item:hover {
+        background-color: #f3f3f3;
+        cursor: pointer;
+    }
+    .item-active {
+        background-color: #1b4ca1!important;
+        color: white!important
+    }
+}
+
+.auto-language-list {
+    display: flex;
+    border: 1px solid #e3dede;
+    padding: 15px 0;
+    border-radius: 7px;
+    max-height: 200px;
+    overflow: auto;
+    position: absolute;
+    background: white;
+    z-index: 99;
+    width: 100%;
+    .language-item {
+        padding: 5px 15px;
+    }
+    .language-item:hover {
+        background-color: #f3f3f3;
+        cursor: pointer;
+    }
+    .language-item-active {
+        background-color: #1b4ca1!important;
+        color: white!important
+    }
+}
+
+::ng-deep.mat-calendar-body-active {
+    background: #1b4ca1!important;
+    border-radius: 100%!important;
+}
+
+::ng-deep.course-survey .lib-container{
+    height: 100% !important;
+    @media screen and (max-width: 430px) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 1rem !important;
+      }
+}
+
+.disagnation-caret {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.mother-toungue-caret {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+::ng-deep.userDetailsForm .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5rem 0 0.8rem 0;
+}
+input[disabled] + mat-icon.disagnation-caret {
+    opacity: 0.5;
+}
+input[disabled] + mat-icon.mother-toungue-caret {
+    opacity: 0.5;
+}
+
+::ng-deep.course-survey .lib-container-2 {
+    height: auto;
+    min-height: unset !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 2rem !important;
+    @media screen and (max-width: 430px) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+
+}
+
+.profile-form-field .mat-select {
+    border: none;
+}
+
+.customForm {
+    padding-right: 0 !important;
+    padding-bottom: 1rem !important;
+    padding: 1rem 3rem;
+}
+.cadreControl-name{
+    background: #c3c3c3;
+    padding: 10px;
+}
+
+.country-code {
+    margin-top: 5px;
+    text-align: center;
+    width: 50px;
+    height: 46px;
+    border: 1px solid #d6d5d5;
+    border-radius: 5px;
+}
+
+.get-otp {
+    color: #1B4CA1;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+}
+.enter-otp {
+    align-items: center;
+    justify-content: space-between;
+}
+.custom-size {
+    width: 96%;
+}
+.resend-otp {
+    color: #1b4ca1;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.verified-check{
+    position: absolute;
+    right: 3px;
+    color: #5fa800;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.save-button:disabled {
+    opacity: 0.6!important;
+}
+
+.loader {
+    position: absolute;
+    top: 0pc;
+    left: 0px;
+    z-index: 1000;
+    height: 100vh;
+    width: 100vw;
+    background-color: #80808045;
+  }
+
+  .mat-error {
+    margin: -10px 0px 5px;
+  }
+
+:host ::ng-deep.userDetailsForm .mat-form-field-wrapper {
+    padding-bottom: 8px!important
+}
+
+
+
+
+
+// Main container styling
+.custom-select-container {
+    width: 100%;
+  }
+   
+  // Fixed height select styling
+  .fixed-height-select {
+    width: 100%;
+    // Make the form field exactly 45px high
+    ::ng-deep .mat-form-field-flex {
+      height: 48px !important;
+      min-height: 45px !important;
+      align-items: center;
+    }
+    ::ng-deep .mat-form-field-infix {
+      padding: 0 !important;
+      border-top: 0 !important;
+      height: 45px !important;
+      display: flex;
+      align-items: center;
+    }
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+    // Fix arrow alignment
+    ::ng-deep .mat-select-arrow-wrapper {
+      transform: translateY(0) !important;
+    }
+    // Fix label positioning
+    ::ng-deep .mat-form-field-label-wrapper {
+      top: -1.1em;
+    }
+  }
+   
+  // Styles for the search panel
+  ::ng-deep .search-panel {
+    // Add max-height to enable scrolling for many options
+    max-height: 350px;
+    // Search container styling
+    .sticky-search-container {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: white;
+      padding: 8px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+    // Search input wrapper
+    .search-input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    // Search input styling
+    .search-input {
+      width: 100%;
+      height: 35px;
+      padding: 0 30px 0 12px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+  &:focus {
+        outline: none;
+        border-color: #F3962F;
+        box-shadow: 0 0 0 1px rgba(243, 150, 47, 0.2);
+      }
+    }
+    // Clear button styling
+    .clear-button {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(0, 0, 0, 0.5);
+      font-size: 14px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  &:hover {
+        color: rgba(0, 0, 0, 0.8);
+      }
+    }
+    // Style for the no results message
+    .mat-option.mat-option-disabled {
+      color: rgba(0, 0, 0, 0.38);
+      font-style: italic;
+    }
+  }
+   
+  // MDC-specific overrides (Angular Material 15+)
+  ::ng-deep .mat-mdc-form-field.fixed-height-select {
+    .mat-mdc-text-field-wrapper {
+      height: 45px !important;
+    }
+    .mat-mdc-form-field-flex {
+      min-height: 45px !important;
+      height: 45px !important;
+    }
+    .mat-mdc-form-field-infix {
+      min-height: 45px !important;
+      height: 45px !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }

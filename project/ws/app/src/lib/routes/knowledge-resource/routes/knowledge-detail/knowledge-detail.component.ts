@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core'
 import { NSKnowledgeResource } from '../../models/knowledge-resource.models'
 import { ActivatedRoute } from '@angular/router'
 import { KnowledgeResourceService } from '../../services/knowledge-resource.service'
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+import { environment } from 'src/environments/environment'
 
 // tslint:disable
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
 // tslint:enable
 
 @Component({
@@ -15,6 +17,7 @@ import _ from 'lodash'
   // tslint:disable-next-line
   host: { class: 'flex flex-1 overflow-hidden' },
 })
+
 export class KnowledgeDetailComponent implements OnInit {
   resource!: any
   type = 'KNOWLEDGERESOURCE'
@@ -23,11 +26,13 @@ export class KnowledgeDetailComponent implements OnInit {
   fileType!: string
   acc: any
   obj: any
+  environment: any
 
   constructor(
     private route: ActivatedRoute,
     private kwResources: KnowledgeResourceService,
-    private sanitizer: DomSanitizer
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
     ) {
       // this.resource = _.get(this.route.snapshot, 'data.resource.data.responseData') || []
    }
@@ -38,6 +43,7 @@ export class KnowledgeDetailComponent implements OnInit {
       this.type = _.get(params, 'type')
 
     })
+    this.environment = environment
     this.kwResources
     .getResource(this.id, this.type)
     .subscribe((reponse: NSKnowledgeResource.IResourceResponse) => {
@@ -45,6 +51,13 @@ export class KnowledgeDetailComponent implements OnInit {
         this.resource = reponse.responseData
       } else {
         this.resource = []
+      }
+    })
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
       }
     })
   }
@@ -56,13 +69,6 @@ export class KnowledgeDetailComponent implements OnInit {
         this.refresh()
       }
     })
-}
-
-getSafeUrl(url: string): SafeUrl | null {
-  if (url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url)
-  }
-  return null
 }
 
 addBookmark(resource: NSKnowledgeResource.IResourceData) {
@@ -134,6 +140,26 @@ refresh() {
     },                                        () => {
       alert('Not copied!')
     })
+  }
+
+  getUrl(url: string, name: string) {
+    const path = name.split('content/frac/')[1]
+    if (path) {
+      return `https://${this.environment.sitePath}/content-store/content/frac/${path}`
+    }
+    return url
+  }
+
+  getName(name: string) {
+    const fName = name.split('content/frac/')[1]
+    if (fName) {
+      return fName.split(/_(.*)/s)[1]
+    }
+    return name
+  }
+
+  handleNavigate(url: any): void {
+    window.open(url, '_blank')
   }
 
 }

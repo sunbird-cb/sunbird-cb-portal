@@ -1,0 +1,35 @@
+<div class="updates-card p-3 flex flex-col">
+  <div class="flex justify-between items-center">
+    <div class="flex gap-2 items-center">
+      <div class="profile-image flex">
+        <ws-widget-avatar-photo 
+          [photoUrl]="profileUpdates?.profileImage"
+          [initials]="nameInitials"
+          [name]="profileUpdates?.firstName"
+          [size]="'profile-round-m'"
+        ></ws-widget-avatar-photo>
+      </div>
+      <div class="flex flex-col ">
+        <div class="user-name">
+          {{ profileUpdates?.firstName }}
+        </div>
+        <div class="user-designation">
+          {{ profileUpdates?.designation }}
+        </div>
+      </div>
+    </div>
+    <div class="updated-time">
+      {{ profileUpdates?.updatedTime }}
+    </div>
+  </div>
+
+  <div class="description mt-2">
+    {{ profileUpdates?.description }}
+  </div>
+
+  <ng-container *ngIf="profileUpdates?.profileLink">
+    <button mat-button class="profile-link mt-2 flex items-center justify-center gap-2" (click)="openProfileLink()">
+      View Profile <mat-icon class="send-icon">send</mat-icon>
+    </button>
+  </ng-container>
+</div>

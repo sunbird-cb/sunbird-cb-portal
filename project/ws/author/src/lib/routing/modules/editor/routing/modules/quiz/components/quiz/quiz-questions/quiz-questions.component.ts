@@ -1,10 +1,10 @@
 import { DeleteDialogComponent } from '@ws/author/src/lib/modules/shared/components/delete-dialog/delete-dialog.component'
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, EventEmitter, Output, Input } from '@angular/core'
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar'
+import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar'
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout'
 import { map, mergeMap, tap, catchError } from 'rxjs/operators'
 import { forkJoin, of, Observable, Subscription } from 'rxjs'
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -38,7 +38,7 @@ import { NSApiRequest } from '@ws/author/src/lib/interface/apiRequest'
 
 import { CONTENT_BASE_WEBHOST } from '@ws/author/src/lib/constants/apiEndpoints'
 import { VIEWER_ROUTE_FROM_MIME } from '@sunbird-cb/collection'
-import { FormGroup } from '@angular/forms'
+import { UntypedFormGroup } from '@angular/forms'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'
 
@@ -599,7 +599,7 @@ export class QuizQusetionsComponent implements OnInit, OnDestroy {
             height: '450px',
             data: this.metaContentService.getOriginalMeta(this.currentId),
           })
-          dialogRef.afterClosed().subscribe((commentsForm: FormGroup) => {
+          dialogRef.afterClosed().subscribe((commentsForm: UntypedFormGroup) => {
             this.finalCall(commentsForm)
           })
         }
@@ -623,7 +623,7 @@ export class QuizQusetionsComponent implements OnInit, OnDestroy {
     )
   }
 
-  finalCall(commentsForm: FormGroup) {
+  finalCall(commentsForm: UntypedFormGroup) {
     if (commentsForm) {
       const body: NSApiRequest.IForwardBackwardActionGeneral = {
         comment: commentsForm.controls.comments.value,

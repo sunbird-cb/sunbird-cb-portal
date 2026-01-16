@@ -1,9 +1,9 @@
 import { Router } from '@angular/router'
 import { DashBoardService } from './dashboard.service'
 import { Component, OnInit } from '@angular/core'
-import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Observable } from 'rxjs'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { map, startWith } from 'rxjs/operators'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
     'Create content',
     // 'Create page',
   ]
-  createControl = new FormControl()
+  createControl = new UntypedFormControl()
   filteredOptions: Observable<string[]> = this.createControl.valueChanges.pipe(
     startWith(''),
     map(value => this.filter(value)),

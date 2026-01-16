@@ -21,6 +21,7 @@ export class NotificationService {
     comment: string,
     approved: boolean,
   ): Observable<any> {
+    const contentStatus: any = content.status
     if (!this.initService.authAdditionalConfig.allowNotification) {
       return of({})
     }
@@ -29,9 +30,9 @@ export class NotificationService {
     const nextStateOwner = this.workFlowService.getOwner(nextAction)
     const nextActionName = this.workFlowService.getActionName(nextAction)
     const nextStateOwnerName = this.workFlowService.getOwnerName(nextAction)
-    const currentOwner = this.workFlowService.getOwner(content.status)
-    const currentOwnerName = this.workFlowService.getOwnerName(content.status)
-    const currentActionName = this.workFlowService.getActionName(content.status)
+    const currentOwner = this.workFlowService.getOwner(contentStatus)
+    const currentOwnerName = this.workFlowService.getOwnerName(contentStatus)
+    const currentActionName = this.workFlowService.getActionName(contentStatus)
     // Condition if the content is moved forward
     if (approved) {
       // Removing the below code as publish mail will be trigger from backend itself
@@ -54,8 +55,8 @@ export class NotificationService {
       // }
       // Condition if the author sends the content to review
       if (
-        (workFlow.indexOf(content.status) === 0 ||
-          workFlow.indexOf(content.status) === workFlow.length - 1) &&
+        (workFlow.indexOf(contentStatus) === 0 ||
+          workFlow.indexOf(contentStatus) === workFlow.length - 1) &&
         workFlow.indexOf(nextAction) < workFlow.length - 2
       ) {
         // Condition if the next action nextStateOwner exists
@@ -79,8 +80,8 @@ export class NotificationService {
       }
       // Condition if the reviewer sends the content to next stage
       if (
-        (workFlow.indexOf(content.status) > 0 ||
-          workFlow.indexOf(content.status) < workFlow.length - 2) &&
+        (workFlow.indexOf(contentStatus) > 0 ||
+          workFlow.indexOf(contentStatus) < workFlow.length - 2) &&
         workFlow.indexOf(nextAction) < workFlow.length - 2
       ) {
         return this.getApi(
@@ -119,7 +120,7 @@ export class NotificationService {
         this.rejectContent(
           content,
           comment,
-          this.workFlowService.getActionName(content.status) as string,
+          this.workFlowService.getActionName(contentStatus) as string,
           currentOwnerName as string,
           ((content as any)[currentOwner as string] || []).map((v: { id: string }) => v.id),
         ),
@@ -237,6 +238,7 @@ export class NotificationService {
   }
 
   deleteContent(content: NSContent.IContentMeta, comment: string): Observable<any> {
+    const contentStatus: any = content.status
     if (!this.initService.authAdditionalConfig.allowNotification) {
       return of({})
     }
@@ -246,7 +248,7 @@ export class NotificationService {
         '#contentTitle': content.name,
         '#contentType': content.contentType,
         '#comment': comment,
-        '#currentStage': this.workFlowService.getActionName(content.status) || content.status,
+        '#currentStage': this.workFlowService.getActionName(contentStatus) || contentStatus,
         '#targetUrl': `${document.baseURI}author/my-content?status=deleted`,
       },
       'target-data': {},
@@ -301,10 +303,11 @@ export class NotificationService {
   }
 
   moveToDraft(content: NSContent.IContentMeta, comment: string): Observable<any> {
+    const contentStatus: any = content.status
     if (!this.initService.authAdditionalConfig.allowNotification) {
       return of({})
     }
-    const currentActionName = this.workFlowService.getActionName(content.status)
+    const currentActionName = this.workFlowService.getActionName(contentStatus)
     const body = {
       'event-id': 'move_content_to_draft',
       'tag-value-pair': {

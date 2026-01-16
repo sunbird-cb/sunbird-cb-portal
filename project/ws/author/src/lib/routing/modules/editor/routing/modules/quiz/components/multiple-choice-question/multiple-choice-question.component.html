@@ -3,11 +3,11 @@
     <mat-card class="customheader padding flex border-b-4 flex-row items-center">
       <div class="px-4 sm:px-0 w-3/12">
         <mat-card-title>
-          <p class="ws-mat-primary-text text-left titlePadding" i18n>Answer</p>
+          <p class="ws-mat-primary-text text-left titlePadding" >Answer</p>
         </mat-card-title>
       </div>
       <div class="w-4/12 item-spacing">
-        <mat-card-title class="ws-mat-primary-text text-center" i18n>Option</mat-card-title>
+        <mat-card-title class="ws-mat-primary-text text-center" >Option</mat-card-title>
       </div>
       <div class="absolute right-0 top-0 p-3 sm:pr-6 xl:pr-8 content-center pt-4">
         <button
@@ -27,7 +27,7 @@
     </mat-card>
   </div> -->
   <div class="flex addpadding items-center margin-top-l margin-bottom-m">
-    <p class="mat-h3 font-weight-bold margin-remove" i18n>Add Options</p>
+    <p class="mat-h3 font-weight-bold margin-remove" >Add Options</p>
     <button class="mat-elevation-z5 small-button padding-remove ws-mat-primary-background margin-left-s" (click)="addOption()"
       type="button" mat-icon-button i18n-matTooltip matTooltipPosition="below" matTooltip="Add option" i18n-aria-label aria-label="add option">
       <mat-icon class="text-white small-icon">add</mat-icon>
@@ -54,7 +54,7 @@
           <button class="inline-flex remove-padding items-center" (click)="openCkEditor(i)" i18n-aria-label aria-label="edit hint"
             type="button" mat-button>
             <mat-icon class="fill-current w-4 h-4 mr-2">info</mat-icon>
-            <span class="padding-1" i18n>Hint</span>
+            <span class="padding-1" >Hint</span>
           </button>
         </div>
         <div class="width-4 ml-4 justify-center flex items-center item-spacing">
@@ -99,14 +99,14 @@
                 <div class="w-2/5"></div>
                 <mat-checkbox formControlName="isCorrect" (change)="onSelected($event)" i18n-matTooltip matTooltipPosition="below" matTooltip="Check for correct answer"
                   i18n-aria-label aria-label="Check for correct answer">
-                  <span i18n>is correct</span>
+                  <span >is correct</span>
                 </mat-checkbox>
               </div>
               <div class="flex hint-button justify-center item-spacing pr-1" *ngIf="showHint">
                 <button class="inline-flex remove-padding items-center" (click)="openCkEditor(i)" i18n-aria-label aria-label="edit hint"
                   type="button" mat-icon-button>
                   <mat-icon class="fill-current remove-padding w-4 h-4 mr-2">info</mat-icon>
-                  <span class="padding-1" i18n>Hint</span>
+                  <span class="padding-1" >Hint</span>
                 </button>
               </div>
             </div>

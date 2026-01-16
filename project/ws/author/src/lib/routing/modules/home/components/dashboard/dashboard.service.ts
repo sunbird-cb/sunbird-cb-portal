@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { CONTENT_CREATE } from '@ws/author/src/lib/constants/apiEndpoints'
 import { NSApiResponse } from '@ws/author/src/lib/interface//apiResponse'
 import { NSApiRequest } from '@ws/author/src/lib/interface/apiRequest'

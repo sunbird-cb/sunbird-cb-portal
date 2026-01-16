@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { AppTocCohortsComponent } from '../../components/app-toc-cohorts/app-toc-cohorts.component'
 
 @Injectable({

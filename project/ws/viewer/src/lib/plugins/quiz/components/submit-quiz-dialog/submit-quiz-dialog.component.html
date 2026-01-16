@@ -1,16 +1,22 @@
-<h2 mat-dialog-title i18n>Submit Quiz</h2>
+<h2 mat-dialog-title >Submit Quiz</h2>
 <mat-dialog-content>
-  <ng-container i18n *ngIf="submissionState === 'answered'">
+  <ng-container *ngIf="data?.canAttempt && data?.primaryCategory !== 'Practice Question Set'">
+      <div class="mt-4 mb-4">
+          <b>You have only {{data?.canAttempt?.attemptsAllowed - data?.canAttempt?.attemptsMade}} attempt(s) left. Make sure before submitting.</b>
+      </div>
+  </ng-container>
+  <ng-container *ngIf="data?.submissionState === 'answered'">
     Do you want to submit?
   </ng-container>
-  <ng-container i18n *ngIf="submissionState === 'unanswered'">
-    You have not answered all the questions! Do you still want to submit?
+  <ng-container *ngIf="data?.submissionState === 'unanswered'">
+    <!-- You have not answered all the questions! Do you still want to submit? -->
+    Oops! It looks like a few questions were missed, are you sure you want to submit?
   </ng-container>
-  <ng-container i18n *ngIf="submissionState === 'marked'">
+  <ng-container *ngIf="data?.submissionState === 'marked'">
     You still have some questions marked for later! Do you still want to submit?
   </ng-container>
 </mat-dialog-content>
-<mat-dialog-actions class="flex-row-reverse">
-  <button mat-button mat-dialog-close i18n>No</button>
-  <button mat-button [mat-dialog-close]="true" i18n>Yes</button>
+<mat-dialog-actions class="flex-row">
+  <button class="primary-blue-btn" mat-button mat-dialog-close >No</button>
+  <button class="secondary-blue-border-btn" mat-button [mat-dialog-close]="true" >Yes</button>
 </mat-dialog-actions>

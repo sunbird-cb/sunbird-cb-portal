@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute, Data } from '@angular/router'
 import { AppTocService } from '../../services/app-toc.service'
 import { NsContent, ROOT_WIDGET_CONFIG, IGraphWidget, NsError } from '@sunbird-cb/collection'

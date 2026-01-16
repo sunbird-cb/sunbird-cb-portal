@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { DialogBoxModeratorComponent } from './dialog-box-moderator.component'
 import { MatIconModule } from '@angular/material/icon'
-import { MatRadioModule } from '@angular/material/radio'
+import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio'
 import { FormsModule } from '@angular/forms'
-import { MatDialogModule } from '@angular/material/dialog'
-import { MatButtonModule } from '@angular/material/button'
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog'
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button'
 @NgModule({
   declarations: [DialogBoxModeratorComponent],
   imports: [

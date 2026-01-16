@@ -1,0 +1,14 @@
+<div class="padding-dynamic" *ngIf="offlineSessionData">
+    <div class="flex flex-around flex-wrapped">
+        <div class="w-full">
+            <mat-card>
+                <mat-card-content>
+                <div id="fullScreenContainer" class=" p-5" style="min-height: 78vh;">
+                    <ng-container   *ngIf="isFetchingDataComplete" [wsResolverWidget]="widgetResolverOfflineSessionData"></ng-container>
+                </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+  

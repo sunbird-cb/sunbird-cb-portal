@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { FormControl } from '@angular/forms'
-import { MatSnackBar } from '@angular/material'
+import { UntypedFormControl } from '@angular/forms'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, EventService, IResolveResponse, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, IResolveResponse, WsEvents } from '@sunbird-cb/utils-v2'
 // import { startWith, map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
@@ -34,7 +34,7 @@ export class InterestComponent implements OnInit {
 
   autocompleteInterests: string[] = []
 
-  interestControl = new FormControl('')
+  interestControl = new UntypedFormControl('')
 
   filteredOptions$: Observable<string[]> = of([])
   appName!: string

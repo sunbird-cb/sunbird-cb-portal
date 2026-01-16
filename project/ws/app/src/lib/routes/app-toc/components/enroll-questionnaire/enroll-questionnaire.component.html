@@ -1,0 +1,56 @@
+<ng-container *ngIf="wfClientVersion !== '1.1'">
+  <div #fullScreenContainer>
+    <div class="dialog-header text-right mb-2">
+      <mat-icon class="mat-icon notranslate material-icons close-icon cursor-pointer" matprefix="" role="img"
+        aria-hidden="true" [mat-dialog-close]="false">close</mat-icon>
+    </div>
+    <lib-micro-survey class="course-survey" [apiData]="data?.apiData" [afterSubmitAction]="afterSubmitAction"
+      [isReadOnly]="isReadOnly" [surveyId]="data?.surveyId" [courseId]="data?.courseId" [courseName]="data?.courseName"
+      [isblendedprogram]="true" [customTextAreaRows]="1">
+    </lib-micro-survey>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="wfClientVersion === '1.1'">
+  <div class="preview-container">
+    <div class="form-header">
+      <div class="flex justify-between iteams-center">
+        <div>{{formDetails?.title}}</div>
+        <div class="cursor-pointer" (click)="closeForm()"><mat-icon>close</mat-icon></div>
+      </div>
+    </div>
+    <div class="form-content">
+      <ng-container *ngIf="surveyForm">
+        <form [formGroup]="surveyForm">
+          <ng-container *ngFor="let parentField of parentalFields">
+            <ng-container [ngSwitch]="parentField.fieldType">
+              <ng-container *ngSwitchCase="'heading'">
+                <ws-app-survey-form-section [childFields]="getChildFields(parentField.sectionId)"
+                  [sectionField]="parentField"
+                  [childQuestionsFormArray]="getChildQuestionsFormArray(parentField.sectionId)"
+                  (questionValues)="updateQuestionValues($event)"></ws-app-survey-form-section>
+              </ng-container>
+              <ng-container *ngSwitchCase="'separator'">
+                <hr class="opacity-50 elment-separator">
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <ws-app-survey-form-question [fieldDetails]="parentField"
+                  [questionForm]="getQuestionControl(parentField.controlIndex)"
+                  (questionValues)="updateQuestionValues($event)"></ws-app-survey-form-question>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <div class="flex justify-end m-4">
+            <button mat-button class="submit-btn" [disabled]="!surveyFormIsValid" (click)="submitForm()">Submit</button>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="addLoader > 0">
+  <div class="text-center my-2 loader flex justify-center items-center">
+    <mat-spinner class="inline-block"></mat-spinner>
+  </div>
+</ng-container>

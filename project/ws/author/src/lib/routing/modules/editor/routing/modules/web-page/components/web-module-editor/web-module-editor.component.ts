@@ -1,15 +1,15 @@
 import { DeleteDialogComponent } from '@ws/author/src/lib/modules/shared/components/delete-dialog/delete-dialog.component'
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { UploadAudioComponent } from '../upload-audio/upload-audio.component'
-import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout'
 import { map, mergeMap, tap, catchError } from 'rxjs/operators'
 import { of, Observable, Subscription, forkJoin } from 'rxjs'
 import { ActivatedRoute, Router } from '@angular/router'
-import { FormGroup } from '@angular/forms'
+import { UntypedFormGroup } from '@angular/forms'
 
 import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
 import { CommentsDialogComponent } from '@ws/author/src/lib/modules/shared/components/comments-dialog/comments-dialog.component'
@@ -75,7 +75,7 @@ export class WebModuleEditorComponent implements OnInit, OnDestroy {
   mode$ = this.mediumSizeBreakpoint$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   showAudioCard = false
   imagesUrlbase = ''
-  @ViewChild(PlainCKEditorComponent, { static: false }) ckEditor!: PlainCKEditorComponent
+  @ViewChild(PlainCKEditorComponent) ckEditor!: PlainCKEditorComponent
   // @ViewChild('editor', { static: false }) ckEditor!: any
   // downloadRegex = new RegExp(`(/content-store/.*?)(\\\)?\\\\?['"])`, 'gm')
 
@@ -538,7 +538,7 @@ export class WebModuleEditorComponent implements OnInit, OnDestroy {
     )
   }
 
-  finalCall(commentsForm: FormGroup) {
+  finalCall(commentsForm: UntypedFormGroup) {
     if (commentsForm) {
       const body: NSApiRequest.IForwardBackwardActionGeneral = {
         comment: commentsForm.controls.comments.value,
@@ -691,7 +691,7 @@ export class WebModuleEditorComponent implements OnInit, OnDestroy {
           height: '450px',
           data: this.metaContentService.getOriginalMeta(this.currentId),
         })
-        dialogRef.afterClosed().subscribe((commentsForm: FormGroup) => {
+        dialogRef.afterClosed().subscribe((commentsForm: UntypedFormGroup) => {
           this.finalCall(commentsForm)
         })
       }

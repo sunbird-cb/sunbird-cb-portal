@@ -46,7 +46,7 @@
                   class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important">
                   <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
-                    <span i18n>{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'View All'}}</span>
+                    <span >{{widgetData.strips[0].viewMoreUrl.viewMoreText || 'View All'}}</span>
                     <mat-icon class="default-icon">arrow_forward</mat-icon>
                   </a>
                 </div>
@@ -96,11 +96,11 @@
   <mat-card>
     <div class="w-full">
       <div class="p-4">
-        <div class="text-3xl font-semibold text-center leading-tight" i18n>
+        <div class="text-3xl font-semibold text-center leading-tight" >
           Content not available
         </div>
         <br />
-        <div class="text-base font-medium text-center leading-normal" i18n>
+        <div class="text-base font-medium text-center leading-normal" >
           Please try different keywords or change the search query.
         </div>
       </div>

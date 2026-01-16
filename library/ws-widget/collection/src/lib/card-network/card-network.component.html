@@ -17,11 +17,11 @@
   <mat-accordion multi>
     <mat-expansion-panel class="mat-elevation-z" [expanded]="true" hideToggle *ngIf="enableFeature">
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>New on IGOT Karmyogi</mat-panel-title>
+        <mat-panel-title >New on IGOT Karmyogi</mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <div>
-          <h3 class="mat-error text-center" *ngIf="newUserArray.length === 0" i18n>
+          <h3 class="mat-error text-center" *ngIf="newUserArray.length === 0" >
             No Active User Info Available
           </h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 col-gap-4">
@@ -39,12 +39,12 @@
     </mat-expansion-panel>
     <mat-expansion-panel class="mat-elevation-z" [expanded]="true" hideToggle *ngIf="enableFeature">
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>People to Follow</mat-panel-title>
+        <mat-panel-title >People to Follow</mat-panel-title>
 
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <div>
-          <h3 class="mat-error text-center" *ngIf="departmentUserArray.length === 0" i18n>
+          <h3 class="mat-error text-center" *ngIf="departmentUserArray.length === 0" >
             No People info Available
           </h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 col-gap-4">
@@ -61,12 +61,12 @@
     </mat-expansion-panel>
     <mat-expansion-panel class="mat-elevation-z" [expanded]="true" hideToggle *ngIf="!enableFeature">
       <mat-expansion-panel-header>
-        <mat-panel-title i18n>User Search</mat-panel-title>
+        <mat-panel-title >User Search</mat-panel-title>
 
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <div>
-          <h3 class="mat-error text-center" *ngIf="searchResultUserArray.length === 0 && !this.searchSpinner" i18n>
+          <h3 class="mat-error text-center" *ngIf="searchResultUserArray.length === 0 && !this.searchSpinner" >
             Search Result Not found.
           </h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 col-gap-4">

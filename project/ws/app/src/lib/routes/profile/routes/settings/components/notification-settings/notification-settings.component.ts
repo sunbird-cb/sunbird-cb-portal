@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { NsSettings } from '../../settings.model'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { Component, OnInit } from '@angular/core'
 import { SettingsService } from '../../settings.service'
-import { MatSnackBar } from '@angular/material'
+//import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { TranslateService } from '@ngx-translate/core'
 /* tslint:disable*/
 import _ from 'lodash'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'ws-app-notification-settings',
@@ -12,138 +13,95 @@ import _ from 'lodash'
   styleUrls: ['./notification-settings.component.scss'],
 })
 export class NotificationSettingsComponent implements OnInit {
-
-  notificationSettings: NsSettings.INotificationGroup[] = []
-  notificationPref!: NsSettings.INotificationPreferenceResponse
-  notificationPrefList: NsSettings.INotificationPreference[] = []
-  notificationsFetchStatus: TFetchStatus = 'none'
-  savePrefInprogress = false
-  notificationsUpdateStatus: TFetchStatus = 'none'
-  userPreference: any = {}
-  disableBtn = false
-  @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
-  @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
+  selectedLanguage = 'en'
+  notificationSettings: any[] = []
   constructor(
-    private snackBar: MatSnackBar,
+    //private snackBar: MatSnackBar,
     private settingsSvc: SettingsService,
-  ) { }
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
+    private snackbar: MatSnackBar
+
+  ) {
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      let lang = JSON.stringify(localStorage.getItem('websiteLanguage'))
+      lang = lang.replace(/\"/g, '')
+      this.selectedLanguage = lang
+      this.translate.use(lang)
+    }
+
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+        this.selectedLanguage = lang
+      }
+    })
+  }
+
+  getTitle(label: string) {
+    let _lable = ''
+    if (label === 'EMAIL') {
+      _lable = 'email'
+    } else if (label === 'SMS') {
+      _lable = 'sms'
+    } else if (label === 'PUSH') {
+      _lable = 'push'
+    } else if (label === 'IN_APP') {
+      _lable = 'inApp'
+    }
+    return this.translateLabels(_lable, 'notificationV2Settings')
+  }
+
+  getDescription(label: string) {
+    let _lable = ''
+    if (label === 'EMAIL') {
+      _lable = 'emailDesc'
+    } else if (label === 'SMS') {
+      _lable = 'smsDesc'
+    } else if (label === 'PUSH') {
+      _lable = 'pushDesc'
+    } else if (label === 'IN_APP') {
+      _lable = 'inAppDesc'
+    }
+    return this.translateLabels(_lable, 'notificationV2Settings')
+  }
+
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateActualLabel(label, type, '')
+  }
 
   ngOnInit() {
-    this.fetchNotificationPreference()
-  }
 
-  private fetchNotificationPreference() {
-    this.notificationsFetchStatus = 'fetching'
-    this.settingsSvc.fetchNotificationPreference().subscribe(
-      data => {
-        this.notificationsFetchStatus = 'done'
-        const value = _.get(data, 'result.response.value')
-        if (value) {
-          this.notificationPref = JSON.parse(value)
-          this.notificationPrefList = this.notificationPref.notificationPreferenceList || []
-          this.notificationPrefList = this.notificationPrefList.map(n => {
-            n.status = true
-            return n
-          })
-          this.fetchUserNotificationPref()
-        }        
-      },
-      _ => {
-        this.notificationsFetchStatus = 'error'
-      },
-    )
-  }
-
-  private fetchUserNotificationPref() {
-    this.notificationsFetchStatus = 'fetching'
-    this.settingsSvc.fetchUserNotificationPreference().subscribe(
-      data => {
-        this.notificationsFetchStatus = 'done'
-        this.userPreference = _.get(data, 'result.notification_preference') || {}
-        this.updateNotificationPref()
-      },
-      _ => {
-        this.notificationsFetchStatus = 'error'
-      },
-    )
-  }
-
-  updateStatus(notificationPref: NsSettings.INotificationPreference) {
-    this.notificationPrefList.find((x, i) => {
-      if (x.id === notificationPref.id) {
-        this.notificationPrefList[i].status = !this.notificationPrefList[i].status
-
-        // Update userPreference with status
-          this.userPreference[notificationPref.id] = this.notificationPrefList[i].status
-      }
+    this.settingsSvc.getSettings().subscribe((settings: any) => {
+      this.notificationSettings = _.get(settings, 'result.settings', [])
+      console.log(this.notificationSettings)
+    }, error => {
+      this.notificationSettings = []
+      console.log(error)
     })
   }
 
-  submitUserPref() {
-    this.savePrefInprogress = true
-    this.disableBtn = true
-    const req = {
-      'request': this.userPreference
-    }
-    this.settingsSvc.updateUserNotificationPreference(req).subscribe(
-      _data => {
-        this.savePrefInprogress = false
-        this.disableBtn = false
-        this.openSnackbar(this.toastSuccess.nativeElement.value)
-      },
-      _ => {
-        this.savePrefInprogress = false
-        this.disableBtn = false
-        this.openSnackbar(this.toastError.nativeElement.value)
-      },
-    )
-  }
-
-  private openSnackbar(primaryMsg: string, duration: number = 5000) {
-    this.snackBar.open(primaryMsg, 'X', {
-      duration,
-    })
-  }
-
-  updateNotificationPref() {
-    if(this.notificationPrefList && this.notificationPrefList.length) {
-      if(this.userPreference) {
-        for(let key in this.userPreference){
-          if(_.findIndex(this.notificationPrefList,  { id: key } ) >=0){
-
-            this.notificationPrefList[_.findIndex(this.notificationPrefList,  { id: key } )].status = this.userPreference[key]
-          }
-        }
+  onToggleChange(item: any, event: any) {
+    let request = {
+      request: {
+        notificationType: item.notificationType,
+        enabled: event.checked
       }
     }
-  }
-
-  updateMode(groupIndex: number, eventIndex: number, successMsg: string, errorMsg: string) {
-    this.notificationSettings[groupIndex].events[eventIndex].recipients.forEach(recipient => {
-      recipient.modes.forEach(mode => {
-        mode.status = !mode.status
-      })
+    this.settingsSvc.enableNotification(request).subscribe((settings: any) => {
+      const result = _.get(settings, 'result', '')
+      if (result && result.enabled) {
+        this.snackbar.open('Notification enabled!')
+      } else {
+        this.snackbar.open('Notification disabled!')
+      }
+    }, error => {
+      console.log(error)
+      this.snackbar.open('Something went wrong!')
+      item.enabled = !event.enabled
     })
-    this.updateNotificationSettings(successMsg, errorMsg)
-  }
-
-  private updateNotificationSettings(successMsg: string, errorMsg: string) {
-    if (this.notificationSettings && this.notificationSettings.length) {
-      this.notificationsUpdateStatus = 'fetching'
-      this.settingsSvc.updateNotificationSettings(this.notificationSettings).subscribe(
-        _ => {
-          this.notificationsUpdateStatus = 'done'
-          this.snackBar.open(successMsg, 'X')
-        },
-        _ => {
-          this.notificationsUpdateStatus = 'error'
-          this.snackBar.open(errorMsg, 'X')
-        },
-      )
-    }
-  }
-
-  getSupportedModes(notificationEvent: NsSettings.INotificationEvent): NsSettings.INotificationMode[] {
-    return notificationEvent.recipients[0].modes
   }
 }

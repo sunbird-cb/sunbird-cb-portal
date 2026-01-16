@@ -1,0 +1,280 @@
+<div class="home-container m-auto flex flex-row gap-6"
+  [ngClass]="mobileTopHeaderVisibilityStatus ? 'home-container':'home-container-without-mobile-header'">
+  <ng-container *ngIf="showNoConfig">
+    <div class="flex items-center justify-center h-32 w-full">
+      <h2 class="text-2xl font-semibold">No Configuration Found</h2>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!showNoConfig">
+    <ng-container *ngIf="!homeConfig?.insightOnRight?.active">
+      <div class="bg-info mt-2" [ngClass]="
+          homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' :
+          (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''"
+        *ngIf="homeConfig?.leftSection?.active">
+        <ng-container *ngIf="jan26Change && jan26Change.isEnabled">
+          <div class="mob-logo items-center justify-center">
+            <img [src]="jan26Change?.mWeb?.logoUrl" alt="Application Logo" class="app-logo" />
+            <span class="mat-subheading-2 ws-mat-default-text margin-left-xs logo-text"
+              [innerHTML]="jan26Change?.mWeb?.logoText"></span>
+          </div>
+        </ng-container>
+        <ng-container>
+          <div class="not-my-user-container margin-top-m" *ngIf="isNotMyUser && !isIgotOrg">
+            <div class="not-my-user-content">
+              <div>
+                <mat-icon class="warning-icon" [ngStyle]="{'color':'red'}">warning</mat-icon>
+              </div>
+              <div class="not-my-user-data">
+                <p>
+                  <span>{{ 'home.notMyUser1' | translate }}</span>
+                  <b>{{ 'home.notMyUser2' | translate }}</b>.
+                  <span>{{ 'home.notMyUser3' | translate }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="disigantion-master-container margin-top-l"
+            *ngIf="updateDesignationCard && designationList?.length && showUpdateDesignations">
+            <div class="flex items-center justify-center gap-2">
+              <img [src]="updateDesignationCard?.imageUrl" alt="updateDesignation" />
+              <div class="flex flex-col gap-2">
+                <div class="title">Hello {{userData?.firstName}}!</div>
+                <div class="note">{{renderUpdateDesignationCardHeader()}}</div>
+              </div>
+            </div>
+            <div class="hr my-3"></div>
+            <div class="choose-designation">
+              <div class="dLabel pb-1">{{ 'publicsignup.selectDesignation' | translate }}</div>
+              <div class="flex items-center gap-3 pb-3">
+                <div class="contoller">
+                  <div class="flex items-center relative">
+                    <input type="text" class="input-text designation-input cursor-pointer" matInput
+                      #trigger="matAutocompleteTrigger" #autocompleteInput [(value)]="selectDesignation"
+                      placeholder="{{'updteDesignation.select' | translate }}" [matAutocomplete]="designationAuto"
+                      (input)="onInputChange($event.target.value)" />
+                    <mat-icon class="dropdown-icon cursor-pointer"
+                      (click)="openAutocomplete(trigger, autocompleteInput)">arrow_drop_down</mat-icon>
+                  </div>
+                  <mat-autocomplete class="mat-autocomplete" (closed)="onAutoCompleteClosed()"
+                    (opened)="onAutoCompleteOpened()" #designationAuto="matAutocomplete"
+                    (optionSelected)="onOptionSelected($event.option.value)">
+                    <ng-container *ngIf="filterDesigantionList.length > 0; else noDesignation">
+                      <mat-option *ngFor="let designation of filterDesigantionList" value="{{ designation?.name }}">{{
+                        designation?.name }}</mat-option>
+                    </ng-container>
+                    <ng-template #noDesignation>
+                      <mat-option disabled>No Designation found</mat-option>
+                    </ng-template>
+                  </mat-autocomplete>
+                </div>
+                <button type="button" mat-button (click)="updateDesignation()"
+                  [disabled]="selectDesignation?.length === 0"
+                  class="btn submit-btn {{selectDesignation?.length === 0 ? '' : 'cursor-pointer'}}">{{renderUpdateDesignationCardButtonText()}}
+                </button>
+              </div>
+            </div>
+            <div class="hint" [innerHTML]="renderUpdateDesignationCardHint()"></div>
+          </div>
+          <div class="margin-top-m" *ngIf="nwlConfiguration?.enabled && canShowNlwCard">
+            <div class="nlw-container cursor-pointer" (click)="navigateToNationalLearning()">
+              <div class="flex">
+                <div class="nlw-title gap-3">
+                  {{currentLang === 'hi'? nwlConfiguration?.titleHi : nwlConfiguration?.title}}
+                </div>
+                <div class="nlw-title">
+                  <img class="nlw-animation" src="assets/images/national-learning/nlw.gif" alt="" />
+                </div>
+              </div>
+              <div class="flex nlw-description">
+                {{currentLang === 'hi'? nwlConfiguration?.descriptionHi : nwlConfiguration?.description }}
+              </div>
+              <div class="progress-wrapper mt-5">
+                <div class="flex items-center">
+                  <div *ngFor="let n of [].constructor(totalDays); let i = index">
+                    <div class="flex items-center">
+                      <div class="dot {{daysCompleted > i ? 'active' : ''}}"></div>
+                      <div class="line {{daysCompleted > i ? 'active' : ''}}"
+                        [ngStyle]="{'width': nwlConfiguration?.width}"></div>
+                      <div class="dot" *ngIf="(totalDays - 1) === i"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-align-end nlw-redirect margin-top-l">
+                <button class="nlw-view-more-btn mat-button mat-button-base text-white">
+                  {{nwlConfiguration?.buttonText}}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE LEARNING WEEK -->
+          <div class="margin-top-m" *ngIf="slwConfiguration?.enabled && canShowSlwCard">
+            <div class="nlw-container cursor-pointer" (click)="navigateToStatelLearning()">
+              <div class="flex justify-between">
+                <div class="nlw-title gap-3">
+                  <p class="margin-remove mat-subheading-1 {{slwConfiguration?.celebrateClass}}">{{currentLang === 'hi'?
+                    slwConfiguration?.celebrateHi : slwConfiguration?.celebrate}}</p>
+                  <p class="{{slwConfiguration?.titleClass}}">{{currentLang === 'hi'? slwConfiguration?.titleHi :
+                    slwConfiguration?.title}}</p>
+                </div>
+                <div class="nlw-title">
+                  <img class="nlw-animation" src="assets/images/national-learning/nlw.gif" alt="" />
+                </div>
+              </div>
+              <div class="flex nlw-description">
+                {{currentLang === 'hi'? slwConfiguration?.descriptionHi : slwConfiguration?.description }}
+              </div>
+              <div class="progress-wrapper mt-5">
+                <div class="flex items-center">
+                  <div *ngFor="let n of [].constructor(totalDays); let i = index">
+                    <div class="flex items-center">
+                      <div class="dot {{daysCompleted > i ? 'active' : ''}}"></div>
+                      <div class="line {{daysCompleted > i ? 'active' : ''}}"
+                        [ngStyle]="{'width': slwConfiguration?.width}"></div>
+                      <div class="dot" *ngIf="(totalDays - 1) === i"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-align-end nlw-redirect margin-top-l">
+                <button class="nlw-view-more-btn mat-button mat-button-base text-white">
+                  {{slwConfiguration?.buttonText}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <!-- profilecard stats -->
+        <div class="margin-top-m">
+          <ws-widget-profile-card-stats (activity)="goToActivity($event)" [profileData]="profileCardData"
+            [insightsData]="insightsData" [isLoading]="profileDataLoading"
+            [hideCollapsible]="true"></ws-widget-profile-card-stats>
+        </div>
+        <!-- annoucements -->
+        <div class=" col-span-12 mt-6 custom">
+          <div class="block sm:hidden md:block">
+            <sb-uic-announcements [layoutType]="'web'" (openDialog)="triggerOpenDialog($event)"
+              [objectData]="announcementData?.data" [fetchDataFromApi]="false" [channelId]="orgId">
+            </sb-uic-announcements>
+          </div>
+          <div class="sm:block md:hidden">
+            <sb-uic-announcements [layoutType]="'mobile'" (openDialog)="triggerOpenDialog($event)"
+             [objectData]="announcementData?.data" [fetchDataFromApi]="false" [channelId]="orgId">
+           </sb-uic-announcements>
+          </div>
+          <div class="announcements-container" *ngIf="showModal">
+            <div class="cursor-pointer close-share-dialog">
+              <mat-icon (click)="onClose()" class="close-icon">close</mat-icon>
+            </div>
+            <div class="share-modal px-3 pt-8">
+              <sb-uic-announcements [layoutType]="'web'" (openDialog)="triggerOpenDialog($event)"
+                [objectData]="announcementData?.data" [mobileHeight]="true" [fetchDataFromApi]="true"
+                [channelId]="orgId">
+              </sb-uic-announcements>
+            </div>
+          </div>
+
+        </div>
+        <!-- events calendar -->
+        <div class="mt-8" *ngIf="eventsCalendarData?.enabled">
+            <ws-app-events-calendar
+                [eventCalendarDetails]="eventsCalendarData"></ws-app-events-calendar>
+        </div>
+        <!-- <ws-in-sight-side-bar (telemetryRaisedLibrary)="raiseTelemetryInteratEvent($event)"></ws-in-sight-side-bar> -->
+      </div>
+
+      <div class="bg-primary" [ngClass]="
+          homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' :
+          (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''"
+        *ngIf="homeConfig?.rightSection?.active">
+        <div class="flex flex-col gap-1 mt-3">
+          <ng-container *ngIf="enableLazyLoadingFlag">
+            <div class="slider margin-top-m" *ngIf="sliderData && sliderData[0]?.active">
+              <ng-container *ngFor="let sectionItem of sectionList">
+                <ng-container *ngIf="sectionItem.section === 'slider' && sectionItem.isVisible">
+                  <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+                </ng-container>
+              </ng-container>
+            </div>
+            <ng-container *ngFor="let sectionItem of sectionList; let i=index; trackBy i">
+              <div [ngClass]="sectionItem.section" *ngIf="sectionItem.section.startsWith('section_')">
+                <ng-container *ngIf="sectionItem.isVisible && sectionItem.isActive">
+                  <ws-feed-list [widgetData]="sectionItem.stripData" [providerId]="getOrgId(sectionItem.stripData)"
+                    (telemetryRaisedLibrary)="raiseTelemetryInteratEvent($event)">
+                  </ws-feed-list>
+                </ng-container>
+              </div>
+            </ng-container>
+
+
+          </ng-container>
+
+          <ng-container *ngIf="!enableLazyLoadingFlag">
+            <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
+              <ng-container *ngIf="item?.strips[0]?.active">
+                <ws-feed-list [widgetData]="item" [providerId]="getOrgId(sectionItem.stripData)"
+                  (telemetryRaisedLibrary)="raiseTelemetryInteratEvent($event)"></ws-feed-list>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="homeConfig?.insightOnRight?.active">
+      <div class="bg-primary" [ngClass]="
+          homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'right' :
+          (!homeConfig?.rightSection?.active && !homeConfig?.leftSection?.active) ? 'full' : ''"
+        *ngIf="homeConfig?.rightSection?.active">
+        <div class="flex flex-col gap-3 mt-8">
+          sliderData --{{sliderData | json}}
+          <div class="slider margin-top-m" *ngIf="sliderData && sliderData[0]?.active">
+            sectionList --{{sectionList | json}}
+            <ng-container *ngFor="let sectionItem of sectionList">
+              <div>sectionItem --{{sectionItem | json}}</div>
+              <ng-container *ngIf="sectionItem.section === 'slider' && sectionItem.isVisible">
+                <div>slider</div>
+                <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <ng-container *ngIf="enableLazyLoadingFlag">
+            <ng-container *ngFor="let sectionItem of sectionList; let i=index; trackBy i">
+              <div [ngClass]="sectionItem.section" *ngIf="sectionItem.section.startsWith('section_')">
+                <ng-container *ngIf="sectionItem.isVisible && sectionItem.isActive">
+                  <ws-feed-list [widgetData]="sectionItem.stripData" [providerId]="getOrgId(sectionItem.stripData)"
+                    (telemetryRaisedLibrary)="raiseTelemetryInteratEvent($event)">
+                  </ws-feed-list>
+                </ng-container>
+              </div>
+            </ng-container>
+
+          </ng-container>
+
+          <ng-container *ngIf="!enableLazyLoadingFlag">
+            <ng-container *ngFor="let item of contentStripData; let i=index; trackBy i">
+              <ng-container *ngIf="item?.strips[0]?.active">
+                <ws-feed-list [widgetData]="item" [providerId]="getOrgId(sectionItem.stripData)"
+                  (telemetryRaisedLibrary)="raiseTelemetryInteratEvent($event)"></ws-feed-list>
+              </ng-container>
+            </ng-container>
+
+            <div class="slider" *ngIf="sliderData && sliderData[0]?.active">
+              <ws-widget-sliders [widgetData]="sliderData"></ws-widget-sliders>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="bg-info" [ngClass]="
+          homeConfig?.leftSection?.active &&  homeConfig?.rightSection?.active ? 'left' :
+          (homeConfig?.leftSection?.active &&  !homeConfig?.rightSection?.active) ? 'full' : ''"
+        *ngIf="homeConfig?.leftSection?.active">
+        <!-- <ws-in-sight-side-bar (telemetryRaisedLibrary)="raiseTelemetryInteratEvent($event)"></ws-in-sight-side-bar> -->
+      </div>
+    </ng-container>
+  </ng-container>
+
+</div>

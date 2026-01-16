@@ -1,0 +1,22 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+
+.lang-radio-btn {
+    width: 100%;
+    margin-bottom: 16px;
+}
+.mat-form-field {
+    width: 100%;
+}
+
+.custom-rounded {
+    border: 1px solid #1a4ca1 !important;
+    border-radius: 50px;
+    padding: 8px 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a4ca1 !important;
+}
+

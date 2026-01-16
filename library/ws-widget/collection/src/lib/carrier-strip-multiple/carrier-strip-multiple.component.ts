@@ -10,7 +10,7 @@ import {
   TFetchStatus,
   LoggerService,
   UtilityService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 
 interface IStripUnitContentData {

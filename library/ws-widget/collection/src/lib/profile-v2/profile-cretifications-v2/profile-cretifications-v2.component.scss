@@ -1,6 +1,6 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-common';
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@use '@sunbird-cb/design-system/src/styles/ws-common';
+@use '@sunbird-cb/design-system/src/styles/ws-vars';
+@use '@sunbird-cb/design-system/src/styles/ws-mixins' as *;
 
 .comment-card {
   // width: 40%;
@@ -93,4 +93,13 @@ mat-card-actions {
   height: 100px;
   width: 100px;
   padding-right: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .detais-view {
+    width: calc(100vw - 220px);
+  }
+  .detais-view > div{
+    word-break: break-word;
+  }
 }

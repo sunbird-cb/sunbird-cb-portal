@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router'
+import { ActivatedRouteSnapshot } from '@angular/router'
 
 import { Observable, forkJoin, of } from 'rxjs'
 // import { tap } from 'rxjs/operators'
 // import { AuthInitService } from '@ws/author/src/lib/services/init.service'
 
 @Injectable()
-export class InitResolver implements Resolve<any> {
+export class InitResolver  {
   constructor(
     // private ckEditorInject: CKEditorService,
   ) { }

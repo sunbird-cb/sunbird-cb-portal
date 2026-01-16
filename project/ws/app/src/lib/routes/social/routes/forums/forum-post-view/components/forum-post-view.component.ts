@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Data, Router } from '@angular/router'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumService } from '../../service/forum.service'
 

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { PageEvent } from '@angular/material'
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
 import { ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
-import { ConfigurationsService, ValueService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, ValueService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { NSAnalyticsData } from '../../../analytics/models/analytics.model'
 import { AnalyticsService } from '../../../analytics/services/analytics.service'
 import { NSLearningHistory } from '../../models/learning.models'
 import { LearningHistoryService } from '../../services/learning-history.service'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 
 interface ILearningHistoryContent {
   content: NSLearningHistory.ILearningHistory
@@ -43,7 +43,7 @@ export class LearningHistoryComponent implements OnInit {
     1}`.slice(-2)}-${`0${new Date(this.yesterday).getDate()}`.slice(-2)}`
   contentType = 'Course'
   isCompleted = 0
-  filterControl = new FormControl()
+  filterControl = new UntypedFormControl()
   userFetchStatus: TFetchStatus = 'fetching'
   historyFetchStatus: TFetchStatus = 'fetching'
   courseFetchStatus: TFetchStatus = 'fetching'

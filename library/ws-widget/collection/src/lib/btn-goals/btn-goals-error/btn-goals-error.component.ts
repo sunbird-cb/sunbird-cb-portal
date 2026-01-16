@@ -1,7 +1,7 @@
 
 import { Component, Inject } from '@angular/core'
 import { GoalsError } from '../../_constants/goals-error.constants'
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
+import { MAT_LEGACY_SNACK_BAR_DATA as MAT_SNACK_BAR_DATA } from '@angular/material/legacy-snack-bar'
 
 interface IData {
   type: keyof typeof GoalsError,

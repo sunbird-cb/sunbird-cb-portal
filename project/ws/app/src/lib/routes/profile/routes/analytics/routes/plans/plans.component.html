@@ -43,7 +43,7 @@
           </mat-card>
         </ng-container>
         <div *ngIf="userProgressData?.goal_progress?.length === 0" class="margin-xl">
-          <h4 class="text-center" i18n>You have not created any Goals</h4>
+          <h4 class="text-center" >You have not created any Goals</h4>
         </div>
       </mat-tab>
       <mat-tab label="Playlist">
@@ -79,14 +79,14 @@
           </mat-card>
         </ng-container>
         <div *ngIf="userProgressData?.playlist_progress?.length === 0" class="margin-xl flex flex-middle">
-          <h4 class="text-center" i18n>You have not created playlist.</h4>
+          <h4 class="text-center" >You have not created playlist.</h4>
         </div>
       </mat-tab>
     </mat-tab-group>
   </div>
 </div>
 <div *ngIf="userFetchStatus === 'error'" class="margin-xl mat-elevation-z2">
-  <h2 i18n class="flex flex-center coming-soon-msg p-4 flex ws-mat-primary-text">
+  <h2 class="flex flex-center coming-soon-msg p-4 flex ws-mat-primary-text">
     We are gathering the data to provide insights!
   </h2>
 </div>

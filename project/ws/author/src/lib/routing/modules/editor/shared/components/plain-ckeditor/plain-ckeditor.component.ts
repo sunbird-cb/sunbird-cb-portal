@@ -11,7 +11,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import {
   AUTHORING_CONTENT_BASE,
   CONTENT_BASE_STATIC,
@@ -30,7 +30,7 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
 import { UploadService } from '@ws/author/src/lib/routing/modules/editor/shared/services/upload.service'
 import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 
 declare const CKEDITOR: any
@@ -71,12 +71,12 @@ export class PlainCKEditorComponent implements AfterViewInit, OnInit, OnDestroy 
     | typeof CONTENT_BASE_WEBHOST_ASSETS = CONTENT_BASE_WEBHOST_ASSETS
   @Output() value = new EventEmitter<string>()
   config: any
-  @ViewChild('editor', { static: false }) editor!: any
-  @ViewChild('uploadImage', { static: false }) image!: ElementRef
+  @ViewChild('editor') editor!: any
+  @ViewChild('uploadImage') image!: ElementRef
   imageName = 'Insert Image'
-  @ViewChild('uploadFile', { static: false }) file!: ElementRef
+  @ViewChild('uploadFile') file!: ElementRef
   fileName = 'Upload File'
-  @ViewChild('addBlank', { static: false }) blank!: ElementRef
+  @ViewChild('addBlank') blank!: ElementRef
   blankName = 'Add Blank'
   timer: any
   subscription!: Subscription

@@ -3,7 +3,7 @@ import { SearchServService } from '../../services/search-serv.service'
 import { Router, ActivatedRoute } from '@angular/router'
 import { IFilterUnitResponse } from '../../models/search.model'
 import { Subscription } from 'rxjs'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsError, ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
 

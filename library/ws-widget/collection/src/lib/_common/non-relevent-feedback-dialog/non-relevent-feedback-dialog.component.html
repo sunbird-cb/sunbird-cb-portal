@@ -1,0 +1,15 @@
+<div class="greet-overlay feedback-overlay">
+    <div class="overlay-text mt-4">
+      {{'home.sakshamaifeedbackText' | translate}}
+    </div>
+    <mat-form-field class="feedback-text w-full mt-4" appearance="outline">
+      <textarea matInput placeholder="Enter your feedback..." rows="4" #feedback [maxLength]="500"></textarea>
+    </mat-form-field>
+    <div class="action-feedback mt-4 flex gap-4 justify-center items-center">
+      <button mat-flat-button class="mat-btn-flat cursor-pointer"
+        (click)="saveFeedback(feedback.value)">{{'userProfile.submit' | translate}}
+      </button>
+      <button mat-raised-button class="mat-btn-outline cursor-pointer"
+        (click)="cancelFeedbackPopup()">{{'userProfile.cancel' | translate}}</button>
+    </div>
+  </div>

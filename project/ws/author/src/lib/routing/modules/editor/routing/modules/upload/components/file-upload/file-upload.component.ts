@@ -1,5 +1,5 @@
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import {
   Component,
   EventEmitter,
@@ -9,9 +9,9 @@ import {
   ViewChild,
   TemplateRef,
 } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
-import { MatSnackBar } from '@angular/material'
-import { MatDialog } from '@angular/material/dialog'
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import {
   CONTENT_BASE_STATIC,
   CONTENT_BASE_STREAM,
@@ -40,11 +40,11 @@ import { ProfanityPopUpComponent } from '../profanity-popup/profanity-popup'
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {
-  @ViewChild('guideline', { static: false }) guideline!: TemplateRef<HTMLElement>
-  @ViewChild('errorFile', { static: false }) errorFile!: TemplateRef<HTMLElement>
-  @ViewChild('selectFile', { static: false }) selectFile!: TemplateRef<HTMLElement>
+  @ViewChild('guideline') guideline!: TemplateRef<HTMLElement>
+  @ViewChild('errorFile') errorFile!: TemplateRef<HTMLElement>
+  @ViewChild('selectFile') selectFile!: TemplateRef<HTMLElement>
 
-  fileUploadForm!: FormGroup
+  fileUploadForm!: UntypedFormGroup
   iprAccepted = false
   file!: File | null
   mimeType = ''
@@ -71,7 +71,7 @@ export class FileUploadComponent implements OnInit {
   @Output() data = new EventEmitter<any>()
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private contentService: EditorContentService,

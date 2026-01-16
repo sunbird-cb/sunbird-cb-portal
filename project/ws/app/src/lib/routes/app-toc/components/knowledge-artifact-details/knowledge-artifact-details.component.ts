@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
-import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 import { Observable, Subscription } from 'rxjs'
 import { EditorService } from '../../../../../../../author/src/lib/routing/modules/editor/services/editor.service'
 import { NsAppToc } from '../../models/app-toc.model'
@@ -159,6 +159,7 @@ export class KnowledgeArtifactDetailsComponent implements OnInit, OnDestroy {
       webPage: 0,
       youtube: 0,
       interactivecontent: 0,
+      offlineSession: 0,
     }
     if (this.content && this.tocStructure) {
       this.hasTocStructure = true

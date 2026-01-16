@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'
-import { MatSnackBar, MatDialog } from '@angular/material'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
@@ -11,7 +10,9 @@ import {
   EditorQuillComponent,
   DialogSocialDeletePostComponent,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService, LoggerService, ValueService, NsPage } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService, LoggerService, ValueService, NsPage } from '@sunbird-cb/utils-v2'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-qna-view',

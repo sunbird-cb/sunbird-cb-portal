@@ -1,0 +1,11 @@
+<div class="flex flex-col gap-4">
+    <div class="text-base font-bold text-center">{{ 'profileInfo.requestToAddDesignation' | translate }}</div>
+    <div class="flex flex-col gap-1">
+        <div class="text-sm font-bold required">{{ 'profileInfo.enterDesignation' | translate }}</div>
+        <input type="text" [(ngModel)]="designation" class="input-text" placeholder="{{ 'profileInfo.enterYourDesignation' | translate }}" />
+    </div>
+    <div class="flex justify-between">
+        <button class="outline-button" (click)="handleCloseModal()">{{ 'profileInfo.cancel' | translate }}</button>
+        <button class="save-button" [disabled]="!designation" [ngClass]="{'disable-button': !designation}" (click)="handleSaveDesignation()">{{ 'profileInfo.submitRequest' | translate }}</button>
+    </div>
+</div>

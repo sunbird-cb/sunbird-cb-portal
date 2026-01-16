@@ -3,9 +3,9 @@
 </div>
 <div class="padding-dynamic" *ngIf="audioData && isNotEmbed">
   <div class="flex flex-around flex-wrapped">
-    <div class="w-full">
-      <div *ngIf="!isScreenSizeSmall">
-        <mat-card>
+    <div class="w-full audio-player-container" *ngIf="!isScreenSizeSmall">
+      <div >
+        <mat-card class="audio-mat-card">
           <mat-card-content>
             <div id="fullScreenContainer" class="video-player">
               <ng-container *ngIf="isFetchingDataComplete" [wsResolverWidget]="widgetResolverAudioData"></ng-container>
@@ -75,8 +75,8 @@
 <!-- templates -->
 <ng-template #creators let-authors="authors" let-title="title">
   <mat-card>
-    <h2 *ngIf="title === 'AUTHOR'" i18n>Authors</h2>
-    <h2 *ngIf="title === 'CONTACT'" i18n>Contacts</h2>
+    <h2 *ngIf="title === 'AUTHOR'" >Authors</h2>
+    <h2 *ngIf="title === 'CONTACT'" >Contacts</h2>
     <mat-divider></mat-divider>
     <div *ngFor="let author of authors" class="author">
       <ws-widget-user-image class="author-image" [email]="author.email"></ws-widget-user-image>

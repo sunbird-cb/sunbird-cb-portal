@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { NsContent } from '@sunbird-cb/utils/src/public-api'
+import { NsContent } from '@sunbird-cb/utils-v2'
 import { NSQuiz } from '@ws/viewer/src/lib/plugins/quiz/quiz.model'
 // import { NSQuiz } from '@ws/viewer/src/lib/plugins/quiz/quiz.model'
 import { NSCompetencie } from '../../models/competencies.model'
@@ -40,6 +40,8 @@ export class CompetenciesAssessmentComponent implements OnInit {
                     questionId: '',
                     instructions: '',
                     questionType: undefined,
+                    questionLevel: '',
+                    marks: 0,
                     options: [
                         {
                             optionId: '',

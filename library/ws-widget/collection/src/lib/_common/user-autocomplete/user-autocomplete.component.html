@@ -10,10 +10,10 @@
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption class="ws-widget-user-autocomplete"
     (optionSelected)="selectUser($event, duplicate.value, selfShareError.value)">
-    <mat-option *ngIf="fetchTagsStatus === 'fetching'" i18n>Fetching users...</mat-option>
+    <mat-option *ngIf="fetchTagsStatus === 'fetching'" >Fetching users...</mat-option>
     <mat-option *ngIf="
         (fetchTagsStatus === 'done' || fetchTagsStatus === 'error') && !autocompleteAllUsers.length
-      " i18n>
+      " >
       No user found. Please check the value entered.</mat-option>
     <mat-option *ngFor="let autocompleteUser of autocompleteAllUsers" [value]="autocompleteUser">
       <div class="flex items-center">

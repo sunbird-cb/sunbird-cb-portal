@@ -1,0 +1,225 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+$border-color: rgba(0, 0, 0, 0.0784313725);
+
+@mixin custom-mat-icon($font-size: 20px, $width: 20px, $height: 20px) {
+  font-size: $font-size;
+  width: $width;
+  height: $height;
+}
+
+.profile-editor-container {
+  padding: 24px;
+  max-width: 600px;
+  width: 600px;
+}
+
+.profile-editor-header {
+
+  .header-title {
+    color: #000000DE;
+    /* stylelint-disable */
+    font: 600 16px Montserrat;
+    /* stylelint-enable */
+  }
+
+  .close-button {
+    cursor: pointer;
+    pointer-events: all;
+
+    .close-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      color: #666666;
+    }
+  }
+
+  .mat-form-field-appearance-legacy {
+    border-color: rgb(27, 76, 161) !important;
+  }
+}
+
+
+.solid {
+  width: calc(100% + 46px);
+  margin-left: -24px;
+  border-top: 2px solid #00000014;
+}
+
+
+.form-actions {
+
+  .cancel-btn {
+    border: 1px solid #1B4CA1;
+    border-radius: 16px;
+    padding: 6px 16px;
+    color: #1B4CA1;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+
+  .save-btn {
+    background-color: #1B4CA1;
+    border-radius: 16px;
+    padding: 6px 16px;
+    color: white;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+
+  .save-btn:disabled {
+    background-color: #B0C4DE;
+    color: #FFFFFF !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+
+}
+
+::ng-deep .profile-control {
+  .mat-input-element {
+    border-radius: 25px;
+    height: 12px;
+  }
+
+  .mat-select {
+    border-radius: 25px;
+    height: 12px;
+  }
+
+}
+
+
+@media screen and (max-width: 768px) {
+  .profile-editor-container {
+    width: calc(100% - 30px);
+    padding: 15px;
+  }
+
+  .cancel-btn {
+    display: none !important;
+  }
+
+  .save-btn {
+    width: 100% !important;
+  }
+
+}
+
+.input-text {
+  width: calc(100% - 36px);
+}
+
+.label {
+  color: #212529;
+  font: 700 14px Lato;
+}
+
+
+.blue-outline {
+  border-radius: 20px;
+  padding: 4px 16px;
+  border: 1px solid $text-primary;
+  color: $text-primary;
+  cursor: pointer;
+}
+
+.edit-button {
+  color: #1B4CA1;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  pointer-events: all;
+  cursor: pointer;
+
+
+}
+
+.add-button {
+  color: #1B4CA1;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+
+.common-card-css {
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid $border-color;
+  background-color: #FFF;
+  color: rgba($color: #000000, $alpha: 0.85);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: auto;
+  gap: 24px;
+}
+
+.title-div {
+  .title {
+    font-size: 14px;
+    font-weight: 600;
+    font-family: $font-family-montserrat;
+  }
+
+  .mat-icon {
+    @include custom-mat-icon(24px, 24px, 24px);
+  }
+}
+
+.form-field-container {
+  margin-bottom: 16px;
+}
+
+.field-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.required-indicator {
+  color: red;
+  margin-left: 4px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width: 641px) {
+
+  .common-card-css {
+    padding: 12px;
+  }
+}
+
+.description-hint {
+  color: var(--accessbility-shades-with-opacity-kb-greys-black-60, rgba(0, 0, 0, 0.60));
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.font-red {
+  color: var(--borders-success-and-errors-border-error-light, #D13924);
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}

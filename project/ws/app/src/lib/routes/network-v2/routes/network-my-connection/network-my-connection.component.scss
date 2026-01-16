@@ -41,9 +41,7 @@
   //   // outline: 1px solid #000;
   //   margin: 0 0 2em 0;
   //   text-overflow: ellipsis !important;
-  //   /**
-  //  * Required properties to achieve text-overflow
-  //  */
+  //   __<<ngThemingMigrationEscapedComment0>>__
   //   white-space: nowrap;
   //   overflow: hidden;
   // }
@@ -154,11 +152,11 @@
 .search .search-border {
   border-radius: 4px;
   // <<<<<<< HEAD
-  // /*.75rem;*/
+  // __<<ngThemingMigrationEscapedComment2>>__
   // border: 1px solid #DEDFE0;
   // flex: 1;
   // max-width: 500px;
-  // /* border-color: #cecece;*/
+  // __<<ngThemingMigrationEscapedComment3>>__
   // =======
   border: 1px solid #DEDFE0;
   flex: 1;

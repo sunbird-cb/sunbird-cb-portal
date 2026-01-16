@@ -1,7 +1,7 @@
 <mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles">
   <ws-widget-btn-page-back [widgetData]="{ url: 'back' }"></ws-widget-btn-page-back>
 
-  <span i18n class="margin-left-xs">Recent Blogs</span>
+  <span class="margin-left-xs">Recent Blogs</span>
   <span class="spacer"></span>
   <div class="flex items-center border search border-solid search-border" style="width: 100%;
     max-width: 500px;
@@ -31,13 +31,13 @@
       <mat-icon>more_vertical</mat-icon>
     </a>
     <mat-menu #menu="matMenu">
-      <a i18n [routerLink]="'/app/social/blogs/me'" mat-menu-item>My Blogs</a>
-      <a i18n [routerLink]="'/app/social/blogs/edit'" mat-menu-item>Write a Blog</a>
+      <a [routerLink]="'/app/social/blogs/me'" mat-menu-item>My Blogs</a>
+      <a [routerLink]="'/app/social/blogs/edit'" mat-menu-item>Write a Blog</a>
     </mat-menu>
   </ng-container>
   <ng-container *ngIf="(isXSmall$ | async) === false">
-    <a mat-raised-button i18n [routerLink]="'/app/social/blogs/me'" class="margin-right-s">My Blogs</a>
-    <a mat-raised-button class="margin-left-s" i18n [routerLink]="'/app/social/blogs/edit'">Write a Blog</a>
+    <a mat-raised-button [routerLink]="'/app/social/blogs/me'" class="margin-right-s">My Blogs</a>
+    <a mat-raised-button class="margin-left-s" [routerLink]="'/app/social/blogs/edit'">Write a Blog</a>
   </ng-container>
 </mat-toolbar>
 
@@ -60,7 +60,7 @@
         [postCreatorId]="result?.postCreator?.postCreatorId" [activity]="result.activity"></ws-widget-btn-social-like>
     </div>
   </mat-card>
-  <h2 class="text-center margin-top-m" i18n *ngIf="timelineFetchStatus === 'none'">
+  <h2 class="text-center margin-top-m" *ngIf="timelineFetchStatus === 'none'">
     No blogs have been posted yet
   </h2>
   <div *ngIf="timelineFetchStatus === 'fetching'" class="text-center margin-top-s">

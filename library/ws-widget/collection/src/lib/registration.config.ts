@@ -44,8 +44,8 @@ import { CardBreadcrumbComponent } from './card-breadcrumb/card-breadcrumb.compo
 import { CardBreadcrumbModule } from './card-breadcrumb/card-breadcrumb.module'
 import { CardChannelComponent } from './card-channel/card-channel.component'
 import { CardChannelModule } from './card-channel/card-channel.module'
-import { CardContentComponent } from './card-content/card-content.component'
-import { CardContentModule } from './card-content/card-content.module'
+// import { CardContentComponent } from './card-content/card-content.component'
+// import { CardContentModule } from './card-content/card-content.module'
 import { CardLearnComponent } from './card-learn/card-learn.component'
 import { CardLearnModule } from './card-learn/card-learn.module'
 import { CardWelcomeComponent } from './card-welcome/card-welcome.component'
@@ -117,6 +117,8 @@ import { PlayerAudioComponent } from './player-audio/player-audio.component'
 import { PlayerAudioModule } from './player-audio/player-audio.module'
 import { PlayerPdfComponent } from './player-pdf/player-pdf.component'
 import { PlayerPdfModule } from './player-pdf/player-pdf.module'
+import { PlayerOfflineSessionComponent } from './player-offline-session/player-offline-session.component'
+import { PlayerOfflineSessionModule } from './player-offline-session/player-offline-session.module'
 import { PlayerSlidesComponent } from './player-slides/player-slides.component'
 import { PlayerSlidesModule } from './player-slides/player-slides.module'
 import { PlayerVideoComponent } from './player-video/player-video.component'
@@ -169,6 +171,17 @@ import { BreadcrumbsOrgModule } from './breadcrumbs-org/breadcrumbs-org.module'
 import { CardNotifyComponent } from './card-notify/card-notify.component'
 import { PlayerSurveyComponent } from './player-survey/player-survey.component'
 import { PlayerSurveyModule } from './player-survey/player-survey.module'
+import { CardContentV2Component } from './card-content-v2/card-content-v2.component'
+import { CardContentV2Module } from './card-content-v2/card-content-v2.module'
+import { ContentStripWithTabsComponent } from './content-strip-with-tabs/content-strip-with-tabs.component'
+import { ProfileKarmapointsModule } from './profile-v2/profile-karmapoints/profile-karmapoints.module'
+import { ProfileKarmapointsComponent } from './profile-v2/profile-karmapoints/profile-karmapoints.component'
+import { CardEventHubComponent } from './card-event-hub/card-event-hub.component'
+import { CardEventHubModule } from './card-event-hub/card-event-hub.module'
+import { CardCompetencyComponent } from './card-competency/card-competency.component'
+import { CardCompetencyModule } from './card-competency/card-competency.module'
+import { TipsForLearnerModule } from './_common/tips-for-learner/tips-for-learner.module'
+import { SurveyFormModule } from './_common/survey-form-left-section/survey-form/survey-form.module'
 
 export const WIDGET_REGISTERED_MODULES = [
   AvatarPhotoModule,
@@ -191,7 +204,8 @@ export const WIDGET_REGISTERED_MODULES = [
   BtnProfileModule,
   BtnSettingsModule,
   CardBreadcrumbModule,
-  CardContentModule,
+  // CardContentModule,
+  CardContentV2Module,
   CardChannelModule,
   CardLearnModule,
   CardWelcomeModule,
@@ -213,6 +227,7 @@ export const WIDGET_REGISTERED_MODULES = [
   PlayerAmpModule,
   PlayerAudioModule,
   PlayerPdfModule,
+  PlayerOfflineSessionModule,
   PlayerSurveyModule,
   PlayerSlidesModule,
   PlayerVideoModule,
@@ -231,6 +246,7 @@ export const WIDGET_REGISTERED_MODULES = [
   ProfileCretificationsV2Module,
   ProfileDepartmentsModule,
   ProfileHobbiesModule,
+  ProfileKarmapointsModule,
   EmbeddedPageModule,
   SelectorResponsiveModule,
   DiscussionForumModule,
@@ -255,6 +271,10 @@ export const WIDGET_REGISTERED_MODULES = [
   LeftMenuModule,
   UIORGTableModule,
   BreadcrumbsOrgModule,
+  CardEventHubModule,
+  CardCompetencyModule,
+  TipsForLearnerModule,
+  SurveyFormModule,
 ]
 
 export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] = [
@@ -354,10 +374,15 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetSubType: ROOT_WIDGET_CONFIG.card.channel,
     component: CardChannelComponent,
   },
+  // {
+  //   widgetType: ROOT_WIDGET_CONFIG.card._type,
+  //   widgetSubType: ROOT_WIDGET_CONFIG.card.content,
+  //   component: CardContentComponent,
+  // },
   {
     widgetType: ROOT_WIDGET_CONFIG.card._type,
     widgetSubType: ROOT_WIDGET_CONFIG.card.content,
-    component: CardContentComponent,
+    component: CardContentV2Component,
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.card._type,
@@ -408,6 +433,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
     widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.multiStripNew,
     component: ContentStripNewMultipleComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.contentStrip.stripWithTabs,
+    component: ContentStripWithTabsComponent,
   },
   // {
   //   widgetType: ROOT_WIDGET_CONFIG.contentStrip._type,
@@ -476,6 +506,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.player._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.player.offlineSession,
+    component: PlayerOfflineSessionComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.player._type,
     widgetSubType: ROOT_WIDGET_CONFIG.player.slides,
     component: PlayerSlidesComponent,
   },
@@ -528,6 +563,11 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetType: ROOT_WIDGET_CONFIG.profileV2._type,
     widgetSubType: ROOT_WIDGET_CONFIG.profileV2.academics,
     component: ProfileAcademicsComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.profileV2._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.profileV2.karmapoints,
+    component: ProfileKarmapointsComponent,
   },
   {
     widgetType: ROOT_WIDGET_CONFIG.profileV2._type,
@@ -635,10 +675,19 @@ export const WIDGET_REGISTRATION_CONFIG: NsWidgetResolver.IRegistrationConfig[] 
     widgetSubType: ROOT_WIDGET_CONFIG.card.home_carrier,
     component: CardCarrierHomeComponent,
   },
-
   {
     widgetType: ROOT_WIDGET_CONFIG.menus._type,
     widgetSubType: ROOT_WIDGET_CONFIG.menus.leftMenu,
     component: LeftMenuComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.card._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.card.event_hub,
+    component: CardEventHubComponent,
+  },
+  {
+    widgetType: ROOT_WIDGET_CONFIG.card._type,
+    widgetSubType: ROOT_WIDGET_CONFIG.card.card_competency,
+    component: CardCompetencyComponent,
   },
 ]

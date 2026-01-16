@@ -15,14 +15,14 @@
       <div [ngClass]="{ 'mat-body-strong': !isSubmitted }">
         {{ timeLeft | pipeDurationTransform: 'hms' }}
       </div>
-      <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" i18n>
+      <div *ngIf="isSubmitted" class="margin-left-xs mat-body-strong" >
         (Submitted)
       </div>
     </div>
   </nav>
   <mat-sidenav-container class="sidenav-container" autosize>
     <mat-sidenav [mode]="sidenavMode" class="sidenav" #sidenav [opened]="sidenavOpenDefault">
-      <h2 class="mat-title margin-top-s text-center" i18n>Questions</h2>
+      <h2 class="mat-title margin-top-s text-center" >Questions</h2>
       <div class="flex flex-wrapped margin-right-s margin-left-s">
         <div class="col" *ngFor="let question of quizJson?.questions; let i = index">
           <div (click)="scroll(i + 1)" [ngClass]="{
@@ -62,7 +62,7 @@
               <mat-spinner></mat-spinner>
             </div>
           </div>
-          <h2 i18n class="mat-title" *ngIf="fetchingResultsStatus === 'error'">
+          <h2 class="mat-title" *ngIf="fetchingResultsStatus === 'error'">
             Unable to Submit
           </h2>
           <ng-container *ngIf="fetchingResultsStatus === 'done'">
@@ -71,8 +71,8 @@
             </h2>
             <!-- <h2 *ngIf="quizJson.isAssessment" class="mat-title">
               <ng-container i18n="quiz result label">Result:</ng-container>
-              <ng-container i18n *ngIf="isCompleted">PASS</ng-container>
-              <ng-container i18n *ngIf="!isCompleted">FAIL</ng-container>
+              <ng-container *ngIf="isCompleted">PASS</ng-container>
+              <ng-container *ngIf="!isCompleted">FAIL</ng-container>
             </h2> -->
             <div class="flex flex-wrapped flex-center text-center">
               <div class="card-section">

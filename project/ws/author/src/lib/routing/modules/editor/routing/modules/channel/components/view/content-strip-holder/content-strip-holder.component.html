@@ -18,10 +18,10 @@
   </ws-auth-renderer>
   <ws-auth-renderer *ngIf="showData ==='error'" [id]="widgetMap.error" [isSubmitPressed]="isSubmitPressed">
   </ws-auth-renderer>
-  <h1 class="mat-h1 margin-remove inline-block" *ngIf="showNoData" i18n>
+  <h1 class="mat-h1 margin-remove inline-block" *ngIf="showNoData" >
     No data available to show
   </h1>
-  <h1 class="mat-h1 margin-remove inline-block" *ngIf="showError" i18n>
+  <h1 class="mat-h1 margin-remove inline-block" *ngIf="showError" >
     Error while fetching content
   </h1>
   <ws-utils-horizontal-scroller *ngIf="!showNoData && !showError &&

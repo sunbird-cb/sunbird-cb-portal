@@ -1,0 +1,102 @@
+<ng-container *ngIf="banner && banner.enabled">
+    <ng-container [wsResolverWidget]="banner?.data"></ng-container>
+</ng-container>
+<ng-container *ngIf="eventsHome && eventsHome.enabled">
+    <div class="flex flex-col px-4 md:px-0 md:flex-row gap-6 mt-4">
+        <ng-container *ngIf="eventsHome?.data?.leftSection?.enabled">
+            <div class="block md:hidden ">
+                <div class="flex gap-3">
+                    <div *ngIf="eventsHome?.data?.leftSection?.data?.myEngagements?.enabled"
+                        class="mEngagementCard flex items-center justify-center p-2"
+                        (click)="openEventEngagementBottomSheet()">
+                        <div class="flex flex-col gap-3 items-center">
+                            <img class="engagement-icon"
+                                [src]="eventsHome?.data?.leftSection?.data?.myEngagements?.icon" alt="">
+                            <span class="myEngagements-sm">{{translateLabels(eventsHome?.data?.leftSection?.data?.myEngagements?.title?.id,
+                                'events')}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="eventsHome?.data?.leftSection?.data?.eventsCalendar?.enabled"
+                        class="mEngagementCard flex items-center justify-center p-2"
+                        (click)="openEventCalendartBottomSheet()">
+                        <div class="flex flex-col gap-3 items-center">
+                            <img class="engagement-icon"
+                                [src]="eventsHome?.data?.leftSection?.data?.eventsCalendar?.icon" alt="">
+                            <span class="myEngagements-sm">{{translateLabels(eventsHome?.data?.leftSection?.data?.eventsCalendar?.title?.id,
+                                'events')}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <div class="left flex flex-col gap-5">
+                    <div *ngIf="eventsHome?.data?.leftSection?.data?.myEngagements?.enabled">
+                        <ws-app-events-engagement [myEngagements]="eventsHome?.data?.leftSection?.data?.myEngagements"
+                            [engagementDetails]="engagementDetails"></ws-app-events-engagement>
+                    </div>
+                    <div *ngIf="eventsHome?.data?.leftSection?.data?.eventsCalendar?.enabled">
+                        <ws-app-events-calendar
+                            [eventCalendarDetails]="eventsHome?.data?.leftSection?.data?.eventsCalendar"></ws-app-events-calendar>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <div class="flex flex-col gap-6 right">
+            <ng-container *ngIf="eventsHome?.data?.rightSection?.data?.search?.enabled">
+                <div class="search">
+                    <div class=rsearch>
+                        <mat-icon class="search-icon">search</mat-icon>
+                        <!-- <input class="sinput w-full" type="Standard" label="" [formControl]="searchControl"
+                            [placeholder]=" eventsHome?.data?.rightSection?.data?.search?.placeHolder" (keydown.enter)="searchEvents($event)"> -->
+                        <input class="sinput w-full" type="Standard" label="" [formControl]="searchControl"
+                            [placeholder]="translateLabels(eventsHome?.data?.rightSection?.data?.search?.placeHolder, 'events')"
+                            (keydown.enter)="searchEvents($event)">
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="hidden md:block" *ngIf="eventsHome?.data?.rightSection?.data?.browse?.enabled">
+                <div class="category-header mb-4">
+                    {{translateLabels(eventsHome?.data?.rightSection?.data?.browse?.title?.id, 'events')}}
+                </div>
+
+                <div class="flex gap-4">
+                    <ng-container *ngFor="let browseData of eventsHome?.data?.rightSection?.data?.browse?.data">
+                        <ng-container *ngIf="browseData.enabled">
+                            <div class="flex gap-3 px-3 items-center categories-card" (click)="navigate(browseData)">
+                                <img [src]="browseData.icon">
+                                {{translateLabels(browseData.title?.id, 'events')}}
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="block md:hidden" *ngIf="eventsHome?.data?.rightSection?.data?.browse?.enabled">
+                <div class="category-header mb-4">
+                    {{translateLabels(eventsHome?.data?.rightSection?.data?.browse?.title?.id, 'events')}}
+                </div>
+
+                <div class="flex gap-4 mBrowse">
+                    <ng-container *ngFor="let browseData of eventsHome?.data?.rightSection?.data?.browse?.data">
+                        <ng-container *ngIf="browseData.enabled">
+                            <div class="flex gap-3 px-3 items-center categories-card" (click)="navigate(browseData)">
+                                <img [src]="browseData.icon">
+                                {{translateLabels(browseData.title?.id, 'events')}}
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+
+            <ng-container *ngFor="let widgetData of eventsHome?.data?.rightSection?.data?.eventStrips">
+                <ng-container *ngIf="widgetData && widgetData.enabled">
+                    <sb-uic-content-strip-with-tabs [widgetData]="widgetData"
+                        (telemtryResponse)="raiseTelemetryInteratEvent($event)">
+                    </sb-uic-content-strip-with-tabs>
+                </ng-container>
+            </ng-container>
+
+        </div>
+    </div>
+</ng-container>

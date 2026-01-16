@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Event, NavigationEnd, Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, EventService, NsPage, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, NsPage, WsEvents } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { MobileAppsService } from '../_services/mobile-apps.service'
@@ -74,6 +74,7 @@ export class BtnFeatureComponent extends WidgetBaseComponent
   }
 
   ngOnInit() {
+    // console.log('widgetData', this.widgetData)
     this.instanceVal = this.configSvc.rootOrg || ''
     if (this.configSvc.restrictedFeatures) {
       this.isPinFeatureAvailable = !this.configSvc.restrictedFeatures.has('pinFeatures')

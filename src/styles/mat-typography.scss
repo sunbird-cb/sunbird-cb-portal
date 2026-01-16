@@ -1,9 +1,18 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 @import 'ws-vars';
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core();
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
+@include mat.all-legacy-component-typographies();
+@include mat.legacy-core();
 /**
 mat-typography-level parameters:
 1. Font Size
@@ -13,194 +22,193 @@ mat-typography-level parameters:
 */
 // Line-height must be unit-less fraction of the font-size.
 
-$typography: mat-typography-config($font-family: 'Lato',
-  $display-4: mat-typography-level(112px, 112px, 400, $font-family-montserrat),
-  $display-3: mat-typography-level(56px, 56px, 400, $font-family-montserrat),
-  $display-2: mat-typography-level(45px, 52px, 400, $font-family-montserrat),
-  $display-1: mat-typography-level(36px, 40px, 300, $font-family-montserrat),
-  $headline: mat-typography-level(24px, 36px, 600, $font-family-montserrat),
-  $title: mat-typography-level(20px, 30px, 600, $font-family-montserrat),
-  $subheading-2: mat-typography-level(14px, 21px, 700, $font-family-lato),
-  $subheading-1: mat-typography-level(16px, 24px, 600, $font-family-montserrat),
-  $body-2: mat-typography-level(14px, 21px, 400, $font-family-lato),
-  $body-1: mat-typography-level(16px, 24px, 400, $font-family-lato),
-  $caption: mat-typography-level(12px, 18px, 400, $font-family-lato),
-  $button: mat-typography-level(14px, 21px, 700, $font-family-lato),
-  $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato));
-// $overline: mat-typography-level(20, 30, 400, $font-family-lato));
-@include angular-material-typography($typography);
+$typography: mat.define-legacy-typography-config($font-family: 'Lato',
+  $display-4: mat.define-typography-level(112px, 112px, 400, $font-family-montserrat),
+  $display-3: mat.define-typography-level(56px, 56px, 400, $font-family-montserrat),
+  $display-2: mat.define-typography-level(45px, 52px, 400, $font-family-montserrat),
+  $display-1: mat.define-typography-level(36px, 40px, 300, $font-family-montserrat),
+  $headline: mat.define-typography-level(24px, 36px, 600, $font-family-montserrat),
+  $title: mat.define-typography-level(20px, 30px, 600, $font-family-montserrat),
+  $subheading-2: mat.define-typography-level(14px, 21px, 700, $font-family-lato),
+  $subheading-1: mat.define-typography-level(16px, 24px, 600, $font-family-montserrat),
+  $body-2: mat.define-typography-level(14px, 21px, 400, $font-family-lato),
+  $body-1: mat.define-typography-level(16px, 24px, 400, $font-family-lato),
+  $caption: mat.define-typography-level(12px, 18px, 400, $font-family-lato),
+  $button: mat.define-typography-level(14px, 21px, 700, $font-family-lato),
+  $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato));
+@include mat.all-legacy-component-typographies($typography);
 
 .x-small-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px - 48px, 112px - 48px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px - 24px, 56px - 24px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(45px - 24px, 48px - 24px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px - 16px, 40px - 16px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px - 12px, 36px - 8px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px - 10px, 30px - 8px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px - 4px, 21px - 8px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px - 6px, 24px - 8px, 600, font-family-montserrat),
-      $body-2: mat-typography-level(14px - 4px, 21px - 8px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px - 4px, 24px - 8px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px - 4px, 18px - 8px, 400, $font-family-lato),
-      $button: mat-typography-level(14px - 4px, 21px - 4px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px - 48px, 112px - 48px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px - 24px, 56px - 24px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(45px - 24px, 48px - 24px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px - 16px, 40px - 16px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px - 12px, 36px - 8px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px - 10px, 30px - 8px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px - 4px, 21px - 8px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px - 6px, 24px - 8px, 600, font-family-montserrat),
+      $body-2: mat.define-typography-level(14px - 4px, 21px - 8px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px - 4px, 24px - 8px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px - 4px, 18px - 8px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px - 4px, 21px - 4px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .small-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px - 24px, 112px - 24px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px - 16px, 56px - 16px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(45px - 12px, 48px - 12px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px - 6px, 40px - 8px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px - 4px, 36px - 6px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px - 4px, 30px - 6px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px - 2px, 21px - 4px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px - 2px, 24px - 4px, 600, $font-family-montserrat),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px - 24px, 112px - 24px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px - 16px, 56px - 16px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(45px - 12px, 48px - 12px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px - 6px, 40px - 8px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px - 4px, 36px - 6px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px - 4px, 30px - 6px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px - 2px, 21px - 4px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px - 2px, 24px - 4px, 600, $font-family-montserrat),
       /* $headline: mat-typography-level(28px - 4px, 41px - 6px, 400),
     // $title: mat-typography-level(28px - 4px, 41px - 6px, 300),
     // $subheading-2: mat-typography-level(20px - 2px, 31px - 4px, 300),
     // $subheading-1: mat-typography-level(15px - 2px, 24px - 4px, 300), */
-      $body-2: mat-typography-level(14px - 2px, 21px - 4px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px - 2px, 24px - 4px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px - 2px, 18px - 4px, 400, $font-family-lato),
-      $button: mat-typography-level(14px - 2px, 21px - 2px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+      $body-2: mat.define-typography-level(14px - 2px, 21px - 4px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px - 2px, 24px - 4px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px - 2px, 18px - 4px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px - 2px, 21px - 2px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .large-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px + 24px, 112px + 24px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px + 16px, 56px + 16px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(45px + 12px, 48px + 12px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px + 6px, 40px + 8px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px + 4px, 36px + 6px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px + 4px, 30px + 6px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px + 2px, 21px + 4px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px + 2px, 24px + 4px, 600, $font-family-montserrat),
-      $body-2: mat-typography-level(14px + 2px, 21px + 4px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px + 2px, 24px + 4px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px + 2px, 18px + 4px, 400, $font-family-lato),
-      $button: mat-typography-level(14px + 2px, 21px + 2px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px + 24px, 112px + 24px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px + 16px, 56px + 16px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(45px + 12px, 48px + 12px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px + 6px, 40px + 8px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px + 4px, 36px + 6px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px + 4px, 30px + 6px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px + 2px, 21px + 4px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px + 2px, 24px + 4px, 600, $font-family-montserrat),
+      $body-2: mat.define-typography-level(14px + 2px, 21px + 4px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px + 2px, 24px + 4px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px + 2px, 18px + 4px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px + 2px, 21px + 2px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .x-large-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px + 48px, 112px + 48px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px + 24px, 56px + 24px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(48px + 24px, 48px + 24px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px + 16px, 40px + 16px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px + 12px, 36px + 8px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px + 10px, 30px + 8px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px + 4px, 21px + 8px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px + 6px, 24px + 8px, 600, $font-family-montserrat),
-      $body-2: mat-typography-level(14px + 4px, 21px + 8px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px + 4px, 24px + 8px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px + 4px, 18px + 8px, 400, $font-family-lato),
-      $button: mat-typography-level(14px + 4px, 21px + 4px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px + 48px, 112px + 48px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px + 24px, 56px + 24px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(48px + 24px, 48px + 24px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px + 16px, 40px + 16px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px + 12px, 36px + 8px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px + 10px, 30px + 8px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px + 4px, 21px + 8px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px + 6px, 24px + 8px, 600, $font-family-montserrat),
+      $body-2: mat.define-typography-level(14px + 4px, 21px + 8px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px + 4px, 24px + 8px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px + 4px, 18px + 8px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px + 4px, 21px + 4px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .custom-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px, 112px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px, 56px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(45px, 52px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px, 40px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px, 36px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px, 30px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px, 21px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px, 24px, 600, $font-family-montserrat),
-      $body-2: mat-typography-level(14px, 21px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px, 24px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px, 18px, 400, $font-family-lato),
-      $button: mat-typography-level(14px, 21px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px, 112px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px, 56px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(45px, 52px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px, 40px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px, 36px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px, 30px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px, 21px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px, 24px, 600, $font-family-montserrat),
+      $body-2: mat.define-typography-level(14px, 21px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px, 24px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px, 18px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px, 21px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .x-small-custom-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px - 48px, 112px - 48px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px - 24px, 56px - 24px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(45px - 24px, 48px - 24px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px - 16px, 40px - 16px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px - 12px, 36px - 8px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px - 10px, 30px - 8px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px - 4px, 21px - 8px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px - 6px, 24px - 8px, 600, $font-family-montserrat),
-      $body-2: mat-typography-level(14px - 4px, 21px - 8px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px - 4px, 24px - 8px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px - 4px, 18px - 8px, 400, $font-family-lato),
-      $button: mat-typography-level(14px - 4px, 21px - 4px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px - 48px, 112px - 48px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px - 24px, 56px - 24px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(45px - 24px, 48px - 24px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px - 16px, 40px - 16px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px - 12px, 36px - 8px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px - 10px, 30px - 8px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px - 4px, 21px - 8px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px - 6px, 24px - 8px, 600, $font-family-montserrat),
+      $body-2: mat.define-typography-level(14px - 4px, 21px - 8px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px - 4px, 24px - 8px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px - 4px, 18px - 8px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px - 4px, 21px - 4px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .small-custom-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px - 24px, 112px - 24px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px - 16px, 56px - 16px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(45px - 12px, 48px - 12px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px - 6px, 40px - 8px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px - 4px, 36px - 6px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px - 4px, 30px - 6px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px - 2px, 21px - 4px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px - 2px, 24px - 4px, 600, $font-family-montserrat),
-      $body-2: mat-typography-level(14px - 2px, 21px - 4px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px - 2px, 24px - 4px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px - 2px, 18px - 4px, 400, $font-family-lato),
-      $button: mat-typography-level(14px - 2px, 21px - 2px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px - 24px, 112px - 24px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px - 16px, 56px - 16px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(45px - 12px, 48px - 12px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px - 6px, 40px - 8px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px - 4px, 36px - 6px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px - 4px, 30px - 6px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px - 2px, 21px - 4px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px - 2px, 24px - 4px, 600, $font-family-montserrat),
+      $body-2: mat.define-typography-level(14px - 2px, 21px - 4px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px - 2px, 24px - 4px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px - 2px, 18px - 4px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px - 2px, 21px - 2px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .large-custom-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px + 24px, 112px + 24px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px + 16px, 56px + 16px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(45px + 12px, 48px + 12px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px + 6px, 40px + 8px, 400, $font-family-montserrat),
-      $headline: mat-typography-level(24px + 4px, 36px + 6px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px + 4px, 30px + 6px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px + 2px, 21px + 4px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px + 2px, 24px + 4px, 600, $font-family-montserrat),
-      $body-2: mat-typography-level(14px + 2px, 21px + 4px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px + 2px, 24px + 4px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px + 2px, 18px + 4px, 400, $font-family-lato),
-      $button: mat-typography-level(14px + 2px, 21px + 2px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px + 24px, 112px + 24px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px + 16px, 56px + 16px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(45px + 12px, 48px + 12px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px + 6px, 40px + 8px, 400, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px + 4px, 36px + 6px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px + 4px, 30px + 6px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px + 2px, 21px + 4px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px + 2px, 24px + 4px, 600, $font-family-montserrat),
+      $body-2: mat.define-typography-level(14px + 2px, 21px + 4px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px + 2px, 24px + 4px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px + 2px, 18px + 4px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px + 2px, 21px + 2px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }
 
 .x-large-custom-typography {
-  $typography: mat-typography-config($font-family: $font-family-lato,
-      $display-4: mat-typography-level(112px + 48px, 112px + 48px, 400, $font-family-montserrat),
-      $display-3: mat-typography-level(56px + 24px, 56px + 24px, 400, $font-family-montserrat),
-      $display-2: mat-typography-level(48px + 24px, 48px + 24px, 400, $font-family-montserrat),
-      $display-1: mat-typography-level(36px + 16px, 40px + 16px, 300, $font-family-montserrat),
-      $headline: mat-typography-level(24px + 12px, 36px + 8px, 600, $font-family-montserrat),
-      $title: mat-typography-level(20px + 10px, 30px + 8px, 600, $font-family-montserrat),
-      $subheading-2: mat-typography-level(14px + 4px, 21px + 8px, 700, $font-family-lato),
-      $subheading-1: mat-typography-level(16px + 6px, 24px + 8px, 600, $font-family-montserrat),
-      $body-2: mat-typography-level(14px + 4px, 21px + 8px, 400, $font-family-lato),
-      $body-1: mat-typography-level(16px + 4px, 24px + 8px, 400, $font-family-lato),
-      $caption: mat-typography-level(12px + 4px, 18px + 8px, 400, $font-family-lato),
-      $button: mat-typography-level(14px + 4px, 21px + 4px, 700, $font-family-lato),
-      $input: mat-typography-level(inherit, 1.125, 400, $font-family-lato),
+  $typography: mat.define-legacy-typography-config($font-family: $font-family-lato,
+      $display-4: mat.define-typography-level(112px + 48px, 112px + 48px, 400, $font-family-montserrat),
+      $display-3: mat.define-typography-level(56px + 24px, 56px + 24px, 400, $font-family-montserrat),
+      $display-2: mat.define-typography-level(48px + 24px, 48px + 24px, 400, $font-family-montserrat),
+      $display-1: mat.define-typography-level(36px + 16px, 40px + 16px, 300, $font-family-montserrat),
+      $headline: mat.define-typography-level(24px + 12px, 36px + 8px, 600, $font-family-montserrat),
+      $title: mat.define-typography-level(20px + 10px, 30px + 8px, 600, $font-family-montserrat),
+      $subheading-2: mat.define-typography-level(14px + 4px, 21px + 8px, 700, $font-family-lato),
+      $subheading-1: mat.define-typography-level(16px + 6px, 24px + 8px, 600, $font-family-montserrat),
+      $body-2: mat.define-typography-level(14px + 4px, 21px + 8px, 400, $font-family-lato),
+      $body-1: mat.define-typography-level(16px + 4px, 24px + 8px, 400, $font-family-lato),
+      $caption: mat.define-typography-level(12px + 4px, 18px + 8px, 400, $font-family-lato),
+      $button: mat.define-typography-level(14px + 4px, 21px + 4px, 700, $font-family-lato),
+      $input: mat.define-typography-level(inherit, 1.125, 400, $font-family-lato),
     );
-  @include angular-material-typography($typography);
+  @include mat.all-legacy-component-typographies($typography);
 }

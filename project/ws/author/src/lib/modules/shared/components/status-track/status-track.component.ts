@@ -4,7 +4,7 @@ import { WorkFlowService } from '@ws/author/src/lib/services/work-flow.service'
 import { ISearchContent } from '@ws/author/src/lib/interface/search'
 import { NSContent } from '@ws/author/src/lib/interface/content'
 import { Component, Input, OnInit, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
 
 interface IWorkFlowLog {
   name: string
@@ -72,7 +72,9 @@ export class StatusTrackComponent implements OnInit {
         this.workFlowLog.push(log)
       })
     const systemFlow = this.workFlowService.getWorkFlow(this.content)
-    this.currentStage = systemFlow.indexOf(this.content.status)
+    if (this.content.status) {
+      this.currentStage = systemFlow.indexOf(this.content.status)
+    }
     if (this.currentStage > -1) {
       systemFlow
         .filter(v => v !== 'Processing')

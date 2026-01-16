@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms'
 import { CertificateDetailsComponent } from './components/index'
 import { CertificateService } from './services/certificate.service'
 import { ApiService } from '@ws/author/src/public-api'
-import { MatIconModule } from '@angular/material'
+import { MatIconModule } from '@angular/material/icon'
 // import { SharedModule } from '@sunbird/shared';
 // import { TelemetryModule } from '@sunbird/telemetry';
 // import { PlayerHelperModule } from '@sunbird/player-helper';

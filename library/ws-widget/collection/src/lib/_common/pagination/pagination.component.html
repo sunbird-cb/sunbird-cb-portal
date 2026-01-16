@@ -1,0 +1,35 @@
+<div class="ws-pagination-wrapper px-2 md:px-4 mt-3">
+    <div class="pagination-size-select mat-full-radius-select flex items-center gap-2">
+        <span class="text-xs font-normal hidden md:block">{{pageMessage}}</span>
+        <mat-form-field appearance="outline">
+            <mat-select [(value)]="defaultPaginationSize" (selectionChange)="onChangePageSize($event)">
+                <ng-container *ngFor="let option of defaultPaginationSizeOptions">
+                    <mat-option [value]="option">{{option}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <ul class="pagination">
+        <div class="pagination-listing flex items-center">
+            <ng-container
+                *ngFor="let count of pagination.paginationLength; let last = last; let first = first; let i = index">
+                <li class="page-item" *ngIf="first" (click)="navigateToPrevPage(currentPage)"
+                    [ngClass]="{disabled: currentPage === firstPage}">
+                    <a class="page-link" aria-label="Previous">
+                        <span aria-hidden="true"><mat-icon>keyboard_arrow_left</mat-icon></span>
+                    </a>
+                </li>
+                <li class="page-item flex items-center justify-center" [ngClass]="count == currentPage ? 'active' : '' "
+                    (click)="goToPage(count)">
+                    <a class="page-link">{{count}}</a>
+                </li>
+                <li class="page-item" *ngIf="last" (click)="navigateToNextPage(currentPage)"
+                    [ngClass]="{disabled: currentPage === lastPage}">
+                    <a class=" page-link" aria-label="Next">
+                        <span aria-hidden="true"><mat-icon>keyboard_arrow_right</mat-icon></span>
+                    </a>
+                </li>
+            </ng-container>
+        </div>
+    </ul>
+</div>

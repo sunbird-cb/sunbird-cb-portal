@@ -3,12 +3,14 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 // import { environment } from './../../../environments/environment'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsInstanceConfig } from '@sunbird-cb/utils'
+import { ConfigurationsService, MultilingualTranslationsService, NsInstanceConfig } from '@sunbird-cb/utils-v2'
+
 import { BtnPageBackService } from './btn-page-back.service'
 import { DiscussUtilsService } from '@ws/app/src/lib/routes/discuss/services/discuss-utils.service'
 import { environment } from 'src/environments/environment'
 // tslint:disable
 import _ from 'lodash'
+import { TranslateService } from '@ngx-translate/core'
 // tslint:enable
 
 type TUrl = undefined | 'none' | 'back' | string
@@ -33,7 +35,7 @@ type TUrl = undefined | 'none' | 'back' | string
 })
 export class BtnPageBackComponent extends WidgetBaseComponent
   implements OnInit, NsWidgetResolver.IWidgetData<{ url: TUrl }> {
-  @Input() widgetData: { url: TUrl, titles?: NsWidgetResolver.ITitle[] } = { url: 'none', titles: [] }
+  @Input() widgetData: { url: TUrl, titles?: NsWidgetResolver.ITitle[], textClass?: string } = { url: 'none', titles: [] }
   presentUrl = ''
   @HostBinding('id')
   public id = 'nav-back'
@@ -47,8 +49,15 @@ export class BtnPageBackComponent extends WidgetBaseComponent
     public router: Router,
     private configSvc: ConfigurationsService,
     private discussUtilitySvc: DiscussUtilsService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService
   ) {
     super()
+    if (localStorage.getItem('websiteLanguage')) {
+      this.translate.setDefaultLang('en')
+      const lang = localStorage.getItem('websiteLanguage')!
+      this.translate.use(lang)
+    }
   }
 
   ngOnInit() {
@@ -173,6 +182,10 @@ export class BtnPageBackComponent extends WidgetBaseComponent
     }
     const value = this.hasRole(roles)
     return value
+  }
+
+  translateLabels(label: string, type: any, subtype: any) {
+    return this.langtranslations.translateLabel(label, type, subtype)
   }
 
 }

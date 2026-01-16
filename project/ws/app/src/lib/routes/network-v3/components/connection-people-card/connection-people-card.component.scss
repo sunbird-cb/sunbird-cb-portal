@@ -1,0 +1,83 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.peoples-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.card-container {
+    height: 195px;
+    width:  170px;
+    border: 1px solid rgba(0,0,0,8%);
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.08);
+}
+
+.photo-container{
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.name-container {
+    padding: $size-m $size-l 10px;
+    height: 95px;
+}
+.name-container-inner {
+    height: 65px;
+    box-sizing: border-box;
+}
+.name{
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+.designation{
+    line-height: 21px;
+    height: 21px;
+    overflow: hidden;
+    /*stylelint-disable */
+    font: 400 12px Lato
+    /*stylelint-enable */;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+}
+.action-container {
+    position: relative;
+    bottom: 0; 
+    left: 0;
+}
+.connect_btn {
+    width: 115px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #1B4CA11A !important;
+    border: 1px solid #1B4CA1!important;
+}
+
+.disabled-btn {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.connection-sent {
+    border: 1px solid #999999 !important;
+    color: #999999 !important;
+    pointer-events: none;
+    height: 30px;
+    border-radius: 15px;
+}
+    
+
+.connect-icon {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+:host ::ng-deep .mat-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

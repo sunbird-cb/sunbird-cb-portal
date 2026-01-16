@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild, ViewEncapsulation } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Observable } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
 import { ISearchAutoComplete } from '../../models/search.model'
@@ -18,7 +18,7 @@ export class SearchInputComponent implements OnInit, OnChanges {
   @Input() placeHolder = ''
   @Input() ref = ''
   @Output() closed: EventEmitter<boolean> = new EventEmitter()
-  queryControl = new FormControl(this.activated.snapshot.queryParams.q || 'all')
+  queryControl = new UntypedFormControl(this.activated.snapshot.queryParams.q || 'all')
   languageSearch: string[] = []
   filteredOptions$: Observable<string[]> = this.queryControl.valueChanges.pipe(
     startWith(this.queryControl.value),
@@ -26,7 +26,7 @@ export class SearchInputComponent implements OnInit, OnChanges {
     distinctUntilChanged(),
     switchMap(() => []),
   )
-  @ViewChild('searchInput', { static: false }) searchInputElem: ElementRef<any> = {} as ElementRef<
+  @ViewChild('searchInput') searchInputElem: ElementRef<any> = {} as ElementRef<
     any
   >
   autoCompleteResults: ISearchAutoComplete[] = []

@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { MatButtonModule, MatDialogModule, MatIconModule, MatRadioModule } from '@angular/material'
-import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field'
 import { DialogBoxAdminComponent } from './dialog-box-admin.component'
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button'
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog'
+import { MatIconModule } from '@angular/material/icon'
+import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio'
 
 @NgModule({
   declarations: [DialogBoxAdminComponent],

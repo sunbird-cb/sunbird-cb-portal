@@ -1,7 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MatDialog, MatSnackBar } from '@angular/material'
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   BtnPlaylistService,
@@ -13,7 +12,7 @@ import {
   WidgetContentService,
 } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 // tslint:disable-next-line:max-line-length
 import { PlaylistContentDeleteDialogComponent } from '../../components/playlist-content-delete-dialog/playlist-content-delete-dialog.component'
@@ -25,6 +24,8 @@ import {
   PLAYLIST_TITLE_MAX_LENGTH,
   PLAYLIST_TITLE_MIN_LENGTH,
 } from '../../constants/playlist.constant'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-playlist-detail',
@@ -54,7 +55,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       errorType: 'internalServer',
     },
   }
-  editPlaylistForm!: FormGroup
+  editPlaylistForm!: UntypedFormGroup
   changeName!: boolean
   defaultThumbnail: string | undefined = ''
   deletedContents = new Set()
@@ -65,7 +66,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   screenSizeSubscription: Subscription | null = null
 
   constructor(
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     public configSvc: ConfigurationsService,
     public contentSvc: WidgetContentService,
@@ -241,6 +242,9 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
               undefined,
               firstPlayableContent.primaryCategory
             )
+
+            /* tslint:disable-next-line */
+            console.log(this.playlistPlayLink,'=====> playlist  firstPlayableContent url link <========')
           }
         })
       },                                                         _err => {
@@ -255,6 +259,9 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
               undefined,
               firstPlayableContent.primaryCategory
             )
+
+            /* tslint:disable-next-line */
+            console.log(this.playlistPlayLink,'=====> playlist  firstPlayableContent url 252 link <========')
           }
         })
       })

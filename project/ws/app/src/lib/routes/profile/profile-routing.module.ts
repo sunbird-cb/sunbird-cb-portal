@@ -2,7 +2,7 @@ import { AccountPasswordSettingsComponent } from './routes/settings/components/a
 import { PrivacySettingsComponent } from './routes/settings/components/privacy-settings/privacy-settings.component'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@sunbird-cb/utils-v2'
 import { ProfileComponent } from './profile.component'
 import { LearningComponent } from './routes/analytics/routes/learning/learning.component'
 import { PlansComponent } from './routes/analytics/routes/plans/plans.component'
@@ -25,6 +25,7 @@ import { BadgesComponent } from './routes/badges/badges.component'
 import { GeneralGuard } from '../../../../../../../src/app/guards/general.guard'
 import { ProfileResolverService } from './resolvers/profile-resolver.service'
 import { NotificationSettingsComponent } from './routes/settings/components/notification-settings/notification-settings.component'
+import { ProfileVisibilitySettingsComponent } from './routes/settings/components/profile-visibility-settings/profile-visibility-settings.component'
 
 const routes: Routes = [
   {
@@ -39,7 +40,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile',
       pageId: 'dashboard',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -61,7 +62,7 @@ const routes: Routes = [
         component: BadgesComponent,
         data: {
           pageId: 'badges',
-          module: 'profile',
+          module: 'Profile',
         },
         resolve: {
           badges: BadgesResolver2,
@@ -74,7 +75,7 @@ const routes: Routes = [
         component: AchievementsComponent,
         data: {
           pageId: ':type',
-          module: 'profile',
+          module: 'Profile',
         },
         resolve: {
           competencyData: CompetencyResolverService,
@@ -86,7 +87,7 @@ const routes: Routes = [
         component: CardDetailComponent,
         data: {
           pageId: ':type/details',
-          module: 'profile',
+          module: 'Profile',
         },
       },
     ],
@@ -94,7 +95,7 @@ const routes: Routes = [
       pageType: 'feature',
       pageKey: 'profile',
       pageId: 'competency',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       pageData: PageResolve,
@@ -157,7 +158,7 @@ const routes: Routes = [
     component: InterestComponent,
     data: {
       pageId: 'interest',
-      module: 'profile',
+      module: 'Profile',
     },
     resolve: {
       interests: InterestUserResolve,
@@ -169,7 +170,7 @@ const routes: Routes = [
     component: PlansComponent,
     data: {
       pageId: 'plans',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -184,8 +185,10 @@ const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     data: {
-      pageId: 'notification',
-      module: 'profile',
+      pageType: 'feature',
+      pageKey: 'profile',
+      pageId: 'settings',
+      module: 'Profile',
     },
   },
   {
@@ -193,7 +196,7 @@ const routes: Routes = [
     component: NotificationSettingsComponent,
     data: {
       pageId: 'notification',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -201,7 +204,7 @@ const routes: Routes = [
     component: PrivacySettingsComponent,
     data: {
       pageId: 'privacy',
-      module: 'profile',
+      module: 'Profile',
     },
   },
   {
@@ -209,7 +212,15 @@ const routes: Routes = [
     component: AccountPasswordSettingsComponent,
     data: {
       pageId: 'accountandpassword',
-      module: 'profile',
+      module: 'Profile',
+    },
+  },
+  {
+    path: 'profile-visibility',
+    component: ProfileVisibilitySettingsComponent,
+    data: {
+      pageId: 'profile-visibility',
+      module: 'Profile',
     },
   },
 ]
@@ -224,6 +235,7 @@ const routes: Routes = [
         data: {
           pageType: 'feature',
           pageKey: 'profile',
+          pageId: 'app/profile',
         },
         resolve: {
           pageData: PageResolve,

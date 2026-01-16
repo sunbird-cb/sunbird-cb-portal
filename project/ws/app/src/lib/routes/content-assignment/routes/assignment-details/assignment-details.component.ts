@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   ContentAssignService,
@@ -9,7 +9,7 @@ import {
   ConfigurationsService,
   NsPage,
   TFetchStatus,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-assignment-details',

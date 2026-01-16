@@ -5,8 +5,8 @@
         <h2 class="heading margin-remove">Contents </h2>
         <a href="javascript:void(0)" role="button" class="expandButton"
           *ngIf="!contextPath || contextPath !== 'Collection'" (click)="expandAll = !expandAll" mat-button>
-          <ng-container *ngIf="!expandAll" i18n>Expand All</ng-container>
-          <ng-container *ngIf="expandAll" i18n>Collapse All</ng-container>
+          <ng-container *ngIf="!expandAll" >Expand All</ng-container>
+          <ng-container *ngIf="expandAll" >Collapse All</ng-container>
         </a>
       </div> -->
       <div class="content-card padding-right-m padding-left-m padding-top-s padding-bottom-s margin-bottom-m" *ngFor="let card of content?.children; trackBy: contentTrackBy">
@@ -17,8 +17,8 @@
     <ng-template #noChildren>
       <div *ngIf="!isPlayable"
         class="ws-mat-primary-default-text ws-mat-primary-lite-background px-6 py-8 font-normal text-base noChildren"
-        i18n>
-        The preview for this type of content is unavailable. Please click on Start button above to view.
+       >
+        {{ 'apptocontents.previewContentUnavailable' | translate }}
       </div>
       <ng-container *ngIf="isPlayable" [wsResolverWidget]="contentPlayWidgetConfig"></ng-container>
     </ng-template>
@@ -26,7 +26,7 @@
   <!-- <div class="side-container">
     Part Of
     <div class="margin-bottom-l" *ngIf="contentParents?.length">
-      <h2 class="margin-remove" i18n>This content is also part of</h2>
+      <h2 class="margin-remove" >This content is also part of</h2>
       <mat-nav-list>
         <a
           [routerLink]="'../../' + parent?.identifier + '/overview'"
@@ -43,18 +43,18 @@
         <div *ngIf="contentParents?.length > 3" class="text-right">
           <button type="button" mat-button color="primary" (click)="expandPartOf = !expandPartOf">
             <ng-container *ngIf="!expandPartOf">
-              <ng-container i18n>View </ng-container>
+              <ng-container >View </ng-container>
               <ng-container>{{ contentParents?.length - 3 }}</ng-container>
-              <ng-container i18n> More</ng-container>
+              <ng-container > More</ng-container>
             </ng-container>
-            <ng-container *ngIf="expandPartOf" i18n>View Less</ng-container>
+            <ng-container *ngIf="expandPartOf" >View Less</ng-container>
           </button>
         </div>
       </mat-nav-list>
     </div> -->
   <!-- Playground resources -->
   <!-- <div class="playgrounds-container" *ngIf="content?.playgroundResources?.length">
-      <h2 i18n>Playgrounds</h2>
+      <h2 >Playgrounds</h2>
       <ws-utils-horizontal-scroller [loadStatus]="'done'">
         <div
           *ngFor="let playground of content?.playgroundResources; trackBy: contentTrackBy"

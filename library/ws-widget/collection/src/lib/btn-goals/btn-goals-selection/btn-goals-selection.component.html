@@ -10,9 +10,9 @@
   </div>
 </div>
 <div class="mt-2 flex flex-row-reverse">
-  <button mat-button [mat-dialog-close]="true" i18n>Done</button>
+  <button mat-button [mat-dialog-close]="true" >Done</button>
   <a (click)="closeDialog.emit()" [routerLink]="'/app/goals/create/custom'"
-    [queryParams]="{ preselected: contentId, preselectedName: contentName }" mat-button i18n i18n>Create
+    [queryParams]="{ preselected: contentId, preselectedName: contentName }" mat-button >Create
     New</a>
 </div>
 

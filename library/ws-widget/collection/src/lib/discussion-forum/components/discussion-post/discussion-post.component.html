@@ -13,12 +13,12 @@
             <div class="padding-left-l width-expand flex flex-end datePost">
               <div class="post-date" *ngIf="!post?.lastEdited?.dtLastEdited?.length">
                 {{ post?.dtLastModified | date }}
-                <ng-container i18n> at </ng-container>
+                <ng-container > at </ng-container>
                 <ng-container>{{ post?.dtLastModified | date: 'shortTime' }}</ng-container>
               </div>
               <div class="post-date" *ngIf="post?.lastEdited?.dtLastEdited?.length">
                 {{ post?.lastEdited.dtLastEdited | date }}
-                <ng-container i18n> at </ng-container>
+                <ng-container > at </ng-container>
                 <ng-container>{{ post?.lastEdited.dtLastEdited | date: 'shortTime' }}</ng-container>
               </div>
               <div>
@@ -43,12 +43,12 @@
           <div class="padding-left-l width-expand flex flex-end datePost">
             <div class="post-date" *ngIf="!post?.lastEdited?.dtLastEdited?.length">
               {{ post?.dtLastModified | date }}
-              <ng-container i18n> at </ng-container>
+              <ng-container > at </ng-container>
               <ng-container>{{ post?.dtLastModified | date: 'shortTime' }}</ng-container>
             </div>
             <div class="post-date" *ngIf="post?.lastEdited?.dtLastEdited?.length">
               {{ post?.lastEdited.dtLastEdited | date }}
-              <ng-container i18n> at </ng-container>
+              <ng-container > at </ng-container>
               <ng-container>{{ post?.lastEdited.dtLastEdited | date: 'shortTime' }}</ng-container>
             </div>
             <div>
@@ -111,7 +111,7 @@
             Update
           </button>
           <button type="button" name="discussion-post-cancel-button" class="margin-top-s margin-left-s"
-            mat-stroked-button color="primary" i18n (click)="editMode = false">
+            mat-stroked-button color="primary" (click)="editMode = false">
             Cancel
           </button>
         </div>
@@ -138,11 +138,11 @@
     <div *ngIf="replyFetchStatus === 'hasMore' || isNewRepliesAvailable"
       class="text-center margin-top-xs margin-bottom-s flex flex-around">
       <button name="discussion-post-load-previous-replies-button" type="button" mat-stroked-button color="primary"
-        *ngIf="replyFetchStatus === 'hasMore'" (click)="fetchPostReplies()" i18n>
+        *ngIf="replyFetchStatus === 'hasMore'" (click)="fetchPostReplies()" >
         Load Previous Replies
       </button>
       <button name="discussion-post-load-new-replies-button" type="button" mat-stroked-button color="primary"
-        *ngIf="isNewRepliesAvailable" (click)="fetchPostReplies(true)" i18n>
+        *ngIf="isNewRepliesAvailable" (click)="fetchPostReplies(true)" >
         Load New Replies
       </button>
     </div>
@@ -151,7 +151,7 @@
 
     <div class="padding-left-m width-expand">
       <!-- <div name="discussion-post-respond-toggle-button" [hidden]="replyPlaceholderToggler"
-        (click)="replyPlaceholderToggler = !replyPlaceholderToggler" class="write-reply-placeholder" role="button" i18n>
+        (click)="replyPlaceholderToggler = !replyPlaceholderToggler" class="write-reply-placeholder" role="button" >
         Respond to this thread
       </div> -->
       <h4 class="reply-heading">Respond to this thread</h4>
@@ -165,11 +165,11 @@
           <div class="text-right padding-top-s mat-app-background btn-container">
             <button name="discussion-post-reply-button" class="discussion-forum-action-button"
               [disabled]="!isValidReply || isPostingReply" (click)="publishReply(editFailMsg.value)" type="button"
-              mat-raised-button color="primary" i18n>
+              mat-raised-button color="primary" >
               Reply
             </button>
             <button name="discussion-post-cancel-reply-button" type="button" class="margin-left-xs" mat-stroked-button
-              (click)="replyPlaceholderToggler = !replyPlaceholderToggler" i18n>
+              (click)="replyPlaceholderToggler = !replyPlaceholderToggler" >
               Cancel
             </button>
             <div *ngIf="isPostingReply" class="text-center">
@@ -185,10 +185,10 @@
 <mat-menu #editMenu="matMenu">
   <ng-template matMenuContent>
 
-    <button name="discussion-post-edit-button" type="button" (click)="editMode = true" mat-menu-item i18n>Edit
+    <button name="discussion-post-edit-button" type="button" (click)="editMode = true" mat-menu-item >Edit
       Post</button>
     <button name="discussion-post-delete-button" type="button" (click)="deletePost(deleteFailMsg.value)" mat-menu-item
-      i18n>
+     >
       Delete Post
     </button>
   </ng-template>

@@ -1,0 +1,14 @@
+<div>
+    <div class="dialog-close">
+        <img src="assets/icons/home/decline_icon.svg" [mat-dialog-close]="false" alt="">
+    </div>
+    <div>
+      <ng-container *ngIf="data.component">
+        <ng-template #target></ng-template>
+      </ng-container>
+      <ng-container *ngIf="data.template">
+          <ng-container [ngTemplateOutlet]="data.template"></ng-container>
+      </ng-container>
+    </div>
+</div>
+

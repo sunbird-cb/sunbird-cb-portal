@@ -43,7 +43,7 @@
           </mat-chip-list>
         </div>
         <div class="creation">
-          <span class="mat-caption" i18n>asked</span>&nbsp;
+          <span class="mat-caption" >asked</span>&nbsp;
           <span class="mat-caption">{{ item.dtCreated | date }}</span>&nbsp;
           <span class="ws-mat-primary-text">
             {{ item.postCreator.name }}
@@ -58,8 +58,8 @@
 
 <mat-menu #editMenu="matMenu">
   <ng-template matMenuContent>
-    <a [routerLink]="'./edit/' + item.id" mat-menu-item i18n>Edit Question</a>
-    <button (click)="deletePost(deleteMsg.value)" mat-menu-item i18n>Delete Question</button>
+    <a [routerLink]="'./edit/' + item.id" mat-menu-item >Edit Question</a>
+    <button (click)="deletePost(deleteMsg.value)" mat-menu-item >Delete Question</button>
   </ng-template>
 </mat-menu>
 <input type="hidden" i8n-value value="Successfully deleted" #deleteMsg />

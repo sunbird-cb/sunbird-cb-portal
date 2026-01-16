@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { FormControl } from '@angular/forms'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
+import { UntypedFormControl } from '@angular/forms'
 @Component({
   selector: 'ws-app-view-users',
   templateUrl: './view-users.component.html',
@@ -12,7 +12,7 @@ export class ViewUsersComponent implements OnInit {
     noOfUser: string
   }
   userDataList: any[] = []
-  searchControl = new FormControl()
+  searchControl = new UntypedFormControl()
   constructor(
     private dialogRef: MatDialogRef<ViewUsersComponent>,
     @Inject(MAT_DIALOG_DATA) data: {

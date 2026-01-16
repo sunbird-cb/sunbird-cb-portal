@@ -73,17 +73,17 @@
   </div>
   <div *ngIf="noContent && searchRequestStatus === 'done'" class="margin-top-m margin-left-xl">
     <h2 class="mat-h2" i18n="search route no result">No result</h2>
-    <h3 class="mat-h3" i18n>You may try</h3>
+    <h3 class="mat-h3" >You may try</h3>
     <div class="padding-left-s">
       <h4 [hidden]="!filtersResetAble">
-        <ng-container i18n> Removing Filters </ng-container>
+        <ng-container > Removing Filters </ng-container>
         <button (click)="removeFilters()" type="button" mat-icon-button>
           <mat-icon>restore</mat-icon>
         </button>
       </h4>
       <!-- <h4>
-            <span i18n>Browsing</span>&nbsp;
-            <a [routerLink]="'/catalog'" i18n class="catalog-link">Catalog</a>
+            <span >Browsing</span>&nbsp;
+            <a [routerLink]="'/catalog'" class="catalog-link">Catalog</a>
           </h4> -->
       <h4>Different keywords</h4>
     </div>

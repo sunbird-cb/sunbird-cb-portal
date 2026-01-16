@@ -1,6 +1,6 @@
 import { AuthInitService } from '@ws/author/src/lib/services/init.service'
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
@@ -10,8 +10,8 @@ import { EditorContentV2Service } from '@ws/author/src/lib/routing/modules/edito
 import { EditorContentService } from '@ws/author/src/lib/routing/modules/editor/services/editor-content.service'
 import { Subscription } from 'rxjs'
 import { filter } from 'rxjs/operators'
-import { MatDialog } from '@angular/material'
-import { ValueService } from '@sunbird-cb/utils'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { StatusTrackComponent } from '../../../../../modules/shared/components/status-track/status-track.component'
 
 @Component({

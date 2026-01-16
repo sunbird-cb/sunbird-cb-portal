@@ -1,0 +1,32 @@
+<div class="profile-card flex flex-col gap-3 justify-center items-center">
+  <div class="profile-card-header w-full flex flex-col justify-center items-center">
+    <ng-container *ngIf="!profileDetailsLoading; else bannerLoader">
+      <ng-container *ngIf="bannerImageUrl; else defaultBanner">
+        <img class="banner-image" [src]="bannerImageUrl" alt="banner pic" />
+      </ng-container>
+      <ng-template #defaultBanner>
+        <img class="banner-image" src="./assets/icons/profile_cover_pic.svg" alt="default banner pic" />
+      </ng-template>
+      <div class="profile-image">
+        <ws-widget-avatar-photo 
+          [photoUrl]="profileImageUrl"
+          [initials]="nameInitials"
+          [name]="userName"
+          [size]="'round-xl'"
+        ></ws-widget-avatar-photo>
+      </div>
+    </ng-container>
+    <ng-template #bannerLoader>
+      <ws-widget-skeleton-loader [width]="'270px'" [height]="'94px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+    </ng-template>
+  </div>
+  <ng-container *ngIf="!profileDetailsLoading; else userNameLoader">
+    <div class="userName">
+      {{ userName }}
+    </div>
+  </ng-container>
+  <ng-template #userNameLoader>
+    <ws-widget-skeleton-loader [width]="'100px'" [height]="'20px'" [bindingClass]="'flex rounded margin-bottom-xs'"></ws-widget-skeleton-loader>
+  </ng-template>
+  <button mat-button class="view-profile-btn mb-4" (click)="viewProfile()">{{ 'NetworkLandingPage.viewMyProfile' | translate}}</button>
+</div>

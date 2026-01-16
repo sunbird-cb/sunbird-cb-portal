@@ -190,6 +190,13 @@
   align-items: center;
 }
 
+.flex-align-start {
+  align-items: flex-start;
+}
+.flex-align-end {
+  align-items: flex-end;
+}
+
 .flex-around {
   justify-content: space-around;
 }
@@ -450,7 +457,8 @@
 }
 
 .margin-top-m {
-  margin-top: $size-m !important;
+  // rating was miss aligned for dynamic card
+  // margin-top: $size-m !important;
 }
 
 .margin-top-l {
@@ -549,7 +557,7 @@
   }
 }
 
-//vis-network
+// vis-network
 .vis-network {
   outline: 0em !important;
 }
@@ -557,4 +565,42 @@
 .backdropBackground {
   background-color: darkgrey;
   opacity: 0.8 !important;
+}
+
+
+.btn-primary {
+  background-color: #1B4CA1 !important;
+  color: white !important;
+  border-radius: 20px;
+}
+
+.btn-secondary {
+  border: 1px solid #1B4CA1 !important;
+  color: #1B4CA1 !important;
+  border-radius: 20px;
+}
+
+.btn-with-out-border {
+  background-color: transparent !important;
+  color: #00000099 !important;
+  border: none !important;
+}
+
+.btn-common {
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  border-radius: 25px !important;
+  line-height: normal !important;
+  height: 35px !important;
+  min-height: 34px !important;
+  align-self: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  background: white;
+}
+
+.btn-disable {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

@@ -1,0 +1,96 @@
+<div class="profile-editor-container flex flex-col gap-4">
+  <div class="profile-editor-header">
+    <div class="flex justify-between items-center">
+      <div class="header-title">
+        <div>{{ 'profileInfo.customFields' | translate }}</div>
+        <div class="description-hint mt-1">
+          {{ 'profileInfo.customFieldshint' | translate }}
+        </div>
+      </div>
+      <button mat-icon-button class="close-button" (click)="handleCancel()"
+        *ngIf="customFieldValues && customFieldValues.length">
+        <span class="sr-only">{{ 'profileInfo.close' | translate }}</span>
+        <mat-icon class="close-icon">close</mat-icon>
+      </button>
+    </div>
+    <hr class="solid">
+    <div class="custom-attr-edit" *ngIf="editCustomDetails">
+      <form [formGroup]="customAttrForm">
+        <div class="grid-containers">
+          <!-- Text fields remain in their own grid cells -->
+          <ng-container *ngFor="let field of customAttrList">
+            <div class="flex flex-col pr-3" *ngIf="field?.type === 'text'">
+              <div class="profile-control">
+                <div class="label">{{field?.name}} <strong *ngIf="field?.isMandatory" class="text-red-700">*</strong>
+                </div>
+                <mat-form-field class="profile-form-field w-full">
+                  <input type="text" class="input-text w-full" matInput [formControlName]="field?.attributeName"
+                    [maxlength]="field?.attributeMaxLength" />
+                  <mat-error class="text-xs mt-6"
+                    *ngIf="customAttrForm.get(field?.attributeName)?.touched && customAttrForm.get(field?.attributeName)?.hasError('required') && !customAttrForm.get(field.attributeName)?.hasError('pattern')">
+                    {{field?.name }} is required
+                  </mat-error>
+                  <mat-error class="text-xs mt-6"
+                    *ngIf="customAttrForm.get(field?.attributeName)?.touched && !customAttrForm.get(field?.attributeName)?.hasError('required') && customAttrForm.get(field.attributeName)?.hasError('pattern')">
+                    Invalid input.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="description-hint mb-3" *ngIf="field?.description">
+                Description: {{field?.description}}
+              </div>
+            </div>
+          </ng-container>
+          <!-- MasterList fields - Each dropdown gets its own grid cell -->
+          <ng-container *ngFor="let field of customAttrList">
+            <ng-container *ngIf="field.type === 'masterList' && hierarchyFields[field.attributeName]">
+              <ng-container [formGroupName]="field.attributeName + '_group'">
+                <!-- Use trackBy to help Angular identify unique items -->
+                <ng-container *ngFor="let hierarchyField of hierarchyFields[field.attributeName];
+                           index as i">
+                  <!-- Each dropdown is in its own grid cell -->
+                  <div class="grid-item profile-control">
+                    <div class="flex flex-col gap-2 pr-3 hierarchy-dropdown">
+                      <div class="info-div">
+                        <div class="label">
+                          <!-- Show parent field name only for the first item -->
+                          {{hierarchyField | titlecase}} <strong *ngIf="field?.isMandatory"
+                            class="text-red-700">*</strong>
+                        </div>
+                        <mat-form-field class="profile-form-field w-full">
+                          <mat-select [formControlName]="hierarchyField"
+                            (selectionChange)="onDropdownChange(field?.attributeName, hierarchyField, $event.value, i)">
+                            <mat-option *ngFor="let option of fieldOptions[field?.attributeName][hierarchyField] || []"
+                              [value]="option?.value">
+                              {{ option?.label }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <div class="description-hint mb-3" *ngIf="field?.description">
+                Description: {{field?.description}}
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </form>
+      <div class="description-hint mt-9">
+        <span class="font-red">{{ 'profileInfo.disclaimer' | translate }}</span>
+        <span> - {{ 'profileInfo.disclaimerHint' | translate }}</span>
+      </div>
+    </div>
+    <hr class="solid">
+    <div class="form-actions flex items-center gap-4 mt-4">
+      <button mat-button [disabled]="!customAttrForm.valid" class="save-btn flex align-center justify-center px-2"
+        (click)="handleSaveCustomForm()">{{
+        'NetworkV2Profile.save' | translate }}</button>
+      <button mat-button *ngIf="customFieldValues && customFieldValues.length"
+        class="cancel-btn flex align-center justify-center px-2" (click)="handleCancel()">{{
+        'profileInfo.cancel' | translate }}</button>
+
+    </div>
+  </div>

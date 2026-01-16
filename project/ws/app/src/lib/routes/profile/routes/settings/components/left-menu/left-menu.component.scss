@@ -8,3 +8,33 @@ mat-expansion-panel {
     flex-grow: 0;
   }
 }
+
+.settings-navigation {
+  width: 254px;
+  background-color: #ffffff;
+}
+
+.tabIcon {
+  opacity: 0.7;
+  width: 24px;
+  height: 24px;
+}
+
+:host ::ng-deep .settings-navigation {
+  .ws-active-discuss-route  {
+    background-color: transparent !important;
+
+    .mat-list-item-content {
+      background-color: #1B4CA1;
+      height: 33px;
+      padding: 8px;
+      border-radius: 8px;
+      margin: 0px 5px;
+
+      color: #FFF;
+      /* stylelint-disable */
+      font: 700 14px Lato;
+      /* stylelint-enable */
+    }
+  }
+}

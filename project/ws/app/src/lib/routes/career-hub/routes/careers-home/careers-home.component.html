@@ -1,10 +1,13 @@
-<ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: titles }">
-</ws-widget-btn-page-back>
-<div class="container-balanced mt-4">
+<!-- <ws-widget-btn-page-back [widgetData]="{ url: 'home',titles: titles }">
+</ws-widget-btn-page-back> -->
+<div class="container-balanced mt-4 mob-16">
     <!-- <div *ngIf="currentRoute === 'home'" class="container-balanced-banner"> -->
     <ng-container *ngIf="currentRoute === 'home'" [wsResolverWidget]="banner"></ng-container>
     <!-- </div> -->
     <div class="">
         <router-outlet></router-outlet>
     </div>
+
+    <!-- grid layout - update mobile number & nps panel -->
+    <ng-container [wsResolverWidget]="pageLayout"></ng-container>
 </div>

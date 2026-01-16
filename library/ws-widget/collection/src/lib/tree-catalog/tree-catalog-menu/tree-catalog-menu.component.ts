@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef, Input } from '@angular/core'
-import { TFetchStatus } from '@sunbird-cb/utils'
-import { MatMenuTrigger } from '@angular/material'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
+
 import { NSSearch } from '../../_services/widget-search.model'
+import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu'
 
 @Component({
   selector: 'ws-widget-tree-catalog-menu',

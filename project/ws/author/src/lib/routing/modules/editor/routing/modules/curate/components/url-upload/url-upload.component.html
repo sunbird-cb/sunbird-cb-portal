@@ -8,7 +8,7 @@
       <form class="flex flex-1 flex-column" [formGroup]="urlUploadForm">
         <div class="flex-middle marginleftxl p-5">
           <!-- margin-left15<div class="flex margin-top-xl margin-bottom-m   flex-middle">
-            <p class="mat-h2  font-weight-500 margin-right-s" i18n>Link</p>
+            <p class="mat-h2  font-weight-500 margin-right-s" >Link</p>
             <mat-form-field appearance="outline" class=" margin-left5 flex-grow60 padding-remove-bottom">
               <input type="url" matInput autoComplete="false" i18n-placeholder formControlName="artifactUrl" placeholder="Enter or paste URL here"
                 class="input ws-mat-primary-text" />
@@ -18,37 +18,37 @@
             </mat-form-field>
           </div> -->
           <div class="flex-1">
-            <p class="font-weight-bold margin-remove-bottom" i18n>
+            <p class="font-weight-bold margin-remove-bottom" >
               Link
             </p>
             <mat-form-field appearance="outline" class="flex-1 margin-top-xs" style="display: contents;">
               <mat-icon matPrefix class="ws-mat-default-text t-45">link</mat-icon>
               <input type="url" matInput formControlName="artifactUrl" i18n-placeholder
                 placeholder="Enter or paste URL here" />
-              <mat-error *ngIf="showError(urlUploadForm.controls.artifactUrl)" i18n>
+              <mat-error *ngIf="showError(urlUploadForm.controls.artifactUrl)" >
                 URL is mandatory
               </mat-error>
             </mat-form-field>
           </div>
           <!-- <div class="margin-top-xs">
-            <p class="font-weight-bold margin-remove-bottom" i18n>
+            <p class="font-weight-bold margin-remove-bottom" >
               Is It Available on internet ?
             </p>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <mat-select formControlName="isInIntranet" placeholder="e.g. Yes">
-                <mat-option [value]="false" i18n>Yes</mat-option>
-                <mat-option [value]="true" i18n>No</mat-option>
+                <mat-option [value]="false" >Yes</mat-option>
+                <mat-option [value]="true" >No</mat-option>
               </mat-select>
             </mat-form-field>
           </div> -->
           <!-- <div class="flex flx-1 flex-middle margin-top-xs">
-            <p class="font-weight-bold margin-remove-bottom" i18n>
+            <p class="font-weight-bold margin-remove-bottom" >
               Opens in a new tab?
             </p>
             <mat-form-field appearance="outline" class="margin-top-xs">
               <mat-select formControlName="isIframeSupported" placeholder="e.g. Yes">
-                <mat-option [value]="'Yes'" i18n>No</mat-option>
-                <mat-option [value]="'No'" i18n>Yes</mat-option>
+                <mat-option [value]="'Yes'" >No</mat-option>
+                <mat-option [value]="'No'" >Yes</mat-option>
               </mat-select>
             </mat-form-field>
           </div> -->
@@ -70,7 +70,7 @@
       <!-- matStepperNext -->
       <button type="button" mat-button class="ws-mat-primary-background margin-top-m m-auto" (click)="submit()">
         <mat-icon class="text-white">file_upload</mat-icon>
-        <b class="text-white" i18n>Save and Proceed</b>
+        <b class="text-white" >Save and Proceed</b>
       </button>
     </div>
   </mat-card-actions>

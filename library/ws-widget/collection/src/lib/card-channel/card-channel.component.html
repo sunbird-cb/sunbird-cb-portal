@@ -12,7 +12,7 @@
         class="ws-mat-primary-text font-weight-500 mat-body px-2 py-1"
       >
         <ng-container *ngIf="!widgetData?.expiryDate">
-          <ng-container i18n>since</ng-container>
+          <ng-container >since</ng-container>
           {{ widgetData?.publishedOn | date }}
         </ng-container>
         <ng-container *ngIf="widgetData?.expiryDate">
@@ -41,7 +41,7 @@
         class="ws-mat-primary-text font-weight-500 mat-body px-2 py-1"
       >
         <ng-container *ngIf="!widgetData?.endDate">
-          <ng-container i18n>since</ng-container>
+          <ng-container >since</ng-container>
           {{ widgetData?.startDate }}
         </ng-container>
         <ng-container *ngIf="widgetData?.endDate">

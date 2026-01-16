@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { WidgetUserService } from '@sunbird-cb/collection'
-import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
+import { WidgetUserServiceLib } from '@sunbird-cb/consumption'
+import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils-v2'
 @Injectable({
   providedIn: 'root',
 })
 
-export class MandatoryCourseResolverService implements
-  Resolve<Observable<IResolveResponse<any>> |
-  IResolveResponse<any>> {
+export class MandatoryCourseResolverService  {
     constructor(
       private configSvc: ConfigurationsService,
-      private userSvc: WidgetUserService,
+      private userSvc: WidgetUserServiceLib,
     ) {
 
     }

@@ -1,6 +1,6 @@
 <div [hidden]="isRestricted">
   <div class="discussion-header mat-toolbar" [hidden]="widgetData.isLoggedInUserRestricted">
-    <!-- <p class="ws-mat-primary-text font-medium text-xl" i18n>Start a new thread</p> -->
+    <!-- <p class="ws-mat-primary-text font-medium text-xl" >Start a new thread</p> -->
     <div class="question-container">
       <ws-widget-user-image class="user-image" [userId]="userId" [email]="userEmail" [userName]="userName"
         [imageType]="'user-photo'" [imageSize]="'small'">
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="btn-container text-right margin-top-s">
-      <!-- <mat-checkbox class="mx-2 text-sm font-small" i18n>Notify me when someone replies to my post</mat-checkbox> -->
+      <!-- <mat-checkbox class="mx-2 text-sm font-small" >Notify me when someone replies to my post</mat-checkbox> -->
       <button name="discussion-forum-post-button" class="discussion-forum-action-button"
         [disabled]="!isValidPost || isPostingDiscussion || widgetData?.isDisabled" type="button"
         (click)="publishConversation(error.value)" mat-raised-button color="primary" i18n
@@ -26,7 +26,7 @@
     <div></div>
   </div>
   <div class="discussion-body mb-6">
-    <div *ngIf="discussionFetchStatus === 'none'" class="no-conversation mat-toolbar" i18n>
+    <div *ngIf="discussionFetchStatus === 'none'" class="no-conversation mat-toolbar" >
       There aren’t any conversations yet
     </div>
     <ws-widget-discussion-post [post]="reply" (deleteSuccess)="onDeletePost(i)"
@@ -36,7 +36,7 @@
     </div>
     <div class="text-center margin-top-s" *ngIf="discussionFetchStatus === 'hasMore'">
       <button name="discussion-forum-show-more-posts-button" mat-stroked-button [color]="'primary'"
-        [disabled]="isDisabled" class="width-1-1" type="button" i18n (click)="fetchDiscussion()">
+        [disabled]="isDisabled" class="width-1-1" type="button" (click)="fetchDiscussion()">
         Show More Posts
       </button>
     </div>
@@ -46,7 +46,7 @@
 
 <div [hidden]="!isRestricted">
   <div class="discussion-body mb-6">
-    <div class="no-conversation mat-toolbar" i18n>
+    <div class="no-conversation mat-toolbar" >
       Discussion Forum is disabled currently.
     </div>
   </div>

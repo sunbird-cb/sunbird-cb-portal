@@ -1,0 +1,28 @@
+<div class="flex justify-between">
+  <div class="teachers-note-header pt-2">Essential insights and guidance to enrich and standardize your teaching
+    experience.</div>
+  <div class="download-all" (click)="downloadAllContent()">Download All</div>
+</div>
+
+<div class="guide-container" *ngIf="content?.referenceNodes">
+  <ng-container *ngFor="let note of content?.referenceNodes">
+    <div *ngIf="note?.resourceCategory === 'Reference Resource'" class="guide-card flex gap-4 justify-between">
+      <div>
+        <div class="note-title">{{note?.name}}</div>
+        <div class="flex gap-2 pt-2">
+          <mat-icon class="material-symbols-outlined">
+            visibility
+          </mat-icon>
+          <a (click)="previewContent(note)">
+            <span class="view-pdf">View</span>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="download-ind">
+          <a download="{{note?.name}}" (click)="downloadPDF(note)">Download</a>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

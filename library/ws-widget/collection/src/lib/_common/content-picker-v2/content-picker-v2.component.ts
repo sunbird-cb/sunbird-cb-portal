@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core'
-import { ValueService, ConfigurationsService } from '@sunbird-cb/utils'
+import { ValueService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { NSSearch } from '../../_services/widget-search.model'
 // import { SearchApiService } from '@ws/app/src/lib/routes/search/apis/search-api.service'
@@ -7,7 +7,7 @@ import { NSSearch } from '../../_services/widget-search.model'
 import { IWidgetData, IAppliedFilters } from './content-picker-v2.model'
 import { NsContent } from '../../_services/widget-content.model'
 import { ContentPickerV2Service } from './content-picker-v2.service'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { distinctUntilChanged } from 'rxjs/operators'
 
 @Component({
@@ -36,8 +36,8 @@ export class ContentPickerV2Component implements OnInit, OnDestroy {
   fetchStatus: 'none' | 'fetching' | 'done' | 'error'
   searchConfig: any = null
   objKey = Object.keys
-  sortOrderControl = new FormControl('desc')
-  sortByControl = new FormControl()
+  sortOrderControl = new UntypedFormControl('desc')
+  sortByControl = new UntypedFormControl()
 
   constructor(
     private valueSvc: ValueService,

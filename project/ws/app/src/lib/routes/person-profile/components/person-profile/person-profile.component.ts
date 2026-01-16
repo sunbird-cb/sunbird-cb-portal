@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core'
 import { BtnFollowService, UserAutocompleteService, NsAutoComplete } from '@sunbird-cb/collection'
 import { PersonProfileService } from '../../services/person-profile.service'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService, ValueService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, ValueService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { IFollowerId } from '../../person-profile.model'
 import { ProfileService } from '../../../profile/services/profile.service'
 import { Subscription } from 'rxjs'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-person-profile',

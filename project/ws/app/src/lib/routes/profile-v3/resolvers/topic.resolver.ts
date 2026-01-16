@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
-import { NSProfileDataV3 } from '../models/profile-v3.models'
 import { TopicService } from '../services/topics.service'
 import { catchError, map } from 'rxjs/operators'
 
 @Injectable()
-export class TopicResolverService implements Resolve<Observable<NSProfileDataV3.ITopic[]>> {
+export class TopicResolverService  {
 
     constructor(private topicService: TopicService) { }
     resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> {

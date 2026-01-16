@@ -29,7 +29,7 @@ export class AceEditorComponent implements OnInit {
     showGutter: true,
     showLineNumbers: false,
   }
-  @ViewChild('editor', { static: false }) editor!: any
+  @ViewChild('editor') editor!: any
 
   constructor() { }
 

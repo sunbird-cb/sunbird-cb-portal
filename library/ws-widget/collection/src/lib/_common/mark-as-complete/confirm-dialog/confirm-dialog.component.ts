@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
 import { IReqMarkAsComplete } from '../mark-as-complete.model'
 import { MarkAsCompleteService } from '../mark-as-complete.service'
-import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { ContentProgressService } from '../../content-progress/content-progress.service'
 
 interface IDialogData {

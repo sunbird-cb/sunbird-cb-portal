@@ -1,0 +1,35 @@
+<div class="flex flex-col gap-2">
+  <div class="flex justify-between items-center">
+    <div class="section-header">Competencies</div>
+  </div>
+  <div class="note my-1">This competencies is coming from your my learning.</div>
+  <div class="competency-tabs">
+    <ng-container *ngFor="let competency of competencies; let i = index">
+      <button 
+        mat-button
+        class="competency-tab flex items-center justify-center" 
+        [class.active]="competency.active"
+        (click)="selectCompetency(i)">
+        {{ competency?.name }} ({{ competency?.themes?.length }})
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="themes-container" [class.expanded]="viewAll">
+    <ng-container *ngFor="let competency of competencies">
+      <ng-container *ngIf="competency.active">
+        <div class="flex flex-wrap gap-4">
+          <ng-container *ngFor="let theme of competency.themes">
+            <div class="theme-item flex items-center justify-center">
+              {{ theme.name }}
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  
+  <div class="view-toggle">
+    <a (click)="toggleView()">{{ viewAll ? 'View Less' : 'View More' }}</a>
+  </div>
+</div>

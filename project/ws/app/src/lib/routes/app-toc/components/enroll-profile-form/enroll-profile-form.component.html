@@ -1,0 +1,408 @@
+<div #fullScreenContainer>
+    <div class="dialog-header text-right mb-2">
+        <mat-icon class="mat-icon notranslate material-icons close-icon cursor-pointer" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon>
+    </div>
+    <h1> {{data?.courseName}} </h1>
+    <div class="w-full" *ngIf="!isLoading">
+      <form [formGroup]="userDetailsForm" class="userDetailsForm">
+          <div class="w-full" *ngIf="canShowName">
+            <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.name' | translate }}
+            </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <input type="text" class="input-text" matInput formControlName="name" placeholder="Name"/>
+            </mat-form-field>
+          </div>
+          <div class="w-full" *ngIf="canShowOrg">
+            <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ (showDoptChanges ? 'profileInfo.presentOrganisation' : 'profileInfo.organisation') | translate }}
+            </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <input type="text" class="input-text" matInput formControlName="organisation" placeholder="Organisation"/>
+            </mat-form-field>
+          </div>
+          <div class="w-full" *ngIf="canShowEmail">
+            <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.email' | translate }}
+            </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <input type="text" class="input-text" matInput formControlName="primaryEmail" placeholder="Enter email" (keyup)="handleEmpty('primaryEmail')"/>
+            </mat-form-field>
+            <mat-error class="mat-error" *ngIf="userDetailsForm.get('primaryEmail').hasError('required') || userDetailsForm.get('primaryEmail').hasError('pattern')">
+              {{ 'profileInfo.invalidEmail' | translate }}
+            </mat-error>
+            <div class="flex justify-end" *ngIf="verifyEmail && !otpSent && !eVerified">
+              <span class="get-otp" (click)="handleGenerateEmailOTP('email')">{{ 'profileInfo.getOTP' | translate
+                }}</span>
+            </div>
+            <div *ngIf="emailOtpSent">
+              <form [formGroup]="emailOtpForm">
+                <div class="w-full">
+                  <div class="flex enter-otp">
+                    <div class="font-semibold required"
+                      i18n="Title label|Label which explains the user to enter title">
+                      {{ 'profileInfo.enterOTP' | translate }}
+                    </div>
+                    <div class="mb-3">Time Remaining: <span #emailTimerDiv></span></div>
+                  </div>
+                  <mat-form-field appearance="outline" class="profile-form-field mobile-num">
+                    <input type="text" matInput formControlName="eOtp" class="input-text custom-size" placeholder="{{ 'profileInfo.enterTheOTP' | translate }}" maxlength="6" />
+                  </mat-form-field>
+                </div>
+                <div class="w-full">
+                  <div class="flex justify-center" *ngIf="showEmailResendOTP">
+                    <div class="flex flex-row">
+                        <div class="timer">{{ 'profileInfo.didNotReceiveOTP' | translate }}</div>
+                        <div class="resend-otp" (click)="handleResendEmailOTP()">&nbsp;&nbsp;{{ 'profileInfo.resentOTP' | translate }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full mb-4">
+                  <div class="flex flex-row justify-between">
+                    <button class="save-button" (click)="verifyEmailOTP()">{{ 'profileInfo.submit' | translate }}</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="w-full" *ngIf="canShowGroup">
+            <div class="font-semibold margin-0 required"
+              i18n="Title label|Label which explains the user to enter title">
+              {{ 'profileInfo.group' | translate }}
+            </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select formControlName="group" placeholder="{{ 'profileInfo.chooseAGroup' | translate }}">
+                  <mat-option *ngFor="let group of groupData" value="{{group}}">{{ group }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="text-xs mb-2" *ngIf="showDoptChanges">
+              {{'profileInfo.groupNote' | translate}}
+            </div>
+        </div>
+        <div class="w-full relative" *ngIf="canShowDesignation">
+          <div class="font-semibold margin-0 required"
+            i18n="Title label|Label which explains the user to enter title">
+            {{ 'profileInfo.designation' | translate }}
+          </div>
+          <!-- <mat-form-field appearance="outline" class="w-full">
+            <div class="flex flex-row auto-complete-row relative">
+              <input type="text" class="input-text high-zindex" matInput formControlName="designation"
+                (input)="filterdesignation($event.target.value)" (focus)="onDesignationsFocus()" #textBox
+                placeholder="{{ 'profileInfo.chooseADesignation' | translate }}">
+              <mat-icon class="disagnation-caret">arrow_drop_down</mat-icon>
+            </div>
+          </mat-form-field> -->
+          <div class="custom-select-container">
+            <mat-form-field appearance="outline" class="fixed-height-select">
+              <mat-select placeholder="{{ 'profileInfo.chooseADesignation' | translate }}" formControlName="designation"  (closed)="onDesignationDropdownClosed()" (openedChange)="setupScrollListener($event)"  panelClass="search-panel">
+                <!-- Sticky search input container -->
+                <div class="sticky-search-container" (click)="$event.stopPropagation()">
+                  <div class="search-input-wrapper">
+                    <input 
+                                type="text" 
+                                placeholder="Search designation" 
+                                formControlName="searchDesignation" 
+                                class="search-input"
+                                (keydown)="$event.stopPropagation()"
+                                (click)="$event.stopPropagation()"
+                                autocomplete="off">
+                    <button 
+                                *ngIf="searchDesignation?.value" 
+                                type="button" 
+                                class="clear-button" 
+                                (click)="searchDesignation?.setValue('')">
+                                ✕
+                    </button>
+                  </div>
+                </div>
+                <!-- Options list -->
+                <mat-option *ngFor="let option of designationsMeta " [value]="option?.name" (click)="selectDesignation(option?.name)">
+                        {{ option?.name }}
+                </mat-option>
+                 <!-- Loading indicator -->
+                  <div *ngIf="isLoadingMoreDesignations" class="loading-indicator">
+                    Loading more...
+                  </div>
+                <!-- No results message -->
+                <mat-option *ngIf="(designationsMeta )?.length === 0" disabled>
+                        No matches found
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-error *ngIf="userDetailsForm?.controls['designation']?.invalid && userDetailsForm?.controls['designation']?.touched"
+                class="mat-error">
+                Please select a valid designation.
+            </mat-error>
+          <div class="text-xs mb-2" *ngIf="showDoptChanges">
+            {{'profileInfo.designationNote' | translate}}
+          </div>
+          <!-- <div class="auto-list flex flex-col ignore-blur" #dropdown
+            *ngIf="openDesignationDropdown && filterDesignationsMeta.length">
+            <div (mousedown)="preventBlur($event)"
+              class="item {{userDetailsForm.controls['designation']?.value?.toLowerCase() === designation?.name?.toLowerCase() ? 'item-active' : ''}}"
+              *ngFor="let designation of filterDesignationsMeta" (click)="selectDesignation(designation.name)">
+              {{ designation?.name }}
+            </div>
+          </div> -->
+        </div>
+        <div class="w-full relative" *ngIf="canShowDesignation && canShowOtherDesignation">
+          <div class="font-semibold margin-0 required"
+            i18n="Title label|Label which explains the user to enter title">
+            {{ 'profileInfo.otherDesignation' | translate }}
+          </div>
+          <div *ngIf="canShowOtherDesignation">
+            <mat-form-field appearance="outline" class="w-full">
+              <input type="text" class="input-text" matInput formControlName="otherDesignation" placeholder="{{ 'profileInfo.enterDesignation' | translate }}"/>
+            </mat-form-field>
+          </div>
+        </div>
+          <div class="w-full" *ngIf="canShowEmployeeCode">
+              <div class="font-semibold margin-0 required"
+                  i18n="Title label|Label which explains the user to enter title">
+                  {{ 'profileInfo.employeeId' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="w-full">
+                  <input type="text" class="input-text" matInput formControlName="employeeCode" placeholder="Enter employee code"/>
+              </mat-form-field>    
+              <mat-error class="mat-error" *ngIf="userDetailsForm?.get('employeeCode')?.hasError('pattern')">
+                Please enter an Alpha-numeric value only
+            </mat-error>                
+          </div>
+          <div class="w-full" *ngIf="canshowMobile">
+            <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.mobileNumber' | translate }}
+            </div>
+            <div class="flex flex-row gap-4">
+              <div class="country-code flex justify-center items-center" appearance="outline">
+                +91
+              </div>
+              <div class="flex-1">
+                <div class="flex flex-col">
+                  <mat-form-field appearance="outline" class="mobile-num">
+                    <input type="text" class="input-text mobile-text relative" maxlength="10" (keyup)="handleEmpty('mobile')"
+                      matInput formControlName="mobile" placeholder="Enter mobile number"/>
+                      <mat-icon class="verified-check" *ngIf="mVerified">check_circle</mat-icon>
+                  </mat-form-field>
+                  <mat-error class="mat-error"
+                      *ngIf="userDetailsForm.get('mobile').hasError('required') || userDetailsForm.get('mobile').hasError('pattern')">
+                        {{ 'profileInfo.pleaseEnterValidMobileNumber' | translate }}
+                    </mat-error>
+                </div>
+                <div class="flex justify-end" *ngIf="verifyMobile && !otpSent && !mVerified">
+                  <span class="get-otp sm:mr-4" (click)="handleGenerateOTP('phone')">{{ 'profileInfo.getOTP' |
+                    translate }}</span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="otpSent">             
+              <form [formGroup]="otpForm">
+                <div class="w-full">
+                  <div class="flex enter-otp">
+                    <div class="font-semibold required"
+                      i18n="Title label|Label which explains the user to enter title">
+                      {{ 'profileInfo.enterOTP' | translate }}
+                    </div>
+                    <div class="mb-3">Time Remaining: <span #timerDiv></span></div>
+                  </div>
+                  <mat-form-field appearance="outline" class="profile-form-field mobile-num">
+                    <input type="text" matInput formControlName="otp" class="input-text custom-size" placeholder="{{ 'profileInfo.enterTheOTP' | translate }}" maxlength="6" />
+                  </mat-form-field>
+                </div>
+                <div class="w-full">
+                  <div class="flex justify-center" *ngIf="showResendOTP">  
+                    <div class="flex flex-row">
+                        <div class="timer">{{ 'profileInfo.didNotReceiveOTP' | translate }}</div>
+                        <div class="resend-otp" (click)="handleResendOTP()">&nbsp;&nbsp;{{ 'profileInfo.resentOTP' | translate }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full mb-4">
+                  <div class="flex flex-row justify-between">
+                    <button class="save-button" (click)="verifyMobileOTP()">{{ 'profileInfo.submit' | translate }}</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        <div class="w-full" *ngIf="canShowGender">
+            <div class="font-semibold margin-0 required"
+              i18n="Title label|Label which explains the user to enter title">
+              {{ 'profileInfo.gender' | translate }}
+            </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select formControlName="gender" placeholder="Select gender">
+                    <mat-option *ngFor="let _gender of eUserGender" value="{{ _gender }}">{{
+                      handleTranslateTo(_gender.toLowerCase()) }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+          </div>
+            <div class="w-full" *ngIf="canShowDob">
+              <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.dob' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="w-full">
+                  <input matInput class="input-text icon-include-input" [max]="currentDate" [matDatepicker]="picker" [(ngModel)]="selectedDate"
+                formControlName="dob" placeholder="Select date of birth" />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div class="w-full relative" *ngIf="canShowDomicileMedium">
+            <div class="font-semibold margin-0 required"
+              i18n="Title label|Label which explains the user to enter title">
+              {{ 'profileInfo.motherTongue' | translate }}
+            </div>
+            <mat-form-field appearance="outline" class="w-full">
+              <div class="flex flex-row auto-complete-row relative">
+                <input type="text" class="input-text high-zindex" aria-label="Domicile Medium (Mother Tongue)" matInput
+                  formControlName="domicileMedium" placeholder="Select mother tongue"
+                  (input)="filterLanguage($event.target.value)" (focus)="onLanguageFocus()" #languageTextBox/>
+                <mat-icon class="mother-toungue-caret">arrow_drop_down</mat-icon>
+              </div>
+            </mat-form-field>
+            <mat-error *ngIf="userDetailsForm.controls['domicileMedium'].invalid && userDetailsForm.controls['domicileMedium'].touched"
+                class="mat-error">
+                  Please select a valid mother tongue.
+              </mat-error>
+            <div class="auto-language-list flex flex-col ignore-blur" #languageDropdown
+              *ngIf="openLanguageDropdown && masterLanguages?.length">
+              <div (mousedown)="preventLanguageBlur($event)"
+                class="language-item {{userDetailsForm.controls['domicileMedium']?.value?.toLowerCase() === language?.name?.toLowerCase() ? 'language-item-active' : ''}}"
+                *ngFor="let language of masterLanguages" (click)="selectLanguage(language.name)">
+                {{ language?.name }}
+              </div>
+            </div>
+          </div>
+            <div class="w-full" *ngIf="canShowCategory">
+              <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.category' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="w-full">
+                  <mat-select formControlName="category" placeholder="Select category">
+                    <mat-option *ngFor="let category of eCategory" value="{{ category }}">{{
+                      handleTranslateTo(category?.toLowerCase()) }}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="w-full" *ngIf="canShowpinCode">
+              <div class="font-semibold margin-0 required"
+                  i18n="Title label|Label which explains the user to enter title">
+                  {{ 'userProfile.officePinCode' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="w-full">
+                  <input type="email" class="input-text" matInput maxlength="6" formControlName="pinCode" placeholder="Enter pincode"/>
+              </mat-form-field>
+              <mat-error class="mat-error" *ngIf="userDetailsForm?.get('pinCode')?.hasError('pattern')">
+                {{ 'profileInfo.invalidPinCode' | translate }}
+                </mat-error>          
+          </div>
+          <div class="w-full" *ngIf="canShowshowCadreDetails  && !showDoptChanges">
+              <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.fromGovOrganization' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="profile-form-field">
+                  <mat-select formControlName="isCadre" (selectionChange)="getIsCadreStatus($event.value)" placeholder="Select cadre">
+                    <mat-option [value]="true">Yes</mat-option>
+                    <mat-option [value]="false">No</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div class="w-full" *ngIf="canShowshowCadreDetails && isCadreStatus  && !showDoptChanges">
+              <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.typeOfCivilService' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="profile-form-field">
+                  <mat-select formControlName="typeOfCivilService" (selectionChange)="getService($event.value)"  placeholder="Select type of civil service">
+                    <mat-option *ngFor="let service of civilServiceTypes" [value]="service">{{ service }}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div class="w-full" *ngIf="canShowshowCadreDetails && userDetailsForm.get('typeOfCivilService').value && userDetailsForm.get('isCadre').value && !showDoptChanges">
+              <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.serviceType' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="profile-form-field">
+                  <mat-select formControlName="serviceType" (selectionChange)="onServiceSelect($event)" placeholder="Select service">
+                      <mat-option *ngFor="let service of serviceName" [value]="service">{{ service }}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div class="w-full" *ngIf="canShowshowCadreDetails && userDetailsForm.get('serviceType').value && 
+              userDetailsForm.get('isCadre').value 
+              && userDetailsForm.get('typeOfCivilService').value && (
+                  userDetailsForm.get('serviceType').value === 'Indian Administrative Service (IAS)' || 
+                  userDetailsForm.get('serviceType').value === 'Indian Police Service (IPS)' || 
+                  userDetailsForm.get('serviceType').value === 'Indian Forest Service (IFoS)' 
+                ) && !showDoptChanges">
+              <div class="font-semibold margin-0 required"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.cadre' | translate }}
+              </div>
+              <mat-form-field appearance="outline" class="profile-form-field">
+                  <mat-select formControlName="cadreName" (selectionChange)="onCadreSelect($event.value)" placeholder="Select cadre">
+                      <mat-option *ngFor="let state of cadre" [value]="state">{{ state }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+          </div>
+          <ng-container *ngIf="!showDoptChanges">
+            <div class="w-full" *ngIf="canShowshowCadreDetails && userDetailsForm.get('serviceType') && (userDetailsForm.get('serviceType').value && 
+            userDetailsForm.get('isCadre').value && userDetailsForm.get('typeOfCivilService').value && (
+                userDetailsForm.get('serviceType').value === 'Indian Administrative Service (IAS)' || 
+                userDetailsForm.get('serviceType').value === 'Indian Police Service (IPS)' || 
+                userDetailsForm.get('serviceType').value === 'Indian Forest Service (IFoS)' 
+            ) && userDetailsForm.get('cadreName').value)  ? true : ((userDetailsForm.get('serviceType').value && 
+                userDetailsForm.get('isCadre').value 
+            && userDetailsForm.get('typeOfCivilService').value && (
+                userDetailsForm.get('serviceType').value !== 'Indian Administrative Service (IAS)' && 
+                userDetailsForm.get('serviceType').value !== 'Indian Police Service (IPS)' && 
+                userDetailsForm.get('serviceType').value !== 'Indian Forest Service (IFoS)' 
+            ))) ? true : false">
+                <div class="font-semibold margin-0 required"
+                  i18n="Title label|Label which explains the user to enter title">
+                  {{ 'profileInfo.batch' | translate }}
+                </div>
+                <mat-form-field appearance="outline" class="profile-form-field">
+                    <mat-select formControlName="cadreBatch" placeholder="Select batch">
+                        <mat-option *ngFor="let year of yearArray" [value]="year">{{ year }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+          </ng-container>
+          <div class="w-full" *ngIf="canShowshowCadreDetails && userDetailsForm.get('isCadre').value &&  userDetailsForm.get('cadreBatch').value && !showDoptChanges">
+              <div class="font-semibold margin-0 required mb-3"
+                i18n="Title label|Label which explains the user to enter title">
+                {{ 'profileInfo.cadreControllingAuthority' | translate }}
+              </div>
+              <span class="cadreControl-name">{{cadreControllingAuthority}}</span>
+          </div>
+          <ng-container>
+            <div class="w-full flex flex-row gap-4 justify-end margin-top-m">
+              <button
+                class="save-button"
+                [disabled]="userDetailsForm?.invalid || !mVerified || !eVerified"
+                (click)="onSubmitForm(userDetailsForm)">
+                {{ 'profileInfo.saveChanges' | translate }}
+              </button>
+            </div>
+          </ng-container>
+      </form>
+    </div>
+    <ng-container *ngIf="addLoader > 0" >
+      <div class="text-center my-2 loader flex justify-center items-center">
+        <mat-spinner class="inline-block"></mat-spinner>
+      </div>
+    </ng-container>
+</div>

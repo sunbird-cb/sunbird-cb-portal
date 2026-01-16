@@ -1,12 +1,12 @@
 <div class="row-wise" style="position: relative;">
   <mat-radio-group class="radio my-auto" [(ngModel)]="inputType" (ngModelChange)="onSelectionChange()">
-    <mat-radio-button class="radioButton" [value]="'id'" i18n>
+    <mat-radio-button class="radioButton" [value]="'id'" >
       Provide Id of the content
     </mat-radio-button>
-    <mat-radio-button class="radioButton" [value]="'upload'" checked i18n>
+    <mat-radio-button class="radioButton" [value]="'upload'" checked >
       Upload File
     </mat-radio-button>
-    <mat-radio-button class="radioButton" [value]="'external'" i18n>
+    <mat-radio-button class="radioButton" [value]="'external'" >
       External Video Url
     </mat-radio-button>
   </mat-radio-group>

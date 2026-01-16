@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { WidgetContentService } from '../../../../_services/widget-content.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 // import { SearchServService } from '@ws/app/src/lib/routes/search/services/search-serv.service'
 import { Subscription } from 'rxjs'
 
@@ -20,7 +20,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   @Output()
   searchRequest = new EventEmitter<ISearchQuery>()
 
-  searchControl = new FormControl('')
+  searchControl = new UntypedFormControl('')
   selectedLang: string
   availableLanguages: string[] = []
   searchControlSubscription: Subscription | null = null

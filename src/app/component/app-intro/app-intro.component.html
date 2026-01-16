@@ -1,12 +1,12 @@
 <mat-card class="temp-class">
-    <!-- <a role="button" class="close-x" mat-icon-button i18n (click)="closeSnackBar()">
+    <!-- <a role="button" class="close-x" mat-icon-button (click)="closeSnackBar()">
         <mat-icon>close</mat-icon>
     </a> -->
     <mat-card-header>
-        <mat-card-title i18n>
+        <mat-card-title >
             Welcome to iGOT
         </mat-card-title>
-        <mat-card-subtitle i18n>
+        <mat-card-subtitle >
             Here is a quick overview of iGOT platform and its core capabilities to help you get started.
         </mat-card-subtitle>
     </mat-card-header>
@@ -14,9 +14,9 @@
         <ws-app-quick-tour></ws-app-quick-tour>
     </mat-card-content>
     <mat-card-actions class="flex flex-1 flex-row">
-        <mat-checkbox class="example-margin" [(ngModel)]="checked" i18n>Do not show this again</mat-checkbox>
+        <mat-checkbox class="example-margin" [(ngModel)]="checked" >Do not show this again</mat-checkbox>
         <span class="flex flex-1"></span>
         <button mat-button class="flex flex-end margin-right-xs text-white ws-mat-primary-background"
-            (click)="confirmed()" cdkFocusInitial i18n>Close</button>
+            (click)="confirmed()" cdkFocusInitial >Close</button>
     </mat-card-actions>
 </mat-card>

@@ -1,0 +1,10 @@
+<ng-container *ngIf="data.type === 'pending'">
+    <div class="flex flex-row gap-8 items-center">
+        <div class="flex-1">
+            Still the request is pending, click <span class="primary cursor-pointer" (click)="handleRoute()" >here</span> to check profile page
+        </div>
+        <div class="flex items-center close" (click)="snackBarRef.dismiss()">
+            <mat-icon class="cursor-pointer">close</mat-icon>
+        </div>
+    </div>
+</ng-container>

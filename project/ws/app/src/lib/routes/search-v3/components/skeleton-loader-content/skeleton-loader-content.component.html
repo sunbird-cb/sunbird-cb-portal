@@ -1,0 +1,23 @@
+
+<div class="skeleton-wrapper">
+    <mat-card class="course-card mb-4 overflow-hidden max-w-full">
+        <div class="card-container p-4 flex relative">
+            <!-- Left side - Image -->
+            <div class="course-image-container relative overflow-hidden">
+                <ws-widget-skeleton-loader [height]="'150px'" [bindingClass]="'w-full h-full rounded-xl'"></ws-widget-skeleton-loader>
+            </div>
+
+            <!-- Right side - Content -->
+            <div class="pl-0 md:pl-4 flex flex-column w-full">
+                <ws-widget-skeleton-loader [height]="'20px'" [bindingClass]="'w-2/12 rounded mb-2'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [height]="'20px'" [bindingClass]="'w-10/12 rounded mb-2'"></ws-widget-skeleton-loader>
+                <ws-widget-skeleton-loader [height]="'20px'" [bindingClass]="'w-9/12 rounded mb-1'"></ws-widget-skeleton-loader>
+                <div class="flex gap-3 items-center my-2">
+                    <ws-widget-skeleton-loader [height]="'30px'" [bindingClass]="'w-8 rounded-xl mb-2'"></ws-widget-skeleton-loader>
+                    <ws-widget-skeleton-loader [height]="'20px'" [bindingClass]="'w-40 rounded mb-2'"></ws-widget-skeleton-loader>
+                </div>
+                <ws-widget-skeleton-loader [height]="'20px'" [bindingClass]="'w-1/4 rounded mb-2'"></ws-widget-skeleton-loader>
+            </div>
+        </div>
+    </mat-card>
+</div>

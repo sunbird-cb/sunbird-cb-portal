@@ -1,55 +1,55 @@
 <ng-container *ngIf="!emptyWidget && !isDataPresent">
   <h2 class="fullView">
     <ng-container [ngSwitch]="widgetData.widgetSubType">
-      <ng-container i18n *ngSwitchCase="'cardBreadcrumb'">
+      <ng-container *ngSwitchCase="'cardBreadcrumb'">
         Breadcrumb
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'playerVideo'">
+      <ng-container *ngSwitchCase="'playerVideo'">
         Video
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'intranetResponsive'">
+      <ng-container *ngSwitchCase="'intranetResponsive'">
         Intranet
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'videoWrapper'">
+      <ng-container *ngSwitchCase="'videoWrapper'">
         Video
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'playerAudio'">
+      <ng-container *ngSwitchCase="'playerAudio'">
         Audio
       </ng-container>
       <ng-container *ngSwitchCase="'elementHtml'">
-        <ng-container i18n *ngIf="widgetData.widgetData.type === 'image'">
+        <ng-container *ngIf="widgetData.widgetData.type === 'image'">
           Image
         </ng-container>
-        <ng-container i18n *ngIf="!widgetData.widgetData.type">
+        <ng-container *ngIf="!widgetData.widgetData.type">
           Embedd Code
         </ng-container>
-        <ng-container i18n *ngIf="widgetData.widgetData.type === 'title'">
+        <ng-container *ngIf="widgetData.widgetData.type === 'title'">
           Title
         </ng-container>
-        <ng-container i18n *ngIf="widgetData.widgetData.type === 'text'">
+        <ng-container *ngIf="widgetData.widgetData.type === 'text'">
           Text
         </ng-container>
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'pageEmbedded'">
+      <ng-container *ngSwitchCase="'pageEmbedded'">
         Iframe
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'sliderBanners'">
+      <ng-container *ngSwitchCase="'sliderBanners'">
         Banner
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'imageMapResponsive'">
+      <ng-container *ngSwitchCase="'imageMapResponsive'">
         Image Map
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'gridLayout'">
+      <ng-container *ngSwitchCase="'gridLayout'">
         Grid
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'linearLayout'">
+      <ng-container *ngSwitchCase="'linearLayout'">
         Linear
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'tabLayout'">
+      <ng-container *ngSwitchCase="'tabLayout'">
         Tab
       </ng-container>
       <ng-container *ngSwitchCase="'selectorResponsive'">
-        <ng-container *ngIf="widgetData.widgetData.type === 'imageMap'" i18n>
+        <ng-container *ngIf="widgetData.widgetData.type === 'imageMap'" >
           Image Map
         </ng-container>
         <ng-container *ngIf="widgetData.widgetData.type === 'image'">
@@ -57,27 +57,27 @@
         </ng-container>
       </ng-container>
       <ng-container *ngSwitchCase="'galleryView'">
-        <ng-container *ngIf="widgetData.widgetData.type === 'image'" i18n>
+        <ng-container *ngIf="widgetData.widgetData.type === 'image'" >
           Image Gallery
         </ng-container>
-        <ng-container *ngIf="widgetData.widgetData.type === 'video'" i18n>
+        <ng-container *ngIf="widgetData.widgetData.type === 'video'" >
           Video Gallery
         </ng-container>
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'contentStripMultiple'">
+      <ng-container *ngSwitchCase="'contentStripMultiple'">
         Content Strip Container
       </ng-container>
-      <ng-container i18n *ngSwitchCase="'contentStripSingle'">
+      <ng-container *ngSwitchCase="'contentStripSingle'">
         Entry List
       </ng-container>
-      <ng-container i18n *ngSwitchDefault>
+      <ng-container *ngSwitchDefault>
         Common
       </ng-container>
     </ng-container>
-    <ng-container i18n> Widget</ng-container>
+    <ng-container > Widget</ng-container>
   </h2>
 </ng-container>
 <ng-container *ngIf="!emptyWidget && isDataPresent" [wsResolverWidget]="widgetData"></ng-container>
 <ng-container *ngIf="emptyWidget">
-  <h1 class="drag" i18n>Drag and Drop a Widget</h1>
+  <h1 class="drag" >Drag and Drop a Widget</h1>
 </ng-container>

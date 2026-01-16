@@ -18,29 +18,26 @@ import { RomanConvertPipe } from '@ws/author/src/lib/routing/modules/editor/rout
 import { QuizQusetionsComponent } from './components/quiz/quiz-questions/quiz-questions.component'
 
 @NgModule({
-  declarations: [
-    QuizComponent,
-    QuizQusetionsComponent,
-    QuestionEditorComponent,
-    MatchTheFollowingComponent,
-    MultipleChoiceQuestionComponent,
-    FillUpsEditorComponent,
-    QuestionEditorSidenavComponent,
-    OpenPlainCkEditorComponent,
-    RomanConvertPipe,
-
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    EditorSharedModule,
-    DragDropModule,
-    QuizRoutingModule,
-    AuthViewerModule,
-
-  ],
-  providers: [QuizStoreService],
-  entryComponents: [OpenPlainCkEditorComponent],
-  exports: [QuizComponent, QuizQusetionsComponent],
+    declarations: [
+        QuizComponent,
+        QuizQusetionsComponent,
+        QuestionEditorComponent,
+        MatchTheFollowingComponent,
+        MultipleChoiceQuestionComponent,
+        FillUpsEditorComponent,
+        QuestionEditorSidenavComponent,
+        OpenPlainCkEditorComponent,
+        RomanConvertPipe,
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        EditorSharedModule,
+        DragDropModule,
+        QuizRoutingModule,
+        AuthViewerModule,
+    ],
+    providers: [QuizStoreService],
+    exports: [QuizComponent, QuizQusetionsComponent]
 })
 export class QuizModule { }

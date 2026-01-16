@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import {
-  MatCardModule,
-  MatButtonModule,
-} from '@angular/material'
 import { CertificationComponent } from './certification.component'
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button'
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card'
 @NgModule({
   declarations: [CertificationComponent],
   imports: [

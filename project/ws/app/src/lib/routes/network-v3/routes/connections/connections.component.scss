@@ -1,0 +1,94 @@
+.header {
+  /*stylelint-disable */
+  font: 600 16px 'Montserrat';
+  /* stylelint-enable */
+  color: #000000
+}
+
+.tabLable {
+  color: #00000099;
+  /*stylelint-disable */
+  font: 400 14px 'Lato';
+  /* stylelint-enable */
+}
+
+.selected-count {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #FF0000;
+  /*stylelint-disable */
+  font: 700 10px 'Lato';
+  /* stylelint-enable */
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+}
+
+.connections-list {
+  margin-top: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--borders-black-border-8-black, rgba(0, 0, 0, 0.08));
+  background: #FFF;
+  padding: 0px 16px;
+  width: 508px;
+  max-width: calc(100vw - 50px);
+}
+
+.no-records-found {
+  min-height: 270px;
+  height: 100%;
+  max-height: 100%;
+
+  .emptyPageIcon {
+    height: 70px;
+  }
+
+  .no-data-text {
+    color: #000000;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+}
+
+.connections-tab-group {
+  max-width: 96vw;
+}
+
+:host ::ng-deep .network-connections {
+
+  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    box-shadow: none !important;
+  }
+
+  .mat-tab-label {
+    min-width: fit-content !important;
+    padding: 0 16px !important;
+    height: 35px !important;
+
+    .tabLable {
+      color: #00000099 !important;
+    }
+  }
+
+  .mat-tab-label-active {
+    .tabLable {
+      color: #000000DE !important;
+      /*stylelint-disable */
+      font: normal 700 14px/normal 'Lato' !important;
+      /* stylelint-enable */
+    }
+  }
+}
+
+@media (max-width: 768px) {
+
+  .connections-list {
+    width: 100%;
+    padding: 0px 10px;
+  }
+
+}

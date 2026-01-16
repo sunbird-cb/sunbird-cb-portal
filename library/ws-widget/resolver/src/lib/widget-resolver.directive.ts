@@ -1,5 +1,5 @@
 import { Directive, Input, ViewContainerRef, OnChanges } from '@angular/core'
-import { LoggerService } from '@sunbird-cb/utils'
+import { LoggerService } from '@sunbird-cb/utils-v2'
 import { NsWidgetResolver } from './widget-resolver.model'
 import { WidgetResolverService } from './widget-resolver.service'
 

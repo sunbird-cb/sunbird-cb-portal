@@ -42,7 +42,7 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="userProgressData?.goal_shared_by_me?.length === 0">
-          <h4 class="text-center" i18n>You have not shared any goal</h4>
+          <h4 class="text-center" >You have not shared any goal</h4>
         </ng-container>
       </mat-tab>
       <mat-tab label="Goals shared to me">
@@ -74,7 +74,7 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="userProgressData?.goal_shared_to_me?.length === 0">
-          <h4 class="text-center" i18n>No goals are shared with you</h4>
+          <h4 class="text-center" >No goals are shared with you</h4>
         </ng-container>
       </mat-tab>
       <mat-tab label="Artifacts shared">
@@ -96,7 +96,7 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="nsoData?.artifacts_shared?.length === 0">
-          <h4 class="text-center" i18n>You have not shared any artifact</h4>
+          <h4 class="text-center" >You have not shared any artifact</h4>
         </ng-container>
       </mat-tab>
       <mat-tab label="Playlist shared by me">
@@ -130,7 +130,7 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="userProgressData?.playlist_shared_by_me?.length === 0">
-          <h4 class="text-center" i18n>You have not shared any Playlist</h4>
+          <h4 class="text-center" >You have not shared any Playlist</h4>
         </ng-container>
       </mat-tab>
       <mat-tab label="Playlist shared to me">
@@ -165,7 +165,7 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="userProgressData?.playlist_shared_to_me?.length === 0">
-          <h4 class="text-center" i18n>No Playlist are shared with you</h4>
+          <h4 class="text-center" >No Playlist are shared with you</h4>
         </ng-container>
       </mat-tab>
       <mat-tab label="Playground">
@@ -184,7 +184,7 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="nsoData?.playground_details?.length === 0">
-          <h4 class="text-center" i18n>You have not accessed any Playground</h4>
+          <h4 class="text-center" >You have not accessed any Playground</h4>
         </ng-container>
       </mat-tab>
       <mat-tab label="Experts I Contacted">
@@ -206,7 +206,7 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="nsoData?.experts_contacted?.length === 0">
-          <h4 class="text-center" i18n>You have not contacted any Expert</h4>
+          <h4 class="text-center" >You have not contacted any Expert</h4>
         </ng-container>
       </mat-tab>
       <mat-tab label="Content Created">
@@ -223,14 +223,14 @@
           </mat-card>
         </ng-container>
         <ng-container *ngIf="nsoData?.content_created?.length === 0">
-          <h4 class="text-center" i18n>You have not created any content</h4>
+          <h4 class="text-center" >You have not created any content</h4>
         </ng-container>
       </mat-tab>
     </mat-tab-group>
   </div>
 </div>
 <div *ngIf="nsoFetchStatus === 'error' && userFetchStatus === 'error'" class="margin-xl mat-elevation-z2">
-  <h2 i18n class="flex flex-center coming-soon-msg p-4 flex ws-mat-primary-text">
+  <h2 class="flex flex-center coming-soon-msg p-4 flex ws-mat-primary-text">
     We are gathering the data to provide insights!
   </h2>
 </div>

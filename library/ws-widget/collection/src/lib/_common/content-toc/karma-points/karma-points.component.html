@@ -1,0 +1,12 @@
+<ng-container *ngIf="!disableKarmaPoints">
+    <ws-widget-sliders-dynamic [widgetData]="karmaPointsSlider"></ws-widget-sliders-dynamic>
+
+    <ng-container *ngIf="btnCategory === 'claim'">
+        <button class="flex flex-wrap gap-1 claim-button" (click)="onClickOfClaim()" >
+            <img src="/assets/icons/home/karma-badge.svg" width="28px" class="mr-2" alt="karma-points image" />
+            <div *ngIf="btnKPData?.textBeforeIcon">{{ btnKPData.textBeforeIcon }}</div>
+            <div *ngIf="btnKPData.points">{{ btnKPData.points }} {{ translateLabels(btnKPData.textAfterPoints, 'appKarmapointsPanel') }}</div>
+            <div *ngIf="btnKPData?.textAfterIcon">{{ translateLabels(btnKPData.textAfterIcon, 'appKarmapointsPanel') }}</div>
+        </button>
+    </ng-container> 
+</ng-container>

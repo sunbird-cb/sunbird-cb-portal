@@ -1,0 +1,30 @@
+.otp-input-box {
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  border: none;
+  border-radius: 0.25rem;
+  margin-right: 13px;
+  color: #000;
+  /* stylelint-disable */
+  border: 1px solid #00000066;
+  /* stylelint-enable */
+
+  &:focus {
+    border-color: #1b4ca1;
+    outline: 0;
+    box-shadow: 0 0 0 1px #1b4ca1;
+  }
+
+  @media (max-width: 1400px ) {
+    width: 28px;
+    height: 28px;
+    margin-right: 11px;
+  }
+
+  @media (max-width: 576px) {
+    width: 30px;
+    height: 30px;
+    margin-right: 9px;
+  }
+}

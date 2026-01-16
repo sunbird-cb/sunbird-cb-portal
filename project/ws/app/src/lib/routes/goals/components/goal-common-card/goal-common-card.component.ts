@@ -8,9 +8,9 @@ import {
   ElementRef,
 } from '@angular/core'
 import { NsGoal, BtnGoalsService } from '@sunbird-cb/collection'
-import { TFetchStatus, EventService, ConfigurationsService, WsEvents } from '@sunbird-cb/utils'
+import { TFetchStatus, EventService, ConfigurationsService, WsEvents } from '@sunbird-cb/utils-v2'
 import { Router } from '@angular/router'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-goal-common-card',

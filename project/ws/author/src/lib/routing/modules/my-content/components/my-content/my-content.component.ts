@@ -1,7 +1,7 @@
 import { AuthExpiryDateConfirmComponent } from '@ws/author/src/lib/modules/shared/components/auth-expiry-date-confirm/auth-expiry-date-confirm.component'
 import { FlatTreeControl } from '@angular/cdk/tree'
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { FormGroup } from '@angular/forms'
+import { UntypedFormGroup } from '@angular/forms'
 import { MatDialog, MatSnackBar, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
@@ -53,7 +53,7 @@ export class MyContentComponent implements OnInit, OnDestroy {
   ordinals: any
   isAdmin = false
   currentAction: 'author' | 'reviewer' | 'expiry' | 'deleted' = 'author'
-  @ViewChild('searchInput', { static: false }) searchInputElem: ElementRef<any> = {} as ElementRef<
+  @ViewChild('searchInput') searchInputElem: ElementRef<any> = {} as ElementRef<
     any
   >
 
@@ -523,14 +523,14 @@ export class MyContentComponent implements OnInit, OnDestroy {
       data: { ...content.data, status: 'Draft' },
     })
 
-    dialogRef.afterClosed().subscribe((commentsForm: FormGroup) => {
+    dialogRef.afterClosed().subscribe((commentsForm: UntypedFormGroup) => {
       if (commentsForm) {
         this.finalCall(commentsForm, content)
       }
     })
   }
 
-  finalCall(commentsForm: FormGroup, content: any) {
+  finalCall(commentsForm: UntypedFormGroup, content: any) {
     if (commentsForm) {
       let operationValue: any
       switch (content.type) {

@@ -1,0 +1,130 @@
+<div class="widget-card-content-new">
+  <ng-container *ngIf="widgetData" [ngSwitch]="((widgetData && widgetData?.cardSubType) || 'cardStandard')">
+    <ng-container *ngSwitchCase="'card-event-v2'" [ngTemplateOutlet]="cardEventV2"></ng-container>
+    <ng-container *ngSwitchCase="'card-event-v2-skeleton'" [ngTemplateOutlet]="cardEventV2Skeleton"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #cardEventV2>
+  <mat-card class="card-resource-container mr-5 padding-remove cursor-pointer {{ widgetData?.cardCustomeClass}}">
+    <div class="display-contents">
+      <ng-container *ngIf="event">
+        <a class="w-full" (click)="raiseTelemetry();getRedirectUrlData(event); $event.stopPropagation()" role="link"
+          i18n-aria-label>
+          <mat-card-content class="min-top">
+            <div class="relative">
+              <div class="relative">
+                <ng-container *ngIf="event?.appIcon">
+                  <img mat-card-image [src]="event?.appIcon | pipePublicURL" loading="lazy"
+                    class="card-img ws-mat-primary-lite-background margin-remove"
+                    [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="event?.name" />
+                </ng-container>
+                <ng-container *ngIf="!event?.appIcon">
+                  <img mat-card-image [src]="defaultThumbnail" loading="lazy"
+                    class="card-img ws-mat-primary-lite-background margin-remove" [alt]="event?.name" />
+                </ng-container>
+                <div class="duration-box right-corner" *ngIf="event?.duration > 0">
+                  <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                  <span class=" ws-mat-white-text duration">
+                    {{ getTime(event?.duration)}}
+                  </span>
+                </div>
+                <div *ngIf="event?.showLive" class="fixed-live">
+                  {{event?.status}}</div>
+              </div>
+            </div>
+            <div class="padding-m">
+              <div class="pb-1 flex justify-between">
+                <div class="flex gap-1 resource-type">
+                  <img src="assets/icons/handshake.svg" />
+                  <span class="resource-text">{{event?.resourceType}}
+                  </span>
+                </div>
+                <div *ngIf="event?.showLive" class="flex gap-1 live blink">
+                  <img class='img' src="/assets/icons/live.svg" alt="">
+                  <span>{{event?.status}}</span>
+                </div>
+              </div>
+              <div class="event-title capitalize" matTooltipClass="card-tooltip" matTooltip="{{event?.name}}">
+                {{event?.name}}</div>
+              <div class="event-description">{{event?.description}}</div>
+              <div class="flex w-full flex-wrap flex-middle pb-1 pt-1">
+                <div class="course_logo_box">
+                  <img src="/assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg" class="source-icon"
+                    [wsUtilsDefaultThumbnail]="defaultSLogo" [alt]="(event?.name + '_' + event?.identifier)" />
+                </div>
+                <span class="org-text">{{'cardcontentv2.by' | translate}} {{ event?.owner }}</span>
+              </div>
+              <div class="flex w-full flex-wrap gap-1 flex-middle pb-1 pt-1 opacity-75">
+                <mat-icon class="resource-type-icon">date_range</mat-icon>
+                <span class="resource-text"
+                  *ngIf="event?.startDate && event?.startTime">{{getStartDate(event?.startDate,
+                  event?.startTime) | date: 'EEE, MMM d hh:mm a'}}</span>
+              </div>
+              <div class="flex w-full flex-wrap gap-1 flex-middle pb-1 pt-1 opacity-75"
+                *ngIf="event?.resourceType !== 'Samuhik Charcha'">
+                <mat-icon class="resource-type-icon">card_membership</mat-icon>
+                <span class="resource-text">Certification</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </a>
+      </ng-container>
+    </div>
+  </mat-card>
+</ng-template>
+
+<ng-template #cardEventV2Skeleton>
+  <mat-card class="card-resource-container mr-5 padding-remove  {{ widgetData?.cardCustomeClass}}">
+    <div class="display-contents">
+      <ng-container *ngIf="!isCardFlipped">
+        <mat-card-content class="min-top">
+          <div style="position: relative; z-index: 1;">
+            <ng-container>
+              <ws-widget-skeleton-loader [width]="widgetData?.cardCustomeClass ? '272px':'384px'" [height]="'150px'"
+                [bindingClass]="'flex rounded card-img'"></ws-widget-skeleton-loader>
+            </ng-container>
+          </div>
+          <div class="padding-m">
+            <div class="course_widget flex margin-remove">
+              <div class="flex flex-end mb-2">
+                <ws-widget-skeleton-loader [width]="'150px'" [height]="'16px'"
+                  [bindingClass]="'flex mr-4'"></ws-widget-skeleton-loader>
+              </div>
+            </div>
+            <div class="mat-subheading-1 title-text ws-mat-text-block-fade-gradient  mb-4">
+              <ws-widget-skeleton-loader [width]="'100%'" [height]="'16px'"
+                [bindingClass]="'flex'"></ws-widget-skeleton-loader>
+              <ws-widget-skeleton-loader [width]="'100%'" [height]="'32px'"
+                [bindingClass]="'flex rounded margin-top-s'"></ws-widget-skeleton-loader>
+            </div>
+            <div class="flex w-full flex-wrap flex-middle margin-top-s">
+              <div class="">
+                <ws-widget-skeleton-loader [width]="'15px'" [height]="'15px'"
+                  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <span class="org-text"> <ws-widget-skeleton-loader [width]="'200px'" [height]="'15px'"
+                  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
+            </div>
+            <div class="flex w-full flex-wrap flex-middle margin-top-s">
+              <div class="">
+                <ws-widget-skeleton-loader [width]="'16px'" [height]="'16px'"
+                  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <span class="org-text"> <ws-widget-skeleton-loader [width]="'200px'" [height]="'16px'"
+                  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
+            </div>
+            <div class="flex w-full flex-wrap flex-middle margin-top-s">
+              <div class="">
+                <ws-widget-skeleton-loader [width]="'16px'" [height]="'16px'"
+                  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader>
+              </div>
+              <span class="org-text"> <ws-widget-skeleton-loader [width]="'200px'" [height]="'16px'"
+                  [bindingClass]="'flex rounded'"></ws-widget-skeleton-loader></span>
+            </div>
+          </div>
+        </mat-card-content>
+      </ng-container>
+    </div>
+  </mat-card>
+</ng-template>

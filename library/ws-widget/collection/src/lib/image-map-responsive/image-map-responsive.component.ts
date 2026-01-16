@@ -23,7 +23,7 @@ export class ImageMapResponsiveComponent extends WidgetBaseComponent
   private resizeObserver: Subscription | null = null
   interval: any
 
-  @ViewChild('map', { static: false }) mapElem!: ElementRef
+  @ViewChild('map') mapElem!: ElementRef
   @Input() widgetData!: IWidgetImageMap
 
   constructor(private domSanitizer: DomSanitizer) {

@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, OnChanges } from '@angular/core'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { NsContent } from '@sunbird-cb/collection'
 import { NSProfileData } from '../../../profile/models/profile.model'
 import { UserdetailallComponent } from '../userdetailall/userdetailall.component'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { PersonProfileService } from '../../services/person-profile.service'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-user-kb',

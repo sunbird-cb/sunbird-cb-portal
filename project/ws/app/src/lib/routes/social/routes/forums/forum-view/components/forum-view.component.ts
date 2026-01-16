@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 // tslint:disable-next-line: max-line-length
-import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, TFetchStatus, ValueService } from '@sunbird-cb/utils-v2'
 import { Observable } from 'rxjs'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'

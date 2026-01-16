@@ -1,10 +1,9 @@
 import { Component, OnDestroy, Input, EventEmitter, Output } from '@angular/core'
-import { MatDialog, MatSnackBar } from '@angular/material'
 import { throwError, Subject } from 'rxjs'
 import { takeWhile, switchMap, tap, takeUntil } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { TSendStatus, TFetchStatus } from '@sunbird-cb/utils'
+import { TSendStatus, TFetchStatus } from '@sunbird-cb/utils-v2'
 
 import { SnackbarComponent } from '../snackbar/snackbar.component'
 import { CertificationApiService } from '../../apis/certification-api.service'
@@ -14,6 +13,8 @@ import {
   ICertificationSendResponse,
 } from '../../models/certification.model'
 import { RequestCancelDialogComponent } from '../request-cancel-dialog/request-cancel-dialog.component'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-toc-certification-booking-card',

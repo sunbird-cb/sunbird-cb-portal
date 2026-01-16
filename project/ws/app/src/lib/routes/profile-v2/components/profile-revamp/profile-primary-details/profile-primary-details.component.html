@@ -1,0 +1,229 @@
+<div>
+  <!-- # region Primary Details -->
+  <div class="section-header mb-4 flex justify-between items-center">
+    <span class="flex items-center">{{ 'NetworkV2Profile.primaryDetails' | translate}} 
+      <mat-icon class="info-icon" [matTooltipPosition]="'below'" #pTooltip="matTooltip"
+                matTooltip="{{ 'NetworkV2Profile.pdTooltipMsg' | translate }}"
+                (click)="pTooltip.toggle()">info_outline</mat-icon></span>
+    <ng-container *ngIf="showPrimaryDetailsEdit">
+      <mat-icon class="edit-icon" (click)="editPrimaryDetails('Primary Details')">edit</mat-icon>
+    </ng-container>
+    <ng-container *ngIf="disablePrimaryDetailsEdit">
+      <mat-icon class="edit-icon disable" [matTooltipPosition]="'below'" [matTooltip]="'NetworkV2Profile.pdTooltipWarnMsg' | translate">edit</mat-icon>
+    </ng-container>
+    <div class="withdraw-text edit-button" *ngIf="showWithdrawRequestBtn" (click)="showWithdrawRequestPopup()">
+      {{'NetworkV2Profile.withdrawRequest' | translate }}
+    </div>
+  </div>
+  <div class="flex gap-10">
+    <div class="flex flex-col gap-2 pr-3">
+      <span class="label">{{ 'NetworkV2Profile.group' | translate }}</span>
+      <span class="primaryDetailsvalue flex gap-2 items-center">{{ primaryDetails?.group }}
+        <ng-container *ngIf="primaryDetails?.profileGroupStatus === 'VERIFIED'; else groupNotVerified">
+          <img class="status-icon ml-1" src="./assets/icons/Accept_icon.png" alt="status">
+        </ng-container>
+        <ng-template #groupNotVerified>
+          <div class="profile-not-verified flex gap-2 justify-center items-center">
+            <div class="text">{{ 'NetworkV2Profile.notVerified' | translate }}</div>
+            <mat-icon>info_outline</mat-icon>
+          </div>
+        </ng-template>
+      </span>
+    </div>
+    <div class="flex flex-col gap-2 pr-3">
+      <span class="label">{{ 'NetworkV2Profile.designation' | translate }}</span>
+      <span class="primaryDetailsvalue flex gap-2 items-center">{{ primaryDetails?.designation }}
+        <ng-container *ngIf="primaryDetails?.profileDesignationStatus === 'VERIFIED'; else designationNotVerified">
+          <img class="status-icon ml-1" src="./assets/icons/Accept_icon.png" alt="status">
+        </ng-container>
+        <ng-template #designationNotVerified>
+          <div class="profile-not-verified flex gap-2 justify-center items-center">
+            <div class="text">{{ 'NetworkV2Profile.notVerified' | translate }}</div>
+            <mat-icon>info_outline</mat-icon>
+          </div>
+        </ng-template>
+      </span>
+    </div>
+  </div>
+
+  <ng-container *ngIf="showApprovalStatus">
+    <div class="profile-approval-status mb-4">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <div class="w-full flex justify-end items-center">
+              <div>
+                <div mat-icon-button class="flex gap-2 items-center viewApprovalStatuas w-full">
+                  <span>{{ 'NetworkV2Profile.viewApprovalStatus' | translate }}</span>
+                  <mat-icon>{{panelOpenState ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel-header>
+          <div>
+            <div class="approvalStatusHeader">
+              {{ 'NetworkV2Profile.approvalStatus' | translate }}
+            </div>
+            <ng-container *ngIf="unVerifiedObj?.group || rejectedFields?.group">
+              <div class="flex justify-between items-center px-5 py-3">
+                <ng-container *ngIf="showGroupPending">
+                  <div class="w-full">
+                    <div class="statusLable">{{ 'NetworkV2Profile.group' | translate }}</div>
+                    <div class="approvalStausValue">{{unVerifiedObj?.group}}</div>
+                  </div>
+                  <div class="w-full">
+                    <div class="approvalStatusPending flex justify-center items-center">{{ 'NetworkV2Profile.pending' |
+                      translate }}</div>
+                  </div>
+                  <div class="w-full flex justify-center" style="width: 200px;">-</div>
+                </ng-container>
+                <ng-container *ngIf="showGroupRejection">
+                  <div class="w-full">
+                    <div class="statusLable">{{ 'NetworkV2Profile.group' | translate }}</div>
+                    <div class="approvalStausValue">{{rejectedFields?.group}}</div>
+                  </div>
+                  <div class="w-full">
+                    <div class="approvalStatusRejected flex justify-center items-center">{{ 'NetworkV2Profile.rejected' |
+                      translate }}</div>
+                  </div>
+                  <div mat-icon-button (click)="viewReason(rejectedFields?.groupRejectionComments)"
+                    class="flex gap-2 items-center viewReason">
+                    <span>{{ 'NetworkV2Profile.viewReason' | translate }}</span>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="unVerifiedObj?.designation || rejectedFields?.designation">
+              <div class="flex justify-between items-center px-5 py-3">
+                <ng-container *ngIf="showDesignationPending">
+                  <div class="w-full">
+                    <div class="statusLable">{{ 'NetworkV2Profile.designation' | translate }}</div>
+                    <div class="approvalStausValue">{{unVerifiedObj?.designation}}</div>
+                  </div>
+                  <div class="w-full">
+                    <div class="approvalStatusPending flex justify-center items-center">{{ 'NetworkV2Profile.pending' |
+                      translate }}</div>
+                  </div>
+                  <div class="flex justify-center" style="width: 200px;">-</div>
+                </ng-container>
+                <ng-container *ngIf="showDesignationRejection">
+                  <div class="w-full">
+                    <div class="statusLable">{{ 'NetworkV2Profile.designation' | translate }}</div>
+                    <div class="approvalStausValue">{{rejectedFields?.designation}}</div>
+                  </div>
+                  <div class="w-full">
+                    <div class="approvalStatusRejected flex justify-center items-center">{{ 'NetworkV2Profile.rejected' |
+                      translate }}</div>
+                  </div>
+                  <div mat-icon-button (click)="viewReason(rejectedFields?.designationRejectionComments)"
+                    class="flex gap-2 items-center viewReason">
+                    <span>{{ 'NetworkV2Profile.viewReason' | translate }}</span>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </ng-container>
+
+  <!-- #endregion Primary Details -->
+
+  <ng-container *ngIf="isCurrentUser">
+    <hr class="divider my-3" />
+
+    <!-- #region Other Details -->
+    <div class="section-header mb-4 flex justify-between items-center">
+      <span>{{ 'NetworkV2Profile.otherDetails' | translate }}</span>
+      <ng-container *ngIf="isCurrentUser">
+        <mat-icon class="edit-icon" (click)="editPrimaryDetails('Other Details')">edit</mat-icon>
+      </ng-container>
+    </div>
+    <div class="details-grid">
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.employeeId' | translate }}</span>
+        <span class="value">{{ primaryDetails?.employeeCode }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.email' | translate }}</span>
+        <span class="value">{{ primaryDetails?.primaryEmail }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.mobileNumber' | translate }}</span>
+        <span class="value">+91 {{ primaryDetails?.mobile }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.gender' | translate }}</span>
+        <span class="value">{{ primaryDetails?.gender }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.dob' | translate }}</span>
+        <span class="value">{{ primaryDetails?.dob }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.motherTongue' | translate }}</span>
+        <span class="value">{{ primaryDetails?.domicileMedium }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.category' | translate }}</span>
+        <span class="value">{{ primaryDetails?.category }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.officePinCode' | translate }}</span>
+        <span class="value">{{ primaryDetails?.pinCode }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.eHRMSId' | translate }}</span>
+        <span class="value">{{ primaryDetails?.externalSystemId || 'N/A' }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.dor' | translate }}</span>
+        <span class="value">{{ primaryDetails?.externalSystemDor || 'N/A' }}</span>
+      </div>
+      <div class="flex flex-col gap-2 pr-3">
+        <span class="label">{{ 'NetworkV2Profile.fromGovOrganization' | translate }}</span>
+        <span class="value">{{ primaryDetails?.isCadre ? 'Yes' : 'No' }}</span>
+      </div>
+      <ng-container *ngIf="primaryDetails?.isCadre">
+        <ng-container *ngIf="primaryDetails?.civilServiceType">
+          <div class="flex flex-col gap-2 pr-3">
+            <span class="label">{{ 'NetworkV2Profile.civilServiceType' | translate }}</span>
+            <span class="value">{{ primaryDetails?.civilServiceType }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="primaryDetails?.civilServiceName">
+          <div class="flex flex-col gap-2 pr-3">
+            <span class="label">{{ 'NetworkV2Profile.services' | translate }}</span>
+            <span class="value">{{ primaryDetails?.civilServiceName }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="primaryDetails?.cadreName">
+          <div class="flex flex-col gap-2 pr-3">
+            <span class="label">{{ 'NetworkV2Profile.cadre' | translate }}</span>
+            <span class="value">{{ primaryDetails?.cadreName }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="primaryDetails?.cadreBatch">
+          <div class="flex flex-col gap-2 pr-3">
+            <span class="label">{{ 'NetworkV2Profile.batch' | translate }}</span>
+            <span class="value">{{ primaryDetails?.cadreBatch }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="primaryDetails?.cadreControllingAuthorityName">
+          <div class="flex flex-col gap-2 pr-3">
+            <span class="label">{{ 'NetworkV2Profile.cadreControllingAuthority' | translate }}</span>
+            <span class="value">{{ primaryDetails?.cadreControllingAuthorityName }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="primaryDetails?.isOnCentralDeputation !== undefined">
+          <div class="flex flex-col gap-2 pr-3">
+            <span class="label">{{ 'NetworkV2Profile.centralDeputation' | translate }}</span>
+            <span class="value">{{ primaryDetails?.isOnCentralDeputation ? 'Yes' : 'No'}}</span>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+  <!-- #endregion Other Details -->
+</div>

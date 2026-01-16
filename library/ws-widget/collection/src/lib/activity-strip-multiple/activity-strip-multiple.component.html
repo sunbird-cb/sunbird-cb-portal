@@ -44,7 +44,7 @@
                   class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all">
                   <a mat-button [routerLink]="widgetData.strips[0]?.viewMoreUrl?.path"
                     [queryParams]="widgetData.strips[0]?.viewMoreUrl?.queryParams">
-                    <span i18n>Your Dashboard</span>
+                    <span >Your Dashboard</span>
                   </a>
                 </div>
               </div>
@@ -84,11 +84,11 @@
   <mat-card>
     <div class="w-full">
       <div class="p-4">
-        <div class="text-3xl font-semibold text-center leading-tight" i18n>
+        <div class="text-3xl font-semibold text-center leading-tight" >
           Content not available
         </div>
         <br />
-        <div class="text-base font-medium text-center leading-normal" i18n>
+        <div class="text-base font-medium text-center leading-normal" >
           Please try different keywords or change the search query.
         </div>
       </div>
@@ -100,12 +100,12 @@
 <ng-template #userManual>
   <mat-card class="temp-class">
     <mat-card-content>
-      <a role="button" class="close-x" mat-icon-button i18n (click)="closeSnackBar()">
+      <a role="button" class="close-x" mat-icon-button (click)="closeSnackBar()">
         <mat-icon>close</mat-icon>
       </a>
       <div class="custom-margin">
         <div class="">
-          <a role="button" mat-button i18n (click)="download()">See what is new in the latest version of iGot Karmayogi.
+          <a role="button" mat-button (click)="download()">See what is new in the latest version of iGot Karmayogi.
             Click Here <mat-icon>file_download</mat-icon></a>
         </div>
       </div>
@@ -113,11 +113,11 @@
     </mat-card-content>
   </mat-card>
   <!-- <div class="flex" role="none">
-    <a role="button" mat-icon-button i18n (click)="download()">
+    <a role="button" mat-icon-button (click)="download()">
       <mat-icon>download</mat-icon>
-      <span i18n>Download User Manual</span>
+      <span >Download User Manual</span>
     </a>
-    <a role="button" mat-icon-button i18n (click)="closeSnackBar()">
+    <a role="button" mat-icon-button (click)="closeSnackBar()">
       <mat-icon>close</mat-icon>
     </a>
   </div> -->

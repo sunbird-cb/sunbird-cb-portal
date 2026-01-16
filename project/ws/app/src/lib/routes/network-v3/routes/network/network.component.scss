@@ -1,0 +1,78 @@
+.left-nav-content {
+  width: 270px;
+  height: fit-content;
+}
+
+:host ::ng-deep .center-content {
+  width: 567px;
+  max-width: 95vw;
+}
+
+.right-nav-content {
+  width: 270px;
+}
+
+.suggestions-header{
+  color: var(--accessbility-shades-without-opacity-kb-greys-black-100, #000);
+  /*stylelint-disable */
+  font: 600 14px/normal Montserrat;
+  /* stylelint-enable */
+  font-style: normal;
+}
+
+@media only screen and (max-width: 768px) {
+  .left-nav-content {
+    width: 0px;
+  }
+
+  .navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: none;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+  
+  .center-content {
+    max-height: calc(100vh - 190px);
+    overflow-y: auto;
+  }
+}
+/* Mobile Header Bar Styles */
+.mobile-header {
+  height: 56px;
+  background: #ffffff;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.back-arrow {
+  position: absolute;
+  left: 6px;
+  top: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  pointer-events: all;
+  cursor: pointer;
+}
+.header-title {
+  /*stylelint-disable */
+  font: 600 14px/normal Montserrat;
+  /* stylelint-enable */
+  color: #000000;
+  margin: 0 auto;
+}
+
+.navigateBack-icon {
+  color: #00000099;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  cursor: pointer;
+  pointer-events: all;
+}

@@ -1,0 +1,10 @@
+<div class="flex flex-col gap-4">
+  <div class="flex justify-between items-center">
+    <div class="section-header">{{ 'NetworkV2Profile.certificate' | translate }}</div>
+    <mat-icon class="close-icon" (click)="closePopup()">close</mat-icon>
+  </div>
+
+  <div class="w-full">
+    <img class="w-full" [src]="certificateUrl" alt="certificate">
+  </div>
+</div>

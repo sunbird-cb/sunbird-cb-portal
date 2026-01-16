@@ -1,0 +1,136 @@
+.tips-container {
+    background-color: #F9CB97;
+    padding: 16px;
+    padding-bottom: 0px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    width: 385px;
+    box-sizing: border-box;
+
+  
+  }
+
+  @media screen and (max-width: 1000px) {
+    .tips-container {
+      width: 100%;
+  
+    }
+  }
+  
+  .tips-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    z-index: 10;
+  }
+  
+  // .tips-header h3 {
+  //   margin: 0;
+  //   font-size: 1.2em;
+  //   color: #000000;
+  //   font-family: Montserrat;
+  //   font-size: 16px;
+  //   z-index: 10;
+  // }
+  
+  .tips-header button {
+    background: none;
+    border: none;
+    color: #01468f;
+    cursor: pointer;
+    font-family: Lato;
+    font-size: 14px;
+    z-index: 10;
+  }
+  
+  .tip-content {
+    display: flex;
+    // justify-content: space-between;
+    z-index: 10;
+    padding-top: 6px;
+    // margin-bottom: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+  }
+  
+  .tip-content p {
+    // margin-left: 8px;
+    color: #000000;
+    font-family: Lato;
+    font-size: 14px;
+    z-index: 10;
+    // padding: 0px 4px;
+    line-height: 20px;
+  }
+  
+  .tip-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    font-family: Montserrat !important;
+    font-size: 16px !important;
+    padding: 10px 3px;
+    z-index: 10;
+    font-weight: 600;
+    line-height: 19.5px;
+    width: 45px;
+  }
+  
+  // .tip-data {
+  //   width: calc(100% - 110px);
+  // }
+  .tip-data {
+    margin-left: 12px;
+  }
+
+
+  .background-circle {
+    position: absolute;
+    z-index: 1;
+    right: -6.5em;
+    top: 2.8em;
+    width: 178px;
+    height: 178px;
+    border-radius: 100%;
+    background-color: #fcd2a3;
+  }
+  
+  .circle-box {
+    position: relative;
+    width: 100%;
+    height: 0px;
+  }
+
+  .book-icon {
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+  }
+  
+  .background {
+    background-color: white;
+    width: 56px;
+    height: 42px;
+    border-radius: 5px;
+    text-align: center;
+  }  
+  .view-more {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 40px;
+    justify-content: center;
+  }
+
+  .view-more:hover {
+    background-color: #DCDFE5;
+  }
+  .margin-bottom-none {
+    margin-bottom: 0!important;
+  }

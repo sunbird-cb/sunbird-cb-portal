@@ -6,15 +6,34 @@
 }
   
 .rating-button {
-margin-right: 10px;
-line-height: 20px;
-height: 24px;
-width: 24px;
+    margin-right: 10px;
+    line-height: 20px;
+    height: 24px;
+    width: 24px;
+}
+
+::ng-deep .textarea-container {
+    width: 100%;
+
+    .mat-form-field-wrapper {
+        margin: 0px;
+    }
+
+    .mat-form-field-infix {
+        padding: 8px 0px;
+        border-top: 0px;
+
+        textarea {
+            min-height: 52px !important;
+            padding: 8px 0px;
+        }
+    }
+
 }
   
 .orange {
-color: RGB(246, 153, 83);
-font-size: 24px;
+    color: RGB(246, 153, 83);
+    font-size: 24px;
 }
 
 .no-padding {
@@ -27,8 +46,15 @@ font-size: 24px;
 
 .success-msg-container {
     min-height: 331px;
+
     @include breakpoint-xs {
         min-height: auto;
+    }
+}
+
+.success-image {
+    @include breakpoint-xs {
+        width: 120px;
     }
 }
 

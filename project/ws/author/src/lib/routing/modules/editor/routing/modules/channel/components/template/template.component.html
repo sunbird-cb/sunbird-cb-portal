@@ -1,4 +1,4 @@
-<h2 i18n>Double click on the desired template to choose the type:</h2>
+<h2 >Double click on the desired template to choose the type:</h2>
 <mat-tab-group
   animationDuration="0ms"
   class="mat-tab-labels"
@@ -7,7 +7,7 @@
   [selectedIndex]="selectedIndex"
 >
   <mat-tab>
-    <ng-template mat-tab-label i18n>
+    <ng-template mat-tab-label >
       Model Templates
     </ng-template>
     <div class="margin-top-xl margin-bottom-xl">
@@ -19,7 +19,7 @@
           [ngClass]="{ 'ws-mat-primary-background-op30': selected === '1' }"
         >
           <mat-card class="example-card"> </mat-card>
-          <h3 class="no-margin" i18n>Blank Content</h3>
+          <h3 class="no-margin" >Blank Content</h3>
         </div>
         <!-- <div
           class="padding  ws-mat-primary-background-op30-hover"
@@ -28,7 +28,7 @@
           [ngClass]="{ 'ws-mat-primary-background-op30': selected === '2' }"
         >
           <mat-card class="example-card img1"> </mat-card>
-          <h3 class="no-margin" i18n>HTML with Content Strip</h3>
+          <h3 class="no-margin" >HTML with Content Strip</h3>
         </div>
         <div
           class="padding  ws-mat-primary-background-op30-hover"
@@ -37,13 +37,13 @@
           [ngClass]="{ 'ws-mat-primary-background-op30': selected === '3' }"
         >
           <mat-card class="example-card img2"> </mat-card>
-          <h3 class="no-margin" i18n>Image Map with Content Strip</h3>
+          <h3 class="no-margin" >Image Map with Content Strip</h3>
         </div> -->
       </div>
     </div>
   </mat-tab>
   <mat-tab>
-    <ng-template mat-tab-label i18n>
+    <ng-template mat-tab-label >
       Copy from other contents
     </ng-template>
     <div class="margin-top-xl margin-bottom-xl">
@@ -64,17 +64,17 @@
         </div>
       </div>
     </div>
-    <h2 class="mat-h2 text-center margin-top-m" i18n *ngIf="error">
+    <h2 class="mat-h2 text-center margin-top-m" *ngIf="error">
       Something went wrong. Not able to load the content.
     </h2>
-    <h2 class="mat-h2 text-center margin-top-m" i18n *ngIf="noData">
+    <h2 class="mat-h2 text-center margin-top-m" *ngIf="noData">
       No data available.
     </h2>
     <div
       class="text-right margin-right-xxl margin-bottom-m"
       *ngIf="!error && totalContent > contents.length"
     >
-      <button mat-raised-button [color]="'primary'" (click)="fetchContent(true)" i18n>
+      <button mat-raised-button [color]="'primary'" (click)="fetchContent(true)" >
         Load More...
       </button>
     </div>

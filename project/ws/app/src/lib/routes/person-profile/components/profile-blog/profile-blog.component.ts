@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
 import { NsDiscussionForum } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService, ValueService } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService, ValueService } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { PersonProfileService } from '../../services/person-profile.service'
 @Component({

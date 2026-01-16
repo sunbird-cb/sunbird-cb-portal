@@ -1,4 +1,4 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-mixins';
+@use '@sunbird-cb/design-system/src/styles/ws-mixins' as *;
 
 .view-more {
   display: flex;
@@ -35,4 +35,10 @@
 
 .pad {
   padding: $size-l 0 $size-l $size-l;
+}
+
+
+::ng-deep ws-utils-horizontal-scroller .prevBtn,
+::ng-deep ws-utils-horizontal-scroller .nextBtn {
+  z-index: 1 !important;
 }

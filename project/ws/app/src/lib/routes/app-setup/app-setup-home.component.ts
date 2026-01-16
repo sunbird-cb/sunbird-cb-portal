@@ -1,9 +1,9 @@
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { StepperSelectionEvent, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 import { IWidgetsPlayerMediaData } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { InterestComponent } from '../profile/routes/interest/components/interest/interest.component'
 import { SettingsComponent } from '../profile/routes/settings/settings.component'
 import { ActivatedRoute } from '@angular/router'
@@ -42,11 +42,11 @@ export class AppSetupHomeComponent implements OnInit, AfterViewInit {
     },
   }
 
-  @ViewChild('userInterest', { static: false }) interestCompRef:
+  @ViewChild('userInterest') interestCompRef:
     | InterestComponent
     | undefined = undefined
 
-  @ViewChild('userSettings', { static: false }) settingsCompRef:
+  @ViewChild('userSettings') settingsCompRef:
     | SettingsComponent
     | undefined = undefined
 

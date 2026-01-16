@@ -34,7 +34,7 @@
 }
 
 .correct-option {
-  color: #357a38 !important;
+  color: #000 !important;
   // font-size: larger !important;
   font-weight: 700 !important;
   // border: 1px solid #357a38;
@@ -42,7 +42,7 @@
 }
 
 .incorrect-option {
-  color: #f0506e;
+  color: #000;
   // font-size: larger !important;
   font-weight: 700 !important;
   // border: 1px solid #f0506e;
@@ -51,7 +51,7 @@
 
 
 .correct-answer {
-  color: #357a38 !important;
+  color: #000 !important;
   // font-size: larger;
   font-weight: 700;
   border: 1px solid #357a38;
@@ -59,7 +59,7 @@
 }
 
 .incorrect-answer {
-  color: #f0506e;
+  color: #000;
   // font-size: larger;
   font-weight: 700;
   border: 1px solid #f0506e;

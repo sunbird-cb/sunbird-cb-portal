@@ -1,0 +1,69 @@
+@import '_ws-vars.scss';
+
+.search-div {
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    background: #fff;
+
+    .mat-icon {
+        padding: 8px;
+    }
+
+    .search-input {
+        padding: 8px 0px;
+        border: none;
+        border-radius: 8px;
+        width: 100%;
+        font-family: $font-family-lato;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: none !important;
+        }
+    }
+}
+
+.ratings-container {
+    padding: 24px;
+    background-color: rgba(27, 76, 161, 0.08);
+}
+
+.separator {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.reviews {
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.rating-start-value {
+    mat-icon {
+        color: $colorOrange;
+    }
+}
+
+::ng-deep .mat-menu-panel {
+    min-width: 12em !important;
+    padding: 8px 0px !important;
+    border-radius: 12px;
+    margin-top: 4px;
+
+    .mat-menu-content {
+        padding-top: 0px !important;
+
+        button {
+            padding: 0 16px !important;
+        }
+    }
+}
+
+.no-reviews-found {
+    background-color: #FFF;
+    margin-top: 16px;
+    border-radius: 8px;
+    border: none;
+}

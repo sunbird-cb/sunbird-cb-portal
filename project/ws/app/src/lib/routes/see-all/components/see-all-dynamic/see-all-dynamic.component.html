@@ -1,0 +1,75 @@
+<div class="learnsearch margin-top-l margin-bottom-l">
+  <div class="container-balanced">
+    <div class="result-meta flex items-center justify-between flex-wrap mb-4">
+      <div>
+        <div class="explore-all-content">
+          <span>{{ contentName ? contentName : 'cardshublist.exploreAllContent' | translate }}</span>
+        </div>
+        <div>
+          <p class="contents-title-top text-dark mb-0">
+            <span *ngIf="contentItems.length === 1">
+              {{ 'learnsearch.content' | translate : { count: totalCount || 0 } }}
+            </span>
+            <span *ngIf="contentItems.length > 1">
+              {{ 'learnsearch.contents' | translate: { count: totalCount || 0 } }}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="sort-search ml-auto flex items-center gap-4">
+        <!-- Search Input -->
+        <div class="search-input-wrapper">
+          <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="searchString"
+            (keyup.enter)="onSearch(searchString)" />
+          <button *ngIf="searchString && searchString.trim() !== ''" class="clear-btn" (click)="clearSearch()"
+            title="Clear search">
+            <i class="icon-close"></i>
+          </button>
+          <button class="search-btn" (click)="onSearch(searchString)">
+            <i class="icon-search"></i>
+          </button>
+        </div>
+
+        <!-- Sort Options -->
+        <ws-app-search-sort-input *ngIf="customOptions?.length > 0" [category]="'content'" [isExploreContentTab]="false"
+          [customOptions]="customOptions" (searchSorter)="onChangeSortSearch($event)"></ws-app-search-sort-input>
+      </div>
+    </div>
+
+    <!-- Loading Skeleton -->
+    <div *ngIf="loading">
+      <ws-app-skeleton-loader-content *ngFor="let i of [1, 2, 3, 4]"></ws-app-skeleton-loader-content>
+    </div>
+
+    <!-- No Results -->
+    <div *ngIf="!loading && contentItems?.length === 0" class="text-center">
+      <img src="/assets/icons/no-data.svg" wsUtilsImageResponsive alt="No results"
+        class="margin-top-l margin-bottom-s" />
+      <div class="no-data-text font-bold text-sm my-4">{{ 'home.noDataFound' | translate }}</div>
+    </div>
+
+    <!-- Loading with existing items -->
+    <ng-container *ngIf="loading && contentItems.length > 0">
+      <ng-container *ngFor="let item of [1, 2, 3, 4]">
+        <div class="mt-2">
+          <ws-app-skeleton-loader-content></ws-app-skeleton-loader-content>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- Content Cards with Infinite Scroll -->
+    <div *ngIf="!loading && contentItems.length > 0" class="search-content-card" infiniteScroll
+      [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollEnd()">
+      <ng-container *ngFor="let item of contentItems; let index = index">
+        <sb-uic-card-landscape [widgetData]="item?.widgetData" (contentData)="getRedirectUrlData($event)">
+        </sb-uic-card-landscape>
+      </ng-container>
+    </div>
+
+    <!-- Loading More Indicator -->
+    <div *ngIf="isLoadingMore" class="text-center py-4">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<ng-container *ngIf="data && data?.from !== 'assessment' && data?.from !== 'approvedDomain' && data?.from !== 'openLanguageDialog' &&
+data?.from !== 'openConfirmDialoge'">
+  <div mat-dialog-content>
+    <ng-container *ngIf="data.title">
+      <div class="dialog-header">
+          <h1 class="mr-2 text-center" mat-dialog-title>{{data.title}}</h1>
+          <mat-icon class="mat-icon notranslate material-icons close-icon" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon>
+      </div>
+    </ng-container>
+  <p class="text-center">{{data.message}}</p>
+  </div>
+  <div class="flex btn-wrapper" mat-dialog-actions>
+    <ng-container *ngIf="data.cancelButton">
+      <button class="blue-border mat-stroked-button mat-accent cancelButton" mat-button [mat-dialog-close]="false" >{{data.cancelButton}}</button>
+    </ng-container>
+    <button class="mat-button mat-button-base text-white acceptbtn" mat-button [mat-dialog-close]="data" cdkFocusInitial>{{data.acceptButton}}</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data?.from === 'assessment'">
+  <div mat-dialog-content class="confirmation-dialog-container">
+    <div class="dialog-header">
+        <h1 class="mr-2" mat-dialog-title></h1>
+        <!-- <mat-icon class="mat-icon notranslate material-icons close-icon" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false">close</mat-icon> -->
+    </div>
+  <p class="message">{{'playerbrief.assessmentBackConfirm' | translate}}</p>
+</div>
+<div class="flex btn-wrapper" mat-dialog-actions>
+  <button class="blue-border mat-stroked-button mat-accent cancelButton" mat-button [mat-dialog-close]="false" >{{'playerbrief.assessmentBackCancelBtn' | translate}}</button>
+  <button class="mat-button mat-button-base text-white acceptbtn" mat-button [mat-dialog-close]="data" cdkFocusInitial>{{'playerbrief.assessmentBackConfirmBtn' | translate}}</button>
+</div>
+</ng-container>
+
+<ng-container *ngIf="data?.from === 'approvedDomain'">
+  <div mat-dialog-content class="confirmation-dialog-container width-380">
+    <div class="dialog-header">
+        <mat-icon class="text-center notranslate material-icons info-icon" matprefix="" role="img" aria-hidden="true" [mat-dialog-close]="false" height="24px" width="24px">info_outline</mat-icon>
+    </div>
+    <div class="domain-msg-wrapper">
+      <p class="domain-message">{{'profileInfo.emailApprovedPopupMsg' | translate}}</p>
+      <p class="domain-sub-message">{{'profileInfo.emailApprovedPopupSubmsg' | translate}}</p>
+    </div> 
+</div>
+
+<div class="flex btn-wrapper" mat-dialog-actions>
+  <button class="mat-button mat-button-base text-white okButton" mat-button [mat-dialog-close]="data" cdkFocusInitial>{{'profileInfo.ok' | translate}}</button>
+</div>
+</ng-container>
+
+<ng-container *ngIf="data && data?.from === 'openConfirmDialoge'">
+  <div class="flex flex-col items-center justify-center text-center">
+    <img src="assets/icons/translate.svg" alt="Congratulations Badge" class="congrats-badge">
+    <p class="mat-subheading-2"> {{ data?.header}} </p>
+    <p class="mat-body-2"> {{ data?.message}} </p>
+
+    <mat-dialog-actions align="end">
+      <button  mat-dialog-close class="close-btn submit-btn">{{ data.cancelButton}}</button>
+      <button [mat-dialog-close]="true" class="accept-btn submit-btn">{{ data.acceptButton}}</button>
+    </mat-dialog-actions>
+  </div>
+
+</ng-container>

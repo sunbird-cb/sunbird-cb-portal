@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router'
 import { ContentAssignService } from '@sunbird-cb/collection'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { Observable } from 'rxjs'
 
 @Injectable()
-export class ContentAssignmentGuard implements CanActivate {
+export class ContentAssignmentGuard  {
   adminLevel = ''
   userType = ''
   stateUrl = ''

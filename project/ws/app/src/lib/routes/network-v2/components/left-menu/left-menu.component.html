@@ -3,7 +3,7 @@
     <a mat-list-item *ngIf="tab?.enabled" matRipple active routerLinkActive="ws-active-discuss-route"
       [routerLink]="tab.routerLink" (click)="menuClick(tab)">
       <!-- <mat-icon>account_circle</mat-icon> -->
-      <span class="padding-left-xs">{{tab?.name}}</span>
+      <span class="padding-left-xs">{{translateLabels(tab?.key, 'network')}}</span>
     </a>
   </ng-container>
 </mat-nav-list>

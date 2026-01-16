@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { CanActivate, UrlTree, Router } from '@angular/router'
+import { UrlTree, Router } from '@angular/router'
 import { Observable } from 'rxjs'
-import { ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils-v2'
 
 @Injectable({
   providedIn: 'root',
 })
-export class LearningAnalyticsGuard implements CanActivate {
+export class LearningAnalyticsGuard  {
   isLtMedium$ = this.valueSvc.isLtMedium$
   screenSizeIsLtMedium = false
   constructor(

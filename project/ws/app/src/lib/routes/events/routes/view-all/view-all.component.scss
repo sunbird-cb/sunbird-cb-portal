@@ -1,0 +1,154 @@
+.search-input {
+  border-radius: 24px;
+  height: 40px;
+  padding-left: 24px;
+  //margin-right: 15px;
+  border: none;
+}
+
+.results-header {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19.5px;
+  letter-spacing: 0%;
+}
+
+.filter-chip {
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.4px;
+  letter-spacing: 0%;
+  color: rgba(102, 102, 102, 1);
+  border: 1px solid rgba(180, 180, 180, 1);
+  padding: 10px 16px;
+  border-radius: 3px;
+}
+
+.close-btn {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.clear-all {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sort-menu {
+  width: 100% !important;
+}
+
+.item_dropdown_box {
+  float: right;
+  // width: 210px;
+  box-sizing: border-box;
+
+  @media (max-width:768px) {
+    display: flex;
+    align-items: center;
+  }
+
+  .item {
+    background: white;
+    width: 100%;
+    padding: 0px 16px;
+    border-radius: 52px;
+
+    .mat-form-field {
+      // background-color: #f0f3f4;
+      // border:1px solid rgba(0, 0, 0, 0.08);
+      // padding: 0px 12px;
+      // border-radius: 4px 4px;
+      // box-sizing: border-box;
+
+      @media (max-width:768px) {
+        width: 100%;
+      }
+    }
+
+    .theme-igot.day-mode .mat-form-field-appearance-legacy .mat-form-field-underline {
+      background-color: none;
+    }
+
+  }
+}
+
+.clear {
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.8px;
+  letter-spacing: 0%;
+  color: rgba(27, 76, 161, 1);
+}
+
+.filter-heading {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19.5px;
+  letter-spacing: 0%;
+
+}
+
+.filter-sub-heading {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17.07px;
+  letter-spacing: 0%;
+
+}
+
+.check-list {
+  padding: 4px 0;
+
+  ::ng-deep .mdc-label {
+    margin-left: 10px !important;
+  }
+}
+
+.line {
+  border-top: 1px solid #c3c3c3;
+}
+
+.view-more {
+  color: #1b4ca1;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.clear {
+  color: rgba(27, 76, 161, 1);
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.8px;
+  letter-spacing: 0%;
+}
+
+.date-list {
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0.34375em !important;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding: 0 0 13px 0 !important
+  }
+
+  ::ng-deep .mat-form-field-suffix {
+    margin-right: -10px !important;
+  }
+
+
+}
+
+.radio-list {
+  ::ng-deep .mat-mdc-radio-button .mdc-radio {
+    padding: 0px !important
+  }
+}

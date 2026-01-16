@@ -123,27 +123,27 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initGraph() {
-    const dateStartYear = this.startDate.split('-')[0]
-    let yearEnd = ''
-    let yearStart = ''
-    const dateStart = this.startDate.split('-')[1]
-    if (dateStart !== '01') {
-      if (dateStartYear === '2018') {
-        yearStart = '2018'
-        yearEnd = '2019'
-      } else {
-        yearStart = '2019'
-        yearEnd = '2020'
-      }
-    } else {
-      if (dateStartYear === '2019') {
-        yearStart = '2018'
-        yearEnd = '2019'
-      } else {
-        yearStart = '2019'
-        yearEnd = '2020'
-      }
-    }
+    // const dateStartYear = this.startDate.split('-')[0]
+    // let yearEnd = ''
+    // let yearStart = ''
+    // const dateStart = this.startDate.split('-')[1]
+    // if (dateStart !== '01') {
+    //   if (dateStartYear === '2018') {
+    //     yearStart = '2018'
+    //     yearEnd = '2019'
+    //   } else {
+    //     yearStart = '2019'
+    //     yearEnd = '2020'
+    //   }
+    // } else {
+    //   if (dateStartYear === '2019') {
+    //     yearStart = '2018'
+    //     yearEnd = '2019'
+    //   } else {
+    //     yearStart = '2019'
+    //     yearEnd = '2020'
+    //   }
+    // }
     const today = new Date()
     // tslint:disable-next-line:max-line-length
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -170,91 +170,91 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.chartContainer) {
       this.chartContainer.nativeElement.appendChild(canvas)
     }
-    this.bubbleChart = new Chart('trackWise', {
-      type: 'bubble',
+    // this.bubbleChart = new Chart('trackWise', {
+    //   type: 'bubble',
 
-      data: this.popData,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: false,
-        },
-        hover: {
-          mode: 'index',
-        },
-        scales: {
-          xAxes: [
-            {
-              // type: 'time',
-              // time: {
-              //   unit: 'month',
-              //   displayFormats: {
-              //       quarter: 'MMM YYYY'
-              //   }
-              // },
-              ticks: {
-                // callback: function(value, index, data) {
-                //   return  (value <= 12 ) ? value: '';
-                // },
+    //   data: this.popData,
+    //   options: {
+    //     responsive: true,
+    //     maintainAspectRatio: false,
+    //     legend: {
+    //       display: false,
+    //     },
+    //     hover: {
+    //       mode: 'index',
+    //     },
+    //     scales: {
+    //       xAxes: [
+    //         {
+    //           // type: 'time',
+    //           // time: {
+    //           //   unit: 'month',
+    //           //   displayFormats: {
+    //           //       quarter: 'MMM YYYY'
+    //           //   }
+    //           // },
+    //           ticks: {
+    //             // callback: function(value, index, data) {
+    //             //   return  (value <= 12 ) ? value: '';
+    //             // },
 
-                callback(value) {
-                  return (
-                    `${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                    [value > 12 ? +value - 13 : +value - 1]}${(value > 12 ? yearEnd : yearStart)}`
-                  )
-                },
+    //             callback(value:any) {
+    //               return (
+    //                 `${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    //                 [value > 12 ? +value - 13 : +value - 1]}${(value > 12 ? yearEnd : yearStart)}`
+    //               )
+    //             },
 
-                source: 'labels',
-                beginAtZero: false,
-                max: 16,
-                stepSize: 1,
-                suggestedMin: 4,
-              },
-              scaleLabel: {
-                display: true,
-                labelString: 'Months',
-              },
-              gridLines: {
-                display: false,
-              },
-            },
-          ],
-          yAxes: [
-            {
-              gridLines: {
-                display: false,
-              },
-              scaleLabel: {
-                display: true,
-                labelString: '# of courses',
-              },
+    //             source: 'labels',
+    //             beginAtZero: false,
+    //             max: 16,
+    //             stepSize: 1,
+    //             suggestedMin: 4,
+    //           },
+    //           scaleLabel: {
+    //             display: true,
+    //             labelString: 'Months',
+    //           },
+    //           gridLines: {
+    //             display: false,
+    //           },
+    //         },
+    //       ],
+    //       yAxes: [
+    //         {
+    //           gridLines: {
+    //             display: false,
+    //           },
+    //           scaleLabel: {
+    //             display: true,
+    //             labelString: '# of courses',
+    //           },
 
-              display: true,
-              ticks: {
-                beginAtZero: true,
+    //           display: true,
+    //           ticks: {
+    //             beginAtZero: true,
 
-                max: 4,
-                stepSize: 1,
-              },
-            },
-          ],
-        },
-        tooltips: {
-          callbacks: {
-            label(tooltipItem: any, data: any) {
-              let label = data.datasets[tooltipItem.datasetIndex].label || ''
-              if (label) {
-                label += ' : '
-              }
-              // tslint:disable-next-line:max-line-length
-              label += `in ${data.value[Math.floor(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x) - 1]} on ${data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].text} is ${data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].actual.toFixed(2)} mins`
-              return label
-            },
-          },
-        },
-      },
-    })
+    //             max: 4,
+    //             stepSize: 1,
+    //           },
+    //         },
+    //       ],
+    //     },
+    //     tooltips: {
+    //       callbacks: {
+    //         label(tooltipItem: any, data: any) {
+    //           let label = data.datasets[tooltipItem.datasetIndex].label || ''
+    //           if (label) {
+    //             label += ' : '
+    //           }
+    //           // tslint:disable-next-line:max-line-length
+    //           label += `in ${data.value[Math.floor(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x) - 1]} on ${data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].text} is ${data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].actual.toFixed(2)} mins`
+    //           return label
+    //         },
+    //       },
+    //     },
+    //   },
+    // })
   }
   ngOnDestroy() {
     if (this.bubbleChart) {

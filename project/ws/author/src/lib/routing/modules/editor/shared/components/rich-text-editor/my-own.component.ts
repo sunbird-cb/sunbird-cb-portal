@@ -1,7 +1,7 @@
 import { Component, Input, Self, Optional, ElementRef, SimpleChanges, OnChanges, DoCheck, OnDestroy } from '@angular/core'
-import { NgControl, NgForm, FormGroupDirective, FormControl } from '@angular/forms'
+import { NgControl, NgForm, FormGroupDirective, UntypedFormControl } from '@angular/forms'
 import { ErrorStateMatcher, CanUpdateErrorState } from '@angular/material/core'
-import { MatFormFieldControl } from '@angular/material/form-field'
+import { MatLegacyFormFieldControl as MatFormFieldControl } from '@angular/material/legacy-form-field'
 import { Subject } from 'rxjs'
 import { QuillComponent } from './quill.component'
 
@@ -139,7 +139,7 @@ export class MatQuillComponent extends QuillComponent implements
     const oldState = this.errorState
     const parent = this._parentFormGroup || this._parentForm
     const matcher = this.errorStateMatcher || this._defaultErrorStateMatcher
-    const control = this.ngControl ? <FormControl>this.ngControl.control : null
+    const control = this.ngControl ? <UntypedFormControl>this.ngControl.control : null
     const newState = matcher.isErrorState(control, parent)
 
     if (newState !== oldState) {

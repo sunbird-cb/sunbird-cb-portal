@@ -5,8 +5,8 @@ import { NSBrowseCompetency } from '../../models/competencies.model'
 import _ from 'lodash'
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
-import { ValueService } from '@sunbird-cb/utils'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { ValueService } from '@sunbird-cb/utils-v2'
 import { LocalDataService } from '../../services/localService';
 
 @Component({
@@ -26,7 +26,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
   mimeType: any = []
   sourceType: any = []
   mediaType: any = []
-  filterForm: FormGroup | undefined
+  filterForm: UntypedFormGroup | undefined
   facets: any
   titles = [
     { title: 'Learn', url: '/page/learn', icon: 'school' },
@@ -58,8 +58,8 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.displayLoader = this.browseCompServ.isLoading()
-    this.filterForm = new FormGroup({
-      filters: new FormControl(''),
+    this.filterForm = new UntypedFormGroup({
+      filters: new UntypedFormControl(''),
     })
     this.paramSubscription = this.activatedRoute.params.subscribe(async params => {
       this.competencyName = _.get(params, 'competency')
@@ -156,7 +156,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
       .searchCompetency(req)
       .subscribe((response: NSBrowseCompetency.ICompetencieResponse) => {
         if (response.statusInfo && response.statusInfo.statusCode === 200) {
-          console.log('response.responseData :: ', response.responseData)
+          // console.log('response.responseData :: ', response.responseData)
           if (response.responseData && response.responseData.length) {
             this.competencyData = response.responseData[0]
           }
@@ -175,7 +175,7 @@ export class CompetencyDetailsComponent implements OnInit, OnDestroy {
     this.browseCompServ
       .searchCompetency(req)
       .subscribe((response: any) => {
-          console.log('response :: ', response)
+          // console.log('response :: ', response)
             if (response) {
               this.competencyData = _.first(_.filter(response, { 'name': this.competencyName }))
             }

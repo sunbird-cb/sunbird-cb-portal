@@ -10,7 +10,7 @@ import {
 } from '@angular/core'
 import { Subscription, fromEvent } from 'rxjs'
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser'
-import { ValueService, ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ValueService, ConfigurationsService, EventService } from '@sunbird-cb/utils-v2'
 import { WidgetContentService, NsContent } from '@sunbird-cb/collection'
 import { ViewerUtilService } from '../../viewer-util.service'
 import { ActivatedRoute } from '@angular/router'
@@ -51,7 +51,7 @@ export class WebModuleComponent implements OnInit, OnChanges, OnDestroy {
   iframeLoadingInProgress = true
   isCompleted = false
   slideAudioUrl: SafeUrl = ''
-  @ViewChild('iframeElem', { static: false }) iframeElem: ElementRef<HTMLIFrameElement>
+  @ViewChild('iframeElem') iframeElem: ElementRef<HTMLIFrameElement>
   current: string[] = []
   counter = false
   isScrolled = false
@@ -151,7 +151,13 @@ export class WebModuleComponent implements OnInit, OnChanges, OnDestroy {
           current: this.current,
           max_size: this.slides.length,
         }
-        this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest)
+        const isPreAssessment = this.activatedRoute.snapshot.queryParams.preAssessment
+        if(isPreAssessment) {
+          this.viewerSvc.realTimeProgressUpdateForPreAssessment(id, realTimeProgressRequest)
+        } else {
+          this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest)
+        }
+        
       }
     }
   }

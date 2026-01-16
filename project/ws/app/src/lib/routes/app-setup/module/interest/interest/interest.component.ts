@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { WidgetContentService, NsContent, BtnPlaylistService, NsPlaylist } from '@sunbird-cb/collection'
-import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils'
-import { FormControl } from '@angular/forms'
-import { MatSnackBar } from '@angular/material'
+import { TFetchStatus, NsPage, ConfigurationsService } from '@sunbird-cb/utils-v2'
+import { UntypedFormControl } from '@angular/forms'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Subscription } from 'rxjs'
 import { InterestService } from '../../../../profile/routes/interest/services/interest.service'
 
@@ -17,7 +17,7 @@ export class InterestComponent implements OnInit {
   selectedContent = 0
   selectedInterest = ''
   playListName = 'Learn Later'
-  contentLangForm: FormControl = new FormControl()
+  contentLangForm: UntypedFormControl = new UntypedFormControl()
   interestRES: any
   fetchStatus: TFetchStatus = 'none'
   playlistForInterest: NsPlaylist.IPlaylist | null = null

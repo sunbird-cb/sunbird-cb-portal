@@ -1,9 +1,9 @@
 {
   "name": "@ws/viewer",
   "main": "./src/public-api.ts",
-  "version": "0.0.1",
+  "version": "0.0.1", 
   "peerDependencies": {
-    "@angular/common": "^8.2.0",
-    "@angular/core": "^8.2.0"
+    "@angular/common": "^16.2.12",
+    "@angular/core": "^16.2.12"
   }
 }

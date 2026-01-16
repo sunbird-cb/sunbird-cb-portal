@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { LoggerService } from '@sunbird-cb/utils'
+import { LoggerService } from '@sunbird-cb/utils-v2'
 import { DEPTH_RUE } from '@ws/author/src/lib/constants/depth-rule'
 import { IAllowedType } from '@ws/author/src/lib/interface/collection-child-config'
 import { NSContent } from '@ws/author/src/lib/interface/content'

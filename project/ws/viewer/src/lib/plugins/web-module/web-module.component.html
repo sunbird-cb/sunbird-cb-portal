@@ -26,7 +26,7 @@
     <input type="number" name="Web Module slide" aria-label="Page Number" i18n-aria-label [ngModel]="currentSlideNumber" (ngModelChange)="setPage($event)"
       [min]="1" [max]="slides.length" class="page-input" [readonly]="slides.length < 2" />
     <span>
-      <ng-container i18n>of</ng-container>
+      <ng-container >of</ng-container>
       {{ slides.length }}
     </span>
     <button mat-icon-button (click)="pageChange(1)" [disabled]="currentSlideNumber >= slides.length" aria-label="next" i18n-aria-label>

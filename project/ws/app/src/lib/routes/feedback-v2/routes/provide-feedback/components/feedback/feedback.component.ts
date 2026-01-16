@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { TSendStatus, IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms'
+import { TSendStatus, IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import {
   FeedbackSnackbarComponent,
   FeedbackService,
@@ -21,8 +21,8 @@ export class FeedbackComponent {
   positiveFeedbackSendStatus: TSendStatus
   negativeFeedbackSendStatus: TSendStatus
   singleFeedbackSendStatus: TSendStatus
-  feedbackForm: FormGroup
-  singleFeedbackForm: FormGroup
+  feedbackForm: UntypedFormGroup
+  singleFeedbackForm: UntypedFormGroup
   feedbackConfig!: IFeedbackConfig
   showImporveError = false
   userId: any
@@ -38,13 +38,13 @@ export class FeedbackComponent {
     this.negativeFeedbackSendStatus = 'none'
     this.singleFeedbackSendStatus = 'none'
 
-    this.feedbackForm = new FormGroup({
-      positive: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
-      negative: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
+    this.feedbackForm = new UntypedFormGroup({
+      positive: new UntypedFormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
+      negative: new UntypedFormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
     })
 
-    this.singleFeedbackForm = new FormGroup({
-      feedback: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
+    this.singleFeedbackForm = new UntypedFormGroup({
+      feedback: new UntypedFormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
     })
 
     const feedbackConfigResolve = this.route.snapshot.data['feedbackConfig'] as IResolveResponse<

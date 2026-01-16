@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable, BehaviorSubject } from 'rxjs'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { NsPlaylist, NsGoal, NsDiscussionForum } from '@sunbird-cb/collection'
 import { IFollowDetails } from '../person-profile.model'
 

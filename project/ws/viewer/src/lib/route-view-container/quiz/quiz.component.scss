@@ -1,6 +1,11 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+.h-inherit {
+  height: inherit !important;
+  overflow: scroll;
+}
+
 .video-player-summary-container {
   height: auto;
   display: flex;
@@ -10,8 +15,8 @@
 }
 
 .padding-dynamic {
-  padding: $size-xs;
-  padding-top: $size-m;
+  // padding: $size-xs;
+  // padding-top: $size-m;
   @include breakpoint-xs {
     padding: $size-xs;
     // padding-top: 40vh;

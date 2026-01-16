@@ -1,0 +1,105 @@
+<div class="bg-white p-4">
+  <div class="flex justify-between items-center mb-4">
+    <div class="filter-heading">{{'events.filterBy' | translate}}</div>
+    <div class="clear cursor-pointer" (click)="clearAll()">{{'events.clearAll' | translate}}</div>
+  </div>
+  <ng-container *ngFor="let facet of facetsData  | keyvalue:returnZero">
+    <div class="individual-block">
+      <div class="list mb-4">
+        <ng-container *ngIf="facet?.value?.name === 'Event Type'">
+          <div *ngIf="facet?.value?.values?.length">
+            <p class="filter-heading mb-4">{{translateLabels(facet?.value?.key, 'events')}}</p>
+            <ng-container
+              *ngFor="let eType of (!facet.viewMore ? facet?.value?.values.slice(0,2) : facet?.value?.values); index as i">
+              <div class="check-list">
+                <mat-checkbox [checked]="canCheck(facet?.key, eType)"
+                  (change)="changeSelection($event?.checked,facet?.key, eType, facet?.value?.values)"
+                  class="mat-gyaan-filter">{{eType.name}}</mat-checkbox>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!facet.viewMore && facet?.value?.values?.length > 2">
+              <div class="pt-3">
+                <span class="view-more" (click)="facet.viewMore = true">{{'events.viewAll' | translate}}</span>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="facet.viewMore">
+              <div class="pt-3">
+                <span class="view-more" (click)="facet.viewMore = false">{{'events.viewLess' | translate}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="facet?.value?.name === 'Date Range'">
+          <div *ngIf="facet?.value?.values?.length">
+            <p class="filter-heading mb-4">{{translateLabels(facet?.value?.key, 'events')}}</p>
+            <ng-container *ngFor="let eType of facet?.value?.values; index as i">
+              <ng-container *ngIf="eType.key === 'fromDate'">
+                <div class="date-list">
+                  <label>{{translateLabels(eType?.key, 'events')}}</label>
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput [matDatepicker]="sDate"
+                      placeholder="{{translateLabels(eType?.placeHolderKey,'events')}}"
+                      (dateChange)="onDateChange($event, eType, facet)" [(ngModel)]="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="sDate"></mat-datepicker-toggle>
+                    <mat-datepicker #sDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="eType.key === 'toDate'">
+                <div class="date-list">
+                  <label>{{translateLabels(eType?.key, 'events')}}</label>
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput [matDatepicker]="eDate"
+                      placeholder="{{translateLabels(eType?.placeHolderKey,'events')}}"
+                      (dateChange)="onDateChange($event, eType, facet)" [(ngModel)]="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="eDate"></mat-datepicker-toggle>
+                    <mat-datepicker #eDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </ng-container>
+
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="facet?.value?.name === 'Event Status'">
+          <div class='radio-list-mobile' *ngIf="facet?.value?.values?.length">
+            <div class="line mb-4" *ngIf="facet?.value?.displayName === 'Event Status'"></div>
+            <p class="filter-heading mb-4">{{translateLabels(facet?.value?.key, 'events')}}</p>
+            <mat-radio-group (change)="changeStatus($event.value, facet?.key)">
+              <ng-container *ngFor="let eType of facet?.value?.values; index as i">
+                <div class="check-list">
+                  <mat-radio-button [value]="eType" class="mat-gyaan-filter"
+                    [checked]="selectedValue?.name === eType?.name">
+                    {{ translateLabels(eType.key, 'events') }}
+                  </mat-radio-button>
+                </div>
+              </ng-container>
+            </mat-radio-group>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="facet?.value?.name === 'Event Date/Time'">
+          <div *ngIf="facet?.value?.values?.length">
+            <div class="line mb-4" *ngIf="facet?.value?.displayName === 'Event Status'"></div>
+            <p class="filter-heading mb-4">{{translateLabels(facet?.value?.key, 'events')}}</p>
+            <ng-container *ngFor="let eType of facet?.value?.values; index as i">
+              <div class="check-list">
+                <mat-checkbox [checked]="canCheck(facet?.key, eType)"
+                  (change)="changeSelection($event?.checked,facet?.key, eType, facet?.value?.values)"
+                  class="mat-gyaan-filter">{{translateLabels(eType.key, 'events')}}</mat-checkbox>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="sticky bottom-nav-wrapper md:hidden">
+    <div class="footer-block flex justify-between">
+      <button class="btn btn-primary clear-btn" (click)="applyFilter('cancel')">{{'gyaanKarmayogi.cancel'|
+        translate}}</button>
+      <button class="btn btn-primary apply-btn" (click)="applyFilter('apply')">{{'gyaanKarmayogi.apply'|
+        translate}}</button>
+    </div>
+  </div>
+</div>

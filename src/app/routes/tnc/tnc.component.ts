@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { NsTnc } from '../../models/tnc.model'
-import { LoggerService, ConfigurationsService } from '@sunbird-cb/utils'
+import { LoggerService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { HttpClient } from '@angular/common/http'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ROOT_WIDGET_CONFIG, NsError } from '@sunbird-cb/collection'
 import { TncAppResolverService } from '../../services/tnc-app-resolver.service'
 import { TncPublicResolverService } from '../../services/tnc-public-resolver.service'
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 
 @Component({
   selector: 'ws-tnc',

@@ -12,7 +12,7 @@ import {
   LoggerService,
   ConfigurationsService,
   NsPage,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { TncAppResolverService } from '../../../../../../../../../src/app/services/tnc-app-resolver.service'
 import { TncPublicResolverService } from '../../../../../../../../../src/app/services/tnc-public-resolver.service'
 import { Globals } from '../../globals'

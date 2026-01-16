@@ -26,7 +26,7 @@ export class RendererComponent implements OnInit, OnChanges {
   @Input() isSubmitPressed = false
   event = false
   widgetData!: IWidgetAuthor
-  @ViewChild('parent', { static: false }) parent!: ElementRef
+  @ViewChild('parent') parent!: ElementRef
   width = '0px'
   top = '0px'
   widget!: any

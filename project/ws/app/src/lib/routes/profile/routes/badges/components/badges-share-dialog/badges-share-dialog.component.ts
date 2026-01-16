@@ -1,7 +1,7 @@
 import { Component, ElementRef, TemplateRef, ViewChild, OnInit , Inject } from '@angular/core'
 import {  NsAutoComplete } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
-import { MAT_DIALOG_DATA } from '@angular/material'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
 
 @Component({
   selector: 'ws-app-badges-share-dialog',

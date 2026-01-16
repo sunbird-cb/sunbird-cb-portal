@@ -1,15 +1,5 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatDialogModule,
-  MatTableModule,
-  MatPaginatorModule,
-  MatTabsModule,
-  MatFormFieldModule,
-  MatInputModule,
-} from '@angular/material'
 import { ResourceCollectionRoutingModule } from './resource-collection-routing.module'
 import { ResourceCollectionComponent } from './resource-collection.component'
 
@@ -33,9 +23,17 @@ import {
   PipeDurationTransformModule,
   PipeLimitToModule,
   PipePartialContentModule,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button'
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card'
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog'
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field'
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input'
+import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator'
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table'
+import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs'
 
 @NgModule({
   declarations: [ResourceCollectionComponent],

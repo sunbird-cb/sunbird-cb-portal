@@ -54,8 +54,8 @@
             float: left;
 
             @media (max-width:768px) {
-                width: 49%;
-                max-width: 49%;
+                width: 75%;
+                max-width: 75%;
             }
 
             .search_box_main {
@@ -84,13 +84,21 @@
 
         .item_dropdown_box {
             float: right;
-            width: 210px;
+            // width: 210px;
             box-sizing: border-box;
 
             @media (max-width:768px) {
-                width: 49%;
+                // width: 49%;
+                width: 20%;
+                display: flex;
+                align-items: center;
+                margin-right: 8px;
             }
             .item {
+                background: white;
+                width: 100%;
+                padding: 0px 16px;
+                border-radius: 52px;
                 .mat-form-field {
                     // background-color: #f0f3f4;
                     // border:1px solid rgba(0, 0, 0, 0.08);
@@ -126,10 +134,18 @@
         justify-content: space-between;
 
         @media (max-width:1024px) {
-            justify-content: flex-start;
+            // justify-content: flex-start;
+            grid-template-columns: unset;
+
         }
 
     }
+
+    @media screen and (min-width: 360px) and (max-width: 576px) {
+        .provider_card_box  {
+            justify-content: center;
+        }
+      }
 
     a.load_more_link {
         margin:35px auto 0 auto;
@@ -137,4 +153,30 @@
         display: block;
     }
 
+}
+.sort-menu {
+    width: 100% !important;
+    }
+.search-wrapper {
+    mat-icon {
+        top: 8px;
+        left: 20px;
+    }
+    .search-field {
+        width:  487px;
+        height: 40px;
+        padding: 12px 16px 12px 48px;
+        gap: 8px;
+        border-radius: 52px;
+        background: #FFFFFF;
+        border: 1px solid #00000014;
+        @media (max-width:768px) {
+            width:  284px;
+        }
+    }
+}
+
+input[type="search"]::-webkit-search-decoration:hover,
+input[type="search"]::-webkit-search-cancel-button:hover { 
+    cursor:pointer; 
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { CanActivate, UrlTree, Router } from '@angular/router'
+import { UrlTree, Router } from '@angular/router'
 import { Observable } from 'rxjs'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 @Injectable({
   providedIn: 'root',
 })
-export class AnalyticsGuard implements CanActivate {
+export class AnalyticsGuard  {
   constructor(
     private configSvc: ConfigurationsService,
     private router: Router,

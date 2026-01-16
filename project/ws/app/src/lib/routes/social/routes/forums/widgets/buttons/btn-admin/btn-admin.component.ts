@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { SocialForum } from '../../../models/SocialForumposts.model'
 import { DialogBoxAdminAcceptComponent } from '../../Dialog-Box/dialog-box-admin-accept/dialog-box-admin-accept.component'
 import { DialogBoxAdminComponent } from '../../Dialog-Box/dialog-box-admin/dialog-box-admin.component'

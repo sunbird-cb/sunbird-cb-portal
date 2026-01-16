@@ -3,7 +3,7 @@ import { Observable, ReplaySubject } from 'rxjs'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { NSCompetency } from '../models/competency.model'
 import { map } from 'rxjs/operators'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 // const PROTECTED_SLAG_V8 = `/LA1/api`
 const PROTECTED_SLAG_V8 = `/api`

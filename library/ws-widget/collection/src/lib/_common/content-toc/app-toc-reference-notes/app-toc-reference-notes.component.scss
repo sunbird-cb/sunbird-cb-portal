@@ -1,0 +1,74 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.teachers-note-header {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.8px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.download-all {
+  padding: 12px 16px 12px 16px;
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.8px;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #1B4CA1;
+  cursor: pointer;
+}
+
+.guide-container {
+  .view-pdf {
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.8;
+    color: black;
+  }
+
+
+  .note-title {
+     /* stylelint-disable */
+    font-family: Lato;
+    /* stylelint-enable */
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #1B4CA1;
+  }
+
+  .guide-card {
+    border-radius: 8px;
+    background-color: white;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .download-ind {
+    padding: 12px 16px 12px 16px;
+    /* stylelint-disable */
+    font-family: Lato;
+    /* stylelint-enable */
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16.8px;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #1B4CA1;
+    cursor: pointer;
+    border-radius: 40px;
+    border-color: 1px solid #c3c3c3;
+  }
+
+}

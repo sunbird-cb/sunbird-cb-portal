@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { BrowseCompetencyService } from '../../services/browse-competency.service'
 import { NSBrowseCompetency } from '../../models/competencies.model'
@@ -7,6 +7,7 @@ import { NSBrowseCompetency } from '../../models/competencies.model'
 import _ from 'lodash'
 // tslint:enable
 import { LocalDataService } from '../../services/localService'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-competency-filters',
@@ -15,7 +16,7 @@ import { LocalDataService } from '../../services/localService'
 })
 export class CompetencyFiltersComponent implements OnInit, OnDestroy {
   @Output() appliedFilter = new EventEmitter<any>()
-  filterForm: FormGroup | undefined
+  filterForm: UntypedFormGroup | undefined
   private subscription: Subscription = new Subscription
   userFilters: any = []
   myFilterArray: any = []
@@ -41,14 +42,15 @@ export class CompetencyFiltersComponent implements OnInit, OnDestroy {
   ]
   constructor(
     private browseCompServ: BrowseCompetencyService,
+    private langtranslations: MultilingualTranslationsService,
     private localDataService: LocalDataService,
   ) { }
 
   ngOnInit() {
-    this.filterForm = new FormGroup({
-      filterControl: new FormControl(''),
+    this.filterForm = new UntypedFormGroup({
+      filterControl: new UntypedFormControl(''),
       // competencyAreas: new FormControl(''),
-      searchCompArea: new FormControl(''),
+      searchCompArea: new UntypedFormControl(''),
     })
     this.getAllCompetencyAreas()
 
@@ -141,4 +143,7 @@ export class CompetencyFiltersComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
+  translateLabels(label: string, type: any) {
+    return this.langtranslations.translateLabel(label, type, '')
+  }
 }

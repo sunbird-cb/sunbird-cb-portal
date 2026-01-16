@@ -39,8 +39,8 @@
     [htmlText]="(exerciseData?.starterCodes)[0]"
   ></ws-quill-code-editor> -->
 
-  <ace-editor class="code-container" (textChanged)="raiseInputChange()" theme="eclipse" [mode]="(exerciseData?.supportedLanguages)[0].mode"
-    [options]="options" [(text)]="(exerciseData?.starterCodes)[0]" #editor></ace-editor>
+  <!-- <ace-editor class="code-container" (textChanged)="raiseInputChange()" theme="eclipse" [mode]="(exerciseData?.supportedLanguages)[0].mode"
+    [options]="options" [(text)]="(exerciseData?.starterCodes)[0]" #editor></ace-editor> -->
   <mat-card-actions>
     <div class="flex flex-between flex-wrapped">
       <div class="flex flex flex-between flex-wrapped">
@@ -55,7 +55,7 @@
         </div>
         <div class="margin-top-m flex flex-wrapped">
           <div class="tooltip">
-            <span class="tooltiptext" id="myTooltip" i18n>Copy to clipboard</span>
+            <span class="tooltiptext" id="myTooltip" >Copy to clipboard</span>
             <button mat-raised-button color="primary" (click)="copyToClipBoardFunction() ; raiseClickEvent()" (mouseout)="outFunc()">
               Copy Code
             </button>
@@ -194,28 +194,28 @@
               </ng-container>
               <table class="table-verify">
                 <tr>
-                  <th i18n>
+                  <th >
                     Sl. No.
                   </th>
-                  <th i18n>
+                  <th >
                     Type
                   </th>
-                  <th i18n>
+                  <th >
                     S/A
                   </th>
-                  <th i18n>
+                  <th >
                     Test Target
                   </th>
-                  <th i18n>
+                  <th >
                     Input
                   </th>
-                  <th i18n>
+                  <th >
                     Expected Output
                   </th>
-                  <th i18n>
+                  <th >
                     Actual Output
                   </th>
-                  <th i18n>
+                  <th >
                     Result
                   </th>
                 </tr>
@@ -358,22 +358,22 @@
               </ng-container>
               <table class="table-verify">
                 <tr>
-                  <th i18n>
+                  <th >
                     Sl. No.
                   </th>
-                  <th i18n>
+                  <th >
                     Type
                   </th>
-                  <th i18n>
+                  <th >
                     Input
                   </th>
-                  <th i18n>
+                  <th >
                     Expected Output
                   </th>
-                  <th i18n>
+                  <th >
                     Actual Output
                   </th>
-                  <th i18n>
+                  <th >
                     Result
                   </th>
                 </tr>
@@ -381,7 +381,7 @@
                   <td>
                     {{ i + 1 }}
                   </td>
-                  <td [attr.rowspan]="verifyResult?.Samples?.length" *ngIf="i === 0" i18n>
+                  <td [attr.rowspan]="verifyResult?.Samples?.length" *ngIf="i === 0" >
                     Sample
                   </td>
                   <td>
@@ -402,13 +402,13 @@
                   </td>
                   <td [attr.rowspan]="
                       verifyResult?.Hiddens?.length + verifyResult?.HiddensFailedHalved?.length
-                    " *ngIf="i === 0" i18n>
+                    " *ngIf="i === 0" >
                     Actual
                   </td>
                   <td>
                     {{ obj.input }}
                   </td>
-                  <td i18n>
+                  <td >
                     N/A
                   </td>
                   <td [innerHTML]="obj.output | pipeSafeSanitizer: 'html'"></td>
@@ -421,13 +421,13 @@
                   <td>
                     {{ i + 1 + verifyResult?.Samples?.length + verifyResult?.Hiddens?.length }}
                   </td>
-                  <td [attr.rowspan]="verifyResult?.HiddensFailedHalved?.length" *ngIf="verifyResult?.Hiddens?.length < 1 && i === 0" i18n>
+                  <td [attr.rowspan]="verifyResult?.HiddensFailedHalved?.length" *ngIf="verifyResult?.Hiddens?.length < 1 && i === 0" >
                     Actual
                   </td>
                   <td>
                     {{ obj.input }}
                   </td>
-                  <td i18n>
+                  <td >
                     N/A
                   </td>
                   <td [innerHTML]="obj.output | pipeSafeSanitizer: 'html'"></td>
@@ -448,7 +448,7 @@
             <div *ngSwitchCase="'200'">
               <ng-container>
                 <mat-card-header>
-                  <h3 class="mat-h3" i18n>Test Cases Passed</h3>
+                  <h3 class="mat-h3" >Test Cases Passed</h3>
                 </mat-card-header>
                 <div class="flex flex-wrapped flex-center text-center">
                   <div class="card-section">
@@ -507,28 +507,28 @@
               </ng-container>
               <table class="table-verify">
                 <tr>
-                  <th i18n>
+                  <th >
                     Sl. No.
                   </th>
-                  <th i18n>
+                  <th >
                     Type
                   </th>
-                  <th i18n>
+                  <th >
                     S/A
                   </th>
-                  <th i18n>
+                  <th >
                     Target
                   </th>
-                  <th i18n>
+                  <th >
                     Input
                   </th>
-                  <th i18n>
+                  <th >
                     Expected Output
                   </th>
-                  <th i18n>
+                  <th >
                     Actual Output
                   </th>
-                  <th i18n>
+                  <th >
                     Result
                   </th>
                 </tr>
@@ -536,33 +536,33 @@
                   <td>
                     {{ i + 1 }}
                   </td>
-                  <td [attr.rowspan]="verifyJavaResult?.structural?.length" *ngIf="i === 0" i18n>
+                  <td [attr.rowspan]="verifyJavaResult?.structural?.length" *ngIf="i === 0" >
                     Structural
                   </td>
-                  <td i18n>
+                  <td >
                     N/A
                   </td>
                   <td>
                     <ng-container *ngIf="obj.tcclass">
-                      <ng-container i18n>Class </ng-container>{{ obj.tcclass }}
+                      <ng-container >Class </ng-container>{{ obj.tcclass }}
                       <br>
                     </ng-container>
                     <ng-container *ngIf="obj.tcmethod">
-                      <ng-container i18n>Method: </ng-container>{{ obj.tcmethod }}
+                      <ng-container >Method: </ng-container>{{ obj.tcmethod }}
                       <br>
                     </ng-container>
                     <ng-container *ngIf="obj.tctarget">
-                      <ng-container i18n>Target: </ng-container>{{ obj.tctarget }}
+                      <ng-container >Target: </ng-container>{{ obj.tctarget }}
                       <br>
                     </ng-container>
                   </td>
-                  <td i18n>
+                  <td >
                     N/A
                   </td>
-                  <td i18n>
+                  <td >
                     N/A
                   </td>
-                  <td i18n>
+                  <td >
                     N/A
                   </td>
                   <td>
@@ -574,23 +574,23 @@
                   <td>
                     {{ (verifyJavaResult?.structural?.length || 0) + i + 1 }}
                   </td>
-                  <td [attr.rowspan]="(verifyJavaResult?.sample?.length || 0) + (verifyJavaResult?.actual?.length || 0)" *ngIf="i === 0" i18n>
+                  <td [attr.rowspan]="(verifyJavaResult?.sample?.length || 0) + (verifyJavaResult?.actual?.length || 0)" *ngIf="i === 0" >
                     Procedural
                   </td>
-                  <td i18n [attr.rowspan]="verifyJavaResult?.sample?.length" *ngIf="i === 0">
+                  <td [attr.rowspan]="verifyJavaResult?.sample?.length" *ngIf="i === 0">
                     Sample
                   </td>
                   <td>
                     <ng-container *ngIf="obj.tcclass">
-                      <ng-container i18n>Class </ng-container>{{ obj.tcclass }}
+                      <ng-container >Class </ng-container>{{ obj.tcclass }}
                       <br>
                     </ng-container>
                     <ng-container *ngIf="obj.tcmethod">
-                      <ng-container i18n>Method: </ng-container>{{ obj.tcmethod }}
+                      <ng-container >Method: </ng-container>{{ obj.tcmethod }}
                       <br>
                     </ng-container>
                     <ng-container *ngIf="obj.tctarget">
-                      <ng-container i18n>Target: </ng-container>{{ obj.tctarget }}
+                      <ng-container >Target: </ng-container>{{ obj.tctarget }}
                       <br>
                     </ng-container>
                   </td>
@@ -611,23 +611,23 @@
                     {{ (verifyJavaResult?.structural?.length || 0) + (verifyJavaResult?.sample?.length || 0) + i + 1 }}
                   </td>
                   <td [attr.rowspan]="verifyJavaResult?.sample?.length || 0 + verifyJavaResult?.actual?.length || 0" *ngIf="i === 0 && (!verifyJavaResult?.sample || !verifyJavaResult?.sample?.length)"
-                    i18n>
+                   >
                     Procedural
                   </td>
-                  <td i18n *ngIf="i === 0" [attr.rowspan]="verifyJavaResult?.actual?.length">
+                  <td *ngIf="i === 0" [attr.rowspan]="verifyJavaResult?.actual?.length">
                     Actual
                   </td>
                   <td>
                     <ng-container *ngIf="obj.tcclass">
-                      <ng-container i18n>Class </ng-container>{{ obj.tcclass }}
+                      <ng-container >Class </ng-container>{{ obj.tcclass }}
                       <br>
                     </ng-container>
                     <ng-container *ngIf="obj.tcmethod">
-                      <ng-container i18n>Method: </ng-container>{{ obj.tcmethod }}
+                      <ng-container >Method: </ng-container>{{ obj.tcmethod }}
                       <br>
                     </ng-container>
                     <ng-container *ngIf="obj.tctarget">
-                      <ng-container i18n>Target: </ng-container>{{ obj.tctarget }}
+                      <ng-container >Target: </ng-container>{{ obj.tctarget }}
                       <br>
                     </ng-container>
                   </td>
@@ -638,7 +638,7 @@
                     <ng-container *ngIf="obj.tcexpected else elseBlock">
                       {{obj.tcexpected}}
                     </ng-container>
-                    <ng-template #elseBlock i18n>N/A</ng-template>
+                    <ng-template #elseBlock >N/A</ng-template>
                   </td>
                   <td [innerHTML]="obj.tcactual | pipeSafeSanitizer: 'html'"></td>
                   <td>
@@ -649,7 +649,7 @@
               </table>
               <ng-container *ngIf="verifyJavaResult.codeQuality">
                 <br>
-                <h3 *ngIf="verifyJavaResult.codeQuality.message" i18n>Code Analysis</h3>
+                <h3 *ngIf="verifyJavaResult.codeQuality.message" >Code Analysis</h3>
                 {{verifyJavaResult.codeQuality.message}}
                 <table *ngIf="verifyJavaResult.codeQuality.data && verifyJavaResult.codeQuality.data.length" class="table-verify">
                   <tr>
@@ -691,7 +691,7 @@
           </span>
         </div>
       </div>
-      <div *ngIf="!verifyResult && !verifyJavaResult && apiErrorOccurred" class="status error" i18n>
+      <div *ngIf="!verifyResult && !verifyJavaResult && apiErrorOccurred" class="status error" >
         Some Error Occured
       </div>
     </ng-container>
@@ -721,7 +721,7 @@
           </span>
         </div>
       </div>
-      <div *ngIf="!submitResult && apiErrorOccurred" class="status error" i18n>
+      <div *ngIf="!submitResult && apiErrorOccurred" class="status error" >
         Some Error Occurred
       </div>
     </ng-container>

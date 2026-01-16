@@ -27,8 +27,13 @@ export namespace NSCompetencie {
     source: null
     status: string
     competencySelfAttestedLevel?: string
-    competencySelfAttestedLevelValue?: number
+    competencySelfAttestedLevelValue?: string
+    competencySelfAttestedLevelName?: string
     type: string
+    competencyCBPCompletionLevel?: string
+    competencyCBPCompletionLevelName?: string
+    competencyCBPCompletionLevelValue?: string
+    children?: any[]
   }
   export interface IWebResponse {
     errorMessage: string

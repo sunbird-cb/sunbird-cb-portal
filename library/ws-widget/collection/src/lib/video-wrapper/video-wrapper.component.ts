@@ -17,6 +17,7 @@ export class VideoWrapperComponent extends WidgetBaseComponent implements
   }
 
   ngOnInit() {
+    console.log('this.widgetData', this.widgetData)
     if (this.widgetData) {
       if (this.widgetData.externalData) {
         if (!(this.widgetData.externalData.iframeSrc) && this.widgetData.videoData) {

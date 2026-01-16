@@ -1,38 +1,69 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": false,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "types": [
+      "jest"
+    ],
     "alwaysStrict": true,
     "baseUrl": "./",
     "declaration": false,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
-    "lib": ["es2018", "dom"],
-    "module": "ESNext",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "module": "es2020",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist/out-tsc",
     "paths": {
-      "@ws/app": ["project/ws/app"],
-      "@ws/app/*": ["project/ws/app/*"],
-      "@ws/author": ["project/ws/author"],
-      "@ws/author/*": ["project/ws/author/*"],
-      "@ws/viewer": ["project/ws/viewer"],
-      "@ws/viewer/*": ["project/ws/viewer/*"],
-      "@ws/learning-hub": ["project/ws/learning-hub"],
-      "@ws/learning-hub/*": ["project/ws/learning-hub/*"],
-      "@sunbird-cb/collection": ["library/ws-widget/collection"],
-      "@sunbird-cb/collection/*": ["library/ws-widget/collection/*"],
-      "@sunbird-cb/utils": ["library/ws-widget/utils"],
-      "@sunbird-cb/utils/*": ["library/ws-widget/utils/*"],
-      "@sunbird-cb/resolver": ["library/ws-widget/resolver"],
-      "@sunbird-cb/resolver/*": ["library/ws-widget/resolver/*"],
+      "@ws/app": [
+        "project/ws/app"
+      ],
+      "@ws/app/*": [
+        "project/ws/app/*"
+      ],
+      "@ws/author": [
+        "project/ws/author"
+      ],
+      "@ws/author/*": [
+        "project/ws/author/*"
+      ],
+      "@ws/viewer": [
+        "project/ws/viewer"
+      ],
+      "@ws/viewer/*": [
+        "project/ws/viewer/*"
+      ],
+      "@ws/learning-hub": [
+        "project/ws/learning-hub"
+      ],
+      "@ws/learning-hub/*": [
+        "project/ws/learning-hub/*"
+      ],
+      "@sunbird-cb/collection": [
+        "library/ws-widget/collection"
+      ],
+      "@sunbird-cb/collection/*": [
+        "library/ws-widget/collection/*"
+      ],
+      "@sunbird-cb/resolver": [
+        "library/ws-widget/resolver"
+      ],
+      "@sunbird-cb/resolver/*": [
+        "library/ws-widget/resolver/*"
+      ]
     },
     "removeComments": true,
     "sourceMap": false,
@@ -41,9 +72,13 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "es2015",
-    "typeRoots": ["node_modules/@types", "./custom_typings"],
-    "plugins": [{
+    "target": "ES2022",
+    "typeRoots": [
+      "node_modules/@types",
+      "./custom_typings"
+    ],
+    "plugins": [
+      {
         "name": "@angular/language-service"
       },
       {
@@ -53,6 +88,7 @@
         "configFile": "./tslint.json",
         "suppressWhileTypeErrorsPresent": false
       }
-    ]
+    ],
+    "useDefineForClassFields": false
   }
 }

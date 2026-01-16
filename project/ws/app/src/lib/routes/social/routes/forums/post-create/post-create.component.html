@@ -8,7 +8,7 @@
     <div>
       <textarea matInput class="mat-typography title-textarea" i18n-placeholder placeholder="Title" required
         minlength="10" maxlength="80" name="title" [(ngModel)]="title" autofocus #blogTitle="ngModel"></textarea>
-      <p *ngIf="(blogTitle.dirty || blogTitle.touched) && blogTitle.invalid" class="error-text mat-caption" i18n>
+      <p *ngIf="(blogTitle.dirty || blogTitle.touched) && blogTitle.invalid" class="error-text mat-caption" >
         *Title range: 10-80 characters
       </p>
     </div>
@@ -18,7 +18,7 @@
         minlength="10" maxlength="150" name="abstract" [(ngModel)]="abstract" autofocus
         #blogAbstract="ngModel"></textarea>
       <p *ngIf="(blogAbstract.dirty || blogAbstract.touched) && blogAbstract.invalid" class="error-text mat-caption"
-        i18n>
+       >
         *Abstract range: 10-150 characters
       </p>
     </div>
@@ -51,7 +51,7 @@
   <div class="flex flex-middle flex-center margin-top-m">
     <button *ngIf="editMode === 'update'" class="margin-right-s" (click)="update(saved.value, error.value)"
       [disabled]="isCreatingPost || !actionBtnsEnabled || blogTitle.invalid || blogAbstract.invalid" mat-raised-button
-      color="primary" i18n>
+      color="primary" >
       Save
     </button>
     <button *ngIf="(editMode === 'create' || editMode === 'draft') && !isCreatingPost" class="margin-right-s"

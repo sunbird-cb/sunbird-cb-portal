@@ -1,0 +1,14 @@
+<mat-card class="mat-card pad-4 other-portal-box items-center content-center margin-bottom-l" *ngIf="noData">
+
+    <div class="flex flex-row items-center content-center portal-box">
+        <div class="flex flex-col card-text-box items-center content-center">
+            <img src="{{ noData.iconImg }}" class="discuss_icon" alt="{{ noData.linkText }}">
+            <p class=".mat-body-2 margin-remove-bottom">
+                {{ noData.desc }}
+            </p>
+            <a class="mat-subheading-2 start-discuss" routerLink="{{ noData.linkUrl }} ">{{ noData.linkText }} </a>
+        </div>
+
+    </div>
+
+</mat-card>

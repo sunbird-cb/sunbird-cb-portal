@@ -1,0 +1,141 @@
+@import 'ws-vars';
+@import 'ws-mixins';
+
+
+
+.download-btn,
+.view-btn {
+  background-color: #1B4CA1;
+  border-radius: 16px;
+  padding: 6px 16px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  border: none !important;
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+}
+
+.view-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.c-icon {
+  color: #1B4CA1 !important;
+  font-size: 14px;
+  height: 14px;
+  width: 14px;
+  font-weight: 600;
+  border: 1px solid #1B4CA1;
+  border-radius: 11px;
+  padding: 2px;
+}
+
+.upload-btn {
+  background-color: white;
+  border: 1px solid #1B4CA1 !important;
+  border-radius: 16px;
+  padding: 6px 16px;
+  color: #1B4CA1;
+  font-weight: 600;
+  font-size: 14px;
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+}
+
+.font-style {
+  font-size: 14px;
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+}
+
+.note-title {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.guide-card {
+  border-radius: 8px;
+  background-color: white;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.download-btn,
+.download-link {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.upload-btn:disabled {
+  cursor: not-allowed;
+  border: 1px solid #858181 !important;
+  color: #858181;
+}
+
+mat-spinner {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.download-btn .white-spinner {
+
+  ::ng-deep .mat-progress-spinner circle,
+  ::ng-deep .mat-spinner circle {
+    stroke: white !important;
+  }
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  .blue-spinner {
+
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    ::ng-deep .mat-progress-spinner circle,
+    ::ng-deep .mat-spinner circle {
+      stroke: #1B4CA1 !important;
+    }
+
+  }
+}
+
+.feedback-container {
+  background: rgba(244, 248, 255, 1);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.assignment-note {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  color: #1B4CA1;
+}
+
+.assignment-note-icon {
+  font-size: 22px !important;
+  width: 22px !important;
+  height: 22px !important;
+  color: #f0aa6b !important;
+}

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import * as _ from 'lodash'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { ServerResponse } from 'http'
-import { ApiService } from '@ws/author/src/public-api'
+import { ApiService } from '@ws/author/src/lib/modules/shared/services/api.service'
+// /lib/modules/shared/services/api.service.ts'
 
 const urls = {
   HIERARCHY: 'course/v1/hierarchy',
@@ -11,7 +12,10 @@ const urls = {
   PROXIES_PREFIX: '/apis/proxies/v8/',
   VALIDATE_CERTIFICATE: 'certreg/v1/certs/validate',
   DOWNLOAD_CERTIFICATE: (id: string) => `certreg/v2/certs/download/${id}`,
+  DOWNLOAD_CERTIFICATE_v2: (id: string) => `apis/protected/v8/cohorts/course/batch/cert/download/${id}`,
   SEARCH_CERTIFICATE: 'certreg/v1/certs/search',
+  VALIDATE_ENROLLMENT: 'cios-enroll/v1/validation',
+  CONSENT_API: 'consent/v1/acknowledge',
 }
 
 @Injectable({
@@ -39,6 +43,15 @@ export class CertificateService {
     //  {"id":"api.certs.registry.download","ver":"v2","ts":"1615529580406","params":null,"responseCode":"OK",
     // "result":{"printUri":"data:image/svg+xml
   }
+  downloadCertificate_v2(id: string): Observable<ServerResponse> {
+    const option = {
+      url: `${urls.DOWNLOAD_CERTIFICATE_v2(id)}`,
+    }
+    return this.apiService.get(option.url)
+    // sample response
+    //  {"id":"api.certs.registry.download","ver":"v2","ts":"1615529580406","params":null,"responseCode":"OK",
+    // "result":{"printUri":"data:image/svg+xml
+  }
   searchCertificate(recipientId: string): Observable<ServerResponse> {
     const option = {
       url: `${urls.LEARNER_PREFIX}${urls.SEARCH_CERTIFICATE}`,
@@ -58,5 +71,23 @@ export class CertificateService {
     }
     return this.apiService.post(option.url, option.data)
 
+  }
+
+  validateEnrollmentEligibility(courseId: string, partnerId: string): Observable<ServerResponse> {
+    const option = {
+      url: `${urls.PROXIES_PREFIX}${urls.VALIDATE_ENROLLMENT}`,
+      data: {
+        courseId,
+        partnerId,
+      },
+    }
+    return this.apiService.post(option.url, option.data)
+  }
+  consentSubmit(request: any): Observable<ServerResponse> {
+    const option = {
+      url: `${urls.PROXIES_PREFIX}${urls.CONSENT_API}`,
+      data: request
+    }
+    return this.apiService.post(option.url, option.data)
   }
 }

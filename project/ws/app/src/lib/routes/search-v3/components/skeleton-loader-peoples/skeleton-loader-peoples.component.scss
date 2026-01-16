@@ -1,0 +1,40 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.card-container {
+  height: 192px;
+  width: 172px;
+  border: 1px solid $matCardBorderColor;
+  border-radius: 12px;
+  background: $white;
+}
+
+.all-result-peoples {
+  width: 280px !important;
+  height: 176px !important;
+}
+
+.action-container {
+  padding: $size-m 0;
+  position: relative;
+  bottom: 0;
+  left: 0;
+}
+.connect_btn {
+  width: 230px;
+  border-radius: 20px;
+}
+
+.action-container .mat-btn-outline {
+  height: 32px !important;
+  padding: 8px 28px !important;
+  background: $brandAccentDarkShade2 !important;
+}
+
+@media screen and (max-width: 576px) {
+  .all-result-peoples {
+    margin: 0 auto;
+    width: 335px !important;
+  }
+}

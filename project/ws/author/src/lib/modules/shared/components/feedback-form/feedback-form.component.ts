@@ -1,12 +1,6 @@
 import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core'
-import {
-  MAT_DIALOG_DATA,
-  MatSnackBar,
-  MatDialogRef,
-  MatAutocompleteSelectedEvent,
-  MatChipInputEvent,
-} from '@angular/material'
-import { FormControl } from '@angular/forms'
+
+import { UntypedFormControl } from '@angular/forms'
 import {
   NsAutoComplete,
   UserAutocompleteService,
@@ -26,6 +20,10 @@ import {
   catchError,
 } from 'rxjs/operators'
 import { of } from 'rxjs'
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete'
+import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips'
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 const NOTIFICATION_TIME = 5
 
@@ -38,11 +36,11 @@ export class FeedbackFormComponent implements OnInit {
   forSelf = true
   selectedUsersDetails: any[] = []
   employeeList: any[] = []
-  publisherDetailsCtrl!: FormControl
+  publisherDetailsCtrl!: UntypedFormControl
   userMessage = ''
   fetchTagsStatus: 'done' | 'fetching' | null = null
   hasError = false
-  @ViewChild('publisherDetailsView', { static: false }) publisherDetailsView!: ElementRef
+  @ViewChild('publisherDetailsView') publisherDetailsView!: ElementRef
   onAction = false
 
   constructor(
@@ -55,7 +53,7 @@ export class FeedbackFormComponent implements OnInit {
 
   ngOnInit() {
     this.userMessage = `Grant me the ${this.data} role`
-    this.publisherDetailsCtrl = new FormControl()
+    this.publisherDetailsCtrl = new UntypedFormControl()
     this.publisherDetailsCtrl.valueChanges
       .pipe(
         debounceTime(500),

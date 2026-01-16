@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Subscription } from 'rxjs'
-import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { NsContent, WidgetContentService } from '@sunbird-cb/collection'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
@@ -121,6 +121,13 @@ export class RdbmsHandsOnComponent implements OnInit, OnDestroy {
         identifier: data ? data.identifier : null,
         mimeType: NsContent.EMimeTypes.RDBMS_HANDS_ON,
         url: data ? data.artifactUrl : null,
+        object: {
+          id: data ? data.identifier : null,
+          type: data ? data.primaryCategory : '',
+          rollup: {
+            l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
+          },
+        },
       },
     }
     this.eventSvc.dispatchEvent(event)

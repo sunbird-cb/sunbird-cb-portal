@@ -8,7 +8,7 @@
   >
     <mat-tab>
       <ng-template mat-tab-label>
-        <span i18n class="mat-body-2">Rate Platform</span>
+        <span class="mat-body-2">Rate Platform</span>
       </ng-template>
       <ng-container
         *ngTemplateOutlet="feedbackHolder; context: { $implicit: feedbackRequest.application }"
@@ -17,7 +17,7 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span i18n class="mat-body-2">Rate Content</span>
+        <span class="mat-body-2">Rate Content</span>
       </ng-template>
       <ng-container
         *ngTemplateOutlet="
@@ -29,11 +29,11 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span i18n class="mat-body-2">Report an issue</span>
+        <span class="mat-body-2">Report an issue</span>
       </ng-template>
       <div class="text-center">
         <img alt [src]="feedbackBugImg" />
-        <h2 class="mat-h2" i18n>Got Stuck?</h2>
+        <h2 class="mat-h2" >Got Stuck?</h2>
         <div class="margin-top-m">
           <form #bugForm="ngForm" (submit)="submitFeedback(feedbackRequest.bug, bugForm)">
             <mat-form-field class="field-container" floatLabel="never">
@@ -85,7 +85,7 @@
             [max]="5"
             [pattern]="numbersPattern"
           />
-          <mat-error [hidden]="rating.valid && rating.touched" i18n>
+          <mat-error [hidden]="rating.valid && rating.touched" >
             Rating is required
           </mat-error>
         </mat-form-field>
@@ -104,7 +104,7 @@
       </label>
       <div class="margin-top-m">
         <mat-form-field class="field-container">
-          <mat-label i18n>I liked</mat-label>
+          <mat-label >I liked</mat-label>
           <textarea
             *ngIf="request.feedbackType === 'application'"
             [name]="request.feedbackType + '_liked'"
@@ -125,7 +125,7 @@
       </div>
       <div class="margin-top-s">
         <mat-form-field class="field-container">
-          <mat-label i18n>I wish</mat-label>
+          <mat-label >I wish</mat-label>
           <textarea
             *ngIf="request.feedbackType === 'application'"
             [name]="request.feedbackType + '_wished'"

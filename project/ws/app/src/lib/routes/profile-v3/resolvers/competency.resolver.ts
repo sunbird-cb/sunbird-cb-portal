@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
-import { NSProfileDataV3 } from '../models/profile-v3.models'
 import { catchError, map } from 'rxjs/operators'
 import { ProfileV3Service } from '../services/profile_v3.service'
 
 @Injectable()
-export class CompetencyResolverService implements Resolve<Observable<NSProfileDataV3.ICompetencie[]>> {
+export class CompetencyResolverService  {
 
     constructor(private compService: ProfileV3Service) { }
     resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<any> {

@@ -1,0 +1,102 @@
+.states {
+  max-width: 100vw;
+  overflow-x: auto;
+}
+
+.stateCard {
+  width: 238px;
+  height: 65px;
+  padding: 16px;
+  border: 1px solid #00000014;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+
+  .statName {
+    color: #000000;
+    /* style lint disable */
+    font: 600 14px Montserrat;
+    /* style lint enable */
+  }
+
+  .infoIcon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    color: #00000099;
+  }
+
+  .rightArrowDiv {
+    height: 16px;
+    width: 16px;
+    margin-top: -3px;
+    pointer-events: all;
+    cursor: pointer;
+  }
+
+      .right-arrow {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      font-weight: 100;
+      color: #1B4CA1;
+    }
+
+  .statIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .statPoints {
+    color: #000000DE;
+    /* style lint disable */
+    font: 700 14px Lato;
+    /* style lint enable */
+  }
+
+  .viewAll {
+    a {
+      color: #1B4CA1;
+      cursor: pointer;
+      /* stylelint-disable */
+      font: 700 14px Lato;
+      /* stylelint-enable */
+      text-decoration: none;
+    }
+  }
+
+  // .view-all-btn {
+  //   width: 90px;
+  //   height: 33px;
+  //   padding: 8px 0px;
+  //   border-radius: 46px;
+  //   background-color: #E6E6E6;
+  //   color: #000000DE;
+  //   /* style lint disable */
+  //   font: 700 14px Lato;
+  //   /* style lint enable */
+
+  //   .right-arrow {
+  //     width: 16px;
+  //     height: 16px;
+  //     font-size: 16px;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //   }
+  // }
+}
+
+@media screen and (max-width:768px) {
+  .stateCard {
+    width: 100px;
+    height: 50px;
+    padding: 8px;
+    border-radius: 8px;
+
+    .statName{
+      /* style lint disable */
+      font: 900 10px Lato;
+      /* style lint enable */
+    }
+  }
+}

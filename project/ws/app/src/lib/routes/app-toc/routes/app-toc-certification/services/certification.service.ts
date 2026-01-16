@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { FormGroup } from '@angular/forms'
+import { UntypedFormGroup } from '@angular/forms'
 import { throwError, of, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
 import { NsContent } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 
 import {
   ICertificationMeta,
@@ -70,7 +70,7 @@ export class CertificationService {
 
   bookAtDeskSlot(
     certificationId: string,
-    atDeskForm: FormGroup,
+    atDeskForm: UntypedFormGroup,
   ): Observable<ICertificationSendResponse> {
     const atDeskBooking: IAtDeskBooking = {
       country_code: atDeskForm.value.country,
@@ -90,7 +90,7 @@ export class CertificationService {
 
   sendExternalProof(
     certificationId: string,
-    resultForm: FormGroup,
+    resultForm: UntypedFormGroup,
   ): Observable<ICertificationSendResponse> {
     try {
       const formData = this.toFormData(resultForm.value)
@@ -105,7 +105,7 @@ export class CertificationService {
 
   submitVerificationRequest(
     certificationId: string,
-    submitForm: FormGroup,
+    submitForm: UntypedFormGroup,
   ): Observable<ICertificationSendResponse> {
     const resultData: ISubmitOrWithdrawRequest = {
       result_type: submitForm.value.resultType,

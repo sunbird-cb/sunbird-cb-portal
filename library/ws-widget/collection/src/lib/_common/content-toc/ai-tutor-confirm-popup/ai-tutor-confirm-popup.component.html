@@ -1,0 +1,14 @@
+<div mat-dialog-content>
+  <div class="flex justify-center text-center">
+    <img src="assets/icons/bot-chat-big.svg"/>
+  </div>
+  <div class="text-center blue-text mt-3">
+    Hey, it seems you are not enrolled. Do you want to enroll?
+  </div>
+</div>
+<div mat-dialog-actions class="flex flex-row mt-4 mx-10">
+  <button mat-button class="cancel-btn" (click)="close()" >No</button>
+  <button mat-raised-button color='primary' class="action-btn mx-3" (click)="enrollNow(true)" cdkFocusInitial >
+    {{data.enroll ? 'Resume' : 'Enroll Now'}}
+  </button>
+</div>

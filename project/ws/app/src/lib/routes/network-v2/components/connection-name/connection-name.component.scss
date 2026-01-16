@@ -7,6 +7,14 @@
     width: 268px;
     border: 1px solid rgba(0, 0, 0, 8%);
 }
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-height: 3.6em;
+    line-height: 1.8em;
+    white-space: nowrap;
+ }
 
 .photo-container {
     background: #F8F4F9;
@@ -15,11 +23,23 @@
 
 .name-container {
     padding: $size-m $size-l;
+    height: 75px;
 }
 
 .name {
     text-transform: capitalize;
-}
+    cursor: pointer;
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    height: 2.1rem;
+    margin: 0 auto;
+    line-height: 1;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
 .designation {
     line-height: 21px;
@@ -27,6 +47,9 @@
 
 .action-container {
     padding: $size-m 0;
+}
+.font-bold {
+    font-weight: 600!important;
 }
 
 [wsTooltipDirective] {
@@ -40,6 +63,7 @@
     // top:auto;
     // left: auto;
     padding: 5px;
+    left: -57px;
     // background: #fff;
     // box-shadow: 0 2px 1px rgba(0,0,0,.6);
 
@@ -47,3 +71,12 @@
     //     left: 0;
     // }
   }
+  .profile-badge-span {
+    width: 20px;
+    vertical-align: top;
+  }
+  img.profile-badge {
+    position: absolute;
+    padding-top: 4px;
+    padding-left: 5px;
+}

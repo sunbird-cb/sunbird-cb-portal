@@ -44,7 +44,7 @@ export class ConditionCheckService {
       if ((conditions as any).includes('*')) {
         return true
       }
-      return conditions.some(condition => {
+      return conditions.some((condition: any) => {
         let isLocalPassed = true
         Object.keys(condition).forEach(meta => {
           if (

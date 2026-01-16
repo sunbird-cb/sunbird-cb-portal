@@ -1,25 +1,30 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ProfileCertificateDialogComponent } from './profile-certificate-dialog.component'
-import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatSnackBarModule, MatTooltipModule } from '@angular/material'
-import { PipeSafeSanitizerModule } from '@sunbird-cb/utils/src/public-api'
+
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils-v2'
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button'
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card'
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog'
+import { MatIconModule } from '@angular/material/icon'
+import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar'
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip'
 
 @NgModule({
-  declarations: [ProfileCertificateDialogComponent],
-  imports: [
-    CommonModule,
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    PipeSafeSanitizerModule,
-  ],
-  exports: [
-    ProfileCertificateDialogComponent,
-  ],
-  entryComponents: [ProfileCertificateDialogComponent],
+    declarations: [ProfileCertificateDialogComponent],
+    imports: [
+        CommonModule,
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        PipeSafeSanitizerModule,
+    ],
+    exports: [
+        ProfileCertificateDialogComponent,
+    ]
 })
 export class ProfileCertificateDialogModule { }

@@ -1,8 +1,9 @@
-$font-family-sans: -apple-system, Lato, Montserrat, BlinkMacSystemFont, 'Segoe UI', Roboto,
-  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-  'Segoe UI Symbol', 'Noto Color Emoji';
+$font-family-sans: -apple-system, Lato, Montserrat, BlinkMacSystemFont,
+  'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 $font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
-$font-family-mono: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+$font-family-mono: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+  monospace;
 $font-family-open-sans: 'Open Sans';
 $font-family-lato: 'Lato';
 $font-family-montserrat: 'Montserrat';
@@ -21,10 +22,57 @@ $mat-toolbar-gt-xs: 56px;
 
 $page-center: 1230px;
 $max-width: 1230px;
+$new-max-width: 1200px;
 $max-width-2: 1230px;
-$card-standard-width: 265px;
+$card-standard-width: 245px;
 $card-career-width: 400px;
 $card-network-width: 400px;
 $card-discuss-home-width: 400px;
 $letter-spacing: -0.05em;
 $word-spacing: 5px;
+$colorOrange: rgba(246, 153, 83, 1);
+$text-primary: #1b4ca1;
+$colorGreen: #5fa800;
+$colorRed: #d13924;
+$overleyDarkBackground: #00000099;
+
+$brandAccentColor: #1b4ca1;
+$brandAccentDarkShade: #1b4ca129;
+$brandAccentDarkShade2: #1b4ca11a;
+
+$greyShadeSaksham: #545454;
+$releventBtn: #276de5;
+$releventBoxshadowHover: #276de599;
+$white: #ffffff;
+$primaryDark600: #194593;
+$textRecentSearch: #241c15;
+
+$borderColor: #00000029;
+$borderColorSelect: #1b1f2426;
+$labelColorselect: #24292fcc;
+
+$black: #000000;
+$black-87: #000000de;
+$blueGrayDark: #1b2133;
+
+$lightGrayshade: #e0e0e0;
+$dimGrayshade: #626262;
+$textGreyShade1: #666666;
+$textGreyShade2: #999999;
+$textGreyShade3: #241c15a6;
+$textGreyShade4: #4e5562;
+
+$courseYellow: #f3962f;
+
+$snackBarSuccess: #1d8923;
+$snackBarSuccessShade: #1d892329;
+
+$snackBarDanger: #d12e2e;
+$snackBarBoxshadow: #0000003d;
+
+$chipStandardBackground: #eef1f6;
+$matChipsStandardColor: #333d4c;
+
+$matCardBorderColor: #00000014;
+
+$matListHoverBg: #e8edf6;

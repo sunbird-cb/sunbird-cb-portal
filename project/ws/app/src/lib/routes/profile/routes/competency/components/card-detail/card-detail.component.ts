@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ROOT_WIDGET_CONFIG } from '@sunbird-cb/collection'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 import { Chart } from 'chart.js'
 import { NSProfileData } from '../../../../models/profile.model'
 import { NSCompetency } from '../../models/competency.model'
@@ -172,7 +172,7 @@ export class CardDetailComponent implements OnInit {
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 3,
-            lineTension: 0,
+            // lineTension: 0,
             fill: true,
           },
           {
@@ -181,7 +181,7 @@ export class CardDetailComponent implements OnInit {
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 3,
             label: '25-50',
-            lineTension: 0,
+            // lineTension: 0,
             fill: true,
           },
           {
@@ -190,7 +190,7 @@ export class CardDetailComponent implements OnInit {
             borderColor: 'rgba(255, 206, 86, 1)',
             borderWidth: 3,
             label: '50-75',
-            lineTension: 0,
+            // lineTension: 0,
             fill: true,
           },
           {
@@ -199,20 +199,21 @@ export class CardDetailComponent implements OnInit {
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 3,
             label: '75-10',
-            lineTension: 0,
+            // lineTension: 0,
             fill: true,
           },
         ],
       },
       options: {
         scales: {
-          yAxes: [
+          y: 
             {
+              beginAtZero: true,
               ticks: {
-                beginAtZero: true,
+                
               },
             },
-          ],
+          
         },
       },
     })

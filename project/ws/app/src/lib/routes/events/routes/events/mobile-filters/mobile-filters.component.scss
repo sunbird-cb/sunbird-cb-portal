@@ -1,0 +1,89 @@
+.clear {
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.8px;
+  letter-spacing: 0%;
+  color: rgba(27, 76, 161, 1);
+}
+
+.filter-heading {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19.5px;
+  letter-spacing: 0%;
+
+}
+
+.filter-sub-heading {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17.07px;
+  letter-spacing: 0%;
+
+}
+
+.check-list {
+  padding: 4px 0;
+
+  ::ng-deep .mdc-label {
+    margin-left: 10px !important;
+  }
+}
+
+.line {
+  border-top: 1px solid #c3c3c3;
+}
+
+.view-more {
+  color: #1b4ca1;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.clear-btn {
+  width: 141px;
+  height: 40px;
+  top: 1090px;
+  left: 223px;
+  padding: 12px 32px 12px 32px;
+  gap: 8px;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid rgb(27, 76, 161);
+  color: rgb(27, 76, 161);
+}
+
+.apply-btn {
+  width: 141px;
+  height: 40px;
+  top: 1090px;
+  left: 223px;
+  padding: 12px 32px 12px 32px;
+  gap: 8px;
+  border-radius: 12px;
+  background: rgb(27, 76, 161);
+  color: white;
+}
+
+.date-list {
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0.34375em !important;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding: 0 0 13px 0 !important
+  }
+
+  ::ng-deep .mat-form-field-suffix {
+    margin-right: -10px !important;
+  }
+}
+
+.radio-list-mobile {
+  ::ng-deep .mat-mdc-radio-button .mdc-radio {
+    padding: 0px !important
+  }
+}

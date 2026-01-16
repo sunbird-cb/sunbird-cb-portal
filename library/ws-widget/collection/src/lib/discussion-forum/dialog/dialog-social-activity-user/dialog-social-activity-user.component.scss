@@ -1,4 +1,5 @@
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@use '@sunbird-cb/design-system/src/styles/ws-vars';
+@use '@sunbird-cb/design-system/src/styles/ws-mixins' as *;
 
 ws-widget-user-image {
   $size: 40px;

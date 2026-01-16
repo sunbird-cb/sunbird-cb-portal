@@ -16,7 +16,7 @@
     <div class="hover-text" *ngIf="badge.BadgeName!=='Certified' && badge.BadgeName!=='Professional'
     && badge.BadgeName!=='Master'">
       <div class="mx-1 style">{{badge.requiredCount-badge.currentCount}}</div>
-      <div i18n class="mx-1 style">more to go.</div>
+      <div class="mx-1 style">more to go.</div>
     </div>
     <mat-progress-bar [value]="badge.progress"></mat-progress-bar>
   </mat-card>

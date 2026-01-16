@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 // import { NSNetworkDataV2 } from '@ws/app/src/lib/routes/network-v2/models/network-v2.model'
 // import { NetworkV2Service } from '@ws/app/src/lib/routes/network-v2/services/network-v2.service'
 // import { of } from 'rxjs'

@@ -23,7 +23,7 @@ import { ConfirmDialogComponent } from '@ws/author/src/lib/modules/shared/compon
 import { ErrorParserComponent } from '@ws/author/src/lib/modules/shared/components/error-parser/error-parser.component'
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NSApiRequest } from '@ws/author/src/lib/interface/apiRequest'
-import { FormGroup } from '@angular/forms'
+import { UntypedFormGroup } from '@angular/forms'
 import {
   CONTENT_BASE_WEBHOST_ASSETS,
   CONTENT_BASE_WEBHOST,
@@ -66,7 +66,7 @@ export class AddWebPagesComponent implements OnInit, OnDestroy {
   showAudioCard = false
   imagesUrlbase = ''
 
-  @ViewChild(PlainCKEditorComponent, { static: false }) ckEditor!: PlainCKEditorComponent
+  @ViewChild(PlainCKEditorComponent) ckEditor!: PlainCKEditorComponent
 
   constructor(
     public dialog: MatDialog,
@@ -528,7 +528,7 @@ export class AddWebPagesComponent implements OnInit, OnDestroy {
     )
   }
 
-  finalCall(commentsForm: FormGroup) {
+  finalCall(commentsForm: UntypedFormGroup) {
     if (commentsForm) {
       const body: NSApiRequest.IForwardBackwardActionGeneral = {
         comment: commentsForm.controls.comments.value,
@@ -681,7 +681,7 @@ export class AddWebPagesComponent implements OnInit, OnDestroy {
           height: '450px',
           data: this.metaContentService.getOriginalMeta(this.currentId),
         })
-        dialogRef.afterClosed().subscribe((commentsForm: FormGroup) => {
+        dialogRef.afterClosed().subscribe((commentsForm: UntypedFormGroup) => {
           this.finalCall(commentsForm)
         })
       }

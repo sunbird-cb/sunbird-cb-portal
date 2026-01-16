@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
+import { ConfigurationsService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { SEARCH_V6_AUTH } from '@ws/author/src/lib/constants/apiEndpoints'
 import { NSContent } from '@ws/author/src/lib/interface/content'
 import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
@@ -99,9 +99,14 @@ export class AuthPickerComponent implements OnInit, OnDestroy {
   selectedContentChanged(content: NSContent.IContentMeta, checked: boolean) {
     if (checked) {
       this.selectedContents.push(content)
-      this.selectedContentIds.add(content.identifier)
+      if (content.identifier) {
+        this.selectedContentIds.add(content.identifier)
+      }
+
     } else {
-      this.selectedContentIds.delete(content.identifier)
+      if (content.identifier) {
+        this.selectedContentIds.delete(content.identifier)
+      }
       this.selectedContents = this.selectedContents.filter(v => v.identifier !== content.identifier)
     }
   }

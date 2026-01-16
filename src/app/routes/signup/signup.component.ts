@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { SignupService } from './signup.service'
 
 @Component({
@@ -10,8 +10,8 @@ import { SignupService } from './signup.service'
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  signupForm: FormGroup
-  unseenCtrl!: FormControl
+  signupForm: UntypedFormGroup
+  unseenCtrl!: UntypedFormControl
   unseenCtrlSub!: Subscription
   uploadSaveData = false
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
@@ -21,12 +21,12 @@ export class SignupComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private signupService: SignupService,
   ) {
-    this.signupForm = new FormGroup({
-      fname: new FormControl('', [Validators.required]),
-      lname: new FormControl('', [Validators.required]),
+    this.signupForm = new UntypedFormGroup({
+      fname: new UntypedFormControl('', [Validators.required]),
+      lname: new UntypedFormControl('', [Validators.required]),
       // mobile: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      code: new FormControl('', [Validators.required]),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      code: new UntypedFormControl('', [Validators.required]),
     })
   }
 

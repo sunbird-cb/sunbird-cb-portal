@@ -15,7 +15,8 @@
 // .border-t-5 {
 //   border-top-width: 5px !important;
 // }
-@import '~@sunbird-cb/design-system/src/styles/ws-vars';
+@use '@sunbird-cb/design-system/src/styles/ws-vars';
+@use '@sunbird-cb/design-system/src/styles/ws-mixins' as *;
 
 .card-minimal-container {
   position: relative;

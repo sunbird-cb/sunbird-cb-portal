@@ -1,0 +1,61 @@
+<div class="profile-verification-dialog">
+  <!-- Illustration positioned outside/above the dialog -->
+  <div class="illustration">
+    <img src="/fusion-assets/images/KarmaSahayogi.svg" alt="Profile Verification" class="verification-image">
+  </div>
+
+  <!-- Main dialog content -->
+  <div class="dialog-content">
+    <!-- Blue Header -->
+    <div class="dialog-header">
+      <h2 class="dialog-title">iGOT PROFILE</h2>
+    </div>
+
+    <!-- Dialog Body -->
+    <div class="dialog-body">
+      <p class="message-text mb-2" >
+        <span *ngIf="ministryOrStateType === 'ministry' || ministryOrStateType === 'spv'">{{'NetworkV2Profile.ministryGreeting' | translate}}</span>
+        <span *ngIf="ministryOrStateType === 'state'">{{'NetworkV2Profile.stateGreeting' | translate}}</span>
+        
+      </p>
+      
+      <p class="submission-note">
+        <span *ngIf="data?.userProfile?.departmentName && data?.userProfile?.professionalDetails[0]?.designation && data?.userProfile?.professionalDetails[0]?.group  && data?.userProfile?.primaryEmail && data?.userProfile?.mobile;else missingDetails">
+          {{'NetworkV2Profile.confirmMsg' | translate}} "{{'playerbrief.assessmentBackConfirmBtn' | translate}}" {{'NetworkV2Profile.otherwise' | translate}}, {{'NetworkV2Profile.click' | translate}} "{{'userProfile.updateprofile' | translate}}"
+        </span>
+        <ng-template #missingDetails>
+          <span >{{'NetworkV2Profile.missingMsg' | translate}} "{{'userProfile.updateprofile' | translate}}"</span>
+        </ng-template>
+        
+      </p>
+      <!-- Profile Information -->
+      <div class="profile-info">
+        <div class="info-row">
+          <span class="info-label" [ngClass]="data?.userProfile?.departmentName? '': 'danger-label'">{{'requestDialog.organisation' | translate}}: {{ data?.userProfile?.departmentName    || 'Not Filled' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"  [ngClass]="data?.userProfile?.professionalDetails[0]?.designation ? '': 'danger-label'">{{'userProfile.designation' | translate}}: {{ data?.userProfile?.professionalDetails[0]?.designation || 'Not Filled' }}</span>
+        </div>
+         <div class="info-row">
+          <span class="info-label"  [ngClass]="data?.userProfile?.professionalDetails[0]?.group ? '': 'danger-label'">{{'userProfile.group' | translate}}: {{ data?.userProfile?.professionalDetails[0]?.group || 'Not Filled' }}</span>
+        </div>
+        <div class="info-row">  
+          <span class="info-label" [ngClass]="data?.userProfile?.primaryEmail ? '': 'danger-label'">{{'publicsignup.email' | translate}}: {{ data?.userProfile?.primaryEmail || 'Not Filled' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label" [ngClass]="data?.userProfile?.mobile ? '': 'danger-label'">{{'userProfile.mobileNumber' | translate}}: {{ data?.userProfile?.mobile || 'Not Filled' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dialog Actions -->
+    <div class="dialog-actions">
+      <button mat-stroked-button class="confirm-btn" (click)="onVerify()" *ngIf="data?.userProfile?.departmentName && data?.userProfile?.professionalDetails[0]?.designation && data?.userProfile?.professionalDetails[0]?.group  && data?.userProfile?.primaryEmail && data?.userProfile?.mobile">
+        Confirm
+      </button>
+      <button mat-raised-button class="update-btn" (click)="onUpdateProfile()">
+        Update Profile
+      </button>
+    </div>
+  </div>
+</div>

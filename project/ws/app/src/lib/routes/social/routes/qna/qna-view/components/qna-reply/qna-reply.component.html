@@ -30,7 +30,7 @@
         </ws-widget-editor-quill>
         <div class="text-right">
           <button type="button" class="margin-top-s" [disabled]="!replyPostEnabled" mat-raised-button color="primary"
-            i18n (click)="editReply(editFailMsg.value)">
+            (click)="editReply(editFailMsg.value)">
             Update
           </button>
           <button type="button" class="margin-top-s margin-left-s" mat-stroked-button color="primary" i18n
@@ -46,8 +46,8 @@
       <div class="flex flex-between margin-top-xs">
         <div class="ws-mat-primary-text">
           <ng-container *ngIf="userId === item?.postCreator?.postCreatorId">
-            <a role="button" class="cursor-pointer" i18n (click)="editMode = true">edit</a>&nbsp;&nbsp;
-            <a role="button" class="cursor-pointer" i18n (click)="deleteReply(deleteFailMsg.value)">delete</a>
+            <a role="button" class="cursor-pointer" (click)="editMode = true">edit</a>&nbsp;&nbsp;
+            <a role="button" class="cursor-pointer" (click)="deleteReply(deleteFailMsg.value)">delete</a>
           </ng-container>
         </div>
         <div class="user-details">
@@ -57,7 +57,7 @@
             </span>
             <div class="mat-caption">
               <span>{{ item.dtCreated | date }}</span>
-              <ng-container i18n> at </ng-container>
+              <ng-container > at </ng-container>
               <span>{{ item.dtCreated | date: 'shortTime' }}</span>
             </div>
           </div>
@@ -70,13 +70,13 @@
             {{ comment.postContent.body }}
             <span class="ws-mat-primary-text"> - {{ comment.postCreator.name }} </span>
             <span class="mat-caption"> {{ comment.dtCreated | date }}</span>
-            <span class="mat-caption" i18n> at</span>
+            <span class="mat-caption" > at</span>
             <span class="mat-caption"> {{ comment.dtCreated | date: 'shortTime' }}</span>
           </div>
         </div>
         <div class="text-right" *ngIf="commentData?.postCount > 0">
           <button type="button" [disabled]="commentFetchStatus === 'fetching'" (click)="fetchQuestionComments()"
-            mat-button color="primary" i18n>
+            mat-button color="primary" >
             Load More Comments
           </button>
         </div>
@@ -90,7 +90,7 @@
             name="comment" [(ngModel)]="commentAddRequest.postContent.body" />
         </mat-form-field>
         <button mat-stroked-button [disabled]="!commentAddRequest.postContent.body.length || isPostingComment"
-          color="primary" class="margin-left-s" i18n="Post comment of question" (click)="postComment()" i18n>
+          color="primary" class="margin-left-s" i18n="Post comment of question" (click)="postComment()" >
           Post
         </button>
       </form>

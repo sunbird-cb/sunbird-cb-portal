@@ -1,4 +1,4 @@
-<mat-toolbar role="navigation" *ngIf="pageData?.navigationBar && !error && isXSmall" [ngStyle]="navBackground?.styles">
+<mat-toolbar class="page" role="navigation" *ngIf="pageData?.navigationBar && !error && isXSmall" [ngStyle]="navBackground?.styles">
   <!-- [ngClass]="{
   navbar: !isXSmall && !pageData.navigationBar.pageBackLink && !pageData.navigationBar.pageTitle
   }" [color]="navBackground?.color" -->
@@ -27,17 +27,17 @@
     <button type="button" mat-icon-button *ngIf="links?.length" [matMenuTriggerFor]="quickLinksMenu">
       <mat-icon>more_vertical</mat-icon>
     </button>
-    <button class="home-help" mat-icon-button id='helper' [matMenuTriggerFor]="helpMenu" *ngIf="!isHlpMenuXs">
+    <!-- <button class="home-help" mat-icon-button id='helper' [matMenuTriggerFor]="helpMenu" *ngIf="!isHlpMenuXs">
       <mat-icon>more_vertical</mat-icon>
-    </button>
+    </button> -->
   </ng-container>
 </mat-toolbar>
 <ng-container *ngIf="!error" [wsResolverWidget]="pageData?.pageLayout"></ng-container>
 <h2 *ngIf="error" class="mat-error margin-top-m text-center">
-  <ng-container *ngIf="error === 'NoContent'" i18n>
+  <ng-container *ngIf="error === 'NoContent'" >
     Page not found. Check the url.
   </ng-container>
-  <ng-container *ngIf="error !== 'NoContent'" i18n>
+  <ng-container *ngIf="error !== 'NoContent'" >
     Check your network connection and reload the page.
   </ng-container>
 </h2>

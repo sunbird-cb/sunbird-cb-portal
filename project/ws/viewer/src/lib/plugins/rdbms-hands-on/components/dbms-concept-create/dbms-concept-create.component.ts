@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { RdbmsHandsOnService } from '../../rdbms-hands-on.service'
 import { NSRdbmsHandsOn } from '../../rdbms-hands-on.model'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'viewer-dbms-concept-create',
@@ -24,12 +24,12 @@ export class DbmsConceptCreateComponent implements OnInit {
   @ViewChild('thirdEntry', { static: true }) thirdEntry: ElementRef<any> | null = null
 
   executedResult: NSRdbmsHandsOn.IRdbmsApiResponse | null = null
-  queryForm: FormGroup | null = null
+  queryForm: UntypedFormGroup | null = null
   dropdownData: NSRdbmsHandsOn.IDropdownDetails[] = []
   contentData: any
   selectedOption: any
   executed = false
-  dropdownQueryForm: FormGroup | null = null
+  dropdownQueryForm: UntypedFormGroup | null = null
   hasFiredRealTimeProgress = false
   insertValues: any[] = []
   insertTableValues: any[] = []
@@ -61,7 +61,7 @@ export class DbmsConceptCreateComponent implements OnInit {
     wrap: true,
   }
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     private dbmsSvc: RdbmsHandsOnService,
   ) { }

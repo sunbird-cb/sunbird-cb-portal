@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-import { WsEvents, EventService } from '@sunbird-cb/utils/src/public-api'
+import { WsEvents, EventService } from '@sunbird-cb/utils-v2'
 /* tslint:disable*/
 import _ from 'lodash'
 @Component({

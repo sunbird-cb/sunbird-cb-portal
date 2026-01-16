@@ -8,10 +8,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NsWidgetResolver, WidgetBaseComponent } from '@sunbird-cb/resolver'
-import { EventService, LoggerService, WsEvents, ValueService } from '@sunbird-cb/utils'
+import { EventService, LoggerService, WsEvents, ValueService } from '@sunbird-cb/utils-v2'
 import * as PDFJS from 'pdfjs-dist/webpack'
 import { fromEvent, interval, merge, Subject, Subscription } from 'rxjs'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
@@ -39,8 +39,8 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   MIN_SCALE = 0.2
   CSS_UNITS = 96 / 72
   totalPages = 0
-  currentPage = new FormControl(0)
-  zoom = new FormControl(this.DEFAULT_SCALE)
+  currentPage = new UntypedFormControl(0)
+  zoom = new UntypedFormControl(this.DEFAULT_SCALE)
   isSmallViewPort = false
   realTimeProgressRequest = {
     content_type: 'Resource',
@@ -62,6 +62,8 @@ export class PlayerPdfComponent extends WidgetBaseComponent
   private runnerSubs: Subscription | null = null
   private routerSubs: Subscription | null = null
   public isInFullScreen = false
+  public isMobile = false
+  public markAsCompleteSubjectSubscribe: Subscription | null = null
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -149,6 +151,26 @@ export class PlayerPdfComponent extends WidgetBaseComponent
       })
       this.eventDispatcher(WsEvents.EnumTelemetrySubType.Init)
     }
+
+    this.markAsCompleteSubjectSubscribe  = this.viewerSvc.markAsCompleteSubject.subscribe((data: any) => {
+
+      if (data) {
+        this.currentPage.reset()
+        this.currentPage.setValue(this.totalPages)
+        this.current  = [...this.current, ...[this.totalPages.toString()]]
+        this.markAsCompleteSubjectSubscribe?.unsubscribe()
+        if (this.identifier) {
+          this.saveContinueLearning(this.identifier)
+          // this.fireRealTimeProgress(this.identifier)
+        }
+      }
+    })
+
+    if (window.innerWidth <= 1200) {
+      this.isMobile = true
+    } else {
+      this.isMobile = false
+    }
   }
   ngOnChanges() {
     // if (this.widgetData !== this.oldData) {
@@ -172,7 +194,7 @@ export class PlayerPdfComponent extends WidgetBaseComponent
     )
     if (this.widgetData && this.widgetData.pdfUrl) {
       // this.loadDocument(this.widgetData.pdfUrl)
-      const publicUrl = this.viewerSvc.getPublicUrl(this.widgetData.pdfUrl)
+      const publicUrl = this.viewerSvc.getCdnUrl(this.widgetData.pdfUrl)
       this.loadDocument(publicUrl)
       if (this.widgetData.identifier) {
         this.identifier = this.widgetData.identifier
@@ -298,11 +320,20 @@ export class PlayerPdfComponent extends WidgetBaseComponent
         max_size: this.totalPages,
         current: this.current,
       }
-      const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-        this.activatedRoute.snapshot.queryParams.collectionId : this.widgetData.identifier
-      const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-        this.activatedRoute.snapshot.queryParams.batchId : this.widgetData.identifier
-      this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
+      const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                           this.activatedRoute.snapshot.queryParams.batchId, id)
+      const collectionId = (resData && resData.courseId) ? resData.courseId : ''
+      const isPreAssessment = this.activatedRoute.snapshot.queryParams.preAssessment
+      const batchId = (resData && resData.batchId) ? resData.batchId : ''
+      if(isPreAssessment) {
+        if (id && collectionId) {
+          this.viewerSvc
+            .realTimeProgressUpdateForPreAssessment(id, realTimeProgressRequest)
+        }
+      } else 
+      if (id && collectionId && batchId) {
+        this.viewerSvc.realTimeProgressUpdate(id, realTimeProgressRequest, collectionId, batchId)
+      }
     }
     return
   }

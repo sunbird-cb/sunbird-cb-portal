@@ -1,0 +1,247 @@
+/* profile-editor.component.scss */
+.profile-editor-container {
+  padding: 24px;
+  max-width: 600px;
+  width: 600px;
+}
+
+.profile-editor-header {
+  
+  .header-title {
+    color: #000000DE;
+    /* stylelint-disable */
+    font: 600 16px Montserrat;
+    /* stylelint-enable */
+  }
+
+  .close-button {
+    cursor: pointer;
+    pointer-events: all;
+
+    .close-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      color: #666666;
+    }
+  }
+}
+
+.solid {
+  width: calc(100% + 46px);
+  margin-left: -24px;
+  border-top: 2px solid #00000014;
+}
+
+.editor-description {
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 24px;
+  /* stylelint-disable */
+  font: 400 14px Lato;
+  /* stylelint-enable */
+}
+
+.profile-editor-form {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 245px);
+  overflow: auto;
+}
+
+.form-actions {
+
+  .cancel-btn {
+    border: 1px solid #1B4CA1;
+    border-radius: 16px;
+    padding: 6px 16px;
+    color: #1B4CA1;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+  
+  .save-btn {
+    background-color: #1B4CA1;
+    border-radius: 16px;
+    padding: 6px 16px;
+    color: white;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+  
+}
+
+.lable {
+  color: #212529;
+  /* stylelint-disable */
+  font: 700 14px Lato;
+  /* stylelint-enable */
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  margin-bottom: -2px;
+  color: #00000099;
+  margin-left: 4px;
+}
+
+.upload {
+  background: #1B4CA10A;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5px;
+  border: 1px dotted #1B4CA1;
+}
+
+.dragFileText {
+  color: #1B4CA1;
+  /* stylelint-disable */
+  font: 700 12px Lato;
+  /* stylelint-enable */
+}
+
+.disable {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: unset;
+}
+
+.fileNameCard {
+  background-color: #1B4CA114;
+  height: 40px;
+  border-radius: 3px;
+
+  .iconName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+::ng-deep .profile-control {
+  .sticky-search-container {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: white;
+    padding: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+  .search-input {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding-left: 10px;
+    width: 98%;
+    height: 30px;
+    border-radius: 17px;
+    &:focus {
+      outline: none;
+      border-color: #F3962F;
+      box-shadow: 0 0 0 1px rgba(243, 150, 47, 0.2);
+    }
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 35px;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 11px 0px 0px !important;
+  }
+
+  .mat-form-field-infix {
+    border-top: 0.7em !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0px !important;
+  }
+
+  .mat-mdc-icon-button svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 16px !important;
+    border-left-style: solid !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    display: none !important;
+  }
+  
+}
+
+::ng-deep .profile-control-date-field {
+  .mat-form-field-flex {
+    align-items: center !important; 
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 35px;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 7px 0px 0px !important;
+  }
+
+  .mat-form-field-infix {
+    border-top: 0.7em !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0px !important;
+  }
+
+  .mat-mdc-icon-button svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 16px !important;
+    border-left-style: solid !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    display: none !important;
+  }
+}
+
+.remove-file {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.disable-btn {
+  background-color: #999999 !important;
+  color: #FFFFFF !important;
+  pointer-events: none !important;
+}
+
+.disableField {
+  opacity: 0.5;
+  cursor: unset;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-editor-container {
+    width: calc(100% - 30px);
+    padding: 15px;
+  }
+
+  .cancel-btn {
+    display: none !important;
+  }
+
+  .save-btn {
+    width: 100% !important;
+  }
+  
+}

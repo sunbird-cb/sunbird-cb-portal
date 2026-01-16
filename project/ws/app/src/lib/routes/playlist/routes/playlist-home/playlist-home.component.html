@@ -11,8 +11,8 @@
         <h1 *ngIf="userName" class="mat-display-1 margin-bottom-l">Hey {{ userName }}!</h1>
         <mat-button-toggle-group class="no-border" value="me" (change)="goalPlayList($event?.value)"
           [value]="playListFor">
-          <mat-button-toggle value="me" i18n>My Playlist</mat-button-toggle>
-          <mat-button-toggle value="shared" i18n *ngIf="isShareEnabled">Shared with me</mat-button-toggle>
+          <mat-button-toggle value="me" >My Playlist</mat-button-toggle>
+          <mat-button-toggle value="shared" *ngIf="isShareEnabled">Shared with me</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
@@ -31,7 +31,7 @@
   <a name="accept-reject-link-playlist-home" routerLink="/app/playlist/notification" *ngIf="numNotifications">
     <mat-card class="flex flex-middle padding-remove padding-top-s padding-bottom-s margin-bottom-xl">
       <mat-icon color="accent" class="margin-left-s">notifications</mat-icon>
-      <p class="margin-left-xs margin-remove-bottom" i18n>
+      <p class="margin-left-xs margin-remove-bottom" >
         Accept or Reject playlists shared with you!
       </p>
       <span class="spacer"></span>
@@ -47,16 +47,16 @@
     <h2>{{type === EPlaylistTypes.ME?"My Playlist": "Shared Playlist"}}</h2>
     <span class="flex flex-1"></span>
     <a *ngIf="type === EPlaylistTypes.ME" mat-flat-button class="ws-mat-button-theme" style="display: inline-table;"
-      routerLink="/app/playlist/create" i18n>
+      routerLink="/app/playlist/create" >
       Create Playlist
     </a>
   </div>
   <mat-form-field class="width-1-1" appearance="fill">
     <mat-icon matSuffix>search</mat-icon>
-    <mat-label i18n *ngIf=" type===EPlaylistTypes.ME">
+    <mat-label *ngIf=" type===EPlaylistTypes.ME">
       Search for your playlist
     </mat-label>
-    <mat-label i18n *ngIf="type === EPlaylistTypes.SHARED">
+    <mat-label *ngIf="type === EPlaylistTypes.SHARED">
       Search for playlist shared with you
     </mat-label>
     <input name="search-playlists-input-playlist-home" matInput [(ngModel)]="searchPlaylistQuery" />
@@ -92,7 +92,7 @@
             <span class="create-icon-text">+</span>
           </div>
         </div>
-        <h3 class="mat-subheading-2 font-weight-500 margin-top-xxs margin-bottom-m" i18n>
+        <h3 class="mat-subheading-2 font-weight-500 margin-top-xxs margin-bottom-m" >
           Create New
         </h3>
       </a>
@@ -106,8 +106,8 @@
     </ws-app-playlist-card>
   </ng-container>
   <ng-template #emptyPlaylist>
-    <h3 *ngIf="mode === 'ME'" class="mat-h3 w-full display-block text-center" i18n>No Playlists</h3>
-    <h3 *ngIf="mode === 'SHARED'" class="mat-h3 w-full display-block text-center" i18n>
+    <h3 *ngIf="mode === 'ME'" class="mat-h3 w-full display-block text-center" >No Playlists</h3>
+    <h3 *ngIf="mode === 'SHARED'" class="mat-h3 w-full display-block text-center" >
       No playlist shared with you
     </h3>
   </ng-template>

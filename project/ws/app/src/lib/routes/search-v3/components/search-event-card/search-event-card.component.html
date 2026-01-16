@@ -1,0 +1,114 @@
+<div class="course-content-card-wrapper">
+    <mat-card class="course-card mb-4 overflow-hidden max-w-full cursor-pointer" (click)="navigateToEvent()">
+        <div class="card-container p-4 flex relative">
+            <!-- Left side - Image -->
+            <div class="course-image-container relative overflow-hidden">
+                <ng-container *ngIf="content?.posterImage">
+                    <img [src]="content?.posterImage | pipePublicURL" alt="Course thumbnail"
+                        class="w-full h-full rounded-xl" [wsUtilsDefaultThumbnail]="defaultThumbnail">
+                </ng-container>
+                <ng-container *ngIf="!content?.posterImage">
+                    <ng-container *ngIf="content?.appIcon; else defaultImg">
+                        <img [src]="content?.appIcon | pipePublicURL" alt="Course thumbnail"
+                            class="w-full h-full rounded-xl" [wsUtilsDefaultThumbnail]="defaultThumbnail">
+                    </ng-container>
+                    <ng-template #defaultImg>
+                        <img alt="Course thumbnail" class="w-full h-full rounded-xl"
+                            src="/assets/instances/eagle/app_logos/default.png" />
+                    </ng-template>
+                </ng-container>
+
+                <ng-container *ngIf="isCurrentlyActive()">
+                    <div class="image-overlay rounded-xl"></div>
+                    <div class="course-badges-live">
+                        <span class="badge new-badge font-normal">Live</span>
+                    </div>
+                </ng-container>
+                <div class="course-badges-new" *ngIf="checkIfContentIsNew(content?.createdOn)">
+                    <span class="badge new-badge font-normal">New</span>
+                </div>
+
+                <div class="course-badges flex items-center gap-2" *ngIf="eventDuration">
+                    <span class="badge duration-badge font-normal">
+                        <mat-icon>schedule</mat-icon>
+                        {{eventDuration | pipeDurationTransform: 'hms'}}
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- Right side - Content -->
+            <div class="course-content pl-0 md:pl-4">
+                <ng-container>
+                    <div class="flex justify-between items-center">
+                        <div class="saptha" *ngIf="content?.resourceType">
+                            <div class="event-tag">
+                                <mat-icon class="star-icon" svgIcon="handshake"></mat-icon>
+                                <span class="font-normal text-xs">{{translateLabels(content.resourceType,
+                                    'event')}}</span>
+                            </div>
+
+                        </div>
+                        <!-- Bookmark button -->
+                        <!-- <div class="bookmark-container">
+                            <button mat-icon-button aria-label="Bookmark this course"
+                                (click)="contentBookmarked = !contentBookmarked">
+                                <mat-icon [ngClass]="contentBookmarked ? 'marked':'unmarked'">{{contentBookmarked ?
+                                    'bookmark' :
+                                    'bookmark_border'}}</mat-icon>
+                            </button>
+                        </div> -->
+                    </div>
+                </ng-container>
+
+                <h2 class="course-title font-normal text-ellipse">
+                    {{content?.name}}
+                </h2>
+
+                <div class="course-tags mb-3 font-normal text-ellipse">
+                    {{content?.description}}
+                </div>
+
+                <!-- <div class="course-tags mb-3 font-normal" *ngIf="content?.competencies_v6">
+                    <div class="flex flex-row align-flex-start">
+                        <div class="w-66">Sub Theme - </div>
+                        <div class="subtheme-detail">
+                            <span>
+                                {{getSubTheme(content?.competencies_v6)}}
+                            </span>
+                        </div>  
+                    </div>
+                    
+                </div> -->
+
+                <div class="course-author mb-3 flex items-center gap-2">
+                    <div class="author-avatar flex items-center justify-center">
+                        <img class="source-icon" alt="ong" [src]="content?.appIcon | pipePublicURL" width="16"
+                            [wsUtilsDefaultThumbnail]="defaultSLogo">
+                    </div>
+                    <span class="organization-name" *ngIf="content?.sourceName">{{'learnsearch.by' | translate}}
+                        {{content?.sourceName}}</span>
+                </div>
+
+                <div class="course-stats flex items-center gap-4 flex-wrap">
+                    <div class="stats">
+                        <mat-icon class="star-icon" svgIcon="calender-event"></mat-icon>
+                        <span class="font-normal text-xs">{{content?.startDate | date }} {{formattedTime}}</span>
+                    </div>
+
+                    <!-- <div class="stats">
+                        <mat-icon class="star-icon" svgIcon="certificate"></mat-icon>
+                        <span class="font-normal text-xs">Certification</span>
+                    </div> -->
+
+                    <div class="karmayogi-verified" *ngIf="isIgot">
+                        <img class="source-icon" alt="ong"
+                            src="/assets/instances/eagle/app_logos/igot-katmayogi-logo.svg" width="18">
+                        <span class="font-normal text-xs">iGOT</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </mat-card>
+</div>

@@ -17,7 +17,7 @@ export class TooltipDirective {
     @Input() parametroPlantilla!: TemplateRef<any>
     @Input() placement = 'top'
     // @Input() close
-    @ContentChild('tooltipTemplate', { static: false })
+    @ContentChild('tooltipTemplate')
     private tooltipTemplateRef!: TemplateRef<Object>
     offset = 10
     @HostListener('mouseenter') onMouseEnter(): void {

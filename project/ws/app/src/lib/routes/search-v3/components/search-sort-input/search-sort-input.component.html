@@ -1,0 +1,11 @@
+<div class="sort-by-container" [ngClass]="category === 'peoples' ? 'select-width-max-people':'select-width-max'">
+    <label for="sortSelect" class="sort-by-label">Sort By</label>
+    <div class="select-wrapper">
+        <select #sortSelect id="sortSelect" [(ngModel)]="selectedOption" (change)="onChange($event)"
+            class="sort-select" [ngClass]="category === 'peoples' ? 'select-width-max-people':'select-width-max'">
+            <option *ngFor="let option of options" [value]="option.value">
+                {{ option.name }}
+            </option>
+        </select>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+@media print {
+	body {
+		margin: 0 !important;
+	}
+}
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  min-height: 400px;
+}
+
+
+
+.main-container {
+	font-family: 'Lato';
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ck-content {
+	font-family: 'Lato';
+	line-height: 1.6;
+	word-break: break-word;
+}
+
+.editor-container_inline-editor .editor-container__editor {
+	min-width: 795px;
+	max-width: 795px;
+}
+
+.editor-container_include-block-toolbar {
+	margin-left: 42px;
+}

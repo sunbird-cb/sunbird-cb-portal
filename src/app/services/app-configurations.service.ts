@@ -1,10 +1,10 @@
 import { Injectable  } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
-import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
+import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils-v2'
 
 @Injectable()
-export class AppConfigurationsService implements Resolve<Observable<any>> {
+export class AppConfigurationsService  {
 
   constructor(private configSvc: ConfigurationsService) { }
 

@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
-import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils'
+import { IResolveResponse, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
 import { map, catchError } from 'rxjs/operators'
 
 @Injectable()
-export class PostFetchResolverService implements
-  Resolve<Observable<IResolveResponse<{ request: NsDiscussionForum.IPostRequest, response: NsDiscussionForum.IPostResult }>>
-  | IResolveResponse<{ request: NsDiscussionForum.IPostRequest, response: NsDiscussionForum.IPostResult }>> {
+export class PostFetchResolverService  {
 
   userId = ''
   constructor(

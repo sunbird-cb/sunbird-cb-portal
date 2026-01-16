@@ -5,9 +5,10 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { NsGoal, BtnGoalsService, NsAutoComplete } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils'
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material'
+import { TFetchStatus, ConfigurationsService } from '@sunbird-cb/utils-v2'
 
 @Component({
   selector: 'ws-app-goal-share-dialog',

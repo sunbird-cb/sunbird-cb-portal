@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { MatSnackBar } from '@angular/material'
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Subscription } from 'rxjs'
-import { TSendStatus } from '@sunbird-cb/utils'
+import { TSendStatus } from '@sunbird-cb/utils-v2'
 import {
   FeedbackService,
   FeedbackSnackbarComponent,
@@ -17,14 +17,14 @@ import {
 })
 export class ServiceRequestComponent implements OnDestroy {
   sendStatus: TSendStatus
-  serviceRequestForm: FormGroup
+  serviceRequestForm: UntypedFormGroup
   private _submitSub?: Subscription
 
   constructor(private feedbackSvc: FeedbackService, private snackbar: MatSnackBar) {
     this.sendStatus = 'none'
 
-    this.serviceRequestForm = new FormGroup({
-      serviceRequest: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
+    this.serviceRequestForm = new UntypedFormGroup({
+      serviceRequest: new UntypedFormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
     })
   }
 

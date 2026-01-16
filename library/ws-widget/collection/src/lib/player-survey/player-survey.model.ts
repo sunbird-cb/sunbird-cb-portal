@@ -7,6 +7,7 @@ export interface IWidgetsPlayerSurveyData {
   contentType?: any
   courseName?: any
   progressStatus?: any
+  wfClientVersion?: string
 }
 
 export interface IPlayerSurvey {

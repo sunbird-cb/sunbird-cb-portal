@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router'
 import { NsContent, PipeContentRoutePipe, WidgetContentService } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils-v2'
 import { Observable, of } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
 
@@ -52,14 +52,12 @@ const ADDITIONAL_FIELDS_IN_CONTENT = [
 ]
 @Injectable()
 export class AppTocResolverService
-  implements
-  Resolve<
-  Observable<IResolveResponse<NsContent.IContent>> | IResolveResponse<NsContent.IContent>
-  > {
+   {
   constructor(
     private contentSvc: WidgetContentService,
     private routePipe: PipeContentRoutePipe,
     private router: Router,
+    private configSvc: ConfigurationsService,
   ) { }
 
   resolve(
@@ -71,12 +69,15 @@ export class AppTocResolverService
     if (contentId) {
       const   forPreview = window.location.href.includes('/public/') || window.location.href.includes('&preview=true')
       return (forPreview
-        ? this.contentSvc.fetchAuthoringContent(contentId)
+        ? this.contentSvc.fetchAuthoringContent(contentId,'read')
         : this.contentSvc.fetchContent(contentId, 'detail', ADDITIONAL_FIELDS_IN_CONTENT, primaryCategory)
       ).pipe(
         map(data => ({ data, error: null })),
         tap(resolveData => {
           resolveData.data = resolveData.data.result.content
+          if (resolveData.data.cstoken) {
+            this.configSvc.cstoken = resolveData.data.cstoken
+          }
           let currentRoute: string[] | string = window.location.href.split('/')
           currentRoute = currentRoute[currentRoute.length - 1]
           if (forPreview && currentRoute !== 'contents' && currentRoute !== 'overview') {

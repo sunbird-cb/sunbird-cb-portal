@@ -1,5 +1,5 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
-import { ConfigurationsService, NsInstanceConfig, UserPreferenceService } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsInstanceConfig, UserPreferenceService } from '@sunbird-cb/utils-v2'
 
 @Injectable({
   providedIn: 'root',

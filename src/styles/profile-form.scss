@@ -76,13 +76,8 @@
     margin-top: 2px!important;
     font-size: 14px;
       font-weight: 400;
-      font-family: Lato;
+      font-family: Lato, sans-serif;
 }
-  // .form-input {
-  //     font-size: 14px;
-  //     font-weight: 400;
-  //     font-family: Lato;
-  // }
   .mat-select {
     color: rgba(0,0,0,.87)!important;
     margin-top: 0.25rem!important
@@ -90,7 +85,7 @@
   ::ng-deep .mat-select-value {
     font-size: 14px;
       font-weight: 400;
-      font-family: Lato;
+      font-family: Lato, sans-serif;
   }
  ::ng-deep .mat-select-arrow-wrapper {
     transform: none!important;
@@ -123,17 +118,12 @@
     }
 
     .btn-success {
-      // background-color: rgb(48, 105, 51) !important;
       background-color: #0074b6!important;
       border-radius: 4px;
       width: 240px;
       box-shadow: none;
       margin-right: 16px;
 
-      // &.btn-responsive {
-      //   width: 100%;
-      //   max-width: 340px;
-      // }
     }
 
     .btn-success:disabled,
@@ -163,7 +153,6 @@
         border-radius: 4px 0 0 4px;
         border-right-style: none;
         min-width: 4px;
-        border-right-style: none;
       }
 
       .mat-form-field-outline-gap {
@@ -219,7 +208,6 @@
 
 
  ::ng-deep .theme-igot.day-mode .mat-radio-button.mat-radio-checked   {
-    //   background-color: transparent !important;
 
       .mat-radio-container {
         .mat-radio-inner-circle {

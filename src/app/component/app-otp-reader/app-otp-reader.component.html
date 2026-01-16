@@ -1,0 +1,8 @@
+<div id="inputs">
+    <ng-container *ngFor="let input of inputs; let i = index">
+        <input #input type="text"
+            class="otp-input-box"
+            id="{{ input }}" [(ngModel)]="inputValues[i]" (input)="onValueChange($event, i)" maxlength="1"
+            (keyup)="onBackspace($event, i)" />
+    </ng-container>
+</div>

@@ -1,0 +1,216 @@
+@import 'ws-vars';
+.filter-section {
+  .mat-expansion-panel-spacing {
+    margin-bottom: 10px !important;
+    box-shadow: none !important;
+    border: 0;
+  }
+  .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+  .mat-expansion-panel-header {
+    height: 30px !important;
+  }
+  .sublist-section {
+    ul {
+      list-style-type: none;
+    }
+  }
+}
+
+::ng-deep.mat-expansion-panel-body {
+  padding: 0 16px !important;
+}
+
+:host ::ng-deep {
+  .mat-checkbox-frame {
+    border: 1px solid $overleyDarkBackground;
+  }
+
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background: $brandAccentColor 0% 0% no-repeat padding-box !important;
+    border-radius: 4px;
+  }
+
+  .mat-checkbox-checked .mat-checkbox-label {
+    @extend .mat-checkbox-label;
+    font-weight: 700;
+    line-height: 100%;
+    color: $brandAccentColor;
+  }
+}
+
+.expansion-heading {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  line-height: 16.8px;
+  color: $overleyDarkBackground;
+}
+
+.mt-4 {
+  margin-top: 1rem !important;
+}
+
+.mat-full-radius {
+  input.search-filter-input {
+    margin-top: 0.45rem;
+    padding-left: 0.2rem;
+  }
+}
+
+.search-input-themes.mat-full-radius {
+  input.search-filter-input {
+    margin-top: 0.8rem;
+    padding-left: 0.2rem;
+  }
+}
+
+::ng-deep {
+  .content-provider-filter .mat-full-radius,
+  .languages-filter .mat-full-radius,
+  .designation-filter .mat-full-radius,
+  .root-org-name-filter .mat-full-radius,
+  .sector-filter .mat-full-radius,
+  .competency-filter .mat-full-radius,
+  .sectorNames-filter .mat-full-radius {
+    position: relative;
+    .mat-form-field-appearance-outline {
+      .mat-form-field-flex {
+        height: 40px;
+        align-items: center;
+      }
+
+      .mat-form-field-infix {
+        min-height: 40px !important;
+        padding: 6px 0 6px 0;
+      }
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    .mat-form-field {
+      font-size: 14px;
+    }
+  }
+}
+
+.mb-2 {
+  margin-bottom: 8px !important;
+}
+
+::ng-deep .competency-area-filter .mat-selection-list {
+  height: 125px;
+  overflow-y: auto;
+}
+
+.filter-list {
+  .filter-pill {
+    padding: 2px 2px 2px 12px;
+    border-radius: 18px;
+    background-color: $lightGrayshade;
+    span {
+      /* stylelint-disable */
+      font-family: Lato;
+      /* stylelint-enable */
+      color: $dimGrayshade;
+      display: inline-block;
+      max-width: 14em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    mat-icon {
+      font-size: 16px;
+    }
+    .mat-icon-button {
+      width: 28px;
+      height: 28px;
+      line-height: 0;
+    }
+  }
+}
+
+.clear-all-btn {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  color: $colorRed !important;
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+  background-color: transparent !important;
+}
+
+.padding-top-0 {
+  padding-top: 0 !important;
+}
+
+.padding-remove {
+  padding: 0 4px 0 0 !important;
+}
+
+.min-width-adjust {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.8px;
+  color: $overleyDarkBackground;
+  display: inline-block;
+  max-width: 11em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 6px;
+}
+
+.min-width-adjust-expansion {
+  @extend .min-width-adjust;
+  max-width: 10em;
+}
+
+.adjust{
+  width: max-content
+}
+.sub-header {
+  /* stylelint-disable */
+  font-family: Lato;
+  /* stylelint-enable */
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16.8px;
+  margin-top: 6px;
+}
+
+.search-input-themes {
+  width: 100%;
+  .search-icon {
+    font-size: 22px;
+  }
+}
+
+::ng-deep .search-input-themes {
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding : 5px 0px;
+    border-top: 1px;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
+}
+
+.search-input-block {
+  width:100%
+}
+
+@media (max-width: 768px) {
+  .filter-sidebar {
+    padding: 1rem 1rem 4rem 1rem !important;
+  }
+}

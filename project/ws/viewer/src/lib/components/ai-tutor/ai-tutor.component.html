@@ -1,0 +1,513 @@
+<!-- <div class="tutor-container">
+<div class="learning-type-container">
+  <mat-form-field appearance="none">
+    <select  matNativeControl required class="section-dd" >
+      <option value="">Select learning type here </option>
+      <option value="">None</option>
+      <option value="">Socratic</option>
+      <option value="">Story Telling</option>
+      <option value="">Summarisation</option>
+    </select>
+  </mat-form-field>
+</div>
+<div [ngClass]="from === 'chatbot' ? 'ai-tutor-container-chatbot':'ai-tutor-container'" #scrollMe>
+  <div class="message-container" #scrollMe>
+    <div class="start-chat" *ngIf="aiTutorResultArr?.length === 0">
+      <h2 class="hey">Hey<span *ngIf="userInfo?.firstName">, {{userInfo?.firstName}}</span> </h2>
+      <p>Welcome to Ai Tutor, Get instant explanations, step-by-step learning guidance, and customised learning tailored just for you.</p>
+    </div>
+    <ng-container *ngFor="let chat of aiTutorResultArr; let i =index">
+      <ng-container *ngIf="chat.type === 'incoming'">
+        <ng-container *ngIf="chat?.answer">
+          <div class="flex row-start incoming-msg margin-bottom-s">
+            <div class="system-icon"><img alt="ai-icon" src="/assets/icons/chatbot-ai-new.svg"></div>
+          
+            <div class="system-msg padding-xs"  *ngIf="chat?.wordsCount <= 30"  [innerHTML]="chat.answer">
+            </div>
+              <div class="system-msg padding-xs">
+                <div   *ngIf="chat?.wordsCount > 30" [innerHTML]="chat?.showLess ? chat.shortAnswer :  chat.answer"></div>
+                <a class="link" href="javascript:void(0)" *ngIf="!chat?.showLess" (click)="toggleShow(i, 'less')">Show Less</a>
+                <a class="link" href="javascript:void(0)" *ngIf="chat?.showLess" (click)="toggleShow(i, 'more')">Show More</a>
+              </div>
+            
+
+          </div>
+          <ng-container *ngFor="let item of chat?.result; let ci=index">
+          <div class="system-msg-mimetype flex flex-col" *ngIf="item?.contentType === 'Resource'">
+            <ng-container *ngIf="item?.mimeType === 'application/pdf'">
+              <div class="resource-icon"><a [href]="item?.resourceLink" target="_blank"><img src="/assets/icons/ai-pdf-icon.jpg"></a></div>
+              <div class="resource-link">
+                <a [href]="item?.resourceLink" target="_blank">Open Resource Link</a>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item?.mimeType === 'video/mp4'">
+              
+              <div class="position-relative">
+                <div class="position-relative">
+                  <img src="/assets/icons/ai-video-icon.jpg">
+
+                </div>
+                <div class="content-duration" *ngIf="item?.contentStart || item?.contentEnd">
+                  <span *ngIf="item?.contentStart">{{item?.contentStart}}</span>
+                  <span *ngIf="item?.contentEnd">:{{item?.contentEnd}}</span>
+                </div>
+              </div>
+              <div class="resource-link">
+                <a [href]="item?.resourceLink" target="_blank">Open Resource Link</a>
+              </div>
+            </ng-container>
+          </div>
+          <div class="recommended-question my-5px" [ngClass]="{'margin-left-5': item?.message }">
+            <div class="my-5px mr-2">
+              <ng-container *ngIf="item?.contentType !== 'Resource'">
+                <div class="btn-default" (click)="redirectToToc(item)">{{item?.title}}
+                  <mat-icon class="vertical-middle">navigate_next</mat-icon>
+                </div>
+                <div>
+                  {{item?.description | slice : 0:50}}
+                </div>
+              </ng-container>
+            </div>
+            <div class="flex flex-row font-12">
+              <div class="cursor-pointer" (click)="copyPath(item, ci)">
+                <mat-icon matTooltip="Copy" aria-label="Copy">content_copy</mat-icon>
+                <span *ngIf="copiedIndex === ci" class="copied-tooltip">Link Copied!</span>
+              </div>
+              <div class="ml-2 mr-2"><img alt="ai-icon" src="/assets/ai-tutor/ai-icon.svg"></div>
+              <div class="ai-generated-content ml-2">These are AI generated results</div>
+            </div>
+          </div>
+        </ng-container>
+          
+          
+        </ng-container>
+        <ng-container *ngIf="!chat?.answer">
+          <div class="flex row-start incoming-msg margin-bottom-s">
+            <div class="system-icon"><img alt="ai-icon" src="/assets/icons/chatbot-ai-new.svg"></div>
+            <div class="loading-bar-icon"><img alt="ai-icon" src="/assets/icons/loading_bar.gif"></div>
+          </div>
+  
+        </ng-container>
+      </ng-container>
+      
+      <ng-container *ngIf="chat.type === 'sendMsg'">
+        <div class="flex width-1-1 row-end padding-top-l padding-bottom-m">
+          <div class="user-seleted-question padding-xs">
+            {{chat?.question}}
+          </div>
+          <div class="user-icon" *ngIf="userIcon">
+            <img alt="ai-icon" src="{{userIcon}}">
+          </div>
+          <div class="circle-s user-icon" *ngIf="!userIcon" [ngStyle]="{'background-color':  circleColor }">
+            <div  class="initials" i18n-aria-label>
+              {{ userInitials }} 
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>  
+</div>
+<div class="control-container">
+  <div class="border-gradient-rounded">
+    <div class="flex flex-row mx-5 justify-between">
+
+      <div class="query-box">
+        <input class="width-500" type="text" placeholder="Ask anything..." [(ngModel)]="searchQueryAItutor" (keydown.enter)="submitSearchQuery()"/>
+        
+      </div>
+
+      <div>
+        <button type="button" class="flex-auto-display send-btn" (click)="submitSearchQuery()" [disabled]="!searchQueryAItutor">
+          <mat-icon class="send-btn-icon">send</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+
+<div class="overflow-y-hidden" [ngClass]="(isMobile && !maximize ? 'ai-tutor-popup-minimize' : (isMobile ? 'ai-tutor-popup': ''))">
+<div *ngIf="isMobile">
+  <div class="flex flex-row ai-tutor-mobile-header">
+      <div class="flex flex-row">
+          <div class="flex">
+              <span class="font-bold">AI Tutor</span>
+            </div>        
+            <div class="red-circle ml-5">
+              New
+            </div>
+      </div>
+      <div class="flex flex-row justify-end">
+        <div *ngIf="maximize" (click)="minimizeAITutor()">
+          <mat-icon>minimize</mat-icon>
+        </div>
+        <div *ngIf="!maximize" (click)="maximizeAITutor()">
+          <mat-icon>maximize</mat-icon>
+        </div>
+        <div (click)="closeAITutorPopup()">
+            <mat-icon>close</mat-icon>
+        </div>
+      </div>
+      
+      
+  </div>
+</div>
+<div [hidden]="!maximize">
+<div class="header">
+  <!-- <mat-form-field appearance="none" style="width:100%">
+    <select  matNativeControl required class="section-dd" >
+      <option value="">You can also choose a learning style that suits you best from here.</option>
+      <option value="">None</option>
+      <option value="">Socratic</option>
+      <option value="">Story Telling</option>
+      <option value="">Summarisation</option>
+    </select>
+  </mat-form-field> -->
+  <mat-form-field class="multiline-select" appearance="fill" style="width: 100%; height: 80px;" floatLabel="never">
+    <mat-select class="multiline-select-box" required [(value)]="selectedLearningStyle" (selectionChange)="getLearningStyle()">
+      <mat-select-trigger class="multiline-select-box-trigger">
+        <div class="option-content">
+          <div class="title">{{ selectedLearningStyle?.title }}</div>
+          <div class="subtitle">{{ selectedLearningStyle?.subtitle }}</div>
+        </div>
+      </mat-select-trigger>
+      <mat-option class="multiline-select-option" value="" *ngFor="let item of learningStyle" [value]="item">
+        <div class="option-content">
+          <div class="title">{{item?.title}}</div>
+          <div class="subtitle">{{item?.subtitle}}</div>
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+</div>
+
+<div class="container-none" id="container-none">
+  <div [ngClass]="from === 'chatbot' ? 'ai-tutor-container-chatbot':'ai-tutor-container'">
+    <div class="message-container" #scrollMe>
+      <div class="start-chat" *ngIf="aiTutorResultArr?.length === 0">
+        <h2 class="hey">Hey<span *ngIf="userInfo?.firstName">, {{userInfo?.firstName}}</span> </h2>
+        <p>Welcome to AI Tutor, Get instant explanations, step-by-step learning guidance, and customised learning tailored just for you.</p>
+      </div>
+      <ng-container *ngFor="let chat of aiTutorResultArr; let i =index">
+        <ng-container *ngIf="chat.type === 'incoming'">
+          <ng-container *ngIf="chat?.answer || chat?.showFromInternet">
+            <div class="flex row-start incoming-msg margin-bottom-s" *ngIf="chat?.answer">
+              <div class="system-icon"><img alt="ai-icon" src="/assets/icons/bot-chat-small.svg"></div>
+            
+              <!-- <div class="system-msg padding-xs"  *ngIf="chat?.wordsCount <= 30"  [innerHTML]="chat.answer">
+              </div> -->
+              <div class="flex row-start incoming-msg margin-bottom-s" *ngIf="chat?.showFromInternet">
+                <div class="system-msg padding-xs mx-10">
+                  I couldn’t find any relevant results for your query. Would you like me to search outside the iGOT platform for more information?
+                </div>
+    
+              </div>
+              <ng-container *ngIf="chat?.answer">
+              <div class="system-msg padding-xs"  *ngIf="chat?.wordsCount <= 30">
+                <markdown [data]="chat?.answer"></markdown>
+              </div>
+              
+                <div class="system-msg padding-xs" *ngIf="chat?.wordsCount > 30" >
+                  <!-- <div   [innerHTML]="chat?.showLess ? chat.shortAnswer :  chat.answer"></div> -->
+                  <markdown [data]="chat?.answer"></markdown>
+                  <!-- <markdown [data]="chat?.showLess ? chat.shortAnswer :  chat.answer"></markdown> -->
+                  <!-- <a class="link" href="javascript:void(0)" *ngIf="!chat?.showLess" (click)="toggleShow(i, 'less')">Show Less</a>
+                  <a class="link" href="javascript:void(0)" *ngIf="chat?.showLess" (click)="toggleShow(i, 'more')">Show More</a> -->
+                </div>
+              </ng-container>
+              
+  
+            </div>
+            
+            <div *ngIf="chat?.showFromInternet">
+              <div class="flex row my-2 justify-start mx-10 my-5">
+                <div (click)="callFromInternet(chat, i)">
+                  <button type="button" class="web-button px-4 cursor-pointer">
+                    <mat-icon class="web-search-icon">search  </mat-icon><span class="blue-color">Search the web</span>
+                  </button>
+                </div>
+                <div (click)="rejectFromInternet(i)" class="mx-2">
+                  <button type="button" class="web-button py-2 px-4 cursor-pointer">
+                    <mat-icon class="web-close-icon">close</mat-icon><span class="blue-color">No</span>
+                  </button>
+                </div>
+            </div>
+            </div>
+            <ng-container *ngFor="let item of chat?.result; let ci=index">
+            <div class="system-msg-mimetype flex flex-col" *ngIf="item?.contentType === 'Resource'">
+              <ng-container *ngIf="item?.mimeType === 'application/pdf'">
+                <!-- <div class="resource-icon"><a [href]="item?.resourceLink" target="_blank" (click)="raiseTelemetryForResource(item)">
+                  <img src="/assets/icons/ai-pdf-icon.jpg"></a>
+                </div> -->
+                <div class="recommended-question-for-resource mx-10" (click)="redirectToResource(item);raiseTelemetryForResource(item)">
+                  <!-- <div class="resource-icon">
+                    <a [href]="item?.resourceLink" target="_blank" (click)="raiseTelemetryForResource(item)">
+                    <img src="/assets/ai-tutor/pdf.svg">
+                    </a>
+                    <p>{{item?.message}}</p>
+                  </div> -->
+                  <div class="btn-default mb-2">
+                    <a [href]="item?.resourceLink" target="_blank">
+                      <img class="vertical-middle h-w-34" src="/assets/ai-tutor/pdf.svg">
+                    </a>
+                    {{item?.title}}
+                    <mat-icon class="vertical-middle" *ngIf="!(item?.fromInternet)">navigate_next</mat-icon>
+                  </div>
+                </div>
+                <!-- <div class="resource-link">
+                  <a [href]="item?.resourceLink" target="_blank">Click to view</a>
+                </div> -->
+              </ng-container>
+              <!-- <ng-container *ngIf="item?.mimeType === 'video/mp4'">
+                
+                <div class="resource-icon">
+                <a [href]="item?.resourceLink" target="_blank" (click)="raiseTelemetryForResource(item)">
+                  <div class="position-relative">
+                    <div class="position-relative">
+                      <img src="/assets/icons/ai-video-icon.jpg">
+  
+                    </div>
+                    <div class="content-duration flex" *ngIf="item?.contentStart > -1 && item?.contentEnd > -1 && !(item?.fromInternet)">
+                      <span><mat-icon>access_time</mat-icon>&nbsp;&nbsp;</span>
+                      <span *ngIf="item?.contentStart > -1">
+                        <span *ngIf="item?.contentStart > 0">{{item?.contentStart | pipeDurationTransform: 'hms'}}</span>
+                        <span *ngIf="item.contentStart === '0'">0</span>
+                      </span>
+                      <span *ngIf="item?.contentEnd > -1">&nbsp;-&nbsp;{{item?.contentEnd | pipeDurationTransform: 'hms'}}</span>
+                    </div>
+                  </div>
+                  
+                  
+                </a>
+              </div>
+            </ng-container> -->
+            <ng-container *ngIf="item?.mimeType === 'video/mp4'">
+              <div class="recommended-question-for-resource mx-10" (click)="redirectToResource(item);raiseTelemetryForResource(item)">
+                
+                <div class="btn-default mb-2">
+                  <div class="flex flex-row">
+                  <div>
+                  <a [href]="item?.resourceLink" target="_blank">
+                    <img class="vertical-middle h-w-34" src="/assets/ai-tutor/video.svg">
+                  </a>
+                </div>
+                <div class="ml-1">
+                  <span>{{item?.title}} </span>
+                </div>
+                <div>
+                  <span class="content-duration flex ml-1" *ngIf="item?.contentStart > -1 && item?.contentEnd > -1 && !(item?.fromInternet)">
+                    <span><mat-icon>access_time</mat-icon>&nbsp;&nbsp;</span>
+                    <span *ngIf="item?.contentStart > -1">
+                      <span *ngIf="item?.contentStart > 0">{{item?.contentStart | pipeDurationTransform: 'hms'}}</span>
+                      <span *ngIf="item.contentStart === '0'">0</span>
+                    </span>
+                    <span *ngIf="item?.contentEnd > -1">&nbsp;-&nbsp;{{item?.contentEnd | pipeDurationTransform: 'hms'}}</span>
+                  </span>                  
+                </div>
+                <div>
+                  <mat-icon class="vertical-middle" *ngIf="!(item?.fromInternet)">navigate_next</mat-icon>
+                </div>
+              </div>
+                </div>
+                <!-- <a [href]="item?.resourceLink" target="_blank" (click)="raiseTelemetryForResource(item)">
+                  <div class="position-relative">
+                    <div class="position-relative">
+                      <img class="h-w-34" src="/assets/ai-tutor/video.svg">
+                      <p>{{item?.message}}</p>
+                    </div>
+                    <div class="content-duration flex" *ngIf="item?.contentStart > -1 && item?.contentEnd > -1 && !(item?.fromInternet)">
+                      <span><mat-icon>access_time</mat-icon>&nbsp;&nbsp;</span>
+                      <span *ngIf="item?.contentStart > -1">
+                        <span *ngIf="item?.contentStart > 0">{{item?.contentStart | pipeDurationTransform: 'hms'}}</span>
+                        <span *ngIf="item.contentStart === '0'">0</span>
+                      </span>
+                      <span *ngIf="item?.contentEnd > -1">&nbsp;-&nbsp;{{item?.contentEnd | pipeDurationTransform: 'hms'}}</span>
+                    </div>
+                  </div>
+                  
+                  
+                </a> -->
+              </div>
+            </ng-container>
+                <div class="flex flex-row cursor-pointer">
+                  <!-- <div class="resource-link"  *ngIf="!(item?.fromInternet)">
+                    <a [href]="item?.resourceLink" target="_blank">Click to view</a>
+                  </div> -->
+                  <div class="cursor-pointer ml-10 mr-2 my-1" (click)="copyPath(item, ci)" *ngIf="item?.contentType === 'Resource' && !(item?.fromInternet)">
+                    <mat-icon matTooltip="Copy" aria-label="Copy">content_copy</mat-icon>
+                    <span *ngIf="copiedIndex === ci" class="copied-tooltip">Link Copied!</span>
+                  </div>
+                  <!-- <div class="feefback-section flex flex-row my-1" *ngIf="(item?.feedback)">
+                    <div *ngIf="item?.feedback !== 'down'"
+                     class="cursor-pointer feedback-icon mt-1" [ngClass]="item?.feedback !== 'up' ? 'rotate-180' : ''">
+                     <img *ngIf="item?.feedback !== 'up'" src="/assets/ai-tutor/down.svg">
+                     <img *ngIf="item?.feedback == 'up'" src="/assets/ai-tutor/up.svg">
+                    </div>
+                    <div *ngIf="item?.feedback !== 'up'"  class="ml-2 cursor-pointer feedback-icon">
+                      <img src="/assets/ai-tutor/fill-down.svg">
+                    </div>
+                  </div>
+                  <div class="feefback-section flex flex-row my-1" *ngIf="item?.feedback === ''">
+                    <div *ngIf="item?.feedback !== 'down'" (click)="sharePositiveContentRating(item,i, ci)"
+                     class="cursor-pointer feedback-icon" [ngClass]="item?.feedback !== 'up' ? 'rotate-180' : ''">
+                     <img *ngIf="item?.feedback !== 'up'" src="/assets/ai-tutor/down.svg">
+                     <img *ngIf="item?.feedback == 'up'" src="/assets/ai-tutor/up.svg">
+                    </div>
+                    <div *ngIf="item?.feedback !== 'up'" (click)="openAIFeedbackPopup(item,i, ci)" class="ml-2 cursor-pointer feedback-icon mt-1">
+                      <img src="/assets/ai-tutor/down.svg">
+                    </div>
+                  </div> -->
+                  <div class="feefback-section flex flex-row my-1">
+                    <div  (click)="sharePositiveContentRating(item,i, ci)" class="cursor-pointer feedback-icon mt-1" 
+                  >
+                    <img [ngClass]="'rotate-180'" *ngIf="item?.feedback !== 'up' && !item?.showLoaderForUp" src="/assets/ai-tutor/down.svg">
+                    <img *ngIf="item?.feedback === 'up'  && !item?.showLoaderForUp" src="/assets/ai-tutor/up.svg">
+                    <img *ngIf="item?.showLoaderForUp" class="blue-loader-animation" height="18" width="18" src="/assets/ai-tutor/blue-loader.png">
+                  </div>
+                  <div (click)="openAIFeedbackPopup(item,i, ci)" class="ml-2 cursor-pointer feedback-icon mt-1">
+                    <img *ngIf="item?.feedback !== 'down' && !item?.showLoaderForDown" src="/assets/ai-tutor/down.svg"> 
+                    <img *ngIf="item?.feedback === 'down'  && !item?.showLoaderForDown" src="/assets/ai-tutor/fill-down.svg"> 
+                    <img *ngIf="item?.showLoaderForDown" class="blue-loader-animation" height="18" width="18" src="/assets/ai-tutor/blue-loader.png">
+                  </div>
+                  </div>
+                  <!-- <div class="flex flex-row font-12 mt-1">
+                    <div class="ml-2 mr-2 cu"><img alt="ai-icon" src="/assets/ai-tutor/ai-icon.svg"></div>
+                    <div class="ai-generated-content ml-2">These are <span *ngIf="item?.fromInternet">Web</span><span *ngIf="!(item?.fromInternet)">AI</span> generated results</div>
+                  </div> -->
+                  <!-- <div class="feefback-section flex flex-row">
+                    
+                    <div *ngIf="item?.feedback !== 'down'" (click)="sharePositiveContentRating(item,i, ci)"
+                 class="cursor-pointer feedback-icon" [ngClass]="item?.feedback !== 'up' ? 'rotate-180' : ''">
+                 <img *ngIf="item?.feedback !== 'up'" src="/assets/ai-tutor/down.svg">
+                 <img *ngIf="item?.feedback == 'up'" src="/assets/ai-tutor/up.svg">
+                </div>
+                <div *ngIf="item?.feedback !== 'up'" (click)="openAIFeedbackPopup(item,i, ci)" class="ml-2 cursor-pointer feedback-icon"><img src="/assets/ai-tutor/down.svg"></div>
+                  </div> -->
+                </div>
+              
+            </div>
+            <div class="recommended-question" [ngClass]="{'ml-10': item?.message }">
+              <div class="my-5px mr-2 w-92">
+                <ng-container *ngIf="item?.contentType !== 'Resource' && !(item?.fromInternet)">
+                  <div class="btn-default" (click)="redirectToToc(item)">{{item?.title}}
+                    <mat-icon class="vertical-middle" *ngIf="!(item?.fromInternet)">navigate_next</mat-icon>
+                  </div>
+                  <div class="recommended-question-desc" *ngIf="!(item?.fromInternet)">
+                    <!-- {{item?.description}} -->
+                     <markdown [data]="item?.description"></markdown>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="flex flex-row font-12 mb-2">
+                <div class="cursor-pointer" (click)="copyPath(item, ci)" *ngIf="item?.contentType !== 'Resource' && !(item?.fromInternet)">
+                  <mat-icon matTooltip="Copy" aria-label="Copy">content_copy</mat-icon>
+                  <span *ngIf="copiedIndex === ci" class="copied-tooltip">Link Copied!</span>
+                </div>
+                <!-- <div class="feefback-section flex flex-row" *ngIf="item?.contentType !== 'Resource'">
+                  
+                  <div *ngIf="item?.feedback !== 'down'" (click)="sharePositiveContentRating(item, i,ci)" 
+                class="cursor-pointer feedback-icon" [ngClass]="item?.feedback !== 'up' ? 'rotate-180' : ''">
+                  <img *ngIf="item?.feedback !== 'up'" src="/assets/ai-tutor/down.svg">
+                  <img *ngIf="item?.feedback == 'up'" src="/assets/ai-tutor/up.svg">
+                </div>
+                <div *ngIf="item?.feedback !== 'up'"  (click)="openAIFeedbackPopup(item, i,ci)" class="ml-2 cursor-pointer feedback-icon"><img src="/assets/ai-tutor/down.svg"></div>
+                </div>   -->
+                <div class="feefback-section flex flex-row" *ngIf="item?.contentType !== 'Resource'">
+                  <div  (click)="sharePositiveContentRating(item,i, ci)" class="cursor-pointer feedback-icon mt-1" 
+                  >
+                    <img [ngClass]="'rotate-180'" *ngIf="item?.feedback !== 'up' && !item?.showLoaderForUp" src="/assets/ai-tutor/down.svg">
+                    <img *ngIf="item?.feedback === 'up'  && !item?.showLoaderForUp" src="/assets/ai-tutor/up.svg">
+                    <img *ngIf="item?.showLoaderForUp" class="blue-loader-animation" height="18" width="18" src="/assets/ai-tutor/blue-loader.png">
+                  </div>
+                  <div (click)="openAIFeedbackPopup(item,i, ci)" class="ml-2 cursor-pointer feedback-icon mt-1">
+                    <img *ngIf="item?.feedback !== 'down' && !item?.showLoaderForDown" src="/assets/ai-tutor/down.svg"> 
+                    <img *ngIf="item?.feedback === 'down'  && !item?.showLoaderForDown" src="/assets/ai-tutor/fill-down.svg"> 
+                    <img *ngIf="item?.showLoaderForDown" class="blue-loader-animation" height="18" width="18" src="/assets/ai-tutor/blue-loader.png">
+                  </div>
+                </div> 
+              </div>
+              <!-- <div class="flex flex-row font-12 mt-1" *ngIf="item?.contentType !== 'Resource'">
+                <div class="ml-2 mr-2 cu"><img alt="ai-icon" src="/assets/ai-tutor/ai-icon.svg"></div>
+                <div class="ai-generated-content ml-2">These are <span *ngIf="item?.fromInternet">Web</span><span *ngIf="!(item?.fromInternet)">AI</span> generated results</div>
+              </div> -->
+            </div>
+          </ng-container>
+          <div class=" flex flex-row ml-10" *ngIf="chat?.answer && !(chat?.result?.length)">
+            <div  (click)="sharePositiveContentRatingForAnswer(chat,i)" class="cursor-pointer feedback-icon mt-1" 
+            >
+              <img [ngClass]="'rotate-180'" *ngIf="chat?.feedback !== 'up' && !chat?.showLoaderForUp" src="/assets/ai-tutor/down.svg">
+              <img *ngIf="chat?.feedback === 'up'  && !chat?.showLoaderForUp" src="/assets/ai-tutor/up.svg">
+              <img *ngIf="chat?.showLoaderForUp" class="blue-loader-animation" height="18" width="18" src="/assets/ai-tutor/blue-loader.png">
+            </div>
+            <div (click)="openAIFeedbackPopupForAnswer(chat,i)" class="ml-2 cursor-pointer feedback-icon mt-1">
+              <img *ngIf="chat?.feedback !== 'down' && !chat?.showLoaderForDown" src="/assets/ai-tutor/down.svg"> 
+              <img *ngIf="chat?.feedback === 'down'  && !chat?.showLoaderForDown" src="/assets/ai-tutor/fill-down.svg"> 
+              <img *ngIf="chat?.showLoaderForDown" class="blue-loader-animation" height="18" width="18" src="/assets/ai-tutor/blue-loader.png">
+            </div>
+          </div> 
+          <div class="flex flex-row font-12 mt-1 mb-1 ai-generated-content-container" *ngIf="chat?.result?.length">
+            <div class="ml-5 mr-2 cu"><img alt="ai-icon" src="/assets/ai-tutor/ai-icon.svg"></div>
+            <div class="ai-generated-content ml-2">These are <span *ngIf="item?.fromInternet">Web</span><span *ngIf="!(item?.fromInternet)">AI</span> generated results</div>
+          </div>
+            
+          </ng-container>
+          <ng-container>
+            <div class="flex row-start incoming-msg margin-bottom-s" *ngIf="chat?.newMessage === '' && !resultFetch">
+              <div class="system-icon"><img alt="ai-icon" src="/assets/icons/bot-chat-small.svg"></div>
+              <div class="loading-bar-icon flex flex-row vertical-middle">
+                <div class="mt-2"><span class="blue-color">Retrieving Results</span></div>
+                <div><img alt="ai-icon" src="/assets/icons/loading_bar.gif"></div>
+              </div>
+            </div>
+    
+          </ng-container>
+        </ng-container>
+        
+        <ng-container *ngIf="chat.type === 'sendMsg'">
+          <div class="flex width-1-1 row-end padding-top-l padding-bottom-m">
+            <div class="user-seleted-question padding-xs">
+              {{chat?.question}}
+            </div>
+            <div class="user-icon" *ngIf="userIcon">
+              <img alt="ai-icon" src="{{userIcon}}">
+            </div>
+            <div class="circle-s user-icon" *ngIf="!userIcon" [ngStyle]="{'background-color':  circleColor }">
+              <div  class="initials" i18n-aria-label>
+                {{ userInitials }} 
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>  
+  </div>
+</div>
+
+<div class="footer" [ngClass]="isMobile ? 'ai-popup-mobile-footer':''">
+  <div class="border-gradient-rounded" [style.height.px]="containerHeight">
+    <div class="flex flex-row ml-5 mr-2 justify-between">
+
+      <div class="query-box">
+        <!-- <input class="width-500" type="text" placeholder="Ask anything..." [(ngModel)]="searchQueryAItutor" (keydown.enter)="submitSearchQuery()"/>  -->
+        <textarea #autoResizeTextarea class="width-500"
+        placeholder="Ask Me Anything..."
+        (input)="resizeTextarea(autoResizeTextarea, 'fromInput')"
+        [(ngModel)]="searchQueryAItutor" (keydown.enter)="submitSearchQuery(autoResizeTextarea, $event)"
+        rows="1"
+        >
+        </textarea>
+        
+      </div>
+
+      <div class="margin-top-2px">
+        <button type="button" class="flex-auto-display send-btn" (click)="submitSearchQuery('',$event)" [disabled]="!searchQueryAItutor">
+          <mat-icon class="send-btn-icon">send</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

@@ -1,4 +1,4 @@
-@import "~@sunbird-cb/design-system/src/styles/_ws-mixins.scss";
+@use "@sunbird-cb/design-system/src/styles/_ws-mixins.scss" as *;
 
 .feature {
   position: relative;

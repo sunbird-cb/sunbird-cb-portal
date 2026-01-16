@@ -1,6 +1,6 @@
 <form class="flex flex-row-reverse flex-wrapped" [formGroup]="customizeForm">
   <mat-form-field *ngIf="widgetData.graphIsCustomizableColor" class="margin-right-xl">
-    <mat-label i18n>Choose a palette</mat-label>
+    <mat-label >Choose a palette</mat-label>
     <mat-select [(value)]="graphPalette" formControlName="colorPalette">
       <mat-option
         (click)="customizeGraph(customizeForm?.get('colorPalette')?.value)"
@@ -11,7 +11,7 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field *ngIf="widgetData.graphIsCustomizableType" class="margin-right-xl">
-    <mat-label i18n>Choose a Graph Type</mat-label>
+    <mat-label >Choose a Graph Type</mat-label>
     <mat-select [(value)]="graphDataType" formControlName="graphType">
       <mat-option
         (click)="customizeGraphType(customizeForm?.get('graphType')?.value)"

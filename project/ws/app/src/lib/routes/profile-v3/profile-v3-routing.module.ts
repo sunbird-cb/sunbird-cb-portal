@@ -17,7 +17,7 @@ const routes: Routes = [
     component: ProfileHomeComponent,
     data: {
       pageId: '',
-      module: 'profile-v3',
+      module: 'Profile',
     },
     resolve: {
       competencies: CompetencyResolverService,
@@ -33,7 +33,7 @@ const routes: Routes = [
         component: WelcomeOnboardComponent,
         data: {
           pageId: 'welcome',
-          module: 'profile-v3',
+          module: 'Profile',
         },
         resolve: {
           // basicProfile: BasicProfileResolver,
@@ -44,7 +44,7 @@ const routes: Routes = [
         component: RolesAndActivitiesComponent,
         data: {
           pageId: 'roles',
-          module: 'profile-v3',
+          module: 'Profile',
         },
         resolve: {
           // topics: RolesResolverService,
@@ -55,7 +55,7 @@ const routes: Routes = [
         component: CurrentCompetenciesComponent,
         data: {
           pageId: 'current-competencies',
-          module: 'profile-v3',
+          module: 'Profile',
         },
       },
       {
@@ -63,7 +63,7 @@ const routes: Routes = [
         component: DesiredCompetenciesComponent,
         data: {
           pageId: 'desired-competencies',
-          module: 'profile-v3',
+          module: 'Profile',
         },
         // resolve: {
         //   allResources : AllResourceResolveService,
@@ -74,7 +74,7 @@ const routes: Routes = [
         component: TopicComponent,
         data: {
           pageId: 'topics',
-          module: 'profile-v3',
+          module: 'Profile',
         },
         resolve: {
           topics: TopicResolverService,
@@ -85,7 +85,7 @@ const routes: Routes = [
         component: PlatformWalkthroughComponent,
         data: {
           pageId: 'platform-walkthrough',
-          module: 'profile-v3',
+          module: 'Profile',
         },
         // resolve: {
         //   topics: TopicResolverService,

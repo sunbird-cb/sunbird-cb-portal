@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, EventService, LoggerService, WsEvents } from '@sunbird-cb/utils/src/public-api'
+import { ConfigurationsService, EventService, LoggerService, WsEvents } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { NsContent } from '@sunbird-cb/collection/src/lib/_services/widget-content.model'
 import { WidgetContentService } from '@sunbird-cb/collection/src/public-api'
 import { NSQuiz } from '../../plugins/quiz/quiz.model'
+import { ViewerUtilService } from '../../viewer-util.service'
 // import { ViewerDataService } from '../../viewer-data.service'
 /// **
 // * this will not be available for any Preview.
@@ -41,6 +42,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
         private eventSvc: EventService,
         private contentSvc: WidgetContentService,
         private log: LoggerService,
+        private viewerSvc: ViewerUtilService,
         // private _viewerDataService: ViewerDataService,
     ) {
         // this._viewerDataService.resourceChangedSubject.subscribe(() => {
@@ -49,14 +51,31 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
     }
     ngOnInit(): void {
         this.isFetchingDataComplete = false
+        if (window.location.href.includes('preAssessment')) {
+            this.dataSubscription = this.activatedRoute.data.subscribe(
+                async (data: any) => {
+                    this.isFetchingDataComplete = false
+                    this.testData = data.content.data
+                    if (data && data?.content && data?.content?.data && data?.content?.data?.contextCategory === 'Pre Enrolment Assessment') {
+                        this.contentSvc.currentMetaData = data
+                    }
+                    //   console.log(this.testData)
+                    this.init()
+                })
+        } else {
+            this.dataSubscription = this.activatedRoute.data.subscribe(
+                async (data:any) => {
+                    this.isFetchingDataComplete = false
+                    this.testData = data.content.data
+                    if(data && data?.content && data?.content?.data  && data?.content?.data?.contextCategory === 'Pre Enrolment Assessment') {
+                        this.contentSvc.currentMetaData = data
+                    }
+                    //   console.log(this.testData)
+                    this.init()
+                })
+        }
 
-        this.dataSubscription = this.activatedRoute.data.subscribe(
-            async data => {
-                this.isFetchingDataComplete = false
-                this.testData = data.content.data
-                //   console.log(this.testData)
-                this.init()
-            })
+       
     }
     init() {
         if (this.testData) {
@@ -68,6 +87,7 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
             this.quizJson.showTimer = this.testData.requiresSubmit
             this.quizJson.timeLimit = this.testData.expectedDuration
             this.quizJson.primaryCategory = this.testData.primaryCategory
+            this.quizJson.questions = []
             this.alreadyRaised = true
             this.raiseEvent(WsEvents.EnumTelemetrySubType.Loaded, this.testData)
         }
@@ -81,39 +101,54 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
     //         }
     //     }
     // }
-    async fetchContinueLearning(collectionId: string, identifier: string): Promise<boolean> {
+    async fetchContinueLearning(identifier: string): Promise<boolean> {
         return new Promise(resolve => {
             let userId
             if (this.configSvc.userProfile) {
                 userId = this.configSvc.userProfile.userId || ''
             }
-            const req: NsContent.IContinueLearningDataReq = {
-                request: {
-                    userId,
-                    batchId: this.batchId,
-                    courseId: collectionId || '',
-                    contentIds: [],
-                    fields: ['progressdetails'],
-                },
-            }
-            this.contentSvc.fetchContentHistoryV2(req).subscribe(
-                data => {
-                    if (data && data.result && data.result.contentList.length) {
-                        for (const content of data.result.contentList) {
-                            if (content.contentId === identifier && content.progressdetails) {
-                                try {
-                                    // const progressdetails = JSON.parse(content.progressdetails)
-                                    // this.widgetResolverTestData.widgetData.resumePage = Number(content.progressdetails.current.pop())
-                                    // console.log(progressdetails)
-                                } catch { }
+            if (this.activatedRoute.snapshot.queryParams.collectionId
+                && this.activatedRoute.snapshot.queryParams.batchId
+                && identifier
+            ) {
+                const requestCourse = this.viewerSvc.getBatchIdAndCourseId(
+                    this.activatedRoute.snapshot.queryParams.collectionId,
+                    this.activatedRoute.snapshot.queryParams.batchId,
+                    identifier)
+                const language = this.viewerSvc.getResourceContentLanguage(identifier) 
+                const req: NsContent.IContinueLearningDataReq = {
+                    request: {
+                        userId,
+                        language,
+                        batchId: requestCourse.batchId,
+                        courseId: requestCourse.courseId || '',
+                        contentIds: [],
+                        fields: ['progressdetails'],
+                    },
+                }
+                this.contentSvc.fetchContentHistoryV2(req).subscribe(
+                    data => {
+                        if (data && data.result && data.result.contentList.length) {
+                            this.contentSvc.setProgramChildResumeData(data.result.contentList, requestCourse.courseId)
+                            for (const content of data.result.contentList) {
+                                if (content.contentId === identifier && content.progressdetails) {
+                                    try {
+                                        // const progressdetails = JSON.parse(content.progressdetails)
+                                        // this.widgetResolverTestData.widgetData.resumePage = Number(content.progressdetails.current.pop())
+                                        // console.log(progressdetails)
+                                    } catch { }
 
+                                }
                             }
                         }
-                    }
-                    resolve(true)
-                },
-                () => resolve(true),
-            )
+                        resolve(true)
+                    },
+                    () => resolve(true),
+                )
+                resolve(true)
+            }
+            resolve(true)
+
         })
     }
     isErrorOccured(event: any) {
@@ -136,6 +171,13 @@ export class PracticeTestComponent implements OnInit, OnDestroy {
                 identifier: data ? data.identifier : null,
                 mimeType: NsContent.EMimeTypes.PDF,
                 url: data ? data.artifactUrl : null,
+                object: {
+                    id: data ? data.identifier : null,
+                    type: data ? data.primaryCategory : '',
+                    rollup: {
+                        l1: this.activatedRoute.snapshot.queryParams.collectionId || '',
+                    },
+                },
             },
         }
         this.eventSvc.dispatchEvent(event)

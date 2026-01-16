@@ -1,0 +1,401 @@
+<div class="profile-editor-container flex flex-col gap-4">
+  <!-- #region(Header) -->
+  <div class="profile-editor-header flex justify-between items-center">
+    <div class="header-title">{{ header }}</div>
+    <button mat-icon-button class="close-button" (click)="handleCancel()">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+  </div>
+  <hr class="solid">
+  <!-- #endregion (Header) -->
+
+  <ng-container [ngSwitch]="header">
+    <ng-container *ngSwitchCase="'Service History'" [ngTemplateOutlet]="serviceHistory"></ng-container>
+    <ng-container *ngSwitchCase="'Educational qualifications'"
+      [ngTemplateOutlet]="educationalQualifications"></ng-container>
+    <ng-container *ngSwitchCase="'Achievements'" [ngTemplateOutlet]="achievements"></ng-container>
+  </ng-container>
+
+  <!-- #region (Footer Form Actions) -->
+  <hr class="solid">
+  <div class="form-actions flex justify-end items-center gap-4">
+    <button mat-button class="cancel-btn flex align-center justify-center px-2" (click)="handleCancel()">{{'NetworkV2Profile.cancel' | translate}}</button>
+    <button mat-button class="save-btn flex align-center justify-center px-2" (click)="handleSubmit()" [ngClass]="{'disable-btn': entryForm.invalid}"  >
+      {{(entryDetails !== '' ? 'NetworkV2Profile.update' : 'NetworkV2Profile.add') | translate}}</button>
+  </div>
+  <!-- #endregion (Footer Form Actions) -->
+
+  <!-- #region (Service History) -->
+  <ng-template #serviceHistory>
+    <form [formGroup]="entryForm" class="profile-editor-form">
+      <div class="flex flex-col">
+        <!-- Organisation/Ministry -->
+        <div class="flex flex-col profile-control w-full" [ngClass]="{'disableField': isCurrentOrgDetails}">
+          <div class="lable required">{{'NetworkV2Profile.organisation' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select formControlName="orgName" placeholder="{{'NetworkV2Profile.selectOrganisationMinistry'| translate}}"panelClass="profile-control"
+            (openedChange)="setupScrollListenerForOrg($event)" (closed)="onOrganisationDropdownClosed()">
+              <div class="sticky-search-container" (click)="$event.stopPropagation()">
+              <div class="">
+                <input type="text" placeholder="{{'NetworkV2Profile.searchOrganisationMinistry' | translate}}" formControlName="searchOrgName"
+                  class="search-input" (keydown)="$event.stopPropagation()" (click)="$event.stopPropagation()"
+                  autocomplete="off">
+                </div>
+              </div>
+              <mat-option *ngFor="let option of orgList" [value]="option?.orgName">
+                {{ option?.orgName }}
+              </mat-option>
+              <div *ngIf="isLoadingMoreOrganisations" class="loading-indicator">
+                {{'NetworkV2Profile.loadingMore' | translate}}
+              </div>
+              <mat-option *ngIf="(orgList )?.length === 0 && !isLoadingMoreOrganisations" disabled>
+                {{'NetworkV2Profile.noMatchesFound' | translate}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('orgName', 'required')">{{'NetworkV2Profile.pleaseSelectOrganization' | translate}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Designation -->
+        <div class="flex flex-col profile-control w-full" [ngClass]="{'disableField': isCurrentOrgDetails || !selctedOrgDetails?.orgId}">
+          <div class="lable required">{{'NetworkV2Profile.designation' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select formControlName="designation" placeholder="{{'NetworkV2Profile.selectDesignation' | translate}}" panelClass="profile-control"
+            (openedChange)="setupScrollListener($event)" (closed)="onDesignationDropdownClosed()">
+            <div class="sticky-search-container" (click)="$event.stopPropagation()">
+              <div class="">
+                <input type="text" placeholder="{{'NetworkV2Profile.searchDesignation' | translate}}" formControlName="searchDesignation"
+                  class="search-input" (keydown)="$event.stopPropagation()" (click)="$event.stopPropagation()"
+                  autocomplete="off">
+              </div>
+            </div>
+            <mat-option *ngFor="let option of designationsMeta" [value]="option?.name">
+              {{ option?.name }}
+            </mat-option>
+            <div *ngIf="isLoadingMoreDesignations" class="loading-indicator">
+              {{'NetworkV2Profile.loadingMore' | translate}}
+            </div>
+            <mat-option *ngIf="(designationsMeta )?.length === 0 && !isLoadingMoreDesignations" disabled>
+              {{'NetworkV2Profile.noMatchesFound' | translate}}
+            </mat-option>
+          </mat-select>
+            <mat-error *ngIf="hasError('designation', 'required')">{{'NetworkV2Profile.pleaseSelectDesignation' | translate}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col gap-0 md:flex-row md:gap-8">
+          <!-- State -->
+          <div class="flex flex-col profile-control w-full">
+            <div class="lable">State</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select formControlName="orgState" placeholder="{{'NetworkV2Profile.selectState' | translate}}" (selectionChange)="getDistrictsList($event.value)">
+                <ng-container *ngFor="let state of statesList">
+                  <mat-option [value]="state?.stateName">{{state?.stateName}}</mat-option>
+                </ng-container>
+              </mat-select>
+              <mat-error *ngIf="hasError('orgState', 'required')">{{'NetworkV2Profile.pleaseSelectState' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- District -->
+          <div class="flex flex-col profile-control w-full" [ngClass]="{'disableField': !entryForm?.get('orgState')?.value}"
+            matTooltip="{{ entryForm?.get('orgState')?.value ? '' : 'Please select a state first.' }}"
+            [matTooltipDisabled]="entryForm?.get('orgState')?.value !== ''" matTooltipPosition="above">
+            <div class="lable">{{'NetworkV2Profile.district' | translate}}</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select formControlName="orgDistrict" placeholder="{{'NetworkV2Profile.selectDistrict' | translate}}">
+                <ng-container *ngFor="let district of districtsList">
+                  <mat-option [value]="district">{{district}}</mat-option>
+                </ng-container>
+              </mat-select>
+              <mat-error *ngIf="hasError('orgDistrict', 'required')">{{'NetworkV2Profile.pleaseSelectDistrict' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-0 md:flex-row md:gap-8">
+          <!-- Start Date -->
+          <div class="flex flex-col profile-control-date-field w-full">
+            <div class="lable">{{'NetworkV2Profile.startDate' | translate}}</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="{{'NetworkV2Profile.selectDate' | translate}}" [max]="todayDate"
+               (dateChange)="onStartDateChange($event.value)">
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+              <mat-error *ngIf="hasError('startDate', 'matDatepickerParse')">
+                {{'NetworkV2Profile.pleaseEnterValidDate' | translate}}
+              </mat-error>
+              <mat-error *ngIf="hasError('startDate', 'required')">{{'NetworkV2Profile.pleaseSelectStartDate' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- End Date -->
+          <div class="flex flex-col profile-control-date-field w-full" [ngClass]="{'disableField': isCurrentlyWorking}">
+            <div class="lable">{{'NetworkV2Profile.endDate' | translate}}</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="{{'NetworkV2Profile.selectDate' | translate}}"  [min]="startDate">
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+              <mat-error *ngIf="hasError('endDate', 'required') && !hasError('endDate', 'matDatepickerParse')">
+                {{ 'NetworkV2Profile.pleaseSelectEndDate' | translate }}
+              </mat-error>
+              <mat-error *ngIf="hasError('endDate', 'endDateLessThanStartDate')">
+                {{ 'NetworkV2Profile.endDataCannotBeBeforeStartDate' | translate }}
+              </mat-error>
+              <mat-error *ngIf="hasError('endDate', 'matDatepickerParse')">
+                {{ 'NetworkV2Profile.pleaseEnterValidDate' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="flex flex-col profile-control mb-4">
+          <mat-checkbox class="lable" [checked]="isCurrentlyWorking === true" (change)="onCurrentlyWorkingChange($event.checked)">
+            {{'NetworkV2Profile.currentlyWorking' | translate}}
+          </mat-checkbox>
+        </div>
+
+        <!-- Description -->
+        <div class="flex flex-col w-full">
+          <div class="lable">{{'NetworkV2Profile.description' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <textarea matInput maxlength="1000" formControlName="description" rows="4" placeholder="{{'NetworkV2Profile.addYourDescription' | translate}}"></textarea>
+            <mat-error *ngIf="hasError('description', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedExcept(),.' | translate}}</mat-error>
+            <mat-hint align="end" *ngIf="entryForm.get('description')?.value">
+              {{ entryForm.get('description')?.value.length }}/1000
+            </mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <!-- #endregion (Service History) -->
+
+  <!-- #region (Educational Qualifications) -->
+  <ng-template #educationalQualifications>
+    <form [formGroup]="entryForm" class="profile-editor-form">
+      <div class="flex flex-col">
+        <!-- Degree -->
+        <div class="flex flex-col profile-control w-full">
+          <div class="lable required">{{'NetworkV2Profile.degree' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select formControlName="degree" placeholder="{{'NetworkV2Profile.selectDegree' | translate}}" (selectionChange)="onDegreeChange($event.value)"
+                panelClass="profile-control" (openedChange)="setupScrollListenerForDegrees($event)" (closed)="onDegreesDropdownClosed()">
+              <div class="sticky-search-container" (click)="$event.stopPropagation()">
+                <div class="">
+                  <input type="text" placeholder="{{'NetworkV2Profile.searchDegrees' | translate}}" formControlName="searchDegrees"
+                    class="search-input" (keydown)="$event.stopPropagation()" (click)="$event.stopPropagation()"
+                    autocomplete="off">
+                </div>
+              </div>
+              <mat-option *ngFor="let degree of filterDegreesMeta" [value]="degree?.name">
+                {{ degree?.name }}
+              </mat-option>
+              <div *ngIf="isLoadingMoredegrees" class="loading-indicator">
+                {{'NetworkV2Profile.loadingMore' | translate}}
+              </div>
+              <mat-option *ngIf="(filterDegreesMeta )?.length === 0" disabled>
+                {{'NetworkV2Profile.noMatchesFound' | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Other Degree -->
+        <ng-container *ngIf="entryForm.get('degree')?.value?.toLowerCase() === 'other'">
+          <div class="flex flex-col profile-control w-full">
+            <div class="lable">{{'NetworkV2Profile.degreeName' | translate}}</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput formControlName="otherDegree" placeholder="{{'NetworkV2Profile.pleaseEnterYourDegreeName' | translate}}" maxlength="80">
+              <mat-error *ngIf="hasError('otherDegree', 'required')">{{'NetworkV2Profile.pleaseEnterDegreeName' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('otherDegree', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedInThisField' | translate}}</mat-error>
+              <mat-hint align="end" *ngIf="entryForm.get('otherDegree')?.value">
+                {{ entryForm.get('otherDegree')?.value.length }}/80
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <!-- Field of Study -->
+        <div class="flex flex-col profile-control w-full">
+          <div class="lable required">{{'NetworkV2Profile.fieldOfStudy' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="fieldOfStudy" maxlength="250"
+              placeholder="{{'NetworkV2Profile.enterYourSpecialization' | translate}}">
+            <mat-error *ngIf="hasError('fieldOfStudy', 'required')">{{'NetworkV2Profile.pleaseEnterFieldOfStudy' | translate}}</mat-error>
+            <mat-error *ngIf="hasError('fieldOfStudy', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedInThisField' | translate}}</mat-error>
+            <mat-hint align="end" *ngIf="entryForm.get('fieldOfStudy')?.value">
+              {{ entryForm.get('fieldOfStudy')?.value.length }}/250
+            </mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Institute Name -->
+        <div class="flex flex-col profile-control w-full">
+          <div class="lable required">{{'NetworkV2Profile.instituteName' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select formControlName="institutionName" placeholder="{{'NetworkV2Profile.pleaseSelectInstituteName' | translate}}" panelClass="profile-control"
+            (openedChange)="setupInstituteScrollListener($event)" (closed)="onInstituteDropdownClosed()" >
+            <div class="sticky-search-container" (click)="$event.stopPropagation()">
+              <div class="">
+                <input type="text" placeholder="{{'NetworkV2Profile.searchInstitute' | translate}}" formControlName="searchInstitute"
+                  class="search-input" (keydown)="$event.stopPropagation()" (click)="$event.stopPropagation()"
+                  autocomplete="off">
+              </div>
+            </div>
+              <ng-container *ngFor="let institute of filterInstitutionsList">
+                <mat-option [value]="institute?.name">{{institute?.name}}</mat-option>
+              </ng-container>
+                <div *ngIf="isLoadingMoreInstitutions" class="loading-indicator">
+                {{'NetworkV2Profile.loadingMore' | translate}}
+              </div>
+              <mat-option *ngIf="(filterInstitutionsList )?.length === 0" disabled>
+                {{'NetworkV2Profile.noMatchesFound' | translate}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('institutionName', 'required')">{{'NetworkV2Profile.pleaseSelectInstituteName' | translate}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <ng-container *ngIf="entryForm.get('institutionName')?.value === 'Other'">
+          <!-- Other Institute Name -->
+          <div class="flex flex-col profile-control w-full">
+            <div class="lable">{{'NetworkV2Profile.otherInstituteName' | translate}}</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput formControlName="otherInstituteName" placeholder="{{'NetworkV2Profile.enterYourInstituteName' | translate}}" maxlength="125">
+              <mat-error *ngIf="hasError('otherInstituteName', 'required')">{{'NetworkV2Profile.pleaseEnterInstituteName' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('otherInstituteName', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedInThisField' | translate}}</mat-error>
+              <mat-hint align="end" *ngIf="entryForm.get('otherInstituteName')?.value">
+                {{ entryForm.get('otherInstituteName')?.value.length }}/125
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <div class="flex flex-col gap-0 md:flex-row md:gap-8">
+          <!-- Start Year -->
+          <div class="flex flex-col profile-control w-full">
+            <div class="lable required">{{'NetworkV2Profile.startYear' | translate}}</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select formControlName="startYear" placeholder="{{'NetworkV2Profile.selectYear' | translate}}" (selectionChange)="onStartYearChange($event.value)">
+                <ng-container *ngFor="let year of yeasersList">
+                  <mat-option [value]="year">{{year}}</mat-option>
+                </ng-container>
+              </mat-select>
+              <mat-error *ngIf="hasError('startYear', 'required')">{{'NetworkV2Profile.pleaseSelectStartYear' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- End Year -->
+          <div class="flex flex-col profile-control w-full">
+            <div class="lable required">{{'NetworkV2Profile.endYear' | translate}}</div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select formControlName="endYear" placeholder="{{'NetworkV2Profile.selectYear' | translate}}">
+                <ng-container *ngFor="let year of yeasersList">
+                  <mat-option [value]="year" [disabled]="isEndYearDisabled(year)">{{year}}</mat-option>
+                </ng-container>
+              </mat-select>
+              <mat-error *ngIf="hasError('endYear', 'required')">{{'NetworkV2Profile.pleaseSelectEndYear' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <!-- #endregion (Educational Qualifications) -->
+
+  <!-- #region (Achievements) -->
+  <ng-template #achievements>
+    <form [formGroup]="entryForm" class="profile-editor-form">
+      <div class="flex flex-col">
+        <div class="editor-description">
+          {{'NetworkV2Profile.awards/Publications/OtherCertifications' | translate}}
+        </div>
+        <!-- Title field -->
+        <div class="flex flex-col profile-control w-full">
+          <div class="lable required">{{'NetworkV2Profile.title' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="title" maxlength="250" placeholder="e.g. Excel beginner">
+            <mat-error *ngIf="hasError('title', 'required')">{{'NetworkV2Profile.pleaseEnterTitle' | translate}}</mat-error>
+            <mat-error *ngIf="hasError('title', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedExcept()$-/' | translate}}</mat-error>
+            <mat-hint align="end" *ngIf="entryForm.get('title')?.value">
+              {{ entryForm.get('title')?.value.length }}/250
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <!-- Issuing Organisation -->
+        <div class="flex flex-col profile-control w-full">
+          <div class="lable">{{'NetworkV2Profile.issuingOrganisation' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput maxlength="250" formControlName="issuedOrganisation" placeholder="e.g. Microsoft">
+            <mat-error *ngIf="hasError('issuedOrganisation', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedExcept()$' | translate}}</mat-error>
+            <mat-hint align="end" *ngIf="entryForm.get('issuedOrganisation')?.value">
+              {{ entryForm.get('issuedOrganisation')?.value.length }}/250
+            </mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Issue Date -->
+        <div class="flex flex-col profile-control-date-field w-full">
+          <div class="lable">{{'NetworkV2Profile.issueDate' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput [matDatepicker]="issueDatePicker" formControlName="issuedDate" placeholder="{{'NetworkV2Profile.selectDate' | translate}}" [max]="todayDate">
+            <mat-datepicker-toggle matSuffix [for]="issueDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #issueDatePicker></mat-datepicker>
+            <mat-error *ngIf="hasError('issuedDate', 'required')">{{'NetworkV2Profile.pleaseSelectIssueDate' | translate}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="w-full mb-5">
+          <div class="lable">{{'NetworkV2Profile.upload' | translate}}</div>
+        <ng-container *ngIf="entryForm?.controls?.fileName?.value; else uploadIcon">
+          <div class="fileNameCard flex justify-between px-2 items-center">
+            <div class="flex gap-2 items-center w-full">
+              <img src="/assets/icons/image.svg" alt="app icon">
+              <span class="iconName">{{entryForm?.controls?.fileName?.value}}</span>
+            </div>
+              <mat-icon class="remove-file" (click)="removeFile()">close</mat-icon>
+          </div>
+        </ng-container>
+        <ng-template #uploadIcon>
+          <div class="upload flex justify-center items-center" [ngClass]="{'disable': disableUpload }" cdkDropList
+            [cdkDropListData]="videoData" (cdkDropListDropped)="onFileSelected($event)" (dragover)="preventDefaultCDK($event)"
+            (dragenter)="preventDefaultCDK($event, 'enter')" (dragleave)="preventDefaultCDK($event, 'leave')"
+            (drop)="onDrop($event)" onclick="document.getElementById('upload-file').click();">
+            <input #file type="file" name="upload-file" id="upload-file" class="hidden" accept=".png, .jpg, .jpeg"
+              (change)="onFileSelected(file.files);">
+            <div class="flex justify-center items-center gap-2">
+              <img src="/assets/icons/upload-upward-arrow.svg" alt="icon">
+              <span class="dragFileText">{{'NetworkV2Profile.dragFileToUpload' | translate}}</span>
+            </div>
+          </div>
+        </ng-template>
+        </div>
+
+        <!-- URL -->
+        <div class="flex flex-col profile-control w-full" [ngClass]="{'disable': disableUrl }">
+          <div class="lable">{{'NetworkV2Profile.url' | translate}}
+            <mat-icon class="info-icon" matTooltip="You may provide the link for the achievement.">info_outline</mat-icon>
+          </div>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="url" placeholder="e.g. https://www.example.com">
+            <mat-error *ngIf="hasError('url', 'pattern')">{{'NetworkV2Profile.pleaseGiveValidUrl' | translate}}</mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Description -->
+        <div class="flex flex-col w-full">
+          <div class="lable">{{'NetworkV2Profile.description' | translate}}</div>
+          <mat-form-field appearance="outline" class="full-width">
+            <textarea matInput formControlName="description" rows="4" maxlength="500"
+              placeholder="{{'NetworkV2Profile.describeAboutTheSkillsThatYouHaveGainedFromThisLearning' | translate}}"></textarea>
+               <mat-error *ngIf="hasError('description', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedExcept()$-/' | translate}}</mat-error>
+            <mat-hint align="end" *ngIf="entryForm.get('description')?.value">
+              {{ entryForm.get('description')?.value.length }}/500
+            </mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <!-- #endregion (Achievements) -->
+</div>

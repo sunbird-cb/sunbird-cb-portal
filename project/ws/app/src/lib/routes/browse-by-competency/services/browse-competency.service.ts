@@ -42,10 +42,6 @@ export class BrowseCompetencyService {
     .pipe(finalize(() => this.displayLoader$.next(false)))
   }
 
-  // fetchCompetencyAreas(): Observable<any> {
-  //   return this.http.get<any>(API_ENDPOINTS.GET_COMPETENCY_AREA)
-  // }
-
   public notifyOther(data: any) {
     if (data) {
       this.removeFilter.next(data)

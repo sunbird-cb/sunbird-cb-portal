@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils-v2'
 // import { IActivityCard } from '@ws/app/src/lib/routes/activities/interfaces/activities.model'
 import { Router } from '@angular/router'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-widget-activity-card',

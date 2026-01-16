@@ -1,0 +1,22 @@
+<ng-container *ngIf="isPopup">
+  <div class="popup-header flex justify-between items-center">
+    <div class="header-title">Educational Qualifications</div>
+    <button mat-icon-button class="close-button" (click)="closePopup()">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+  </div>
+</ng-container>
+<div class="flex flex-col gap-2"  [ngClass]="{'container': isPopup}">
+  <ng-container *ngFor="let educationalQualification of educationalQualificationsList">
+    <div class="education-card flex flex-col gap-0">
+      <div class="flex justify-between items-start">
+        <div class="degree">{{educationalQualification?.degree}}</div>
+        <ng-container *ngIf="isCurrentUser">
+          <mat-icon class="edit-icon" (click)="openEditDialog(educationalQualification)">edit</mat-icon>
+        </ng-container>
+      </div>
+      <div class="education-details">{{educationalQualification?.fieldOfStudy ? educationalQualification?.fieldOfStudy + ', ' : '' }} {{educationalQualification?.institutionName}}</div>
+      <div class="education-period">{{educationalQualification?.startYear}} - {{educationalQualification?.endYear}}</div>
+    </div>
+  </ng-container>
+</div>

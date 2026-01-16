@@ -1,0 +1,39 @@
+button.ws-mat-primary-background {
+    color: white !important;
+    border-radius: 16px !important;
+    line-height: 32px !important;
+  
+    .mat-icon {
+      margin-right: 4px;
+      margin-top: -3px;
+    }
+  }
+
+  .ws-mat-red-background {
+    background-color: red !important;
+    color: white !important;
+    border-radius: 16px !important;
+    line-height: 32px !important;
+  }
+
+  .tag {
+    display: flex;
+    margin: 0 10px;
+    padding: 3px 15px;
+    font-size: 12px;
+    min-width: 50px;
+    justify-content: center;
+    border-radius: 20px 5px 5px 20px;
+  }
+
+  .tag-div mat-icon {
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .tag-div {
+    border: 1px solid #f69953;
+    background-color: rgb(27, 76, 161);
+    width: 125px;
+  }

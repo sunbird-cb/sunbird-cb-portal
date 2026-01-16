@@ -1,0 +1,678 @@
+<div class="profile-editor-container flex flex-col gap-4">
+  <!-- #region(Header) -->
+  <div class="profile-editor-header flex justify-between items-center">
+    <div class="header-title">{{ header }}</div>
+    <button mat-icon-button class="close-button" *ngIf="header !== 'Mandatory Section'" (click)="handleCancel()">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+  </div>
+  <hr class="solid">
+  <!-- #endregion (Header) -->
+
+  <ng-container [ngSwitch]="header">
+    <ng-container *ngSwitchCase="'Profile'" [ngTemplateOutlet]="profileTopSection"></ng-container>
+    <ng-container *ngSwitchCase="'Primary Details'" [ngTemplateOutlet]="primaryDetails"></ng-container>
+    <ng-container *ngSwitchCase="'Mandatory Section'" [ngTemplateOutlet]="mandatorySection"></ng-container>
+    <ng-container *ngSwitchCase="'About Me'" [ngTemplateOutlet]="aboutMe"></ng-container>
+    <ng-container *ngSwitchCase="'Other Details'" [ngTemplateOutlet]="otherDetails"></ng-container>
+  </ng-container>
+
+  <!-- #region (Footer Form Actions) -->
+  <hr class="solid">
+  <div class="form-actions flex justify-end items-center gap-4" *ngIf="header !== 'Mandatory Section'">
+    <button mat-button class="cancel-btn flex align-center justify-center px-2" (click)="handleCancel()">{{ 'NetworkV2Profile.cancel' | translate }}</button>
+    <ng-container *ngIf="header === 'Primary Details'; else saveChanges">
+      <button mat-button [disabled]="!enableEditBtn" [ngClass]="{'disableBtn': !enableEditBtn}" class="save-btn flex align-center justify-center px-2" (click)="handleSubmit()">
+        {{ 'NetworkV2Profile.sendForApproval' | translate }}</button>
+    </ng-container>
+    <ng-template #saveChanges>
+      <button mat-button class="save-btn flex align-center justify-center px-2" (click)="handleSubmit()"
+        [ngClass]="{'disableBtn': !canSaveChanges}">{{ 'NetworkV2Profile.saveChanges' | translate }}</button>
+    </ng-template>
+  </div>
+  <div  class="form-actions flex justify-end items-center gap-4" *ngIf="header === 'Mandatory Section'">
+      <button mat-button class="save-btn flex align-center justify-center px-2" (click)="handleSubmit()"
+        [ngClass]="{'disableBtn': !canSaveChanges || submitbtnLoading}">{{ 'NetworkV2Profile.saveChanges' | translate }}</button>
+
+  </div>
+  <!-- #endregion (Footer Form Actions) -->
+
+  <!-- #region (profile) -->
+  <ng-template #profileTopSection>
+    <!-- #region (Profile Pic) -->
+    <div class="profile-pic-container">
+      <div class="avatar-wrapper" [class.has-image]="profileImage">
+        <!-- Show this when there's no image -->
+        <div class="initials-avatar" *ngIf="!profileImage">
+          <span class="initials">{{userInitials}}</span>
+          <div class="camera-button flex items-center justify-center" (click)="uploadImage()">
+            <mat-icon>add_a_photo</mat-icon>
+          </div>
+        </div>
+
+        <!-- Show this when there's an image -->
+        <div class="image-avatar" *ngIf="profileImage">
+          <img [src]="profileImage" alt="Profile picture">
+          <button mat-icon-button class="delete-button" (click)="deleteImage()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion (Profile Pic) -->
+    <form [formGroup]="profileForm" class="profile-top-editor-form flex flex-col">
+      <div class="flex flex-col profile-control">
+        <div class="lable required">{{'NetworkV2Profile.name' | translate}} </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput formControlName="firstname" placeholder="{{'NetworkV2Profile.enterName' | translate}}" maxlength="200">
+          <mat-error *ngIf="hasError('firstname', 'required')">{{'NetworkV2Profile.nameIsRequired' | translate}}</mat-error>
+          <mat-error *ngIf="hasError('firstname', 'minlength') && !hasError('firstname', 'pattern')"> {{'NetworkV2Profile.nameAtLeast2Chars' | translate}}</mat-error>
+          <mat-error *ngIf="hasError('firstname', 'pattern')">{{customNameValidation | translate}} </mat-error>
+          <mat-hint align="end" *ngIf="profileForm.get('firstname')?.value">
+            {{ profileForm.get('firstname')?.value.length }}/200
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="form-fields-container">
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.state' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="state" (selectionChange)="getDistrictsList($event.value)"
+              placeholder="{{'NetworkV2Profile.selectState' | translate}}">
+              <ng-container *ngFor="let state of statesList">
+                <mat-option [value]="state.stateName">{{ state.stateName }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.district' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="district" placeholder="Select District">
+              <ng-container *ngFor="let district of districtsList">
+                <mat-option [value]="district">{{ district }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <!-- #endregion (profile) -->
+
+  <!-- #region (Primary Details) -->
+  <ng-template #primaryDetails>
+    <form [formGroup]="profileForm" class="profile-editor-form">
+      <div class="profile-editor-description">
+        {{'NetworkV2Profile.pdTooltipMsg' | translate}}
+      </div>
+      <div class="flex flex-col profile-control">
+        <div class="lable">{{'NetworkV2Profile.group' | translate}}</div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-select formControlName="group" placeholder="{{'NetworkV2Profile.chooseAGroup' | translate}}">
+            <mat-option value="" disabled>{{ 'NetworkV2Profile.chooseAGroup' | translate }}</mat-option>
+            <mat-option *ngFor="let group of groupsList" value="{{group}}">{{ group }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="flex flex-col profile-control">
+        <div class="lable">{{'NetworkV2Profile.designation' | translate}}</div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-select formControlName="designation" placeholder="{{'NetworkV2Profile.chooseADesignation' | translate}}" panelClass="profile-control"
+            (openedChange)="setupScrollListener($event)" (closed)="onDesignationDropdownClosed()">
+            <div class="sticky-search-container" (click)="$event.stopPropagation()">
+              <div class="search-input-wrapper profile-control">
+                <input type="text" placeholder="Search designation" formControlName="searchDesignation"
+                  class="search-input" (keydown)="$event.stopPropagation()" (click)="$event.stopPropagation()"
+                  autocomplete="off">
+              </div>
+            </div>
+            <mat-option *ngFor="let option of designationsMeta" [value]="option?.designation">
+              {{ option?.designation }}
+            </mat-option>
+            <div *ngIf="isLoadingMoreDesignations" class="loading-indicator">
+              {{'NetworkV2Profile.loadingMore' | translate}}
+            </div>
+            <mat-option *ngIf="(designationsMeta )?.length === 0" disabled>
+              {{'NetworkV2Profile.noMatchesFound' | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="note-container p-2">
+          <div class="flex flex-start items-center gap-2">
+            <mat-icon class="info-icon-designation">info</mat-icon>
+            <div class="designation-note" [innerHTML]="getDesignationHint()"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <!-- #endregion (Primary Details) -->
+
+  <!-- #region (Mandatory Section) -->
+  <ng-template #mandatorySection>
+    <!-- Withdraw Button - Show independently -->
+    <div class="flex justify-end items-center mb-3" *ngIf="showOrganizationPending || showGroupPending || showDesignationPending">
+      <div class="withdraw-text edit-button" (click)="showWithdrawRequestPopup()">
+        {{'NetworkV2Profile.withdrawRequest' | translate }}
+      </div>
+    </div>
+
+    <!-- Display Current Group, Designation, and Organization with Verification Status -->
+    <div class="mb-4" *ngIf="showApprovalStatus">
+      <div class="flex gap-10 mb-4 flex-wrap">
+        <div class="flex flex-col gap-2 pr-3">
+          <span class="label font-semibold">{{ 'NetworkV2Profile.group' | translate }}</span>
+          <span class="primaryDetailsvalue flex gap-2 items-center">{{ data?.primaryDetails?.group || profileDetails?.group }}
+            <ng-container *ngIf="data?.primaryDetails?.profileGroupStatus === 'VERIFIED'; else groupNotVerified">
+              <img class="status-icon ml-1" src="./assets/icons/Accept_icon.png" alt="verified" style="width: 16px; height: 16px;">
+            </ng-container>
+            <ng-template #groupNotVerified>
+              <div class="profile-not-verified flex gap-1 justify-center items-center" style="background: #FFF3E0; padding: 2px 8px; border-radius: 4px;">
+                <div class="text" style="font-size: 12px; color: #E65100;">{{ 'NetworkV2Profile.notVerified' | translate }}</div>
+                <mat-icon style="font-size: 14px; width: 14px; height: 14px; color: #E65100;">info_outline</mat-icon>
+              </div>
+            </ng-template>
+          </span>
+        </div>
+        <div class="flex flex-col gap-2 pr-3">
+          <span class="label font-semibold">{{ 'NetworkV2Profile.designation' | translate }}</span>
+          <span class="primaryDetailsvalue flex gap-2 items-center">{{ data?.primaryDetails?.designation || profileDetails?.designation }}
+            <ng-container *ngIf="data?.primaryDetails?.profileDesignationStatus === 'VERIFIED'; else designationNotVerified">
+              <img class="status-icon ml-1" src="./assets/icons/Accept_icon.png" alt="verified" style="width: 16px; height: 16px;">
+            </ng-container>
+            <ng-template #designationNotVerified>
+              <div class="profile-not-verified flex gap-1 justify-center items-center" style="background: #FFF3E0; padding: 2px 8px; border-radius: 4px;">
+                <div class="text" style="font-size: 12px; color: #E65100;">{{ 'NetworkV2Profile.notVerified' | translate }}</div>
+                <mat-icon style="font-size: 14px; width: 14px; height: 14px; color: #E65100;">info_outline</mat-icon>
+              </div>
+            </ng-template>
+          </span>
+        </div>
+        <div class="flex flex-col gap-2 pr-3" *ngIf="data?.primaryDetails?.departmentName || profileDetails?.departmentName">
+          <span class="label font-semibold">{{ 'NetworkV2Profile.organization' | translate }}</span>
+          <span class="primaryDetailsvalue flex gap-2 items-center">{{ data?.primaryDetails?.departmentName || profileDetails?.departmentName }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Approval Status Section -->
+      <ng-container *ngIf="showApprovalStatus">
+        <div class="profile-approval-status mb-4">
+          <mat-accordion>
+            <mat-expansion-panel hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <div class="w-full flex justify-end items-center">
+                  <div>
+                    <div mat-icon-button class="flex gap-2 items-center viewApprovalStatuas w-full cursor-pointer">
+                      <span>{{ 'NetworkV2Profile.viewApprovalStatus' | translate }}</span>
+                      <mat-icon>{{panelOpenState ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel-header>
+              <div>
+                <div class="approvalStatusHeader font-semibold mb-2">
+                  {{ 'NetworkV2Profile.approvalStatus' | translate }}
+                </div>
+                <ng-container *ngIf="data?.unVerifiedObj?.group || data?.rejectedFields?.group">
+                  <div class="flex justify-between items-center px-5 py-3">
+                    <ng-container *ngIf="showGroupPending">
+                      <div class="w-full">
+                        <div class="statusLable">{{ 'NetworkV2Profile.group' | translate }}</div>
+                        <div class="approvalStausValue">{{data?.unVerifiedObj?.group}}</div>
+                      </div>
+                      <div class="w-full">
+                        <div class="approvalStatusPending flex justify-center items-center">{{ 'NetworkV2Profile.pending' | translate }}</div>
+                      </div>
+                      <div class="w-full flex justify-center" style="width: 200px;">-</div>
+                    </ng-container>
+                    <ng-container *ngIf="showGroupRejection">
+                      <div class="w-full">
+                        <div class="statusLable">{{ 'NetworkV2Profile.group' | translate }}</div>
+                        <div class="approvalStausValue">{{data?.rejectedFields?.group}}</div>
+                      </div>
+                      <div class="w-full">
+                        <div class="approvalStatusRejected flex justify-center items-center">{{ 'NetworkV2Profile.rejected' | translate }}</div>
+                      </div>
+                      <div mat-icon-button (click)="viewReason(data?.rejectedFields?.groupRejectionComments)" class="flex gap-2 items-center viewReason cursor-pointer">
+                        <span>{{ 'NetworkV2Profile.viewReason' | translate }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="data?.unVerifiedObj?.designation || data?.rejectedFields?.designation">
+                  <div class="flex justify-between items-center px-5 py-3">
+                    <ng-container *ngIf="showDesignationPending">
+                      <div class="w-full">
+                        <div class="statusLable">{{ 'NetworkV2Profile.designation' | translate }}</div>
+                        <div class="approvalStausValue">{{data?.unVerifiedObj?.designation}}</div>
+                      </div>
+                      <div class="w-full">
+                        <div class="approvalStatusPending flex justify-center items-center">{{ 'NetworkV2Profile.pending' | translate }}</div>
+                      </div>
+                      <div class="flex justify-center" style="width: 200px;">-</div>
+                    </ng-container>
+                    <ng-container *ngIf="showDesignationRejection">
+                      <div class="w-full">
+                        <div class="statusLable">{{ 'NetworkV2Profile.designation' | translate }}</div>
+                        <div class="approvalStausValue">{{data?.rejectedFields?.designation}}</div>
+                      </div>
+                      <div class="w-full">
+                        <div class="approvalStatusRejected flex justify-center items-center">{{ 'NetworkV2Profile.rejected' | translate }}</div>
+                      </div>
+                      <div mat-icon-button (click)="viewReason(data?.rejectedFields?.designationRejectionComments)" class="flex gap-2 items-center viewReason cursor-pointer">
+                        <span>{{ 'NetworkV2Profile.viewReason' | translate }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="data?.unVerifiedObj?.organization || data?.rejectedFields?.organization">
+                  <div class="flex justify-between items-center px-5 py-3">
+                    <ng-container >
+                      <div class="w-full">
+                        <div class="statusLable">{{ 'NetworkV2Profile.organization' | translate }}</div>
+                        <div class="approvalStausValue">{{data?.unVerifiedObj?.organization}}</div>
+                      </div>
+                      <div class="w-full">
+                        <div class="approvalStatusPending flex justify-center items-center">{{ 'NetworkV2Profile.pending' | translate }}</div>
+                      </div>
+                      <div class="flex justify-center" style="width: 200px;">-</div>
+                    </ng-container>
+                    <ng-container *ngIf="showOrganizationRejection">
+                      <div class="w-full">
+                        <div class="statusLable">{{ 'NetworkV2Profile.organization' | translate }}</div>
+                        <div class="approvalStausValue">{{data?.rejectedFields?.organization}}</div>
+                      </div>
+                      <div class="w-full">
+                        <div class="approvalStatusRejected flex justify-center items-center">{{ 'NetworkV2Profile.rejected' | translate }}</div>
+                      </div>
+                      <div mat-icon-button (click)="viewReason(data?.rejectedFields?.organizationRejectionComments)" class="flex gap-2 items-center viewReason cursor-pointer">
+                        <span>{{ 'NetworkV2Profile.viewReason' | translate }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </ng-container>
+      <hr class="divider my-3" style="border-top: 1px solid #e0e0e0;" />
+    </div>
+ <!-- <span *ngIf="profileForm">{{profileForm|json}}</span>  -->
+    <form [formGroup]="profileForm" class="profile-editor-form">
+      <div class="profile-editor-description">
+        {{'NetworkV2Profile.pdTooltipMsg' | translate}}
+      </div>
+
+     
+      <div class="form-fields-container">
+        <div class="flex flex-col profile-control">
+          <div class="lable required">{{'NetworkV2Profile.mobileNumber' | translate}}</div>
+          <div class="flex gap-2">
+            <div class="country-code">
+              +91
+            </div>
+            <mat-form-field appearance="outline">
+              <input matInput maxlength="10" (keyup)="handleEmpty('mobile')" formControlName="mobile">
+              <mat-error class="text-xs" *ngIf="hasError('mobile', 'required') || hasError('mobile', 'pattern')">
+                {{ 'NetworkV2Profile.pleaseEnterValidMobileNumber' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex justify-end" *ngIf="verifyMobile">
+            <span class="get-otp" (click)="handleGenerateOTP('phone')">{{ 'NetworkV2Profile.getOTP' | translate}}</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable required">{{'NetworkV2Profile.email' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <input matInput type="email" formControlName="primaryEmail" (keyup)="handleEmpty('primaryEmail')">
+            <mat-error *ngIf="hasError('primaryEmail', 'required')">
+              {{ 'NetworkV2Profile.emailIsRequired' | translate }}
+            </mat-error>
+            <mat-error *ngIf="hasError('primaryEmail', 'pattern')">
+              {{ 'NetworkV2Profile.invalidEmail' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <div class="flex justify-end" *ngIf="verifyEmail">
+            <span class="get-otp" (click)="handleGenerateEmailOTP('email')">{{ 'NetworkV2Profile.getOTP' | translate}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-fields-container">
+        <div class="flex flex-col profile-control">
+          <div class="lable required">{{'NetworkV2Profile.transferOrganization' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <mat-select placeholder="Select organization" formControlName="transferOrganization" panelClass="search-panel"
+              (openedChange)="setupTransferOrgScrollListener($event)">
+              <!-- Sticky search input container -->
+              <div class="sticky-search-container" (click)="$event.stopPropagation()">
+                <div class="search-input-wrapper">
+                  <input 
+                    type="text" 
+                    placeholder="Search organization" 
+                    formControlName="searchTransferOrganization" 
+                    class="search-org-input"
+                    (keydown)="$event.stopPropagation()"
+                    (click)="$event.stopPropagation()"
+                    autocomplete="off">
+                  <button 
+                    *ngIf="searchTransferOrganization?.value" 
+                    type="button" 
+                    class="clear-button" 
+                    (click)="searchTransferOrganization?.setValue('')">
+                    ✕
+                  </button>
+                </div>
+              </div>
+              <!-- Options list -->
+              <mat-option *ngFor="let org of transferOrgFilterData; trackBy: trackByOrgFn" [value]="org?.channel" (onSelectionChange)="onTransferOrgSelectionChange(org)">
+                {{ org?.channel }}
+              </mat-option>
+              <!-- Loading indicator -->
+              <div *ngIf="isLoadingMoreTransferOrg" class="loading-indicator">
+                {{'NetworkV2Profile.loadingMore' | translate}}
+              </div>
+              <!-- No results message -->
+              <mat-option *ngIf="(transferOrgFilterData)?.length === 0" disabled>
+                {{'NetworkV2Profile.noMatchesFound' | translate}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('transferOrganization', 'required')">
+              {{'NetworkV2Profile.chooseOrganization' | translate}}
+            </mat-error>
+          </mat-form-field>
+          <div class="field-disabled-note" *ngIf="isOrganizationPending || isGroupPending || isDesignationPending">
+            <mat-icon class="warning-icon">info</mat-icon>
+            <span>{{ 'NetworkV2Profile.fieldDisabledDueToApprovalStatus' | translate }}</span>
+          </div>
+        </div>
+        <div class="flex flex-col profile-control">
+          <div class="lable required">{{'NetworkV2Profile.group' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="group" placeholder="{{'NetworkV2Profile.chooseAGroup' | translate}}">
+              <mat-option value="" disabled>{{ 'NetworkV2Profile.chooseAGroup' | translate }}</mat-option>
+              <mat-option *ngFor="let group of groupsList" value="{{group}}">{{ group }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('group', 'required')">{{'NetworkV2Profile.chooseAGroup' | translate}}</mat-error>
+          </mat-form-field>
+          <div class="field-disabled-note" *ngIf="isOrganizationPending || isGroupPending || isDesignationPending">
+            <mat-icon class="warning-icon">info</mat-icon>
+            <span>{{ 'NetworkV2Profile.fieldDisabledDueToApprovalStatus' | translate }}</span>
+          </div>
+        </div>
+
+      </div>
+
+       <div class="form-fields-container">
+        <div class="flex flex-col profile-control">
+          <div class="lable required">{{'NetworkV2Profile.designation' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="designation" placeholder="{{'NetworkV2Profile.chooseADesignation' | translate}}" panelClass="profile-control"
+              (openedChange)="setupScrollListener($event)" (closed)="onDesignationDropdownClosed()">
+              <div class="sticky-search-container" (click)="$event.stopPropagation()">
+                <div class="search-input-wrapper profile-control">
+                  <input type="text" placeholder="Search designation" formControlName="searchDesignation"
+                    class="search-input" (keydown)="$event.stopPropagation()" (click)="$event.stopPropagation()"
+                    autocomplete="off">
+                </div>
+              </div>
+              <mat-option *ngFor="let option of designationsMeta" [value]="option?.designation">
+                {{ option?.designation }}
+              </mat-option>
+              <div *ngIf="isLoadingMoreDesignations" class="loading-indicator">
+                {{'NetworkV2Profile.loadingMore' | translate}}
+              </div>
+              <mat-option *ngIf="(designationsMeta )?.length === 0" disabled>
+                {{'NetworkV2Profile.noMatchesFound' | translate}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('designation', 'required')">{{'NetworkV2Profile.chooseADesignation' | translate}}</mat-error>
+          </mat-form-field>
+          <div class="field-disabled-note" *ngIf="isOrganizationPending || isGroupPending || isDesignationPending">
+            <mat-icon class="warning-icon">info</mat-icon>
+            <span>{{ 'NetworkV2Profile.fieldDisabledDueToApprovalStatus' | translate }}</span>
+          </div>
+          <div class="note-container p-2" *ngIf="!isDesignationPending && !isOrganizationPending && !isGroupPending">
+            <div class="flex flex-start items-center gap-2">
+              <mat-icon class="info-icon-designation">info</mat-icon>
+              <div class="designation-note" [innerHTML]="getDesignationHint()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </ng-template>
+  <!-- #endregion (Mandatory Section) -->
+
+  <!-- #region (About Me) -->
+  <ng-template #aboutMe>
+    <form [formGroup]="profileForm" class="profile-editor-form">
+      <div class="profile-editor-description">
+        {{'NetworkV2Profile.youCanWriteAboutYourYearsOfExperienceIndustryOrSkillsPeopleAlsoTalkAboutTheirAchievementsOrPreviousJobExperiences' | translate}}
+      </div>
+
+      <div class="flex flex-col">
+        <div class="lable">{{'NetworkV2Profile.youCanWriteAboutYourYearsOfExperienceSkillsCurrentJobRoleAndResponsibilities' | translate}}
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea matInput formControlName="aboutme" rows="6"  maxlength="2000" placeholder="{{'NetworkV2Profile.typeHere' | translate}}"></textarea>
+          <mat-error *ngIf="hasError('aboutme', 'pattern')">{{'NetworkV2Profile.specialCharNotAllowedExcept()-' | translate}}</mat-error>
+          <mat-hint align="end" *ngIf="profileForm.get('aboutme')?.value">
+            {{ profileForm.get('aboutme')?.value.length }}/2000
+          </mat-hint>
+        </mat-form-field>
+      </div>
+    </form>
+  </ng-template>
+  <!-- #endregion (About Me) -->
+
+  <!-- #region (Other Details) -->
+  <ng-template #otherDetails>
+
+    <form [formGroup]="profileForm" class="profile-editor-form">
+      <div class="form-fields-container">
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.employeeId' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="employeeCode">
+            <mat-error *ngIf="hasError('employeeCode', 'pattern')">{{'NetworkV2Profile.pleaseEnterAlphaNumeric' | translate}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.email' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <input matInput type="email" formControlName="primaryEmail" (keyup)="handleEmpty('primaryEmail')">
+            <mat-error *ngIf="hasError('primaryEmail', 'pattern')">
+              {{ 'NetworkV2Profile.invalidEmail' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <div class="flex justify-end" *ngIf="verifyEmail">
+            <span class="get-otp" (click)="handleGenerateEmailOTP('email')">{{ 'NetworkV2Profile.getOTP' | translate}}</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.gender' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="gender">
+              <ng-container *ngFor="let gender of eUserGender">
+                <mat-option [value]="gender">{{handleTranslateToProfile(gender.toLowerCase())}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.dob' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <input matInput [matDatepicker]="picker" formControlName="dob" [max]="currentDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.category' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="category">
+              <ng-container *ngFor="let category of eCategory">
+                <mat-option [value]="category">{{ handleTranslateToProfile(category?.toLowerCase()) }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.officePinCode' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <input matInput maxlength="6" formControlName="pinCode">
+            <mat-error *ngIf="hasError('pinCode', 'pattern')">
+              {{ 'NetworkV2Profile.invalidPinCode' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.mobileNumber' | translate}}</div>
+          <div class="flex gap-2">
+            <div class="country-code">
+              +91
+            </div>
+            <mat-form-field appearance="outline">
+              <input matInput maxlength="10" (keyup)="handleEmpty('mobile')" formControlName="mobile">
+              <mat-error class="text-xs" *ngIf="hasError('mobile', 'required') || hasError('mobile', 'pattern')">
+                {{ 'NetworkV2Profile.pleaseEnterValidMobileNumber' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex justify-end" *ngIf="verifyMobile">
+            <span class="get-otp" (click)="handleGenerateOTP('phone')">{{ 'NetworkV2Profile.getOTP' | translate}}</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{'NetworkV2Profile.motherTongue' | translate}}</div>
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="domicileMedium" aria-label="Domicile Medium (Mother Tongue)" matInput
+              (keydown)="onkeyDown($event)" [matAutocomplete]="languageAuto">
+            <mat-icon matSuffix>arrow_drop_down</mat-icon>
+          </mat-form-field>
+          <mat-autocomplete #languageAuto="matAutocomplete" (opened)="onAutoCompleteOpened()"
+            (closed)="onAutoCompleteClosed()">
+            <ng-container *ngIf="masterLanguages.length > 0; else noLanguage">
+              <ng-container *ngFor="let language of masterLanguages">
+                <mat-option [value]="language.name">{{ language.name }}</mat-option>
+              </ng-container>
+            </ng-container>
+            <ng-template #noLanguage>
+              <mat-option disabled>{{ 'NetworkV2Profile.noLanguageFound' | translate }}</mat-option>
+            </ng-template>
+          </mat-autocomplete>
+        </div>
+
+        <div class="flex flex-col profile-control mb-2">
+          <div class="lable">{{ 'NetworkV2Profile.eHRMSId' | translate }}</div>
+          <div>{{profileDetails?.additionalProperties?.externalSystemId || 'NA'}} </div>
+          <!-- <mat-form-field appearance="outline">
+            <input matInput formControlName="externalSystemId">
+          </mat-form-field> -->
+        </div>
+
+        <div class="flex flex-col profile-control">
+          <div class="lable">{{ 'NetworkV2Profile.dor' | translate }}</div>
+          <div>{{profileDetails?.additionalProperties?.externalSystemDor || 'NA'}} </div>
+          <!-- <mat-form-field appearance="outline">
+            <input matInput formControlName="externalSystemDor">
+          </mat-form-field> -->
+        </div>
+
+        <ng-container *ngIf="noCadreDetails">
+          <div class="flex flex-col profile-control">
+            <div class="lable">{{ 'NetworkV2Profile.fromGovOrganization' | translate }}</div>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="isCadre" (selectionChange)="getIsCadreStatus($event.value)">
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isCadreStatus">
+          <div class="flex flex-col profile-control justify-center">
+            <div class="lable required">{{ 'NetworkV2Profile.typeOfCivilServices' | translate }}</div>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="civilServiceType" (selectionChange)="getService($event.value)">
+                <mat-option *ngFor="let service of civilServiceTypes" [value]="service">{{ service }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="profileForm.get('civilServiceType').value && profileForm.get('isCadre').value">
+          <div class="flex flex-col profile-control">
+            <div class="lable required">{{ 'NetworkV2Profile.services' | translate }}</div>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="civilServiceName" (selectionChange)="onServiceSelect($event.value)">
+                <mat-option *ngFor="let service of serviceNamesList" [value]="service">{{ service }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="showCadreDetails">
+          <div class="flex flex-col profile-control">
+            <div class="lable required">{{ 'NetworkV2Profile.cadre' | translate }}</div>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="cadreName" (selectionChange)="onCadreSelect($event.value)">
+                <mat-option *ngFor="let state of cadreList" [value]="state">{{ state }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="showBatchDetails">
+          <div class="flex flex-col profile-control">
+            <div class="lable required">{{ 'NetworkV2Profile.batch' | translate }}</div>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="cadreBatch">
+                <mat-option *ngFor="let year of yearArray" [value]="year">{{ year }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="showControllingAuthority">
+          <div class="info-value-c required">{{ cadreControllingAuthority }}</div>
+        </ng-container>
+
+        <ng-container *ngIf="showCentralDeputation">
+          <div class="flex flex-col profile-control">
+            <div class="lable required">{{ 'NetworkV2Profile.centralDeputation' | translate }}</div>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="isOnCentralDeputation">
+                <mat-option [value]="true">{{ 'Yes' }}</mat-option>
+                <mat-option [value]="false">{{ 'No' }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+  </ng-template>
+  <!-- #endregion (Other Details) -->
+
+</div>
+  <div class="custom-loader" *ngIf="submitbtnLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>

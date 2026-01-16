@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router'
+import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { ApiService } from '../modules/shared/services/api.service'
 import { NSContent } from '../interface/content'
@@ -7,7 +7,7 @@ import { NSContent } from '../interface/content'
 import { catchError } from 'rxjs/operators'
 
 @Injectable()
-export class ContentAndDataReadMultiLangTOCResolver implements Resolve<{ content: NSContent.IContentMetaV2, data: any }[]> {
+export class ContentAndDataReadMultiLangTOCResolver  {
 
   constructor(
     private apiService: ApiService,

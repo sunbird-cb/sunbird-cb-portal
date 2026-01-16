@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { noop, Subscription } from 'rxjs'
 
 import {
@@ -13,7 +13,7 @@ import {
   IFeedbackThread,
   IFeedbackSummary,
 } from '@sunbird-cb/collection'
-import { TFetchStatus, IResolveResponse } from '@sunbird-cb/utils'
+import { TFetchStatus, IResolveResponse } from '@sunbird-cb/utils-v2'
 import { MyFeedbackService } from '../../services/my-feedback.service'
 import { FeedbackFilterDialogComponent } from '../feedback-filter-dialog/feedback-filter-dialog.component'
 
@@ -24,7 +24,7 @@ import { FeedbackFilterDialogComponent } from '../feedback-filter-dialog/feedbac
 })
 export class FeedbackListComponent implements OnInit, OnDestroy {
   feedbackData!: IFeedbackSearchResult
-  searchForm: FormGroup
+  searchForm: UntypedFormGroup
   filterObj: IFeedbackFilterObj
   feedbackFetchStatus: TFetchStatus
   feedbackTypes: typeof EFeedbackType
@@ -33,7 +33,7 @@ export class FeedbackListComponent implements OnInit, OnDestroy {
   pageNo: number
   pageSize: number
   hasHits: boolean
-  unseenCtrl: FormControl
+  unseenCtrl: UntypedFormControl
   unseenCtrlSub!: Subscription
   feedbackSummary!: IFeedbackSummary
 
@@ -44,12 +44,12 @@ export class FeedbackListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.searchForm = new FormGroup({
-      query: new FormControl(),
-      showLimited: new FormControl(),
+    this.searchForm = new UntypedFormGroup({
+      query: new UntypedFormControl(),
+      showLimited: new UntypedFormControl(),
     })
 
-    this.unseenCtrl = new FormControl()
+    this.unseenCtrl = new UntypedFormControl()
 
     this.feedbackFetchStatus = 'none'
 

@@ -3,12 +3,22 @@
 .customicon {
   position: absolute;
   top: -0.5em;
-  right: 0;
+  right: -4px;
 }
 
 a.disabled {
   pointer-events: none;
   cursor: default;
+}
+
+span.optional-span {
+  margin-left: 8px;
+  padding: 0px 6px;
+  border-radius: 2px 2px;
+  display:inline-block;
+  background-color: #0074b6;
+  color: #fff;
+  font-size: 12px;
 }
 
 .card-collection {
@@ -48,6 +58,9 @@ a.disabled {
 
 .tab:focus {
   outline: 1px solid !important;
+}
+.custom-chevron:focus {
+  outline: 0px solid !important;
 }
 
 .resource-container {
@@ -153,7 +166,8 @@ a.disabled {
 
   .resource-container {
     margin-bottom: 20px;
-    margin-right: 8px;
+    margin-right: 0px;
+
 
     // background-color: #fff;
     .card-thumbnail {
@@ -284,9 +298,23 @@ a.disabled {
   }
 }
 
+.certificate-txt {
+  padding: 0 20px;
+  color: #0273b6;
+  font-weight: 700;
+}
+
 
 // @media only screen and (max-width:469px) {
 // .children-container {
 // margin: $size-s 0 $size-m $size-s;
 // }
 // }
+
+.view-certificate-wrapper {
+  display: flex;
+  border-radius: 4px;
+  border: 1.5px solid rgba(0,116,182, 1);
+  opacity: 1;
+  padding: 8px;
+}

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { ConfigurationsService, EventService, UtilityService, WsEvents } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, UtilityService, WsEvents } from '@sunbird-cb/utils-v2'
 import { NsContent } from '../_services/widget-content.model'
 import { IKBContentCard } from './card-knowledge.model'
 

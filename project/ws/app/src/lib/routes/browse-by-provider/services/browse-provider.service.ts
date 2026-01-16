@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { finalize } from 'rxjs/operators'
+import { NsContent } from '@sunbird-cb/utils-v2'
 
 const API_ENDPOINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
@@ -40,6 +41,15 @@ export class BrowseProviderService {
     if (data) {
       this.removeFilter.next(data)
     }
+  }
+  postApiMethod(apiUrl: any, req: any): Observable<NsContent.IContent> {
+    req.query = req.query || ''
+    return this.http.post<NsContent.IContent>(apiUrl, req)
+  }
+
+  getApiMethod(apiUrl: any): Observable<NsContent.IContent> {
+    // req.query = req.query || '';
+    return this.http.get<NsContent.IContent>(apiUrl)
   }
 
 }

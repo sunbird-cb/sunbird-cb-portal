@@ -1,0 +1,69 @@
+<div style="width:100%;background-color: #fff;">
+    <!-- //NOSONAR --><div class="dialog-close" *ngIf="!isMobile" (click)="closePopup()"><img alt="" src="assets/icons/home/decline_icon.svg" type="button"></div>
+    <div [ngClass]="popupClass === 'download-app-popup' ? 'download-app-popup' : 'download-app'" *ngIf="!isMobile">
+        <ng-container>
+            <div class="left-side">
+                <h2>{{ 'downloadapp.download' | translate }}</h2>
+                <div>
+                    <p class="main-heading">{{ 'downloadapp.igotKarmyogi' | translate }} <span class="sub-heading">{{ 'downloadapp.mobileApp' | translate }}</span></p>
+                </div>
+                <div class="description">
+                    <p>{{ 'downloadapp.subtext' | translate }}</p>
+                </div>
+                <div class="app-store-button">
+                    <div class="play-store">
+                        <div><a href="https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&pli=1" target="_blank"><img alt="" src="/assets/icons/footer-nav/gplay badge@2x.svg" /></a></div>
+                        <div><a href="https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&pli=1" target="_blank"><img alt="" src="/assets/icons/footer-nav/qrcode@2x.svg" /></a></div>
+                        <p>{{ 'downloadapp.scanToDownload' | translate }}</p>
+                    </div>
+                    <div class="app-store">
+                        <div><a href="https://apps.apple.com/in/app/igot-karmayogi/id6443949491" target="_blank"><img alt="" src="/assets/icons/footer-nav/appStore.svg" /></a></div>
+                        <div><a href="https://apps.apple.com/in/app/igot-karmayogi/id6443949491" target="_blank"><img alt="" src="/assets/icons/footer-nav/Group 2@2x.svg" /></a></div>
+                        <p>{{ 'downloadapp.scanToDownload' | translate }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="right-side">
+                <div class="circle flex items-center justify-center">
+                    <div class="vertical-image">
+                        <img alt="" src="/assets/icons/footer-nav/mobile.png" />
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class='mobile-download' *ngIf="isMobile">
+        <div class="right-side">
+            <div class="circle">
+                <div class="vertical-image">
+                    <img alt="" src="/assets/icons/footer-nav/mobile.png" />
+                </div>
+            </div>
+        </div>
+        <ng-container>
+            <div class="left-side">
+                <h2>{{ 'downloadapp.download' | translate }}</h2>
+                <div>
+                    <p class="main-heading">{{ 'downloadapp.igotKarmyogi' | translate }} <span class="sub-heading">{{ 'downloadapp.mobileApp' | translate }}</span></p>
+                </div>
+                <div class="description">
+                    <p>{{ 'downloadapp.subtext' | translate }}</p>
+                </div>
+                <div class="app-store-button">
+                    <div class="play-store">
+                        <div><a href="https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&pli=1" target="_blank"><img alt="" src="/assets/icons/footer-nav/gplay badge@2x.svg" /></a></div>
+                        <div><a href="https://play.google.com/store/apps/details?id=com.igot.karmayogibharat&pli=1" target="_blank"><img alt="" src="/assets/icons/footer-nav/qrcode@2x.svg" /></a></div>
+                        <p>{{ 'downloadapp.scanToDownload' | translate }}</p>
+                    </div>
+                    <div class="app-store">
+                        <div><a href="https://apps.apple.com/in/app/igot-karmayogi/id6443949491" target="_blank"><img alt="" src="/assets/icons/footer-nav/appStore.svg" /></a></div>
+                        <div><a href="https://apps.apple.com/in/app/igot-karmayogi/id6443949491" target="_blank"><img alt="" src="/assets/icons/footer-nav/Group 2@2x.svg" /></a></div>
+                        <p>{{ 'downloadapp.scanToDownload' | translate }}</p>
+                    </div>
+                </div>
+
+            </div>
+            
+        </ng-container>
+    </div>
+<div>

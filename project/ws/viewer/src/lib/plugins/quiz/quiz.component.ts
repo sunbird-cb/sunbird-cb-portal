@@ -7,7 +7,6 @@ import {
   SimpleChanges,
   ViewChild, ViewChildren,
 } from '@angular/core'
-import { MatDialog, MatSidenav } from '@angular/material'
 import { interval, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { NSQuiz } from './quiz.model'
@@ -15,15 +14,20 @@ import { QuestionComponent } from './components/question/question.component'
 import { SubmitQuizDialogComponent } from './components/submit-quiz-dialog/submit-quiz-dialog.component'
 import { OnConnectionBindInfo } from 'jsplumb'
 import { QuizService } from './quiz.service'
-import { EventService, WsEvents } from '@sunbird-cb/utils'
+import { EventService, WsEvents } from '@sunbird-cb/utils-v2'
 import { ActivatedRoute } from '@angular/router'
 import { ViewerUtilService } from '../../viewer-util.service'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatSidenav } from '@angular/material/sidenav'
 export type FetchStatus = 'hasMore' | 'fetching' | 'done' | 'error' | 'none'
 
 @Component({
   selector: 'viewer-plugin-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
+  /* tslint:disable */
+  host: { class: 'h-inherit' },
+  /* tslint:enable */
 })
 export class QuizComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -45,6 +49,8 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
         section: '',
         questionType: undefined,
         questionId: '',
+        questionLevel: '',
+        marks: 0,
         options: [
           {
             optionId: '',
@@ -57,8 +63,8 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     isAssessment: false,
   }
   @ViewChildren('questionsReference') questionsReference: QueryList<QuestionComponent> | null = null
-  @ViewChild('sidenav', { static: false }) sideNav: MatSidenav | null = null
-  @ViewChild('submitModal', { static: false }) submitModal: ElementRef | null = null
+  @ViewChild('sidenav') sideNav: MatSidenav | null = null
+  @ViewChild('submitModal') submitModal: ElementRef | null = null
   currentQuestionIndex = 0
   currentTheme = ''
   fetchingResultsStatus: FetchStatus = 'none'
@@ -141,11 +147,25 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     if (this.forPreview) {
       return
     }
-    const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
-      this.activatedRoute.snapshot.queryParams.collectionId : ''
-    const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
-      this.activatedRoute.snapshot.queryParams.batchId : ''
-    this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
+    const resData = this.viewerSvc.getBatchIdAndCourseId(this.activatedRoute.snapshot.queryParams.collectionId,
+                                                         this.activatedRoute.snapshot.queryParams.batchId, this.identifier)
+    const collectionId = (resData && resData.courseId) ? resData.courseId : this.activatedRoute.snapshot.queryParams.collectionId ?
+    this.activatedRoute.snapshot.queryParams.collectionId : ''
+    const batchId = (resData && resData.batchId) ? resData.batchId : this.activatedRoute.snapshot.queryParams.batchId ?
+    this.activatedRoute.snapshot.queryParams.batchId : ''
+
+    // const collectionId = this.activatedRoute.snapshot.queryParams.collectionId ?
+    //   this.activatedRoute.snapshot.queryParams.collectionId : ''
+    // const batchId = this.activatedRoute.snapshot.queryParams.batchId ?
+    //   this.activatedRoute.snapshot.queryParams.batchId : ''
+    const isPreAssessment = this.activatedRoute.snapshot.queryParams.preAssessment
+    if(isPreAssessment) {
+      if (this.identifier && collectionId && batchId) {
+        this.viewerSvc.realTimeProgressUpdateForPreAssessmentQuiz(this.identifier, status)
+      }
+    }else if (this.identifier && collectionId && batchId) {
+      this.viewerSvc.realTimeProgressUpdateQuiz(this.identifier, collectionId, batchId, status)
+    }
   }
 
   startQuiz() {
@@ -222,8 +242,8 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
         this.submissionState = 'answered'
       }
       const dialogRef = this.dialog.open(SubmitQuizDialogComponent, {
-        width: '250px',
-        data: this.submissionState,
+        width: '350px',
+        data: {submissionState: this.submissionState, primaryCategory: this.quizJson.primaryCategory,},
       })
 
       dialogRef.afterClosed().subscribe(result => {

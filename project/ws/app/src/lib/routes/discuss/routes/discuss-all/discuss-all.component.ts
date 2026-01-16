@@ -1,7 +1,7 @@
 
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core'
 import { NSDiscussData } from '../../models/discuss.model'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { DiscussStartComponent } from '../../components/discuss-start/discuss-start.component'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DiscussService } from '../../services/discuss.service'

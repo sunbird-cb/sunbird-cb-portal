@@ -10,12 +10,12 @@
           <div class="padding-left-l width-expand flex flex-end datePost">
             <div class="post-date" *ngIf="!reply?.lastEdited?.dtLastEdited?.length">
               {{ reply.dtLastModified | date }}
-              <ng-container i18n> at </ng-container>
+              <ng-container > at </ng-container>
               <ng-container>{{ reply.dtLastModified | date: 'shortTime' }}</ng-container>
             </div>
             <div class="post-date" *ngIf="reply?.lastEdited?.dtLastEdited?.length">
               {{ reply.lastEdited?.dtLastEdited | date }}
-              <ng-container i18n> at </ng-container>
+              <ng-container > at </ng-container>
               <ng-container>{{ reply.lastEdited?.dtLastEdited | date: 'shortTime' }}</ng-container>
             </div>
             <div>
@@ -36,12 +36,12 @@
           <div class="padding-left-s width-expand flex flex-end datePost">
             <div class="post-date" *ngIf="!reply?.lastEdited?.dtLastEdited?.length">
               {{ reply.dtLastModified | date }}
-              <ng-container i18n> at </ng-container>
+              <ng-container > at </ng-container>
               <ng-container>{{ reply.dtLastModified | date: 'shortTime' }}</ng-container>
             </div>
             <div class="post-date" *ngIf="reply?.lastEdited?.dtLastEdited?.length">
               {{ reply.lastEdited?.dtLastEdited | date }}
-              <ng-container i18n> at </ng-container>
+              <ng-container > at </ng-container>
               <ng-container>{{ reply.lastEdited?.dtLastEdited | date: 'shortTime' }}</ng-container>
             </div>
             <div>
@@ -71,11 +71,11 @@
         </ws-widget-editor-quill>
         <div class="text-right">
           <button name="discussion-reply-update-button" type="button" class="margin-top-s" [disabled]="!replyPostEnabled"
-            mat-raised-button color="primary" i18n (click)="editReply(editFailMsg.value)">
+            mat-raised-button color="primary" (click)="editReply(editFailMsg.value)">
             Update
           </button>
           <button name="discussion-reply-cancel-update-button" type="button" class="margin-top-s margin-left-s"
-            mat-stroked-button color="primary" i18n (click)="editMode = false">
+            mat-stroked-button color="primary" (click)="editMode = false">
             Cancel
           </button>
         </div>
@@ -105,9 +105,9 @@
 
 <mat-menu #editMenu="matMenu">
   <ng-template matMenuContent>
-    <button name="discussion-reply-edit-button" type="button" (click)="editMode = true" mat-menu-item i18n>Edit</button>
+    <button name="discussion-reply-edit-button" type="button" (click)="editMode = true" mat-menu-item >Edit</button>
     <button name="discussion-reply-delete-button" type="button" (click)="deletePost(deleteFailMsg.value)" mat-menu-item
-      i18n>
+     >
       Delete
     </button>
   </ng-template>

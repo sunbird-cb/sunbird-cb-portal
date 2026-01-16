@@ -13,35 +13,35 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="mat-app-background padding-s margin-bottom-s">
-        <h3 *ngIf="!generalTnc?.isAccepted && generalTnc?.acceptedVersion.length" class="ws-mat-primary-text" i18n>
+        <h3 *ngIf="!generalTnc?.isAccepted && generalTnc?.acceptedVersion.length" class="ws-mat-primary-text" >
           Terms and Conditions have been updated.
         </h3>
         <div class="flex items-center justify-between">
           <!-- <div> -->
           <!-- <p class="margin-remove">
-              <ng-container i18n>Showing in</ng-container>
+              <ng-container >Showing in</ng-container>
               '{{generalTnc?.language}}'
             </p> -->
           <!-- <p class="margin-remove" *ngIf="generalTnc?.acceptedLanguage?.length">
-              <ng-container i18n> Accepted Language: </ng-container>
+              <ng-container > Accepted Language: </ng-container>
               '{{generalTnc?.acceptedLanguage}}'
             </p> -->
           <!-- </div> -->
           <div *ngIf="generalTnc?.version">
-            <ng-container i18n>T&C Version: </ng-container>
+            <ng-container >T&C Version: </ng-container>
             <span class="ws-mat-primary-text">{{ generalTnc?.version }}</span>
           </div>
           <button mat-button [matMenuTriggerFor]="tncLangMenu">
-            <ng-container i18n>Available Languages</ng-container>
+            <ng-container >Available Languages</ng-container>
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
         </div>
         <!-- <div *ngIf="generalTnc?.isAccepted">
-          <ng-container i18n>Accepted on </ng-container>
+          <ng-container >Accepted on </ng-container>
           <span class="ws-mat-primary-text">{{ generalTnc?.acceptedDate | date }}</span>
         </div> -->
         <!-- <div *ngIf="!generalTnc?.isAccepted && generalTnc?.acceptedVersion.length">
-          <ng-container i18n>Accepted Version: </ng-container>
+          <ng-container >Accepted Version: </ng-container>
           <span class="ws-mat-primary-text">{{ generalTnc?.acceptedVersion }}</span>
         </div> -->
       </div>
@@ -68,35 +68,35 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="mat-app-background padding-s margin-bottom-s">
-        <h3 *ngIf="!dpTnc?.isAccepted && dpTnc?.acceptedVersion.length" class="ws-mat-primary-text" i18n>
+        <h3 *ngIf="!dpTnc?.isAccepted && dpTnc?.acceptedVersion.length" class="ws-mat-primary-text" >
           Data privacy has been upgraded.
         </h3>
         <div class="flex items-center justify-between">
           <!-- <div> -->
           <!-- <p class="margin-remove">
-              <ng-container i18n>Showing in</ng-container>
+              <ng-container >Showing in</ng-container>
               '{{dpTnc?.language}}'
             </p> -->
           <!-- <p class="margin-remove" *ngIf="dpTnc?.acceptedLanguage?.length">
-              <ng-container i18n> Accepted Language: </ng-container>
+              <ng-container > Accepted Language: </ng-container>
               '{{dpTnc?.acceptedLanguage}}'
             </p> -->
           <!-- </div> -->
           <div *ngIf="dpTnc?.version">
-            <ng-container i18n>Data Privacy Version: </ng-container>
+            <ng-container >Data Privacy Version: </ng-container>
             <span class="ws-mat-primary-text">{{ dpTnc?.version }}</span>
           </div>
           <button mat-button [matMenuTriggerFor]="dpLangMenu">
-            <ng-container i18n>Available Languages</ng-container>
+            <ng-container >Available Languages</ng-container>
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
         </div>
         <!-- <div *ngIf="dpTnc?.isAccepted">
-          <ng-container i18n>Accepted on </ng-container>
+          <ng-container >Accepted on </ng-container>
           <span class="ws-mat-primary-text">{{ dpTnc?.acceptedDate | date }}</span>
         </div> -->
         <!-- <div *ngIf="!dpTnc?.isAccepted && dpTnc?.acceptedVersion.length">
-          <ng-container i18n>Accepted Version: </ng-container>
+          <ng-container >Accepted Version: </ng-container>
           <span class="ws-mat-primary-text">{{ dpTnc?.acceptedVersion }}</span>
         </div> -->
       </div>

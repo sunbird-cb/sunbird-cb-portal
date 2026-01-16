@@ -21,20 +21,20 @@
   >
     <mat-drawer class="mat-elevation-z5" [opened]="true" mode="over">
       <div class="flex flex-wrap">
-        <h2 i18n class="margin-bottom-s mat-h2 w-3/4">
+        <h2 class="margin-bottom-s mat-h2 w-3/4">
           Widget Library:
         </h2>
         <div class="w-1/4">
           <ng-container *ngIf="canShowMode">
-            <b i18n>Editor Mode: </b>
+            <b >Editor Mode: </b>
             <mat-button-toggle-group
               [value]="mode"
               (change)="changeEditMode()"
               name="fontStyle"
               aria-label="Font Style"
             >
-              <mat-button-toggle value="Basic" i18n>Basic</mat-button-toggle>
-              <mat-button-toggle value="Advanced" i18n>Advanced</mat-button-toggle>
+              <mat-button-toggle value="Basic" >Basic</mat-button-toggle>
+              <mat-button-toggle value="Advanced" >Advanced</mat-button-toggle>
             </mat-button-toggle-group>
           </ng-container>
           <mat-icon
@@ -62,7 +62,7 @@
           <mat-icon aria-hidden="false" class="custom op60" aria-label="Example home icon"
             >audiotrack</mat-icon
           >
-          <span class="caption" i18n>Audio</span>
+          <span class="caption" >Audio</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -72,7 +72,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >video_call</mat-icon
           >
-          <span class="caption" i18n>Video</span>
+          <span class="caption" >Video</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -82,7 +82,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >text_fields</mat-icon
           >
-          <span class="caption" i18n>Text</span>
+          <span class="caption" >Text</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -92,7 +92,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >collections</mat-icon
           >
-          <span class="caption" i18n>Banner</span>
+          <span class="caption" >Banner</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -102,7 +102,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >filter_frames</mat-icon
           >
-          <span class="caption" i18n>Iframe</span>
+          <span class="caption" >Iframe</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -112,7 +112,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >menu_open</mat-icon
           >
-          <span class="caption" i18n>BreadCrum</span>
+          <span class="caption" >BreadCrum</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -122,7 +122,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >category</mat-icon
           >
-          <span class="caption" i18n>Image Map</span>
+          <span class="caption" >Image Map</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -132,7 +132,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >list</mat-icon
           >
-          <span class="caption" i18n>Entry List</span>
+          <span class="caption" >Entry List</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -140,7 +140,7 @@
           (dragstart)="dragstart_handler($event, 'strip')"
         >
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon">dns</mat-icon>
-          <span class="caption" i18n>Content</span>
+          <span class="caption" >Content</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -150,7 +150,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >amp_stories</mat-icon
           >
-          <span class="caption" i18n>Responsive Container</span>
+          <span class="caption" >Responsive Container</span>
         </div>
         <div
           class="item concept mat-toolbar cursor-pointer"
@@ -160,7 +160,7 @@
           <mat-icon aria-hidden="false" class="custom" aria-label="Example home icon"
             >library_add</mat-icon
           >
-          <span class="caption" i18n>Gallery Container</span>
+          <span class="caption" >Gallery Container</span>
         </div>
       </ws-utils-horizontal-scroller>
     </mat-drawer>

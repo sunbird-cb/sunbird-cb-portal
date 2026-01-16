@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core'
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { } from '@sunbird-cb/collection'
-import { IResolveResponse } from '@sunbird-cb/utils'
+import { IResolveResponse } from '@sunbird-cb/utils-v2'
 import { DiscussService } from '../services/discuss.service'
 
 @Injectable()
 export class DiscussUnreadResolve
-  implements
-  Resolve<Observable<IResolveResponse<any>> | IResolveResponse<any>> {
+   {
   constructor(private discussionSvc: DiscussService) { }
 
   resolve(

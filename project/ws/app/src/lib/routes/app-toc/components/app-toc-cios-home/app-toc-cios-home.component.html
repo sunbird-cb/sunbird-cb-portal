@@ -1,0 +1,379 @@
+<ng-container *ngIf="extContentAvailable">
+    <div class="toc-banner">
+        <div class="flex flex-row gap-6 fixed-width">
+            <div class="banner-details toc-content" #bannerDetails>
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center justify-between gap-4">
+                        <ng-container *ngIf="skeletonLoader">
+                            <ws-widget-skeleton-loader [width]="'132px'" [height]="'32px'"
+                                [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'140px'" [height]="'24px'"
+                                [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                        </ng-container>
+
+                        <ng-container *ngIf="!skeletonLoader">
+                            <!-- <div class="flex flex-row gap-2">
+                    <div class="flex flex-row tag-div rounded-2xl gap-1 items-center p-2">
+                    <mat-icon class="ws-mat-orange-text">video_library</mat-icon>
+                     <ng-container *ngIf="content?.courseCategory">
+                        <div class="text-xs font-bold text-white leading-3">{{ translateLabel(content?.courseCategory, 'searchfilters') }}</div>
+                    </ng-container>
+                    <ng-container *ngIf="extContentReadData?.topic">
+                        <div class="text-xs font-bold text-white leading-3">{{ 'External Course' }}</div>
+                    </ng-container>
+                    </div>
+                </div> -->
+                        </ng-container>
+
+                        <div class="flex items-center text-white mob-share">
+                            <mat-icon (click)="onClickOfShare()">share</mat-icon>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="!skeletonLoader">
+                        <!-- Knowledge level block -->
+                        <div *ngIf="extContentReadData?.difficultyLevel || extContentReadData?.knowledgeLevel"
+                            class="knowledge-level-container">
+                            <span
+                                *ngIf="extContentReadData?.difficultyLevel?.toLowerCase() === 'beginner' || extContentReadData?.knowledgeLevel?.toLowerCase() === 'beginner'"
+                                class="level-badge beginner">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
+                                    <rect width="16" height="16" fill="#DBF4DC" />
+                                    <path
+                                        d="M7.42267 5C7.67927 4.55555 8.32077 4.55556 8.57737 5L12.0415 11C12.2981 11.4444 11.9773 12 11.4641 12H4.53592C4.02272 12 3.70197 11.4444 3.95857 11L7.42267 5Z"
+                                        fill="#49C951" />
+                                </svg>
+                                {{extContentReadData?.difficultyLevel || extContentReadData?.knowledgeLevel}}
+                            </span>
+                            <span
+                                *ngIf="extContentReadData?.difficultyLevel?.toLowerCase() === 'intermediate' || extContentReadData?.knowledgeLevel?.toLowerCase() === 'intermediate'"
+                                class="level-badge intermediate">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
+                                    <rect width="16" height="16" fill="#D1DBEC" />
+                                    <path
+                                        d="M7.42267 2.66666C7.67927 2.22221 8.32077 2.22221 8.57737 2.66666L12.0415 8.66666C12.2981 9.1111 11.9773 9.66666 11.4641 9.66666H4.53592C4.02272 9.66666 3.70197 9.1111 3.95857 8.66666L7.42267 2.66666Z"
+                                        fill="#1B4CA1" />
+                                    <path
+                                        d="M7.42267 5.66666C7.67927 5.22221 8.32077 5.22221 8.57737 5.66666L12.0415 11.6667C12.2981 12.1111 11.9773 12.6667 11.4641 12.6667H4.53592C4.02272 12.6667 3.70197 12.1111 3.95857 11.6667L7.42267 5.66666Z"
+                                        fill="#1B4CA1" stroke="#D1DBEC" stroke-width="0.5" />
+                                </svg>
+                                {{extContentReadData?.difficultyLevel || extContentReadData?.knowledgeLevel}}
+                            </span>
+                            <span
+                                *ngIf="extContentReadData?.difficultyLevel?.toLowerCase() === 'advanced' || extContentReadData?.knowledgeLevel?.toLowerCase() === 'advanced'"
+                                class="level-badge advanced">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
+                                    <g clip-path="url(#clip0)">
+                                        <rect width="16" height="16" fill="#FFE6E1" />
+                                        <path
+                                            d="M7.42264 2.33334C7.67924 1.8889 8.32074 1.8889 8.57734 2.33334L12.0414 8.33334C12.298 8.77779 11.9773 9.33334 11.4641 9.33334H4.53589C4.02269 9.33334 3.70194 8.77779 3.95854 8.33334L7.42264 2.33334Z"
+                                            fill="#FF8268" />
+                                        <path
+                                            d="M7.42264 5C7.67924 4.55555 8.32074 4.55556 8.57734 5L12.0414 11C12.298 11.4444 11.9773 12 11.4641 12H4.53589C4.02269 12 3.70194 11.4444 3.95854 11L7.42264 5Z"
+                                            fill="#FF8268" stroke="#FFE6E1" stroke-width="0.5" />
+                                        <path
+                                            d="M7.42264 7.66669C7.67924 7.22224 8.32074 7.22224 8.57734 7.66669L12.0414 13.6667C12.298 14.1111 11.9773 14.6667 11.4641 14.6667H4.53589C4.02269 14.6667 3.70194 14.1111 3.95854 13.6667L7.42264 7.66669Z"
+                                            fill="#FF8268" stroke="#FFE6E1" stroke-width="0.5" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0">
+                                            <rect width="16" height="16" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                {{extContentReadData?.difficultyLevel || extContentReadData?.knowledgeLevel}}
+                            </span>
+                        </div>
+                    </ng-container>
+                    <div class="flex flex-col gap-2">
+                        <ng-container *ngIf="skeletonLoader">
+                            <ws-widget-skeleton-loader [width]="'90%'" [height]="'32px'"
+                                [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                            <ws-widget-skeleton-loader [width]="'70%'" [height]="'32px'"
+                                [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="!skeletonLoader">
+                            <div class="banner-text text-base sm:text-4xl leading-6 sm:leading-10 font-bold">{{
+                                handleCapitalize(extContentReadData?.name) }}</div>
+                            <div class="text-sm sm:text-base source-text font-semibold break-words" #contentSource
+                                [ngClass]="{'sourceEllipsis': sourceEllipsis}" title="{{content?.source}}">
+                                {{ 'cardcontentv2.by' | translate }}
+                                <span *ngIf="extContentReadData?.contentPartner?.contentPartnerName">
+                                    <span *ngIf="extContentReadData?.courseProvider?.length;else contentPartnerName">
+                                        {{ formatcourseProviders(extContentReadData?.courseProvider) }}
+                                    </span>
+                                    <ng-template #contentPartnerName>
+                                        {{extContentReadData?.contentPartner?.contentPartnerName }}
+                                    </ng-template>
+                                </span>
+                                <span *ngIf="!extContentReadData?.contentPartner?.contentPartnerName">{{
+                                    'common.karmayogiBharat' | translate }}</span>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ng-container *ngIf="skeletonLoader">
+                        <ws-widget-skeleton-loader [width]="'120px'" [height]="'40px'"
+                            [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                        <ws-widget-skeleton-loader [width]="'88px'" [height]="'24px'"
+                            [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                    </ng-container>
+                    <ng-container *ngIf="!skeletonLoader">
+                        <!-- <div class="flex gap-4 items-center" *ngIf="content?.averageRating || content?.additionalTags?.length">
+                    <div class="flex flex-row rating-chip py-2 items-center cursor-pointer" (click)="handleNavigateToReviews()" *ngIf="content?.averageRating">
+                    <div class="flex flex-row gap-1 margin-left-s items-center">
+                        <mat-icon>grade</mat-icon>
+                        <div class="text-white text-sm leading-4">{{ content?.averageRating }}</div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="text-white text-sm leading-4 margin-right-m">{{ content?.totalRating | pipeCountTransform }}</div>
+                    </div>
+                    <div class="flex items-center" *ngIf="content?.additionalTags?.length">
+                    <div class="most-enrolled-chip text-xs leading-3">
+                        <span *ngIf="content?.additionalTags?.includes('mostTrending')">{{ 'cardcontentv2.mostTrending' | translate }}</span>
+                        <span *ngIf="content?.additionalTags?.includes('mostEnrolled')">{{ 'cardcontentv2.mostEnrolled' | translate }}</span>
+                    </div>
+                    </div>
+                </div> -->
+                    </ng-container>
+                    <ng-container *ngIf="skeletonLoader">
+                        <ws-widget-skeleton-loader [width]="'180px'" [height]="'20px'"
+                            [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                    </ng-container>
+                    <ng-container *ngIf="!skeletonLoader && extContentReadData?.lastUpdatedOn">
+                        <div class="text-xs leading-4 source-text">({{ 'apptoc.lastUpdatedOn' | translate }} {{
+                            extContentReadData?.lastUpdatedOn | date: 'MMM d, y' }})</div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="!forPreview">
+
+        <div *ngIf="isMobile">
+            <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}' && userExtCourseEnroll?.issued_certificates?.length ===  0
+            && userExtCourseEnroll?.progress <= 100">
+                <div class="no-certificate-found mt-6 mb-4 mx-2">
+                    <div>
+                        <span>Progress and certificates for {{ extContentReadData?.contentPartner?.contentPartnerName }}
+                            courses are visible only after you complete the course and pass the assessment.</span>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="flex flex-col gap-4 p-5 border-bottom position-bottom">
+                <!-- <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}'">
+                    <div class="flex flex-row justify-end w-full ws-mat-black-text">
+                        <span class="mat-body-2  ws-mat-black-text">
+                            {{userExtCourseEnroll?.progress}}%</span>
+                    </div>
+                    <ws-widget-content-progress [contentId]="userExtCourseEnroll?.progress"
+                                                [progress]="userExtCourseEnroll?.progress"
+                                                [progressType]="'percentage'" [customClassName]="'viewer-progress'">
+                                            </ws-widget-content-progress>
+                  </ng-container>   -->
+                <ng-container *ngIf="(userExtCourseEnroll | json) === '{}' && !enrollValidationLoading && canEnroll">
+                    <button class="flex action-button justify-center flex-middle resume" type="button"
+                        (click)="enRollToExtCourse(extContentReadData)">
+                        <ng-container>{{ 'apptochome.enroll' | translate }}
+                        </ng-container>
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="enrollValidationLoading">
+                    <ws-widget-skeleton-loader [width]="'132px'" [height]="'32px'"
+                        [bindingClass]="'rounded blue-2-loader'"></ws-widget-skeleton-loader>
+                </ng-container>
+                <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}' && extContentReadData?.redirectUrl">
+                    <a class="flex action-button justify-center flex-middle resume" target="_blank"
+                        [href]="extContentReadData?.redirectUrl" (click)="captureRedirectTelemetry(extContentReadData)">
+                        <ng-container>{{ 'apptochome.redirect' | translate }}
+                            <mat-icon class="ml-2 ws-mat-white-text">open_in_new</mat-icon>
+                        </ng-container>
+                    </a>
+                </ng-container>
+                <!-- <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}' && userExtCourseEnroll?.issued_certificates?.length > 0
+                    && userExtCourseEnroll?.progress === 100">
+                    <button class="flex action-button justify-center flex-middle resume" type="button" (click)="downloadCert()">
+                         <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24">
+                        <span>Certificate</span>
+                        <mat-icon  *ngIf="!downloadCertificateLoading" class="ml-2">arrow_downward</mat-icon>
+                        <div class="center flex flex-middle certificate-loader margin-left-s" *ngIf="downloadCertificateLoading">
+                            <mat-spinner strokeWidth="2" stroke="'white'" class="white-spinner" [diameter]="24"></mat-spinner>
+                          </div>
+                    </button>
+                </ng-container>  -->
+            </div>
+            <div>
+                <div class="flex flex-col px-8 py-4 gap-2" *ngIf="extContentReadData?.duration > 0">
+                    <img src="/assets/icons/toc/timer.svg" width="20px" alt="web image" />
+                    <div class="text-xs">{{ extContentReadData?.duration * 60 | pipeDurationTransform: 'hms' }}</div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="flex flex-row gap-6 fixed-width">
+        <div class="toc-content" [ngClass]="isMobile ? '':'mt-8 mb-8'">
+            <mat-tab-group>
+                <mat-tab label="{{ 'apptocsinglepage.about' | translate }}">
+                    <ng-template matTabContent>
+                        <div class="flex flex-col" [ngClass]="isMobile ? '':'mt-5 mb-5'">
+                            <ng-container *ngIf="skeletonLoader">
+                                <ws-widget-skeleton-loader [width]="'80px'" [height]="'16px'"
+                                    [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                                <div class="flex flex-col gap-2 mt-4">
+                                    <ws-widget-skeleton-loader [width]="'80%'" [height]="'16px'"
+                                        [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                                    <ws-widget-skeleton-loader [width]="'95%'" [height]="'16px'"
+                                        [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                                    <ws-widget-skeleton-loader [width]="'65%'" [height]="'16px'"
+                                        [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!skeletonLoader">
+                                <ws-widget-app-toc-about [contentReadData]="extContentReadData" [showReviews]="false"
+                                    [baseContentReadData]="extContentReadData"
+                                    [showMarketPlaceCertificate]="(userExtCourseEnroll | json) !== '{}' && userExtCourseEnroll?.issued_certificates?.length >  0 && userExtCourseEnroll?.progress === 100"
+                                    [content]="extContentReadData" [fromMarketPlace]="true"
+                                    [skeletonLoader]="skeletonLoader">
+                                </ws-widget-app-toc-about>
+                            </ng-container>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+
+                <ng-container *ngIf="config?.commentsTab">
+                    <mat-tab label="{{ 'apptocsinglepage.comments' | translate }}">
+                        <!-- <ng-template matTabContent> -->
+                        <div class="flex flex-col ratings-div mt-5" id="commentsDiv" *ngIf="discussWidgetData">
+                            <ng-container *ngIf="!commentId">
+                                <d-v2-widget-comment [widgetData]="discussWidgetData"></d-v2-widget-comment>
+                            </ng-container>
+                            <ng-container *ngIf="commentId">
+                                <div class="flex flex-row gap-3 cursor-pointer mb-5" (click)="clearCommentIdFromUrl()">
+                                    <mat-icon class="cursor-pointer">arrow_back</mat-icon>
+                                    Back to all comments
+                                </div>
+                                <d-v2-widget-comment [widgetData]="discussWidgetData" [commentId]="commentId"
+                                    [skeletonLoader]></d-v2-widget-comment>
+                            </ng-container>
+
+                        </div>
+                        <!-- </ng-template> -->
+                    </mat-tab>
+                </ng-container>
+            </mat-tab-group>
+
+        </div>
+        <div class="right-container">
+            <div class="right-content" #rightContainer>
+                <ng-container *ngIf="skeletonLoader">
+                    <ws-widget-skeleton-loader [width]="'384px'" [height]="'224px'"
+                        [bindingClass]="'rounded'"></ws-widget-skeleton-loader>
+                </ng-container>
+                <ng-container *ngIf="!skeletonLoader">
+                    <div class="flex flex-col image-div"
+                        [ngStyle]="{
+            'background-image': 'url(' + extContentReadData?.appIcon + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"
+                        [ngClass]="{'image-backdrop': scrolled}">
+                        <div class="flex flex-col justify-between text-container">
+                            <div class="flex items-center gap-4 justify-end">
+                                <div (click)="onClickOfShare()"
+                                    class="flex flex-row items-center justify-end gap-2 share-tag" *ngIf="!forPreview">
+                                    <mat-icon>share</mat-icon>
+                                    <div>{{ 'apptocsinglepage.share' | translate }}</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1" *ngIf="scrolled">
+                                <div class="text-xl leading-6 text-white font-bold text-scrol-custom">{{
+                                    handleCapitalize(extContentReadData?.name) }}
+                                </div>
+                                <!-- <div class="text-sm source-text font-semibold break-words" #contentSource [ngClass]="{'sourceEllipsis': sourceEllipsis}" title="{{content?.source}}">
+                        {{ 'cardcontentv2.by' | translate }}
+                        <span *ngIf="extContentReadData?.contentPartner?.contentPartnerName">{{ extContentReadData?.contentPartner?.contentPartnerName }}</span>
+                        <span *ngIf="!extContentReadData?.contentPartner?.contentPartnerName">{{ 'common.karmayogiBharat' | translate }}</span>
+                    </div> -->
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </ng-container>
+
+                <ng-container *ngIf="!forPreview">
+                    <div class="flex flex-col gap-3 p-3 border-bottom">
+                        <!-- <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}'">
+                        <div class="flex flex-row justify-end w-full ws-mat-black-text">
+                            <span class="mat-body-2  ws-mat-black-text">
+                                {{userExtCourseEnroll?.progress}}%</span>
+                        </div>
+                        <ws-widget-content-progress [contentId]="userExtCourseEnroll?.progress"
+                                                    [progress]="userExtCourseEnroll?.progress"
+                                                    [progressType]="'percentage'" [customClassName]="'viewer-progress'">
+                                                </ws-widget-content-progress>
+                    </ng-container>   -->
+
+                        <ng-container
+                            *ngIf="(userExtCourseEnroll | json) === '{}' && !enrollValidationLoading && canEnroll">
+                            <button class="flex action-button justify-center flex-middle resume" type="button"
+                                (click)="enRollToExtCourse(extContentReadData)">
+                                <ng-container>{{ 'apptochome.enroll' | translate }}
+                                </ng-container>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="enrollValidationLoading">
+                            <ws-widget-skeleton-loader [width]="'100%'" [height]="'32px'"
+                                [bindingClass]="'rounded '"></ws-widget-skeleton-loader>
+                        </ng-container>
+                        <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}' && extContentReadData?.redirectUrl">
+                            <a class="flex action-button justify-center flex-middle resume" target="_blank"
+                                [href]="extContentReadData?.redirectUrl"
+                                (click)="captureRedirectTelemetry(extContentReadData)">
+                                <ng-container>{{ 'apptochome.redirect' | translate }}
+                                    <mat-icon class="ml-2 ws-mat-white-text">open_in_new</mat-icon>
+                                </ng-container>
+                            </a>
+                        </ng-container>
+                        <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}' && userExtCourseEnroll?.issued_certificates?.length ===  0
+                        && userExtCourseEnroll?.progress <= 100 && widgetData && widgetData.sliderData?.length">
+                            <div class="no-certificate-found">
+                                <ws-widget-sliders-dynamic [widgetData]="widgetData"></ws-widget-sliders-dynamic>
+                            </div>
+                        </ng-container>
+                        <!-- <ng-container *ngIf="(userExtCourseEnroll | json) !== '{}' && userExtCourseEnroll?.issued_certificates?.length > 0
+                        && userExtCourseEnroll?.progress === 100">
+                        <button class="flex action-button justify-center flex-middle resume" type="button" (click)="downloadCert()">
+                            <img src="fusion-assets/images/certificate-ico.svg" width="24" height="24">
+                            <span>Certificate</span>
+                            <mat-icon  *ngIf="!downloadCertificateLoading" class="ml-2">arrow_downward</mat-icon>
+                            <div class="center flex flex-middle certificate-loader margin-left-s" *ngIf="downloadCertificateLoading">
+                                <mat-spinner strokeWidth="2" stroke="'white'" class="white-spinner" [diameter]="24"></mat-spinner>
+                            </div>
+                        </button>
+                    </ng-container>  -->
+                    </div>
+                </ng-container>
+                <div>
+                    <div class="flex flex-col kpi-values items-center gap-2" *ngIf="extContentReadData?.duration > 0">
+                        <img src="/assets/icons/toc/timer.svg" width="20px" alt="web image" />
+                        <div class="text-xs">
+                            {{ extContentReadData?.duration | pipeDurationTransform: 'hms' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<div *ngIf="!extContentAvailable">
+    <div class="flex justify-center w-full">
+        <div class="margin-xl text-center">
+            <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
+                class="margin-top-l margin-bottom-s">
+            <h2 class="mat-h2" i18n="search route no result">{{'learnsearch.noResults' | translate}}</h2>
+        </div>
+    </div>
+
+</div>
+
+<ws-app-share-toc *ngIf="enableShare" [contentLink]="contentLink" [rootOrgId]="rootOrgId" [content]="extContentReadData"
+    (resetEnableShare)="resetEnableShare($event)"></ws-app-share-toc>

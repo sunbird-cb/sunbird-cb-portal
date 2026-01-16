@@ -1,0 +1,108 @@
+<div class="w-full flex justify-between gap-2 md:gap-4 py-3" [ngClass]="{'border-b': showBorder}">
+  <!-- #region (user details) -->
+   <div class="flex gap-2 user-details-container">
+    <div class="profile-iamge">
+      <ws-widget-avatar-photo 
+        [photoUrl]="otherUserProfile?.profileImageUrl"
+        [initials]="nameInitials"
+        [name]="fullName"
+        [size]="'round-m'"
+      ></ws-widget-avatar-photo>
+    </div>
+
+    <div class="user-details flex flex-col gap-1">
+      <div class="user-name" (click)="goToUserProfile(otherUserProfile)">{{ fullName }}</div>
+      <div class="user-designation">{{ otherUserProfile?.professionalDetails?.[0]?.designation }}</div>
+      <div class="organisation">{{ otherUserProfile?.departmentName }}</div>
+      <div class="location">{{ otherUserProfile?.location }} </div>
+    </div>
+  </div>
+   <!-- #endregion (user details) -->
+
+   <!-- #region (status and actions) -->
+    <div class="flex justify-center items-center action-buttons h-full" [ngSwitch]="currentTab">
+      <ng-container *ngSwitchCase="'Approved'">
+        <div class="flex w-full gap-8 justify-center items-center">
+           <a class="flex gap-1 items-center action-link" (click)="viewProfile()">
+              {{'NetworkLandingPage.viewProfile' | translate}}
+            </a>
+
+          <div class="flex justify-center items-center" [matMenuTriggerFor]="connectionsMenu">
+            <mat-icon class="connectionsMenuIcon">more_vert</mat-icon>
+          </div>
+          <mat-menu #connectionsMenu="matMenu">
+            <button mat-menu-item class="menu-item" (click)="copyProfile()">
+              <span>{{'NetworkLandingPage.copyProfileLink' | translate}}</span>
+            </button>
+            <ng-container *ngIf="!otherUserProfile?.connectionStatus">
+              <button mat-menu-item class="menu-item" (click)="openConformationPopup('Removed')">
+                <span>{{'NetworkLandingPage.removeConnection' | translate}}</span>
+              </button>
+            </ng-container>
+          </mat-menu>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'Received'">
+        <div class="w-full flex flex-col gap-4">
+          <div class="flex h-full flex-col w-full">
+            <div class="flex justify-end timing">{{otherUserProfile?.timeAgo}}</div>
+          </div>
+          <ng-container *ngIf="!otherUserProfile?.connectionStatus || otherUserProfile?.connectionStatus === 'progress'; else connectionUpdated">
+            <div class="request-btns flex justify-between w-full items-center">
+              <a class="ignore flex justify-center items-center" [ngClass]="{'action-link-disabled': otherUserProfile?.connectionStatus === 'progress'}" 
+                (click)="openConformationPopup('Rejected')">{{'NetworkLandingPage.ignore' | translate}}</a>
+              <button mat-button class="accept-btn" (click)="openConformationPopup('Approved')"
+               [ngClass]="{'action-link-disabled': otherUserProfile?.connectionStatus === 'progress'}">{{'NetworkLandingPage.accept' | translate}} </button>
+            </div>
+          </ng-container>
+          <ng-template #connectionUpdated>
+            <div class="request-btns flex justify-end w-full items-center">
+              <ng-container *ngIf="otherUserProfile?.connectionStatus === 'Approved'; else ignoredTemplate">
+                <button mat-button class="connection-sent-btn flex justify-center items-center">{{'NetworkLandingPage.accepted' | translate}}</button>
+              </ng-container>
+              <ng-template #ignoredTemplate>
+                <ng-container *ngTemplateOutlet="disableLink; context: { message: 'NetworkLandingPage.ignored' }"></ng-container>
+              </ng-template>
+            </div>
+          </ng-template>
+            
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'Pending'">
+        <ng-container *ngIf="!otherUserProfile?.connectionStatus || otherUserProfile?.connectionStatus === 'progress'; else withdrawnTemplate">
+          <div class="flex w-full justify-center items-center">
+            <a class="flex gap-1 items-center action-link" (click)="openConformationPopup('Withdrawn')"
+             [ngClass]="{'action-link-disabled': otherUserProfile?.connectionStatus === 'progress'}">
+                {{'NetworkLandingPage.withdraw' | translate}}
+              </a>
+          </div>
+        </ng-container>
+        <ng-template #withdrawnTemplate>
+          <ng-container *ngTemplateOutlet="disableLink; context: { message: 'NetworkLandingPage.withdrawn' }"></ng-container>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'Blocked'">
+        <ng-container *ngIf="!otherUserProfile?.connectionStatus || otherUserProfile?.connectionStatus === 'progress'; else blockedTemplate">
+          <div class="flex w-full justify-center items-center">
+            <a class="flex gap-1 items-center action-link" (click)="openConformationPopup('Unblocked')"
+             [ngClass]="{'action-link-disabled': otherUserProfile?.connectionStatus === 'progress'}">
+                {{'NetworkLandingPage.unblock' | translate}}
+              </a>
+          </div>
+        </ng-container>
+        <ng-template #blockedTemplate>
+          <ng-container *ngTemplateOutlet="disableLink; context: { message: 'NetworkLandingPage.unblocked' }"></ng-container>
+        </ng-template>
+      </ng-container>
+    </div>
+    <!-- #endregion (status and actions) -->
+</div>
+
+<ng-template #disableLink let-message="message">
+  <a class="flex gap-1 items-center action-link action-link-sent">
+    {{message | translate}}
+  </a>
+</ng-template>

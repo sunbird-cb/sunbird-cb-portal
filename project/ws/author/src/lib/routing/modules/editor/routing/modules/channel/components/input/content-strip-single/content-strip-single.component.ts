@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { ConfirmDialogComponent } from '@ws/author/src/lib/modules/shared/components/confirm-dialog/confirm-dialog.component'
-import { AbstractControl, FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms'
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { MatSnackBar, MatDialog, MatChipInputEvent } from '@angular/material'
 import { IPickerContentData, NsContent, NsContentStripSingle } from '@sunbird-cb/collection'
 import { UploadService } from '@ws/author/src/lib/routing/modules/editor/shared/services/upload.service'
@@ -30,7 +30,7 @@ export class ContentStripSingleComponent implements OnInit {
   @Input() identifier = ''
   @Input() isSubmitPressed = false
   @Input() editorMode: 'advanced' | 'basic' = 'advanced'
-  form!: FormGroup
+  form!: UntypedFormGroup
   pickerContentData!: IPickerContentData
   requestType: 'KB' | 'ids' | 'Collections' | 'api' | 'manual' | 'searchRegionRecommendation' | 'search' = 'ids'
   backUpRequestType: 'KB' | 'ids' | 'Collections' | 'api' | 'manual' | 'searchRegionRecommendation' | 'search' = 'ids'
@@ -42,12 +42,12 @@ export class ContentStripSingleComponent implements OnInit {
   language: string[] = []
   keywords: string[] = []
   collectionId: string[] = []
-  keywordsCtrl = new FormControl('')
+  keywordsCtrl = new UntypedFormControl('')
   filteredOptions$: Observable<string[]> = of([])
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private interestSvc: InterestService,
     private snackBar: MatSnackBar,
     private loader: LoaderService,
@@ -77,9 +77,9 @@ export class ContentStripSingleComponent implements OnInit {
     }
   }
 
-  getFormPath(control: FormArray, i: number, key: string): any {
+  getFormPath(control: UntypedFormArray, i: number, key: string): any {
     const form = control.at(i)
-    return (form.get(key) as FormControl).value
+    return (form.get(key) as UntypedFormControl).value
   }
 
   addKeyword(event: MatChipInputEvent): void {
@@ -178,7 +178,7 @@ export class ContentStripSingleComponent implements OnInit {
     this.subscription = this.getPath('request', 'ids').valueChanges.subscribe({
       next: () => {
         const set = new Set<string>()
-        const lexIDs = (this.form.controls.request as FormGroup).controls.ids.value || []
+        const lexIDs = (this.form.controls.request as UntypedFormGroup).controls.ids.value || []
         lexIDs.map((v: string) => set.add(v))
         this.pickerContentData = {
           ...this.pickerContentData,
@@ -211,15 +211,15 @@ export class ContentStripSingleComponent implements OnInit {
     })
   }
 
-  get paths(): FormArray {
-    return this.form.controls.request.get('manualData') as FormArray
+  get paths(): UntypedFormArray {
+    return this.form.controls.request.get('manualData') as UntypedFormArray
   }
 
   removeButtonClick(index: number) {
     this.paths.removeAt(index)
   }
   addManualDataForm(data?: NsContentStripSingle.IContentStrip) {
-    const path = this.getPath('request', 'manualData') as FormArray
+    const path = this.getPath('request', 'manualData') as UntypedFormArray
 
     path.push(
       this.formBuilder.group({
@@ -294,7 +294,7 @@ export class ContentStripSingleComponent implements OnInit {
   }
 
   onContentSelectionChanged(event: { content: Partial<NsContent.IContent>; checked: boolean }) {
-    const lexIDs = JSON.parse(JSON.stringify((this.form.controls.request as FormGroup).controls.ids.value || []))
+    const lexIDs = JSON.parse(JSON.stringify((this.form.controls.request as UntypedFormGroup).controls.ids.value || []))
     if (event.checked) {
       lexIDs.push(event.content.identifier)
       if (this.pickerContentData.preselected) {

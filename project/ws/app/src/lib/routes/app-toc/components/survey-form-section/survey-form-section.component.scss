@@ -1,0 +1,17 @@
+.section-wrapper {
+  background: rgba(27, 76, 161, 0.08);
+  padding: 16px 16px 8px 16px;
+  border-radius: 8px;
+}
+
+.section-title {
+  /* stylelint-disable */
+  font-family: Montserrat;
+  /* stylelint-enable */
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}

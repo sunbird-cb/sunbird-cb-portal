@@ -21,9 +21,9 @@
                 [required]="true" /> -->
               <mat-select [required]="true" formControlName="category" i18n-placeholder placeholder="--Select--"
                 #category>
-                <mat-option [value]="'Behavioural'" i18n>Behavioural</mat-option>
-                <mat-option [value]="'Domain'" i18n>Domain</mat-option>
-                <mat-option [value]="'Functional'" i18n>Functional</mat-option>
+                <mat-option [value]="'Behavioural'" >Behavioural</mat-option>
+                <mat-option [value]="'Domain'" >Domain</mat-option>
+                <mat-option [value]="'Functional'" >Functional</mat-option>
               </mat-select>
               <!-- <mat-hint align="end">{{ subTitle.value.length }} / 1000</mat-hint> -->
               <mat-error *ngIf="showError('category')" i18n="question Error|Explains question is required">
@@ -111,14 +111,14 @@
         <mat-dialog-actions align="end" class="mb-0-imp">
           <button mat-raised-button type="button" [mat-dialog-close]="true"
             class="ws-mat-accent-border flex-auto-display">
-            <span class="ws-mat-default-text" i18n>Discard</span>
+            <span class="ws-mat-default-text" >Discard</span>
           </button>
           <span *ngIf="uploadSaveData" class="px-4 flex items-center justify-center">
             <mat-spinner [diameter]="30"></mat-spinner>
           </span>
           <button mat-raised-button type="submit" class="text-white ws-mat-primary-background flex-auto-display"
             [disabled]="uploadSaveData || startForm?.invalid" (click)="submitPost(startForm)">
-            <span class="text-white" i18n>Submit Competency</span>
+            <span class="text-white" >Submit Competency</span>
           </button>
         </mat-dialog-actions>
       </div>

@@ -18,7 +18,7 @@
         <mat-divider></mat-divider>
         <br />
         <div [formGroupName]="i">
-          <p><b class="font-weight-bold required" i18n>Title</b></p>
+          <p><b class="font-weight-bold required" >Title</b></p>
           <mat-form-field appearance="outline" class="full-width">
             <input
               matInput
@@ -27,11 +27,11 @@
               formControlName="text"
               #text
             />
-            <mat-error *ngIf="!text.value && isSubmitPressed" i18n>
+            <mat-error *ngIf="!text.value && isSubmitPressed" >
               Above field is required
             </mat-error>
           </mat-form-field>
-          <p><b class="font-weight-bold" i18n>URL</b></p>
+          <p><b class="font-weight-bold" >URL</b></p>
           <mat-form-field appearance="outline" class="full-width">
             <input
               matInput
@@ -49,5 +49,5 @@
 <br />
 <button type="button" mat-raised-button (click)="addPath('', '')">
   <mat-icon>add box</mat-icon>
-  <ng-container i18n>Add New Path</ng-container>
+  <ng-container >Add New Path</ng-container>
 </button>

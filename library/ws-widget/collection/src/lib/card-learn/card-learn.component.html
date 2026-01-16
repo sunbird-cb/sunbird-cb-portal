@@ -2,9 +2,9 @@
   <!-- <div class="mat-toolbar px-4 sm:px-8 md:px-0 py-4 flex items-center">
     <ws-widget-user-image class="user-image" [email]="userEmail"></ws-widget-user-image>
     <h3>
-    <ng-container i18n>Hey, </ng-container>
+    <ng-container >Hey, </ng-container>
     <ng-container>{{ givenName }}</ng-container>
-    <ng-container *ngIf="!isNewUser" i18n>, Welcome Back!</ng-container>
+    <ng-container *ngIf="!isNewUser" >, Welcome Back!</ng-container>
     </h3>
   </div> -->
 </ng-container>
@@ -25,29 +25,45 @@
     <!-- </ng-container> -->
 
   </mat-card-content>
-  <mat-card-actions align="left" class="marg">
+  <mat-card-actions align="left" class="marg flex flex-wrap gap-4">
 
     <ng-container *ngFor="let btn of exploreBtns; let i = index">
-      <button *ngIf="i===0" mat-button type="button" class="explore_btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display"
+      <button *ngIf="i===0" mat-button type="button"
+        (click)="raiseTelemetry(btn.name)"
+        class="explore_btn margin-left-xs margin-right-xs small-button blue-border flex-auto-display"
         [routerLink]="btn.route">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}
         </mat-icon>
-        <span class="ws-mat-default-text" i18n>
-          {{btn.name}}
+        <span class="ws-mat-default-text" >
+          {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
-      <button *ngIf="i>=1" mat-button type="button" class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
-        [routerLink]="(btn.route)">
+      <button *ngIf="i>=1 && btn.name !== 'Moderated contents'" mat-button type="button"
+        (click)="raiseTelemetry(btn.name)"
+        class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+        [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
+        <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color" 
+          *ngIf="btn.icon">
+          {{btn.icon}}
+        </mat-icon>
+        <img [src]="btn.image" *ngIf="btn.image" class="channle-icon icon-margin">
+        <span class="ws-mat-default-text" >
+          {{ translateLabels(btn.name, 'learn')}}
+        </span>
+      </button>
+      <button *ngIf="i>=1 && btn.name === 'Moderated contents' && showModeratedCourseTab" mat-button type="button"
+        (click)="raiseTelemetry(btn.name)"
+        class="explore_btn margin-left-xs small-button blue-border flex-auto-display"
+        [routerLink]="btn?.route" [queryParams]="btn?.queryParams">
         <mat-icon class="ws-mat-default-text icon-margin mat-icon notranslate material-icons mat-icon-no-color">
           {{btn.icon}}
         </mat-icon>
-        <span class="ws-mat-default-text" i18n>
-          {{btn.name}}
+        <span class="ws-mat-default-text" >
+          {{ translateLabels(btn.name, 'learn')}}
         </span>
       </button>
     </ng-container>
-
   </mat-card-actions>
 
   <!-- </mat-card> -->
@@ -56,7 +72,7 @@
 <ng-template #activities>
   <div class="px-4 sm:px-8 md:px-0 py-4 my-1">
 
-    <!-- <h2 class="title" i18n>Welcome,
+    <!-- <h2 class="title" >Welcome,
       <ng-container>{{ givenName }}</ng-container>
     </h2> -->
     <div class="row-justify flex-wrap">

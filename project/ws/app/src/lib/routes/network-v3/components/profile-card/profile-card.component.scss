@@ -1,0 +1,50 @@
+.profile-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #00000014;
+  overflow: hidden;
+  padding: 0px 10px 15px;
+  width: calc(100% - 20px);
+}
+
+.banner-image {
+  width: 100%;
+  height: 94px;
+}
+
+.profile-image {
+  border-radius: 50%;
+  width: 105px;
+  border: 3px solid #ffffff;
+  margin-top: -65px;
+}
+
+.profile-circle {
+  border-radius: 50%;
+  background-color: rgba(27, 33, 51, 1);
+  font-weight: 600;
+  font-size: 36px;
+  text-transform: uppercase;
+  color: #FFF;
+  width: 84px;
+  height: 84px;
+}
+
+.userName {
+  /*stylelint-disable */
+  font: 600 16px Montserrat;
+  /*stylelint-enable */
+  color: #000000;
+}
+
+.view-profile-btn {
+  border-radius: 17px;
+  height: 32px;
+  border: 1px solid #1B4CA1;
+  /*stylelint-disable */
+  font: 700 14px Lato;
+  /*stylelint-enable */
+  color: #1B4CA1 !important;
+  width: 132px;
+  background-color: #ffffff;
+}

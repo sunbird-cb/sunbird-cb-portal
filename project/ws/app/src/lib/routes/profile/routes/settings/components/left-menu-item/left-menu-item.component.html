@@ -1,0 +1,42 @@
+<ng-container>
+  <!-- Parent or leaf with routerLink -->
+  <a mat-list-item *ngIf="item?.enabled && item.routerLink && !item.children?.length" matRipple
+     routerLinkActive="ws-active-discuss-route"
+     [routerLink]="item.routerLink" (click)="menuClick(item)">
+    <ng-container *ngIf="item.img">
+      <img class="tabIcon" [src]="item.img" alt="">
+    </ng-container>
+    <ng-container *ngIf="item.icon">
+      <mat-icon>{{item.icon}}</mat-icon>
+    </ng-container>
+    <span class="padding-left-xs">{{translateLetMenuName(item?.name)}}</span>
+  </a>
+
+  <!-- Parent or leaf without routerLink, e.g. tourClick -->
+  <a mat-list-item *ngIf="item?.enabled && !item.routerLink && !item.children?.length" matRipple (click)="tourClick(item)">
+    <ng-container *ngIf="item.img">
+      <img class="tabIcon" [src]="item.img" alt="">
+    </ng-container>
+    <ng-container *ngIf="item.icon">
+      <mat-icon>{{item.icon}}</mat-icon>
+    </ng-container>
+    <span class="padding-left-xs">{{translateLetMenuName(item?.name)}}</span>
+  </a>
+
+  <!-- Parent with children (expand/collapse) -->
+  <a mat-list-item *ngIf="item?.enabled && item.children?.length" matRipple (click)="toggleOpen(item, $event)">
+    <ng-container *ngIf="item.img">
+      <img class="tabIcon" [src]="item.img" alt="">
+    </ng-container>
+    <ng-container *ngIf="item.icon">
+      <mat-icon>{{item.icon}}</mat-icon>
+    </ng-container>
+    <span class="padding-left-xs">{{translateLetMenuName(item?.name)}}</span>
+    <mat-icon class="arrow-icon" style="margin-left:auto;">
+      {{ item.open ? 'arrow_drop_down' : 'arrow_right' }}
+    </mat-icon>
+  </a>
+  <div *ngIf="item.children?.length && item.open" class="child-menu pl-4">
+    <ws-app-left-menu-item *ngFor="let child of item.children" [item]="child"></ws-app-left-menu-item>
+  </div>
+</ng-container>

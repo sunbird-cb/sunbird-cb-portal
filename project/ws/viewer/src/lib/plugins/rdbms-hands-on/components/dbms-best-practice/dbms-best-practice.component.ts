@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core'
 import { NSRdbmsHandsOn } from '../../rdbms-hands-on.model'
 import { RdbmsHandsOnService } from '../../rdbms-hands-on.service'
-import { MatSnackBar } from '@angular/material'
-import { FormGroup, FormBuilder } from '@angular/forms'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms'
 
 @Component({
   selector: 'viewer-dbms-best-practice',
@@ -26,11 +26,11 @@ export class DbmsBestPracticeComponent implements OnInit {
   selectedOption: any
   dbStructure: NSRdbmsHandsOn.IDbStructureResponse[] = []
   executed = false
-  dropdownQueryForm: FormGroup | null = null
+  dropdownQueryForm: UntypedFormGroup | null = null
   constructor(
     private dbmsSvc: RdbmsHandsOnService,
     private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) { }
 
   ngOnInit() {

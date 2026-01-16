@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { MatDialogRef } from '@angular/material'
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog'
 
 @Component({
   selector: 'ws-app-playlist-delete-dialog',

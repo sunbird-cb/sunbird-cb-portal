@@ -8,8 +8,8 @@ export namespace NSContent {
     | 'Knowledge Board'
     | 'Channel'
   export interface IContentMeta {
-    accessPaths: string[]
-    identifier: string
+    accessPaths?: string[]
+    identifier?: string
     transcoding: any
     bannerColor: string /*new*/
     name: string
@@ -39,7 +39,7 @@ export namespace NSContent {
     posterImage: string
     language: string[]
     resourceType: string
-    categoryType: string
+    categoryType?: string
     introductoryVideo: string
     introductoryVideoIcon: string
     isInIntranet: boolean
@@ -118,7 +118,7 @@ export namespace NSContent {
     versionKey: string
     lastUpdatedOn: string
     lastUpdatedBy: string
-    status: string
+    status?: string
     releaseNotes: string
     certificationUrl: string
     preContents: IInternalReference[]

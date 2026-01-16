@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { ISelectorResponsive, ISelectorResponsiveUnit } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { WIDGET_LIBRARY } from '../../../constants/widet'
@@ -16,7 +16,7 @@ export class SelectorResponsiveV2Component implements OnInit {
     isValid: boolean
   }>()
 
-  @ViewChild(ImageMapComponent, { static: false }) imageMapComponent!: ImageMapComponent
+  @ViewChild(ImageMapComponent) imageMapComponent!: ImageMapComponent
 
   @Input() content!: ISelectorResponsive
   @Input() identifier = ''

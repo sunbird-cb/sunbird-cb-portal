@@ -12,8 +12,8 @@
           'table-width-1-2': dbStructure?.length
         }">
         <h3 class="pl-2 ws-mat-primary-text rdbmsheadings">Write your query here</h3>
-        <ace-editor class="code-container" (textChanged)="raiseInputChange()" [(text)]="contentData.query" theme="eclipse" [mode]="'sql'"
-          [options]="options" #queryEditor></ace-editor>
+        <!-- <ace-editor class="code-container" (textChanged)="raiseInputChange()" [(text)]="contentData.query" theme="eclipse" [mode]="'sql'"
+          [options]="options" #queryEditor></ace-editor> -->
         <div class="padding-xs">
           <button mat-raised-button color="primary" [disabled]="verified" (click)="verify() ; raiseClickEvent()" i18n="button verify">
             Verify

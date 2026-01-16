@@ -1,0 +1,104 @@
+<form [formGroup]="questionForm" class="pb-2 q-element mb-4 question-container">
+    <div class="flex items-start">
+        <div class="font-semibold margin-remove flex"
+            [ngClass]="{'required' : fieldDetails.isRequired, 'pb-3': otherFieldType.includes(fieldDetails.fieldType)}"
+            i18n="Title label|Label which explains the user to enter title">
+            {{questionForm.value?.question}}
+        </div>
+    </div>
+    <ng-container [ngSwitch]="fieldDetails.fieldType">
+        <ng-container *ngSwitchCase="'dropdown'">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select placeholder="Select..." formControlName="answer">
+                    <mat-option value="{{obj.value}}"
+                        *ngFor=" let obj of fieldDetails?.values">{{obj?.key}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'phone number'">
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput i18n-placeholder placeholder="Type here..." formControlName="answer" maxlength="10" />
+            </mat-form-field>
+            <ng-container
+                *ngIf="questionForm.controls.answer.touched && questionForm.controls.answer.hasError('pattern')">
+                <mat-error class="mat-error mb-1">
+                    {{ 'profileInfo.pleaseEnterValidMobileNumber' | translate }}
+                </mat-error>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'date'">
+            <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker" formControlName="answer">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'boolean'">
+            <mat-radio-group class="pt-2" formControlName="answer">
+                <mat-radio-button [value]="true" class="pr-10 pb-2">True</mat-radio-button>
+                <mat-radio-button [value]="false" class="pr-10 pb-2">False</mat-radio-button>
+            </mat-radio-group>
+        </ng-container>
+        <ng-container *ngSwitchCase="'email'">
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput i18n-placeholder placeholder="Type here..." formControlName="answer" />
+            </mat-form-field>
+            <ng-container
+                *ngIf="questionForm.controls.answer.touched && questionForm.controls.answer.hasError('pattern')">
+                <mat-error class="mat-error mb-1">
+                    {{ 'profileInfo.invalidEmail' | translate }}
+                </mat-error>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'rating'">
+            <div class="rating-container">
+                <mat-icon *ngFor="let star of stars; index as i" class="stat-mat-icon"
+                    [ngClass]="{ 'filled': i < questionForm.controls.answer.value }" (click)="setRating(i + 1)">
+                    star
+                </mat-icon>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'text'">
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput i18n-placeholder placeholder="Type here..." formControlName="answer" />
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'textarea'">
+            <mat-form-field appearance="outline" class="w-full">
+                <textarea matInput i18n-placeholder placeholder="Type here..." rows="4" cols="5"
+                    formControlName="answer"></textarea>
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'radio'">
+            <mat-radio-group class="pt-2 custom" formControlName="answer">
+                <mat-radio-button *ngFor="let obj of fieldDetails?.values" [value]="obj.value" class="pr-5 pb-2">
+                    {{ obj.key }}
+                </mat-radio-button>
+            </mat-radio-group>
+        </ng-container>
+        <ng-container *ngSwitchCase="'numeric'">
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput i18n-placeholder placeholder="Type here..." formControlName="answer" type="text"
+                    maxlength="18" />
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'checkbox'">
+            <section class="pt-2">
+                <ng-container *ngFor="let objct of fieldDetails?.values; let i = index">
+                    <mat-checkbox [checked]="objct.checked" [value]="objct.value" class="pr-5 pb-2 custom"
+                        (change)="checkboxClicked($event, i)">
+                        {{ objct.key }}
+                    </mat-checkbox>
+                </ng-container>
+            </section>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="fieldDetails.notApplicable">
+        <div class="mt-2">
+            <mat-radio-group class="pt-2" formControlName="isNA" (change)="sectionChange()">
+                <mat-radio-button class="pr-10 pb-2 my-raido" value="true">N/A</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </ng-container>
+</form>

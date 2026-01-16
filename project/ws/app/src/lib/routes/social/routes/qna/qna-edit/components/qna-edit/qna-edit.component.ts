@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { ENTER, COMMA } from '@angular/cdk/keycodes'
-import { FormControl } from '@angular/forms'
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatSnackBar } from '@angular/material'
+import { UntypedFormControl } from '@angular/forms'
 import { ActivatedRoute, Data, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { NsError, ROOT_WIDGET_CONFIG, NsDiscussionForum, WsDiscussionForumService } from '@sunbird-cb/collection'
-import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils'
+import { TFetchStatus, ConfigurationsService, NsPage } from '@sunbird-cb/utils-v2'
 import { WsSocialService } from '../../../../../services/ws-social.service'
+import { MatLegacyAutocomplete as MatAutocomplete, MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-app-qna-edit',
@@ -65,7 +66,7 @@ export class QnaEditComponent implements OnInit, OnDestroy {
   }
 
   separatorKeysCodes: number[] = [ENTER, COMMA]
-  tagsCtrl = new FormControl()
+  tagsCtrl = new UntypedFormControl()
   selectedTags: NsDiscussionForum.IPostTag[] = []
   autocompleteAllTags: NsDiscussionForum.IPostTag[] = []
   tagsFromConversation: NsDiscussionForum.IPostTag[] = []

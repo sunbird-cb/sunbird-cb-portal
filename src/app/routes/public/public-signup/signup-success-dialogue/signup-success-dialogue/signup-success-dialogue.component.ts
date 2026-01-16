@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { MatDialogRef } from '@angular/material'
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog'
 import { Router } from '@angular/router'
 
 @Component({

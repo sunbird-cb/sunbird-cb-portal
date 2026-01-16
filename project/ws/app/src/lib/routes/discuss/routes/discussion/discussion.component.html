@@ -109,11 +109,11 @@
         <mat-card-actions align="end">
           <button mat-raised-button type="button" (click)="postReply(post)" [disabled]="answer.value.length < 3"
             class="text-white ws-mat-primary-background flex-auto-display margin-right-xs">
-            <span class="text-white" i18n>Post reply</span>
+            <span class="text-white" >Post reply</span>
           </button>
           <!-- <button mat-raised-button type="button" [mat-dialog-close]="true"
                     class="ws-mat-accent-border flex-auto-display">
-                    <span class="ws-mat-default-text" i18n>Discard</span>
+                    <span class="ws-mat-default-text" >Discard</span>
                   </button> -->
         </mat-card-actions>
       </ng-container>
@@ -313,7 +313,7 @@
       </button>
       <button mat-raised-button type="button" (click)="postCommentsReply(post, post.comment )"
         [disabled]="post.comment?.length < 3" class="text-white ws-mat-primary-background flex-auto-display">
-        <span class="text-white" i18n>Post reply</span>
+        <span class="text-white" >Post reply</span>
       </button>
     </div>
   </div>

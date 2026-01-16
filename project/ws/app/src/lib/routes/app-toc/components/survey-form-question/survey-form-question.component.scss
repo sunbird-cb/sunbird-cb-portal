@@ -1,0 +1,50 @@
+.drag-icon {
+  font-size: 20px;
+  color: black;
+}
+
+.q-element {
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+}
+
+.rating-container {
+  display: flex;
+  gap: 5px;
+}
+
+.stat-mat-icon {
+  font-size: 30px;
+  cursor: pointer;
+  color: #ccc;
+  width: 30px;
+  height: 30px;
+}
+
+.stat-mat-icon.filled {
+  color: #ffca28;
+}
+
+:host ::ng-deep .question-container {
+  .mat-form-field-wrapper {
+    padding: 0px !important;
+  }
+
+  .mat-radio-checked {
+    background-color: white !important;
+  }
+
+  .mat-radio-label-content {
+    font-size: 14px !important;
+    /* stylelint-disable */
+    font-family: Montserrat;
+    /* stylelint-enable */
+  }
+
+}
+
+:host ::ng-deep .custom .mat-checkbox-layout,
+:host ::ng-deep .custom .mat-radio-label {
+  white-space: normal !important;
+}

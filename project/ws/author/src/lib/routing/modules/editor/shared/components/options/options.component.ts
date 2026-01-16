@@ -38,8 +38,9 @@ export class OptionsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   isDirectPublish(): boolean {
+    const currentContentStatus: any = this.contentService.originalContent[this.currentContent]
     return (
-      ['Draft', 'Live'].includes(this.contentService.originalContent[this.currentContent].status) &&
+      ['Draft', 'Live'].includes(currentContentStatus.status) &&
       this.isPublisherSame()
     )
   }
@@ -74,8 +75,9 @@ export class OptionsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   canDelete() {
+    const currentContentStatus: any = this.contentService.originalContent[this.currentContent]
     return this.accessService.hasRole(['editor', 'admin']) ||
-      (['Draft', 'Live'].includes(this.contentService.originalContent[this.currentContent].status) &&
+      (['Draft', 'Live'].includes(currentContentStatus.status) &&
         this.contentService.originalContent[this.currentContent].creatorContacts &&
         this.contentService.originalContent[this.currentContent].creatorContacts.find(v => v.id === this.accessService.userId)
       )

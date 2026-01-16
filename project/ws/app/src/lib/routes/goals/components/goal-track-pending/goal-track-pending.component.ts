@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { TFetchStatus } from '@sunbird-cb/utils'
+import { TFetchStatus } from '@sunbird-cb/utils-v2'
 import { BtnGoalsService, NsGoal } from '@sunbird-cb/collection'
-import { MatTableDataSource, MatSnackBar } from '@angular/material'
 import { SelectionModel } from '@angular/cdk/collections'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table'
 // import { BtnGoalsService } from "@sunbird-cb/collection";
 
 @Component({

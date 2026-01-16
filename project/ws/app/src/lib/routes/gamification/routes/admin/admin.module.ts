@@ -18,7 +18,7 @@ import {
 } from '@angular/material'
 import { UserImageModule } from '@sunbird-cb/collection'
 import { FormsModule } from '@angular/forms'
-import { PipeNameTransformModule, PipeCountTransformModule } from '@sunbird-cb/utils'
+import { PipeNameTransformModule, PipeCountTransformModule } from '@sunbird-cb/utils-v2'
 import { ConfigurationsComponent } from './components/configurations/configurations.component'
 
 @NgModule({

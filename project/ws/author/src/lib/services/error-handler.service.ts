@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core'
-import { LoggerService } from '@sunbird-cb/utils'
+import { LoggerService } from '@sunbird-cb/utils-v2'
 import { LoaderService } from './loader.service'
 
 @Injectable()

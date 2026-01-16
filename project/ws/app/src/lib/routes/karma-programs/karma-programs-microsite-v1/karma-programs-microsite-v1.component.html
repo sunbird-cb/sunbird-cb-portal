@@ -1,0 +1,116 @@
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles }">
+</ws-widget-btn-page-back>
+
+<div class="container-fluid" id="section-micro-sites">
+    <div class="flex flex-col flex-1">
+        <ng-container *ngIf="sectionList?.length">
+            <ng-container *ngFor="let section of sectionList">
+                <ng-container *ngIf="section?.enabled">
+                    <section id="{{section?.key}}" class="w-full grid grid-cols-12 gap-4 " [ngClass]="{'container': section.wrapperClass}">
+                        <ng-container *ngFor="let column of section.column">
+                            <div id="{{column?.key}}" class="col-span-{{column.colspan || 12}} {{column?.background}} ">
+                                <ng-container *ngIf="column?.enabled" [ngSwitch]="column?.key">
+                                    <ng-container *ngSwitchCase="'banner'" [ngTemplateOutlet]="banner"
+                                    [ngTemplateOutletContext]="{data: column.data}"></ng-container>
+                                    <ng-container *ngSwitchCase="'contentSearch'" [ngTemplateOutlet]="contentWithSearch"
+                                        [ngTemplateOutletContext]="{competency: column}"></ng-container> 
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </section>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<!-- banner start -->
+<ng-template #banner let-data="data">
+    <div class="hidden md:block">
+        <div class="flex  items-center justify-center" [ngStyle]="{'background': data.background}">
+            <div class="container">
+                <div class="grid grid-cols-12 gap-4 padding-top-l mb-6">
+                    <div class="col-span-12 md:col-span-6">
+                        <div class="flex-1 flex flex-col mr-4 ws-mat-white-text">
+                            <div class="mt-6 pt-6">
+                                <h1  class=" txt-ellipsis-2 break-words">{{data.title || programName}}</h1>
+                                <p class="mat-body-1">
+                                    {{data?.description | slice:0:descriptionMaxLength}}
+                                    <span *ngIf="data?.description?.length > descriptionMaxLength">...</span>
+                                </p>
+                                <ng-container *ngIf="data?.referenceLinks && data?.referenceLinks?.length">
+                                    <ng-container *ngFor="let ref of data?.referenceLinks">
+                                        <p >
+                                            {{ref?.label}} : <a href="{{ref?.value}}" class=" ref-links " target="_blank"> {{'contentstripmultiple.clickHere' | translate}}</a>
+                                        </p>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-6 zindex">
+                        <div class="slider slider-box" *ngIf="data.sliderData && data.sliderData.sliders">
+                            <sb-uic-sliders [widgetData]="data.sliderData.sliders" [styleData]="data.sliderData.styleData" ></sb-uic-sliders>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img class="absolute comp-back-img" src="assets/icons/microsite/competency.svg" alt="">
+        </div>
+    </div>
+    <div class="block md:hidden">
+        <div class="col-span-12">
+            <div class="slider slider-box" *ngIf="data.sliderData && data.sliderData.sliders">
+                <sb-uic-sliders [widgetData]="data.sliderData.sliders" [styleData]="data.sliderData.styleData" ></sb-uic-sliders>
+            </div>
+        </div>
+        <div class="container px-4 py-4 flex flex-col mob-comp-back-img">
+            <div class="w-full md:w-9/12 flex-1 flex flex-col ws-mat-white-text">
+                <h1 class=" txt-ellipsis-2 break-words">{{data?.title}}</h1>
+                <p class="mat-body-2">
+                    {{data?.description | slice:0:descriptionMaxLength}}
+                    <span *ngIf="data?.description?.length > descriptionMaxLength">...</span>
+                </p>
+                <ng-container *ngIf="data?.referenceLinks && data?.referenceLinks?.length">
+                    <ng-container *ngFor="let ref of data?.referenceLinks">
+                        <p >
+                            {{ref?.label}} : <a href="{{ref?.value}}" class=" ref-links "  target="_blank">{{'contentstripmultiple.clickHere' | translate}}</a>
+                        </p>
+                    </ng-container>
+                </ng-container>
+                
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- banner end -->
+
+<!-- karma program data with search -->
+<ng-template #contentWithSearch let-data="data">
+    <div class="container-balanced px-4 pt-8 pb-8 ">
+        <div class="flex-1 flex flex-col text-white" >
+            <div class="w-full">
+                  <mat-form-field appearance="outline"  class="w-full mat-form-search">
+                    <input name="search"  (keyup.enter)="handleSearchQuery($event)"   matInput placeholder="Search">
+                  </mat-form-field>
+              </div>
+        </div>
+       <ng-container *ngIf="contentDataList?.length;else noData">
+            <div class="flex flex-row flex-wrap content-container mt-5 mb-10 ng-star-inserted">
+                <div class="mr-2 mb-5 flex" *ngFor="let c of contentDataList">
+                    <sb-uic-cards [widgetData]="c.widgetData" (triggerTelemetry)="raiseTelemetryInteratEvent($event)"> </sb-uic-cards>
+                </div>
+            </div>
+       </ng-container>
+
+       <ng-template #noData>
+        <div class="flex justify-center w-full">
+            <div class="margin-xl text-center" >
+                <img src="/assets/common/error-pages/empty_search.svg" wsUtilsImageResponsive alt="No results"
+                    class="margin-top-l margin-bottom-s">
+                <h2 class="mat-h2" i18n="search route no result">{{'learnsearch.noResults' | translate}}</h2>
+            </div>
+        </div>
+    </ng-template> 
+    </div>
+</ng-template>

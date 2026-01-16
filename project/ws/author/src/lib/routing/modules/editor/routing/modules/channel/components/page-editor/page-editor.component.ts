@@ -14,7 +14,7 @@ export class PageEditorComponent implements OnInit {
   @Input() canShowMode = false
   @Input() mode: 'Basic' | 'Advanced' = 'Basic'
   @Output() data = new EventEmitter<string>()
-  @ViewChild(MatDrawer, { static: false }) drawer!: MatDrawer
+  @ViewChild(MatDrawer) drawer!: MatDrawer
 
   constructor(private store: ChannelStoreService, private contentService: EditorContentService) { }
 

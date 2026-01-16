@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { TFetchStatus, LoggerService, ConfigurationsService } from '@sunbird-cb/utils'
+import { TFetchStatus, LoggerService, ConfigurationsService } from '@sunbird-cb/utils-v2'
 import { IBadgeResponse } from './badges.model'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription, fromEvent } from 'rxjs'
 import { BadgesService } from './badges.service'
-import { MatSnackBar } from '@angular/material'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { debounceTime, throttleTime } from 'rxjs/operators'
 
 @Component({
@@ -23,7 +23,7 @@ export class BadgesComponent implements OnInit {
   disablePrev: boolean
   scrollObserver: Subscription | undefined
 
-  @ViewChild('cardContents', { read: ElementRef, static: false }) public cardContents:
+  @ViewChild('cardContents', { read: ElementRef }) public cardContents:
     | ElementRef
     | undefined
 

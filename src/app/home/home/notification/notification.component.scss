@@ -1,0 +1,12 @@
+@import "ws-vars";
+
+.primary {
+    text-transform: underline;
+    font-weight: 600;
+    color: #FFF;
+}
+
+.close {
+    font-weight: 600;
+    color: $colorRed;
+}

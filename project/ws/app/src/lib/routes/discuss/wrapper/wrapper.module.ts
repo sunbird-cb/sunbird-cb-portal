@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { DiscussionEventsService, DiscussionUiModule } from '@sunbird-cb/discussions-ui-v8'
-import { TelemetryService } from '@sunbird-cb/utils/src/lib/services/telemetry.service'
-import { EventService } from '@sunbird-cb/utils/src/lib/services/event.service'
-import { WsEvents } from '@sunbird-cb/utils/src/public-api'
+import { TelemetryService, EventService, WsEvents } from '@sunbird-cb/utils-v2'
 // import {TelemetryService }
 // import { ConfigService } from '../services/config.service'
 
@@ -32,7 +30,7 @@ export class WrapperModule {
                         {
                             type: data.edata.type,
                             subType: data.edata.pageid,
-                            id: (data.object && data.object.id) || '',
+                            id: 'discussion',
                         },
                         data.object,
                         {

@@ -11,8 +11,8 @@
         <div class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-accent-background">
           <a mat-button [routerLink]="'/app/user-profile/details'" class="flex-1">
             <!-- <mat-icon>edit</mat-icon> -->
-            <span class="text-white" i18n *ngIf="completedPercent < 100">{{'Complete Profile'}}</span>
-            <span class="text-white" i18n *ngIf="completedPercent === 100">{{'View Profile'}}</span>
+            <span class="text-white" *ngIf="completedPercent < 100">{{'Complete Profile'}}</span>
+            <span class="text-white" *ngIf="completedPercent === 100">{{'View Profile'}}</span>
           </a>
         </div>
       </ng-container>

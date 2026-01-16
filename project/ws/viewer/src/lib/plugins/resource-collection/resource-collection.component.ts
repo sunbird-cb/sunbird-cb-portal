@@ -1,9 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core'
-import { FormControl } from '@angular/forms'
-import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material'
+import { UntypedFormControl } from '@angular/forms'
 import { NsContent } from '@sunbird-cb/collection'
 import { ViewSubmissionComponent } from './components/view-submission/view-submission.component'
 import { ResourceCollectionService } from './resource-collection.service'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table'
 
 @Component({
   selector: 'viewer-plugin-resource-collection',
@@ -22,7 +25,7 @@ export class ResourceCollectionComponent implements OnInit {
   type = 'all'
   contentId = ''
   fetchingStatus: 'fetching' | 'fetched' = 'fetched'
-  answerControl: FormControl
+  answerControl: UntypedFormControl
   selectedFile: File | null = null
   message: string | null = null
   submitData = {
@@ -41,7 +44,7 @@ export class ResourceCollectionComponent implements OnInit {
     private resourceSvc: ResourceCollectionService,
     private dialog: MatDialog,
   ) {
-    this.answerControl = new FormControl('')
+    this.answerControl = new UntypedFormControl('')
   }
   private openSnackBar(primaryMsg: string, duration: number = 3000) {
     this.snackBar.open(primaryMsg, 'X', {

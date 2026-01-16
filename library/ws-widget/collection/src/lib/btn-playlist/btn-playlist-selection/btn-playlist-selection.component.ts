@@ -1,9 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { FormControl, Validators } from '@angular/forms'
-import { MatListOption, MatSnackBar } from '@angular/material'
-import { EventService, TFetchStatus, WsEvents } from '@sunbird-cb/utils'
+import { UntypedFormControl, Validators } from '@angular/forms'
+import { EventService, TFetchStatus, WsEvents } from '@sunbird-cb/utils-v2'
 import { NsPlaylist } from '../btn-playlist.model'
 import { BtnPlaylistService } from '../btn-playlist.service'
+import { MatLegacyListOption as MatListOption } from '@angular/material/legacy-list'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-widget-btn-playlist-selection',
@@ -25,7 +26,7 @@ export class BtnPlaylistSelectionComponent implements OnInit {
   createPlaylistMode = false
   selectedPlaylists = new Set<string>()
 
-  playlistNameFormControl = new FormControl('', [
+  playlistNameFormControl = new UntypedFormControl('', [
     Validators.required,
     Validators.minLength(1),
     Validators.maxLength(100),

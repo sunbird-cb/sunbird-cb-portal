@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { SystemRolesManagementService } from '../../../system-roles-management/system-roles-management.service'
 import { IManageUser } from '../../../system-roles-management/system-roles-management.model'
 

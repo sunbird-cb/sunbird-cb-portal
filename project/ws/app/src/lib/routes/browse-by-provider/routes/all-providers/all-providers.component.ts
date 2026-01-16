@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { BrowseProviderService } from '../../services/browse-provider.service'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { Subject, Observable } from 'rxjs'
 // tslint:disable
 import _ from 'lodash'
 import { LocalDataService } from '../../../browse-by-competency/services/localService';
+import { TranslateService } from '@ngx-translate/core'
+import { MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
+import { ActivatedRoute } from '@angular/router'
 // tslint:enable
 
 @Component({
@@ -19,10 +22,11 @@ export class AllProvidersComponent implements OnInit {
   page = 1
   defaultLimit = 20
   limit = 20
-  searchForm: FormGroup | undefined
+  searchForm: UntypedFormGroup | undefined
   sortBy: any
   searchQuery = ''
   allProviders: any
+  clonesProviders: any
   disableLoadMore = false
   totalCount = 0
   private unsubscribe = new Subject<void>()
@@ -30,6 +34,7 @@ export class AllProvidersComponent implements OnInit {
     { title: 'Learn', url: '/page/learn', icon: 'school' },
     { title: 'All Providers', url: 'none', icon: '' },
   ]
+  featuredProviders = []
   getAllProvidersReq = {
     request: {
       filters: {
@@ -46,18 +51,44 @@ export class AllProvidersComponent implements OnInit {
   constructor(
     private browseProviderSvc: BrowseProviderService,
     private localService: LocalDataService,
-  ) { }
+    private translate: TranslateService,
+    private route: ActivatedRoute,
+    private langtranslations: MultilingualTranslationsService,
+  ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+    })
+    if (this.route.snapshot.data && this.route.snapshot.data.contentData
+      && this.route.snapshot.data.contentData.data
+      && this.route.snapshot.data.contentData.data.result
+      && this.route.snapshot.data.contentData.data.result.data
+      && this.route.snapshot.data.contentData.data.result.data.length
+    ) {
+      this.route.snapshot.data.contentData.data.result.data?.forEach((element: any) => {
+        element['displayName'] = element.link || ''
+        element['name'] = element?.contentPartnerName || ''
+        element['orgId'] = element?.internalOrgId || ''
+        element['logoUrl'] = element?.link || ''
+      })
+      this.featuredProviders = this.route.snapshot.data.contentData.data.result.data
+    }
+   }
 
   ngOnInit() {
-    this.searchForm = new FormGroup({
-      sortByControl: new FormControl(''),
-      searchKey: new FormControl(''),
+    this.searchForm = new UntypedFormGroup({
+      sortByControl: new UntypedFormControl(''),
+      searchKey: new UntypedFormControl(''),
     })
+    this.sortType('asc')
     this.displayLoader = this.browseProviderSvc.isLoading()
     this.searchForm.valueChanges
       .pipe(
         debounceTime(500),
-        switchMap(async formValue => {
+        switchMap(async (formValue: any) => {
           this.sortBy = formValue.sortByControl
           this.updateQuery(formValue.searchKey)
         }),
@@ -111,6 +142,8 @@ export class AllProvidersComponent implements OnInit {
             this.disableLoadMore = false
           }
         }
+
+        this.clonesProviders = this.allProviders
       })
     } else {
       const fData: any[] = []
@@ -138,6 +171,8 @@ export class AllProvidersComponent implements OnInit {
       } else {
         this.disableLoadMore = false
       }
+
+      this.clonesProviders = this.allProviders
     }
   }
 
@@ -148,7 +183,18 @@ export class AllProvidersComponent implements OnInit {
     this.getAllProvidersReq.request.limit = this.defaultLimit
     this.page = 1
     this.getAllProvidersReq.request.sort_by.orgName = this.sortBy
-    this.getAllProviders()
+    // this.getAllProviders()
+    this.filterChannles(key)
+  }
+
+  filterChannles(value: string) {
+    if (value) {
+      const filterValue = value.toLowerCase()
+      this.clonesProviders = this.allProviders.filter((p: any) => p &&  p.name && p.name.toLowerCase().includes(filterValue))
+    }
+    if (!value) {
+      this.clonesProviders = this.allProviders
+    }
   }
 
   loadMore() {
@@ -161,6 +207,16 @@ export class AllProvidersComponent implements OnInit {
       this.disableLoadMore = true
     } else {
       this.disableLoadMore = false
+    }
+  }
+
+  sortType(sortType: any) {
+    if (this.searchForm && this.searchForm.get('sortByControl')) {
+      // tslint:disable-next-line: no-non-null-assertion
+      this.searchForm.get('sortByControl')!.setValue(sortType)
+      this.sortBy = sortType
+      // tslint:disable-next-line: max-line-length
+      this.allProviders = _.orderBy(this.allProviders && this.allProviders.length ? this.allProviders : this.allProviders, ['name'], [this.sortBy])
     }
   }
 

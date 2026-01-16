@@ -1,0 +1,7 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+:host.video-js-2{
+  height: 264px !important; 
+}

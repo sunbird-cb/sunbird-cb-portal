@@ -1,27 +1,31 @@
 import { Component, OnInit, Inject, Input } from '@angular/core'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { EventService, WsEvents, LoggerService, NsContent } from '@sunbird-cb/utils/src/public-api'
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material'
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms'
+import { EventService, WsEvents, LoggerService, NsContent } from '@sunbird-cb/utils-v2'
 import { RatingService } from '@sunbird-cb/collection/src/lib/_services/rating.service'
 import { switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 import { NsAppRating } from '@ws/app/src/lib/routes/app-toc/models/rating.model'
 import { Router } from '@angular/router'
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 
 @Component({
   selector: 'ws-widget-content-rating-v2-dialog',
   templateUrl: './content-rating-v2-dialog.component.html',
   styleUrls: ['./content-rating-v2-dialog.component.scss'],
 })
+
 export class ContentRatingV2DialogComponent implements OnInit {
   @Input() ccuserRating: any
   @Input() navigatetoTOC: any
+  @Input() rateFromCompletionDialog: any
+  @Input()  isEditMode = false
+  @Input()  collectionId = ''
   content: NsContent.IContent | null = null
   userRating = 0
-  feedbackForm: FormGroup
+  feedbackForm: UntypedFormGroup
   showSuccessScreen = false
   formDisabled = true
-  isEditMode = false
   isEdited = false
   private unsubscribe = new Subject<void>()
 
@@ -34,9 +38,10 @@ export class ContentRatingV2DialogComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
   ) {
-    this.feedbackForm = new FormGroup({
-      review: new FormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
-      rating: new FormControl(0, []),
+    this.feedbackForm = new UntypedFormGroup({
+      review: new UntypedFormControl(null, [Validators.minLength(1), Validators.maxLength(2000)]),
+      rating: new UntypedFormControl(0, []),
+      recommend: new UntypedFormControl(false),
     })
   }
 
@@ -53,18 +58,20 @@ export class ContentRatingV2DialogComponent implements OnInit {
       }
       this.data = dataobj
     }
+
     if (this.data.userRating) {
       this.feedbackForm.patchValue({
         review: this.data.userRating.review,
         rating: this.data.userRating.rating,
+        recommend: this.data.userRating.recommended === 'yes' ? true : false,
       })
       this.feedbackForm.updateValueAndValidity()
       this.userRating = this.data.userRating.rating
       if (this.userRating) {
         this.formDisabled = false
-        this.isEditMode = true
       }
     }
+
     if (this.data.content) {
       this.content = this.data.content
     }
@@ -73,9 +80,11 @@ export class ContentRatingV2DialogComponent implements OnInit {
       .pipe(
         switchMap(async formValue => {
           // tslint:disable-next-line: no-console
-          console.log('formValue.review :: ', formValue.review)
+          // console.log('formValue.review :: ', formValue.review)
           if (this.data.userRating) {
-            if (formValue.review !== this.data.userRating.review || formValue.rating !== this.data.userRating.rating) {
+            if (formValue.review !== this.data.userRating.review
+              || formValue.rating !== this.data.userRating.rating
+              || formValue.recommend !== this.data.userRating.recommend) {
               this.isEdited = true
             } else {
               this.isEdited = false
@@ -94,7 +103,9 @@ export class ContentRatingV2DialogComponent implements OnInit {
         activityType: this.data.content.primaryCategory || '',
         rating: this.userRating || 0,
         ...(feedbackForm.value.review && { review: feedbackForm.value.review }),
+        recommended: feedbackForm.value.recommend ? 'yes' : 'no',
       }
+
       this.ratingSvc.addOrUpdateRating(req).subscribe(
         (_res: any) =>  {
           this.raiseFeedbackTelemetry(feedbackForm)
@@ -103,7 +114,6 @@ export class ContentRatingV2DialogComponent implements OnInit {
           } else {
             this.showSuccessScreen = true
           }
-          // this.dialogRef.close(true)
         },
         (err: any) => {
           this.loggerSvc.error('ADD OR UPDATE USER RATING ERROR >', err)
@@ -119,19 +129,20 @@ export class ContentRatingV2DialogComponent implements OnInit {
   }
 
   raiseFeedbackTelemetry(feedbackForm: any) {
-      this.events.raiseFeedbackTelemetry(
-        {
-          type: this.data.content.primaryCategory,
-          subType: 'rating',
-          id: this.data.content.identifier || '',
-        },
-        {
+    this.events.raiseFeedbackTelemetry(
+      {
+        type: this.data.content.primaryCategory,
+        subType: 'rating',
+        id: this.data.content.identifier || '',
+      },
+      {
         id: this.data.content.identifier || '',
         rating: this.userRating,
         version: `${this.data.content.version}${''}`,
         // tslint:disable-next-line: no-non-null-assertion
         commenttxt: feedbackForm.value.review || '',
-      })
+      }
+    )
   }
 
   addRating(index: number) {
@@ -160,7 +171,9 @@ export class ContentRatingV2DialogComponent implements OnInit {
   closeDialog(val: boolean) {
     if (this.navigatetoTOC) {
       this.dialogRef.close(val)
-      this.router.navigateByUrl(`app/toc/${this.data.content.identifier}/overview`)
+      // In case of multilingual course, redirection should happen to base collectionID
+      const id = this.collectionId || this.data.content.identifier
+      this.router.navigateByUrl(`app/toc/${id}/overview`)
     } else {
       this.dialogRef.close(val)
     }

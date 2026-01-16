@@ -10,7 +10,7 @@ $badge-padding: 12px;
   width: 350px;
   height: 180px;
   margin: 20px 10px;
-   @media only screen and(max-width: 432px) {
+   @media only screen and (max-width: 432px) {
      width: 210px;
      height: 218px;
      margin: 10px 10px;
@@ -78,7 +78,7 @@ mat-card{
   }
 
   .text-align{
-   @media only screen and(max-width: 432px) {
+   @media only screen and (max-width: 432px) {
      text-align:center;
    }
 }

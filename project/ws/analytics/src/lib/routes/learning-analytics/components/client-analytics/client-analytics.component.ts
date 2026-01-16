@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router'
 import { GraphGeneralService } from '@sunbird-cb/collection'
-import { ConfigurationsService, NsPage, ValueService, TFetchStatus } from '@sunbird-cb/utils'
+import { ConfigurationsService, NsPage, ValueService, TFetchStatus } from '@sunbird-cb/utils-v2'
 import { Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { NsAnalytics } from '../../models/learning-analytics.model'
@@ -48,19 +48,19 @@ export class ClientAnalyticsComponent implements OnInit, OnDestroy {
   fetchStatus: TFetchStatus = 'none'
   filterArray: NsAnalytics.IFilterObj[] = []
   filterData: NsAnalytics.IFilter[] = []
-  searchControl = new FormControl()
+  searchControl = new UntypedFormControl()
   analytics = this.route.snapshot.data.pageData.data.analytics.subFeatures.learningAnalytics
   private filterEventSubscription: Subscription | null = null
   private searchEventSubscription: Subscription | null = null
   private defaultSearchSubscription: Subscription | null = null
   paramSubscription: Subscription | null = null
-  searchForm: FormGroup
+  searchForm: UntypedFormGroup
   constructor(
     private route: ActivatedRoute,
     private valueSvc: ValueService,
     private configSvc: ConfigurationsService,
     private resolver: AnalyticsResolver,
-    private form: FormBuilder,
+    private form: UntypedFormBuilder,
     private graphGeneralSvc: GraphGeneralService,
     private router: Router,
     private analyticsSvc: LearningAnalyticsService,

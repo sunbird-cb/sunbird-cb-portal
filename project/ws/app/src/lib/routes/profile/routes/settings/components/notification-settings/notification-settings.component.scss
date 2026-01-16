@@ -2,28 +2,48 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
-.notifications-container {
-  border: 1px solid rgba(0, 0, 0, 0.12);
+.notification-list-item {
+  padding: 16px;
   border-radius: 8px;
+  background-color: $white;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
 
-  .group-name-container {
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
+.notification-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    .group-name {
-      font-weight: 400;
-      margin: 0;
-    }
+.notification-list-item-header {
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.notification-list-item-description {
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+
+}
+
+::ng-deep.notification-settings-container {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: rgba(27, 76, 161, 1) !important;
+  }
+
+
+}
+
+::ng-deep.notification-settings-container {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: white !important;
   }
 }
-
-.event-name {
-  font-weight: 500;
-}
-
-// .prefItem:hover {
-//   background-color: rgba(0, 0, 0, 0.16);
-// }

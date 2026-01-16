@@ -1,0 +1,98 @@
+<div class="flex flex-col justify-between h-full">
+  <div class="flex flex-col gap-4">
+    <div class="flex justify-between items-center">
+      <div class="section-header">Cover Photo</div>
+      <mat-icon class="close-icon" (click)="closePopup()">close</mat-icon>
+    </div>
+
+    <!-- Hidden file input -->
+
+    <!-- Image preview or cropper -->
+    <div class="w-full">
+      <ng-container *ngIf="!showCropper">
+        <ng-container *ngIf="coverPhotoUrl; else defaultImage">
+          <img [src]="coverPhotoUrl" alt="cover photo" class="w-full">
+        </ng-container>
+        <ng-template #defaultImage>
+          <img src="./assets/icons/profile_cover_pic.svg" alt="default cover photo" class="w-full">
+        </ng-template>
+      </ng-container>
+      <ng-container *ngIf="showCropper">
+        <div class="image-cropper">
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="858/215"
+            format="png"
+            [roundCropper]="false"
+            [cropperMinWidth]="1200"
+            [cropperMinHeight]="110"
+            [resizeToWidth]="1200"
+            [cropperStaticWidth]="1200"
+            [cropperStaticHeight]="110"
+            [canvasRotation]="0"
+            [alignImage]="'center'"
+            [fit]="'cover'"
+            [style.display]="showCropper ? null : 'none'"
+            [cropperMaxWidth]="1200"
+            [backgroundColor]="'#fff'"
+            [cropper]="cropperPosition"
+            [onlyScaleDown]="false"
+            [maintainAspectRatio]="true"
+            [hideResizeSquares]="true"
+            [containWithinAspectRatio]="false"
+            (imageCropped)="imageCropped($event)"
+          ></image-cropper>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class=" hidden md:flex justify-between">
+      <div class="delete-button" (click)="deleteCoverPhoto()">
+        <a >Delete Cover Photo</a>
+      </div>
+      <div class="flex gap-4">
+        <ng-container *ngIf="uploadImage; else otherImage">
+          <input type="file" #fileInput class="hidden" (change)="onFileChange($event)" accept="image/*">
+          <button mat-button class="change-photo-button" (click)="fileInput.click()">Change Cover Photo</button>
+        </ng-container>
+        <ng-template #otherImage>
+          <button mat-button class="change-photo-button">Change Cover Photo</button>
+        </ng-template>
+        <button mat-button class="apply-button" (click)="applyChanges()">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="md:hidden">
+    <div class="flex justify-between items-center gap-1">
+      <div class="flex flex-col justify-center items-center mWebDelete">
+        <mat-icon class="delete-icon" (click)="deleteCoverPhoto()">delete</mat-icon>
+        <a >Delete Photo</a>
+      </div>
+
+      <ng-container *ngIf="uploadImage; else otherImage">
+        <input type="file" #fileInput class="hidden" (change)="onFileChange($event)" accept="image/*">
+        <div class="flex flex-col justify-center items-center mWebChange" (click)="fileInput.click()">
+          <mat-icon class="img-icon" >image</mat-icon>
+          <a class="mWeb-change-photo-button">Change Photo</a>
+          <!-- <button mat-button class="mWeb-change-photo-button">Change Photo</button> -->
+        </div>
+      </ng-container>
+      <ng-template #otherImage>
+        <div class="flex flex-col justify-center items-center">
+          <mat-icon class="img-icon" >image</mat-icon>
+          <a class="mWeb-change-photo-button">Change Photo</a>
+          <!-- <button mat-button class="mWeb-change-photo-button">Change Photo</button> -->
+        </div>
+      </ng-template>
+
+      <div class="flex flex-col justify-center items-center mWebSave" (click)="applyChanges()">
+        <mat-icon class="check-icon">check</mat-icon>
+        <a class="save-photo-button">Save Photo</a>
+        <!-- <button mat-button class="save-button">Save Photo</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+

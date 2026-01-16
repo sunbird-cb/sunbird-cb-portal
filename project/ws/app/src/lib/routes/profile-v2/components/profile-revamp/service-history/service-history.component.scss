@@ -1,0 +1,108 @@
+
+.popup-header {
+  padding: 15px 24px;
+  border-bottom: 2px solid #00000014;
+  
+  .header-title {
+    color: #000000DE;
+    /* stylelint-disable */
+    font: 600 16px Montserrat;
+    /* stylelint-enable */
+  }
+
+  .close-button {
+    cursor: pointer;
+    pointer-events: all;
+
+    .close-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      color: #666666;
+    }
+  }
+}
+
+.container {
+  width: 744px;
+  padding: 24px;
+  gap: 22px !important;
+  max-width: calc(100% - 44px);
+}
+
+.edit-icon {
+  color: #1B4CA1;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.service-card {
+  border: 1px solid #0000000A;
+  background-color: #1B4CA10A;
+  border-radius: 8px;
+  padding: 8px;
+  gap: 12px;
+
+  .org-logo {
+    width: 96px;
+    height: 54px;
+  }
+
+  .designation {
+    color: #000000;
+    /* stylelint-disable */
+    font: 600 14px Montserrat;
+    /* stylelint-enable */
+    width: calc(100% - 20px);
+  }
+
+  .org-details {
+    color: #000000;
+    /* stylelint-disable */
+    font: 400 12px Lato;
+    /* stylelint-enable */
+  }
+
+  .org-period {
+    color: #00000099;
+    /* stylelint-disable */
+    font: 400 12px Lato;
+    /* stylelint-enable */
+  }
+
+  .org-description {
+    height: 30px;
+    overflow: hidden;
+    
+  }
+
+  .extend-description {
+    // overflow: auto !important;
+    // height: 100px !important;
+    height: fit-content !important;
+  }
+
+  .view-more {
+    color: #1B4CA1;
+    /* stylelint-disable */
+    font: 800 12px Lato;
+    /* stylelint-enable */
+    cursor: pointer;
+    pointer-events: all;
+  }
+}
+
+.default-logo-card {
+  background-color: #1B4CA129;
+  width: 96px;
+  height: 54px;
+  border-radius: 4px;
+
+  .default-logo {
+    width: 18px;
+    height: 18px;
+  }
+}

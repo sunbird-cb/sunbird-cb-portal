@@ -1,0 +1,196 @@
+// Override Material Dialog default styles for transparency and dynamic height
+
+.profile-verification-dialog-container {
+  overflow: auto;
+  .mat-dialog-container {
+    padding: 0 !important;
+    overflow: visible !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+}
+
+
+
+.profile-verification-dialog {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  min-height: fit-content;
+
+  // Illustration positioned outside/above the dialog
+  .illustration {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    
+    .verification-image {
+      width: 120px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+    }
+  }
+
+  // White dialog box
+  .dialog-content {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 
+                0px 24px 38px 3px rgba(0, 0, 0, 0.14), 
+                0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    height: auto;
+    min-height: fit-content;
+  }
+
+  // Blue header
+  .dialog-header {
+    background: #2563B0;
+    padding: 16px 24px;
+    text-align: center;
+    margin: 0;
+
+    .dialog-title {
+      margin: 0;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+  }
+
+  // Dialog body with message and profile info
+  .dialog-body {
+    padding: 24px 32px;
+    background: #ffffff;
+    padding-bottom: 0;
+
+    .message-text {
+      margin: 0 0 0px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333333;
+      text-align: center;
+      font-weight: 400;
+    }
+
+    .submission-note {
+      margin: 0 0 0px 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #666666;
+      text-align: center;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+
+      .info-row {
+        display: flex;
+        font-size: 14px;
+        padding: 0;
+
+        .info-label {
+          font-weight: 400;
+          color: #555555;
+          width: 100%;
+          text-align: center;
+        }
+        .danger-label {
+          color: #d13924 !important;
+        }
+      }
+    }
+  }
+
+  // Orange buttons
+  .dialog-actions {
+    display: flex;
+    gap: 12px;
+    padding: 12px 32px 24px;
+    justify-content: center;
+    background: #ffffff;
+
+    button {
+      min-width: 140px;
+      height: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 20px;
+      text-transform: none;
+      letter-spacing: 0.3px;
+    }
+
+    .confirm-btn {
+      border: 1.5px solid #FF8534;
+      color: #FF8534;
+      background: #ffffff;
+
+      &:hover {
+        background: #FFF5EF;
+        border-color: #FF8534;
+      }
+    }
+
+    .update-btn {
+      background: #FF8534;
+      color: #ffffff;
+      border: none;
+      box-shadow: none;
+
+      &:hover {
+        background: #E6752E;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 600px) {
+  .profile-verification-dialog {
+    margin-top: 60px;
+
+    .illustration {
+
+      .verification-image {
+        width: 120px;
+      }
+    }
+
+    .dialog-body {
+      padding: 20px;
+
+      .profile-info {
+        gap: 6px;
+
+        .info-row {
+          font-size: 13px;
+        }
+      }
+    }
+
+    .dialog-actions {
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px 20px 24px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,624 @@
+@import 'ws-common';
+
+/* profile-editor.component.scss */
+.profile-editor-container {
+  padding: 24px;
+  max-width: 600px;
+}
+
+.profile-editor-header {
+
+  .header-title {
+    color: #000000DE;
+    /* stylelint-disable */
+    font: 600 16px Montserrat;
+    /* stylelint-enable */
+  }
+
+  .close-button {
+    cursor: pointer;
+    pointer-events: all;
+
+    .close-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      color: #666666;
+    }
+  }
+}
+
+::ng-deep.mat-calendar-body-active {
+  background: #1B4CA1 !important;
+  border-radius: 50% !important;
+}
+
+.profile-pic-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+
+  .avatar-wrapper {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    &:not(.has-image) {
+      background-color: #99B2FF;
+    }
+  }
+
+  .initials-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .initials {
+      font-size: 48px;
+      color: white;
+      text-transform: uppercase;
+    }
+  }
+
+  .image-avatar {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 50%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  .avatar-actions {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.5);
+    border-top-left-radius: 8px;
+  }
+
+  .camera-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    right: 11px;
+    background-color: #ffffff;
+    pointer-events: all;
+    cursor: pointer;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      color: #1C4C9F;
+    }
+  }
+
+  .delete-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    right: 11px;
+    background-color: #ffffff;
+    pointer-events: all;
+    cursor: pointer;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: #D13924;
+    }
+  }
+}
+
+.solid {
+  width: calc(100% + 46px);
+  margin-left: -24px;
+  border-top: 2px solid #00000014;
+}
+
+.profile-editor-description {
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 24px;
+  /* stylelint-disable */
+  font: 400 14px Lato;
+  /* stylelint-enable */
+}
+
+.profile-editor-form {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 245px);
+  overflow: auto;
+}
+
+.profile-top-editor-form {
+  height: calc(100vh - 460px);
+  overflow: auto;
+}
+
+.form-fields-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 50px;
+  row-gap: 10px;
+  margin-bottom: 24px;
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .checkbox-field {
+    margin: 8px 0;
+  }
+}
+
+.form-actions {
+
+  .cancel-btn {
+    border: 1px solid #1B4CA1;
+    border-radius: 16px;
+    padding: 6px 16px;
+    color: #1B4CA1;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+
+  .save-btn {
+    background-color: #1B4CA1;
+    border-radius: 16px;
+    padding: 6px 16px;
+    color: white;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+
+}
+
+// Avatar section styling
+.avatar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #c2e0ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar-initials {
+      text-transform: uppercase;
+    }
+
+    .avatar-upload {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.5);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      mat-icon {
+        color: white;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.lable {
+  color: #212529;
+  /* stylelint-disable */
+  font: 700 14px Lato;
+  /* stylelint-enable */
+}
+
+.get-otp {
+  color: $text-primary;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.country-code {
+  @extend .input-text;
+  margin: 0.4375em 0;
+  padding: 0px;
+  text-align: center;
+  width: 70px;
+  height: 28px;
+  border-radius: 14px;
+  display: block !important;
+  position: relative;
+  top: -1px;
+}
+
+.info-value-c {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 3px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  font-size: 15px !important;
+  height: fit-content;
+  margin-top: 0.5rem;
+}
+
+.disableBtn {
+  pointer-events: none !important;
+  // opacity: 0.5;
+  background-color: #999999 !important;
+  color: #ffffff !important;
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+  .form-fields-container {
+    grid-template-columns: 1fr;
+
+    .full-width {
+      grid-column: span 1;
+    }
+  }
+
+  .cancel-btn {
+    display: none !important;
+  }
+
+  .save-btn {
+    width: 100% !important;
+  }
+}
+
+::ng-deep .profile-control {
+
+  .sticky-search-container {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: white;
+    padding: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .search-input {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding-left: 10px;
+    width: 98%;
+    height: 30px;
+    border-radius: 17px;
+
+    &:focus {
+      outline: none;
+      border-color: #F3962F;
+      box-shadow: 0 0 0 1px rgba(243, 150, 47, 0.2);
+    }
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 35px;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 11px 0px 0px !important;
+  }
+
+  .mat-form-field-infix {
+    border-top: 0.7em !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0px !important;
+  }
+
+  .mat-mdc-icon-button svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 16px !important;
+    border-left-style: solid !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    display: none !important;
+  }
+
+}
+
+.note-container {
+  background-color: #EBEBEB;
+  border: 1px solid #c3c3c3;
+  border-radius: 5px;
+  width: fit-content;
+
+  .designation-note {
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 14.4px;
+    color: black;
+  }
+}
+
+:host ::ng-deep .designation-note {
+  .note-email {
+    color: #1b4ca1 !important;
+    text-decoration: underline !important;
+  }
+}
+
+.info-icon-designation {
+  overflow: visible !important
+}
+// Approval Status Styles for Mandatory Section
+.label {
+  color: #00000099;
+  /* stylelint-disable */
+  font: 400 12px Lato;
+  /* stylelint-enable */
+}
+
+.primaryDetailsvalue {
+  color: #212529;
+  /* stylelint-disable */
+  font: 400 16px Lato;
+  /* stylelint-enable */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.status-icon {
+  width: 18px;
+  height: 18px;
+  margin-bottom: -2px;
+}
+
+.profile-not-verified {
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: #D13924;
+  color: white;
+  border-radius: 20px;
+  line-height: 12px;
+  /* stylelint-disable */
+  font: 400 10px Lato;
+  /* stylelint-enable */
+  padding: 2px 5px;
+
+  .mat-icon {
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+    color: white;
+  }
+}
+
+.profile-approval-status {
+  .separator {
+    border-bottom: 1px solid #d6d6d6;
+  }
+
+  .approvalStatusHeader {
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+
+  .viewApprovalStatuas {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1B4CA1;
+    pointer-events: all;
+    cursor: pointer;
+  }
+
+  .statusLable {
+    /* stylelint-disable */
+    font-family: 'Lato';
+    /* stylelint-enable */
+    font-size: 12px;
+    color: #676767;
+  }
+
+  .approvalStausValue {
+    font-size: 16px;
+    /* stylelint-disable */
+    font-family: 'Lato';
+    /* stylelint-enable */
+    color: #212529;
+  }
+
+  .approvalStatusPending {
+    background-color: #F3962F;
+    height: 25px;
+    width: 70px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #FFFFFF;
+  }
+
+  .approvalStatusRejected {
+    background-color: #D13924;
+    height: 25px;
+    width: 75px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #FFFFFF;
+  }
+
+  .viewReason {
+    font-size: 16px;
+    color: #1B4CA1;
+    border-bottom: 1px solid #1B4CA1;
+    cursor: pointer;
+    pointer-events: all;
+    width: 205px;
+  }
+}
+
+:host ::ng-deep .profile-approval-status {
+  .mat-expansion-panel {
+    box-shadow: none !important;
+  }
+  
+  .mat-expansion-panel-header {
+    padding: 0px !important;
+    background: unset !important;
+    cursor: unset;
+    pointer-events: none;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0px !important;
+  }
+}
+
+// Field disabled note styling
+.field-disabled-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: #FFF3E0;
+  border-radius: 4px;
+  margin-top: -8px;
+  font-size: 12px;
+  color: #E65100;
+  font-family: 'Lato', sans-serif;
+
+  .warning-icon {
+    font-size: 16px;
+    width: 48px;
+    height: 16px;
+    color: #E65100;
+  }
+
+  span {
+    line-height: 1.4;
+  }
+}
+
+// Withdraw button styling
+.withdraw-text {
+  font-size: 14px;
+  color: #1B4CA1;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.edit-button {
+  border-radius: 20px;
+  padding: 4px 16px;
+  border: 1px solid #1B4CA1;
+  color: #1B4CA1;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+// Withdraw button styling
+.withdraw-text {
+  font-size: 14px;
+  color: #1B4CA1;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.edit-button {
+  border-radius: 20px;
+  padding: 4px 16px;
+  border: 1px solid #1B4CA1;
+  color: #1B4CA1;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-org-input {
+  width: 100%;
+  height: 35px;
+  padding: 0 30px 0 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+::ng-deep .search-panel {
+  .sticky-search-container {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: white;
+    padding: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+  .search-input {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding-left: 10px;
+    width: calc(100% - 10px);;
+    height: 30px;
+    &:focus {
+      outline: none;
+      border-color: #F3962F;
+      box-shadow: 0 0 0 1px rgba(243, 150, 47, 0.2);
+    }
+  }
+}
+
+.custom-loader {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #00000030;
+      display: flex;
+  align-items: center;
+  justify-content: center;
+}

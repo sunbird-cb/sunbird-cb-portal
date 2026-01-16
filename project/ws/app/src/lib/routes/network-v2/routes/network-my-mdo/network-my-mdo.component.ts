@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { NSNetworkDataV2 } from '../../models/network-v2.model'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NetworkV2Service } from '../../services/network-v2.service'
-import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, WsEvents, EventService, MultilingualTranslationsService } from '@sunbird-cb/utils-v2'
+import { TranslateService } from '@ngx-translate/core'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-network-my-mdo',
@@ -16,7 +18,7 @@ import { ConfigurationsService, WsEvents, EventService } from '@sunbird-cb/utils
 export class NetworkMyMdoComponent implements OnInit {
 
   data!: NSNetworkDataV2.INetworkUser[]
-  queryControl = new FormControl('')
+  queryControl = new UntypedFormControl('')
   currentFilter = 'timestamp'
   currentFilterSort = 'desc'
   enableSearchFeature = false
@@ -25,8 +27,18 @@ export class NetworkMyMdoComponent implements OnInit {
     private route: ActivatedRoute,
     private networkV2Service: NetworkV2Service,
     private configSvc: ConfigurationsService,
-    private eventSvc: EventService
+    private eventSvc: EventService,
+    private translate: TranslateService,
+    private langtranslations: MultilingualTranslationsService,
   ) {
+    this.langtranslations.languageSelectedObservable.subscribe(() => {
+      if (localStorage.getItem('websiteLanguage')) {
+        this.translate.setDefaultLang('en')
+        const lang = localStorage.getItem('websiteLanguage')!
+        this.translate.use(lang)
+      }
+
+    })
     // console.log('this.route.snapshot.data.myMdoList.data :', this.route.snapshot.data.myMdoList.data)
     this.currentUserDept = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgName
     this.data = this.route.snapshot.data.myMdoList.data.result.data.
@@ -51,6 +63,11 @@ export class NetworkMyMdoComponent implements OnInit {
     })
   }
 
+  translateHub(hubName: string): string {
+    const translationKey =  hubName
+    return this.translate.instant(translationKey)
+  }
+
   updateQuery(key: string) {
     if (key) {
 
@@ -61,6 +78,15 @@ export class NetworkMyMdoComponent implements OnInit {
     if (key) {
       this.currentFilter = key
       this.currentFilterSort = order
+      if (this.currentFilter === 'timestamp') {
+        this.data.sort((a: any, b: any) => {
+          return a.id.toLowerCase().localeCompare(b.id.toLowerCase())
+        })
+      } else {
+        this.data.sort((a: any, b: any) => {
+          return a.personalDetails.firstname.toLowerCase().localeCompare(b.personalDetails.firstname.toLowerCase())
+        })
+      }
     }
   }
 
@@ -98,9 +124,16 @@ export class NetworkMyMdoComponent implements OnInit {
       label,
       index,
     }
-    this.eventSvc.handleTabTelemetry(
-      WsEvents.EnumInteractSubTypes.NETWORK_TAB,
-      data,
+    this.eventSvc.raiseInteractTelemetry(
+      {
+        type: WsEvents.EnumInteractTypes.CLICK,
+        subType: WsEvents.EnumInteractSubTypes.NETWORK_TAB,
+        id: `${_.camelCase(data.label)}-tab`,
+      },
+      {},
+      {
+        module: WsEvents.EnumTelemetrymodules.NETWORK,
+      }
     )
   }
 

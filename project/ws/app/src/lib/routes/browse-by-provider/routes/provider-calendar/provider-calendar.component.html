@@ -1,0 +1,29 @@
+
+<ws-widget-btn-page-back [widgetData]="{ url: 'home', titles: titles, textClass:'ws-mat-default-text' }">
+</ws-widget-btn-page-back>
+<div class="col-span-12">
+    <div class="container-balanced flex flex-col">
+        <div class="hidden md:block">
+            <sb-uic-calender
+                [objectData]="data"
+                [fetchDataFromApi]="true"
+                [layoutType]="'grid'"
+                [showHeader]="'true'"
+                [defaultDays]="data?.defaultDays"
+                [providerId]="providerId"
+                [fullCalendor]="true">
+            </sb-uic-calender>
+        </div>
+        <div class="block md:hidden">
+            <sb-uic-calender
+                [objectData]="data"
+                [fetchDataFromApi]="true"
+                [layoutType]="'row'"
+                [showHeader]="'true'"
+                [defaultDays]="data?.defaultDays"
+                [providerId]="providerId"
+                [fullCalendor]="true">
+            </sb-uic-calender>
+        </div>        
+    </div>
+</div>

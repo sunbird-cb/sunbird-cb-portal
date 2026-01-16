@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
 import {
   ConfigurationsService,
   TFetchStatus,
   ValueService,
-} from '@sunbird-cb/utils'
+} from '@sunbird-cb/utils-v2'
 import { SocialForum } from '../../models/SocialForumposts.model'
 import { ForumHandlerService } from '../../service/EmitterService/forum-handler.service'
 // import { ForumHandlerService } from '../../service/EmitterService/eventemitter.service'

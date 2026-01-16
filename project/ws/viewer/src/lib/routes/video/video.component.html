@@ -1,4 +1,5 @@
-<viewer-video-container
+<ng-container *ngIf="isFetchingDataComplete">
+  <viewer-video-container
   [isNotEmbed]="isNotEmbed"
   [isScreenSizeSmall]="isScreenSizeSmall"
   [isFetchingDataComplete]="isFetchingDataComplete"
@@ -7,3 +8,4 @@
   [discussionForumWidget]="discussionForumWidget"
   [forPreview]="forPreview"
 ></viewer-video-container>
+</ng-container>

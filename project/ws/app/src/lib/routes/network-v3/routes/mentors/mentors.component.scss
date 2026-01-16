@@ -1,0 +1,58 @@
+.mentor-note-card {
+  background: linear-gradient(90deg,#1B2133, rgb(73 55 35 / 90%) 50%, #1B2133);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44, 46, 74, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.mentor-note-text {
+  color: #fff;
+  /* stylelint-disable */
+  font: 600 14px 'Montserrat';
+  /* stylelint-enable */
+}
+
+.discover-mentor-btn {
+  padding: 0px;
+  width: 145px;
+  min-width: 140px;
+  height: 33px;
+  border-radius: 17px;
+  color: #fff;
+  /* stylelint-disable */
+  font: 700 14px 'Lato';
+  /* stylelint-enable */
+  cursor: pointer;
+  background: linear-gradient(#1B2133, #1B2133) padding-box, 
+              linear-gradient(90deg, #DB79FE, #E3C3EA, #55D3FB, #001541) border-box;
+  border: 2px solid transparent;
+  box-shadow: 0 0 10px rgba(219, 121, 254, 0.4), 
+              0 0 20px rgba(85, 211, 251, 0.2);
+}
+
+.header {
+  /*stylelint-disable */
+  font: 600 16px 'Montserrat';
+  /* stylelint-enable */
+  color: #000000
+}
+
+.no-records-found {
+  min-height: 270px;
+  height: 100%;
+  max-height: 100%;
+
+  .emptyPageIcon {
+    height: 70px;
+  }
+
+  .no-data-text {
+    color: #000000;
+    /* stylelint-disable */
+    font: 700 14px Lato;
+    /* stylelint-enable */
+  }
+}
